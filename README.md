@@ -5,6 +5,14 @@ Modding framework for Escape From Tarkov
 [![Build Status](https://drone.sp-tarkov.com/api/badges/SPT-AKI/Server/status.svg?ref=refs/heads/development)](https://drone.sp-tarkov.com/SPT-AKI/Server)
 [![Quality Gate Status](https://sonar.sp-tarkov.com/api/project_badges/measure?project=AKI&metric=alert_status&token=d3b87ff5fac591c1f49a57d4a2883c92bfe6a77f)](https://sonar.sp-tarkov.com/dashboard?id=AKI)
 
+## Privacy
+SPT is an open source project. Your commit credentials as author of a commit will be visible by anyone. Please make sure you understand this before submitting a PR.
+Feel free to use a "fake" username and email on your commits by using the following commands:
+```bash
+git config --local user.name "USERNAME"
+git config --local user.email "USERNAME@SOMETHING.com"
+```
+
 ## Requirements
 
 - NodeJS (with npm)
