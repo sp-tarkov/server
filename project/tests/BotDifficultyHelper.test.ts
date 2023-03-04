@@ -15,13 +15,13 @@ import { TestHelper } from "./common/TestHelper";
 
 const mockHelper = new MockHelper();
 let testHelper: TestHelper;
-let logger: ILogger
-let jsonUtil: JsonUtil
-let randomUtil: RandomUtil
-let configServer: ConfigServer
-let localisationService: LocalisationService
-let databaseServer: DatabaseServer
-let botHelper: BotHelper
+let logger: ILogger;
+let jsonUtil: JsonUtil;
+let randomUtil: RandomUtil;
+let configServer: ConfigServer;
+let localisationService: LocalisationService;
+let databaseServer: DatabaseServer;
+let botHelper: BotHelper;
 
 describe("BotHelper", () => {
     beforeAll(async () => {
@@ -32,7 +32,7 @@ describe("BotHelper", () => {
         configServer = testHelper.getTestConfigServer();
         localisationService = testHelper.getTestLocalisationService();
         databaseServer = testHelper.getTestDatabaseServer();
-        botHelper = testHelper.getTestBotHelper()
+        botHelper = testHelper.getTestBotHelper();
     })
 
     let botDifficultyHelper: BotDifficultyHelper;

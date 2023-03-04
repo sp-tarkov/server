@@ -23,13 +23,13 @@ import { TestHelper } from "./common/TestHelper";
 
 
 let testHelper: TestHelper;
-let logger: ILogger
-let jsonUtil: JsonUtil
-let randomUtil: RandomUtil
-let configServer: ConfigServer
-let localisationService: LocalisationService
-let databaseServer: DatabaseServer
-    let helper: RepairHelper;
+let logger: ILogger;
+let jsonUtil: JsonUtil;
+let randomUtil: RandomUtil;
+let configServer: ConfigServer;
+let localisationService: LocalisationService;
+let databaseServer: DatabaseServer;
+let helper: RepairHelper;
 
 describe("BotHelper", () => {
 

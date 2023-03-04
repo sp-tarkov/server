@@ -11,12 +11,12 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TestHelper } from "./common/TestHelper";
 
 let testHelper: TestHelper;
-let logger: ILogger
-let jsonUtil: JsonUtil
-let randomUtil: RandomUtil
-let configServer: ConfigServer
-let localisationService: LocalisationService
-let databaseServer: DatabaseServer
+let logger: ILogger;
+let jsonUtil: JsonUtil;
+let randomUtil: RandomUtil;
+let configServer: ConfigServer;
+let localisationService: LocalisationService;
+let databaseServer: DatabaseServer;
 
 
 describe("BotHelper", () => {
