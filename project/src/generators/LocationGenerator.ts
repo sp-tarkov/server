@@ -455,23 +455,18 @@ export class LocationGenerator
             // it can handle revolver ammo (it's not restructured to be used here yet.)
             // General: Make a WeaponController for Ragfair preset stuff and the generating weapons and ammo stuff from
             // BotGenerator
-            const mag = items.filter(x => x.slotId === "mod_magazine")[0];
+            const magazine = items.filter(x => x.slotId === "mod_magazine")[0];
             // some weapon presets come without magazine; only fill the mag if it exists
-            if (mag)
+            if (magazine)
             {
-                const weapTemplate = this.itemHelper.getItem(rootItem._tpl)[1];
-                // we can't use weaponTemplate's "_props.ammoCaliber" directly since there's a weapon ("weapon_zmz_pp-9_9x18pmm")
-                // with non-existing ammoCaliber: Caliber9x18PMM -> We get the Caliber from the weapons' default ammo
-                const defAmmoTemplate = this.itemHelper.getItem(weapTemplate._props.defAmmo)[1];
-                const magTemplate = this.itemHelper.getItem(mag._tpl)[1];
-                items.push(
-                    this.itemHelper.createRandomMagCartridges(
-                        magTemplate,
-                        mag._id,
-                        staticAmmoDist,
-                        defAmmoTemplate._props.Caliber
-                    )
-                );
+                const magTemplate = this.itemHelper.getItem(magazine._tpl)[1];
+
+                // Create array with just magazine
+                const magazineWithCartridges = [magazine];
+                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist);
+
+                // Replace existing magazine with above array
+                items.splice(items.indexOf(magazine), 1, ...magazineWithCartridges);
             }
 
             const size = this.itemHelper.getItemSize(items, rootItem._id);
@@ -485,7 +480,12 @@ export class LocationGenerator
         }
         else if (this.itemHelper.isOfBaseclass(tpl, BaseClasses.MAGAZINE))
         {
-            items.push(this.itemHelper.createRandomMagCartridges(itemTemplate, items[0]._id, staticAmmoDist));
+            // Create array with just magazine
+            const magazineWithCartridges = [items[0]];
+            this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, itemTemplate, staticAmmoDist);
+
+            // Replace existing magazine with above array
+            items.splice(items.indexOf(items[0]), 1, ...magazineWithCartridges);
         }
 
         return {

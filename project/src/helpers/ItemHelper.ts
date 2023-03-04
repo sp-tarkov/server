@@ -816,22 +816,71 @@ class ItemHelper
         }
     }
 
-    public createRandomMagCartridges(
+    /**
+     * Add child items (cartridges) to a magazine
+     * @param magazine Magazine to add child items to
+     * @param magTemplate Db template of magazine
+     * @param staticAmmoDist Cartridge distribution
+     * @param caliber Caliber of cartridge to add to magazine
+     * @param minSizePercent % the magazine must be filled to
+     */
+    public fillMagazineWithRandomCartridge(
+        magazine: Item[],
         magTemplate: ITemplateItem,
-        parentId: string,
-        staticAmmoDist: Record<string,
-        IStaticAmmoDetails[]>,
-        caliber: string = undefined
-    ): Item
+        staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
+        caliber: string = undefined,
+        minSizePercent = 0.25
+    ): void
     {
+        // no caliber defined, choose one
         if (!caliber)
         {
             caliber = this.getRandomValidCaliber(magTemplate);
         }
-        const ammoTpl = this.drawAmmoTpl(caliber, staticAmmoDist);
-        const maxCount = magTemplate._props.Cartridges[0]._max_count;
-        const stackCount = this.randomUtil.getInt(Math.round(0.25 * maxCount), maxCount);
-        return this.createCartridges(parentId, ammoTpl, stackCount, 0);
+
+        // Chose a randomly weighted cartridge that fits
+        const cartridgeTpl = this.drawAmmoTpl(caliber, staticAmmoDist);
+        this.fillMagazineWithCartridge(magazine, magTemplate, cartridgeTpl, minSizePercent);
+    }
+
+    /**
+     * Add child items to a magazine of a specific cartridge
+     * @param magazine Magazine to add child items to
+     * @param magTemplate Db template of magazine
+     * @param cartridgeTpl Cartridge to add to magazine
+     * @param minSizePercent % the magazine must be filled to
+     */
+    public fillMagazineWithCartridge(
+        magazine: Item[],
+        magTemplate: ITemplateItem,
+        cartridgeTpl: string,
+        minSizePercent = 0.25
+    ): void
+    {
+        // Get cartrdge properties and max allowed stack size
+        const cartridgeDetails = this.getItem(cartridgeTpl);
+        const cartridgeMaxStackSize = cartridgeDetails[1]._props.StackMaxSize;
+
+        // Get max number of cartridges in magazine, choose random value between min/max
+        const magazineCartridgeMaxCount = magTemplate._props.Cartridges[0]._max_count;
+        const stackCount = this.randomUtil.getInt(Math.round(minSizePercent * magazineCartridgeMaxCount), magazineCartridgeMaxCount);
+
+        // Loop over cartridge count and add stacks to magazine
+        let currentStoredCartridgeCount = 0;
+        let location = 0;
+        while (currentStoredCartridgeCount < stackCount)
+        {
+            // Get stack size of cartridges
+            const cartridgeCountToAdd = (stackCount <= cartridgeMaxStackSize)
+                ? stackCount
+                : cartridgeMaxStackSize;
+
+            // Add cartridge item object into items array
+            magazine.push(this.createCartridges(magazine[0]._id, cartridgeTpl, cartridgeCountToAdd, location));
+
+            currentStoredCartridgeCount += cartridgeCountToAdd;
+            location ++;
+        }
     }
 
     protected getRandomValidCaliber(magTemplate: ITemplateItem): string
