@@ -192,6 +192,11 @@ export class BotGenerator
         // Simulate bot looking like a Player scav with the pmc name in brackets
         if (botRole === "assault" && this.randomUtil.getChance100(this.botConfig.chanceAssaultScavHasPlayerScavName))
         {
+            if (isPlayerScav)
+            {
+                return name;
+            }
+
             const pmcNames = [...this.databaseServer.getTables().bots.types["usec"].firstName, ...this.databaseServer.getTables().bots.types["bear"].firstName];
 
             return `${name} (${this.randomUtil.getArrayValue(pmcNames)})`;
