@@ -396,14 +396,14 @@ export class InRaidHelper
         // Is item equipped on player
         if (itemToCheck.parentId === pmcData.Inventory.equipment)
         {
-            // Check slot id against config, true = delete, false = keep
-            const keep = !this.lostOnDeathConfig.equipment[itemToCheck.slotId];
-            if (keep === undefined)
+            // Check slot id against config, true = delete, false = keep, undefined = delete
+            const discard = this.lostOnDeathConfig.equipment[itemToCheck.slotId];
+            if (discard === undefined)
             {
                 return false;
             }
 
-            return keep;
+            return !discard;
         }
 
         // Is quest item + quest item not lost on death
