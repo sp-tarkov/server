@@ -706,16 +706,19 @@ export class QuestHelper
      * @param itemTpl item tpl to look for
      * @returns 'FindItem' condition id
      */
-    public getFindItemIdForQuestHandIn(itemTpl: string): string
+    public getFindItemIdForQuestHandIn(itemTpl: string): string[]
     {
+        const result: string[] = [];
         for (const quest of this.getQuestsFromDb())
         {
             const condition = quest.conditions.AvailableForFinish.find(c => c._parent === "FindItem" && c._props?.target?.includes(itemTpl));
             if (condition)
             {
-                return condition._props.id;
+                result.push(condition._props.id);
             }
         }
+
+        return result;
     }
 
     /**

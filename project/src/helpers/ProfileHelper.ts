@@ -29,20 +29,36 @@ export class ProfileHelper
     )
     { }
 
-    public resetProfileQuestCondition(sessionID: string, conditionId: string): void
+    /**
+     * Remove/reset started quest condtions in player profile
+     * @param sessionID Session id
+     * @param conditionIds Condition ids that need to be reset/removed
+     */
+    public resetProfileQuestCondition(sessionID: string, conditionIds: string[]): void
     {
+        // Get all quests in progress
         const startedQuests = this.getPmcProfile(sessionID).Quests.filter(q => q.status === QuestStatus.Started);
-
         for (const quest of startedQuests)
         {
-            const index = quest.completedConditions.indexOf(conditionId);
-
+            let matchingConditionId: string;
+            for (const conditionId of conditionIds)
+            {
+                if (quest.completedConditions.includes(conditionId))
+                {
+                    matchingConditionId = conditionId;
+                    break;
+                }
+            }
+            
+            // Find index of condition in array
+            const index = quest.completedConditions.indexOf(matchingConditionId);
             if (index > -1)
             {
+                // Remove condition
                 quest.completedConditions.splice(index, 1);
             }
         }
-    }    
+    } 
 
     /**
      * Get all profiles from server
