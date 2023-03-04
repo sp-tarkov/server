@@ -849,31 +849,34 @@ export class InventoryHelper
     /**
     * Internal helper function to move item within the same profile_f.
     */
-    public moveItemInternal(inventoryItems: Item[], body: IInventoryMoveRequestData): void
+    public moveItemInternal(pmcData: IPmcData, inventoryItems: Item[], moveRequest: IInventoryMoveRequestData): void
     {
-        this.handleCartridges(inventoryItems, body);
+        this.handleCartridges(inventoryItems, moveRequest);
 
         for (const inventoryItem of inventoryItems)
         {
             // Find item we want to 'move'
-            if (inventoryItem._id && inventoryItem._id === body.item)
+            if (inventoryItem._id && inventoryItem._id === moveRequest.item)
             {
-                this.logger.debug(`${body.Action} item: ${body.item} from slotid: ${inventoryItem.slotId} to container: ${body.to.container}`);
+                this.logger.debug(`${moveRequest.Action} item: ${moveRequest.item} from slotid: ${inventoryItem.slotId} to container: ${moveRequest.to.container}`);
 
                 // don't move shells from camora to cartridges (happens when loading shells into mts-255 revolver shotgun)
-                if (inventoryItem.slotId.includes("camora_") && body.to.container === "cartridges")
+                if (inventoryItem.slotId.includes("camora_") && moveRequest.to.container === "cartridges")
                 {
-                    this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: inventoryItem.slotId, container: body.to.container}));
+                    this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: inventoryItem.slotId, container: moveRequest.to.container}));
                     return;
                 }
 
                 // Edit items details to match its new location
-                inventoryItem.parentId = body.to.id;
-                inventoryItem.slotId = body.to.container;
+                inventoryItem.parentId = moveRequest.to.id;
+                inventoryItem.slotId = moveRequest.to.container;
 
-                if ("location" in body.to)
+                this.updateFastPanelBinding(pmcData, inventoryItem);
+
+                if ("location" in moveRequest.to)
                 {
-                    inventoryItem.location = body.to.location;
+                    inventoryItem.location = moveRequest.to.location;
+                    
                 }
                 else
                 {
@@ -883,6 +886,32 @@ export class InventoryHelper
                     }
                 }
                 return;
+            }
+        }
+    }
+
+    /**
+     * Update fast panel bindings when an item is moved into a container that doesnt allow quick slot access
+     * @param pmcData Player profile
+     * @param itemBeingMoved item being moved
+     */
+    protected updateFastPanelBinding(pmcData: IPmcData, itemBeingMoved: Item): void
+    {
+        // Find matching itemid in fast panel
+        for (const itemKey in pmcData.Inventory.fastPanel)
+        {
+            if (pmcData.Inventory.fastPanel[itemKey] === itemBeingMoved._id)
+            {
+                // Get moved items parent
+                const itemParent = pmcData.Inventory.items.find(x => x._id === itemBeingMoved.parentId);
+                
+                // Empty id if item is moved to a container other than pocket/special/rig
+                if (itemParent && !(itemParent.slotId.startsWith("Pockets") || itemParent.slotId === "TacticalVest"))
+                {
+                    pmcData.Inventory.fastPanel[itemKey] = "";
+                }
+
+                break;
             }
         }
     }

@@ -147,11 +147,8 @@ export interface Inventory
     sortingTable: string
     questRaidItems: string
     questStashItems: string
-    fastPanel: FastPanel
+    fastPanel: Record<string, string>
 }
-
-export interface FastPanel 
-{ }
 
 export interface Skills 
 {
