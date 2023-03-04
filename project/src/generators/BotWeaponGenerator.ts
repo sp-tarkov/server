@@ -421,7 +421,7 @@ export class BotWeaponGenerator
         {
             this.logger.warning(this.localisationService.getText("bot-incompatible_ammo_for_weapon_falling_back_to_default", {chosenAmmo: chosenAmmoTpl, weaponId: weaponTemplate._id, weaponName: weaponTemplate._name, defaultAmmo: weaponTemplate._props.defAmmo}));
 
-            // Incompatible ammo found, return default (can happen with .366 and 7.62x39 weapons) return weaponTemplate._props.defAmmo;
+            // Incompatible ammo found, return default (can happen with .366 and 7.62x39 weapons)
             return weaponTemplate._props.defAmmo;
         }
 
