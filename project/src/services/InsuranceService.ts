@@ -177,8 +177,9 @@ export class InsuranceService
      * @param offraidData post-raid request object
      * @param preRaidGear gear player wore prior to raid
      * @param sessionID Session id
+     * @param playerDied did the player die in raid
      */
-    public storeLostGear(pmcData: IPmcData, offraidData: ISaveProgressRequestData, preRaidGear: Item[], sessionID: string): void
+    public storeLostGear(pmcData: IPmcData, offraidData: ISaveProgressRequestData, preRaidGear: Item[], sessionID: string, playerDied: boolean): void
     {
         const preRaidGearHash: Record<string, Item> = {};
         const offRaidGearHash = {};
@@ -201,8 +202,8 @@ export class InsuranceService
             if (preRaidGearHash[insuredItem.itemId])
             {
                 // This item exists in preRaidGear, meaning we brought it into the raid...
-                // Check if we brought it out of the raid
-                if (!offRaidGearHash[insuredItem.itemId])
+                // Check if item missing OR player died with item on
+                if (!offRaidGearHash[insuredItem.itemId] || playerDied)
                 {
                     // We didn't bring this item out! We must've lost it.
                     gears.push({
