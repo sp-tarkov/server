@@ -7,10 +7,14 @@ import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { Money } from "@spt-aki/models/enums/Money";
 import { TestHelper } from "../common/TestHelper";
 
-const testHelper = new TestHelper();
+let testHelper: TestHelper;
 
 describe("test text", () =>
 {
+    beforeAll(async () => {
+        testHelper = await TestHelper.fetchTestHelper();
+    })
+    
     let itemHelper: ItemHelper;
     beforeEach(() =>
     {
