@@ -180,8 +180,8 @@
         "5fd4c60f875c30179f5d04c2": 1,
         "5f5f41f56760b4138443b352": 1,
         "61bc85697113f767765c7fe7": 1,
-        "60a3c68c37ea821725773ef5": 1,
         "60a621c49c197e4e8c4455e6": 1,
+        "60a3c68c37ea821725773ef5": 1,
         "639343fce101f4caa40a4ef3": 1,
         "628d0618d1ba6e4fa07ce5a4": 1
       },
@@ -1200,6 +1200,11 @@
           "5a32aa8bc4a2826c6e06d737"
         ]
       },
+      "5cf67cadd7f00c065a5abab7": {
+        "mod_muzzle": [
+          "5cc9ad73d7f00c000e2579d4"
+        ]
+      },
       "5bb2475ed4351e00853264e3": {
         "mod_pistol_grip": [
           "57af48872459771f0b2ebf11"
@@ -1250,11 +1255,6 @@
       "5bb20e58d4351e00320205d7": {
         "mod_stock_000": [
           "5bb20e70d4351e0035629f8f"
-        ]
-      },
-      "5cf67cadd7f00c065a5abab7": {
-        "mod_muzzle": [
-          "5cc9ad73d7f00c000e2579d4"
         ]
       },
       "5bd70322209c4d00d7167b8f": {
@@ -1779,13 +1779,13 @@
         "5aa2a7e8e5b5b00016327c16",
         "5df8a72c86f77412640e2e83",
         "573478bc24597738002c6175",
+        "5aaf8a0be5b5b00015693243",
+        "5ae30bad5acfc400185c2dc4",
         "5e00c1ad86f774747333222c",
         "5b7be4575acfc400161d0832",
         "5bed61680db834001d2c45ab",
         "5a16ba61fcdbcb098008728a",
         "5b4326435acfc433000ed01d",
-        "5aaf8a0be5b5b00015693243",
-        "5ae30bad5acfc400185c2dc4",
         "5b432be65acfc433000ed01f",
         "61c18d83b00456371a66814b",
         "5e01ef6886f77445f643baa4",
@@ -1876,9 +1876,9 @@
         "5b7d645e5acfc400170e2f90",
         "59ecc3dd86f7746dc827481c",
         "5c0e53c886f7747fa54205c7",
+        "591c4e1186f77410354b316e",
         "5ed515ece452db0eb56fc028",
         "59e7635f86f7742cbf2c1095",
-        "591c4e1186f77410354b316e",
         "5abcd472d8ce8700166032ae",
         "5c4ee3d62e2216152006f302",
         "5bb20dadd4351e00367faeff",
@@ -1890,10 +1890,10 @@
         "57cffb66245977632f391a99",
         "5a16bb52fcdbcb001a3b00dc",
         "5943eeeb86f77412d6384f6b",
-        "5ea17ca01412a1425304d1c0",
-        "62a5c41e8ec41a51b34739c3",
         "5a7b4900e899ef197b331a2a",
         "5c05293e0db83400232fff80",
+        "5ea17ca01412a1425304d1c0",
+        "62a5c41e8ec41a51b34739c3",
         "5e54f62086f774219b0f1937",
         "607d5a891246154cad35d6aa",
         "5bed625c0db834001c062946",
@@ -1920,12 +1920,12 @@
         "611a30addbdd8440277441dc",
         "5926f2e086f7745aae644231",
         "5ae30db85acfc408fb139a05",
+        "5b40e61f5acfc4001a599bec",
         "5a7dbfc1159bd40016548fde",
         "6194f5a318a3974e5e7421eb",
         "5c503ac82e221602b21d6e9a",
         "59e89d0986f77427600d226e",
         "62a5c333ec21e50cad3b5dc6",
-        "5b40e61f5acfc4001a599bec",
         "62a09cfe4f842e1bd12da3e4",
         "62a61c988ec41a51b34758d5",
         "59ccfdba86f7747f2109a587",
@@ -1978,7 +1978,18 @@
         "62e7e7bbe6da9612f743f1e0",
         "5fb655b748c711690e3a8d5a",
         "5a7b4960e899ef197b331a2d",
-        "5c052a900db834001a66acbd"
+        "5c052a900db834001a66acbd",
+        "5bb20e70d4351e0035629f8f",
+        "5b7d68af5acfc400170e30c3",
+        "5d19cd96d7ad1a4a992c9f52",
+        "5aa2b9ede5b5b000137b758b",
+        "59f99a7d86f7745b134aa97b",
+        "58949dea86f77409483e16a8",
+        "5cf518cfd7f00c065b422214",
+        "638db77630c4240f9e06f8b6",
+        "5c6d11072e2216000e69d2e4",
+        "637b6251104668754b72f8f9",
+        "59e7711e86f7746cae05fbe1"
       ],
       "SecuredContainer": [
         "5a3c16fe86f77452b62de32a",
@@ -2003,12 +2014,12 @@
         "54527ac44bdc2d36668b4567",
         "5c0d668f86f7747ccb7f13b2",
         "56dff061d2720bb5668b4567",
+        "5c0d5e4486f77478390952fe",
         "5c0d5ae286f7741e46554302",
         "5efb0e16aeb21837e749c7ff",
         "5ba26835d4351e0035628ff5",
         "57a0e5022459774d1673f889",
         "5efb0c1bd79ff02a1f5e68d9",
-        "5c0d5e4486f77478390952fe",
         "56dfef82d2720bbd668b4567",
         "5e023e53d4353e3302577c4c",
         "5fbe3ffdf8b6a877a729ea82",
@@ -2077,11 +2088,11 @@
     "Ворон",
     "Барс",
     "Крачун",
+    "Орел",
     "Ягуар",
     "Каракурт",
     "Тайпан",
     "Дикобраз",
-    "Орел",
     "Гепард",
     "Ирбис",
     "Манул"
@@ -4028,10 +4039,10 @@
   "chances": {
     "equipment": {
       "Headwear": 90,
-      "Earpiece": 53,
-      "FaceCover": 64,
+      "Earpiece": 52,
+      "FaceCover": 65,
       "ArmorVest": 35,
-      "Eyewear": 78,
+      "Eyewear": 77,
       "ArmBand": 0,
       "TacticalVest": 100,
       "Backpack": 46,
@@ -4051,11 +4062,11 @@
       "mod_sight_front": 85,
       "mod_mount_000": 17,
       "mod_mount_001": 48,
-      "mod_mount_002": 14,
+      "mod_mount_002": 15,
       "mod_foregrip": 27,
       "mod_muzzle": 36,
       "mod_mount": 37,
-      "mod_tactical_001": 39,
+      "mod_tactical_001": 40,
       "mod_reciever": 100,
       "mod_tactical": 45,
       "mod_equipment_000": 1,
@@ -4071,11 +4082,11 @@
       "mod_tactical_003": 0,
       "mod_handguard": 100,
       "mod_mount_004": 66,
-      "mod_equipment": 17,
-      "mod_muzzle_000": 50,
+      "mod_equipment": 15,
+      "mod_muzzle_000": 47,
       "mod_muzzle_001": 0,
       "mod_pistol_grip": 0,
-      "mod_equipment_002": 10
+      "mod_equipment_002": 8
     }
   },
   "generation": {
