@@ -168,8 +168,8 @@ export class InraidController
         {
             for (const questItem of postRaidSaveRequest.profile.Stats.CarriedQuestItems)
             {
-                const findItemConditionId = this.questHelper.getFindItemIdForQuestHandIn(questItem);
-                this.profileHelper.resetProfileQuestCondition(sessionID, findItemConditionId);
+                const findItemConditionIds = this.questHelper.getFindItemIdForQuestHandIn(questItem);
+                this.profileHelper.resetProfileQuestCondition(sessionID, findItemConditionIds);
             }
 
             pmcData.Stats.CarriedQuestItems = [];
