@@ -124,12 +124,14 @@ export class InraidController
         // Remove inventory if player died and send insurance items
         if (insuranceEnabled)
         {
+            this.insuranceService.storeLostGear(pmcData, offraidData, preRaidGear, sessionID, isDead);
+        }
+        else
+        {
             if (locationName === "Laboratory")
             {
                 // TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insured items
             }
-
-            this.insuranceService.storeLostGear(pmcData, offraidData, preRaidGear, sessionID, isDead);
         }
 
         if (isDead)

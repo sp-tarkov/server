@@ -323,12 +323,9 @@ export class InRaidHelper
     public deleteInventory(pmcData: IPmcData, sessionID: string): void
     {
         const toDelete = [];
-        const itemsInPocketsRigBackpack = this.getBaseItemsInRigPocketAndBackpack(pmcData);
-        const lootItemIds = itemsInPocketsRigBackpack.map(x => x._id);
-
         for (const item of pmcData.Inventory.items)
         {
-            if (this.isItemKeptAfterDeath(pmcData, item, lootItemIds))
+            if (this.isItemKeptAfterDeath(pmcData, item))
             {
                 continue;
             }
@@ -340,20 +337,9 @@ export class InRaidHelper
                 toDelete.push(item._id);
             }
 
-            // Remove items in pockets
-            if (item.slotId === "Pockets")
+            if (item.slotId.startsWith("pocket"))
             {
-                for (const itemInPocket of pmcData.Inventory.items.filter(x => x.parentId === item._id))
-                {
-                    // Don't delete items in special slots
-                    // Can be special slot 1, 2 or 3
-                    if (itemInPocket.slotId.includes("SpecialSlot"))
-                    {
-                        continue;
-                    }
-
-                    toDelete.push(itemInPocket._id);
-                }
+                toDelete.push(item._id);
             }
         }
 
@@ -388,11 +374,16 @@ export class InRaidHelper
      * Does the provided items slotId mean its kept on the player after death
      * @pmcData Player profile
      * @itemToCheck Item to check should be kept
-     * @lootItemTpls Array of item Ids that are inside player rig/backpack/pocket
      * @returns true if item is kept after death
      */
-    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item, lootItemIds: string[]): boolean
+    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item): boolean
     {
+        // No parentid means its a base inventory item, always keep
+        if (!itemToCheck.parentId)
+        {
+            return true;
+        }
+
         // Is item equipped on player
         if (itemToCheck.parentId === pmcData.Inventory.equipment)
         {
@@ -412,8 +403,8 @@ export class InRaidHelper
             return true;
         }
 
-        // Is loot item + not lost on death
-        if (!this.lostOnDeathConfig.loot && lootItemIds.includes(itemToCheck._id))
+        // special slots are always kept after death
+        if (itemToCheck.slotId?.includes("SpecialSlot") && this.lostOnDeathConfig.specialSlotItems)
         {
             return true;
         }
