@@ -447,7 +447,14 @@
         "5d40419286f774318526545f",
         "5751a89d24597722aa0e8db0",
         "5c06782b86f77426df5407d2",
-        "57347c77245977448d35f6e2"
+        "57347c77245977448d35f6e2",
+        "59faf98186f774067b6be103",
+        "5909e99886f7740c983b9984",
+        "5e2af00086f7746d3f3c33f7",
+        "5e2af02c86f7746d420957d4",
+        "56742c284bdc2d98058b456d",
+        "5b43575a86f77424f443fe62",
+        "59faf7ca86f7740dbe19f6c2"
       ],
       "SecuredContainer": [
         "5e99711486f7744bfc4af328",
@@ -2527,9 +2534,9 @@
     "equipment": {
       "Headwear": 0,
       "Earpiece": 26,
-      "FaceCover": 23,
+      "FaceCover": 24,
       "ArmorVest": 0,
-      "Eyewear": 32,
+      "Eyewear": 31,
       "ArmBand": 0,
       "TacticalVest": 0,
       "Backpack": 100,
