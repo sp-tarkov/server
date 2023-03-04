@@ -460,8 +460,8 @@ export class BotWeaponGenerator
 
     /**
      * Fill existing magazines to full, while replacing their contents with specified ammo
-     * @param weaponMods 
-     * @param magazine 
+     * @param weaponMods Weapon with children
+     * @param magazine Magazine item
      * @param cartridgeTpl Cartridge to insert into magazine
      */
     protected fillExistingMagazines(weaponMods: Item[], magazine: Item, cartridgeTpl: string): void
@@ -491,9 +491,9 @@ export class BotWeaponGenerator
 
     /**
      * Add desired ammo tpl as item to weaponmods array, placed as child to UBGL
-     * @param weaponMods 
-     * @param ubglMod 
-     * @param ubglAmmoTpl 
+     * @param weaponMods Weapon with children
+     * @param ubglMod UBGL item
+     * @param ubglAmmoTpl Grenade ammo tpl
      */
     protected fillUbgl(weaponMods: Item[], ubglMod: Item, ubglAmmoTpl: string): void
     {
@@ -520,7 +520,7 @@ export class BotWeaponGenerator
         const magazineCartridgeChildItem = weaponWithMods.find(m => m.parentId === magazine._id && m.slotId === "cartridges");
         if (magazineCartridgeChildItem)
         {
-            // Can't trust this child item, will make it properly below
+            // Easier to delete and create below instaed of modifying existing item
             weaponWithMods = weaponWithMods.slice(weaponWithMods.indexOf(magazineCartridgeChildItem), 1);
         }
 
@@ -530,7 +530,7 @@ export class BotWeaponGenerator
         // Add full cartridge child items to above array
         this.itemHelper.fillMagazineWithCartridge(magazineWithCartridges, magazineTemplate, chosenAmmoTpl, 1);
 
-        // Replace existing magazine with above array
+        // Replace existing magazine with above array of mag + cartridge stacks
         weaponWithMods.splice(weaponWithMods.indexOf(magazine), 1, ...magazineWithCartridges);
     }
 

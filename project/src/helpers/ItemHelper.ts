@@ -663,9 +663,9 @@ class ItemHelper
 
     /**
      * WARNING, SLOW. Recursively loop down through an items hierarchy to see if any of the ids match the supplied list, return true if any do
-     * @param {string} tpl
-     * @param {Array} tplsToCheck
-     * @returns boolean
+     * @param {string} tpl Items tpl to check parents of
+     * @param {Array} tplsToCheck Tpl values to check if parents of item match
+     * @returns boolean Match found
      */
     public doesItemOrParentsIdMatch(tpl: string, tplsToCheck: string[]): boolean
     {
@@ -702,9 +702,9 @@ class ItemHelper
     }
 
     /**
-     * Return true if item is a quest item
-     * @param {string} tpl
-     * @returns boolean
+     * Check if item is quest item
+     * @param tpl Items tpl to check quest status of
+     * @returns true if item is flagged as quest item
      */
     public isQuestItem(tpl: string): boolean
     {
@@ -720,7 +720,7 @@ class ItemHelper
 
     /**
      * Get the inventory size of an item
-     * @param items 
+     * @param items Item with children
      * @param rootItemId 
      * @returns ItemSize object (width and height)
      */
@@ -770,8 +770,8 @@ class ItemHelper
 
     /**
      * Get a random cartridge from an items Filter property
-     * @param item 
-     * @returns 
+     * @param item Db item template to look up Cartridge filter values from
+     * @returns Caliber of cartridge
      */
     public getRandomCompatibleCaliberTemplateId(item: ITemplateItem): string
     {
