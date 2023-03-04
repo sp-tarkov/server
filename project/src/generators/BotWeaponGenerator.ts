@@ -460,41 +460,40 @@ export class BotWeaponGenerator
 
     /**
      * Fill existing magazines to full, while replacing their contents with specified ammo
-     * @param weaponMods 
-     * @param magazine 
-     * @param ammoTpl 
+     * @param weaponMods Weapon with children
+     * @param magazine Magazine item
+     * @param cartridgeTpl Cartridge to insert into magazine
      */
-    protected fillExistingMagazines(weaponMods: Item[], magazine: Item, ammoTpl: string): void
+    protected fillExistingMagazines(weaponMods: Item[], magazine: Item, cartridgeTpl: string): void
     {
-        const modTemplate = this.itemHelper.getItem(magazine._tpl)[1];
-        if (!modTemplate)
+        const magazineTemplate = this.itemHelper.getItem(magazine._tpl)[1];
+        if (!magazineTemplate)
         {
             this.logger.error(this.localisationService.getText("bot-unable_to_find_magazine_item", magazine._tpl));
 
             return;
         }
 
-        const parentItem = this.itemHelper.getItem(modTemplate._parent)[1];
-        const fullStackSize = modTemplate._props.Cartridges[0]._max_count;
+        const parentItem = this.itemHelper.getItem(magazineTemplate._parent)[1];
 
         // the revolver shotgun uses a magazine with chambers, not cartridges ("camora_xxx")
         // Exchange of the camora ammo is not necessary we could also just check for stackSize > 0 here
         // and remove the else
         if (this.botWeaponGeneratorHelper.magazineIsCylinderRelated(parentItem._name))
         {
-            this.fillCamorasWithAmmo(weaponMods, magazine._id, ammoTpl);
+            this.fillCamorasWithAmmo(weaponMods, magazine._id, cartridgeTpl);
         }
         else
         {
-            this.addOrUpdateMagazinesChildWithAmmo(weaponMods, magazine, ammoTpl, fullStackSize);
+            this.addOrUpdateMagazinesChildWithAmmo(weaponMods, magazine, cartridgeTpl, magazineTemplate);
         }
     }
 
     /**
      * Add desired ammo tpl as item to weaponmods array, placed as child to UBGL
-     * @param weaponMods 
-     * @param ubglMod 
-     * @param ubglAmmoTpl 
+     * @param weaponMods Weapon with children
+     * @param ubglMod UBGL item
+     * @param ubglAmmoTpl Grenade ammo tpl
      */
     protected fillUbgl(weaponMods: Item[], ubglMod: Item, ubglAmmoTpl: string): void
     {
@@ -510,30 +509,29 @@ export class BotWeaponGenerator
 
     /**
      * Add cartridge item to weapon Item array, if it already exists, update
-     * @param weaponMods Weapon items array to amend
+     * @param weaponWithMods Weapon items array to amend
      * @param magazine magazine item details we're adding cartridges to
-     * @param chosenAmmo cartridge to put into the magazine
+     * @param chosenAmmoTpl cartridge to put into the magazine
      * @param newStackSize how many cartridges should go into the magazine
+     * @param magazineTemplate magazines db template
      */
-    protected addOrUpdateMagazinesChildWithAmmo(weaponMods: Item[], magazine: Item, chosenAmmo: string, newStackSize: number): void
+    protected addOrUpdateMagazinesChildWithAmmo(weaponWithMods: Item[], magazine: Item, chosenAmmoTpl: string, magazineTemplate: ITemplateItem): void
     {
-        const magazineCartridgeChildItem = weaponMods.find(m => m.parentId === magazine._id && m.slotId === "cartridges");
-        if (!magazineCartridgeChildItem) // magazine doesn't have a child item with the ammo inside it, create one
+        const magazineCartridgeChildItem = weaponWithMods.find(m => m.parentId === magazine._id && m.slotId === "cartridges");
+        if (magazineCartridgeChildItem)
         {
-            weaponMods.push({
-                _id: this.hashUtil.generate(),
-                _tpl: chosenAmmo,
-                parentId: magazine._id,
-                slotId: "cartridges",
-                upd:
-                    { StackObjectsCount: newStackSize }
-            });
+            // Easier to delete and create below instaed of modifying existing item
+            weaponWithMods = weaponWithMods.slice(weaponWithMods.indexOf(magazineCartridgeChildItem), 1);
         }
-        else // magazine has cartridge stack, amend details
-        {
-            magazineCartridgeChildItem._tpl = chosenAmmo;
-            magazineCartridgeChildItem.upd = { "StackObjectsCount": newStackSize };
-        }
+
+        // Create array with just magazine
+        const magazineWithCartridges = [magazine];
+
+        // Add full cartridge child items to above array
+        this.itemHelper.fillMagazineWithCartridge(magazineWithCartridges, magazineTemplate, chosenAmmoTpl, 1);
+
+        // Replace existing magazine with above array of mag + cartridge stacks
+        weaponWithMods.splice(weaponWithMods.indexOf(magazine), 1, ...magazineWithCartridges);
     }
 
     /**
