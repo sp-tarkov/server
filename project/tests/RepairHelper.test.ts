@@ -11,17 +11,6 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TestHelper } from "./common/TestHelper";
 
-// const testHelper = new TestHelper();
-
-// const logger = testHelper.getTestLogger();
-
-// const jsonUtil = testHelper.getTestJsonUtil();
-// const randomUtil = testHelper.getTestRandomUtil();
-// const configServer = testHelper.getTestConfigServer();
-
-// const databaseServer = testHelper.getTestDatabaseServer();
-
-
 let testHelper: TestHelper;
 let logger: ILogger;
 let jsonUtil: JsonUtil;
