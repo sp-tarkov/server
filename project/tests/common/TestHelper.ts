@@ -22,8 +22,7 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { MockHelper } from "./MockHelper";
 import WinstonLogger from "./__mocks__/WinstonLogger";
 
-export class TestHelper
-{
+export class TestHelper {
     logger: ILogger;
     asyncQueue: AsyncQueue;
     uuidGenerator: UUidGenerator;
@@ -45,9 +44,26 @@ export class TestHelper
     itemBaseClassService: ItemBaseClassService;
     botHelper: BotHelper;
 
-    constructor()
-    {
+    public static async fetchTestHelper() {
+        const initTestHelper = new TestHelper();
         const mockHelper = new MockHelper();
+
+        const dbImporter = new DatabaseImporter(
+            initTestHelper.logger,
+            initTestHelper.vfs,
+            initTestHelper.jsonUtil,
+            initTestHelper.localisationService,
+            initTestHelper.databaseServer,
+            mockHelper.getMockImageRouter().object,
+            initTestHelper.encodingUtil,
+            initTestHelper.hashUtil,
+            initTestHelper.importerUtil
+        );
+        await dbImporter.onLoad();
+        return initTestHelper
+    }
+
+    constructor() {
 
         this.logger = new WinstonLogger();
         this.asyncQueue = new AsyncQueue();
@@ -67,10 +83,6 @@ export class TestHelper
 
         this.encodingUtil = new EncodingUtil();
         this.importerUtil = new ImporterUtil(this.vfs, this.jsonUtil);
-
-
-        const dbImporter = new DatabaseImporter(this.logger, this.vfs, this.jsonUtil, this.localisationService, this.databaseServer, mockHelper.getMockImageRouter().object, this.encodingUtil, this.hashUtil, this.importerUtil);
-        dbImporter.onLoad();
 
         this.handbookHelper = new HandbookHelper(this.databaseServer);
         this.itemBaseClassService = new ItemBaseClassService(this.logger, this.localisationService, this.databaseServer);

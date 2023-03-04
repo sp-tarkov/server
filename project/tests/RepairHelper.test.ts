@@ -3,23 +3,36 @@ import "reflect-metadata";
 import { RepairHelper } from "@spt-aki/helpers/RepairHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TestHelper } from "./common/TestHelper";
 
-const testHelper = new TestHelper();
+let testHelper: TestHelper;
+let logger: ILogger;
+let jsonUtil: JsonUtil;
+let randomUtil: RandomUtil;
+let configServer: ConfigServer;
+let localisationService: LocalisationService;
+let databaseServer: DatabaseServer;
+let helper: RepairHelper;
 
-const logger = testHelper.getTestLogger();
+describe("BotHelper", () => {
 
-const jsonUtil = testHelper.getTestJsonUtil();
-const randomUtil = testHelper.getTestRandomUtil();
-const configServer = testHelper.getTestConfigServer();
+    beforeAll(async () => {
+        testHelper = await TestHelper.fetchTestHelper();
+        logger = testHelper.getTestLogger();
+        jsonUtil = testHelper.getTestJsonUtil();
+        randomUtil = testHelper.getTestRandomUtil();
+        configServer = testHelper.getTestConfigServer();
+        localisationService = testHelper.getTestLocalisationService();
+        databaseServer = testHelper.getTestDatabaseServer();
+    })
 
-const databaseServer = testHelper.getTestDatabaseServer();
-
-describe("BotHelper", () =>
-{
-    let helper: RepairHelper;
-    beforeEach(() =>
-    {
+    beforeEach(() => {
         helper = new RepairHelper(
             logger,
             jsonUtil,

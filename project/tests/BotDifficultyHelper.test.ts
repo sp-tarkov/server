@@ -2,26 +2,39 @@ import "reflect-metadata";
 
 import { beforeEach, describe, expect, it } from "@jest/globals";
 import { BotDifficultyHelper } from "@spt-aki/helpers/BotDifficultyHelper";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { MockHelper } from "./common/MockHelper";
 import { TestHelper } from "./common/TestHelper";
 
-const testHelper = new TestHelper();
 const mockHelper = new MockHelper();
+let testHelper: TestHelper;
+let logger: ILogger;
+let jsonUtil: JsonUtil;
+let randomUtil: RandomUtil;
+let configServer: ConfigServer;
+let localisationService: LocalisationService;
+let databaseServer: DatabaseServer;
+let botHelper: BotHelper;
 
-const logger = testHelper.getTestLogger();
+describe("BotHelper", () => {
+    beforeAll(async () => {
+        testHelper = await TestHelper.fetchTestHelper();
+        logger = testHelper.getTestLogger();
+        jsonUtil = testHelper.getTestJsonUtil();
+        randomUtil = testHelper.getTestRandomUtil();
+        configServer = testHelper.getTestConfigServer();
+        localisationService = testHelper.getTestLocalisationService();
+        databaseServer = testHelper.getTestDatabaseServer();
+        botHelper = testHelper.getTestBotHelper();
+    })
 
-const jsonUtil = testHelper.getTestJsonUtil();
-const randomUtil = testHelper.getTestRandomUtil();
-const configServer = testHelper.getTestConfigServer();
-const botHelper = testHelper.getTestBotHelper();
-
-const localisationService = testHelper.getTestLocalisationService();
-
-const databaseServer = testHelper.getTestDatabaseServer();
-
-describe("BotHelper", () =>
-{
     let botDifficultyHelper: BotDifficultyHelper;
     beforeEach(() =>
     {
