@@ -182,7 +182,7 @@ export class InsuranceService
     public storeLostGear(pmcData: IPmcData, offraidData: ISaveProgressRequestData, preRaidGear: Item[], sessionID: string, playerDied: boolean): void
     {
         const preRaidGearHash: Record<string, Item> = {};
-        const offRaidGearHash = {};
+        const offRaidGearHash: Record<string, Item> = {};
         const gears = [];
 
         // Build a hash table to reduce loops
@@ -199,13 +199,13 @@ export class InsuranceService
 
         for (const insuredItem of pmcData.InsuredItems)
         {
+            // Check insured item was on player during raid
             if (preRaidGearHash[insuredItem.itemId])
             {
-                // This item exists in preRaidGear, meaning we brought it into the raid...
+                // This item exists in preRaidGear, meaning we brought it into the raid
                 // Check if item missing OR player died with item on
                 if (!offRaidGearHash[insuredItem.itemId] || playerDied)
                 {
-                    // We didn't bring this item out! We must've lost it.
                     gears.push({
                         "pmcData": pmcData,
                         "insuredItem": insuredItem,
@@ -216,6 +216,7 @@ export class InsuranceService
             }
         }
 
+        // Process all insured items lost in-raid
         for (const gear of gears)
         {
             this.addGearToSend(gear.pmcData, gear.insuredItem, gear.item, gear.sessionID);
