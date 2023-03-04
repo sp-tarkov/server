@@ -100,7 +100,7 @@ export class InventoryController
                 return this.httpResponseUtil.appendErrorToOutput(output, this.localisationService.getText("inventory-edit_trader_item"), 228);
             }
 
-            this.inventoryHelper.moveItemInternal(items.from, moveRequest);
+            this.inventoryHelper.moveItemInternal(pmcData, items.from, moveRequest);
         }
         else
         {
@@ -436,17 +436,25 @@ export class InventoryController
         };
     }
 
-    public bindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
+    /**
+     * Bind an inventory item to the quick access menu at bottom of player screen
+     * @param pmcData Player profile
+     * @param bindRequest Reqeust object
+     * @param sessionID Session id
+     * @returns IItemEventRouterResponse
+     */
+    public bindItem(pmcData: IPmcData, bindRequest: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
     {
         for (const index in pmcData.Inventory.fastPanel)
         {
-            if (pmcData.Inventory.fastPanel[index] === body.item)
+            if (pmcData.Inventory.fastPanel[index] === bindRequest.item)
             {
                 pmcData.Inventory.fastPanel[index] = "";
             }
         }
 
-        pmcData.Inventory.fastPanel[body.index] = body.item;
+        pmcData.Inventory.fastPanel[bindRequest.index] = bindRequest.item;
+
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
