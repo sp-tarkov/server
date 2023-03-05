@@ -54,6 +54,15 @@ export class LocationGenerator
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
 
+    /**
+     * Choose loot to put into a static container
+     * @param containerIn 
+     * @param staticForced 
+     * @param staticLootDist 
+     * @param staticAmmoDist 
+     * @param locationName Name of the map to generate static loot for
+     * @returns IStaticContainerProps
+     */
     public generateContainerLoot(
         containerIn: IStaticContainerProps,
         staticForced: IStaticForcedProps[],
@@ -102,6 +111,7 @@ export class LocationGenerator
 
         // Draw random loot
         // money spawn more than once in container
+        let failedToFitCount = 0;
         const locklist = [Money.ROUBLES, Money.DOLLARS, Money.EUROS];
         const tplsDraw = itemDistribution.draw(numberItems, false, locklist);
         const tpls = tplsForced.concat(tplsDraw);
@@ -112,10 +122,20 @@ export class LocationGenerator
             const width = created.width;
             const height = created.height;
 
+            // look for open slot to put chosen item into
             const result = this.containerHelper.findSlotForItem(container2D, width, height);
             if (!result.success)
             {
-                break;
+                // 2 attempts to fit an item, container is probably full, stop trying to add more
+                if (failedToFitCount >= this.locationConfig.fitLootIntoContainerAttempts)
+                {
+                    break;
+                }
+
+                // Can't fit item, skip
+                failedToFitCount++;
+                continue;
+                
             }
 
             container2D = this.containerHelper.fillContainerMapWithItem(container2D, result.x, result.y, width, height, result.rotation);
@@ -130,6 +150,7 @@ export class LocationGenerator
                 container.Items.push(item);
             }
         }
+
         return container;
     }
 
