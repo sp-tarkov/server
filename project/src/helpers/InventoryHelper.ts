@@ -905,7 +905,7 @@ export class InventoryHelper
                 // Get moved items parent
                 const itemParent = pmcData.Inventory.items.find(x => x._id === itemBeingMoved.parentId);
                 
-                // Empty id if item is moved to a container other than pocket/special/rig
+                // Empty out id if item is moved to a container other than pocket/rig
                 if (itemParent && !(itemParent.slotId.startsWith("Pockets") || itemParent.slotId === "TacticalVest"))
                 {
                     pmcData.Inventory.fastPanel[itemKey] = "";

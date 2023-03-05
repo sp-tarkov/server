@@ -646,4 +646,5 @@
         "enabled": true,
         "ignoreMaps": ["base", "develop", "hideout", "privatearea", "suburbs", "terminal", "town"]
     }
+	"fitLootIntoContainerAttempts": 2
 }
