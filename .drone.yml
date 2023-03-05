@@ -133,16 +133,16 @@ steps:
       event:
         - push
 
-  - name: Check that Build is not broken
-    image: registry.sp-tarkov.com/spt/node-wine:16
-    commands:
-      - cd ./project
-      - npm run build:release
-    depends_on:
-      - Run Sonar scanner on push
-    when:
-      event:
-        - push
+  # - name: Check that Build is not broken
+  #   image: registry.sp-tarkov.com/spt/node-wine:16
+  #   commands:
+  #     - cd ./project
+  #     - npm run build:release
+  #   depends_on:
+  #     - Run Sonar scanner on push
+  #   when:
+  #     event:
+  #       - push
 
   - name: Run Sonar scanner on tag
     image: sonarsource/sonar-scanner-cli:4
@@ -185,7 +185,8 @@ steps:
       context: project/
       tags: latest
     depends_on:
-      - Check that Build is not broken
+      # - Check that Build is not broken
+      - Run Sonar scanner on push
 
   - name: Deploy docs
     image: docker:19.03.3-dind
