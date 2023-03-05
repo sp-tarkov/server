@@ -288,8 +288,8 @@
             "laboratory": [{
                     "sptId": "sptBearLabsZoneFloor1NormalSpawn",
                     "BossName": "sptBear",
-					"BossChance": 15,
-					"BossZone": "BotZoneFloor1",
+                    "BossChance": 15,
+                    "BossZone": "BotZoneFloor1",
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -309,7 +309,7 @@
                     "sptId": "sptBearLabsZoneFloor2NormalSpawn",
                     "BossChance": 15,
                     "BossName": "sptBear",
-					"BossZone": "BotZoneFloor2",
+                    "BossZone": "BotZoneFloor2",
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -407,7 +407,7 @@
                     "RandomTimeSpawn": false
                 }
             ],
-			"interchange": [{
+            "interchange": [{
                     "sptId": "sptBearInterchangeNormalSpawn",
                     "BossName": "sptBear",
                     "BossChance": 15,
@@ -447,7 +447,8 @@
                         }
                     ],
                     "RandomTimeSpawn": false
-                }]
+                }
+            ]
         },
         "normal": {
             "factory4_day": [{
@@ -645,6 +646,6 @@
     "fixEmptyBotWavesSettings": {
         "enabled": true,
         "ignoreMaps": ["base", "develop", "hideout", "privatearea", "suburbs", "terminal", "town"]
-    }
-	"fitLootIntoContainerAttempts": 2
+    },
+    "fitLootIntoContainerAttempts": 2
 }
