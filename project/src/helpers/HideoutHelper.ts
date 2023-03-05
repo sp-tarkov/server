@@ -915,11 +915,12 @@ export class HideoutHelper
             }
 
             // Not currently moppable, upgrade to moppable state
-            if (wall.level < 2)
+            if (wall.level <= 1)
             {
                 const newWallLevel = 2;
                 this.logger.debug(`${this.hideoutConfig.hideoutWallAppearTimeSeconds} seconds have passed since profile creation, upgrading hideout wall from level: ${wall.level} to ${newWallLevel}`);
                 wall.level = newWallLevel;
+                wall.constructing = false;
                 // 0 = no wall
                 // 1 = "wall may be a problem is future"
                 // 2 - Interactable wall
@@ -935,6 +936,7 @@ export class HideoutHelper
                 if (this.hideoutImprovementIsComplete(pmcProfile.Hideout.Improvements["639199277a9178252d38c98f"]))
                 {
                     this.logger.debug("Hideout wall stage 2 has completed improvement, upgrading to level 3");
+                    wall.constructing = false;
                     wall.level++;
 
                     return;
