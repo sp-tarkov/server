@@ -117,10 +117,10 @@ export class LocationGenerator
         const tpls = tplsForced.concat(tplsDraw);
         for (const tpl of tpls)
         {
-            const created = this.createStaticLootItem(tpl, staticAmmoDist, parentId);
-            const items = created.items;
-            const width = created.width;
-            const height = created.height;
+            const chosenItemWithChildren = this.createStaticLootItem(tpl, staticAmmoDist, parentId);
+            const items = chosenItemWithChildren.items;
+            const width = chosenItemWithChildren.width;
+            const height = chosenItemWithChildren.height;
 
             // look for open slot to put chosen item into
             const result = this.containerHelper.findSlotForItem(container2D, width, height);
@@ -481,10 +481,16 @@ export class LocationGenerator
             if (magazine)
             {
                 const magTemplate = this.itemHelper.getItem(magazine._tpl)[1];
+                const weaponTemplate = this.itemHelper.getItem(tpl)[1];
+
+                // Edge case for the Klin pp-9, it has a typo in its ammo caliber
+                const ammoCaliber = (weaponTemplate._props.ammoCaliber === "Caliber9x18PMM")
+                    ? "Caliber9x18PM"
+                    : weaponTemplate._props.ammoCaliber;
 
                 // Create array with just magazine
                 const magazineWithCartridges = [magazine];
-                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist);
+                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist, ammoCaliber);
 
                 // Replace existing magazine with above array
                 items.splice(items.indexOf(magazine), 1, ...magazineWithCartridges);
