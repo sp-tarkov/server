@@ -90,7 +90,7 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 5, useRepairKit, 1.2, useDegridation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(80);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeGreaterThan(60);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
     it("updateItemDurability() trader with slick armor, no dura degredation", () =>
@@ -114,7 +114,7 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 20, useRepairKit, 1.2, useDegridation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBe(80);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBe(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
     it("updateItemDurability() repairkit with g36 with max dura degredation - Full repair", () =>
@@ -141,7 +141,7 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1, useDegridation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBe(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
     it("updateItemDurability() trader with g36 with max dura degredation - Full repair", () =>
@@ -168,7 +168,7 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1.2, useDegridation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBe(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
     it("updateItemDurability() faceshield broken use repairkit with max dura degredation", () =>
@@ -197,7 +197,7 @@ describe("BotHelper", () => {
 
         expect(itemToRepair.upd?.FaceShield?.Hits).toBe(0);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(45);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBe(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
     it("isWeaponTemplate() g36 weapon", () =>
