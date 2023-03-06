@@ -917,6 +917,7 @@ export class HideoutHelper
             if (wall.level === 0)
             {
                 wall.level++;
+                wall.constructing = true;
 
                 return;
             }
