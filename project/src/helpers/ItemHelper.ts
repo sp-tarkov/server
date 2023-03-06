@@ -869,17 +869,24 @@ class ItemHelper
 
         // Get max number of cartridges in magazine, choose random value between min/max
         const magazineCartridgeMaxCount = magTemplate._props.Cartridges[0]._max_count;
-        const stackCount = this.randomUtil.getInt(Math.round(minSizePercent * magazineCartridgeMaxCount), magazineCartridgeMaxCount);
+        const desiredStackCount = this.randomUtil.getInt(Math.round(minSizePercent * magazineCartridgeMaxCount), magazineCartridgeMaxCount);
 
         // Loop over cartridge count and add stacks to magazine
         let currentStoredCartridgeCount = 0;
         let location = 0;
-        while (currentStoredCartridgeCount < stackCount)
+        while (currentStoredCartridgeCount < desiredStackCount)
         {
             // Get stack size of cartridges
-            const cartridgeCountToAdd = (stackCount <= cartridgeMaxStackSize)
-                ? stackCount
+            let cartridgeCountToAdd = (desiredStackCount <= cartridgeMaxStackSize)
+                ? desiredStackCount
                 : cartridgeMaxStackSize;
+
+            // Ensure we don't go over the max stackcount size
+            const remainingSpace = desiredStackCount - currentStoredCartridgeCount;
+            if (cartridgeCountToAdd > remainingSpace)
+            {
+                cartridgeCountToAdd = remainingSpace;
+            }
 
             // Add cartridge item object into items array
             magazine.push(this.createCartridges(magazine[0]._id, cartridgeTpl, cartridgeCountToAdd, location));
