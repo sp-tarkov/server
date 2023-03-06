@@ -914,53 +914,28 @@ export class HideoutHelper
                 return;
             }
 
-            // Not currently moppable, upgrade to moppable state
-            if (wall.level <= 1)
+            if (wall.level === 0)
             {
-                const newWallLevel = 2;
-                this.logger.debug(`${this.hideoutConfig.hideoutWallAppearTimeSeconds} seconds have passed since profile creation, upgrading hideout wall from level: ${wall.level} to ${newWallLevel}`);
-                wall.level = newWallLevel;
-                wall.constructing = false;
-                // 0 = no wall
-                // 1 = "wall may be a problem is future"
-                // 2 - Interactable wall
-                // 3 - Smashable wall
-                // 4 - Installable door
+                wall.level++;
 
                 return;
             }
 
-            // Moppable level, upgrade if mopping complete to smashable state
-            if (wall.level === 2)
+            if (wall.level === 1)
             {
                 if (this.hideoutImprovementIsComplete(pmcProfile.Hideout.Improvements["639199277a9178252d38c98f"]))
                 {
-                    this.logger.debug("Hideout wall stage 2 has completed improvement, upgrading to level 3");
+                    this.logger.debug("Improvement 639199277a9178252d38c98f found, upgrading hideout wall from level: 1 to 3");
+                    wall.level = 3;
                     wall.constructing = false;
-                    wall.level++;
-
-                    return;
+                    // 0 = no wall | Idle State
+                    // 1 - EATS EVERYTHING without areas.json change to include improvements
+                    // 2 - Should be Moppable wall / Interactable wall While Constructing = true Sledgehammer is Smashable 
+                    // 2 - While false UI is broken. While true mimics level 3 hideout
+                    // 3 - Smashable wall / Sledgehammer
+                    // 4 - Installable door
                 }
-            }
-
-            // Can be smashed
-            if (wall.level === 3)
-            {
-                // Second mopping, not used to allow upgrade to stage 4 (Improvement id = 639199277a9178252d38c990)
-                return;
-            }
-
-            // Can be repaired
-            if (wall.level === 4)
-            {
-                // Third mopping, not used to allow upgrade to stage 5 (improvement id = 639199277a9178252d38c991)
-                return;
-            }
-
-            // Tidy up
-            if (wall.level === 5)
-            {
-                // Fourth mopping possible, not used to allow upgrade to stage 6 (improvement id = 639199277a9178252d38c992)
+                
                 return;
             }
         }

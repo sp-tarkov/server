@@ -3875,16 +3875,6 @@
       },
       "1": {
         "requirements": [],
-        "bonuses": [],
-        "slots": 0,
-        "constructionTime": 0,
-        "description": "",
-        "autoUpgrade": true,
-        "displayInterface": true,
-        "improvements": []
-      },
-      "2": {
-        "requirements": [],
         "bonuses": [
           {
             "value": 5,
@@ -3923,6 +3913,68 @@
             "type": "SkillGroupLevelingBoost"
           }
         ],
+        "slots": 0,
+        "constructionTime": 43200,
+        "description": "",
+        "autoUpgrade": true,
+        "displayInterface": true,
+        "improvements": [
+          {
+            "id": "639199277a9178252d38c98f",
+            "requirements": [
+              {
+                "templateId": "5e2af47786f7746d404f3aaa",
+                "count": 1,
+                "isFunctional": false,
+                "isEncoded": false,
+                "type": "Item"
+              }
+            ],
+            "bonuses": [
+              {
+                "value": -2,
+                "passive": true,
+                "production": false,
+                "visible": true,
+                "type": "FuelConsumption"
+              },
+              {
+                "value": 2,
+                "passive": true,
+                "production": false,
+                "visible": true,
+                "type": "EnergyRegeneration"
+              },
+              {
+                "value": 2,
+                "passive": true,
+                "production": false,
+                "visible": true,
+                "type": "HealthRegeneration"
+              },
+              {
+                "value": 2,
+                "passive": true,
+                "production": false,
+                "visible": true,
+                "type": "ExperienceRate"
+              },
+              {
+                "value": 2,
+                "passive": true,
+                "production": false,
+                "visible": true,
+                "skillType": "Physical",
+                "type": "SkillGroupLevelingBoost"
+              }
+            ],
+            "improvementTime": 120
+          }
+        ]
+      },
+      "2": {
+        "requirements": [],
+        "bonuses": [],
         "slots": 0,
         "constructionTime": 43200,
         "description": "",
