@@ -938,6 +938,24 @@ export class HideoutHelper
                 
                 return;
             }
+
+            // Workaround for old profiles that have the wall at level 2
+            if (wall.level === 2)
+            {
+                this.logger.debug("Old wall level 2 found, fixing");
+                if (this.hideoutImprovementIsComplete(pmcProfile.Hideout.Improvements["639199277a9178252d38c98f"]))
+                {
+                    this.logger.debug("Wall level adjusted to 3");
+                    wall.level++;
+                }
+                else
+                {
+                    this.logger.debug("Wall level adjusted to 1");
+                    wall.level--;
+                }
+            }
+
+
         }
     }
 
