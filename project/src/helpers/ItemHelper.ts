@@ -838,6 +838,12 @@ class ItemHelper
             caliber = this.getRandomValidCaliber(magTemplate);
         }
 
+        // Edge case for the Klin pp-9, it has a typo in its ammo caliber
+        if (caliber === "Caliber9x18PMM")
+        {
+            caliber = "Caliber9x18PM";
+        }
+
         // Chose a randomly weighted cartridge that fits
         const cartridgeTpl = this.drawAmmoTpl(caliber, staticAmmoDist);
         this.fillMagazineWithCartridge(magazine, magTemplate, cartridgeTpl, minSizePercent);

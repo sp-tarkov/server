@@ -483,14 +483,9 @@ export class LocationGenerator
                 const magTemplate = this.itemHelper.getItem(magazine._tpl)[1];
                 const weaponTemplate = this.itemHelper.getItem(tpl)[1];
 
-                // Edge case for the Klin pp-9, it has a typo in its ammo caliber
-                const ammoCaliber = (weaponTemplate._props.ammoCaliber === "Caliber9x18PMM")
-                    ? "Caliber9x18PM"
-                    : weaponTemplate._props.ammoCaliber;
-
                 // Create array with just magazine
                 const magazineWithCartridges = [magazine];
-                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist, ammoCaliber);
+                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist, weaponTemplate._props.ammoCaliber);
 
                 // Replace existing magazine with above array
                 items.splice(items.indexOf(magazine), 1, ...magazineWithCartridges);
