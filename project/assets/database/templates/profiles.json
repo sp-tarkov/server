@@ -480,7 +480,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -4949,7 +4949,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -9479,7 +9479,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -12870,7 +12870,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -16367,7 +16367,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -20204,7 +20204,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -37165,7 +37165,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -38138,7 +38138,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -38995,7 +38995,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
@@ -41785,7 +41785,7 @@
             {
               "active": true,
               "completeTime": 0,
-              "constructing": true,
+              "constructing": false,
               "lastRecipe": "",
               "level": 0,
               "passiveBonusesEnabled": true,
