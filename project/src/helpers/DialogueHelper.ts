@@ -125,23 +125,10 @@ export class DialogueHelper
             hasRewards: rewards.length > 0,
             rewardCollected: false,
             items: items,
-            maxStorageTime: messageContent.maxStorageTime
+            maxStorageTime: messageContent.maxStorageTime,
+            systemData: messageContent.systemData ? messageContent.systemData : undefined,
+            profileChangeEvents: (messageContent.profileChangeEvents?.length === 0) ? messageContent.profileChangeEvents : undefined
         };
-
-        if (messageContent.systemData)
-        {
-            message.systemData = messageContent.systemData;
-        }
-
-        if (messageContent.text || messageContent.text === "")
-        {
-            message.text = messageContent.text;
-        }
-
-        if (messageContent.profileChangeEvents || messageContent.profileChangeEvents?.length === 0)
-        {
-            message.profileChangeEvents = messageContent.profileChangeEvents;
-        }
 
         dialogue.messages.push(message);
 

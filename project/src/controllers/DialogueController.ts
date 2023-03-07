@@ -73,13 +73,9 @@ export class DialogueController
             "message": this.dialogueHelper.getMessagePreview(dialogue),
             "new": dialogue.new,
             "attachmentsNew": dialogue.attachmentsNew,
-            "pinned": dialogue.pinned
+            "pinned": dialogue.pinned,
+            Users: dialogue.Users ? dialogue.Users : undefined
         };
-
-        if (dialogue.Users)
-        {
-            result.Users = dialogue.Users;
-        }
 
         return result;
     }
