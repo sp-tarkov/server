@@ -80,6 +80,12 @@ export class MatchCallbacks
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public cancelAllGroupInvite(url: string, info: any, sessionID: string): INullResponseData
+    {
+        return this.httpResponse.nullResponse();
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public putMetrics(url: string, info: IPutMetricsRequestData, sessionID: string): INullResponseData
     {
         return this.httpResponse.nullResponse();

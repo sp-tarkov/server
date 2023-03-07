@@ -133,6 +133,14 @@ export class MatchStaticRouter extends StaticRouter
                     }
                 ),
                 new RouteAction(
+                    "/client/match/group/invite/cancel-all",
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    (url: string, info: any, sessionID: string, output: string): any => 
+                    {
+                        return this.matchCallbacks.cancelAllGroupInvite(url, info, sessionID);
+                    }
+                ),
+                new RouteAction(
                     "/client/match/offline/end",
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     (url: string, info: any, sessionID: string, output: string): any => 
