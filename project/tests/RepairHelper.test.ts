@@ -46,7 +46,7 @@ describe("BotHelper", () => {
         expect(helper).toBeInstanceOf(RepairHelper);
     });
 
-    it("updateItemDurability() repairkit with slick armor with max dura degredation", () =>
+    it("updateItemDurability() repairkit with slick armor with max dura degradation", () =>
     {
         const slickTpl = "5e4abb5086f77406975c9342";
         const itemToRepair: Item = {
@@ -69,7 +69,7 @@ describe("BotHelper", () => {
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(80);
     });
 
-    it("updateItemDurability() trader with slick armor with max dura degredation - partial repair", () =>
+    it("updateItemDurability() trader with slick armor with max dura degradation - partial repair", () =>
     {
         const slickTpl = "5e4abb5086f77406975c9342";
         const itemToRepair: Item = {
@@ -93,7 +93,7 @@ describe("BotHelper", () => {
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
-    it("updateItemDurability() trader with slick armor, no dura degredation", () =>
+    it("updateItemDurability() trader with slick armor, no dura degradation", () =>
     {
         const slickTpl = "5e4abb5086f77406975c9342";
         const itemToRepair: Item = {
@@ -109,15 +109,15 @@ describe("BotHelper", () => {
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[slickTpl];
         const isArmor = true;
         const useRepairKit = false;
-        const useDegridation = false;
+        const useDegradation = false;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 20, useRepairKit, 1.2, useDegridation);
+        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 20, useRepairKit, 1.2, useDegradation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBe(80);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
-    it("updateItemDurability() repairkit with g36 with max dura degredation - Full repair", () =>
+    it("updateItemDurability() repairkit with g36 with max dura degradation - Full repair", () =>
     {
         const itemCurrentDura = 68;
         const itemCurrentMaxDura = 100;
@@ -136,15 +136,15 @@ describe("BotHelper", () => {
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[g36Tpl];
         const isArmor = false;
         const useRepairKit = true;
-        const useDegridation = true;
+        const useDegradation = true;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1, useDegridation);
+        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1, useDegradation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
-    it("updateItemDurability() trader with g36 with max dura degredation - Full repair", () =>
+    it("updateItemDurability() trader with g36 with max dura degradation - Full repair", () =>
     {
         const itemCurrentDura = 68;
         const itemCurrentMaxDura = 100;
@@ -163,15 +163,15 @@ describe("BotHelper", () => {
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[g36Tpl];
         const isArmor = false;
         const useRepairKit = false;
-        const useDegridation = true;
+        const useDegradation = true;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1.2, useDegridation);
+        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1.2, useDegradation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
     });
 
-    it("updateItemDurability() faceshield broken use repairkit with max dura degredation", () =>
+    it("updateItemDurability() faceshield broken use repairkit with max dura degradation", () =>
     {
         const twExfilBallisticFaceShieldTpl = "5e00cdd986f7747473332240";
         const itemToRepair: Item = {
@@ -191,9 +191,9 @@ describe("BotHelper", () => {
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[twExfilBallisticFaceShieldTpl];
         const isArmor = true;
         const useRepairKit = true;
-        const useDegridation = true;
+        const useDegradation = true;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 5, useRepairKit, 1, useDegridation);
+        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 5, useRepairKit, 1, useDegradation);
 
         expect(itemToRepair.upd?.FaceShield?.Hits).toBe(0);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(45);
