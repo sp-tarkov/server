@@ -6,6 +6,7 @@ import { PlayerScavGenerator } from "../generators/PlayerScavGenerator";
 import { HealthHelper } from "../helpers/HealthHelper";
 import { InRaidHelper } from "../helpers/InRaidHelper";
 import { ItemHelper } from "../helpers/ItemHelper";
+import { NotificationSendHelper } from "../helpers/NotificationSendHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { QuestHelper } from "../helpers/QuestHelper";
 import { TraderHelper } from "../helpers/TraderHelper";
@@ -15,7 +16,10 @@ import { BodyPartHealth } from "../models/eft/common/tables/IBotBase";
 import { Item } from "../models/eft/common/tables/IItem";
 import { IRegisterPlayerRequestData } from "../models/eft/inRaid/IRegisterPlayerRequestData";
 import { ISaveProgressRequestData } from "../models/eft/inRaid/ISaveProgressRequestData";
+import { IUserDialogInfo } from "../models/eft/profile/IAkiProfile";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
+import { MemberCategory } from "../models/enums/MemberCategory";
+import { MessageType } from "../models/enums/MessageType";
 import { Traders } from "../models/enums/Traders";
 import { IAirdropConfig } from "../models/spt/config/IAirdropConfig";
 import { IInRaidConfig } from "../models/spt/config/IInRaidConfig";
@@ -24,6 +28,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
 import { InsuranceService } from "../services/InsuranceService";
+import { LocaleService } from "../services/LocaleService";
 import { JsonUtil } from "../utils/JsonUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 
@@ -42,10 +47,12 @@ export class InraidController
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("LocaleService") protected localeService: LocaleService,
         @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
+        @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
         @inject("HealthHelper") protected healthHelper: HealthHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
@@ -128,9 +135,22 @@ export class InraidController
         }
         else
         {
-            if (locationName === "Laboratory")
+            if (locationName.toLowerCase() === "laboratory")
             {
-                // TODO: dump of prapor/therapist dialogues that are sent when you die in lab with insured items
+                const localeDb = this.localeService.getLocaleDb();
+                
+                const failedText = localeDb["5a8fd75188a45036844e0b0c"];
+                const senderDetails: IUserDialogInfo = {
+                    _id: Traders.PRAPOR,
+                    info: {
+                        Nickname: "Prapor",
+                        Level: 1,
+                        Side: "Bear",
+                        MemberCategory: MemberCategory.TRADER
+                    }
+                };
+
+                this.notificationSendHelper.sendMessageToPlayer(sessionID, senderDetails, failedText, MessageType.NPC_TRADER);
             }
         }
 
