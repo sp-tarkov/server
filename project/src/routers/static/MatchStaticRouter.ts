@@ -172,6 +172,14 @@ export class MatchStaticRouter extends StaticRouter
                     {
                         return this.matchCallbacks.getRaidConfiguration(url, info, sessionID);
                     }
+                ),
+                new RouteAction(
+                    "/client/match/group/player/remove",
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    (url: string, info: any, sessionID: string, output: string): any => 
+                    {
+                        return this.matchCallbacks.removePlayerFromGroup(url, info, sessionID);
+                    }
                 )
             ]
         );

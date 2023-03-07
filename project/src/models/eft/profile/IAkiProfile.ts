@@ -1,6 +1,6 @@
-import { MessageType } from "../../enums/MessageType"
-import { IPmcData } from "../common/IPmcData"
-import { Item } from "../common/tables/IItem"
+import { MessageType } from "../../enums/MessageType";
+import { IPmcData } from "../common/IPmcData";
+import { Item } from "../common/tables/IItem";
 
 export interface IAkiProfile
 {
@@ -19,8 +19,8 @@ export interface IAkiProfile
 
 export class TraderPurchaseData
 {
-    count: number
-    purchaseTimestamp: number
+    count: number;
+    purchaseTimestamp: number;
 }
 
 export interface Info
@@ -48,11 +48,27 @@ export interface WeaponBuild
 
 export interface Dialogue
 {
-    _id: string
-    messages: Message[]
-    pinned: boolean
-    new: number
     attachmentsNew: number
+    type: MessageType
+    new: number
+    _id: string
+    Users?: IUserDialogInfo[]
+    pinned: boolean
+    messages: Message[]
+}
+
+export interface IUserDialogInfo
+{
+    _id: string
+    info: IUserDialogDetails
+}
+
+export interface IUserDialogDetails
+{
+    Nickname: string
+    Side: string
+    Level: number
+    MemberCategory: number
 }
 
 // @Cleanup: Maybe the same as Dialogue?
@@ -60,10 +76,11 @@ export interface DialogueInfo
 {
     attachmentsNew: number
     new: number
+    _id: string
     type: MessageType
     pinned: boolean
+    Users?: any[]
     message: MessagePreview
-    _id: string
 }
 
 export interface Message
@@ -91,6 +108,7 @@ export interface MessagePreview
     dt: number
     templateId: string
     text?: string
+    systemData?: ISystemData
 }
 
 export interface MessageItems

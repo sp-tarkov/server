@@ -5,6 +5,9 @@ import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "../models/eft/httpResponse/INullResponseData";
+import { IAcceptGroupInviteRequest } from "../models/eft/match/IAcceptGroupInviteRequest";
+import { IAcceptGroupInviteResponse } from "../models/eft/match/IAcceptGroupInviteResponse";
+import { ICancelGroupInviteRequest } from "../models/eft/match/ICancelGroupInviteRequest";
 import { ICreateGroupRequestData } from "../models/eft/match/ICreateGroupRequestData";
 import { IEndOfflineRaidRequestData } from "../models/eft/match/IEndOfflineRaidRequestData";
 import { IGetGroupStatusRequestData } from "../models/eft/match/IGetGroupStatusRequestData";
@@ -15,6 +18,8 @@ import {
 import { IJoinMatchRequestData } from "../models/eft/match/IJoinMatchRequestData";
 import { IJoinMatchResult } from "../models/eft/match/IJoinMatchResult";
 import { IPutMetricsRequestData } from "../models/eft/match/IPutMetricsRequestData";
+import { IRemovePlayerFromGroupRequest } from "../models/eft/match/IRemovePlayerFromGroupRequest";
+import { ISendGroupInviteRequest } from "../models/eft/match/ISendGroupInviteRequest";
 import { IUpdatePingRequestData } from "../models/eft/match/IUpdatePingRequestData";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { HttpResponseUtil } from "../utils/HttpResponseUtil";
@@ -62,21 +67,26 @@ export class MatchCallbacks
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sendGroupInvite(url: string, info: any, sessionID: string): INullResponseData
+    public sendGroupInvite(url: string, info: ISendGroupInviteRequest, sessionID: string): IGetBodyResponseData<string>
     {
-        return this.httpResponse.nullResponse();
+        return this.httpResponse.getBody("2427943f23698ay9f2863735");
     }
 
+    /** Handle client/match/group/invite/accept */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public acceptGroupInvite(url: string, info: any, sessionID: string): INullResponseData
+    public acceptGroupInvite(url: string, info: IAcceptGroupInviteRequest, sessionID: string): IGetBodyResponseData<IAcceptGroupInviteResponse[]>
     {
-        return this.httpResponse.nullResponse();
+        const result = [];
+        result.push({});
+
+        return this.httpResponse.getBody(result);
     }
 
+    /** Handle client/match/group/invite/cancel */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public cancelGroupInvite(url: string, info: any, sessionID: string): INullResponseData
+    public cancelGroupInvite(url: string, info: ICancelGroupInviteRequest, sessionID: string): IGetBodyResponseData<boolean>
     {
-        return this.httpResponse.nullResponse();
+        return this.httpResponse.getBody(true);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -140,6 +150,12 @@ export class MatchCallbacks
     public deleteGroup(url: string, info: any, sessionID: string): INullResponseData
     {
         this.matchController.deleteGroup(info);
+        return this.httpResponse.nullResponse();
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public removePlayerFromGroup(url: string, info: IRemovePlayerFromGroupRequest, sessionID: string): INullResponseData
+    {
         return this.httpResponse.nullResponse();
     }
 

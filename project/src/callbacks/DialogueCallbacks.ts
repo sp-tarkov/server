@@ -4,7 +4,10 @@ import { DialogueController } from "../controllers/DialogueController";
 import { OnUpdate } from "../di/OnUpdate";
 import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
 import { IChatServer } from "../models/eft/dialog/IChatServer";
+import { IClearMailMessageRequest } from "../models/eft/dialog/IClearMailMessageRequest";
+import { IDeleteFriendRequest } from "../models/eft/dialog/IDeleteFriendRequest";
 import { IFriendRequestData } from "../models/eft/dialog/IFriendRequestData";
+import { IFriendRequestSendResponse } from "../models/eft/dialog/IFriendRequestSendResponse";
 import { IGetAllAttachmentsRequestData } from "../models/eft/dialog/IGetAllAttachmentsRequestData";
 import { IGetAllAttachmentsResponse } from "../models/eft/dialog/IGetAllAttachmentsResponse";
 import { IGetChatServerListRequestData } from "../models/eft/dialog/IGetChatServerListRequestData";
@@ -17,6 +20,7 @@ import {
 } from "../models/eft/dialog/IGetMailDialogViewResponseData";
 import { IPinDialogRequestData } from "../models/eft/dialog/IPinDialogRequestData";
 import { IRemoveDialogRequestData } from "../models/eft/dialog/IRemoveDialogRequestData";
+import { IRemoveMailMessageRequest } from "../models/eft/dialog/IRemoveMailMessageRequest";
 import { ISendMessageRequest } from "../models/eft/dialog/ISendMessageRequest";
 import { ISetDialogReadRequestData } from "../models/eft/dialog/ISetDialogReadRequestData";
 import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
@@ -76,21 +80,25 @@ export class DialogueCallbacks implements OnUpdate
         return this.httpResponse.getBody([chatServer]);
     }
 
+    /** Handle client/mail/dialog/list */
     public getMailDialogList(url: string, info: IGetMailDialogListRequestData, sessionID: string): IGetBodyResponseData<DialogueInfo[]>
     {
         return this.httpResponse.getBody(this.dialogueController.generateDialogueList(sessionID));
     }
 
+    /** Handle client/mail/dialog/view */
     public getMailDialogView(url: string, info: IGetMailDialogViewRequestData, sessionID: string): IGetBodyResponseData<IGetMailDialogViewResponseData>
     {
         return this.httpResponse.getBody(this.dialogueController.generateDialogueView(info.dialogId, sessionID));
     }
 
+    /** Handle client/mail/dialog/info */
     public getMailDialogInfo(url: string, info: IGetMailDialogInfoRequestData, sessionID: string): IGetBodyResponseData<DialogueInfo>
     {
         return this.httpResponse.getBody(this.dialogueController.getDialogueInfo(info.dialogId, sessionID));
     }
 
+    /** Handle client/mail/dialog/remove */
     public removeDialog(url: string, info: IRemoveDialogRequestData, sessionID: string): IGetBodyResponseData<any[]>
     {
         this.dialogueController.removeDialogue(info.dialogId, sessionID);
@@ -124,6 +132,7 @@ export class DialogueCallbacks implements OnUpdate
         return this.httpResponse.getBody(this.dialogueController.getAllAttachments(info.dialogId, sessionID));
     }
 
+    /** Handle client/friend/request/list/outbox */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public listOutbox(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<any[]>
     {
@@ -137,7 +146,13 @@ export class DialogueCallbacks implements OnUpdate
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public friendRequest(url: string, request: IFriendRequestData, sessionID: string): INullResponseData
+    public sendFriendRequest(url: string, request: IFriendRequestData, sessionID: string): IGetBodyResponseData<IFriendRequestSendResponse>
+    {
+        return this.httpResponse.getBody({status: 0, requestid: "12345", retryAfter: 600});
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public deleteFriend(url: string, request: IDeleteFriendRequest, sessionID: string): INullResponseData
     {
         return this.httpResponse.nullResponse();
     }
@@ -146,6 +161,18 @@ export class DialogueCallbacks implements OnUpdate
     public sendMessage(url: string, request: ISendMessageRequest, sessionID: string): IGetBodyResponseData<number>
     {
         return this.httpResponse.getBody(1);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public clearMail(url: string, request: IClearMailMessageRequest, sessionID: string): IGetBodyResponseData<any[]>
+    {
+        return this.httpResponse.emptyArrayResponse();
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public removeMail(url: string, request: IRemoveMailMessageRequest, sessionID: string): IGetBodyResponseData<any[]>
+    {
+        return this.httpResponse.emptyArrayResponse();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
