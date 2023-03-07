@@ -6,7 +6,6 @@ import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TestHelper } from "./common/TestHelper";
@@ -16,7 +15,6 @@ let logger: ILogger;
 let jsonUtil: JsonUtil;
 let randomUtil: RandomUtil;
 let configServer: ConfigServer;
-let localisationService: LocalisationService;
 let databaseServer: DatabaseServer;
 let helper: RepairHelper;
 
@@ -28,7 +26,6 @@ describe("BotHelper", () => {
         jsonUtil = testHelper.getTestJsonUtil();
         randomUtil = testHelper.getTestRandomUtil();
         configServer = testHelper.getTestConfigServer();
-        localisationService = testHelper.getTestLocalisationService();
         databaseServer = testHelper.getTestDatabaseServer();
     })
 
