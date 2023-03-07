@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { INotification } from "../models/eft/notifier/INotifier";
 import { Dialogue, IUserDialogInfo, Message } from "../models/eft/profile/IAkiProfile";
+import { MemberCategory } from "../models/enums/MemberCategory";
 import { MessageType } from "../models/enums/MessageType";
 import { SaveServer } from "../servers/SaveServer";
 import { WebSocketServer } from "../servers/WebSocketServer";
@@ -39,8 +40,9 @@ export class NotificationSendHelper
     /**
      * Send a message directly to the player
      * @param sessionId Session id
-     * @param author UID of sender
+     * @param senderDetails Who is sendin the message to player
      * @param messageText Text to send player
+     * @param messageType Underlying type of message being sent
      */
     public sendMessageToPlayer(sessionId: string, senderDetails: IUserDialogInfo, messageText: string, messageType: MessageType): void
     {
@@ -53,7 +55,6 @@ export class NotificationSendHelper
             type: messageType,
             dt: Math.round(Date.now() / 1000),
             text: messageText,
-            templateId: undefined,
             hasRewards: undefined,
             rewardCollected: undefined,
             items: undefined
@@ -69,25 +70,35 @@ export class NotificationSendHelper
         this.sendMessage(sessionId, notification);
     }
 
+    /**
+     * Helper function for sendMessageToPlayer(), get new dialog for storage in profile or find existing by sender id
+     * @param sessionId Session id
+     * @param messageType Type of message to generate
+     * @param senderDetails Who is sending the message
+     * @returns Dialogue
+     */
     protected getDialog(sessionId: string, messageType: MessageType, senderDetails: IUserDialogInfo): Dialogue
     {
+        // Use trader id if sender is trader, otherwise use nickname
+        const key = (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? senderDetails._id : senderDetails.info.Nickname;
         const dialogueData = this.saveServer.getProfile(sessionId).dialogues;
-        const isNewDialogue = !(senderDetails.info.Nickname in dialogueData);
-        let dialogue: Dialogue = dialogueData[senderDetails.info.Nickname];
+        const isNewDialogue = !(key in dialogueData);
+        let dialogue: Dialogue = dialogueData[key];
 
+        // Existing dialog not found, make new one
         if (isNewDialogue)
         {
             dialogue = {
-                _id: senderDetails.info.Nickname,
+                _id: key,
                 type: messageType,
                 messages: [],
                 pinned: false,
                 new: 0,
                 attachmentsNew: 0,
-                Users: [senderDetails]
+                Users: (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? undefined : [senderDetails]
             };
 
-            dialogueData[senderDetails.info.Nickname] = dialogue;
+            dialogueData[key] = dialogue;
         }
         return dialogue;
     }

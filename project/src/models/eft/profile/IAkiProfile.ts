@@ -1,3 +1,4 @@
+import { MemberCategory } from "../../../models/enums/MemberCategory";
 import { MessageType } from "../../enums/MessageType";
 import { IPmcData } from "../common/IPmcData";
 import { Item } from "../common/tables/IItem";
@@ -68,7 +69,7 @@ export interface IUserDialogDetails
     Nickname: string
     Side: string
     Level: number
-    MemberCategory: number
+    MemberCategory: MemberCategory
 }
 
 // @Cleanup: Maybe the same as Dialogue?
@@ -91,7 +92,7 @@ export interface Message
     dt: number
     UtcDateTime?: number
     Member?: IUpdatableChatMember
-    templateId: string
+    templateId?: string
     text?: string
     hasRewards: boolean
     rewardCollected: boolean
