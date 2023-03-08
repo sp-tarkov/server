@@ -1,3 +1,4 @@
+import { Message } from "../profile/IAkiProfile";
 export interface INotifierChannel
 {
     server: string
@@ -8,7 +9,6 @@ export interface INotifierChannel
     ws: string
 }
 
-import { Message } from "../profile/IAkiProfile"
 
 export interface INotification
 {

@@ -54,6 +54,7 @@ export class DialogueHelper
         {
             dialogue = {
                 _id: dialogueID,
+                type: MessageType.NPC_TRADER,
                 messages: [],
                 pinned: false,
                 new: 0,
@@ -124,23 +125,10 @@ export class DialogueHelper
             hasRewards: rewards.length > 0,
             rewardCollected: false,
             items: items,
-            maxStorageTime: messageContent.maxStorageTime
+            maxStorageTime: messageContent.maxStorageTime,
+            systemData: messageContent.systemData ? messageContent.systemData : undefined,
+            profileChangeEvents: (messageContent.profileChangeEvents?.length === 0) ? messageContent.profileChangeEvents : undefined
         };
-
-        if (messageContent.systemData)
-        {
-            message.systemData = messageContent.systemData;
-        }
-
-        if (messageContent.text || messageContent.text === "")
-        {
-            message.text = messageContent.text;
-        }
-
-        if (messageContent.profileChangeEvents || messageContent.profileChangeEvents?.length === 0)
-        {
-            message.profileChangeEvents = messageContent.profileChangeEvents;
-        }
 
         dialogue.messages.push(message);
 
@@ -159,19 +147,30 @@ export class DialogueHelper
     /**
      * Get the preview contents of the last message in a dialogue.
      * @param dialogue 
-     * @returns 
+     * @returns MessagePreview
      */
     public getMessagePreview(dialogue: Dialogue): MessagePreview
     {
         // The last message of the dialogue should be shown on the preview.
         const message = dialogue.messages[dialogue.messages.length - 1];
-
-        return {
+        const result: MessagePreview = {
             dt: message.dt,
             type: message.type,
             templateId: message.templateId,
             uid: dialogue._id
         };
+
+        if (message.text)
+        {
+            result.text = message.text;
+        }
+
+        if (message.systemData)
+        {
+            result.systemData = message.systemData;
+        }
+
+        return result;
     }
 
     /**
