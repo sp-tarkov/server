@@ -479,7 +479,7 @@
                         "Holster": 5,
                         "Earpiece": 35,
                         "Eyewear": 5,
-                        "Backpack": 30,
+                        "Backpack": 35,
                         "FaceCover": 5
                     },
                     "mods": {
@@ -629,7 +629,10 @@
                                 "5648a7494bdc2d9d488b4583": 250,
                                 "5ab8e4ed86f7742d8e50c7fa": 250,
                                 "5df8a2ca86f7740bfe6df777": 155,
-                                "5c0e655586f774045612eeb2": 80
+                                "5c0e655586f774045612eeb2": 80,
+                                "5e4abb5086f77406975c9342": 5,
+                                "6038b4ca92ec1c3103795a0d": 5,
+                                "6038b4b292ec1c3103795a0b": 5
                             },
                             "TacticalVest": {
                                 "628d0618d1ba6e4fa07ce5a4": 1,
