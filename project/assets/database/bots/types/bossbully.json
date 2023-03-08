@@ -434,8 +434,8 @@
         "5913915886f774123603c392",
         "5a351711c4a282000b1521a4",
         "61a64428a8c6aa1b795f0ba1",
-        "5d80cb3886f77440556dbf09",
         "5c94bbff86f7747ee735c08f",
+        "5d80cb3886f77440556dbf09",
         "5ad5d20586f77449be26d877",
         "593858c486f774253a24cb52",
         "63a39e1d234195315d4020bd",
@@ -491,7 +491,8 @@
         "61aa5aed32a4743c3453d319",
         "63a39ce4cd6db0635c1975fa",
         "5a0ee34586f774023b6ee092",
-        "5a0eebed86f77461230ddb3d"
+        "5a0eebed86f77461230ddb3d",
+        "5a0f08bc86f77478f33b84c2"
       ],
       "Backpack": [
         "5c1d0d6d86f7744bb2683e1f",
@@ -2517,9 +2518,9 @@
     "equipment": {
       "Headwear": 23,
       "Earpiece": 0,
-      "FaceCover": 4,
+      "FaceCover": 5,
       "ArmorVest": 0,
-      "Eyewear": 44,
+      "Eyewear": 45,
       "ArmBand": 0,
       "TacticalVest": 0,
       "Backpack": 0,
@@ -2540,7 +2541,7 @@
       "mod_mount_000": 8,
       "mod_charge": 57,
       "mod_mount_003": 100,
-      "mod_scope": 45,
+      "mod_scope": 44,
       "mod_tactical": 0,
       "mod_mount_001": 0,
       "mod_mount_002": 0,
