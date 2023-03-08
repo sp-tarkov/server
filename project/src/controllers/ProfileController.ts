@@ -8,6 +8,7 @@ import { QuestHelper } from "../helpers/QuestHelper";
 import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { TemplateSide } from "../models/eft/common/tables/IProfileTemplate";
+import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
 import { IMiniProfile } from "../models/eft/launcher/IMiniProfile";
 import { IAkiProfile, Inraid, Vitality } from "../models/eft/profile/IAkiProfile";
 import {
@@ -159,6 +160,10 @@ export class ProfileController
         if (profile.trader.setQuestsAvailableForStart)
         {
             this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [QuestStatus.AvailableForStart]);
+
+            const response = this.eventOutputHolder.getOutput(sessionID);
+            // Add rewards for starting quests to profile
+            this.givePlayerStartingQuestRewards(profileDetails, sessionID, response);
         }
 
         // Profile is flagged as wanting quests set to ready to hand in and collect rewards
@@ -170,17 +175,7 @@ export class ProfileController
             const response = this.eventOutputHolder.getOutput(sessionID);
 
             // Add rewards for starting quests to profile
-            for (const quest of profileDetails.characters.pmc.Quests)
-            {
-                const questFromDb = this.questHelper.getQuestFromDb(quest.qid, pmcData);
-
-                // Get messageId of text to send to player as text message in game
-                // Copy of code from QuestController.acceptQuest()
-                const messageId = this.questHelper.getMessageIdForQuestStart(questFromDb.startedMessageText, questFromDb.description);
-                const messageContent = this.dialogueHelper.createMessageContext(messageId, MessageType.QUEST_START, 99999);
-                const itemRewards = this.questHelper.applyQuestReward(profileDetails.characters.pmc, quest.qid, QuestStatus.Started, sessionID, response);
-                this.dialogueHelper.addDialogueMessage(questFromDb.traderId, messageContent, sessionID, itemRewards);
-            }
+            this.givePlayerStartingQuestRewards(profileDetails, sessionID, response);
         }
 
         this.saveServer.getProfile(sessionID).characters.scav = this.generatePlayerScav(sessionID);
@@ -197,6 +192,21 @@ export class ProfileController
         // completed account creation
         this.saveServer.getProfile(sessionID).info.wipe = false;
         this.saveServer.saveProfile(sessionID);
+    }
+
+    protected givePlayerStartingQuestRewards(profileDetails: IAkiProfile, sessionID: string, response: IItemEventRouterResponse): void 
+    {
+        for (const quest of profileDetails.characters.pmc.Quests) 
+        {
+            const questFromDb = this.questHelper.getQuestFromDb(quest.qid, profileDetails.characters.pmc);
+
+            // Get messageId of text to send to player as text message in game
+            // Copy of code from QuestController.acceptQuest()
+            const messageId = this.questHelper.getMessageIdForQuestStart(questFromDb.startedMessageText, questFromDb.description);
+            const messageContent = this.dialogueHelper.createMessageContext(messageId, MessageType.QUEST_START, 99999);
+            const itemRewards = this.questHelper.applyQuestReward(profileDetails.characters.pmc, quest.qid, QuestStatus.Started, sessionID, response);
+            this.dialogueHelper.addDialogueMessage(questFromDb.traderId, messageContent, sessionID, itemRewards);
+        }
     }
 
     /**
