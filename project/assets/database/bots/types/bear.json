@@ -245,7 +245,7 @@
                 "WaitInCoverBetweenShotsSec": 0.2
             },
             "Cover": {
-                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": true,
+                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": false,
                 "CHANGE_COVER_IF_CANT_SHOOT_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
@@ -287,8 +287,8 @@
                 "SPOTTED_GRENADE_RADIUS": 23,
                 "SPOTTED_GRENADE_TIME": 7,
                 "STATIONARY_CAN_USE": false,
-                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 2,
-                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 25,
+                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 1,
+                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 1,
                 "STATIONARY_WEAPON_NO_ENEMY_GETUP": 5,
                 "STAY_IF_FAR": 25,
                 "STAY_IF_FAR_SQRT": 625,
@@ -742,7 +742,7 @@
                 "WaitInCoverBetweenShotsSec": 0.2
             },
             "Cover": {
-                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": true,
+                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": false,
                 "CHANGE_COVER_IF_CANT_SHOOT_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
@@ -784,8 +784,8 @@
                 "SPOTTED_GRENADE_RADIUS": 23,
                 "SPOTTED_GRENADE_TIME": 7,
                 "STATIONARY_CAN_USE": false,
-                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 2,
-                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 25,
+                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 1,
+                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 1,
                 "STATIONARY_WEAPON_NO_ENEMY_GETUP": 5,
                 "STAY_IF_FAR": 25,
                 "STAY_IF_FAR_SQRT": 625,
@@ -1239,7 +1239,7 @@
                 "WaitInCoverBetweenShotsSec": 0.2
             },
             "Cover": {
-                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": true,
+                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": false,
                 "CHANGE_COVER_IF_CANT_SHOOT_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
@@ -1281,8 +1281,8 @@
                 "SPOTTED_GRENADE_RADIUS": 23,
                 "SPOTTED_GRENADE_TIME": 7,
                 "STATIONARY_CAN_USE": false,
-                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 2,
-                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 25,
+                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 1,
+                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 1,
                 "STATIONARY_WEAPON_NO_ENEMY_GETUP": 5,
                 "STAY_IF_FAR": 25,
                 "STAY_IF_FAR_SQRT": 625,
@@ -1738,7 +1738,7 @@
                 "WaitInCoverBetweenShotsSec": 0.2
             },
             "Cover": {
-                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": true,
+                "CAN_END_SHOOT_FROM_COVER_CAUSE_STATIONARY": false,
                 "CHANGE_COVER_IF_CANT_SHOOT_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC": 5,
                 "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
@@ -1780,8 +1780,8 @@
                 "SPOTTED_GRENADE_RADIUS": 23,
                 "SPOTTED_GRENADE_TIME": 7,
                 "STATIONARY_CAN_USE": false,
-                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 2,
-                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 25,
+                "STATIONARY_SPOTTED_TIMES_TO_LEAVE": 1,
+                "STATIONARY_WEAPON_MAX_DIST_TO_USE": 1,
                 "STATIONARY_WEAPON_NO_ENEMY_GETUP": 5,
                 "STAY_IF_FAR": 25,
                 "STAY_IF_FAR_SQRT": 625,
