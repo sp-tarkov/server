@@ -29,6 +29,7 @@ import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
 import { InsuranceService } from "../services/InsuranceService";
 import { LocaleService } from "../services/LocaleService";
+import { PmcChatResponseService } from "../services/PmcChatResponseService";
 import { JsonUtil } from "../utils/JsonUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 
@@ -48,6 +49,7 @@ export class InraidController
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocaleService") protected localeService: LocaleService,
+        @inject("PmcChatResponseService") protected pmcChatResponseService: PmcChatResponseService,
         @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -137,26 +139,20 @@ export class InraidController
         {
             if (locationName.toLowerCase() === "laboratory")
             {
-                const localeDb = this.localeService.getLocaleDb();
-                
-                const failedText = localeDb["5a8fd75188a45036844e0b0c"];
-                const senderDetails: IUserDialogInfo = {
-                    _id: Traders.PRAPOR,
-                    info: {
-                        Nickname: "Prapor",
-                        Level: 1,
-                        Side: "Bear",
-                        MemberCategory: MemberCategory.TRADER
-                    }
-                };
-
-                this.notificationSendHelper.sendMessageToPlayer(sessionID, senderDetails, failedText, MessageType.NPC_TRADER);
+                this.sendLostInsuranceMessage(sessionID);
             }
         }
 
         if (isDead)
         {
+            //TODO - find way to get killer name //this.pmcChatResponseService.sendKillerResponse(sessionID, pmcData);
             pmcData = this.performPostRaidActionsWhenDead(offraidData, pmcData, insuranceEnabled, preRaidGear, sessionID);
+        }
+
+        const victims = offraidData.profile.Stats.Victims.filter(x => x.Role === "sptBear" || x.Role === "sptUsec");
+        if (victims?.length > 0)
+        {
+            this.pmcChatResponseService.sendVictimResponse(sessionID, victims);
         }
 
         if (insuranceEnabled)
@@ -258,6 +254,24 @@ export class InraidController
         this.inRaidHelper.addUpdToMoneyFromRaid(offraidData.profile.Inventory.items);
 
         this.handlePostRaidPlayerScavProcess(scavData, sessionID, offraidData, pmcData, isDead);
+    }
+
+    protected sendLostInsuranceMessage(sessionID: string): void
+    {
+        const localeDb = this.localeService.getLocaleDb();
+
+        const failedText = localeDb["5a8fd75188a45036844e0b0c"];
+        const senderDetails: IUserDialogInfo = {
+            _id: Traders.PRAPOR,
+            info: {
+                Nickname: "Prapor",
+                Level: 1,
+                Side: "Bear",
+                MemberCategory: MemberCategory.TRADER
+            }
+        };
+
+        this.notificationSendHelper.sendMessageToPlayer(sessionID, senderDetails, failedText, MessageType.NPC_TRADER);
     }
 
     /**

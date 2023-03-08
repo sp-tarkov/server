@@ -42,4 +42,13 @@ export class LocalisationService
     {
         return this.i18n.__(key.toLowerCase(), args);
     }
+
+    /**
+     * Get all locale keys
+     * @returns string array of keys
+     */
+    public getKeys(): string[]
+    {
+        return Object.keys(this.i18n.getCatalog("en"));
+    }
 }

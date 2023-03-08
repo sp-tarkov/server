@@ -14,6 +14,7 @@ export enum ConfigTypes
     LOCATION = "aki-location",
     MATCH = "aki-match",
     PLAYERSCAV = "aki-playerscav",
+    PMC_CHAT_RESPONSE = "aki-pmcchatresponse",
     QUEST = "aki-quest",
     RAGFAIR = "aki-ragfair",
     REPAIR = "aki-repair",

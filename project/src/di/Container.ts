@@ -1,4 +1,5 @@
 import { DependencyContainer, Lifecycle } from "tsyringe";
+
 import { BotCallbacks } from "../callbacks/BotCallbacks";
 import { BundleCallbacks } from "../callbacks/BundleCallbacks";
 import { CustomizationCallbacks } from "../callbacks/CustomizationCallbacks";
@@ -212,6 +213,7 @@ import { NotificationService } from "../services/NotificationService";
 import { OpenZoneService } from "../services/OpenZoneService";
 import { PaymentService } from "../services/PaymentService";
 import { PlayerService } from "../services/PlayerService";
+import { PmcChatResponseService } from "../services/PmcChatResponseService";
 import { ProfileFixerService } from "../services/ProfileFixerService";
 import { ProfileSnapshotService } from "../services/ProfileSnapshotService";
 import { RagfairCategoriesService } from "../services/RagfairCategoriesService";
@@ -603,6 +605,7 @@ export class Container
         depContainer.register<BotWeaponModLimitService>("BotWeaponModLimitService", BotWeaponModLimitService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<SeasonalEventService>("SeasonalEventService", SeasonalEventService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<TraderPurchasePersisterService>("TraderPurchasePersisterService", TraderPurchasePersisterService);
+        depContainer.register<PmcChatResponseService>("PmcChatResponseService", PmcChatResponseService);
     }
 
     private static registerServers(depContainer: DependencyContainer): void 
