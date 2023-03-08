@@ -3806,6 +3806,8 @@
         }, {
             "_id": "634acfb4da5c23324e07ca36",
             "_tpl": "5fc22d7c187fea44d52eda44",
+			"parentId": "hideout",
+            "slotId": "hideout",
             "upd": {
                 "FireMode": {
                     "FireMode": "single"

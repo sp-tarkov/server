@@ -409,8 +409,8 @@
         "5c0e534186f7747fa1419867",
         "544fb25a4bdc2dfb738b4567",
         "5c0e531d86f7747fa23f4d42",
-        "637b612fb7afa97bfc3d7005",
         "5c0e530286f7747fa1419862",
+        "637b612fb7afa97bfc3d7005",
         "590c661e86f7741e566b646a",
         "544fb37f4bdc2dee738b4567",
         "5755383e24597772cb798966",
@@ -454,7 +454,8 @@
         "5e2af02c86f7746d420957d4",
         "56742c284bdc2d98058b456d",
         "5b43575a86f77424f443fe62",
-        "59faf7ca86f7740dbe19f6c2"
+        "59faf7ca86f7740dbe19f6c2",
+        "62a0a098de7ac8199358053b"
       ],
       "SecuredContainer": [
         "5e99711486f7744bfc4af328",
@@ -2534,7 +2535,7 @@
     "equipment": {
       "Headwear": 0,
       "Earpiece": 26,
-      "FaceCover": 24,
+      "FaceCover": 25,
       "ArmorVest": 0,
       "Eyewear": 31,
       "ArmBand": 0,
@@ -2557,7 +2558,7 @@
       "mod_scope": 100,
       "mod_stock": 0,
       "mod_sight_front": 100,
-      "mod_mount": 52,
+      "mod_mount": 51,
       "mod_muzzle": 0,
       "mod_foregrip": 0,
       "mod_mount_001": 0,
