@@ -652,7 +652,9 @@
         "590c2d8786f774245b1f03f3",
         "590c661e86f7741e566b646a",
         "590a3efd86f77437d351a25b",
-        "573478bc24597738002c6175"
+        "573478bc24597738002c6175",
+        "5d1c774f86f7746d6620f8db",
+        "59e36c6f86f774176c10a2a7"
       ],
       "SecuredContainer": [
         "5e023e88277cce2b522ff2b1",
@@ -2665,7 +2667,7 @@
   "chances": {
     "equipment": {
       "Headwear": 82,
-      "Earpiece": 32,
+      "Earpiece": 31,
       "FaceCover": 100,
       "ArmorVest": 92,
       "Eyewear": 0,
@@ -2683,9 +2685,9 @@
       "mod_reciever": 100,
       "mod_sight_rear": 78,
       "mod_magazine": 100,
-      "mod_mount": 51,
+      "mod_mount": 50,
       "mod_muzzle": 28,
-      "mod_tactical": 28,
+      "mod_tactical": 27,
       "mod_mount_000": 54,
       "mod_tactical_001": 48,
       "mod_tactical_002": 16,
@@ -2695,11 +2697,11 @@
       "mod_nvg": 100,
       "mod_mount_001": 9,
       "mod_stock": 100,
-      "mod_mount_002": 71,
-      "mod_sight_front": 56,
+      "mod_mount_002": 72,
+      "mod_sight_front": 57,
       "mod_foregrip": 0,
       "mod_charge": 0,
-      "mod_mount_004": 75,
+      "mod_mount_004": 73,
       "mod_pistol_grip": 0,
       "mod_stock_000": 100
     }

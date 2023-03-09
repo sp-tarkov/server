@@ -77,6 +77,14 @@ export class DialogStaticRouter extends StaticRouter
                     }
                 ),
                 new RouteAction(
+                    "/client/mail/dialog/remove",
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    (url: string, info: any, sessionID: string, output: string): any => 
+                    {
+                        return this.dialogueCallbacks.removeMail(url, info, sessionID);
+                    }
+                ),
+                new RouteAction(
                     "/client/mail/dialog/getAllAttachments",
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     (url: string, info: any, sessionID: string, output: string): any => 
@@ -90,6 +98,14 @@ export class DialogStaticRouter extends StaticRouter
                     (url: string, info: any, sessionID: string, output: string): any => 
                     {
                         return this.dialogueCallbacks.sendMessage(url, info, sessionID);
+                    }
+                ),
+                new RouteAction(
+                    "/client/mail/dialog/clear",
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    (url: string, info: any, sessionID: string, output: string): any => 
+                    {
+                        return this.dialogueCallbacks.clearMail(url, info, sessionID);
                     }
                 ),
                 new RouteAction(
@@ -121,7 +137,15 @@ export class DialogStaticRouter extends StaticRouter
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     (url: string, info: any, sessionID: string, output: string): any => 
                     {
-                        return this.dialogueCallbacks.friendRequest(url, info, sessionID);
+                        return this.dialogueCallbacks.sendFriendRequest(url, info, sessionID);
+                    }
+                ),
+                new RouteAction(
+                    "/client/friend/delete",
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    (url: string, info: any, sessionID: string, output: string): any => 
+                    {
+                        return this.dialogueCallbacks.deleteFriend(url, info, sessionID);
                     }
                 )
             ]

@@ -1,6 +1,6 @@
 {
     "name": "aki-server",
-    "version": "3.5.0",
+    "version": "3.5.1",
     "author": "SPT-AKI",
     "license": "NCSA",
     "main": "obj/bundle.js",

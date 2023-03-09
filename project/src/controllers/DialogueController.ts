@@ -6,7 +6,7 @@ import { IGetFriendListDataResponse } from "../models/eft/dialog/IGetFriendListD
 import {
     IGetMailDialogViewResponseData
 } from "../models/eft/dialog/IGetMailDialogViewResponseData";
-import { DialogueInfo, Message } from "../models/eft/profile/IAkiProfile";
+import { DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "../models/eft/profile/IAkiProfile";
 import { MessageType } from "../models/enums/MessageType";
 import { SaveServer } from "../servers/SaveServer";
 import { TimeUtil } from "../utils/TimeUtil";
@@ -67,14 +67,17 @@ export class DialogueController
     {
         const dialogue = this.saveServer.getProfile(sessionID).dialogues[dialogueID];
 
-        return {
+        const result: DialogueInfo = {
             "_id": dialogueID,
-            "type": MessageType.NPC_TRADER,
+            "type": dialogue.type ? dialogue.type : MessageType.NPC_TRADER,
             "message": this.dialogueHelper.getMessagePreview(dialogue),
             "new": dialogue.new,
             "attachmentsNew": dialogue.attachmentsNew,
-            "pinned": dialogue.pinned
+            "pinned": dialogue.pinned,
+            Users: dialogue.Users ? dialogue.Users : undefined
         };
+
+        return result;
     }
 
     /**
@@ -87,7 +90,8 @@ export class DialogueController
      */
     public generateDialogueView(dialogueID: string, sessionID: string): IGetMailDialogViewResponseData
     {
-        const dialogue = this.saveServer.getProfile(sessionID).dialogues[dialogueID];
+        const profile = this.saveServer.getProfile(sessionID);
+        const dialogue = profile.dialogues[dialogueID];
         dialogue.new = 0;
 
         // Set number of new attachments, but ignore those that have expired.
@@ -95,9 +99,30 @@ export class DialogueController
 
         return { 
             messages: dialogue.messages,
-            profiles: [],
+            profiles: this.getProfilesForMail(profile, dialogue.Users),
             hasMessagesWithRewards: this.messagesHaveUncollectedRewards(dialogue.messages)
         };
+    }
+
+    protected getProfilesForMail(pmcProfile: IAkiProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
+    {
+        const result: IUserDialogInfo[] = [];
+        if (dialogUsers)
+        {
+            result.push(...dialogUsers);
+            const profile = pmcProfile.characters.pmc;
+            result.push({
+                _id: pmcProfile.info.id,
+                info: {
+                    Nickname: profile.Info.Nickname,
+                    Side: profile.Info.Side,
+                    Level: profile.Info.Level,
+                    MemberCategory: profile.Info.MemberCategory
+                }
+            });
+        }
+
+        return result;
     }
 
     /**
