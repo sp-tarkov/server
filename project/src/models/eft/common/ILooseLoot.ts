@@ -3,6 +3,7 @@ import { Item } from "./tables/IItem";
 export interface ILooseLoot 
 {
     spawnpointCount: SpawnpointCount;
+    spawnpointTemplate: SpawnpointTemplate;
     spawnpointsForced: SpawnpointsForced[];
     spawnpoints: Spawnpoint[];
 }
