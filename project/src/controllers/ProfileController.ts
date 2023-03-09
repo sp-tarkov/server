@@ -160,10 +160,6 @@ export class ProfileController
         if (profile.trader.setQuestsAvailableForStart)
         {
             this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [QuestStatus.AvailableForStart]);
-
-            const response = this.eventOutputHolder.getOutput(sessionID);
-            // Add rewards for starting quests to profile
-            this.givePlayerStartingQuestRewards(profileDetails, sessionID, response);
         }
 
         // Profile is flagged as wanting quests set to ready to hand in and collect rewards
