@@ -190,6 +190,7 @@
     "server_start_meme_23": "SPT keeping your virginity safe since 2018",
     "server_start_meme_24": "The secret safe haven server is real! Dont tell anyone!",
     "server_start_success": "Happy playing",
+    "server_start_player_active_botreload_skill": "Your character has the 'BotReload' skill active, this will cause your guns to reload unnaturally fast, ignore this message if this is intended",
     "started_webserver_success": "Started webserver at %s",
     "trader-missing_durability_threshold_value": "Unable to find durability threshold value for trader: {{traderId}}, falling back to default of: {{value}}",
     "trader-missing_trader_details_using_default_refresh_time": "Trader: {{traderId}} not found, generating temp entry with default refresh time of: {{updateTime}}",

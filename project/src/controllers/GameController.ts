@@ -133,6 +133,24 @@ export class GameController
             {
                 this.seasonalEventService.checkForAndEnableSeasonalEvents();
             }
+
+            if (pmcProfile?.Skills?.Common)
+            {
+                this.warnOnActiveBotReloadSkill(pmcProfile);
+            }
+        }
+    }
+
+    /**
+     * Players set botReload to a high value and don't expect the crazy fast reload speeds, give them a warn about it
+     * @param pmcProfile Player profile
+     */
+    protected warnOnActiveBotReloadSkill(pmcProfile: IPmcData): void
+    {
+        const botReloadSkill = pmcProfile.Skills.Common.find(x => x.Id === "BotReload");
+        if (botReloadSkill?.Progress > 0)
+        {
+            this.logger.warning(this.localisationService.getText("server_start_player_active_botreload_skill"));
         }
     }
 
