@@ -13195,7 +13195,7 @@
           "id": "60cc6a0765e4664318606ad2",
           "index": 0,
           "type": "Experience",
-          "value": "6700"
+          "value": "11500"
         },
         {
           "findInRaid": true,
@@ -16430,7 +16430,7 @@
           "id": "60c8bf4d9bdefb3130121b0f",
           "index": 0,
           "type": "Experience",
-          "value": "7400"
+          "value": "10000"
         },
         {
           "findInRaid": true,
@@ -34746,7 +34746,7 @@
           "id": "60c8c54f919c14709f49739f",
           "index": 0,
           "type": "Experience",
-          "value": "7400"
+          "value": "30500"
         },
         {
           "findInRaid": true,
@@ -41162,7 +41162,7 @@
           "id": "60cca2c365e4664318606b6a",
           "index": 0,
           "type": "Experience",
-          "value": "5900"
+          "value": "9800"
         },
         {
           "findInRaid": true,
@@ -42685,7 +42685,7 @@
           "id": "60cca8fa65e4664318606b71",
           "index": 0,
           "type": "Experience",
-          "value": "6000"
+          "value": "10000"
         },
         {
           "findInRaid": true,
@@ -45760,9 +45760,15 @@
       "Started": [],
       "Success": [
         {
+          "id": "60cca8fa65e4623316715c62",
+          "index": 0,
+          "type": "Experience",
+          "value": "32000"
+        },
+        {
           "findInRaid": true,
           "id": "5e58dd4886f7747c2721870b",
-          "index": 0,
+          "index": 1,
           "items": [
             {
               "_id": "63fb6c1109ba76db5c0c0c0b",
@@ -46166,9 +46172,15 @@
       "Started": [],
       "Success": [
         {
+          "id": "60dcb8fb65e5623313715c63",
+          "index": 0,
+          "type": "Experience",
+          "value": "34800"
+        },
+        {
           "findInRaid": true,
           "id": "5e58ddad86f7747c2639ee44",
-          "index": 0,
+          "index": 1,
           "items": [
             {
               "_id": "63fb6c1109ba76db5c0c0c0c",
@@ -46185,7 +46197,7 @@
         {
           "findInRaid": true,
           "id": "5e58e25786f7740bef574f07",
-          "index": 1,
+          "index": 2,
           "items": [
             {
               "_id": "63fb6c1109ba76db5c0c0c0d",
@@ -51306,7 +51318,7 @@
           "id": "60d0907d401d874962160b10",
           "index": 0,
           "type": "Experience",
-          "value": "8500"
+          "value": "15300"
         },
         {
           "findInRaid": true,
@@ -57281,7 +57293,7 @@
           "id": "617bf5400cf4a041de5b3969",
           "index": 0,
           "type": "Experience",
-          "value": 8500
+          "value": 12000
         },
         {
           "findInRaid": true,
@@ -59045,7 +59057,7 @@
           "id": "61abc53e1b7da753125cfe2c",
           "index": 0,
           "type": "Experience",
-          "value": 8300
+          "value": 15300
         },
         {
           "findInRaid": true,
@@ -71509,7 +71521,7 @@
           "id": "63a5cf262964a7488f5243d4",
           "index": 0,
           "type": "Experience",
-          "value": 20000
+          "value": 28000
         },
         {
           "findInRaid": true,
@@ -71948,7 +71960,7 @@
                       "value": 100
                     },
                     "id": "63a9b16a87c76a25c912125e",
-                    "target": "Savage",
+                    "target": "Any",
                     "weapon": [
                       "5bf3e03b0db834001d2c4a9c",
                       "5ac4cd105acfc40016339859",
@@ -72113,7 +72125,7 @@
                       "value": 100
                     },
                     "id": "63a9b16a87c76a25c912125e",
-                    "target": "Savage",
+                    "target": "Any",
                     "weapon": [
                       "5447a9cd4bdc2dbd208b4567",
                       "5c07c60e0db834002330051f",
