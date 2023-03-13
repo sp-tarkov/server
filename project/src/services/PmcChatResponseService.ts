@@ -203,7 +203,7 @@ export class PmcChatResponseService
      */
     protected getVictimDetails(pmcVictim: Victim): IUserDialogInfo
     {
-        const categories = [MemberCategory.UNIQUE_ID, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.SHERPA, MemberCategory.DEVELOPER];
+        const categories = [MemberCategory.UNIQUE_ID, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.SHERPA, MemberCategory.DEVELOPER];
         return {_id: pmcVictim.Name, info:{Nickname: pmcVictim.Name, Level: pmcVictim.Level, Side: pmcVictim.Side, MemberCategory: this.randomUtil.getArrayValue(categories)}};
     }
 }
