@@ -3797,7 +3797,7 @@
       "BotSide": "Savage",
       "SpawnPoints": "BotZone",
       "WildSpawnType": "assault",
-      "isPlayers": true,
+      "isPlayers": false,
       "number": 0,
       "slots_max": 2,
       "slots_min": 1,
