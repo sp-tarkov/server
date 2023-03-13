@@ -30,17 +30,23 @@ export class PmcChatResponseService
     }
 
     /**
-     * Chooses a random victim from those provided and sends a message to the player, can be positive or negative
+     * For each PMC victim of the player, have a chance to send a message to the player, can be positive or negative
      * @param sessionId Session id
      * @param pmcVictims Array of bots killed by player
      */
     public sendVictimResponse(sessionId: string, pmcVictims: Victim[]): void
     {
-        const victim = this.chooseRandomVictim(pmcVictims);
+        for (const victim of pmcVictims)
+        {
+            if (!this.randomUtil.getChance100(this.pmcResponsesConfig.victim.responseChancePercent))
+            {
+                continue;
+            }
 
-        const message = this.chooseMessage(true);
-
-        this.notificationSendHelper.sendMessageToPlayer(sessionId, victim, message, MessageType.USER_MESSAGE);
+            const victimDetails = this.getVictimDetails(victim);
+            const message = this.chooseMessage(true);
+            this.notificationSendHelper.sendMessageToPlayer(sessionId, victimDetails, message, MessageType.USER_MESSAGE);
+        }        
     }
 
 
@@ -187,6 +193,17 @@ export class PmcChatResponseService
     {
         const randomVictim = this.randomUtil.getArrayValue(pmcVictims);
 
-        return {_id: randomVictim.Name, info:{Nickname: randomVictim.Name, Level: randomVictim.Level, Side: randomVictim.Side, MemberCategory: MemberCategory.UNIQUE_ID}};
+        return this.getVictimDetails(randomVictim);
+    }
+
+    /**
+     * Convert a victim object into a IUserDialogInfo object
+     * @param pmcVictim victim to convert
+     * @returns IUserDialogInfo
+     */
+    protected getVictimDetails(pmcVictim: Victim): IUserDialogInfo
+    {
+        const categories = [MemberCategory.UNIQUE_ID, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.SHERPA, MemberCategory.DEVELOPER];
+        return {_id: pmcVictim.Name, info:{Nickname: pmcVictim.Name, Level: pmcVictim.Level, Side: pmcVictim.Side, MemberCategory: this.randomUtil.getArrayValue(categories)}};
     }
 }

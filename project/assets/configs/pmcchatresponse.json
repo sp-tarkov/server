@@ -1,8 +1,8 @@
 {
     "victim": {
-        "responseChancePercent": 15,
+        "responseChancePercent": 7,
         "responseTypeWeights": {
-            "positive": 8,
+            "positive": 7,
             "negative": 2,
             "plead": 2
         },
