@@ -1,4 +1,3 @@
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { inject, injectable } from "tsyringe";
 
 import { DialogueHelper } from "../helpers/DialogueHelper";
@@ -8,6 +7,7 @@ import { QuestConditionHelper } from "../helpers/QuestConditionHelper";
 import { QuestHelper } from "../helpers/QuestHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Quest } from "../models/eft/common/tables/IBotBase";
+import { Item } from "../models/eft/common/tables/IItem";
 import { AvailableForConditions, IQuest, Reward } from "../models/eft/common/tables/IQuest";
 import { IRepeatableQuest } from "../models/eft/common/tables/IRepeatableQuests";
 import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";

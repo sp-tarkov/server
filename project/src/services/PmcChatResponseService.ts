@@ -77,9 +77,11 @@ export class PmcChatResponseService
 
         // Choose random response from above list and request it from localisation service
         let responseText = this.localisationService.getText(this.randomUtil.getArrayValue(possibleResponseLocaleKeys));
-        if (this.appendBroToMessageEnd(isVictim))
+
+        if (this.appendSuffixToMessageEnd(isVictim))
         {
-            responseText += " bro";
+            const suffixText = this.localisationService.getText(this.randomUtil.getArrayValue(this.getResponseSuffixLocaleKeys()));
+            responseText += ` ${suffixText}`;
         }
         
         if (this.stripCapitalistion(isVictim))
@@ -124,11 +126,11 @@ export class PmcChatResponseService
     }
 
     /**
-     * Should the word 'bro' be appended to the message being sent to player
+     * Should a suffix be appended to the end of the message being sent to player
      * @param isVictim Was responder a victim of player
      * @returns true = should be stripped
      */
-    appendBroToMessageEnd(isVictim: boolean): boolean
+    appendSuffixToMessageEnd(isVictim: boolean): boolean
     {
         const chance = isVictim
             ? this.pmcResponsesConfig.victim.appendBroToMessageEndChancePercent
@@ -163,6 +165,17 @@ export class PmcChatResponseService
         const keys = this.localisationService.getKeys();
 
         return keys.filter(x => x.startsWith(`${keyBase}${keyType}`));
+    }
+
+    /**
+     * Get all locale keys that start with `pmcresponse-suffix`
+     * @returns array of keys
+     */
+    protected getResponseSuffixLocaleKeys(): string[]
+    {
+        const keys = this.localisationService.getKeys();
+
+        return keys.filter(x => x.startsWith("pmcresponse-suffix"));
     }
 
     /**
