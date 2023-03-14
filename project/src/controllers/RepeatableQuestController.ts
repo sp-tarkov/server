@@ -435,12 +435,13 @@ export class RepeatableQuestController
 
         if (Math.random() < repeatableConfig.questConfig.Exploration.specificExits.probability)
         {
-            // Filter by whitelist, it's also possible that the field "PassageRequirement" does not exist (e.g. shoreline)
+            // Filter by whitelist, it's also possible that the field "PassageRequirement" does not exist (e.g. Shoreline)
             // Scav exits are not listed at all in locations.base currently. If that changes at some point, additional filtering will be required
-            const possibleExists = (this.databaseServer.getTables().locations[locationKey.toLowerCase()].base as ILocationBase).exits.filter(
-                x => !("PassageRequirement" in x)
-                    || repeatableConfig.questConfig.Exploration.specificExits.passageRequirementWhitelist.includes(x.PassageRequirement)
-                    || x.Chance > 0
+            const mapExits = (this.databaseServer.getTables().locations[locationKey.toLowerCase()].base as ILocationBase).exits;
+            const possibleExists = mapExits.filter(
+                x => (!("PassageRequirement" in x)
+                    || repeatableConfig.questConfig.Exploration.specificExits.passageRequirementWhitelist.includes(x.PassageRequirement))
+                    && x.Chance > 0
             );
             const exit = this.randomUtil.drawRandomFromList(possibleExists, 1)[0];
             const exitCondition = this.generateExplorationExitCondition(exit);
