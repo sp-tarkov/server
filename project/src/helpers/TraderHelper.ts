@@ -14,16 +14,20 @@ import { SaveServer } from "../servers/SaveServer";
 import { FenceService } from "../services/FenceService";
 import { LocalisationService } from "../services/LocalisationService";
 import { PlayerService } from "../services/PlayerService";
+import { RandomUtil } from "../utils/RandomUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 import { HandbookHelper } from "./HandbookHelper";
+import { ItemHelper } from "./ItemHelper";
 import { ProfileHelper } from "./ProfileHelper";
 
 @injectable()
 export class TraderHelper
 {
     protected traderConfig: ITraderConfig;
-    /** Dictionary of item tpl and the highest trader rouble price */
+    /** Dictionary of item tpl and the highest trader sell rouble price */
     protected highestTraderPriceItems: Record<string, number> = null;
+    /** Dictionary of item tpl and the highest trader buy back rouble price */
+    protected highestTraderBuyPriceItems: Record<string, number> = null;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -31,10 +35,12 @@ export class TraderHelper
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PlayerService") protected playerService: PlayerService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
@@ -266,6 +272,7 @@ export class TraderHelper
 
     /**
      * Get the highest rouble price for an item from traders
+     * UNUSED
      * @param tpl Item to look up highest pride for
      * @returns highest rouble cost for item
      */
@@ -276,8 +283,12 @@ export class TraderHelper
             return this.highestTraderPriceItems[tpl];
         }
 
+        if (!this.highestTraderPriceItems)
+        {
+            this.highestTraderPriceItems = {};
+        }
+
         // Init dict and fill
-        this.highestTraderPriceItems = {};
         for (const traderName in Traders)
         {
             // Skip some traders
@@ -313,5 +324,57 @@ export class TraderHelper
         }
 
         return this.highestTraderPriceItems[tpl];
+    }
+
+    /**
+     * Get the highest price item can be sold to trader for (roubles)
+     * @param tpl Item to look up best trader sell-to price
+     * @returns Rouble price
+     */
+    public getHighestSellToTraderPrice(tpl: string): number
+    {
+        // Init dict if doesn't exist
+        if (!this.highestTraderBuyPriceItems)
+        {
+            this.highestTraderBuyPriceItems = {};
+        }
+
+        // Return result if it exists
+        if (this.highestTraderBuyPriceItems[tpl])
+        {
+            return this.highestTraderBuyPriceItems[tpl];
+        }
+
+        
+        // Find highest trader price for item
+        for (const traderName in Traders)
+        {
+            // Get trader and check buy category allows tpl
+            const traderBase = this.databaseServer.getTables().traders[Traders[traderName]]?.base;
+            if (traderBase && this.itemHelper.isOfBaseclasses(tpl, traderBase.items_buy.category))
+            {
+                // Get loyalty level details player has achieved with this trader
+                // Uses lowest loyalty level as this function is used before a player has logged into server - we have no idea what player loyalty is with traders
+                const relevantLoyaltyData = traderBase.loyaltyLevels[0];
+                const traderBuyBackPricePercent = relevantLoyaltyData.buy_price_coef;
+
+                const itemHandbookPrice = this.handbookHelper.getTemplatePrice(tpl);
+                const priceTraderBuysItemAt = Math.round(this.randomUtil.getPercentOfValue(traderBuyBackPricePercent, itemHandbookPrice));
+
+                // Set new item to 1 rouble as default
+                if (!this.highestTraderBuyPriceItems[tpl])
+                {
+                    this.highestTraderBuyPriceItems[tpl] = 1;
+                }
+
+                // Existing price smaller in dict than current iteration, overwrite
+                if (this.highestTraderBuyPriceItems[tpl] < priceTraderBuysItemAt)
+                {
+                    this.highestTraderBuyPriceItems[tpl] = priceTraderBuysItemAt;
+                }
+            }
+        }
+
+        return this.highestTraderBuyPriceItems[tpl];
     }
 }

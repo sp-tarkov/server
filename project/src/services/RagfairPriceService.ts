@@ -212,7 +212,7 @@ export class RagfairPriceService implements OnLoad
             if (this.ragfairConfig.dynamic.useTraderPriceForOffersIfHigher)
             {
                 // Get highest trader price for item, if greater than value found so far, use it
-                const traderPrice = this.traderHelper.getHighestTraderPriceRouble(item._tpl);
+                const traderPrice = this.traderHelper.getHighestSellToTraderPrice(item._tpl);
                 if (traderPrice > itemPrice)
                 {
                     itemPrice = traderPrice;
@@ -368,7 +368,7 @@ export class RagfairPriceService implements OnLoad
     protected getHighestHandbookOrTraderPriceAsRouble(itemTpl: string): number
     {
         let price = this.getStaticPriceForItem(itemTpl);
-        const traderPrice = this.traderHelper.getHighestTraderPriceRouble(itemTpl);
+        const traderPrice = this.traderHelper.getHighestSellToTraderPrice(itemTpl);
         if (traderPrice > price)
         {
             price = traderPrice;
