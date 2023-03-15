@@ -340,5 +340,12 @@
     "pmcresponse-suffix_15": "champ",
     "pmcresponse-suffix_16": "amigo",
     "pmcresponse-suffix_17": "bud",
-    "pmcresponse-suffix_18": "guy"
+    "pmcresponse-suffix_18": "guy",
+	"launcher-profile_standard": "Same as live, basic stash size (10x28), 500,000 roubles",
+	"launcher-profile_leftbehind": "Same as Standard plus; larger stash size (10x38), extra equipment/items, 500 dollars",
+	"launcher-profile_preparetoescape": "Same as Left Behind plus; larger stash size (10x48), extra equipment/items, higher starting reputation with traders, 250 euros",
+	"launcher-edgeofdarkness": "Same as Prepare To Escape plus; larger stash size (10x68), extra equipment/items, higher starting reputation with traders, 1000 dollars, 500 euros",
+	"launcher-profile_spteasystart": "Lots of Roubles/Dollars/Euros, Some QoL skills are level 20, trader rep maxed, starting level is 69, no quests completed",
+	"launcher-profile_sptzerotohero": "Start with almost nothing, no Roubles/Dollars/Euros, no trader rep, 1 knife, no quests completed",
+	"launcher-profile_sptdeveloper": "Testing profile, starting level is 69, lots of Roubles/Dollars/Euros, USEC start with all quests ready to start, BEAR start with all quests ready to hand in, invincibility balaclava"
 }

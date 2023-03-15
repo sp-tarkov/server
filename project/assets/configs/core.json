@@ -1,5 +1,6 @@
 {
     "akiVersion": "3.5.3",
     "projectName": "SPT-AKI",
-    "compatibleTarkovVersion": "0.13.0.22173"
+    "compatibleTarkovVersion": "0.13.0.22173",
+	"serverName": "SPT Server"
 }
