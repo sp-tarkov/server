@@ -203,7 +203,11 @@ export class RagfairPriceService implements OnLoad
         {
             // Get dynamic price, fallback to handbook price if value of 1 found
             let itemPrice = this.getFleaPriceForItem(item._tpl);
-            itemPrice = this.adjustPriceIfBelowHandbook(itemPrice, item._tpl);
+
+            if (this.ragfairConfig.dynamic.offerAdjustment.adjustPriceWhenBelowHandbookPrice)
+            {
+                itemPrice = this.adjustPriceIfBelowHandbook(itemPrice, item._tpl);
+            }
 
             if (this.ragfairConfig.dynamic.useTraderPriceForOffersIfHigher)
             {
