@@ -1,3 +1,4 @@
+import { MinMaxWithWhitelist } from "../../../models/eft/common/tables/IBotType";
 import { MinMax } from "../../common/MinMax";
 import { IBaseConfig } from "./IBaseConfig";
 import { IBotDurability } from "./IBotDurability";
@@ -97,7 +98,7 @@ export interface ModLimits
 export interface RandomisationDetails
 {
     levelRange: MinMax
-    generation?: Record<string, MinMax>
+    generation?: Record<string, MinMaxWithWhitelist>
     randomisedWeaponModSlots?: string[]
     randomisedArmorSlots?: string[]
     /** Equipment chances */

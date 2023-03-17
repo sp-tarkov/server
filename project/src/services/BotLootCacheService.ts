@@ -1,7 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
 import { PMCLootGenerator } from "../generators/PMCLootGenerator";
-import { Items } from "../models/eft/common/tables/IBotType";
+import { ItemHelper } from "../helpers/ItemHelper";
+import { IBotType } from "../models/eft/common/tables/IBotType";
 import { ITemplateItem, Props } from "../models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "../models/enums/BaseClasses";
 import { BotLootCache, LootCacheType } from "../models/spt/bots/BotLootCache";
@@ -19,6 +20,7 @@ export class BotLootCacheService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PMCLootGenerator") protected pmcLootGenerator: PMCLootGenerator,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -41,15 +43,15 @@ export class BotLootCacheService
      * @param botRole bot to get loot for
      * @param isPmc is the bot a pmc
      * @param lootType what type of loot is needed (backpack/pocket/stim/vest etc)
-     * @param lootPool the full pool of loot (needed when cache is empty)
+     * @param botJsonTemplate Base json db file for the bot having its loot generated
      * @returns ITemplateItem array
      */
-    public getLootFromCache(botRole: string, isPmc: boolean, lootType: LootCacheType, lootPool: Items): ITemplateItem[]
+    public getLootFromCache(botRole: string, isPmc: boolean, lootType: LootCacheType, botJsonTemplate: IBotType): ITemplateItem[]
     {
         if (!this.botRoleExistsInCache(botRole))
         {
             this.initCacheForBotRole(botRole);
-            this.addLootToCache(botRole, isPmc, lootPool);   
+            this.addLootToCache(botRole, isPmc, botJsonTemplate);
         }
 
         switch (lootType)
@@ -81,11 +83,14 @@ export class BotLootCacheService
     /**
      * Generate loot for a bot and store inside a private class property
      * @param botRole bots role (assault / pmcBot etc)
-     * @param lootPool the full pool of loot we use to create the various sub-categories with
      * @param isPmc Is the bot a PMC (alteres what loot is cached)
+     * @param botJsonTemplate db template for bot having its loot generated
      */
-    protected addLootToCache(botRole: string, isPmc: boolean, lootPool: Items): void
+    protected addLootToCache(botRole: string, isPmc: boolean, botJsonTemplate: IBotType): void
     {
+        // the full pool of loot we use to create the various sub-categories with
+        const lootPool = botJsonTemplate.inventory.items;
+
         // Flatten all individual slot loot pools into one big pool, while filtering out potentially missing templates
         const specialLootTemplates: ITemplateItem[] = [];
         const backpackLootTemplates: ITemplateItem[] = [];
@@ -103,32 +108,34 @@ export class BotLootCacheService
 
         for (const [slot, pool] of Object.entries(lootPool))
         {
+            // No items to add, skip
             if (!pool?.length)
             {
                 continue;
             }
 
+            // Sort loot pool into separate buckets
             let itemsToAdd: ITemplateItem[] = [];
             const items = this.databaseServer.getTables().templates.items;
             switch (slot.toLowerCase())
             {
                 case "specialloot":
-                    itemsToAdd = pool.map(lootTpl => items[lootTpl]);
+                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(specialLootTemplates, itemsToAdd);
                     break;
                 case "pockets":
-                    itemsToAdd = pool.map(lootTpl => items[lootTpl]);
+                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(pocketLootTemplates, itemsToAdd);
                     break;
                 case "tacticalvest":
-                    itemsToAdd = pool.map(lootTpl => items[lootTpl]);
+                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(vestLootTemplates, itemsToAdd);
                     break;
                 case "securedcontainer":
                     // Don't add these items to loot pool
                     break;
                 default:
-                    itemsToAdd = pool.map(lootTpl => items[lootTpl]);
+                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(backpackLootTemplates, itemsToAdd);
             }
             
@@ -146,25 +153,36 @@ export class BotLootCacheService
         this.sortPoolByRagfairPrice(vestLootTemplates);
         this.sortPoolByRagfairPrice(combinedPoolTemplates);
 
-        const specialLootItems = specialLootTemplates.filter(template =>
-            !(this.isBulletOrGrenade(template._props)
-            || this.isMagazine(template._props)));
+        // use whitelist if array has values, otherwise process above sorted pools
+        const specialLootItems = (botJsonTemplate.generation.items.specialItems.whitelist?.length > 0)
+            ? botJsonTemplate.generation.items.specialItems.whitelist.map(x => this.itemHelper.getItem(x)[1])
+            : specialLootTemplates.filter(template =>
+                !(this.isBulletOrGrenade(template._props)
+                || this.isMagazine(template._props)));
 
-        const healingItems = combinedPoolTemplates.filter(template =>
-            this.isMedicalItem(template._props)
-            && template._parent !== BaseClasses.STIMULATOR
-            && template._parent !== BaseClasses.DRUGS);
+        const healingItems = (botJsonTemplate.generation.items.healing.whitelist?.length > 0)
+            ? botJsonTemplate.generation.items.healing.whitelist.map(x => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter(template =>
+                this.isMedicalItem(template._props)
+                && template._parent !== BaseClasses.STIMULATOR
+                && template._parent !== BaseClasses.DRUGS);
 
-        const drugItems = combinedPoolTemplates.filter(template =>
-            this.isMedicalItem(template._props)
-            && template._parent === BaseClasses.DRUGS);
+        const drugItems = (botJsonTemplate.generation.items.drugs.whitelist?.length > 0)
+            ? botJsonTemplate.generation.items.drugs.whitelist.map(x => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter(template =>
+                this.isMedicalItem(template._props)
+                && template._parent === BaseClasses.DRUGS);
 
-        const stimItems = combinedPoolTemplates.filter(template =>
-            this.isMedicalItem(template._props)
-            && template._parent === BaseClasses.STIMULATOR);
+        const stimItems = (botJsonTemplate.generation.items.stims.whitelist?.length > 0)
+            ? botJsonTemplate.generation.items.stims.whitelist.map(x => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter(template =>
+                this.isMedicalItem(template._props)
+                && template._parent === BaseClasses.STIMULATOR);
 
-        const grenadeItems = combinedPoolTemplates.filter(template =>
-            this.isGrenade(template._props));
+        const grenadeItems = (botJsonTemplate.generation.items.grenades.whitelist?.length > 0)
+            ? botJsonTemplate.generation.items.grenades.whitelist.map(x => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter(template =>
+                this.isGrenade(template._props));
 
         // Get loot items (excluding magazines, bullets, grenades and healing items)
         const backpackLootItems = backpackLootTemplates.filter(template =>

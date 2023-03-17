@@ -2396,31 +2396,38 @@
         "items": {
             "drugs": {
                 "max": 2,
-                "min": 0
+                "min": 0,
+				"whitelist": []
             },
             "grenades": {
                 "max": 3,
-                "min": 0
+                "min": 0,
+				"whitelist": []
             },
             "healing": {
                 "max": 3,
-                "min": 1
+                "min": 1,
+				"whitelist": []
             },
             "looseLoot": {
                 "max": 23,
-                "min": 0
+                "min": 0,
+				"whitelist": []
             },
             "magazines": {
                 "max": 4,
-                "min": 2
+                "min": 2,
+				"whitelist": []
             },
             "specialItems": {
                 "max": 0,
-                "min": 0
+                "min": 0,
+				"whitelist": []
             },
             "stims": {
                 "max": 1,
-                "min": 0
+                "min": 0,
+				"whitelist": []
             }
         }
     },
