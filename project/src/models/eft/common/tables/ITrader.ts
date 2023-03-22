@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Item } from "./IItem"
+import { Item } from "./IItem";
 
 export interface ITrader 
 {

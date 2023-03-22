@@ -1,4 +1,4 @@
-import { Item, Location } from "../common/tables/IItem"
+import { Item, Location } from "../common/tables/IItem";
 
 export interface IAddItemTempObject
 {

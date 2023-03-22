@@ -1,4 +1,4 @@
-import { Skills } from "../common/tables/IBotBase"
+import { Skills } from "../common/tables/IBotBase";
 
 export interface IPlayerIncrementSkillLevelRequestData 
 {

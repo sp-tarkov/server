@@ -7,7 +7,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { AsyncQueue } from "@spt-aki/utils/AyncQueue";
+import { AsyncQueue } from "@spt-aki/utils/AsyncQueue";
 import { DatabaseImporter } from "@spt-aki/utils/DatabaseImporter";
 import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
@@ -22,7 +22,8 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { MockHelper } from "./MockHelper";
 import WinstonLogger from "./__mocks__/WinstonLogger";
 
-export class TestHelper {
+export class TestHelper 
+{
     logger: ILogger;
     asyncQueue: AsyncQueue;
     uuidGenerator: UUidGenerator;
@@ -44,7 +45,8 @@ export class TestHelper {
     itemBaseClassService: ItemBaseClassService;
     botHelper: BotHelper;
 
-    public static async fetchTestHelper() {
+    public static async fetchTestHelper() 
+    {
         const initTestHelper = new TestHelper();
         const mockHelper = new MockHelper();
 
@@ -60,10 +62,11 @@ export class TestHelper {
             initTestHelper.importerUtil
         );
         await dbImporter.onLoad();
-        return initTestHelper
+        return initTestHelper;
     }
 
-    constructor() {
+    constructor() 
+    {
 
         this.logger = new WinstonLogger();
         this.asyncQueue = new AsyncQueue();

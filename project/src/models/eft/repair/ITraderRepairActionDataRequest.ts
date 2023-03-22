@@ -1,4 +1,4 @@
-import { IBaseRepairActionDataRequest } from "./IBaseRepairActionDataRequest"
+import { IBaseRepairActionDataRequest } from "./IBaseRepairActionDataRequest";
 
 export interface ITraderRepairActionDataRequest extends IBaseRepairActionDataRequest
 {

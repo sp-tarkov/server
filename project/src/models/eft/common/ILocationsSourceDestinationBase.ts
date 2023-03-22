@@ -1,4 +1,4 @@
-import { ILocations } from "../../spt/server/ILocations"
+import { ILocations } from "../../spt/server/ILocations";
 
 export interface ILocationsGenerateAllResponse 
 {

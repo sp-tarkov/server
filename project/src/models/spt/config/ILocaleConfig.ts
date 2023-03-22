@@ -1,4 +1,4 @@
-import { IBaseConfig } from "./IBaseConfig"
+import { IBaseConfig } from "./IBaseConfig";
 
 export interface ILocaleConfig extends IBaseConfig
 {

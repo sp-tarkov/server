@@ -18,7 +18,7 @@ export class RagfairRequiredItemsService
 
     public getRequiredItemsById(searchId: string): any
     {
-        return this.requiredItemsCache[searchId] || []
+        return this.requiredItemsCache[searchId] || [];
     }
 
     public buildRequiredItemTable(): void

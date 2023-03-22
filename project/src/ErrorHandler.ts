@@ -1,6 +1,6 @@
 import readline from "readline";
 import { ILogger } from "./models/spt/utils/ILogger";
-import { AsyncQueue } from "./utils/AyncQueue";
+import { AsyncQueue } from "./utils/AsyncQueue";
 import { WinstonMainLogger } from "./utils/logging/WinstonMainLogger";
 import { UUidGenerator } from "./utils/UUidGenerator";
 

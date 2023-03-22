@@ -1,4 +1,4 @@
-import { IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData"
+import { IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData";
 
 export interface IInventoryTagRequestData extends IInventoryBaseActionRequestData 
 {

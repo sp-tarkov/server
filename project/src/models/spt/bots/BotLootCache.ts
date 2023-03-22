@@ -1,17 +1,17 @@
-import { ITemplateItem } from "../../eft/common/tables/ITemplateItem"
+import { ITemplateItem } from "../../eft/common/tables/ITemplateItem";
 
 export class BotLootCache
 {
-    backpackLoot: ITemplateItem[]
-    pocketLoot: ITemplateItem[]
-    vestLoot: ITemplateItem[]
-    combinedPoolLoot: ITemplateItem[]
+    backpackLoot: ITemplateItem[];
+    pocketLoot: ITemplateItem[];
+    vestLoot: ITemplateItem[];
+    combinedPoolLoot: ITemplateItem[];
 
-    specialItems: ITemplateItem[]
-    healingItems: ITemplateItem[]
-    drugItems: ITemplateItem[]
-    stimItems: ITemplateItem[]
-    grenadeItems: ITemplateItem[]
+    specialItems: ITemplateItem[];
+    healingItems: ITemplateItem[];
+    drugItems: ITemplateItem[];
+    stimItems: ITemplateItem[];
+    grenadeItems: ITemplateItem[];
 }
 
 export enum LootCacheType

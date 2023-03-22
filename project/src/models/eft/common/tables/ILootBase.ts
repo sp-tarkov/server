@@ -1,4 +1,4 @@
-import { Item } from "./IItem"
+import { Item } from "./IItem";
 
 export interface ILootBase 
 {

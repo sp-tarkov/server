@@ -1,5 +1,5 @@
-import { MinMax } from "../../common/MinMax"
-import { IBaseConfig } from "./IBaseConfig"
+import { MinMax } from "../../common/MinMax";
+import { IBaseConfig } from "./IBaseConfig";
 
 
 export interface IScavCaseConfig extends IBaseConfig

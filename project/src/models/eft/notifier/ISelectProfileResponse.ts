@@ -1,4 +1,4 @@
-import { INotifierChannel } from "./INotifier"
+import { INotifierChannel } from "./INotifier";
 
 export interface ISelectProfileResponse
 {

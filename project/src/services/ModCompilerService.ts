@@ -24,7 +24,7 @@ export class ModCompilerService
         let fileExists = true; // does every js file exist (been compiled before)
         for (const file of modTypeScriptFiles)
         {
-            const fileContent = this.vfs.readFile(file)
+            const fileContent = this.vfs.readFile(file);
             tsFileContents+= fileContent;
 
             // Does equivalent .js file exist
@@ -69,7 +69,7 @@ export class ModCompilerService
     {
         const tranOptions: TranspileOptions = {
             compilerOptions: options
-        }
+        };
 
         for (const filePath of fileNames)
         {

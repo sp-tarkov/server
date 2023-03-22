@@ -227,7 +227,7 @@ import { SeasonalEventService } from "../services/SeasonalEventService";
 import { TraderAssortService } from "../services/TraderAssortService";
 import { TraderPurchasePersisterService } from "../services/TraderPurchasePersisterService";
 import { App } from "../utils/App";
-import { AsyncQueue } from "../utils/AyncQueue";
+import { AsyncQueue } from "../utils/AsyncQueue";
 import { DatabaseImporter } from "../utils/DatabaseImporter";
 import { EncodingUtil } from "../utils/EncodingUtil";
 import { HashUtil } from "../utils/HashUtil";

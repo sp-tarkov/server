@@ -1,4 +1,4 @@
-import { IProcessBaseTradeRequestData } from "./IProcessBaseTradeRequestData"
+import { IProcessBaseTradeRequestData } from "./IProcessBaseTradeRequestData";
 
 export interface IProcessSellTradeRequestData extends IProcessBaseTradeRequestData 
 {

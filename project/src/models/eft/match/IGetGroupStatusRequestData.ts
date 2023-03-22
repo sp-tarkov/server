@@ -1,4 +1,4 @@
-import { RaidMode } from "../../enums/RaidMode"
+import { RaidMode } from "../../enums/RaidMode";
 
 export interface IGetGroupStatusRequestData
 {

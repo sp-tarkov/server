@@ -1,4 +1,4 @@
-import { Message } from "../profile/IAkiProfile"
+import { Message } from "../profile/IAkiProfile";
 
 export interface IGetAllAttachmentsResponse
 {

@@ -44,9 +44,9 @@ export abstract class AbstractWinstonLogger implements ILogger
             cyanBG: "cyanBG",
             whiteBG: "whiteBG"
         }
-    }
+    };
     protected logger: winston.Logger & SptLogger;
-    protected writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>
+    protected writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>;
 
     constructor(
         protected asyncQueue: IAsyncQueue,

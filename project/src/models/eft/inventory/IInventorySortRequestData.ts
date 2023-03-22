@@ -1,5 +1,5 @@
-import { Upd } from "../common/tables/IItem"
-import { IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData"
+import { Upd } from "../common/tables/IItem";
+import { IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData";
 
 export interface IInventorySortRequestData extends IInventoryBaseActionRequestData 
 {
