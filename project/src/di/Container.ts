@@ -200,6 +200,7 @@ import { ItemBaseClassService } from "../services/ItemBaseClassService";
 import { ItemFilterService } from "../services/ItemFilterService";
 import { LocaleService } from "../services/LocaleService";
 import { LocalisationService } from "../services/LocalisationService";
+import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
 import { MatchLocationService } from "../services/MatchLocationService";
 import { CustomItemService } from "../services/mod/CustomItemService";
 import { DynamicRouterModService } from "../services/mod/dynamicRouter/DynamicRouterModService";
@@ -604,6 +605,7 @@ export class Container
         depContainer.register<BotEquipmentModPoolService>("BotEquipmentModPoolService", BotEquipmentModPoolService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<BotWeaponModLimitService>("BotWeaponModLimitService", BotWeaponModLimitService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<SeasonalEventService>("SeasonalEventService", SeasonalEventService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<MatchBotDetailsCacheService>("MatchBotDetailsCacheService", MatchBotDetailsCacheService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<TraderPurchasePersisterService>("TraderPurchasePersisterService", TraderPurchasePersisterService);
         depContainer.register<PmcChatResponseService>("PmcChatResponseService", PmcChatResponseService);
     }

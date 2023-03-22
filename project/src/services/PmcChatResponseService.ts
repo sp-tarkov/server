@@ -3,15 +3,17 @@ import { inject, injectable } from "tsyringe";
 import { NotificationSendHelper } from "../helpers/NotificationSendHelper";
 import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
-import { Victim } from "../models/eft/common/tables/IBotBase";
+import { Aggressor, Victim } from "../models/eft/common/tables/IBotBase";
 import { IUserDialogInfo } from "../models/eft/profile/IAkiProfile";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { MemberCategory } from "../models/enums/MemberCategory";
 import { MessageType } from "../models/enums/MessageType";
 import { IPmcChatResponse } from "../models/spt/config/IPmChatResponse";
+import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 import { RandomUtil } from "../utils/RandomUtil";
 import { LocalisationService } from "./LocalisationService";
+import { MatchBotDetailsCacheService } from "./MatchBotDetailsCacheService";
 
 @injectable()
 export class PmcChatResponseService
@@ -19,8 +21,10 @@ export class PmcChatResponseService
     protected pmcResponsesConfig: IPmcChatResponse;
 
     constructor(
+        @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
+        @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("ConfigServer") protected configServer: ConfigServer
@@ -56,16 +60,43 @@ export class PmcChatResponseService
      * @param pmcData Players profile
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sendKillerResponse(sessionId: string, pmcData: IPmcData): void
+    public sendKillerResponse(sessionId: string, pmcData: IPmcData, killer: Aggressor): void
     {
-        const killer: IUserDialogInfo = {
-            _id: "",
-            info: undefined
+        if (!this.randomUtil.getChance100(this.pmcResponsesConfig.killer.responseChancePercent))
+        {
+            return;
+        }
+
+        // find bot by name in cache
+        const killerDetailsInCache = this.matchBotDetailsCacheService.getBotByName(killer.Name.trim());
+        if (!killerDetailsInCache)
+        {
+            return;
+        }
+
+        // If kill was not a PMC, skip
+        if (!["sptUsec", "sptBear"].includes(killerDetailsInCache.Info.Settings.Role))
+        {
+            return;
+        }
+
+        const killerDetails: IUserDialogInfo = {
+            _id: killerDetailsInCache._id,
+            info: {
+                Nickname: killerDetailsInCache.Info.Nickname,
+                Side: killerDetailsInCache.Info.Side,
+                Level: killerDetailsInCache.Info.Level,
+                MemberCategory: killerDetailsInCache.Info.MemberCategory
+            }
         };
 
         const message = this.chooseMessage(false);
+        if (!message)
+        {
+            return;
+        }
 
-        this.notificationSendHelper.sendMessageToPlayer(sessionId, killer, message, MessageType.USER_MESSAGE);
+        this.notificationSendHelper.sendMessageToPlayer(sessionId, killerDetails, message, MessageType.USER_MESSAGE);
     }
 
     /**
@@ -80,6 +111,12 @@ export class PmcChatResponseService
 
         // Get all locale keys
         const possibleResponseLocaleKeys = this.getResponseLocaleKeys(responseType, isVictim);
+        if (possibleResponseLocaleKeys.length === 0)
+        {
+            this.logger.warning(`No pmc response keys found for type: ${responseType}`);
+
+            return undefined;
+        }
 
         // Choose random response from above list and request it from localisation service
         let responseText = this.localisationService.getText(this.randomUtil.getArrayValue(possibleResponseLocaleKeys));

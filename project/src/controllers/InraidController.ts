@@ -29,6 +29,7 @@ import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
 import { InsuranceService } from "../services/InsuranceService";
 import { LocaleService } from "../services/LocaleService";
+import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
 import { PmcChatResponseService } from "../services/PmcChatResponseService";
 import { JsonUtil } from "../utils/JsonUtil";
 import { TimeUtil } from "../utils/TimeUtil";
@@ -50,6 +51,7 @@ export class InraidController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("PmcChatResponseService") protected pmcChatResponseService: PmcChatResponseService,
+        @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
         @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -145,7 +147,9 @@ export class InraidController
 
         if (isDead)
         {
-            //TODO - find way to get killer name //this.pmcChatResponseService.sendKillerResponse(sessionID, pmcData);
+            this.pmcChatResponseService.sendKillerResponse(sessionID, pmcData, offraidData.profile.Stats.Aggressor);
+            this.matchBotDetailsCacheService.clearCache();
+
             pmcData = this.performPostRaidActionsWhenDead(offraidData, pmcData, insuranceEnabled, preRaidGear, sessionID);
         }
 
