@@ -44,8 +44,7 @@
 			},
 			"bonusTypeWeight": {
 				"WeaponSpread": 1,
-				"MalfunctionProtections": 1,
-				"WeaponDamage": 1
+				"MalfunctionProtections": 1
 			},
 			"common": {
 				"WeaponSpread": {
@@ -62,16 +61,6 @@
 					"valuesMinMax": {
 						"min": 0.94,
 						"max": 0.96
-					},
-					"activeDurabilityPercentMinMax": {
-						"min": 75,
-						"max": 90
-					}
-				},
-				"WeaponDamage": {
-					"valuesMinMax": {
-						"min": 0.7,
-						"max": 0.9
 					},
 					"activeDurabilityPercentMinMax": {
 						"min": 75,
@@ -94,16 +83,6 @@
 					"valuesMinMax": {
 						"min": 0.75,
 						"max": 0.90
-					},
-					"activeDurabilityPercentMinMax": {
-						"min": 75,
-						"max": 90
-					}
-				},
-				"WeaponDamage": {
-					"valuesMinMax": {
-						"min": 0.3,
-						"max": 0.6
 					},
 					"activeDurabilityPercentMinMax": {
 						"min": 75,
