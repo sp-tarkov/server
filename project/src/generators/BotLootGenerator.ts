@@ -11,7 +11,7 @@ import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "../models/enums/BaseClasses";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { EquipmentSlots } from "../models/enums/EquipmentSlots";
-import { LootCacheType } from "../models/spt/bots/BotLootCache";
+import { LootCacheType } from "../models/spt/bots/IBotLootCache";
 import { IBotConfig } from "../models/spt/config/IBotConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";

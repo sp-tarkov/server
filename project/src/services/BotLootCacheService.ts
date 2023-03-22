@@ -5,7 +5,7 @@ import { ItemHelper } from "../helpers/ItemHelper";
 import { IBotType } from "../models/eft/common/tables/IBotType";
 import { ITemplateItem, Props } from "../models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "../models/enums/BaseClasses";
-import { BotLootCache, LootCacheType } from "../models/spt/bots/BotLootCache";
+import { IBotLootCache, LootCacheType } from "../models/spt/bots/IBotLootCache";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { JsonUtil } from "../utils/JsonUtil";
@@ -15,7 +15,7 @@ import { RagfairPriceService } from "./RagfairPriceService";
 @injectable()
 export class BotLootCacheService
 {
-    protected lootCache: Record<string, BotLootCache>;
+    protected lootCache: Record<string, IBotLootCache>;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
