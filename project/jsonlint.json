@@ -1,0 +1,11 @@
+{
+    "comments": false,
+    "trailing-commas": false,
+    "log-files": true,
+    "compact": true,
+    "continue": false,
+    "patterns": [
+        "assets/**/*.json",
+        "!assets/database/loot/*"
+    ]
+}
