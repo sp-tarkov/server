@@ -348,7 +348,7 @@ export class RepairService
             rarity: bonusRarity,
             buffType: bonusType,
             value: bonusValue,
-            thresholdDurability: this.randomUtil.getPercentOfValue(bonusThresholdPercent, repairDetails.repairedItem.upd.Repairable.Durability)
+            thresholdDurability: this.randomUtil.getPercentOfValue(repairDetails.repairedItem.upd.Repairable.Durability, bonusThresholdPercent)
         };
     }
 
