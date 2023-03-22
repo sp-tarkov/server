@@ -25,6 +25,26 @@ git config --local user.email "USERNAME@SOMETHING.com"
 - If you are updating a branch you've had for some time, run `npm ci` before running any tasks. This will run the clean and install target from npm.
 - You can debug your mods using the server, just copy your mod files into the `user/mods` folder and put breakpoints on the **JS** files. **DO NOT** contact the dev team for support on this.
 
+## Contributing
+
+- To contribute this project, you need to fork this repository from gitea.
+- Do your changes in your forked repository and push them.
+- Create a pull request to main repository from your forked repository. 
+
+If you want to sync your forked repository with main you need to add main repository as a remote, do the following in your forked repository:
+- Add main repository as upstream: 
+	- `git remote add upstream MAIN_REPOSITORY_GIT_URL`
+- Fetch the upstream
+	- `git fetch upstream`
+- Checkout to master branch
+	- `git checkout master`
+- Merge upstream/master into your master
+	- `git merge upstream/master`
+- Push your changes to fork repository
+	- `git push`
+
+Sometimes lfs will run into some trouble fetching upstream because of the massive json files. We suggest you deleting your fork and re-forking it. Remember to save your work before doing any deletion.
+
 ## Pulling
 - Run `git lfs fetch` and `git lfs pull` to acquire loot files
 
