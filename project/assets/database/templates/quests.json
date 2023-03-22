@@ -3794,7 +3794,7 @@
     "image": "/files/quest/icon/59c274ae86f77475060a9341.jpg",
     "instantComplete": false,
     "isKey": false,
-    "location": "any",
+    "location": "5704e3c2d2720bac5b8b4567",
     "name": "596a101f86f7741ddb481582 name",
     "note": "596a101f86f7741ddb481582 note",
     "questStatus": {},
@@ -5093,7 +5093,7 @@
             "status": [
               4
             ],
-            "target": "596b43fb86f77457ca186186",
+            "target": "596b36c586f77450d6045ad2",
             "visibilityConditions": []
           },
           "dynamicLocale": false
@@ -5802,7 +5802,7 @@
             "index": 0,
             "parentId": "",
             "status": [
-              2
+              4
             ],
             "target": "5979f9ba86f7740f6c3fe9f2",
             "visibilityConditions": []
@@ -16788,7 +16788,7 @@
             "status": [
               4
             ],
-            "target": "596a218586f77420d232807c"
+            "target": ""
           },
           "dynamicLocale": false
         },
@@ -16802,7 +16802,7 @@
             "status": [
               4
             ],
-            "target": "596b455186f77457cb50eccb"
+            "target": ""
           },
           "dynamicLocale": false
         }
@@ -18068,7 +18068,7 @@
     },
     "description": "5ac2426c86f774138762edfe description",
     "failMessageText": "5ac2426c86f774138762edfe failMessageText",
-    "image": "/files/quest/icon/5ae3260986f7745b3e3bf2a7.jpg",
+    "image": "/files/quest/icon/5ae3260986f8845b3e3bf2a8.jpg",
     "instantComplete": false,
     "isKey": false,
     "location": "any",
@@ -19948,7 +19948,7 @@
     "successMessageText": "5ac3462b86f7741d6118b983 successMessageText",
     "templateId": "5ac3462b86f7741d6118b983",
     "traderId": "5a7c2eca46aef81a7ca2145d",
-    "type": "PickUp"
+    "type": "Completion"
   },
   "5ac3464c86f7741d651d6877": {
     "QuestName": "Farming Part 4",
@@ -30135,7 +30135,7 @@
             "status": [
               4
             ],
-            "target": "5d25aed386f77442734d25d2",
+            "target": "5d24b81486f77439c92d6ba8",
             "visibilityConditions": []
           },
           "dynamicLocale": false
@@ -34528,7 +34528,7 @@
             "status": [
               4
             ],
-            "target": "5967725e86f774601a446662",
+            "target": "59c124d686f774189b3c843f",
             "visibilityConditions": []
           },
           "dynamicLocale": false
@@ -36116,7 +36116,29 @@
             "parentId": "",
             "type": "Completion",
             "value": "1",
-            "visibilityConditions": []
+            "visibilityConditions": [
+              {
+                "_parent": "CompleteCondition",
+                "_props": {
+                  "id": "5f06e63d4ab63001d036b505",
+                  "target": "5c10f94386f774227172c574"
+                }
+              },
+              {
+                "_parent": "CompleteCondition",
+                "_props": {
+                  "id": "5f06e543e52aec6e0936400c",
+                  "target": "5c10f94386f774227172c575"
+                }
+              },
+              {
+                "_parent": "CompleteCondition",
+                "_props": {
+                  "id": "5f06e647fdc0320a0850e200",
+                  "target": "5c10f94386f774227172c576"
+                }
+              }
+            ]
           },
           "dynamicLocale": false
         }
@@ -38540,11 +38562,12 @@
           "dynamicLocale": false
         },
         {
-          "_parent": "HandoverItem",
+          "_parent": "FindItem",
           "_props": {
+            "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "60e827faf09904268a4dbc40",
+            "id": "60e827a20c492412897c688e",
             "index": 42,
             "isEncoded": false,
             "maxDurability": 100,
@@ -38560,12 +38583,12 @@
           "dynamicLocale": false
         },
         {
-          "_parent": "FindItem",
+          "_parent": "HandoverItem",
           "_props": {
-            "countInRaid": false,
+								 
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "60e827a20c492412897c688e",
+            "id": "60e827faf09904268a4dbc40",
             "index": 43,
             "isEncoded": false,
             "maxDurability": 100,
@@ -38663,11 +38686,12 @@
           "dynamicLocale": false
         },
         {
-          "_parent": "HandoverItem",
+          "_parent": "FindItem",
           "_props": {
+            "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff004de19a4c3422ea5d",
+            "id": "60d9a73d9f89812e5b6ac368",
             "index": 48,
             "isEncoded": false,
             "maxDurability": 100,
@@ -38687,8 +38711,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff141c307729c3264f96",
+            "id": "62a6ff004de19a4c3422ea5d",
             "index": 49,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09ec84f842e1bd12da3f2"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a752ac6eb02bc726fcc6",
+            "index": 50,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38707,8 +38752,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff203e015d7ce1151d8a",
-            "index": 50,
+            "id": "62a6ff141c307729c3264f96",
+            "index": 51,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09e974f842e1bd12da3f0"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a77141fd1e14d71e2bfc",
+            "index": 52,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38727,8 +38793,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff454de19a4c3422ea5e",
-            "index": 51,
+            "id": "62a6ff203e015d7ce1151d8a",
+            "index": 53,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09e73af34e73a266d932a"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a77c646f74055e27750a",
+            "index": 54,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38747,8 +38834,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff53b0c0eb73f7394741",
-            "index": 52,
+            "id": "62a6ff454de19a4c3422ea5e",
+            "index": 55,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09e410b9d3c46de5b6e78"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a7955f9e6175514def1b",
+            "index": 56,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38767,8 +38875,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff633e015d7ce1151d8b",
-            "index": 53,
+            "id": "62a6ff53b0c0eb73f7394741",
+            "index": 57,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09e08de7ac81993580532"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a79fac6eb02bc726fcc7",
+            "index": 58,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38787,8 +38916,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff6b3e015d7ce1151d8c",
-            "index": 54,
+            "id": "62a6ff633e015d7ce1151d8b",
+            "index": 59,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09dd4621468534a797ac7"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a7abf81cc57f47174189",
+            "index": 60,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38807,8 +38957,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff7f1c307729c3264f97",
-            "index": 55,
+            "id": "62a6ff6b3e015d7ce1151d8c",
+            "index": 61,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09d79de7ac81993580530"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a7c7826ca0323464cf23",
+            "index": 62,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38827,8 +38998,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ff897230237f257cac2a",
-            "index": 56,
+            "id": "62a6ff7f1c307729c3264f97",
+            "index": 63,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09d3bcf4a99369e262447"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a7cf9f89812e5b6ac369",
+            "index": 64,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38847,8 +39039,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ffaa7230237f257cac2c",
-            "index": 57,
+            "id": "62a6ff897230237f257cac2a",
+            "index": 65,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09cfe4f842e1bd12da3e4"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a7dd401d87496216141f",
+            "index": 66,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38867,8 +39080,29 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "62a6ffb4a9a0ea77981b57d5",
-            "index": 58,
+            "id": "62a6ffaa7230237f257cac2c",
+            "index": 67,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a09cb7a04c0c5c6e0a84f8"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "60d9a80e807141159d0a4e5b",
+            "index": 68,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38887,8 +39121,49 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
+            "id": "62a6ffb4a9a0ea77981b57d5",
+            "index": 69,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a091170b9d3c46de5b6cf2"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "FindItem",
+          "_props": {
+            "countInRaid": false,
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
+            "id": "5db9aaf46194ab4e69304de8",
+            "index": 70,
+            "isEncoded": false,
+            "maxDurability": 100,
+            "minDurability": 0,
+            "onlyFoundInRaid": true,
+            "parentId": "",
+            "target": [
+              "62a08f4c4f842e1bd12d9d62"
+            ],
+            "value": "1",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "HandoverItem",
+          "_props": {
+            "dogtagLevel": 0,
+            "dynamicLocale": false,
             "id": "62a6ffbcec21e50cad3b6708",
-            "index": 59,
+            "index": 71,
             "isEncoded": false,
             "maxDurability": 100,
             "minDurability": 0,
@@ -38908,7 +39183,7 @@
             "compareMethod": ">=",
             "dynamicLocale": false,
             "id": "60d9d34e8a6f9a3731773f93",
-            "index": 60,
+            "index": 72,
             "parentId": "",
             "value": 55,
             "visibilityConditions": []
@@ -38951,7 +39226,7 @@
     },
     "description": "5c51aac186f77432ea65c552 description",
     "failMessageText": "5c51aac186f77432ea65c552 failMessageText",
-    "image": "/files/quest/icon/6137505384aedf00fa17b651.jpg",
+    "image": "/files/quest/icon/5c7eb06188a4504aae56deb7.jpg",
     "instantComplete": false,
     "isKey": false,
     "location": "any",
@@ -45333,6 +45608,23 @@
             "visibilityConditions": []
           },
           "dynamicLocale": false
+        },
+        {
+          "_parent": "Quest",
+          "_props": {
+            "availableAfter": 0,
+            "dispersion": 0,
+            "dynamicLocale": false,
+            "id": "5dc541c497f77469c87589a7",
+            "index": 1,
+            "parentId": "",
+            "status": [
+              2
+            ],
+            "target": "5d25e2e286f77444001e2e48",
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
         }
       ],
       "Fail": []
@@ -47183,7 +47475,7 @@
     "successMessageText": "5edab736cc183c769d778bc2 successMessageText",
     "templateId": "5edab736cc183c769d778bc2",
     "traderId": "54cb57776803fa99248b456e",
-    "type": "Discover"
+    "type": "Exploration"
   },
   "5edaba7c0c502106f869bc02": {
     "QuestName": "Colleagues Part 2",
@@ -51656,7 +51948,7 @@
     "successMessageText": "60896e28e4a85c72ef3fa301 successMessageText",
     "templateId": "60896e28e4a85c72ef3fa301",
     "traderId": "54cb57776803fa99248b456e",
-    "type": "Completion"
+    "type": "PickUp"
   },
   "6089732b59b92115597ad789": {
     "QuestName": "Surplus goods",
@@ -56904,25 +57196,8 @@
             "availableAfter": 0,
             "dispersion": 0,
             "dynamicLocale": false,
-            "id": "61ae0db440869119390a7bcc",
-            "index": 0,
-            "parentId": "",
-            "status": [
-              2,
-              4
-            ],
-            "target": "60896e28e4a85c72ef3fa301",
-            "visibilityConditions": []
-          },
-          "dynamicLocale": false
-        },
-        {
-          "_parent": "Quest",
-          "_props": {
-            "availableAfter": 0,
-            "dynamicLocale": false,
             "id": "51d33b2d4fad9e61441772c0",
-            "index": 1,
+            "index": 0,
             "parentId": "",
             "status": [
               4
@@ -57453,26 +57728,9 @@
             "index": 0,
             "parentId": "",
             "status": [
-              2,
               4
             ],
-            "target": "5ac3464c86f7741d651d6877",
-            "visibilityConditions": []
-          },
-          "dynamicLocale": false
-        },
-        {
-          "_parent": "Quest",
-          "_props": {
-            "availableAfter": 0,
-            "dynamicLocale": false,
-            "id": "51d33b2d4fad9e61441772c0",
-            "index": 1,
-            "parentId": "",
-            "status": [
-              4
-            ],
-            "target": "596760e186f7741e11214d58",
+            "target": "5ac3462b86f7741d6118b983",
             "visibilityConditions": []
           },
           "dynamicLocale": false
@@ -62127,7 +62385,7 @@
     "successMessageText": "626bd75e47ea7f506e5493c5 successMessageText",
     "templateId": "626bd75e47ea7f506e5493c5",
     "traderId": "5a7c2eca46aef81a7ca2145d",
-    "type": "PickUp"
+    "type": "Completion"
   },
   "626bdcc3a371ee3a7a3514c5": {
     "QuestName": "Stray Dogs",
@@ -62602,7 +62860,7 @@
     "successMessageText": "638fcd23dc65553116701d33 successMessageText",
     "templateId": "638fcd23dc65553116701d33",
     "traderId": "5ac3b934156ae10c4430e83c",
-    "type": "Completion"
+    "type": "PickUp"
   },
   "639135534b15ca31f76bc317": {
     "QuestName": "Your Car Needs a Service",
@@ -64276,7 +64534,7 @@
     "successMessageText": "639135d89444fb141f4e6eea successMessageText",
     "templateId": "639135d89444fb141f4e6eea",
     "traderId": "54cb57776803fa99248b456e",
-    "type": "Completion"
+    "type": "PickUp"
   },
   "639135e0fa894f0a866afde6": {
     "QuestName": "Urban Medicine",
@@ -65252,6 +65510,23 @@
             "index": 0,
             "parentId": "",
             "value": 10,
+            "visibilityConditions": []
+          },
+          "dynamicLocale": false
+        },
+        {
+          "_parent": "Quest",
+          "_props": {
+            "availableAfter": 0,
+            "dispersion": 0,
+            "dynamicLocale": false,
+            "id": "63a78e1827a4ff587e6dd0c1",
+            "index": 1,
+            "parentId": "",
+            "status": [
+              4
+            ],
+            "target": "63a88045abf76d719f42d715",
             "visibilityConditions": []
           },
           "dynamicLocale": false
