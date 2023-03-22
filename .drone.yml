@@ -34,6 +34,12 @@ steps:
       - pnpm run lint
       # - npm run check:circular
 
+  - name: Run JSON Validation
+    image: registry.sp-tarkov.com/spt/pnpm:7.25.1
+    commands:
+      - cd ./project
+      - pnpm run lint:json
+
   # - name: Jest coverage
   #   image: registry.sp-tarkov.com/spt/pnpm:7.25.1
   #   commands:
@@ -96,17 +102,6 @@ steps:
       event:
         - push
 
-  - name: Run JSON Validation
-    image: registry.sp-tarkov.com/spt/pnpm:7.25.1
-    commands:
-      - cd ./project
-      - pnpm run lint:json
-    depends_on:
-      - Run Rome
-    when:
-      event:
-        - push
-
   # - name: Jest coverage
   #   image: registry.sp-tarkov.com/spt/pnpm:7.25.1
   #   commands:
@@ -139,7 +134,7 @@ steps:
         -Dsonar.javascript.lcov.reportPaths=./project/coverage/lcov.info
     depends_on:
       # - Jest coverage
-      - Run JSON Validation
+      - Run Rome
     when:
       event:
         - push
