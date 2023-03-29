@@ -254,10 +254,9 @@ export class GameController
             const location: ILocationData = this.databaseServer.getTables().locations[locationKey];
             for (const wave of location.base.waves)
             {
-                // Ignore marksman waves as they're a whole other problem
-                if (wave.slots_min === wave.slots_max && wave.WildSpawnType !== "marksman")
+                if ((wave.slots_max - wave.slots_min === 0))
                 {
-                    this.logger.debug(`Fixed empty map: ${locationKey} wave: ${wave.number} of type: ${wave.WildSpawnType} in zone: ${wave.SpawnPoints}`);
+                    this.logger.debug(`Fixed ${wave.WildSpawnType} Spawn: ${locationKey} wave: ${wave.number} of type: ${wave.WildSpawnType} in zone: ${wave.SpawnPoints} with Max Slots of ${wave.slots_max}`);
                     wave.slots_max++;
                 }
             }
