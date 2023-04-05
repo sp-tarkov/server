@@ -112,7 +112,7 @@
       "Time": -1
     },
     {
-      "BossChance": 24,
+      "BossChance": 28,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -125,7 +125,7 @@
       "Time": -1
     },
     {
-      "BossChance": 6,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -163,7 +163,7 @@
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 260,
-  "BotStart": 20,
+  "BotStart": 120,
   "BotStop": 1500,
   "Description": "Very Big Map",
   "DisabledForScav": false,

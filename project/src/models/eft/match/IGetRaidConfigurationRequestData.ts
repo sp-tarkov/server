@@ -16,7 +16,7 @@ export interface IGetRaidConfigurationRequestData
 //     "keyId": "",
 //     "side": "Pmc",
 //     "location": "factory4_day",
-//     "timeVariant": "CURR",
+//     "timeVariant": "CURR", or "PAST"
 //     "raidMode": "Local",
 //     "metabolismDisabled": false,
 //     "playersSpawnPlace": "SamePlace",
