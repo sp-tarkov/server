@@ -501,10 +501,10 @@ export class RagfairController
             return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionID), this.localisationService.getText("ragfair-offer_not_found_in_profile_short"));
         }
 
-        const differenceInMins = (offers[index].endTime - this.timeUtil.getTimestamp()) / 6000;
-        if (differenceInMins > 1)
+        const differenceInSeconds = (offers[index].endTime - this.timeUtil.getTimestamp());
+        if (differenceInSeconds > this.ragfairConfig.sell.expireSeconds)// expireSeconds Default is 71 seconds
         {
-            const newEndTime = 11 + this.timeUtil.getTimestamp();
+            const newEndTime = this.ragfairConfig.sell.expireSeconds + this.timeUtil.getTimestamp();
             offers[index].endTime = Math.round(newEndTime);
         }
 

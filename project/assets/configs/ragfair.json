@@ -16,7 +16,8 @@
         "reputation": {
             "gain": 0.0000002,
             "loss": 0.0000002
-        }
+        },
+        "expireSeconds": 71
     },
     "traders": {
         "54cb50c76803fa8b248b4571": true,
