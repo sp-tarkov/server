@@ -67,8 +67,12 @@ export class BundleLoader
         {
             const bundlePath = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundle.key}`;
             const bundleFilepath = bundle.path || `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/");
-            this.bundles[bundle.key] = new BundleInfo(modpath, bundle, bundlePath, bundleFilepath);
+            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, bundlePath, bundleFilepath));
         }
+    }
+
+    public addBundle(key: string, b: BundleInfo): void {
+        this.bundles[key] = b;
     }
 }
 
