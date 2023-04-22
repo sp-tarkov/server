@@ -126,15 +126,24 @@ export class TraderHelper
         const traderInfo = pmcData.TradersInfo[traderId];
 
         // Add standing to trader
-        traderInfo.standing += standingToAdd;
-
-        // dont allow standing to fall below 0
-        if (traderInfo.standing < 0)
-        {
-            traderInfo.standing = 0;
-        }
+        traderInfo.standing = this.addStandingValuesTogether(traderInfo.standing, standingToAdd);
 
         this.lvlUp(traderId, sessionId);
+    }
+
+    /**
+     * Add standing to current standing and clamp value if it goes too low
+     * @param currentStanding current trader standing
+     * @param standingToAdd stansding to add to trader standing
+     * @returns current standing + added standing (clamped if needed)
+     */
+    protected addStandingValuesTogether(currentStanding: number, standingToAdd: number): number
+    {
+        const newStanding = currentStanding + standingToAdd;
+
+        return newStanding < 0
+            ? 0
+            : newStanding;
     }
 
     /**
