@@ -100,7 +100,7 @@ export class InventoryController
                 return this.httpResponseUtil.appendErrorToOutput(output, this.localisationService.getText("inventory-edit_trader_item"), 228);
             }
 
-            this.inventoryHelper.moveItemInternal(items.from, moveRequest);
+            this.inventoryHelper.moveItemInternal(pmcData, items.from, moveRequest);
         }
         else
         {
@@ -379,6 +379,10 @@ export class InventoryController
 
     /**
      * Toggles "Toggleable" items like night vision goggles and face shields.
+     * @param pmcData player profile
+     * @param body Toggle request
+     * @param sessionID Session id
+     * @returns IItemEventRouterResponse
      */
     public toggleItem(pmcData: IPmcData, body: IInventoryToggleRequestData, sessionID: string): IItemEventRouterResponse
     {
@@ -388,16 +392,24 @@ export class InventoryController
             pmcData = this.profileHelper.getScavProfile(sessionID);
         }
 
-        for (const item of pmcData.Inventory.items)
+        const itemToToggle = pmcData.Inventory.items.find(x => x._id === body.item);
+        if (itemToToggle)
         {
-            if (item._id && item._id === body.item)
+            if (!itemToToggle.upd)
             {
-                item.upd.Togglable = { On: body.value };
-                return this.eventOutputHolder.getOutput(sessionID);
+                this.logger.warning(`Item with _id: ${itemToToggle._id} is missing a upd object, adding`);
+                itemToToggle.upd = {};
             }
+
+            itemToToggle.upd.Togglable = { On: body.value };
+
+            return this.eventOutputHolder.getOutput(sessionID);
+        }
+        else
+        {
+            this.logger.warning(`Unable to find inventory item with _id to toggle: ${body.item}`);
         }
 
-        //return "";
         return {
             warnings: [],
             profileChanges: {}
@@ -436,17 +448,25 @@ export class InventoryController
         };
     }
 
-    public bindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
+    /**
+     * Bind an inventory item to the quick access menu at bottom of player screen
+     * @param pmcData Player profile
+     * @param bindRequest Reqeust object
+     * @param sessionID Session id
+     * @returns IItemEventRouterResponse
+     */
+    public bindItem(pmcData: IPmcData, bindRequest: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
     {
         for (const index in pmcData.Inventory.fastPanel)
         {
-            if (pmcData.Inventory.fastPanel[index] === body.item)
+            if (pmcData.Inventory.fastPanel[index] === bindRequest.item)
             {
                 pmcData.Inventory.fastPanel[index] = "";
             }
         }
 
-        pmcData.Inventory.fastPanel[body.index] = body.item;
+        pmcData.Inventory.fastPanel[bindRequest.index] = bindRequest.item;
+
         return this.eventOutputHolder.getOutput(sessionID);
     }
 

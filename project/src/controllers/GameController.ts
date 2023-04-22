@@ -64,6 +64,8 @@ export class GameController
         // Store start time in app context
         this.applicationContext.addValue(ContextVariableType.CLIENT_START_TIMESTAMP, startTimeStampMS);
 
+        this.fixShotgunDispersions();
+
         this.openZoneService.applyZoneChangesToAllMaps();
         this.customLocationWaveService.applyWaveChangesToAllMaps();
 
@@ -133,6 +135,44 @@ export class GameController
             {
                 this.seasonalEventService.checkForAndEnableSeasonalEvents();
             }
+
+            if (pmcProfile?.Skills?.Common)
+            {
+                this.warnOnActiveBotReloadSkill(pmcProfile);
+            }
+        }
+    }
+
+    /**
+     * BSG have two values for shotgun dispersion, we make sure both have the same value
+     */
+    protected fixShotgunDispersions(): void
+    {
+        const itemDb = this.databaseServer.getTables().templates.items;
+
+        // Saiga 12ga
+        // Toz 106
+        // Remington 870
+        const shotguns = ["576165642459773c7a400233", "5a38e6bac4a2826c6e06d79b", "5a7828548dc32e5a9c28b516"];
+        for (const shotgunId of shotguns)
+        {
+            if (itemDb[shotgunId]._props.ShotgunDispersion)
+            {
+                itemDb[shotgunId]._props.shotgunDispersion = itemDb[shotgunId]._props.ShotgunDispersion;
+            }
+        }
+    }
+
+    /**
+     * Players set botReload to a high value and don't expect the crazy fast reload speeds, give them a warn about it
+     * @param pmcProfile Player profile
+     */
+    protected warnOnActiveBotReloadSkill(pmcProfile: IPmcData): void
+    {
+        const botReloadSkill = pmcProfile.Skills.Common.find(x => x.Id === "BotReload");
+        if (botReloadSkill?.Progress > 0)
+        {
+            this.logger.warning(this.localisationService.getText("server_start_player_active_botreload_skill"));
         }
     }
 
@@ -236,10 +276,9 @@ export class GameController
             const location: ILocationData = this.databaseServer.getTables().locations[locationKey];
             for (const wave of location.base.waves)
             {
-                // Ignore marksman waves as they're a whole other problem
-                if (wave.slots_min === wave.slots_max && wave.WildSpawnType !== "marksman")
+                if ((wave.slots_max - wave.slots_min === 0))
                 {
-                    this.logger.debug(`Fixed empty map: ${locationKey} wave: ${wave.number} of type: ${wave.WildSpawnType} in zone: ${wave.SpawnPoints}`);
+                    this.logger.debug(`Fixed ${wave.WildSpawnType} Spawn: ${locationKey} wave: ${wave.number} of type: ${wave.WildSpawnType} in zone: ${wave.SpawnPoints} with Max Slots of ${wave.slots_max}`);
                     wave.slots_max++;
                 }
             }

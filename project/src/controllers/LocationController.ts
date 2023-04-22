@@ -2,12 +2,14 @@ import { inject, injectable } from "tsyringe";
 
 import { LocationGenerator } from "../generators/LocationGenerator";
 import { LootGenerator } from "../generators/LootGenerator";
+import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
 import { ILocation } from "../models/eft/common/ILocation";
 import { ILocationBase } from "../models/eft/common/ILocationBase";
 import {
     ILocationsGenerateAllResponse
 } from "../models/eft/common/ILocationsSourceDestinationBase";
 import { ILooseLoot, SpawnpointTemplate } from "../models/eft/common/ILooseLoot";
+import { AirdropTypeEnum } from "../models/enums/AirdropType";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { IAirdropConfig } from "../models/spt/config/IAirdropConfig";
 import { ILocations } from "../models/spt/server/ILocations";
@@ -29,6 +31,7 @@ export class LocationController
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("LocationGenerator") protected locationGenerator: LocationGenerator,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -106,7 +109,10 @@ export class LocationController
         return output;
     }
 
-    /* get all locations without loot data */
+    /**
+     * Get all maps base location properties without loot data
+     * @returns ILocationsGenerateAllResponse
+     */
     public generateAll(): ILocationsGenerateAllResponse
     {
         const locations = this.databaseServer.getTables().locations;
@@ -138,20 +144,52 @@ export class LocationController
     /**
      * Get loot for an airdop container
      * Generates it randomly based on config/airdrop.json values
-     * @returns Array of LootItem
+     * @returns Array of LootItem objects
      */
     public getAirdropLoot(): LootItem[]
     {
-        const options: LootRequest = {
-            presetCount: this.airdropConfig.loot.presetCount,
-            itemCount: this.airdropConfig.loot.itemCount,
-            itemBlacklist: this.airdropConfig.loot.itemBlacklist,
-            itemTypeWhitelist: this.airdropConfig.loot.itemTypeWhitelist,
-            itemLimits: this.airdropConfig.loot.itemLimits,
-            itemStackLimits: this.airdropConfig.loot.itemStackLimits,
-            armorLevelWhitelist: this.airdropConfig.loot.armorLevelWhitelist
-        };
+        const airdropType = this.chooseAirdropType();
 
-        return this.lootGenerator.createRandomloot(options);
+        this.logger.debug(`Chose ${airdropType} for airdrop loot`);
+
+        const airdropConfig = this.getAirdropLootConfigByType(airdropType);
+
+        return this.lootGenerator.createRandomLoot(airdropConfig);
+    }
+
+    /**
+     * Randomly pick a type of airdrop loot using weighted values from config
+     * @returns airdrop type value
+     */
+    protected chooseAirdropType(): AirdropTypeEnum
+    {
+        const possibleAirdropTypes = this.airdropConfig.airdropTypeWeightings;
+
+        return this.weightedRandomHelper.getWeightedValue(possibleAirdropTypes);
+    }
+
+    /**
+     * Get the configuration for a specific type of airdrop
+     * @param airdropType Type of airdrop to get settings for
+     * @returns LootRequest
+     */
+    protected getAirdropLootConfigByType(airdropType: AirdropTypeEnum): LootRequest
+    {
+        let lootSettingsByType = this.airdropConfig.loot[airdropType];
+        if (!lootSettingsByType)
+        {
+            this.logger.error(`Unable to find airdrop config settings for type: ${airdropType}, falling back to mixed`);
+            lootSettingsByType = this.airdropConfig.loot[AirdropTypeEnum.MIXED];
+        }
+
+        return {
+            presetCount: lootSettingsByType.presetCount,
+            itemCount: lootSettingsByType.itemCount,
+            itemBlacklist: lootSettingsByType.itemBlacklist,
+            itemTypeWhitelist: lootSettingsByType.itemTypeWhitelist,
+            itemLimits: lootSettingsByType.itemLimits,
+            itemStackLimits: lootSettingsByType.itemStackLimits,
+            armorLevelWhitelist: lootSettingsByType.armorLevelWhitelist
+        };
     }
 }

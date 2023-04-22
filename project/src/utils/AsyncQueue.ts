@@ -3,7 +3,7 @@ import { ICommand } from "../models/spt/utils/ICommand";
 
 export class AsyncQueue implements IAsyncQueue
 {
-    protected commandsQueue: ICommand[]
+    protected commandsQueue: ICommand[];
 
     constructor()
     {
@@ -23,7 +23,7 @@ export class AsyncQueue implements IAsyncQueue
             await new Promise<void>(resolve => 
             {
                 setTimeout(resolve, 100); 
-            })
+            });
         }
 
         // When the command is ready, execute it

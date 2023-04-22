@@ -11,21 +11,21 @@
         "bossZryachiy": 5,
         "bossTest": 10,
         "cursedAssault": 50,
-        "followerBully": 4,
-        "followerGluharAssault": 2,
-        "followerGluharScout": 2,
-        "followerGluharSecurity": 2,
-        "followerGluharSnipe": 2,
-        "followerKojaniy": 2,
-        "followerSanitar": 2,
-        "followerTagilla": 2,
-        "followerBirdEye": 2,
-        "followerBigPipe": 30,
+        "followerBully": 5,
+        "followerGluharAssault": 5,
+        "followerGluharScout": 5,
+        "followerGluharSecurity": 5,
+        "followerGluharSnipe": 5,
+        "followerKojaniy": 5,
+        "followerSanitar": 5,
+        "followerTagilla": 5,
+        "followerBirdEye": 5,
+        "followerBigPipe": 5,
         "followerZryachiy": 15,
-        "followerTest": 30,
+        "followerTest": 10,
         "marksman": 30,
         "pmcBot": 50,
-        "sectantPriest": 5,
+        "sectantPriest": 10,
         "sectantWarrior": 10,
         "gifter": 5,
         "test": 30,
@@ -268,7 +268,9 @@
                 "lightLaserLimit": 2
             },
             "faceShieldIsActiveChancePercent": 85,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 75,
             "weightingAdjustments": [{
                     "levelRange": {
                         "min": 1,
@@ -291,9 +293,12 @@
             ]
         },
         "marksman": {
-            "nvgIsActiveChancePercent": 60,
+            "nvgIsActiveChanceDayPercent": 60,
+            "nvgIsActiveChanceNightPercent": 60,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 85,
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
@@ -301,30 +306,45 @@
         },
         "cursedassault": {
             "faceShieldIsActiveChancePercent": 90,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "exusec": {
-            "nvgIsActiveChancePercent": 80,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 90
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 90,
+            "laserIsActiveChancePercent": 85
         },
         "bossbully": {
-            "nvgIsActiveChancePercent": 75,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "bossgluhar": {
-            "nvgIsActiveChancePercent": 80,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 95
+            "lightIsActiveDayChancePercent": 45,
+            "lightIsActiveNightChancePercent": 95,
+            "laserIsActiveChancePercent": 95
         },
         "bosskilla": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 35,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 85
         },
         "bosskojaniy": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75,
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
@@ -332,87 +352,131 @@
         },
         "bosssanitar": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 85
         },
         "bosstagilla": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "bossknight": {
-            "nvgIsActiveChancePercent": 90,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "bosszryachiy": {
-            "nvgIsActiveChancePercent": 90,
-            "lightLaserIsActiveChancePercent": 95
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 85
         },
         "bosstest": {},
         "followerbully": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followergluharassault": {
-            "nvgIsActiveChancePercent": 75,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 85,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followergluharscout": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followergluharsecurity": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followergluharsnipe": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followerkojaniy": {
-            "nvgIsActiveChancePercent": 80,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 85,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followersanitar": {
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followertagilla": {},
         "followerbirdeye": {
-            "nvgIsActiveChancePercent": 80,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75,
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
             }
         },
         "followerbigpipe": {
-            "nvgIsActiveChancePercent": 90,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "followerzryachiy": {
-            "nvgIsActiveChancePercent": 90,
-            "lightLaserIsActiveChancePercent": 95
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 90,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 85
         },
         "followertest": {},
         "sectantpriest": {
-            "nvgIsActiveChancePercent": 100,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 100,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 95
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 85,
+            "laserIsActiveChancePercent": 95
         },
         "sectantwarrior": {
-            "nvgIsActiveChancePercent": 100,
+            "nvgIsActiveChanceDayPercent": 10,
+            "nvgIsActiveChanceNightPercent": 100,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 95
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 95
         },
         "test": {},
         "pmcbot": {
-            "nvgIsActiveChancePercent": 80,
+            "nvgIsActiveChanceDayPercent": 20,
+            "nvgIsActiveChanceNightPercent": 95,
             "faceShieldIsActiveChancePercent": 100,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 35,
+            "lightIsActiveNightChancePercent": 95,
+            "laserIsActiveChancePercent": 95,
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
@@ -420,7 +484,9 @@
         },
         "assaultgroup": {},
         "gifter": {
-            "lightLaserIsActiveChancePercent": 50
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75
         },
         "pmc": {
             "weaponModLimits": {
@@ -439,9 +505,12 @@
                 "5447b5e04bdc2d62278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e"],
                 "5447b6254bdc2dc3278b4568": ["55818ae44bdc2dde698b456c", "55818ac54bdc2d5b648b456e", "55818aeb4bdc2ddc698b456a", "55818add4bdc2d5b648b456f"]
             },
-            "nvgIsActiveChancePercent": 50,
+            "nvgIsActiveChanceDayPercent": 20,
+            "nvgIsActiveChanceNightPercent": 95,
             "faceShieldIsActiveChancePercent": 85,
-            "lightLaserIsActiveChancePercent": 75,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 95,
+            "laserIsActiveChancePercent": 85,
             "randomisation": [{
                     "levelRange": {
                         "min": 1,
@@ -454,7 +523,12 @@
                         },
                         "grenades": {
                             "min": 0,
-                            "max": 1
+                            "max": 1,
+                            "whitelist": [
+                                "5710c24ad2720bc3458b45a3",
+                                "58d3db5386f77426186285a0",
+                                "5448be9a4bdc2dfd2f8b456a"
+                            ]
                         },
                         "healing": {
                             "min": 0,
@@ -479,7 +553,7 @@
                         "Holster": 5,
                         "Earpiece": 35,
                         "Eyewear": 5,
-                        "Backpack": 30,
+                        "Backpack": 35,
                         "FaceCover": 5
                     },
                     "mods": {
@@ -629,7 +703,10 @@
                                 "5648a7494bdc2d9d488b4583": 250,
                                 "5ab8e4ed86f7742d8e50c7fa": 250,
                                 "5df8a2ca86f7740bfe6df777": 155,
-                                "5c0e655586f774045612eeb2": 80
+                                "5c0e655586f774045612eeb2": 80,
+                                "5e4abb5086f77406975c9342": 5,
+                                "6038b4ca92ec1c3103795a0d": 5,
+                                "6038b4b292ec1c3103795a0b": 5
                             },
                             "TacticalVest": {
                                 "628d0618d1ba6e4fa07ce5a4": 1,

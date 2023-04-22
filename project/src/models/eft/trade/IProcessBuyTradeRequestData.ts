@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { IProcessBaseTradeRequestData } from "./IProcessBaseTradeRequestData"
+import { IProcessBaseTradeRequestData } from "./IProcessBaseTradeRequestData";
 
 export interface IProcessBuyTradeRequestData extends IProcessBaseTradeRequestData 
 {

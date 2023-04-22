@@ -193,7 +193,13 @@ export class RepairService
         const itemToRepairDetails = this.databaseServer.getTables().templates.items[itemToRepair._tpl];
         const repairItemIsArmor = (!!itemToRepairDetails._props.ArmorMaterial);
 
-        this.repairHelper.updateItemDurability(itemToRepair, itemToRepairDetails, repairItemIsArmor, repairKits[0].count / this.getKitDivisor(itemToRepairDetails, repairItemIsArmor, pmcData), true, 1);
+        this.repairHelper.updateItemDurability(
+            itemToRepair,
+            itemToRepairDetails,
+            repairItemIsArmor,
+            repairKits[0].count / this.getKitDivisor(itemToRepairDetails, repairItemIsArmor, pmcData),
+            this.repairConfig.applyRandomizeDurabilityLoss,
+            1);
 
         // Find and use repair kit defined in body
         for (const repairKit of repairKits)

@@ -430,7 +430,10 @@
         "62a09cfe4f842e1bd12da3e4",
         "590de7e986f7741b096e5f32",
         "5d235a5986f77443f6329bc6",
-        "5bc9bdb8d4351e003562b8a1"
+        "5bc9bdb8d4351e003562b8a1",
+        "59e3658a86f7741776641ac4",
+        "5734758f24597738025ee253",
+        "5bc9bc53d4351e00367fbcee"
       ],
       "SecuredContainer": [
         "56dff061d2720bb5668b4567",
@@ -2397,16 +2400,16 @@
     "equipment": {
       "Headwear": 83,
       "Earpiece": 0,
-      "FaceCover": 17,
-      "ArmorVest": 76,
+      "FaceCover": 16,
+      "ArmorVest": 77,
       "Eyewear": 62,
       "ArmBand": 0,
       "TacticalVest": 100,
-      "Backpack": 23,
+      "Backpack": 24,
       "FirstPrimaryWeapon": 100,
       "SecondPrimaryWeapon": 0,
       "Holster": 0,
-      "Scabbard": 5,
+      "Scabbard": 6,
       "Pockets": 100,
       "SecuredContainer": 100
     },
@@ -2426,7 +2429,7 @@
       "mod_equipment": 15,
       "mod_sight_front": 0,
       "mod_mount_001": 0,
-      "mod_mount_002": 67,
+      "mod_mount_002": 66,
       "mod_mount": 0,
       "mod_nvg": 0,
       "mod_tactical": 68

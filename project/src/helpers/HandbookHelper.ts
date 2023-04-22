@@ -3,27 +3,27 @@ import { inject, injectable } from "tsyringe";
 import { Money } from "../models/enums/Money";
 import { DatabaseServer } from "../servers/DatabaseServer";
 
-class LookupItem
+class LookupItem<T, I>
 {
-    byId: Record<number, string>;
-    byParent: Record<string, string[]>;
+    readonly byId: Map<string, T>;
+    readonly byParent: Map<string, I[]>;
 
     constructor()
     {
-        this.byId = {};
-        this.byParent = {};
+        this.byId = new Map();
+        this.byParent = new Map();
     }
 }
 
 export class LookupCollection
 {
-    items: LookupItem;
-    categories: LookupItem;
+    readonly items: LookupItem<number, string>;
+    readonly categories: LookupItem<string, string>;
 
     constructor()
     {
-        this.items = new LookupItem();
-        this.categories = new LookupItem();
+        this.items = new LookupItem<number, string>();
+        this.categories = new LookupItem<string, string>();
     }
 }
 
@@ -38,27 +38,31 @@ export class HandbookHelper
 
     public hydrateLookup(): void
     {
-        for (const handbookItem of this.databaseServer.getTables().templates.handbook.Items)
+        const handbookDb = this.databaseServer.getTables().templates.handbook;
+        for (const handbookItem of handbookDb.Items)
         {
-            this.handbookPriceCache.items.byId[handbookItem.Id] = handbookItem.Price;
-            if (!this.handbookPriceCache.items.byParent[handbookItem.ParentId])
+            this.handbookPriceCache.items.byId.set(handbookItem.Id, handbookItem.Price);
+            if (!this.handbookPriceCache.items.byParent.has(handbookItem.ParentId))
             {
-                this.handbookPriceCache.items.byParent[handbookItem.ParentId] = [];
+                this.handbookPriceCache.items.byParent.set(handbookItem.ParentId, []);
             }
-            this.handbookPriceCache.items.byParent[handbookItem.ParentId].push(handbookItem.Id);
+            this.handbookPriceCache.items.byParent
+                .get(handbookItem.ParentId)
+                .push(handbookItem.Id);
         }
 
-        for (const handbookCategory of this.databaseServer.getTables().templates.handbook.Categories)
+        for (const handbookCategory of handbookDb.Categories)
         {
-            this.handbookPriceCache.categories.byId[handbookCategory.Id] = handbookCategory.ParentId ? handbookCategory.ParentId : null;
-
+            this.handbookPriceCache.categories.byId.set(handbookCategory.Id, handbookCategory.ParentId || null);
             if (handbookCategory.ParentId)
             {
-                if (!this.handbookPriceCache.categories.byParent[handbookCategory.ParentId])
+                if (!this.handbookPriceCache.categories.byParent.has(handbookCategory.ParentId))
                 {
-                    this.handbookPriceCache.categories.byParent[handbookCategory.ParentId] = [];
+                    this.handbookPriceCache.categories.byParent.set(handbookCategory.ParentId, []);
                 }
-                this.handbookPriceCache.categories.byParent[handbookCategory.ParentId].push(handbookCategory.Id);
+                this.handbookPriceCache.categories.byParent
+                    .get(handbookCategory.ParentId)
+                    .push(handbookCategory.Id);
             }
         }
     }
@@ -77,7 +81,7 @@ export class HandbookHelper
             this.lookupCacheGenerated = true;
         }
 
-        if (tpl in this.handbookPriceCache.items.byId)
+        if (this.handbookPriceCache.items.byId.has(tpl))
         {
             return this.handbookPriceCache.items.byId[tpl];
         }
@@ -96,7 +100,7 @@ export class HandbookHelper
      */
     public templatesWithParent(x: string): string[]
     {
-        return (x in this.handbookPriceCache.items.byParent) ? this.handbookPriceCache.items.byParent[x] : [];
+        return this.handbookPriceCache.items.byParent.get(x) ?? [];
     }
 
     /**
@@ -106,12 +110,12 @@ export class HandbookHelper
      */
     public isCategory(category: string): boolean
     {
-        return (category in this.handbookPriceCache.categories.byId);
+        return this.handbookPriceCache.categories.byId.has(category);
     }
 
     public childrenCategories(x: string): string[]
     {
-        return (x in this.handbookPriceCache.categories.byParent) ? this.handbookPriceCache.categories.byParent[x] : [];
+        return this.handbookPriceCache.categories.byParent.get(x) ?? [];
     }
 
     /**

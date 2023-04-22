@@ -1,4 +1,4 @@
-import { IBaseInteractionRequestData } from "../common/request/IBaseInteractionRequestData"
+import { IBaseInteractionRequestData } from "../common/request/IBaseInteractionRequestData";
 
 export interface IOffraidHealRequestData extends IBaseInteractionRequestData 
 {

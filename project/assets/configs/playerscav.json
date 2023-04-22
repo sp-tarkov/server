@@ -583,7 +583,7 @@
                     "max": 2
                 }
             },
-            "labsAccessCardChancePercent": 2
+            "labsAccessCardChancePercent": 3
         },
         "2": {
             "botTypeForLoot": "assault",
@@ -648,7 +648,7 @@
                     "max": 2
                 }
             },
-            "labsAccessCardChancePercent": 5
+            "labsAccessCardChancePercent": 6
         },
         "3": {
             "botTypeForLoot": "assault",
@@ -713,7 +713,7 @@
                     "max": 2
                 }
             },
-            "labsAccessCardChancePercent": 10
+            "labsAccessCardChancePercent": 11
         },
         "4": {
             "botTypeForLoot": "assault",
@@ -778,7 +778,7 @@
                     "max": 3
                 }
             },
-            "labsAccessCardChancePercent": 15
+            "labsAccessCardChancePercent": 17
         },
         "5": {
             "botTypeForLoot": "assault",
@@ -843,7 +843,7 @@
                     "max": 3
                 }
             },
-            "labsAccessCardChancePercent": 20
+            "labsAccessCardChancePercent": 22
         },
         "6": {
             "botTypeForLoot": "assault",
@@ -908,7 +908,7 @@
                     "max": 4
                 }
             },
-            "labsAccessCardChancePercent": 25
+            "labsAccessCardChancePercent": 27
         }
     }
 }

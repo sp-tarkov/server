@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Item } from "./IItem"
+import { Item } from "./IItem";
 
 export interface ITrader 
 {
@@ -101,10 +101,10 @@ export interface ISuit
     tid: string
     suiteId: string
     isActive: boolean
-    requirements: Requirements
+    requirements: ISuitRequirements
 }
 
-export interface Requirements 
+export interface ISuitRequirements 
 {
     loyaltyLevel: number
     profileLevel: number

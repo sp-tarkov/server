@@ -54,6 +54,15 @@ export class LocationGenerator
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
 
+    /**
+     * Choose loot to put into a static container
+     * @param containerIn 
+     * @param staticForced 
+     * @param staticLootDist 
+     * @param staticAmmoDist 
+     * @param locationName Name of the map to generate static loot for
+     * @returns IStaticContainerProps
+     */
     public generateContainerLoot(
         containerIn: IStaticContainerProps,
         staticForced: IStaticForcedProps[],
@@ -102,20 +111,31 @@ export class LocationGenerator
 
         // Draw random loot
         // money spawn more than once in container
+        let failedToFitCount = 0;
         const locklist = [Money.ROUBLES, Money.DOLLARS, Money.EUROS];
         const tplsDraw = itemDistribution.draw(numberItems, false, locklist);
         const tpls = tplsForced.concat(tplsDraw);
         for (const tpl of tpls)
         {
-            const created = this.createStaticLootItem(tpl, staticAmmoDist, parentId);
-            const items = created.items;
-            const width = created.width;
-            const height = created.height;
+            const chosenItemWithChildren = this.createStaticLootItem(tpl, staticAmmoDist, parentId);
+            const items = chosenItemWithChildren.items;
+            const width = chosenItemWithChildren.width;
+            const height = chosenItemWithChildren.height;
 
+            // look for open slot to put chosen item into
             const result = this.containerHelper.findSlotForItem(container2D, width, height);
             if (!result.success)
             {
-                break;
+                // 2 attempts to fit an item, container is probably full, stop trying to add more
+                if (failedToFitCount >= this.locationConfig.fitLootIntoContainerAttempts)
+                {
+                    break;
+                }
+
+                // Can't fit item, skip
+                failedToFitCount++;
+                continue;
+                
             }
 
             container2D = this.containerHelper.fillContainerMapWithItem(container2D, result.x, result.y, width, height, result.rotation);
@@ -130,6 +150,7 @@ export class LocationGenerator
                 container.Items.push(item);
             }
         }
+
         return container;
     }
 
@@ -455,23 +476,19 @@ export class LocationGenerator
             // it can handle revolver ammo (it's not restructured to be used here yet.)
             // General: Make a WeaponController for Ragfair preset stuff and the generating weapons and ammo stuff from
             // BotGenerator
-            const mag = items.filter(x => x.slotId === "mod_magazine")[0];
+            const magazine = items.filter(x => x.slotId === "mod_magazine")[0];
             // some weapon presets come without magazine; only fill the mag if it exists
-            if (mag)
+            if (magazine)
             {
-                const weapTemplate = this.itemHelper.getItem(rootItem._tpl)[1];
-                // we can't use weaponTemplate's "_props.ammoCaliber" directly since there's a weapon ("weapon_zmz_pp-9_9x18pmm")
-                // with non-existing ammoCaliber: Caliber9x18PMM -> We get the Caliber from the weapons' default ammo
-                const defAmmoTemplate = this.itemHelper.getItem(weapTemplate._props.defAmmo)[1];
-                const magTemplate = this.itemHelper.getItem(mag._tpl)[1];
-                items.push(
-                    this.itemHelper.createRandomMagCartridges(
-                        magTemplate,
-                        mag._id,
-                        staticAmmoDist,
-                        defAmmoTemplate._props.Caliber
-                    )
-                );
+                const magTemplate = this.itemHelper.getItem(magazine._tpl)[1];
+                const weaponTemplate = this.itemHelper.getItem(tpl)[1];
+
+                // Create array with just magazine
+                const magazineWithCartridges = [magazine];
+                this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, magTemplate, staticAmmoDist, weaponTemplate._props.ammoCaliber);
+
+                // Replace existing magazine with above array
+                items.splice(items.indexOf(magazine), 1, ...magazineWithCartridges);
             }
 
             const size = this.itemHelper.getItemSize(items, rootItem._id);
@@ -485,7 +502,12 @@ export class LocationGenerator
         }
         else if (this.itemHelper.isOfBaseclass(tpl, BaseClasses.MAGAZINE))
         {
-            items.push(this.itemHelper.createRandomMagCartridges(itemTemplate, items[0]._id, staticAmmoDist));
+            // Create array with just magazine
+            const magazineWithCartridges = [items[0]];
+            this.itemHelper.fillMagazineWithRandomCartridge(magazineWithCartridges, itemTemplate, staticAmmoDist);
+
+            // Replace existing magazine with above array
+            items.splice(items.indexOf(items[0]), 1, ...magazineWithCartridges);
         }
 
         return {

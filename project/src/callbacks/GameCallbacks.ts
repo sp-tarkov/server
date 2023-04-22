@@ -13,6 +13,7 @@ import { IServerDetails } from "../models/eft/game/IServerDetails";
 import { IVersionValidateRequestData } from "../models/eft/game/IVersionValidateRequestData";
 import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "../models/eft/httpResponse/INullResponseData";
+import { SaveServer } from "../servers/SaveServer";
 import { HttpResponseUtil } from "../utils/HttpResponseUtil";
 import { Watermark } from "../utils/Watermark";
 
@@ -22,6 +23,7 @@ class GameCallbacks
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("Watermark") protected watermark: Watermark,
+        @inject("SaveServer") protected saveServer: SaveServer,
         @inject("GameController") protected gameController: GameController
     )
     {}
@@ -53,11 +55,13 @@ class GameCallbacks
 
     /**
      * Handle client/game/logout
+     * Save profiles on game close
      * @returns IGameLogoutResponseData
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public gameLogout(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGameLogoutResponseData>
     {
+        this.saveServer.save();
         return this.httpResponse.getBody({
             status: "ok"
         });
@@ -123,3 +127,4 @@ class GameCallbacks
 }
 
 export { GameCallbacks };
+

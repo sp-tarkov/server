@@ -2,9 +2,6 @@ import { inject, injectable } from "tsyringe";
 
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Common } from "../models/eft/common/tables/IBotBase";
-import {
-    IPlayerIncrementSkillLevelRequestData
-} from "../models/eft/player/IPlayerIncrementSkillLevelRequestData";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { LocalisationService } from "./LocalisationService";

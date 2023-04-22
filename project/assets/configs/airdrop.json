@@ -1,12 +1,18 @@
 {
     "airdropChancePercent": {
-        "bigmap": 20,
+        "bigmap": 25,
         "woods": 25,
         "lighthouse": 20,
         "shoreline": 20,
         "interchange": 20,
-        "reserve": 10,
-        "tarkovStreets": 12
+        "reserve": 20,
+        "tarkovStreets": 20
+    },
+    "airdropTypeWeightings": {
+        "mixed": 2,
+        "weaponArmor": 1,
+        "foodMedical": 1,
+        "barter": 1
     },
     "airdropMinStartTimeSeconds": 60,
     "airdropMaxStartTimeSeconds": 300,
@@ -16,103 +22,336 @@
     "planeSpeed": 65,
     "crateFallSpeed": 3,
     "loot": {
-        "presetCount": {
-            "min": 3,
-            "max": 5
-        },
-        "itemCount": {
-            "min": 12,
-            "max": 25
-        },
-        "itemBlacklist": [
-            "5e997f0b86f7741ac73993e2",
-            "5b44abe986f774283e2e3512",
-            "5e99711486f7744bfc4af328",
-            "5e99735686f7744bfc4af32c",
-            "6087e570b998180e9f76dc24",
-            "5d52d479a4b936793d58c76b",
-            "5e85aac65505fa48730d8af2",
-            "63495c500c297e20065a08b1",
-            "5cde8864d7f00c0010373be1",
-            "5b3b713c5acfc4330140bd8d",
-            "60c080eb991ac167ad1c3ad4"
-        ],
-        "itemTypeWhitelist": [
-            "543be5dd4bdc2deb348b4569",
-            "5485a8684bdc2da71d8b4567",
-            "5d650c3e815116009f6201d2",
-            "5448e8d64bdc2dce718b4568",
-            "5448e8d04bdc2ddf718b4569",
-            "5447e1d04bdc2dff2f8b4567",
-            "57864ee62459775490116fc1",
-            "5448e54d4bdc2dcc718b4568",
-            "5448e5284bdc2dcb718b4567",
-            "5448e53e4bdc2d60728b4567",
-            "5448f3a64bdc2d60728b456a",
-            "5448f3ac4bdc2dce718b4569",
-            "55818ad54bdc2ddc698b4569",
-            "55818af64bdc2d5b648b4570",
-            "55818b0e4bdc2dde698b456e",
-            "5448bc234bdc2d3c308b4569",
-            "57864ada245977548638de91",
-            "5645bcb74bdc2ded0b8b4578",
-            "5448e5724bdc2ddf718b4568",
-            "55818add4bdc2d5b648b456f",
-            "543be6564bdc2df4348b4568",
-            "57864bb7245977548b3b66c2",
-            "550aa4cd4bdc2dd8348b456c",
-            "5448f39d4bdc2d0a728b4568",
-            "5448f3a14bdc2d27728b4569",
-            "5447e1d04bdc2dff2f8b4567",
-            "55818b164bdc2ddc698b456c",
-            "55818ae44bdc2dde698b456c"
-        ],
-        "itemLimits": {
-            "5447b5cf4bdc2d65278b4567": 1,
-            "5448e8d04bdc2ddf718b4569": 3,
-            "5448e8d64bdc2dce718b4568": 3,
-            "5448bc234bdc2d3c308b4569": 3,
-            "5448f3a64bdc2d60728b456a": 3,
-            "5448e54d4bdc2dcc718b4568": 3,
-            "5485a8684bdc2da71d8b4567": 4,
-            "57864bb7245977548b3b66c2": 2,
-            "57864ada245977548638de91": 3,
-            "5d650c3e815116009f6201d2": 2,
-            "5645bcb74bdc2ded0b8b4578": 2,
-            "5448e5724bdc2ddf718b4568": 2,
-            "55818add4bdc2d5b648b456f": 2,
-            "543be6564bdc2df4348b4568": 3,
-            "550aa4cd4bdc2dd8348b456c": 2,
-            "5448f39d4bdc2d0a728b4568": 4,
-            "5448f3a14bdc2d27728b4569": 2,
-            "5447e1d04bdc2dff2f8b4567": 1,
-            "55818ad54bdc2ddc698b4569": 3,
-            "55818b164bdc2ddc698b456c": 2,
-            "55818ae44bdc2dde698b456c": 2,
-            "5448e5284bdc2dcb718b4567": 2
-        },
-        "itemStackLimits": {
-            "5fc382a9d724d907e2077dab": {
-                "min": 5,
+        "mixed": {
+            "presetCount": {
+                "min": 3,
                 "max": 5
             },
-            "59e690b686f7746c9f75e848": {
-                "min": 10,
+            "itemCount": {
+                "min": 12,
                 "max": 25
             },
-            "5449016a4bdc2d6f028b456f": {
-                "min": 5000,
-                "max": 50000
+            "itemBlacklist": [
+                "5e997f0b86f7741ac73993e2",
+                "5b44abe986f774283e2e3512",
+                "5e99711486f7744bfc4af328",
+                "5e99735686f7744bfc4af32c",
+                "6087e570b998180e9f76dc24",
+                "5d52d479a4b936793d58c76b",
+                "5e85aac65505fa48730d8af2",
+                "63495c500c297e20065a08b1",
+                "5cde8864d7f00c0010373be1",
+                "5b3b713c5acfc4330140bd8d",
+                "60c080eb991ac167ad1c3ad4",
+                "6389c88b33a719183c7f63b6"
+            ],
+            "itemTypeWhitelist": [
+                "543be5dd4bdc2deb348b4569",
+                "5485a8684bdc2da71d8b4567",
+                "5d650c3e815116009f6201d2",
+                "5448e8d64bdc2dce718b4568",
+                "5448e8d04bdc2ddf718b4569",
+                "5447e1d04bdc2dff2f8b4567",
+                "57864ee62459775490116fc1",
+                "5448e54d4bdc2dcc718b4568",
+                "5448e5284bdc2dcb718b4567",
+                "5448e53e4bdc2d60728b4567",
+                "5448f3a64bdc2d60728b456a",
+                "5448f3ac4bdc2dce718b4569",
+                "55818ad54bdc2ddc698b4569",
+                "55818af64bdc2d5b648b4570",
+                "55818b0e4bdc2dde698b456e",
+                "5448bc234bdc2d3c308b4569",
+                "57864ada245977548638de91",
+                "5645bcb74bdc2ded0b8b4578",
+                "5448e5724bdc2ddf718b4568",
+                "55818add4bdc2d5b648b456f",
+                "543be6564bdc2df4348b4568",
+                "57864bb7245977548b3b66c2",
+                "550aa4cd4bdc2dd8348b456c",
+                "5448f39d4bdc2d0a728b4568",
+                "5448f3a14bdc2d27728b4569",
+                "5447e1d04bdc2dff2f8b4567",
+                "55818b164bdc2ddc698b456c",
+                "55818ae44bdc2dde698b456c"
+            ],
+            "itemLimits": {
+                "5447b5cf4bdc2d65278b4567": 1,
+                "5448e8d04bdc2ddf718b4569": 3,
+                "5448e8d64bdc2dce718b4568": 3,
+                "5448bc234bdc2d3c308b4569": 3,
+                "5448f3a64bdc2d60728b456a": 3,
+                "5448e54d4bdc2dcc718b4568": 3,
+                "5485a8684bdc2da71d8b4567": 4,
+                "57864bb7245977548b3b66c2": 2,
+                "57864ada245977548638de91": 3,
+                "5d650c3e815116009f6201d2": 2,
+                "5645bcb74bdc2ded0b8b4578": 2,
+                "5448e5724bdc2ddf718b4568": 2,
+                "55818add4bdc2d5b648b456f": 2,
+                "543be6564bdc2df4348b4568": 3,
+                "550aa4cd4bdc2dd8348b456c": 2,
+                "5448f39d4bdc2d0a728b4568": 4,
+                "5448f3a14bdc2d27728b4569": 2,
+                "5447e1d04bdc2dff2f8b4567": 1,
+                "55818ad54bdc2ddc698b4569": 3,
+                "55818b164bdc2ddc698b456c": 2,
+                "55818ae44bdc2dde698b456c": 2,
+                "5448e5284bdc2dcb718b4567": 2
             },
-            "569668774bdc2da2298b4568": {
-                "min": 100,
-                "max": 500
+            "itemStackLimits": {
+                "5fc382a9d724d907e2077dab": {
+                    "min": 5,
+                    "max": 5
+                },
+                "59e690b686f7746c9f75e848": {
+                    "min": 10,
+                    "max": 25
+                },
+                "5449016a4bdc2d6f028b456f": {
+                    "min": 5000,
+                    "max": 50000
+                },
+                "569668774bdc2da2298b4568": {
+                    "min": 100,
+                    "max": 500
+                },
+                "5696686a4bdc2da3298b456a": {
+                    "min": 100,
+                    "max": 500
+                }
             },
-            "5696686a4bdc2da3298b456a": {
-                "min": 100,
-                "max": 500
+            "armorLevelWhitelist": [0, 4, 5, 6]
+        },
+        "weaponArmor": {
+            "presetCount": {
+                "min": 6,
+                "max": 8
+            },
+            "itemCount": {
+                "min": 10,
+                "max": 20
+            },
+            "itemBlacklist": [
+                "5e997f0b86f7741ac73993e2",
+                "5b44abe986f774283e2e3512",
+                "5e99711486f7744bfc4af328",
+                "5e99735686f7744bfc4af32c",
+                "6087e570b998180e9f76dc24",
+                "5d52d479a4b936793d58c76b",
+                "5e85aac65505fa48730d8af2",
+                "63495c500c297e20065a08b1",
+                "5cde8864d7f00c0010373be1",
+                "5b3b713c5acfc4330140bd8d",
+                "60c080eb991ac167ad1c3ad4"
+            ],
+            "itemTypeWhitelist": [
+                "5485a8684bdc2da71d8b4567",
+                "5448e8d64bdc2dce718b4568",
+                "5448e8d04bdc2ddf718b4569",
+                "5447e1d04bdc2dff2f8b4567",
+                "5448e54d4bdc2dcc718b4568",
+                "5448e5284bdc2dcb718b4567",
+                "5448e53e4bdc2d60728b4567",
+                "55818ad54bdc2ddc698b4569",
+                "55818af64bdc2d5b648b4570",
+                "55818b0e4bdc2dde698b456e",
+                "5448bc234bdc2d3c308b4569",
+                "5645bcb74bdc2ded0b8b4578",
+                "5448e5724bdc2ddf718b4568",
+                "55818add4bdc2d5b648b456f",
+                "543be6564bdc2df4348b4568",
+                "550aa4cd4bdc2dd8348b456c",
+                "55818b164bdc2ddc698b456c",
+                "55818ae44bdc2dde698b456c"
+
+            ],
+            "itemLimits": {
+                "5448e8d04bdc2ddf718b4569": 3,
+                "5448e8d64bdc2dce718b4568": 3,
+                "5448bc234bdc2d3c308b4569": 3,
+                "5448e54d4bdc2dcc718b4568": 3,
+                "5485a8684bdc2da71d8b4567": 4,
+                "5645bcb74bdc2ded0b8b4578": 2,
+                "5448e5724bdc2ddf718b4568": 2,
+                "55818add4bdc2d5b648b456f": 2,
+                "543be6564bdc2df4348b4568": 3,
+                "550aa4cd4bdc2dd8348b456c": 2,
+                "5447e1d04bdc2dff2f8b4567": 3,
+                "55818ad54bdc2ddc698b4569": 3,
+                "55818b164bdc2ddc698b456c": 2,
+                "55818ae44bdc2dde698b456c": 2,
+                "5448e5284bdc2dcb718b4567": 2
+            },
+            "itemStackLimits": {
+                "5fc382a9d724d907e2077dab": {
+                    "min": 5,
+                    "max": 5
+                },
+                "59e690b686f7746c9f75e848": {
+                    "min": 10,
+                    "max": 25
+                }
+            },
+            "armorLevelWhitelist": [0, 3, 4, 5, 6]
+        },
+        "foodMedical": {
+            "presetCount": {
+                "min": 3,
+                "max": 5
+            },
+            "itemCount": {
+                "min": 17,
+                "max": 28
+            },
+            "itemBlacklist": [
+                "5e997f0b86f7741ac73993e2",
+                "5b44abe986f774283e2e3512",
+                "5e99711486f7744bfc4af328",
+                "5e99735686f7744bfc4af32c",
+                "6087e570b998180e9f76dc24",
+                "5d52d479a4b936793d58c76b",
+                "5e85aac65505fa48730d8af2",
+                "63495c500c297e20065a08b1",
+                "5cde8864d7f00c0010373be1",
+                "5b3b713c5acfc4330140bd8d",
+                "60c080eb991ac167ad1c3ad4"
+            ],
+            "itemTypeWhitelist": [
+                "543be5dd4bdc2deb348b4569",
+                "5448e8d64bdc2dce718b4568",
+                "5448e8d04bdc2ddf718b4569",
+                "5448f3a64bdc2d60728b456a",
+                "5448f3ac4bdc2dce718b4569",
+                "5448f39d4bdc2d0a728b4568",
+                "5448f3a14bdc2d27728b4569"
+            ],
+            "itemLimits": {
+                "5447b5cf4bdc2d65278b4567": 1,
+                "5448e8d04bdc2ddf718b4569": 3,
+                "5448e8d64bdc2dce718b4568": 3,
+                "5448bc234bdc2d3c308b4569": 3,
+                "5448f3a64bdc2d60728b456a": 3,
+                "5448e54d4bdc2dcc718b4568": 3,
+                "5485a8684bdc2da71d8b4567": 4,
+                "57864bb7245977548b3b66c2": 2,
+                "57864ada245977548638de91": 3,
+                "5d650c3e815116009f6201d2": 2,
+                "5645bcb74bdc2ded0b8b4578": 2,
+                "5448e5724bdc2ddf718b4568": 2,
+                "55818add4bdc2d5b648b456f": 2,
+                "543be6564bdc2df4348b4568": 3,
+                "550aa4cd4bdc2dd8348b456c": 2,
+                "5448f39d4bdc2d0a728b4568": 4,
+                "5448f3a14bdc2d27728b4569": 2,
+                "5447e1d04bdc2dff2f8b4567": 1,
+                "55818ad54bdc2ddc698b4569": 3,
+                "55818b164bdc2ddc698b456c": 2,
+                "55818ae44bdc2dde698b456c": 2,
+                "5448e5284bdc2dcb718b4567": 2
+            },
+            "itemStackLimits": {
+                "5fc382a9d724d907e2077dab": {
+                    "min": 5,
+                    "max": 5
+                },
+                "59e690b686f7746c9f75e848": {
+                    "min": 10,
+                    "max": 25
+                },
+                "5449016a4bdc2d6f028b456f": {
+                    "min": 5000,
+                    "max": 50000
+                },
+                "569668774bdc2da2298b4568": {
+                    "min": 100,
+                    "max": 500
+                },
+                "5696686a4bdc2da3298b456a": {
+                    "min": 100,
+                    "max": 500
+                }
             }
         },
-        "armorLevelWhitelist": [0, 4, 5, 6]
+        "barter": {
+            "presetCount": {
+                "min": 3,
+                "max": 5
+            },
+            "itemCount": {
+                "min": 16,
+                "max": 25
+            },
+            "itemBlacklist": [
+                "5e997f0b86f7741ac73993e2",
+                "5b44abe986f774283e2e3512",
+                "5e99711486f7744bfc4af328",
+                "5e99735686f7744bfc4af32c",
+                "6087e570b998180e9f76dc24",
+                "5d52d479a4b936793d58c76b",
+                "5e85aac65505fa48730d8af2",
+                "63495c500c297e20065a08b1",
+                "5cde8864d7f00c0010373be1",
+                "5b3b713c5acfc4330140bd8d",
+                "60c080eb991ac167ad1c3ad4",
+                "6389c88b33a719183c7f63b6"
+            ],
+            "itemTypeWhitelist": [
+                "5d650c3e815116009f6201d2",
+                "57864ee62459775490116fc1",
+                "57864ada245977548638de91",
+                "57864bb7245977548b3b66c2",
+                "57864e4c24597754843f8723",
+                "57864c322459775490116fbf",
+                "57864a66245977548f04a81f"
+            ],
+            "itemLimits": {
+                "5447b5cf4bdc2d65278b4567": 1,
+                "57864ee62459775490116fc1": 2,
+                "5448e8d04bdc2ddf718b4569": 3,
+                "5448e8d64bdc2dce718b4568": 3,
+                "5448bc234bdc2d3c308b4569": 3,
+                "5448f3a64bdc2d60728b456a": 3,
+                "5448e54d4bdc2dcc718b4568": 3,
+                "5485a8684bdc2da71d8b4567": 4,
+                "57864bb7245977548b3b66c2": 5,
+                "57864ada245977548638de91": 5,
+                "5d650c3e815116009f6201d2": 5,
+                "5645bcb74bdc2ded0b8b4578": 2,
+                "5448e5724bdc2ddf718b4568": 2,
+                "55818add4bdc2d5b648b456f": 2,
+                "543be6564bdc2df4348b4568": 3,
+                "550aa4cd4bdc2dd8348b456c": 2,
+                "5448f39d4bdc2d0a728b4568": 4,
+                "5448f3a14bdc2d27728b4569": 2,
+                "5447e1d04bdc2dff2f8b4567": 1,
+                "55818ad54bdc2ddc698b4569": 3,
+                "55818b164bdc2ddc698b456c": 2,
+                "55818ae44bdc2dde698b456c": 2,
+                "5448e5284bdc2dcb718b4567": 2
+            },
+            "itemStackLimits": {
+                "5fc382a9d724d907e2077dab": {
+                    "min": 5,
+                    "max": 5
+                },
+                "59e690b686f7746c9f75e848": {
+                    "min": 10,
+                    "max": 25
+                },
+                "5449016a4bdc2d6f028b456f": {
+                    "min": 5000,
+                    "max": 50000
+                },
+                "569668774bdc2da2298b4568": {
+                    "min": 100,
+                    "max": 500
+                },
+                "5696686a4bdc2da3298b456a": {
+                    "min": 100,
+                    "max": 500
+                }
+            }
+        }
     }
 }

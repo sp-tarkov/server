@@ -13,8 +13,9 @@
         "FirstPrimaryWeapon": true,
         "SecondPrimaryWeapon": true,
         "Scabbard": false,
+        "Pockets": false,
         "SecuredContainer": false
     },
-    "loot": true,
-    "questItems": true
+    "questItems": true,
+	"specialSlotItems": false
 }

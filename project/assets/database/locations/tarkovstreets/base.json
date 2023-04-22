@@ -87,7 +87,7 @@
       "TriggerName": ""
     }
   ],
-  "BotAssault": 85,
+  "BotAssault": 80,
   "BotEasy": 10,
   "BotHard": 50,
   "BotImpossible": 0,
@@ -98,7 +98,7 @@
     "Scattering": 1,
     "VisibleDistance": 1
   },
-  "BotMarksman": 15,
+  "BotMarksman": 20,
   "BotMax": 19,
   "BotMaxPlayer": 8,
   "BotMaxTimePlayer": 1000,
@@ -107,7 +107,7 @@
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 380,
   "BotSpawnTimeOnMin": 260,
-  "BotStart": 120,
+  "BotStart": 110,
   "BotStop": 1800,
   "Description": "The downtown Tarkov with banks, malls, hotels and all the other things a striving modern city could have needed.",
   "DisabledForScav": false,

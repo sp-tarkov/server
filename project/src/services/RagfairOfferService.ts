@@ -215,8 +215,8 @@ export class RagfairOfferService
             this.addOfferToExpired(staleOffer);
         }
 
-        // Handle player offer - items need returning/XP adjusting
-        if (isPlayer)
+        // Handle player offer - items need returning/XP adjusting. Checking if offer has actually expired or not.
+        if (isPlayer && staleOffer.endTime <= this.timeUtil.getTimestamp())
         {
             // TODO: something feels wrong, func returns ItemEventRouterResponse but we dont pass it back to caller?
             this.returnPlayerOffer(staleOffer);
@@ -253,8 +253,6 @@ export class RagfairOfferService
 
         this.ragfairServerHelper.returnItems(profile.aid, offer.items);
         profile.RagfairInfo.offers.splice(offerIndex, 1);
-
-        this.removeOfferById(offer._id);
 
         return this.eventOutputHolder.getOutput(sessionID);
     }

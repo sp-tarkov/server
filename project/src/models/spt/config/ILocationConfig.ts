@@ -14,6 +14,8 @@ export interface ILocationConfig extends IBaseConfig
     openZones: Record<string, string[]>
     /** Key = map id, value = item tpls that should only have one forced loot spawn position */
     forcedLootSingleSpawnById: Record<string, string[]>
+    /** How many attempts should be taken to fit an item into a container before giving up */
+    fitLootIntoContainerAttempts: number;
 }
 
 export interface IFixEmptyBotWavesSettings

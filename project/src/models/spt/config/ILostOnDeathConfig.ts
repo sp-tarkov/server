@@ -4,7 +4,7 @@ export interface ILostOnDeathConfig extends IBaseConfig
 {
     kind: "aki-lostondeath"
     equipment: Equipment
-    loot: boolean
+    specialSlotItems: boolean;
     questItems: boolean
 }
 

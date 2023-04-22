@@ -329,7 +329,8 @@
         "5fca13ca637ee0341a484f46",
         "637b6179104668754b72f8f5",
         "637b620db7afa97bfc3d7009",
-        "5c10c8fd86f7743d7d706df3"
+        "5c10c8fd86f7743d7d706df3",
+        "5ed515f6915ec335206e4152"
       ],
       "Backpack": [
         "5c1d0d6d86f7744bb2683e1f",
@@ -447,7 +448,20 @@
         "5d40419286f774318526545f",
         "5751a89d24597722aa0e8db0",
         "5c06782b86f77426df5407d2",
-        "57347c77245977448d35f6e2"
+        "57347c77245977448d35f6e2",
+        "59faf98186f774067b6be103",
+        "5909e99886f7740c983b9984",
+        "5e2af00086f7746d3f3c33f7",
+        "5e2af02c86f7746d420957d4",
+        "56742c284bdc2d98058b456d",
+        "5b43575a86f77424f443fe62",
+        "59faf7ca86f7740dbe19f6c2",
+        "62a0a098de7ac8199358053b",
+        "57347c1124597737fb1379e3",
+        "5d0379a886f77420407aa271",
+        "59e3556c86f7741776641ac2",
+        "590c5c9f86f77477c91c36e7",
+        "5d1b3a5d86f774252167ba22"
       ],
       "SecuredContainer": [
         "5e99711486f7744bfc4af328",
@@ -2527,9 +2541,9 @@
     "equipment": {
       "Headwear": 0,
       "Earpiece": 26,
-      "FaceCover": 23,
+      "FaceCover": 25,
       "ArmorVest": 0,
-      "Eyewear": 32,
+      "Eyewear": 31,
       "ArmBand": 0,
       "TacticalVest": 0,
       "Backpack": 100,

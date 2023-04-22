@@ -528,7 +528,7 @@ export class InventoryHelper
      * inputs Item template ID, Item Id, InventoryItem (item from inventory having _id and _tpl)
      * outputs [width, height]
      */
-    public getItemSize(itemTpl: string, itemID: string, inventoryItem: Item[]): Record<number, number>
+    public getItemSize(itemTpl: string, itemID: string, inventoryItem: Item[]): number[]
     {
         // -> Prepares item Width and height returns [sizeX, sizeY]
         return this.getSizeByInventoryItemHash(itemTpl, itemID, this.getInventoryItemHash(inventoryItem));
@@ -536,20 +536,31 @@ export class InventoryHelper
 
     // note from 2027: there IS a thing i didn't explore and that is Merges With Children
     // -> Prepares item Width and height returns [sizeX, sizeY]
-    protected getSizeByInventoryItemHash(itemTpl: string, itemID: string, inventoryItemHash: InventoryHelper.InventoryItemHash): Record<number, number>
+    protected getSizeByInventoryItemHash(itemTpl: string, itemID: string, inventoryItemHash: InventoryHelper.InventoryItemHash): number[]
     {
         const toDo = [itemID];
         const result = this.itemHelper.getItem(itemTpl);
         const tmpItem = result[1];
 
+        // Invalid item or no object
         if (!(result[0] && result[1]))
         {
             this.logger.error(this.localisationService.getText("inventory-invalid_item_missing_from_db", itemTpl));
         }
 
-        if (!tmpItem._props)
+        // item found but no _props property
+        if (tmpItem && !tmpItem._props)
         {
-            this.logger.error(`Item ${tmpItem._id} ${tmpItem._name} is missing a props field, a size for it cannot be acquired`);
+            this.logger.error(`Item ${itemTpl} ${tmpItem?._name} is missing a props field, a size for it cannot be acquired`);
+        }
+
+        // No item object or getItem() returned false
+        if (!(tmpItem && result[0]))
+        {
+            // return default size of 1x1
+            this.logger.error(this.localisationService.getText("inventory-return_default_size", itemTpl));
+
+            return [1, 1];
         }
 
         const rootItem = inventoryItemHash.byItemId[itemID];
@@ -849,31 +860,34 @@ export class InventoryHelper
     /**
     * Internal helper function to move item within the same profile_f.
     */
-    public moveItemInternal(inventoryItems: Item[], body: IInventoryMoveRequestData): void
+    public moveItemInternal(pmcData: IPmcData, inventoryItems: Item[], moveRequest: IInventoryMoveRequestData): void
     {
-        this.handleCartridges(inventoryItems, body);
+        this.handleCartridges(inventoryItems, moveRequest);
 
         for (const inventoryItem of inventoryItems)
         {
             // Find item we want to 'move'
-            if (inventoryItem._id && inventoryItem._id === body.item)
+            if (inventoryItem._id && inventoryItem._id === moveRequest.item)
             {
-                this.logger.debug(`${body.Action} item: ${body.item} from slotid: ${inventoryItem.slotId} to container: ${body.to.container}`);
+                this.logger.debug(`${moveRequest.Action} item: ${moveRequest.item} from slotid: ${inventoryItem.slotId} to container: ${moveRequest.to.container}`);
 
                 // don't move shells from camora to cartridges (happens when loading shells into mts-255 revolver shotgun)
-                if (inventoryItem.slotId.includes("camora_") && body.to.container === "cartridges")
+                if (inventoryItem.slotId.includes("camora_") && moveRequest.to.container === "cartridges")
                 {
-                    this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: inventoryItem.slotId, container: body.to.container}));
+                    this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: inventoryItem.slotId, container: moveRequest.to.container}));
                     return;
                 }
 
                 // Edit items details to match its new location
-                inventoryItem.parentId = body.to.id;
-                inventoryItem.slotId = body.to.container;
+                inventoryItem.parentId = moveRequest.to.id;
+                inventoryItem.slotId = moveRequest.to.container;
 
-                if ("location" in body.to)
+                this.updateFastPanelBinding(pmcData, inventoryItem);
+
+                if ("location" in moveRequest.to)
                 {
-                    inventoryItem.location = body.to.location;
+                    inventoryItem.location = moveRequest.to.location;
+                    
                 }
                 else
                 {
@@ -883,6 +897,32 @@ export class InventoryHelper
                     }
                 }
                 return;
+            }
+        }
+    }
+
+    /**
+     * Update fast panel bindings when an item is moved into a container that doesnt allow quick slot access
+     * @param pmcData Player profile
+     * @param itemBeingMoved item being moved
+     */
+    protected updateFastPanelBinding(pmcData: IPmcData, itemBeingMoved: Item): void
+    {
+        // Find matching itemid in fast panel
+        for (const itemKey in pmcData.Inventory.fastPanel)
+        {
+            if (pmcData.Inventory.fastPanel[itemKey] === itemBeingMoved._id)
+            {
+                // Get moved items parent
+                const itemParent = pmcData.Inventory.items.find(x => x._id === itemBeingMoved.parentId);
+                
+                // Empty out id if item is moved to a container other than pocket/rig
+                if (itemParent && !(itemParent.slotId?.startsWith("Pockets") || itemParent.slotId === "TacticalVest"))
+                {
+                    pmcData.Inventory.fastPanel[itemKey] = "";
+                }
+
+                break;
             }
         }
     }

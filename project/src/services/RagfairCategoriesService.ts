@@ -28,7 +28,7 @@ export class RagfairCategoriesService
      */
     public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number> 
     {
-        return this.processOffersIntoCategories(offers)
+        return this.processOffersIntoCategories(offers);
     }
 
     /**

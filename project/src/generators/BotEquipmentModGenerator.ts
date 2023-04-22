@@ -324,11 +324,26 @@ export class BotEquipmentModGenerator
      */
     protected setScopeSpawnChancesToFull(modSpawnChances: ModsChances): void
     {
-        modSpawnChances["mod_scope"] = 100;
-        modSpawnChances["mod_scope_000"] = 100;
-        modSpawnChances["mod_scope_001"] = 100;
-        modSpawnChances["mod_scope_002"] = 100;
-        modSpawnChances["mod_scope_003"] = 100;
+        if (!modSpawnChances)
+        {
+            this.logger.warning("Unable to adjust scope spawn chances as spawn chance object is empty");
+
+            return;
+        }
+
+        const fullSpawnChancePercent = 100;
+        const scopeMods = [
+            "mod_scope",
+            "mod_scope_000",
+            "mod_scope_001",
+            "mod_scope_002",
+            "mod_scope_003"
+        ];
+
+        for (const modName of scopeMods)
+        {
+            modSpawnChances[modName] = fullSpawnChancePercent;
+        }
     }
 
     protected sortModKeys(unsortedKeys: string[]): string[]
@@ -423,7 +438,7 @@ export class BotEquipmentModGenerator
     }
 
     /**
-     * randomly choose if a mod should be spawned, 100% for required mods OR mod is ammo slot
+     * Randomly choose if a mod should be spawned, 100% for required mods OR mod is ammo slot
      * never return true for an item that has 0% spawn chance
      * @param itemSlot slot the item sits in
      * @param modSlot slot the mod sits in

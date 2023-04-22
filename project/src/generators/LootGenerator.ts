@@ -37,7 +37,7 @@ export class LootGenerator
      * @param options parameters to adjust how loot is generated
      * @returns An array of loot items
      */
-    public createRandomloot(options: LootRequest): LootItem[]
+    public createRandomLoot(options: LootRequest): LootItem[]
     {
         const result: LootItem[] = [];
 

@@ -1,4 +1,4 @@
-import { IRagfairOffer } from "./IRagfairOffer"
+import { IRagfairOffer } from "./IRagfairOffer";
 
 export interface IGetOffersResult 
 {

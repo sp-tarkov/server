@@ -60,20 +60,16 @@ export class QuestHelper
     /**
     * Get status of a quest in player profile by its id
     * @param pmcData Profile to search
-    * @param questID Quest id to look up
+    * @param questId Quest id to look up
     * @returns QuestStatus enum
     */
-    public getQuestStatus(pmcData: IPmcData, questID: string): QuestStatus
+    public getQuestStatus(pmcData: IPmcData, questId: string): QuestStatus
     {
-        for (const quest of pmcData.Quests)
-        {
-            if (quest.qid === questID)
-            {
-                return quest.status;
-            }
-        }
+        const quest = pmcData.Quests.find(q => q.qid === questId);
 
-        return QuestStatus.Locked;
+        return quest
+            ? quest.status
+            : QuestStatus.Locked;
     }
 
     /**
@@ -191,6 +187,11 @@ export class QuestHelper
         }
     }
 
+    /**
+     * take reward item from quest and set FiR status + fix stack sizes + fix mod Ids
+     * @param reward Reward item to fix
+     * @returns Fixed rewards
+     */
     protected processReward(reward: Reward): Reward[]
     {
         let rewardItems: Reward[] = [];
@@ -252,22 +253,16 @@ export class QuestHelper
     /**
      * Gets a flat list of reward items for the given quest at a specific state (e.g. Fail/Success)
      * @param quest quest to get rewards for
-     * @param state Quest status that holds the items (Started, Success, Fail)
+     * @param status Quest status that holds the items (Started, Success, Fail)
      * @returns array of items with the correct maxStack
      */
-    public getQuestRewardItems(quest: IQuest, state: QuestStatus): Reward[]
+    public getQuestRewardItems(quest: IQuest, status: QuestStatus): Reward[]
     {
-        let questRewards = [];
-
-        // Iterate over all quest rewards
-        for (const reward of quest.rewards[QuestStatus[state]]) // get string version of QuestStatus
-        {
-            // Gather up item rewards
-            if ("Item" === reward.type)
-            {
-                questRewards = questRewards.concat(this.processReward(reward));
-            }
-        }
+        // Iterate over all rewards with the desired status, flatten out items that have a type of Item
+        const questRewards = quest.rewards[QuestStatus[status]]
+            .flatMap((reward: Reward) => reward.type === "Item"
+                ? this.processReward(reward)
+                : []);
 
         return questRewards;
     }
@@ -319,47 +314,52 @@ export class QuestHelper
     }
 
     /**
-     * TODO: what is going on here
-     * @param acceptedQuestId Quest to add to profile
+     * Get quests that can be shown to player after starting a quest
+     * @param startedQuestId Quest started by player
      * @param sessionID Session id
-     * @returns Array of quests in profile + quest passed in as param
+     * @returns Quests accessible to player incuding newly unlocked quests now quest (startedQuestId) was started
      */
-    public acceptedUnlocked(acceptedQuestId: string, sessionID: string): IQuest[]
+    public acceptedUnlocked(startedQuestId: string, sessionID: string): IQuest[]
     {
         const profile: IPmcData = this.profileHelper.getPmcProfile(sessionID);
+        // Get quest acceptance data from profile
+        const profileQuest = profile.Quests.find(x => x.qid === startedQuestId);
 
-        const quests = this.getQuestsFromDb().filter((q) =>
+        // Get quests that 
+        const eligibleQuests = this.getQuestsFromDb().filter((quest) =>
         {
-            const acceptedQuestCondition = q.conditions.AvailableForStart.find(
-                c =>
-                {
-                    return c._parent === "Quest"
-                        && c._props.target === acceptedQuestId
-                        && c._props.status[0] === QuestStatus.Started;
-                });
+            // Quest is accessible to player when the accepted quest passed into param is started
+            // e.g. Quest A passed in, quest B is looped over and has requirement of A to be started, include it
+            const acceptedQuestCondition = quest.conditions.AvailableForStart.find(x =>
+            {
+                return x._parent === "Quest"
+                    && x._props.target === startedQuestId
+                    && x._props.status[0] === QuestStatus.Started;
+            });
 
+            // Not found, skip quest
             if (!acceptedQuestCondition)
             {
                 return false;
             }
 
-            const profileQuest = profile.Quests.find(x => x.qid === acceptedQuestId);
-
-            return profileQuest && (profileQuest.status === QuestStatus.Started || profileQuest.status === QuestStatus.AvailableForFinish);
+            // Include if quest found in profile and is started or ready to hand in
+            return profileQuest && ([QuestStatus.Started, QuestStatus.AvailableForFinish].includes(profileQuest.status));
         });
 
-        return this.getQuestsWithOnlyLevelRequirementStartCondition(quests);
+        return this.getQuestsWithOnlyLevelRequirementStartCondition(eligibleQuests);
     }
 
     /**
-     * TODO: what is going on here
-     * @param failedQuestId 
-     * @param sessionID Session id
+     * Get quests that can be shown to player after failing a quest
+     * @param failedQuestId Id of the quest failed by player
+     * @param sessionId Session id
      * @returns 
      */
-    public failedUnlocked(failedQuestId: string, sessionID: string): IQuest[]
+    public failedUnlocked(failedQuestId: string, sessionId: string): IQuest[]
     {
-        const profile = this.profileHelper.getPmcProfile(sessionID);
+        const profile = this.profileHelper.getPmcProfile(sessionId);
+        const profileQuest = profile.Quests.find(x => x.qid === failedQuestId);
 
         const quests = this.getQuestsFromDb().filter((q) =>
         {
@@ -375,8 +375,6 @@ export class QuestHelper
             {
                 return false;
             }
-
-            const profileQuest = profile.Quests.find(x => x.qid === failedQuestId);
 
             return profileQuest && (profileQuest.status === QuestStatus.Fail);
         });
@@ -430,14 +428,7 @@ export class QuestHelper
             const item = pmcData.Inventory.items[inventoryItemIndex];
             item.upd.StackObjectsCount = newStackSize;
 
-            output.profileChanges[sessionID].items.change.push({
-                "_id": item._id,
-                "_tpl": item._tpl,
-                "parentId": item.parentId,
-                "slotId": item.slotId,
-                "location": item.location,
-                "upd": { "StackObjectsCount": item.upd.StackObjectsCount }
-            });
+            this.addItemStackSizeChangeIntoEventResponse(output, sessionID, item);
         }
         else
         {
@@ -446,6 +437,24 @@ export class QuestHelper
             output.profileChanges[sessionID].items.del.push({ "_id": itemId });
             pmcData.Inventory.items.splice(inventoryItemIndex, 1);
         }
+    }
+
+    /**
+     * Add item stack change object into output route event response
+     * @param output Response to add item change event into
+     * @param sessionId Session id
+     * @param item Item that was adjusted
+     */
+    protected addItemStackSizeChangeIntoEventResponse(output: IItemEventRouterResponse, sessionId: string, item: Item): void
+    {
+        output.profileChanges[sessionId].items.change.push({
+            "_id": item._id,
+            "_tpl": item._tpl,
+            "parentId": item.parentId,
+            "slotId": item.slotId,
+            "location": item.location,
+            "upd": { "StackObjectsCount": item.upd.StackObjectsCount }
+        });
     }
 
     /**
@@ -706,16 +715,19 @@ export class QuestHelper
      * @param itemTpl item tpl to look for
      * @returns 'FindItem' condition id
      */
-    public getFindItemIdForQuestHandIn(itemTpl: string): string
+    public getFindItemIdForQuestHandIn(itemTpl: string): string[]
     {
+        const result: string[] = [];
         for (const quest of this.getQuestsFromDb())
         {
             const condition = quest.conditions.AvailableForFinish.find(c => c._parent === "FindItem" && c._props?.target?.includes(itemTpl));
             if (condition)
             {
-                return condition._props.id;
+                result.push(condition._props.id);
             }
         }
+
+        return result;
     }
 
     /**

@@ -477,35 +477,38 @@ class ItemHelper
     }
 
     /**
-     * split item stack if it exceeds StackMaxSize
+     * split item stack if it exceeds its StackMaxSize property
+     * @param itemToSplit item being split into smaller stacks
+     * @returns Array of split items
      */
-    public splitStack(item: Item): Item[]
+    public splitStack(itemToSplit: Item): Item[]
     {
-        if (!(("upd" in item) && ("StackObjectsCount" in item.upd)))
+        if (!(itemToSplit?.upd?.StackObjectsCount != null))
         {
-            return [item];
+            return [itemToSplit];
         }
 
-        const maxStack = this.databaseServer.getTables().templates.items[item._tpl]._props.StackMaxSize;
-        let count = item.upd.StackObjectsCount;
+        const maxStackSize = this.databaseServer.getTables().templates.items[itemToSplit._tpl]._props.StackMaxSize;
+        let remainingCount = itemToSplit.upd.StackObjectsCount;
         const stacks: Item[] = [];
 
         // If the current count is already equal or less than the max
         // then just return the item as is.
-        if (count <= maxStack)
+        if (remainingCount <= maxStackSize)
         {
-            stacks.push(this.jsonUtil.clone(item));
+            stacks.push(this.jsonUtil.clone(itemToSplit));
+
             return stacks;
         }
 
-        while (count)
+        while (remainingCount)
         {
-            const amount = Math.min(count, maxStack);
-            const newStack = this.jsonUtil.clone(item);
+            const amount = Math.min(remainingCount, maxStackSize);
+            const newStack = this.jsonUtil.clone(itemToSplit);
 
             newStack._id = this.hashUtil.generate();
             newStack.upd.StackObjectsCount = amount;
-            count -= amount;
+            remainingCount -= amount;
             stacks.push(newStack);
         }
 
@@ -514,19 +517,19 @@ class ItemHelper
 
     /**
      * Find Barter items in the inventory
-     * @param {string} by
+     * @param {string} by tpl or id
      * @param {Object} pmcData
      * @param {string} barterItemId
      * @returns Array of Item objects
      */
-    public findBarterItems(by: string, pmcData: IPmcData, barterItemId: string): Item[]
+    public findBarterItems(by: "tpl" | "id", pmcData: IPmcData, barterItemId: string): Item[]
     { 
         // find required items to take after buying (handles multiple items)
         const barterIDs = typeof barterItemId === "string"
             ? [barterItemId]
             : barterItemId;
-        let itemsArray: Item[] = [];
 
+        let barterItems: Item[] = [];
         for (const barterID of barterIDs)
         {
             const filterResult = pmcData.Inventory.items.filter(item =>
@@ -536,10 +539,15 @@ class ItemHelper
                     : (item._id === barterID);
             });
 
-            itemsArray = Object.assign(itemsArray, filterResult);
+            barterItems = Object.assign(barterItems, filterResult);
+        }
+
+        if (barterItems.length === 0) 
+        {
+            this.logger.warning(`No items found for barter Id: ${barterIDs}`);
         }
     
-        return itemsArray;
+        return barterItems;
     }
 
     /**
@@ -663,9 +671,9 @@ class ItemHelper
 
     /**
      * WARNING, SLOW. Recursively loop down through an items hierarchy to see if any of the ids match the supplied list, return true if any do
-     * @param {string} tpl
-     * @param {Array} tplsToCheck
-     * @returns boolean
+     * @param {string} tpl Items tpl to check parents of
+     * @param {Array} tplsToCheck Tpl values to check if parents of item match
+     * @returns boolean Match found
      */
     public doesItemOrParentsIdMatch(tpl: string, tplsToCheck: string[]): boolean
     {
@@ -702,9 +710,9 @@ class ItemHelper
     }
 
     /**
-     * Return true if item is a quest item
-     * @param {string} tpl
-     * @returns boolean
+     * Check if item is quest item
+     * @param tpl Items tpl to check quest status of
+     * @returns true if item is flagged as quest item
      */
     public isQuestItem(tpl: string): boolean
     {
@@ -720,7 +728,7 @@ class ItemHelper
 
     /**
      * Get the inventory size of an item
-     * @param items 
+     * @param items Item with children
      * @param rootItemId 
      * @returns ItemSize object (width and height)
      */
@@ -770,8 +778,8 @@ class ItemHelper
 
     /**
      * Get a random cartridge from an items Filter property
-     * @param item 
-     * @returns 
+     * @param item Db item template to look up Cartridge filter values from
+     * @returns Caliber of cartridge
      */
     public getRandomCompatibleCaliberTemplateId(item: ITemplateItem): string
     {
@@ -800,6 +808,7 @@ class ItemHelper
 
         // Add new stack-size-correct items to ammo box
         let currentStoredCartridgeCount = 0;
+        // Location in ammoBox cartridges will be placed
         let location = 0;
         while (currentStoredCartridgeCount < ammoBoxMaxCartridgeCount)
         {
@@ -808,7 +817,7 @@ class ItemHelper
                 ? ammoBoxMaxCartridgeCount
                 : cartridgeMaxStackSize;
 
-            // Add cartridge item object into items array
+            // Add cartridge item into items array
             ammoBox.push(this.createCartridges(ammoBox[0]._id, cartridgeTpl, cartridgeCountToAdd, location));
 
             currentStoredCartridgeCount += cartridgeCountToAdd;
@@ -816,22 +825,84 @@ class ItemHelper
         }
     }
 
-    public createRandomMagCartridges(
+    /**
+     * Add child items (cartridges) to a magazine
+     * @param magazine Magazine to add child items to
+     * @param magTemplate Db template of magazine
+     * @param staticAmmoDist Cartridge distribution
+     * @param caliber Caliber of cartridge to add to magazine
+     * @param minSizePercent % the magazine must be filled to
+     */
+    public fillMagazineWithRandomCartridge(
+        magazine: Item[],
         magTemplate: ITemplateItem,
-        parentId: string,
-        staticAmmoDist: Record<string,
-        IStaticAmmoDetails[]>,
-        caliber: string = undefined
-    ): Item
+        staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
+        caliber: string = undefined,
+        minSizePercent = 0.25
+    ): void
     {
+        // no caliber defined, choose one at random
         if (!caliber)
         {
             caliber = this.getRandomValidCaliber(magTemplate);
         }
-        const ammoTpl = this.drawAmmoTpl(caliber, staticAmmoDist);
-        const maxCount = magTemplate._props.Cartridges[0]._max_count;
-        const stackCount = this.randomUtil.getInt(Math.round(0.25 * maxCount), maxCount);
-        return this.createCartridges(parentId, ammoTpl, stackCount, 0);
+
+        // Edge case for the Klin pp-9, it has a typo in its ammo caliber
+        if (caliber === "Caliber9x18PMM")
+        {
+            caliber = "Caliber9x18PM";
+        }
+
+        // Chose a randomly weighted cartridge that fits
+        const cartridgeTpl = this.drawAmmoTpl(caliber, staticAmmoDist);
+        this.fillMagazineWithCartridge(magazine, magTemplate, cartridgeTpl, minSizePercent);
+    }
+
+    /**
+     * Add child items to a magazine of a specific cartridge
+     * @param magazine Magazine to add child items to
+     * @param magTemplate Db template of magazine
+     * @param cartridgeTpl Cartridge to add to magazine
+     * @param minSizePercent % the magazine must be filled to
+     */
+    public fillMagazineWithCartridge(
+        magazine: Item[],
+        magTemplate: ITemplateItem,
+        cartridgeTpl: string,
+        minSizePercent = 0.25
+    ): void
+    {
+        // Get cartrdge properties and max allowed stack size
+        const cartridgeDetails = this.getItem(cartridgeTpl);
+        const cartridgeMaxStackSize = cartridgeDetails[1]._props.StackMaxSize;
+
+        // Get max number of cartridges in magazine, choose random value between min/max
+        const magazineCartridgeMaxCount = magTemplate._props.Cartridges[0]._max_count;
+        const desiredStackCount = this.randomUtil.getInt(Math.round(minSizePercent * magazineCartridgeMaxCount), magazineCartridgeMaxCount);
+
+        // Loop over cartridge count and add stacks to magazine
+        let currentStoredCartridgeCount = 0;
+        let location = 0;
+        while (currentStoredCartridgeCount < desiredStackCount)
+        {
+            // Get stack size of cartridges
+            let cartridgeCountToAdd = (desiredStackCount <= cartridgeMaxStackSize)
+                ? desiredStackCount
+                : cartridgeMaxStackSize;
+
+            // Ensure we don't go over the max stackcount size
+            const remainingSpace = desiredStackCount - currentStoredCartridgeCount;
+            if (cartridgeCountToAdd > remainingSpace)
+            {
+                cartridgeCountToAdd = remainingSpace;
+            }
+
+            // Add cartridge item object into items array
+            magazine.push(this.createCartridges(magazine[0]._id, cartridgeTpl, cartridgeCountToAdd, location));
+
+            currentStoredCartridgeCount += cartridgeCountToAdd;
+            location ++;
+        }
     }
 
     protected getRandomValidCaliber(magTemplate: ITemplateItem): string

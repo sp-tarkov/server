@@ -7,6 +7,7 @@ import { QuestConditionHelper } from "../helpers/QuestConditionHelper";
 import { QuestHelper } from "../helpers/QuestHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Quest } from "../models/eft/common/tables/IBotBase";
+import { Item } from "../models/eft/common/tables/IItem";
 import { AvailableForConditions, IQuest, Reward } from "../models/eft/common/tables/IQuest";
 import { IRepeatableQuest } from "../models/eft/common/tables/IRepeatableQuests";
 import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
@@ -165,12 +166,12 @@ export class QuestController
 
     /**
      * Is the quest for the opposite side the player is on
-     * @param side player side (usec/bear)
-     * @param questId questId to check
+     * @param playerSide Player side (usec/bear)
+     * @param questId QuestId to check
      */
-    protected questIsForOtherSide(side: string, questId: string): boolean
+    protected questIsForOtherSide(playerSide: string, questId: string): boolean
     {
-        const isUsec = side.toLowerCase() === "usec";
+        const isUsec = playerSide.toLowerCase() === "usec";
         if (isUsec && this.questConfig.bearOnlyQuests.includes(questId))
         {
             // player is usec and quest is bear only, skip
@@ -294,18 +295,18 @@ export class QuestController
      */
     protected getRepeatableQuestFromProfile(pmcData: IPmcData, acceptedQuest: IAcceptQuestRequestData): IRepeatableQuest
     {
-        let result: IRepeatableQuest;
-        for (const repeatable of pmcData.RepeatableQuests)
+        for (const repeatableQuest of pmcData.RepeatableQuests)
         {
-            result = repeatable.activeQuests.find(x => x._id === acceptedQuest.qid);
-            if (result)
+            const matchingQuest = repeatableQuest.activeQuests.find(x => x._id === acceptedQuest.qid);
+            if (matchingQuest)
             {
-                this.logger.debug(`Accepted repeatable quest ${acceptedQuest.qid} from ${repeatable.name}`);
-                break;
+                this.logger.debug(`Accepted repeatable quest ${acceptedQuest.qid} from ${repeatableQuest.name}`);
+                
+                return matchingQuest;
             }
         }
 
-        return result;
+        return undefined;
     }
 
     /**
@@ -496,7 +497,8 @@ export class QuestController
         const quest = this.questHelper.getQuestFromDb(handoverQuestRequest.qid, pmcData);
         const handoverQuestTypes = ["HandoverItem", "WeaponAssembly"];
         const output = this.eventOutputHolder.getOutput(sessionID);
-        let itemHandoverMode = true;
+
+        let isItemHandoverQuest = true;
         let handedInCount = 0;
 
         // Decrement number of items handed in
@@ -506,7 +508,7 @@ export class QuestController
             if (condition._props.id === handoverQuestRequest.conditionId && handoverQuestTypes.includes(condition._parent))
             {
                 handedInCount = Number.parseInt(<string>condition._props.value);
-                itemHandoverMode = condition._parent === handoverQuestTypes[0];
+                isItemHandoverQuest = condition._parent === handoverQuestTypes[0];
                 handoverRequirements = condition;
 
                 const profileCounter = (handoverQuestRequest.conditionId in pmcData.BackendCounters)
@@ -525,24 +527,19 @@ export class QuestController
             }
         }
 
-        if (itemHandoverMode && handedInCount === 0)
+        if (isItemHandoverQuest && handedInCount === 0)
         {
-            const errorMessage = this.localisationService.getText("repeatable-quest_handover_failed_condition_invalid", {questId: handoverQuestRequest.qid, conditionId: handoverQuestRequest.conditionId});
-            this.logger.error(errorMessage);
-
-            return this.httpResponseUtil.appendErrorToOutput(output, errorMessage);
+            return this.showRepeatableQuestInvalidConditionError(handoverQuestRequest, output);
         }
         
         let totalItemCountToRemove = 0;
         for (const itemHandover of handoverQuestRequest.items)
         {
-            const handedOverItemProfileDetails = pmcData.Inventory.items.find(x => x._id === itemHandover.id);
-            if (handedOverItemProfileDetails._tpl !== handoverRequirements._props.target[0])
+            const matchingItemInProfile = pmcData.Inventory.items.find(x => x._id === itemHandover.id);
+            if (!handoverRequirements._props.target.includes(matchingItemInProfile._tpl))
             {
                 // Item handed in by player doesnt match what was requested
-                const errorMessage = this.localisationService.getText("quest-handover_wrong_item", {questId: handoverQuestRequest.qid, handedInTpl: handedOverItemProfileDetails._tpl, requiredTpl: handoverRequirements._props.target[0]});
-                this.logger.error(errorMessage);
-                return this.httpResponseUtil.appendErrorToOutput(output, errorMessage);
+                return this.showQuestItemHandoverMatchError(handoverQuestRequest, matchingItemInProfile, handoverRequirements, output);
             }
 
             // Remove the right quantity of given items
@@ -580,6 +577,36 @@ export class QuestController
         this.updateProfileBackendCounterValue(pmcData, handoverQuestRequest.conditionId, handoverQuestRequest.qid, totalItemCountToRemove);
 
         return output;
+    }
+
+    /**
+     * Show warning to user and write to log that repeatable quest failed a condition check
+     * @param handoverQuestRequest Quest request
+     * @param output Response to send to user
+     * @returns IItemEventRouterResponse
+     */
+    protected showRepeatableQuestInvalidConditionError(handoverQuestRequest: IHandoverQuestRequestData, output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        const errorMessage = this.localisationService.getText("repeatable-quest_handover_failed_condition_invalid", { questId: handoverQuestRequest.qid, conditionId: handoverQuestRequest.conditionId });
+        this.logger.error(errorMessage);
+
+        return this.httpResponseUtil.appendErrorToOutput(output, errorMessage);
+    }
+
+    /**
+     * Show warning to user and write to log quest item handed over did not match what is required
+     * @param handoverQuestRequest Quest request
+     * @param itemHandedOver Non-matching item found
+     * @param handoverRequirements Quest handover requirements
+     * @param output Response to send to user
+     * @returns IItemEventRouterResponse
+     */
+    protected showQuestItemHandoverMatchError(handoverQuestRequest: IHandoverQuestRequestData, itemHandedOver: Item, handoverRequirements: AvailableForConditions, output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        const errorMessage = this.localisationService.getText("quest-handover_wrong_item", { questId: handoverQuestRequest.qid, handedInTpl: itemHandedOver._tpl, requiredTpl: handoverRequirements._props.target[0] });
+        this.logger.error(errorMessage);
+
+        return this.httpResponseUtil.appendErrorToOutput(output, errorMessage);
     }
 
     /**

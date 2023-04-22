@@ -95,8 +95,8 @@
       "Eyewear": {
         "5d6d2ef3a4b93618084f58bd": 1,
         "5aa2b9aee5b5b00015693121": 1,
-        "5aa2b986e5b5b00014028f4c": 1,
-        "61c18d83b00456371a66814b": 1
+        "61c18d83b00456371a66814b": 1,
+        "5aa2b986e5b5b00014028f4c": 1
       },
       "ArmBand": {},
       "TacticalVest": {},
@@ -434,8 +434,8 @@
         "5913915886f774123603c392",
         "5a351711c4a282000b1521a4",
         "61a64428a8c6aa1b795f0ba1",
-        "5c94bbff86f7747ee735c08f",
         "5d80cb3886f77440556dbf09",
+        "5c94bbff86f7747ee735c08f",
         "5ad5d20586f77449be26d877",
         "593858c486f774253a24cb52",
         "63a39e1d234195315d4020bd",
@@ -486,7 +486,20 @@
         "5913877a86f774432f15d444",
         "5da5cdcd86f774529238fb9b",
         "63a39c7964283b5e9c56b280",
-        "5d80ccdd86f77474f7575e02"
+        "5d80ccdd86f77474f7575e02",
+        "5a145d4786f7744cbb6f4a12",
+        "61aa5aed32a4743c3453d319",
+        "63a39ce4cd6db0635c1975fa",
+        "5a0ee34586f774023b6ee092",
+        "5a0eebed86f77461230ddb3d",
+        "5a0f08bc86f77478f33b84c2",
+        "5448ba0b4bdc2d02308b456c",
+        "5a0ee30786f774023b6ee08f",
+        "5a0ee37f86f774023657a86f",
+        "5d947d4e86f774447b415895",
+        "63a39f18c2d53c2c6839c1d3",
+        "62987cb98081af308d7558c8",
+        "63a397d3af870e651d58e65b"
       ],
       "Backpack": [
         "5c1d0d6d86f7744bb2683e1f",
@@ -2510,11 +2523,11 @@
   },
   "chances": {
     "equipment": {
-      "Headwear": 24,
+      "Headwear": 22,
       "Earpiece": 0,
-      "FaceCover": 5,
+      "FaceCover": 6,
       "ArmorVest": 0,
-      "Eyewear": 44,
+      "Eyewear": 45,
       "ArmBand": 0,
       "TacticalVest": 0,
       "Backpack": 0,
@@ -2529,23 +2542,23 @@
       "mod_launcher": 0,
       "mod_muzzle": 51,
       "mod_reciever": 100,
-      "mod_sight_rear": 25,
+      "mod_sight_rear": 26,
       "mod_stock": 100,
       "mod_magazine": 100,
       "mod_mount_000": 8,
-      "mod_charge": 57,
+      "mod_charge": 56,
       "mod_mount_003": 100,
-      "mod_scope": 45,
+      "mod_scope": 44,
       "mod_tactical": 0,
       "mod_mount_001": 0,
       "mod_mount_002": 0,
       "mod_sight_front": 71,
-      "mod_foregrip": 86,
+      "mod_foregrip": 83,
       "mod_tactical_002": 0,
       "mod_tactical_000": 0,
       "mod_tactical_001": 0,
       "mod_mount": 0,
-      "mod_tactical_003": 60
+      "mod_tactical_003": 64
     }
   },
   "generation": {

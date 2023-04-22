@@ -189,7 +189,7 @@ export class HideoutController
 
         // Apply bonuses
         const bonuses = hideoutData.stages[hideoutArea.level].bonuses;
-        if (bonuses.length > 0)
+        if (bonuses?.length > 0)
         {
             for (const bonus of bonuses)
             {
@@ -198,8 +198,7 @@ export class HideoutController
         }
 
         // Add Skill Points Per Area Upgrade
-        //TODO using a variable for value of increment
-        this.playerService.incrementSkillLevel(pmcData, SkillTypes.HIDEOUT_MANAGEMENT, 80);
+        this.playerService.incrementSkillLevel(pmcData, SkillTypes.HIDEOUT_MANAGEMENT, this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.SkillPointsPerAreaUpgrade);
 
         return output;
     }

@@ -1,4 +1,4 @@
-import { Container, IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData"
+import { Container, IInventoryBaseActionRequestData } from "./IInventoryBaseActionRequestData";
 
 export interface IInventorySplitRequestData extends IInventoryBaseActionRequestData 
 {

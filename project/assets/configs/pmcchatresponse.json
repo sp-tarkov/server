@@ -1,0 +1,24 @@
+{
+    "victim": {
+        "responseChancePercent": 7,
+        "responseTypeWeights": {
+            "positive": 7,
+            "negative": 2,
+            "plead": 2
+        },
+        "stripCapitalisationChancePercent": 20,
+        "allCapsChancePercent": 20,
+        "appendBroToMessageEndChancePercent": 35
+    },
+    "killer": {
+        "responseChancePercent": 16,
+        "responseTypeWeights": {
+            "positive": 5,
+            "negative": 2,
+            "plead": 2
+        },
+        "stripCapitalisationChancePercent": 20,
+        "allCapsChancePercent": 15,
+        "appendBroToMessageEndChancePercent": 15
+    }
+}

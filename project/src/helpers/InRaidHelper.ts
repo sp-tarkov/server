@@ -79,32 +79,38 @@ export class InRaidHelper
      */
     public calculateFenceStandingChangeFromKills(existingFenceStanding: number, victims: Victim[]): number
     {
-        const botTypes = this.databaseServer.getTables().bots.types;
-        for (const victim of victims)
+        // Run callback on every victim, adding up the standings gained/lossed, starting value is existing fence standing
+        const newFenceStanding = victims.reduce((acc, victim) =>
         {
-            let standingForKill = null;
-            if (victim.Side.toLowerCase() === "savage")
-            {
-                // Scavs and bosses
-                standingForKill = botTypes[victim.Role.toLowerCase()].experience.standingForKill;
-            }
-            else
-            {
-                // PMCs
-                standingForKill = botTypes[victim.Side.toLowerCase()].experience.standingForKill;
-            }
-
+            const standingForKill = this.getStandingChangeForKill(victim);
             if (standingForKill)
             {
-                existingFenceStanding += standingForKill;
+                return acc + standingForKill;
             }
-            else
-            {
-                this.logger.warning(this.localisationService.getText("inraid-missing_standing_for_kill", {victimSide: victim.Side, victimRole: victim.Role}));
-            }
-        }
+            this.logger.warning(this.localisationService.getText("inraid-missing_standing_for_kill", {victimSide: victim.Side, victimRole: victim.Role}));
+            
+            return acc;
+        }, existingFenceStanding);
 
-        return existingFenceStanding;
+        return newFenceStanding;
+    }
+
+    /**
+     * Get the standing gain/loss for killing an npc
+     * @param victim Who was killed by player
+     * @returns a numerical standing gain or loss
+     */
+    protected getStandingChangeForKill(victim: Victim): number
+    {
+        const botTypes = this.databaseServer.getTables().bots.types;
+        if (victim.Side.toLowerCase() === "savage")
+        {
+            // Scavs and bosses
+            return botTypes[victim.Role.toLowerCase()]?.experience?.standingForKill;
+        }
+        
+        // PMCs
+        return botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
     }
 
     /**
@@ -231,7 +237,7 @@ export class InRaidHelper
      * @param preRaidProfile profile to update
      * @param postRaidProfile profile to update inventory contents of
      * @param isPlayerScav Was this a p scav raid
-     * @returns
+     * @returns profile with FiR items properly tagged
      */
     public addSpawnedInSessionPropertyToItems(preRaidProfile: IPmcData, postRaidProfile: IPmcData, isPlayerScav: boolean): IPmcData
     {
@@ -242,24 +248,15 @@ export class InRaidHelper
                 const itemExistsInProfile = preRaidProfile.Inventory.items.find((itemData) => item._id === itemData._id);
                 if (itemExistsInProfile)
                 {
-                    if ("upd" in item && "SpawnedInSession" in item.upd)
-                    {
-                        // if the item exists and is taken inside the raid, remove the taken in raid status
-                        delete item.upd.SpawnedInSession;
-                    }
+                    // if the item exists and is taken inside the raid, remove the taken in raid status
+                    delete item.upd?.SpawnedInSession;
 
                     continue;
                 }
             }
 
-            if ("upd" in item)
-            {
-                item.upd.SpawnedInSession = true;
-            }
-            else
-            {
-                item.upd = { SpawnedInSession: true };
-            }
+            item.upd = item.upd ?? {};
+            item.upd.SpawnedInSession = true;
         }
 
         return postRaidProfile;
@@ -273,15 +270,17 @@ export class InRaidHelper
      */
     public removeSpawnedInSessionPropertyFromItems(postRaidProfile: IPmcData): IPmcData
     {
-        const items = this.databaseServer.getTables().templates.items;
-        for (const offraidItem of postRaidProfile.Inventory.items)
+        const dbItems = this.databaseServer.getTables().templates.items;
+        const itemsToRemovePropertyFrom = postRaidProfile.Inventory.items.filter(x =>
         {
-            // Remove the FIR status if the item marked FIR at raid start
-            if ("upd" in offraidItem && "SpawnedInSession" in offraidItem.upd && !items[offraidItem._tpl]._props.QuestItem)
-            {
-                delete offraidItem.upd.SpawnedInSession;
-            }
-        }
+            // Has upd object + upd.SpawnedInSession property + not a quest item
+            return "upd" in x && "SpawnedInSession" in x.upd && !dbItems[x._tpl]._props.QuestItem;
+        });
+
+        itemsToRemovePropertyFrom.forEach(item =>
+        {
+            delete item.upd.SpawnedInSession;
+        });
 
         return postRaidProfile;
     }
@@ -322,48 +321,50 @@ export class InRaidHelper
      */
     public deleteInventory(pmcData: IPmcData, sessionID: string): void
     {
-        const toDelete = [];
-        const itemsInPocketsRigBackpack = this.getBaseItemsInRigPocketAndBackpack(pmcData);
-        const lootItemIds = itemsInPocketsRigBackpack.map(x => x._id);
-
-        for (const item of pmcData.Inventory.items)
+        // Get inventory item ids to remove from players profile
+        const itemIdsToDeleteFromProfile = this.getInventoryItemsLostOnDeath(pmcData).map(x => x._id);
+        itemIdsToDeleteFromProfile.forEach(x =>
         {
-            if (this.isItemKeptAfterDeath(pmcData, item, lootItemIds))
-            {
-                continue;
-            }
+            this.inventoryHelper.removeItem(pmcData, x, sessionID);
+        });
 
-            // Remove normal items or quest raid items
-            if (item.parentId === pmcData.Inventory.equipment
-                || item.parentId === pmcData.Inventory.questRaidItems)
-            {
-                toDelete.push(item._id);
-            }
-
-            // Remove items in pockets
-            if (item.slotId === "Pockets")
-            {
-                for (const itemInPocket of pmcData.Inventory.items.filter(x => x.parentId === item._id))
-                {
-                    // Don't delete items in special slots
-                    // Can be special slot 1, 2 or 3
-                    if (itemInPocket.slotId.includes("SpecialSlot"))
-                    {
-                        continue;
-                    }
-
-                    toDelete.push(itemInPocket._id);
-                }
-            }
-        }
-
-        // Delete items flagged above
-        for (const item of toDelete)
-        {
-            this.inventoryHelper.removeItem(pmcData, item, sessionID);
-        }
-
+        // Remove contents of fast panel
         pmcData.Inventory.fastPanel = {};
+    }
+
+    /**
+     * Get an array of items from a profile that will be lost on death
+     * @param pmcProfile Profile to get items from
+     * @returns Array of items lost on death
+     */
+    protected getInventoryItemsLostOnDeath(pmcProfile: IPmcData): Item[]
+    {
+        const inventoryItems = pmcProfile.Inventory.items ?? []; 
+        const equipment = pmcProfile?.Inventory?.equipment;
+        const questRaidItems = pmcProfile?.Inventory?.questRaidItems;
+
+        return inventoryItems.filter(x =>
+        {
+            // Keep items flagged as kept after death
+            if (this.isItemKeptAfterDeath(pmcProfile, x))
+            {
+                return false;
+            }
+    
+            // Remove normal items or quest raid items
+            if (x.parentId === equipment || x.parentId === questRaidItems)
+            {
+                return true;
+            }
+    
+            // Pocket items are not lost on death
+            if (x.slotId.startsWith("pocket"))
+            {
+                return true;
+            }
+    
+            return false;
+        });
     }
 
     /**
@@ -388,22 +389,27 @@ export class InRaidHelper
      * Does the provided items slotId mean its kept on the player after death
      * @pmcData Player profile
      * @itemToCheck Item to check should be kept
-     * @lootItemTpls Array of item Ids that are inside player rig/backpack/pocket
      * @returns true if item is kept after death
      */
-    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item, lootItemIds: string[]): boolean
+    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item): boolean
     {
+        // No parentid means its a base inventory item, always keep
+        if (!itemToCheck.parentId)
+        {
+            return true;
+        }
+
         // Is item equipped on player
         if (itemToCheck.parentId === pmcData.Inventory.equipment)
         {
-            // Check slot id against config, true = delete, false = keep
-            const keep = !this.lostOnDeathConfig.equipment[itemToCheck.slotId];
-            if (keep === undefined)
+            // Check slot id against config, true = delete, false = keep, undefined = delete
+            const discard = this.lostOnDeathConfig.equipment[itemToCheck.slotId];
+            if (discard === undefined)
             {
                 return false;
             }
 
-            return keep;
+            return !discard;
         }
 
         // Is quest item + quest item not lost on death
@@ -412,8 +418,8 @@ export class InRaidHelper
             return true;
         }
 
-        // Is loot item + not lost on death
-        if (!this.lostOnDeathConfig.loot && lootItemIds.includes(itemToCheck._id))
+        // special slots are always kept after death
+        if (itemToCheck.slotId?.includes("SpecialSlot") && this.lostOnDeathConfig.specialSlotItems)
         {
             return true;
         }

@@ -1,16 +1,16 @@
 {
     "looseLootMultiplier": {
-        "bigmap": 1.2,
+        "bigmap": 1,
         "develop": 1,
-        "factory4_day": 1.2,
-        "factory4_night": 1.2,
-        "interchange": 1.2,
+        "factory4_day": 1,
+        "factory4_night": 1,
+        "interchange": 1,
         "laboratory": 1,
-        "rezervbase": 1.2,
-        "shoreline": 1.2,
-        "woods": 1.3,
+        "rezervbase": 1,
+        "shoreline": 1,
+        "woods": 1,
         "hideout": 0,
-        "lighthouse": 1.2,
+        "lighthouse": 1,
         "privatearea": 1,
         "suburbs": 1,
         "tarkovstreets": 1,
@@ -288,8 +288,8 @@
             "laboratory": [{
                     "sptId": "sptBearLabsZoneFloor1NormalSpawn",
                     "BossName": "sptBear",
-					"BossChance": 15,
-					"BossZone": "BotZoneFloor1",
+                    "BossChance": 15,
+                    "BossZone": "BotZoneFloor1",
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -309,7 +309,7 @@
                     "sptId": "sptBearLabsZoneFloor2NormalSpawn",
                     "BossChance": 15,
                     "BossName": "sptBear",
-					"BossZone": "BotZoneFloor2",
+                    "BossZone": "BotZoneFloor2",
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -407,7 +407,7 @@
                     "RandomTimeSpawn": false
                 }
             ],
-			"interchange": [{
+            "interchange": [{
                     "sptId": "sptBearInterchangeNormalSpawn",
                     "BossName": "sptBear",
                     "BossChance": 15,
@@ -447,7 +447,8 @@
                         }
                     ],
                     "RandomTimeSpawn": false
-                }]
+                }
+            ]
         },
         "normal": {
             "factory4_day": [{
@@ -645,5 +646,6 @@
     "fixEmptyBotWavesSettings": {
         "enabled": true,
         "ignoreMaps": ["base", "develop", "hideout", "privatearea", "suburbs", "terminal", "town"]
-    }
+    },
+    "fitLootIntoContainerAttempts": 2
 }

@@ -1,11 +1,15 @@
 import { inject, injectable } from "tsyringe";
 
 import { BotHelper } from "../helpers/BotHelper";
-import { MinMax } from "../models/common/MinMax";
-import { EquipmentChances, Generation, IBotType, ModsChances } from "../models/eft/common/tables/IBotType";
+import {
+    EquipmentChances, Generation, IBotType, MinMaxWithWhitelist, ModsChances
+} from "../models/eft/common/tables/IBotType";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { BotGenerationDetails } from "../models/spt/bots/BotGenerationDetails";
-import { AdjustmentDetails, EquipmentFilterDetails, EquipmentFilters, IBotConfig, WeightingAdjustmentDetails } from "../models/spt/config/IBotConfig";
+import {
+    AdjustmentDetails, EquipmentFilterDetails, EquipmentFilters, IBotConfig,
+    WeightingAdjustmentDetails
+} from "../models/spt/config/IBotConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 
@@ -78,7 +82,7 @@ export class BotEquipmentFilterService
      * @param generationChanges Changes to apply
      * @param baseBotGeneration dictionary to update
      */
-    protected adjustGenerationChances(generationChanges: Record<string, MinMax>, baseBotGeneration: Generation): void
+    protected adjustGenerationChances(generationChanges: Record<string, MinMaxWithWhitelist>, baseBotGeneration: Generation): void
     {
         if (!generationChanges)
         {
@@ -89,6 +93,8 @@ export class BotEquipmentFilterService
         {
             baseBotGeneration.items[itemKey].min = generationChanges[itemKey].min;
             baseBotGeneration.items[itemKey].max = generationChanges[itemKey].max;
+
+            baseBotGeneration.items[itemKey].whitelist = generationChanges[itemKey].whitelist;
         }
     }
 

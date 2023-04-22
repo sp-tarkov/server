@@ -231,7 +231,7 @@
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 260,
-  "BotStart": 130,
+  "BotStart": 200,
   "BotStop": 1900,
   "Description": "The lighthouse at Cape Dalniy used to be an important strategic point of the city. At the outbreak of the conflict, USEC used it as a landing zone, thus attracting the attention of BEAR troops that aimed to reduce the hostile PMC presence to zero. ",
   "DisabledForScav": false,

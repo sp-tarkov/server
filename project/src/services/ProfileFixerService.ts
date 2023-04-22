@@ -588,17 +588,18 @@ export class ProfileFixerService
 
         // Get items placed in root of stash
         // TODO: extend to other areas / sub items
-        const inventoryItems = pmcProfile.Inventory.items.filter(x => x.slotId === "main");
-        if (!inventoryItems)
+        const inventoryItemsToCheck = pmcProfile.Inventory.items.filter(x => ["hideout", "main"].includes(x.slotId));
+        if (!inventoryItemsToCheck)
         {
             return;
         }
 
-        for (const item of inventoryItems)
+        for (const item of inventoryItemsToCheck)
         {
             if (!itemsDb[item._tpl])
             {
                 this.logger.error(this.localisationService.getText("fixer-mod_item_found", item._tpl));
+
                 return;
             }
         }

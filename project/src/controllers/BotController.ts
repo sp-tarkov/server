@@ -21,6 +21,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { BotGenerationCacheService } from "../services/BotGenerationCacheService";
 import { LocalisationService } from "../services/LocalisationService";
+import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
 import { JsonUtil } from "../utils/JsonUtil";
 
 @injectable()
@@ -36,6 +37,7 @@ export class BotController
         @inject("BotHelper") protected botHelper: BotHelper,
         @inject("BotDifficultyHelper") protected botDifficultyHelper: BotDifficultyHelper,
         @inject("BotGenerationCacheService") protected botGenerationCacheService: BotGenerationCacheService,
+        @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -173,7 +175,15 @@ export class BotController
                 }
             }
             // Get bot from cache, add to return array
-            botsToReturn.push(this.botGenerationCacheService.getBot(cacheKey));
+            const botToReturn = this.botGenerationCacheService.getBot(cacheKey);
+
+            if (info.conditions.length === 1)
+            {
+                // Cache bot when we're returning 1 bot, this indicated the bot is being requested to be spawned
+                this.matchBotDetailsCacheService.cacheBot(botToReturn);
+            }
+
+            botsToReturn.push(botToReturn);
         }
 
         return botsToReturn;

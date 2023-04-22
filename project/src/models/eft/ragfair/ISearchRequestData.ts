@@ -1,4 +1,4 @@
-import { RagfairSort } from "../../enums/RagfairSort"
+import { RagfairSort } from "../../enums/RagfairSort";
 
 export interface ISearchRequestData
 {

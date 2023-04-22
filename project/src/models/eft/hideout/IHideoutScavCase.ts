@@ -1,4 +1,4 @@
-import { MinMax } from "../../common/MinMax"
+import { MinMax } from "../../common/MinMax";
 
 export interface IHideoutScavCase 
 {

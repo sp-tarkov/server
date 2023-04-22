@@ -3676,14 +3676,14 @@
       },
       {
         "templateId": "5c94bbff86f7747ee735c08f",
-        "count": 12,
+        "count": 10,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
       },
       {
         "templateId": "5c1d0d6d86f7744bb2683e1f",
-        "count": 3,
+        "count": 1,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -4199,14 +4199,14 @@
       },
       {
         "templateId": "5a26ac0ec4a28200741e1e18",
-        "count": 150,
+        "count": 50,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
       },
       {
         "templateId": "590c5a7286f7747884343aea",
-        "count": 2,
+        "count": 4,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -5156,7 +5156,7 @@
       },
       {
         "templateId": "5efb0d4f4bc50b58e81710f3",
-        "count": 120,
+        "count": 150,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -5191,12 +5191,12 @@
         "type": "Tool"
       }
     ],
-    "productionTime": 53600,
+    "productionTime": 31500,
     "needFuelForAllProductionTime": false,
     "locked": false,
     "endProduct": "5efb0cabfb3e451d70735af5",
     "continuous": false,
-    "count": 80,
+    "count": 150,
     "productionLimitCount": 0,
     "isEncoded": false
   },
@@ -5559,7 +5559,7 @@
       },
       {
         "templateId": "5cadf6e5ae921500113bb973",
-        "count": 80,
+        "count": 120,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -5570,7 +5570,7 @@
     "locked": false,
     "endProduct": "5cadf6eeae921500134b2799",
     "continuous": false,
-    "count": 60,
+    "count": 80,
     "productionLimitCount": 0,
     "isEncoded": false
   },
@@ -6644,7 +6644,7 @@
       },
       {
         "templateId": "5ba26844d4351e00334c9475",
-        "count": 120,
+        "count": 180,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -6659,14 +6659,14 @@
       },
       {
         "templateId": "5d6fc78386f77449d825f9dc",
-        "count": 4,
+        "count": 3,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
       },
       {
         "templateId": "5d6fc87386f77449db3db94e",
-        "count": 4,
+        "count": 3,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -6679,12 +6679,12 @@
         "type": "Item"
       }
     ],
-    "productionTime": 75600,
+    "productionTime": 36660,
     "needFuelForAllProductionTime": false,
     "locked": false,
     "endProduct": "5ba26835d4351e0035628ff5",
     "continuous": false,
-    "count": 120,
+    "count": 180,
     "productionLimitCount": 0,
     "isEncoded": false
   },
@@ -6707,7 +6707,7 @@
       },
       {
         "templateId": "5cc80f8fe4a949033b0224a2",
-        "count": 100,
+        "count": 180,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -6739,7 +6739,7 @@
     "locked": false,
     "endProduct": "5cc80f38e4a949001152b560",
     "continuous": false,
-    "count": 100,
+    "count": 180,
     "productionLimitCount": 0,
     "isEncoded": false
   },
@@ -6776,7 +6776,7 @@
       },
       {
         "templateId": "590c5a7286f7747884343aea",
-        "count": 3,
+        "count": 1,
         "isFunctional": false,
         "isEncoded": false,
         "type": "Item"
@@ -6796,7 +6796,7 @@
         "type": "Item"
       }
     ],
-    "productionTime": 53120,
+    "productionTime": 31500,
     "needFuelForAllProductionTime": false,
     "locked": false,
     "endProduct": "5a26ac0ec4a28200741e1e18",

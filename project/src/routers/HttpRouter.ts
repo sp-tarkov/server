@@ -37,7 +37,7 @@ export class HttpRouter
         let url = req.url;
 
         // remove retry from url
-        if (url.includes("?retry="))
+        if (url?.includes("?retry="))
         {
             url = url.split("?retry=")[0];
         }
@@ -48,7 +48,7 @@ export class HttpRouter
         }
 
         // TODO: Temporary hack to change ItemEventRouter response sessionID binding to what client expects
-        if (wrapper.output.includes("\"profileChanges\":{"))
+        if (wrapper.output?.includes("\"profileChanges\":{"))
         {
             wrapper.output = wrapper.output.replace(sessionID, `pmc${sessionID}`);
         }

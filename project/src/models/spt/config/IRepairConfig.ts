@@ -1,5 +1,5 @@
-import { MinMax } from "../../../models/common/MinMax"
-import { IBaseConfig } from "./IBaseConfig"
+import { MinMax } from "../../../models/common/MinMax";
+import { IBaseConfig } from "./IBaseConfig";
 
 export interface IRepairConfig extends IBaseConfig
 {

@@ -1,4 +1,5 @@
 import { DependencyContainer, Lifecycle } from "tsyringe";
+
 import { BotCallbacks } from "../callbacks/BotCallbacks";
 import { BundleCallbacks } from "../callbacks/BundleCallbacks";
 import { CustomizationCallbacks } from "../callbacks/CustomizationCallbacks";
@@ -199,6 +200,7 @@ import { ItemBaseClassService } from "../services/ItemBaseClassService";
 import { ItemFilterService } from "../services/ItemFilterService";
 import { LocaleService } from "../services/LocaleService";
 import { LocalisationService } from "../services/LocalisationService";
+import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
 import { MatchLocationService } from "../services/MatchLocationService";
 import { CustomItemService } from "../services/mod/CustomItemService";
 import { DynamicRouterModService } from "../services/mod/dynamicRouter/DynamicRouterModService";
@@ -212,6 +214,7 @@ import { NotificationService } from "../services/NotificationService";
 import { OpenZoneService } from "../services/OpenZoneService";
 import { PaymentService } from "../services/PaymentService";
 import { PlayerService } from "../services/PlayerService";
+import { PmcChatResponseService } from "../services/PmcChatResponseService";
 import { ProfileFixerService } from "../services/ProfileFixerService";
 import { ProfileSnapshotService } from "../services/ProfileSnapshotService";
 import { RagfairCategoriesService } from "../services/RagfairCategoriesService";
@@ -224,7 +227,7 @@ import { SeasonalEventService } from "../services/SeasonalEventService";
 import { TraderAssortService } from "../services/TraderAssortService";
 import { TraderPurchasePersisterService } from "../services/TraderPurchasePersisterService";
 import { App } from "../utils/App";
-import { AsyncQueue } from "../utils/AyncQueue";
+import { AsyncQueue } from "../utils/AsyncQueue";
 import { DatabaseImporter } from "../utils/DatabaseImporter";
 import { EncodingUtil } from "../utils/EncodingUtil";
 import { HashUtil } from "../utils/HashUtil";
@@ -602,7 +605,9 @@ export class Container
         depContainer.register<BotEquipmentModPoolService>("BotEquipmentModPoolService", BotEquipmentModPoolService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<BotWeaponModLimitService>("BotWeaponModLimitService", BotWeaponModLimitService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<SeasonalEventService>("SeasonalEventService", SeasonalEventService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<MatchBotDetailsCacheService>("MatchBotDetailsCacheService", MatchBotDetailsCacheService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<TraderPurchasePersisterService>("TraderPurchasePersisterService", TraderPurchasePersisterService);
+        depContainer.register<PmcChatResponseService>("PmcChatResponseService", PmcChatResponseService);
     }
 
     private static registerServers(depContainer: DependencyContainer): void 

@@ -105,32 +105,23 @@ export class PMCLootGenerator
     }
 
     /**
-     * Check if item has a width/hide that lets it fit into a 1x2 slot
+     * Check if item has a width/height that lets it fit into a 1x2/2x1 slot
      * 1x1 / 1x2 / 2x1
      * @param item Item to check size of
      * @returns true if it fits
      */
     protected itemFitsInto1By2Slot(item: ITemplateItem): boolean
     {
-        if (item._props.Width === 1
-            && item._props.Height === 1)
+        switch (`{${item._props.Width}x${item._props.Height}}`)
         {
-            return true;
-        }
+            case "1x1":
+            case "1x2":
+            case "2x1":
+                return true;
 
-        if (item._props.Width === 1
-            && item._props.Height === 2)
-        {
-            return true;
+            default:
+                return false;
         }
-
-        if (item._props.Width === 2
-            && item._props.Height === 1)
-        {
-            return true;
-        }
-
-        return false;
     }
 
     /**

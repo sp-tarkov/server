@@ -1,9 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
 import { OnLoad } from "../di/OnLoad";
+import { ConfigTypes } from "../models/enums/ConfigTypes";
+import { IHttpConfig } from "../models/spt/config/IHttpConfig";
 import { IDatabaseTables } from "../models/spt/server/IDatabaseTables";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ImageRouter } from "../routers/ImageRouter";
+import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { LocalisationService } from "../services/LocalisationService";
 import { EncodingUtil } from "./EncodingUtil";
@@ -17,7 +20,8 @@ export class DatabaseImporter implements OnLoad
 {
     private hashedFile: any;
     private valid = VaildationResult.UNDEFINED;
-    private filepath;
+    private filepath: string;
+    protected httpConfig: IHttpConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -28,9 +32,11 @@ export class DatabaseImporter implements OnLoad
         @inject("ImageRouter") protected imageRouter: ImageRouter,
         @inject("EncodingUtil") protected encodingUtil: EncodingUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("ImporterUtil") protected importerUtil: ImporterUtil
+        @inject("ImporterUtil") protected importerUtil: ImporterUtil,
+        @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
+        this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
     }
     
     public async onLoad(): Promise<void>
@@ -41,11 +47,13 @@ export class DatabaseImporter implements OnLoad
         {
             try 
             {
-            // reading the dynamic SHA1 file - Ask Alex or Chomp
+                // Reading the dynamic SHA1 file
                 const file = "checks.dat";
                 const fileWithPath = `${this.filepath}${file}`;
                 if (this.vfs.exists(fileWithPath))
+                {
                     this.hashedFile = this.jsonUtil.deserialize(this.encodingUtil.fromBase64(this.vfs.readFile(fileWithPath)));
+                }
                 else
                 {
                     this.valid = VaildationResult.NOT_FOUND;
@@ -61,7 +69,14 @@ export class DatabaseImporter implements OnLoad
 
         await this.hydrateDatabase(this.filepath);
 
-        this.loadImages(`${this.filepath}images/`);
+        this.loadImages(`${this.filepath}images/`, [
+            "/files/CONTENT/banners/",
+            "/files/handbook/",
+            "/files/Hideout/",
+            "/files/launcher/",
+            "/files/quest/icon/",
+            "/files/trader/avatar/"
+        ]);
     }
 
     /**
@@ -124,29 +139,46 @@ export class DatabaseImporter implements OnLoad
         return true;
     }
 
-    public loadImages(filepath: string): void
+    /**
+     * Find and map files with image router inside a designated path
+     * @param filepath Path to find files in
+     */
+    public loadImages(filepath: string, routes: string[]): void
     {
-        const dirs = this.vfs.getDirs(filepath);
-        const routes = [
-            "/files/CONTENT/banners/",
-            "/files/handbook/",
-            "/files/Hideout/",
-            "/files/launcher/",
-            "/files/quest/icon/",
-            "/files/trader/avatar/"
-        ];
-
-        for (const i in dirs)
+        const directories = this.vfs.getDirs(filepath);
+        for (const directoryIndex in directories)
         {
-            const files = this.vfs.getFiles(`${filepath}${dirs[i]}`);
-
-            for (const file of files)
+            // Get all files in directory
+            const filesInDirectory = this.vfs.getFiles(`${filepath}${directories[directoryIndex]}`);
+            for (const file of filesInDirectory)
             {
+                // Register each file in image router
                 const filename = this.vfs.stripExtension(file);
-                this.imageRouter.addRoute(`${routes[i]}${filename}`, `${filepath}${dirs[i]}/${file}`);
+                const routeKey = `${routes[directoryIndex]}${filename}`;
+                let imagePath = `${filepath}${directories[directoryIndex]}/${file}`;
+
+                const pathOverride = this.getImagePathOverride(imagePath);
+                if (pathOverride)
+                {
+                    imagePath = pathOverride;
+                }
+
+                this.imageRouter.addRoute(routeKey, imagePath);
             }
         }
+
+        // Map icon file separately
         this.imageRouter.addRoute("/favicon.ico", `${filepath}icon.ico`);
+    }
+
+    /**
+     * Check for a path override in the http json config file
+     * @param imagePath Key
+     * @returns override for key
+     */
+    protected getImagePathOverride(imagePath: string): string
+    {
+        return this.httpConfig.serverImagePathOverride[imagePath];
     }
 }
 

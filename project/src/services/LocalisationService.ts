@@ -19,7 +19,7 @@ export class LocalisationService
         @inject("LocaleService") protected localeService: LocaleService
     )
     {
-        const localeFileDirectory = (globalThis.G_RELEASE_CONFIGURATION) ? "Aki_Data/Server/locales" : "./assets/locales";
+        const localeFileDirectory = (globalThis.G_RELEASE_CONFIGURATION) ? "Aki_Data/Server/database/locales/server" : "./assets/database/locales/server";
         this.i18n = new I18n(
             {
                 locales: this.localeService.getServerSupportedLocales(),
@@ -41,5 +41,14 @@ export class LocalisationService
     public getText(key: string, args = undefined): string
     {
         return this.i18n.__(key.toLowerCase(), args);
+    }
+
+    /**
+     * Get all locale keys
+     * @returns string array of keys
+     */
+    public getKeys(): string[]
+    {
+        return Object.keys(this.i18n.getCatalog("en"));
     }
 }

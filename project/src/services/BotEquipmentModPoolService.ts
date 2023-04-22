@@ -59,6 +59,12 @@ export class BotEquipmentModPoolService
                 pool[item._id] = {};
             }
 
+            // No slots, skip
+            if (!item._props.Slots)
+            {
+                return;
+            }
+
             for (const slot of item._props.Slots)
             {
                 const itemsThatFit = slot._props.filters[0].Filter;
@@ -77,7 +83,7 @@ export class BotEquipmentModPoolService
                     
                     // Check item added into array for slots, need to iterate over those
                     const subItemDetails = this.databaseServer.getTables().templates.items[itemToAdd];
-                    const hasSubItemsToAdd = subItemDetails._props.Slots?.length > 0;
+                    const hasSubItemsToAdd = subItemDetails?._props?.Slots?.length > 0;
                     if (hasSubItemsToAdd)
                     {
                         // Recursive call

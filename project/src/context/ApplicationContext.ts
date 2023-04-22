@@ -26,6 +26,7 @@ export class ApplicationContext
         {
             return this.variables.get(type)?.getTail()?.getValue();
         }
+
         return undefined;
     }
 
@@ -35,6 +36,7 @@ export class ApplicationContext
         {
             return this.variables.get(type).toList();
         }
+
         return undefined;
     }
 
@@ -45,8 +47,10 @@ export class ApplicationContext
             list = this.variables.get(type);
         else
             list = new LinkedList<ContextVariable>();
+
         if (list.getSize() >= ApplicationContext.holderMaxSize)
             list.removeFirst();
+
         list.add(new ContextVariable(value, type));
         this.variables.set(type, list);
     }

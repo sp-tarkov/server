@@ -158,7 +158,6 @@ export class DataCallbacks
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getItemPrices(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetItemPricesResponse>
     {
-        const traderId = url.replace("/client/items/prices/", "");
         const handbookPrices = this.ragfairController.getStaticPrices();
         const response: IGetItemPricesResponse = {
             supplyNextTime: 1672236024, // todo: get trader refresh time?

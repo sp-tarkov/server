@@ -643,7 +643,11 @@ export class RagfairOfferGenerator
         {
             const fleaPrices = this.databaseServer.getTables().templates.prices;
             const fleaArray = Object.entries(fleaPrices).map(([tpl, price]) => ({ tpl: tpl, price: price }));
-            this.allowedFleaPriceItemsForBarter = fleaArray.filter(x => !this.itemHelper.isOfBaseclasses(x.tpl, this.ragfairConfig.dynamic.barter.itemTypeBlacklist));
+
+            // Only get item prices for items that also exist in items.json
+            const filteredItems = fleaArray.filter(x => this.itemHelper.getItem(x.tpl)[0]);
+
+            this.allowedFleaPriceItemsForBarter = filteredItems.filter(x => !this.itemHelper.isOfBaseclasses(x.tpl, this.ragfairConfig.dynamic.barter.itemTypeBlacklist));
         }
 
         return this.allowedFleaPriceItemsForBarter;

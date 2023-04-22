@@ -50,7 +50,7 @@ export class BotInventoryGenerator
     /**
      * Add equipment/weapons/loot to bot
      * @param sessionId Session id
-     * @param botJsonTemplate bot/x.json data from db
+     * @param botJsonTemplate Base json db file for the bot having its loot generated
      * @param botRole Role bot has (assault/pmcBot)
      * @param isPmc Is bot being converted into a pmc
      * @param botLevel Level of bot being generated
@@ -70,7 +70,7 @@ export class BotInventoryGenerator
         // Roll weapon spawns and generate a weapon for each roll that passed
         this.generateAndAddWeaponsToBot(templateInventory, equipmentChances, sessionId, botInventory, botRole, isPmc, itemGenerationLimitsMinMax, botLevel);
 
-        this.botLootGenerator.generateLoot(sessionId, templateInventory, itemGenerationLimitsMinMax.items, isPmc, botRole, botInventory, equipmentChances, botLevel);
+        this.botLootGenerator.generateLoot(sessionId, botJsonTemplate, isPmc, botRole, botInventory, botLevel);
 
         return botInventory;
     }
@@ -257,23 +257,19 @@ export class BotInventoryGenerator
      */
     protected getFilteredDynamicModsForItem(itemTpl: string, equipmentBlacklist: EquipmentFilterDetails[]): Record<string, string[]>
     {
-        const results = this.botEquipmentModPoolService.getModsForGearSlot(itemTpl);
-        for (const modSlot in results)
+        const modPool = this.botEquipmentModPoolService.getModsForGearSlot(itemTpl);
+        for (const modSlot of Object.keys(modPool ?? []))
         {
-            const blacklistedMods = equipmentBlacklist[0].equipment[modSlot];
-            if (!blacklistedMods)
-            {
-                continue;
-            }
-            const filteredMods =  results[modSlot].filter(x => !blacklistedMods.includes(x));
+            const blacklistedMods = equipmentBlacklist[0].equipment[modSlot] || [];
+            const filteredMods =  modPool[modSlot].filter(x => !blacklistedMods.includes(x));
 
             if (filteredMods.length > 0)
             {
-                results[modSlot] = filteredMods;
+                modPool[modSlot] = filteredMods;
             }
         }
 
-        return results;
+        return modPool;
     }
 
     /**

@@ -19,7 +19,7 @@ export const Listen = (basePath: string) =>
         return class extends Base
         {
             // Record of each handler per HTTP method and path
-            handlers: Partial<Record<HttpMethods, Record<string, HandleFn>>>
+            handlers: Partial<Record<HttpMethods, Record<string, HandleFn>>>;
 
             constructor(...args: any[])
             {
@@ -33,7 +33,7 @@ export const Listen = (basePath: string) =>
                 // Add each flagged handler to the Record
                 handlersArray.forEach(({ handlerName, path, httpMethod }) =>
                 {
-                    if (!this.handlers[httpMethod]) this.handlers[httpMethod] = {}
+                    if (!this.handlers[httpMethod]) this.handlers[httpMethod] = {};
 
                     if (this[handlerName] !== undefined && typeof this[handlerName] === "function")
                     {
@@ -53,8 +53,8 @@ export const Listen = (basePath: string) =>
                 const routesHandles = this.handlers[req.method];
 
                 return Object.keys(this.handlers).some(meth => meth === req.method) &&
-                Object.keys(routesHandles).some(route => (new RegExp(route)).test(req.url))
-            }
+                Object.keys(routesHandles).some(route => (new RegExp(route)).test(req.url));
+            };
 
             // The actual handle method dispatches the request to the registered handlers
             handle = (sessionID: string, req: IncomingMessage, resp: ServerResponse): void =>
@@ -70,11 +70,11 @@ export const Listen = (basePath: string) =>
 
                 // Filter to select valid routes but only use the first element since it's the most precise
                 const validRoutes = routes.filter(handlerKey => (new RegExp(handlerKey)).test(route));
-                if (validRoutes.length > 0) routesHandles[validRoutes[0]](sessionID, req, resp)
-            }
-        }
-    }
-}
+                if (validRoutes.length > 0) routesHandles[validRoutes[0]](sessionID, req, resp);
+            };
+        };
+    };
+};
 
 /**
  *  Internally used to create HTTP decorators.
@@ -89,17 +89,17 @@ const createHttpDecorator = (httpMethod: HttpMethods) =>
         return (target: any, propertyKey: string) =>
         {
             // If the handlers array has not been initialized yet
-            if (!target["handlers"]) target["handlers"] = []
+            if (!target["handlers"]) target["handlers"] = [];
 
             // Flag the method as a HTTP handler
             target["handlers"].push({
                 handlerName: propertyKey,
                 path,
                 httpMethod
-            })
-        }
-    }
-}
+            });
+        };
+    };
+};
 
 /**
  *  HTTP DELETE decorator

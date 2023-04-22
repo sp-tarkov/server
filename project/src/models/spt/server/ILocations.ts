@@ -1,6 +1,6 @@
-import { ILocationBase } from "../../eft/common/ILocationBase"
-import { ILooseLoot } from "../../eft/common/ILooseLoot"
-import { ILocationsBase } from "../../eft/common/tables/ILocationsBase"
+import { ILocationBase } from "../../eft/common/ILocationBase";
+import { ILooseLoot } from "../../eft/common/ILooseLoot";
+import { ILocationsBase } from "../../eft/common/tables/ILocationsBase";
 
 export interface ILocations 
 {

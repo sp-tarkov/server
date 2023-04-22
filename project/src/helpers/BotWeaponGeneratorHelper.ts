@@ -48,6 +48,7 @@ export class BotWeaponGeneratorHelper
         }
         else if (parentItem._id === BaseClasses.UBGL)
         {
+            // underbarrel launchers can only have 1 chambered grenade
             chamberBulletCount = 1;
         }
         else

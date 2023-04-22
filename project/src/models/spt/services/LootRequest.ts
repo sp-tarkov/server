@@ -1,6 +1,6 @@
-import { MinMax } from "../../common/MinMax"
+import { MinMax } from "../../common/MinMax";
 
-export class LootRequest
+export interface LootRequest
 {
     presetCount: MinMax
     itemCount: MinMax

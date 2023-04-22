@@ -16,6 +16,8 @@ import { WebSocketServer } from "./WebSocketServer";
 @injectable()
 export class HttpServer
 {
+    protected httpConfig: IHttpConfig;
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
@@ -30,59 +32,21 @@ export class HttpServer
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
     }
 
-    protected httpConfig: IHttpConfig;
-
-    public getCookies(req: http.IncomingMessage): any
-    {
-        const found = {};
-        const cookies = req.headers.cookie;
-
-        if (cookies)
-        {
-            for (const cookie of cookies.split(";"))
-            {
-                const parts = cookie.split("=");
-
-                found[parts.shift().trim()] = decodeURI(parts.join("="));
-            }
-        }
-
-        return found;
-    }
-
-    public handleRequest(req: IncomingMessage, resp: ServerResponse): void
-    {
-        const sessionID = this.getCookies(req)["PHPSESSID"];
-        this.applicationContext.addValue(ContextVariableType.SESSION_ID, sessionID);
-
-        // http.json logRequests boolean option to allow the user/server to choose to not log requests
-        if (this.httpConfig.logRequests) 
-        {
-            this.logger.info(this.localisationService.getText("client_request", req.url));
-        }
-        
-        for (const listener of this.httpListeners)
-        {
-            if (listener.canHandle(sessionID, req))
-            {
-                listener.handle(sessionID, req, resp);
-                break;
-            }
-        }
-    }
-
+    /**
+     * Handle server loading event
+     */
     public load(): void
     {
         /* create server */
-        //this.serverRespond.get();
         const httpServer: http.Server = http.createServer((req, res) =>
         {
             this.handleRequest(req, res);
         });
 
-        this.httpConfig.ip = this.databaseServer.getTables().server.ip;
-        this.httpConfig.port = this.databaseServer.getTables().server.port;
+        this.databaseServer.getTables().server.ip = this.httpConfig.ip;
+        this.databaseServer.getTables().server.port = this.httpConfig.port;
 
+        /* Config server to listen on a port */
         httpServer.listen(this.httpConfig.port, this.httpConfig.ip, () =>
         {
             this.logger.success(this.localisationService.getText("started_webserver_success", this.httpServerHelper.getBackendUrl()));
@@ -105,4 +69,43 @@ export class HttpServer
         this.webSocketServer.setupWebSocket(httpServer);
     }
 
+    protected handleRequest(req: IncomingMessage, resp: ServerResponse): void
+    {
+        // Pull sessionId out of cookies and store inside app context
+        const sessionId = this.getCookies(req)["PHPSESSID"];
+        this.applicationContext.addValue(ContextVariableType.SESSION_ID, sessionId);
+
+        // http.json logRequests boolean option to allow the user/server to choose to not log requests
+        if (this.httpConfig.logRequests) 
+        {
+            this.logger.info(this.localisationService.getText("client_request", req.url));
+        }
+        
+        for (const listener of this.httpListeners)
+        {
+            if (listener.canHandle(sessionId, req))
+            {
+                listener.handle(sessionId, req, resp);
+                break;
+            }
+        }
+    }
+
+    protected getCookies(req: http.IncomingMessage): Record<string, string>
+    {
+        const found: Record<string, string> = {};
+        const cookies = req.headers.cookie;
+
+        if (cookies)
+        {
+            for (const cookie of cookies.split(";"))
+            {
+                const parts = cookie.split("=");
+
+                found[parts.shift().trim()] = decodeURI(parts.join("="));
+            }
+        }
+
+        return found;
+    }
 }
