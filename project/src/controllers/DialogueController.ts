@@ -6,7 +6,7 @@ import { IGetFriendListDataResponse } from "../models/eft/dialog/IGetFriendListD
 import {
     IGetMailDialogViewResponseData
 } from "../models/eft/dialog/IGetMailDialogViewResponseData";
-import { DialogueInfo, Message } from "../models/eft/profile/IAkiProfile";
+import { Dialogue, DialogueInfo, Message } from "../models/eft/profile/IAkiProfile";
 import { MessageType } from "../models/enums/MessageType";
 import { SaveServer } from "../servers/SaveServer";
 import { TimeUtil } from "../utils/TimeUtil";
@@ -48,13 +48,10 @@ export class DialogueController
      */
     public generateDialogueList(sessionID: string): DialogueInfo[]
     {
-        const data: DialogueInfo[] = [];
-        for (const dialogueId in this.saveServer.getProfile(sessionID).dialogues)
-        {
-            data.push(this.getDialogueInfo(dialogueId, sessionID));
-        }
+        const profile = this.saveServer.getProfile(sessionID);
 
-        return data;
+        // create a new array by applying the getDialogueInfo() function to each dialogue id in the array
+        return Object.keys(profile.dialogues).map(dialogueId => this.getDialogueInfo(dialogueId, sessionID));
     }
 
     /**
@@ -87,17 +84,38 @@ export class DialogueController
      */
     public generateDialogueView(dialogueID: string, sessionID: string): IGetMailDialogViewResponseData
     {
-        const dialogue = this.saveServer.getProfile(sessionID).dialogues[dialogueID];
-        dialogue.new = 0;
+        const dialogue = this.fetchDialogueFromProfile(dialogueID, sessionID);
 
-        // Set number of new attachments, but ignore those that have expired.
-        dialogue.attachmentsNew = this.getUnreadMessagesWithAttachmentsCount(sessionID, dialogueID);
-
+        this.updateDialogAttachmentCount(dialogue, sessionID, dialogueID);
+        
         return { 
             messages: dialogue.messages,
             profiles: [],
             hasMessagesWithRewards: this.messagesHaveUncollectedRewards(dialogue.messages)
         };
+    }
+
+    /**
+     * Get a dialog from a profile by id
+     * @param dialogueId Id of dialog
+     * @param sessionId Sesson id
+     * @returns Dialog from profile
+     */
+    protected fetchDialogueFromProfile(dialogueId: string, sessionId: string): Dialogue
+    {
+        return this.saveServer.getProfile(sessionId).dialogues[dialogueId];
+    }
+
+    /**
+     * Update a dialogs unread attachment count value
+     * @param dialogue Dialog to update
+     * @param sessionId Session id
+     * @param dialogueId Dialog to update
+     */
+    protected updateDialogAttachmentCount(dialogue: Dialogue, sessionId: string, dialogueId: string): void
+    {
+        dialogue.new = 0;
+        dialogue.attachmentsNew = this.getUnreadMessagesWithAttachmentsCount(sessionId, dialogueId);
     }
 
     /**
