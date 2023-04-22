@@ -327,67 +327,38 @@ export class RagfairController
         }
     }
 
-    public addPlayerOffer(pmcData: IPmcData, info: IAddOfferRequestData, sessionID: string): IItemEventRouterResponse
+    /**
+     * List item(s) on flea for sale
+     * @param pmcData Player profile
+     * @param offerRequest Flea list creatio offer
+     * @param sessionID Session id
+     * @returns IItemEventRouterResponse
+     */
+    public addPlayerOffer(pmcData: IPmcData, offerRequest: IAddOfferRequestData, sessionID: string): IItemEventRouterResponse
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
-        let requirementsPriceInRub = 0;
-        const invItems: Item[] = [];
 
-        if (!info?.items || info.items.length === 0)
+        const validationMessage = "";
+        if (!this.isValidPlayerOfferRequest(offerRequest, validationMessage))
         {
-            this.logger.error(this.localisationService.getText("ragfair-invalid_player_offer_request"));
-
-            return this.httpResponse.appendErrorToOutput(output);
+            return this.httpResponse.appendErrorToOutput(output, validationMessage);
         }
 
-        if (!info.requirements)
+        // Get an array of items from player inventory to list on flea
+        const getItemsFromInventoryErrorMessage = "";
+        const itemsInInventoryToList = this.getItemsToListOnFleaFromInventory(pmcData, offerRequest.items, getItemsFromInventoryErrorMessage);
+        if (!itemsInInventoryToList)
         {
-            return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("ragfair-unable_to_place_offer_with_no_requirements"));
-        }
-
-        for (const item of info.requirements)
-        {
-            const requestedItemTpl = item._tpl;
-
-            if (this.paymentHelper.isMoneyTpl(requestedItemTpl))
-            {
-                requirementsPriceInRub += this.handbookHelper.inRUB(item.count, requestedItemTpl);
-            }
-            else
-            {
-                requirementsPriceInRub += this.ragfairPriceService.getDynamicPriceForItem(requestedItemTpl) * item.count;
-            }
-        }
-
-        // Count how many items are being sold and multiply the requested amount accordingly
-        for (const itemId of info.items)
-        {
-            let item = pmcData.Inventory.items.find(i => i._id === itemId);
-
-            if (item === undefined)
-            {
-                this.logger.error(this.localisationService.getText("ragfair-unable_to_find_item_in_inventory", {id: itemId}));
-
-                return this.httpResponse.appendErrorToOutput(output);
-            }
-
-            item = this.itemHelper.fixItemStackCount(item);
-            invItems.push(...this.itemHelper.findAndReturnChildrenAsItems(pmcData.Inventory.items, itemId));
-        }
-
-        if (!invItems?.length)
-        {
-            this.logger.error(this.localisationService.getText("ragfair-unable_to_find_requested_items_in_inventory"));
-
-            return this.httpResponse.appendErrorToOutput(output);
+            this.httpResponse.appendErrorToOutput(output, getItemsFromInventoryErrorMessage);
         }
 
         // Preparations are done, create the offer
-        const offer = this.createPlayerOffer(this.saveServer.getProfile(sessionID), info.requirements, this.ragfairHelper.mergeStackable(invItems), info.sellInOnePiece, requirementsPriceInRub);
+        const requirementsPriceInRub = this.calculateRequirementsPriceInRub(offerRequest.requirements);
+        const offer = this.createPlayerOffer(this.saveServer.getProfile(sessionID), offerRequest.requirements, this.ragfairHelper.mergeStackable(itemsInInventoryToList), offerRequest.sellInOnePiece, requirementsPriceInRub);
         const rootItem = offer.items[0];
         const qualityMultiplier = this.itemHelper.getItemQualityModifier(rootItem);
         const averageOfferPrice = this.ragfairPriceService.getFleaPriceForItem(rootItem._tpl) * rootItem.upd.StackObjectsCount * qualityMultiplier;
-        const itemStackCount = (!info.sellInOnePiece) ? offer.items[0].upd.StackObjectsCount : 1;
+        const itemStackCount = (!offerRequest.sellInOnePiece) ? offer.items[0].upd.StackObjectsCount : 1;
         const singleOfferValue = averageOfferPrice / itemStackCount;
         let sellChance = this.ragfairConfig.sell.chance.base * qualityMultiplier;
 
@@ -397,7 +368,7 @@ export class RagfairController
         // Subtract flea market fee from stash
         if (this.ragfairConfig.sell.fees)
         {
-            const tax = this.ragfairTaxHelper.calculateTax(rootItem, pmcData, requirementsPriceInRub, itemStackCount, info.sellInOnePiece);
+            const tax = this.ragfairTaxHelper.calculateTax(rootItem, pmcData, requirementsPriceInRub, itemStackCount, offerRequest.sellInOnePiece);
 
             const request: IProcessBuyTradeRequestData = {
                 tid: "ragfair",
@@ -428,12 +399,101 @@ export class RagfairController
         output.profileChanges[sessionID].ragFairOffers.push(offer);
 
         // Remove items from inventory after creating offer
-        for (const itemToRemove of info.items)
+        for (const itemToRemove of offerRequest.items)
         {
             this.inventoryHelper.removeItem(pmcData, itemToRemove, sessionID, output);
         }
 
         return output;
+    }
+
+    /**
+     * Is the item to be listed on the flea valid
+     * @param offerRequest Client offer request
+     * @param errorMessage message to show to player when offer is invalid
+     * @returns Is offer valid
+     */
+    protected isValidPlayerOfferRequest(offerRequest: IAddOfferRequestData, errorMessage: string): boolean
+    {
+        if (!offerRequest?.items || offerRequest.items.length === 0)
+        {
+            errorMessage = this.localisationService.getText("ragfair-invalid_player_offer_request");
+            this.logger.error(errorMessage);
+
+            return false;
+        }
+    
+        if (!offerRequest.requirements)
+        {
+            errorMessage = this.localisationService.getText("ragfair-unable_to_place_offer_with_no_requirements");
+            this.logger.error(errorMessage);
+
+            return false;
+        }
+    
+        return true;
+    }
+
+    /**
+     * Get the handbook price in roubles for the items being listed
+     * @param requirements 
+     * @returns Rouble price
+     */
+    protected calculateRequirementsPriceInRub(requirements: Requirement[]): number
+    {
+        let requirementsPriceInRub = 0;
+        for (const item of requirements)
+        {
+            const requestedItemTpl = item._tpl;
+    
+            if (this.paymentHelper.isMoneyTpl(requestedItemTpl))
+            {
+                requirementsPriceInRub += this.handbookHelper.inRUB(item.count, requestedItemTpl);
+            }
+            else
+            {
+                requirementsPriceInRub += this.ragfairPriceService.getDynamicPriceForItem(requestedItemTpl) * item.count;
+            }
+        }
+    
+        return requirementsPriceInRub;
+    }
+
+    /**
+     * Using item ids from flea offer request, find corrispnding items from player inventory and return as array
+     * @param pmcData Player profile
+     * @param itemIdsFromFleaOfferRequest Ids from request
+     * @param errorMessage if item is not found, add error message to this parameter
+     * @returns Array of items from player inventory
+     */
+    protected getItemsToListOnFleaFromInventory(pmcData: IPmcData, itemIdsFromFleaOfferRequest: string[], errorMessage: string): Item[]
+    {
+        const itemsToReturn = [];
+        // Count how many items are being sold and multiply the requested amount accordingly
+        for (const itemId of itemIdsFromFleaOfferRequest)
+        {
+            let item = pmcData.Inventory.items.find(i => i._id === itemId);
+            if (!item)
+            {
+                errorMessage = this.localisationService.getText("ragfair-unable_to_find_item_in_inventory", {id: itemId});
+                this.logger.error(errorMessage);
+
+                return null;
+            }
+
+            item = this.itemHelper.fixItemStackCount(item);
+            itemsToReturn.push(...this.itemHelper.findAndReturnChildrenAsItems(pmcData.Inventory.items, itemId));
+        }
+
+        if (!itemsToReturn?.length)
+        {
+            errorMessage = this.localisationService.getText("ragfair-unable_to_find_requested_items_in_inventory");
+            this.logger.error(errorMessage);
+
+            return null;
+        }
+
+        return itemsToReturn;
     }
 
     public createPlayerOffer(profile: IAkiProfile, requirements: Requirement[], items: Item[], sellInOnePiece: boolean, amountToSend: number): IRagfairOffer
