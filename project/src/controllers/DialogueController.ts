@@ -26,7 +26,7 @@ export class DialogueController
         const profiles = this.saveServer.getProfiles();
         for (const sessionID in profiles)
         {
-            this.removeExpiredItems(sessionID);
+            this.removeExpiredItemsFromMessages(sessionID);
         }
     }
 
@@ -220,20 +220,40 @@ export class DialogueController
     }
 
     /**
-     * Delete expired items. triggers when updating traders.
-     * @param sessionID Session id
+     * Delete expired items from all messages in player profile. triggers when updating traders.
+     * @param sessionId Session id
      */
-    protected removeExpiredItems(sessionID: string): void
+    protected removeExpiredItemsFromMessages(sessionId: string): void
     {
-        for (const dialogueId in this.saveServer.getProfile(sessionID).dialogues)
+        for (const dialogueId in this.saveServer.getProfile(sessionId).dialogues)
         {
-            for (const message of this.saveServer.getProfile(sessionID).dialogues[dialogueId].messages)
+            this.removeExpiredItemsFromMessage(sessionId, dialogueId);
+        }
+    }
+
+    /**
+     * Removes expired items from a message in player profile
+     * @param sessionId Session id
+     * @param dialogueId Dialog id
+     */
+    protected removeExpiredItemsFromMessage(sessionId: string, dialogueId: string): void
+    {
+        for (const message of this.saveServer.getProfile(sessionId).dialogues[dialogueId].messages)
+        {
+            if (this.messageHasExpired(message))
             {
-                if ((this.timeUtil.getTimestamp()) > (message.dt + message.maxStorageTime))
-                {
-                    message.items = {};
-                }
+                message.items = {};
             }
         }
+    }
+
+    /**
+     * Has a dialog message expired
+     * @param message Message to check expiry of
+     * @returns true or false
+     */
+    protected messageHasExpired(message: Message): boolean
+    {
+        return (this.timeUtil.getTimestamp()) > (message.dt + message.maxStorageTime);
     }
 }
