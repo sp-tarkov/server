@@ -5,7 +5,10 @@ import { BotHelper } from "../helpers/BotHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
 import {
-    Common, Health as PmcHealth, IBotBase, Info, Mastering, Skills
+    Common,
+    IBotBase, Info, Mastering,
+    Health as PmcHealth,
+    Skills
 } from "../models/eft/common/tables/IBotBase";
 import { Health, IBotType } from "../models/eft/common/tables/IBotType";
 import { Item, Upd } from "../models/eft/common/tables/IItem";
@@ -192,9 +195,7 @@ export class BotGenerator
         // Simulate bot looking like a Player scav with the pmc name in brackets
         if (botRole === "assault" && this.randomUtil.getChance100(this.botConfig.chanceAssaultScavHasPlayerScavName))
         {
-            const pmcNames = [...this.databaseServer.getTables().bots.types["usec"].firstName, ...this.databaseServer.getTables().bots.types["bear"].firstName];
-
-            return `${name} (${this.randomUtil.getArrayValue(pmcNames)})`;
+            return `${name} (${this.getRandomPmcName()})`;
         }
 
         if (this.botConfig.showTypeInNickname && !isPlayerScav)
@@ -203,6 +204,27 @@ export class BotGenerator
         }
 
         return name;
+    }
+
+    /**
+     * Choose one random Pmc name
+     * @returns Pmc name
+     */
+    protected getRandomPmcName(): string
+    {
+        return this.randomUtil.getArrayValue(this.getPmcNames());
+    }
+
+    /**
+     * Get all possible pmc names, both usec and bear as one array
+     * @returns array of names
+     */
+    protected getPmcNames(): string[]
+    {
+        const usecNames = this.databaseServer.getTables().bots.types["usec"].firstName;
+        const bearNames = this.databaseServer.getTables().bots.types["bear"].firstName;
+
+        return [...usecNames, ...bearNames];
     }
 
     /**
