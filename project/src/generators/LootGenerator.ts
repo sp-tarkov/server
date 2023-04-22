@@ -13,6 +13,11 @@ import { LocalisationService } from "../services/LocalisationService";
 import { HashUtil } from "../utils/HashUtil";
 import { RandomUtil } from "../utils/RandomUtil";
 
+type ItemLimit = {
+    current: number,
+    max: number
+};
+
 @injectable()
 export class LootGenerator
 {
@@ -71,19 +76,18 @@ export class LootGenerator
     }
 
     /**
-     * Construct item limit record to hold max and current item count
+     * Construct item limit record to hold max and current item count for each item type
      * @param limits limits as defined in config
      * @returns record, key: item tplId, value: current/max item count allowed
      */
-    protected initItemLimitCounter(limits: Record<string, number>): Record<string, {current: number, max: number}>
+    protected initItemLimitCounter(limits: Record<string, number>): Record<string, ItemLimit>
     {
-        const itemTypeCounts: Record<string, {current: number, max: number}> = {};
-
-        for (const x in limits)
+        const itemTypeCounts: Record<string, ItemLimit> = {};
+        for (const itemTypeId in limits)
         {
-            itemTypeCounts[x] = {
+            itemTypeCounts[itemTypeId] = {
                 current: 0,
-                max: limits[x]
+                max: limits[itemTypeId]
             };
         }
 
