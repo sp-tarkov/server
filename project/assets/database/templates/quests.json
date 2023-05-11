@@ -60680,17 +60680,14 @@
           "dynamicLocale": false
         },
         {
-          "_parent": "Quest",
+          "_parent": "Level",
           "_props": {
-            "availableAfter": 0,
+            "compareMethod": ">=",
             "dynamicLocale": false,
-            "id": "51d33b2d4fad9e61441772c0",
+            "id": "467b13679f98bf257e572f5b",
             "index": 1,
             "parentId": "",
-            "status": [
-              4
-            ],
-            "target": "5969f9e986f7741dde183a50",
+            "value": 17,
             "visibilityConditions": []
           },
           "dynamicLocale": false
