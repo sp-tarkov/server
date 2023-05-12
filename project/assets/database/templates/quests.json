@@ -58450,7 +58450,7 @@
             "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "24f7d3d66057998dc6454c1e",
+            "id": "60e7434ed1a062318d3d2260",
             "index": 0,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58471,7 +58471,7 @@
             "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "47c9939cdf668be73c1890ac",
+            "id": "60e7436675131b4e61703b7b",
             "index": 1,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58492,7 +58492,7 @@
             "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "fd44c16a946219fba4a26798",
+            "id": "60e7439975131b4e61703b7c",
             "index": 2,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58513,7 +58513,7 @@
             "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "1ddcc210f80a47dd40b6b16a",
+            "id": "60e743cd0367e10a450f780e",
             "index": 3,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58534,7 +58534,7 @@
             "countInRaid": false,
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "51f207116b5c16c128b3e1dc",
+            "id": "62a70191a9a0ea77981b57d9",
             "index": 4,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58554,7 +58554,7 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "abf6a1c43ffc5832bd19b5ba",
+            "id": "60e74302d1a062318d3d225f",
             "index": 5,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58574,7 +58574,7 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "ad18ee7daae03114ca9de900",
+            "id": "60e7432875131b4e61703b7a",
             "index": 6,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58594,7 +58594,7 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "47736ba2b81601ca3f2bb56d",
+            "id": "60e7449875131b4e61703b7e",
             "index": 7,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58614,7 +58614,7 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "28f717c371f35fc1f7590999",
+            "id": "60e744c9d1a062318d3d2262",
             "index": 8,
             "isEncoded": false,
             "maxDurability": 100,
@@ -58634,7 +58634,7 @@
           "_props": {
             "dogtagLevel": 0,
             "dynamicLocale": false,
-            "id": "3715235811727e62ac688198",
+            "id": "62a7019ea9a0ea77981b57da",
             "index": 9,
             "isEncoded": false,
             "maxDurability": 100,
@@ -69130,11 +69130,11 @@
                   }
                 }
               ],
-              "id": "63a7d444f32fa1316250c3d6"
+              "id": "63a7d53904d3dc28a52a2101"
             },
             "doNotResetIfCounterCompleted": false,
             "dynamicLocale": false,
-            "id": "7fc155daefb760072f73d6a8",
+            "id": "63a7d53904d3dc28a52a2100",
             "index": 0,
             "oneSessionOnly": false,
             "parentId": "",
@@ -69158,11 +69158,11 @@
                   }
                 }
               ],
-              "id": "856ed29d2437c31cef12bc89"
+              "id": "63a7d58004d3dc28a52a2103"
             },
             "doNotResetIfCounterCompleted": false,
             "dynamicLocale": false,
-            "id": "fa8ed5dcf3dc58f5ac24705d",
+            "id": "63a7d58004d3dc28a52a2102",
             "index": 1,
             "oneSessionOnly": false,
             "parentId": "",
@@ -69198,11 +69198,11 @@
                   }
                 }
               ],
-              "id": "fd1f19af25b266bd6749151f"
+              "id": "639cee16f5765f47cc7f0ea2"
             },
             "doNotResetIfCounterCompleted": false,
             "dynamicLocale": false,
-            "id": "207dc109be7cde89aaeb5732",
+            "id": "639cee16f5765f47cc7f0ea1",
             "index": 4,
             "oneSessionOnly": false,
             "parentId": "",
@@ -69213,7 +69213,7 @@
                 "_parent": "CompleteCondition",
                 "_props": {
                   "id": "33414a2e634d497865c99505",
-                  "target": "fa8ed5dcf3dc58f5ac24705d"
+                  "target": "63a7d58004d3dc28a52a2102"
                 }
               }
             ]
