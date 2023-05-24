@@ -260,7 +260,7 @@ export class BotInventoryGenerator
         const modPool = this.botEquipmentModPoolService.getModsForGearSlot(itemTpl);
         for (const modSlot of Object.keys(modPool ?? []))
         {
-            const blacklistedMods = equipmentBlacklist[0].equipment[modSlot] || [];
+            const blacklistedMods = equipmentBlacklist[0]?.equipment[modSlot] || [];
             const filteredMods =  modPool[modSlot].filter(x => !blacklistedMods.includes(x));
 
             if (filteredMods.length > 0)

@@ -17,6 +17,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { RagfairServer } from "../servers/RagfairServer";
 import { FenceService } from "../services/FenceService";
 import { PaymentService } from "../services/PaymentService";
+import { HttpResponseUtil } from "../utils/HttpResponseUtil";
 
 @injectable()
 export class TradeHelper
@@ -30,6 +31,7 @@ export class TradeHelper
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("FenceService") protected fenceService: FenceService,
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("ConfigServer") protected configServer: ConfigServer
@@ -126,7 +128,7 @@ export class TradeHelper
     /**
      * Sell item to trader
      * @param pmcData Profile to update
-     * @param sellRequest request data
+     * @param sellRequest Request data
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
@@ -134,33 +136,26 @@ export class TradeHelper
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
-        for (const sellItem of sellRequest.items)
+        // Find item in inventory and remove it
+        for (const itemToBeRemoved of sellRequest.items)
         {
-            for (const item of pmcData.Inventory.items)
+            const itemIdToFind = itemToBeRemoved.id.replace(/\s+/g, ""); // Strip out whitespace
+
+            // Find item in player inventory, or show error to player if not found
+            const matchingItemInInventory = pmcData.Inventory.items.find(x => x._id === itemIdToFind);
+            if (!matchingItemInInventory)
             {
-                // Profile inventory, look into it if item exist
-                const isThereSpace = sellItem.id.search(" ");
-                let checkID = sellItem.id;
+                const errorMessage = `Unable to sell item ${itemToBeRemoved.id}, cannot be found in player inventory`;
+                this.logger.error(errorMessage);
 
-                if (isThereSpace !== -1)
-                {
-                    checkID = checkID.substr(0, isThereSpace);
-                }
-
-                // item found
-                if (item._id === checkID)
-                {
-                    this.logger.debug(`Selling: ${checkID}`);
-
-                    // Remove item from inventory
-                    output = this.inventoryHelper.removeItem(pmcData, checkID, sessionID, output);
-
-                    break;
-                }
+                return this.httpResponse.appendErrorToOutput(output, errorMessage);
             }
+
+            this.logger.debug(`Selling: id: ${matchingItemInInventory._id} tpl: ${matchingItemInInventory._tpl}`);
+            output = this.inventoryHelper.removeItem(pmcData, itemToBeRemoved.id, sessionID, output);
         }
 
-        // Give player money now item is sold to trader
+        // Give player money for sold item(s)
         return this.paymentService.getMoney(pmcData, sellRequest.price, sellRequest, output, sessionID);
     }
 

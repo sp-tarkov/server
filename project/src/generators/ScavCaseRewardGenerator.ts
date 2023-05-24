@@ -55,14 +55,14 @@ export class ScavCaseRewardGenerator
         const dbItems = this.getDbItems();
 
         // Get items that fit the price criteria as set by the scavCase config
-        const commonPricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.common);
-        const rarePricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.rare);
-        const superRarePricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.superrare);
+        const commonPricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.Common);
+        const rarePricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.Rare);
+        const superRarePricedItems = this.getFilteredItemsByPrice(dbItems, rewardItemCounts.Superrare);
 
         // Get randomly picked items from each item collction, the count range of which is defined in hideout/scavcase.json
-        const randomlyPickedCommonRewards = this.pickRandomRewards(commonPricedItems, rewardItemCounts.common, "common");
-        const randomlyPickedRareRewards = this.pickRandomRewards(rarePricedItems, rewardItemCounts.rare, "rare");
-        const randomlyPickedSuperRareRewards = this.pickRandomRewards(superRarePricedItems, rewardItemCounts.superrare, "superrare");
+        const randomlyPickedCommonRewards = this.pickRandomRewards(commonPricedItems, rewardItemCounts.Common, "common");
+        const randomlyPickedRareRewards = this.pickRandomRewards(rarePricedItems, rewardItemCounts.Rare, "rare");
+        const randomlyPickedSuperRareRewards = this.pickRandomRewards(superRarePricedItems, rewardItemCounts.Superrare, "superrare");
 
         // Add randomised stack sizes to ammo and money rewards
         const commonRewards = this.randomiseContainerItemRewards(randomlyPickedCommonRewards, "common");
@@ -269,14 +269,14 @@ export class ScavCaseRewardGenerator
     }
 
     /**
-     * Gathers the reward options from config and scavcase.json into a single object
+     * Gathers the reward min and max count params for each reward quality level from config and scavcase.json into a single object
      * @param scavCaseDetails scavcase.json values
      * @returns ScavCaseRewardCountsAndPrices object
      */
     protected getScavCaseRewardCountsAndPrices(scavCaseDetails: IHideoutScavCase): ScavCaseRewardCountsAndPrices
     {
-        const rewardTypes: (keyof ScavCaseRewardCountsAndPrices)[] = ["common", "rare", "superrare"];
-        const result: Partial<ScavCaseRewardCountsAndPrices> = {};
+        const rewardTypes = Object.keys(scavCaseDetails.EndProducts) as Array<keyof ScavCaseRewardCountsAndPrices>; // Default is ["Common", "Rare", "Superrare"];
+        const result: Partial<ScavCaseRewardCountsAndPrices> = {}; // Make partial object as we're going to add all the data immediately after
 
         // Create reward min/max counts for each type
         for (const rewardType of rewardTypes)
@@ -285,8 +285,8 @@ export class ScavCaseRewardGenerator
             {
                 minCount: scavCaseDetails.EndProducts[rewardType].min,
                 maxCount: scavCaseDetails.EndProducts[rewardType].max,
-                minPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType].min,
-                maxPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType].max
+                minPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType.toLowerCase()].min,
+                maxPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType.toLowerCase()].max
             };
         }
 
