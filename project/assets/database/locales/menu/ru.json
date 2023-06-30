@@ -24,7 +24,7 @@
         "BATTLEYE_ANTICHEAT_QueryTimeout": "Потеряно соединение с античитом. Пожалуйста перезапустите игру",
         "BATTLEYE_ANTICHEAT_CorruptedMemory": "Запущена некорректная версия античита. Пожалуйста перустановите античит",
         "BATTLEYE_ANTICHEAT_GameRestartRequired": "Требуется перезапуск игры",
-        "BATTLEYE_ANTICHEAT_WinAPIFailure": "Ошибка запроса приложения от WIndows",
+        "BATTLEYE_ANTICHEAT_WinAPIFailure": "Ошибка запроса приложения от Windows",
         "BATTLEYE_ANTICHEAT_ClientNotResponding": "Потеряно соединение с античитом",
         "BATTLEYE_ANTICHEAT_BadServiceVersion": "Необходим рестарт игры - запущена устаревшая версия античита",
         "BATTLEYE_ANTICHEAT_DisallowedProgram": "На клиенте запущено запрещенное ПО",
