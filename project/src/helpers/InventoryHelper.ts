@@ -865,39 +865,36 @@ export class InventoryHelper
     {
         this.handleCartridges(inventoryItems, moveRequest);
 
-        for (const inventoryItem of inventoryItems)
+        // Find item we want to 'move'
+        const matchingInventoryItem = inventoryItems.find(x => x._id === moveRequest.item);
+        if (matchingInventoryItem)
         {
-            // Find item we want to 'move'
-            if (inventoryItem._id && inventoryItem._id === moveRequest.item)
+            this.logger.debug(`${moveRequest.Action} item: ${moveRequest.item} from slotid: ${matchingInventoryItem.slotId} to container: ${moveRequest.to.container}`);
+
+            // don't move shells from camora to cartridges (happens when loading shells into mts-255 revolver shotgun)
+            if (matchingInventoryItem.slotId.includes("camora_") && moveRequest.to.container === "cartridges")
             {
-                this.logger.debug(`${moveRequest.Action} item: ${moveRequest.item} from slotid: ${inventoryItem.slotId} to container: ${moveRequest.to.container}`);
-
-                // don't move shells from camora to cartridges (happens when loading shells into mts-255 revolver shotgun)
-                if (inventoryItem.slotId.includes("camora_") && moveRequest.to.container === "cartridges")
-                {
-                    this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: inventoryItem.slotId, container: moveRequest.to.container}));
-                    return;
-                }
-
-                // Edit items details to match its new location
-                inventoryItem.parentId = moveRequest.to.id;
-                inventoryItem.slotId = moveRequest.to.container;
-
-                this.updateFastPanelBinding(pmcData, inventoryItem);
-
-                if ("location" in moveRequest.to)
-                {
-                    inventoryItem.location = moveRequest.to.location;
-                    
-                }
-                else
-                {
-                    if (inventoryItem.location)
-                    {
-                        delete inventoryItem.location;
-                    }
-                }
+                this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: matchingInventoryItem.slotId, container: moveRequest.to.container}));
                 return;
+            }
+
+            // Edit items details to match its new location
+            matchingInventoryItem.parentId = moveRequest.to.id;
+            matchingInventoryItem.slotId = moveRequest.to.container;
+
+            this.updateFastPanelBinding(pmcData, matchingInventoryItem);
+
+            if ("location" in moveRequest.to)
+            {
+                matchingInventoryItem.location = moveRequest.to.location;
+                
+            }
+            else
+            {
+                if (matchingInventoryItem.location)
+                {
+                    delete matchingInventoryItem.location;
+                }
             }
         }
     }

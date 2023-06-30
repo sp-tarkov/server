@@ -100,7 +100,15 @@ export class InventoryController
             // Dont move items from trader to profile, this can happen when editing a traders preset weapons
             if (moveRequest.fromOwner?.type === "Trader" && !items.isMail)
             {
-                return this.httpResponseUtil.appendErrorToOutput(output, this.localisationService.getText("inventory-edit_trader_item"), <BackendErrorCodes>228);
+                return this.getTraderExploitErrorResponse(output);
+            }
+
+            // Check for item in inventory before allowing internal transfer
+            const originalItemLocation = items.from.find(x => x._id === moveRequest.item);
+            if (!originalItemLocation)
+            {
+                // Internal item move but item never existed, likely a dupe glitch
+                return this.getTraderExploitErrorResponse(output);
             }
 
             this.inventoryHelper.moveItemInternal(pmcData, items.from, moveRequest);
@@ -110,6 +118,16 @@ export class InventoryController
             this.inventoryHelper.moveItemToProfile(items.from, items.to, moveRequest);
         }
         return output;
+    }
+
+    /**
+     * Get a event router response with inventory trader message
+     * @param output Item event router response
+     * @returns Item event router response
+     */
+    protected getTraderExploitErrorResponse(output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        return this.httpResponseUtil.appendErrorToOutput(output, this.localisationService.getText("inventory-edit_trader_item"), <BackendErrorCodes>228);
     }
 
     /**
