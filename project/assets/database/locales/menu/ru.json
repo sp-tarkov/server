@@ -15,7 +15,7 @@
         "213 - Error connecting to auth server": "Авторизация временно невозможна, попробуйте позже.",
         "230 - MAX LOGIN COUNT": "Лимит попыток исчерпан. Попробуйте повторить позднее",
         "Place in queue:": "Место в очереди:",
-        "206 - Wrong email or password": "Неверный email или пароль",
+        "206 - Wrong email or password": "Неверная почта или пароль",
         "240 - Servers temporarily unavailable. Please, try later.": "Cервера на техобслуживании",
         "BATTLEYE_ServiceNotRunningProperly": "Античит запущен некорректно. Необходим перезапуск игры",
         "BATTLEYE_UnknownRestartReason": "Античит запущен некорректно. Необходим перезапуск игры",
