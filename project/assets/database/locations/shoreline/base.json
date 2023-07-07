@@ -35,7 +35,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -70,7 +70,7 @@
       "Time": -1
     },
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2,3",
       "BossEscortDifficult": "normal",
@@ -96,9 +96,9 @@
       "Time": -1
     },
     {
-      "BossChance": 15,
+      "BossChance": 12,
       "BossDifficult": "normal",
-      "BossEscortAmount": "4",
+      "BossEscortAmount": "3",
       "BossEscortDifficult": "normal",
       "BossEscortType": "sectantWarrior",
       "BossName": "sectantPriest",
@@ -139,7 +139,7 @@
     "VisibleDistance": 1.2
   },
   "BotMarksman": 20,
-  "BotMax": 13,
+  "BotMax": 17,
   "BotMaxPlayer": 9,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
@@ -152,8 +152,8 @@
   "Description": "The coastline that leads to the port.",
   "DisabledForScav": false,
   "DisabledScavExits": "",
+  "EnableCoop": true,
   "Enabled": true,
-  "EnabledCoop": false,
   "EscapeTimeLimit": 45,
   "EscapeTimeLimitCoop": 35,
   "GenerateLocalLootCache": true,
@@ -172,10 +172,13 @@
   "MinDistToExitPoint": 30,
   "MinDistToFreePoint": 60,
   "MinMaxBots": [],
+  "MinPlayerLvlAccessKeys": 0,
   "MinPlayers": 10,
   "Name": "Shoreline",
   "NewSpawn": true,
   "OcculsionCullingEnabled": true,
+  "OfflineNewSpawn": true,
+  "OfflineOldSpawn": false,
   "OldSpawn": false,
   "OpenZones": "ZoneSanatorium1,ZoneSanatorium2,ZoneIsland,ZoneGasStation,ZoneMeteoStation,ZonePowerStation,ZoneBusStation,ZoneRailWays,ZonePort,ZoneBunkeSniper,ZonePowerStationSniper,ZoneForestTruck,ZoneForestSpawn",
   "PmcMaxPlayersInGroup": 5,

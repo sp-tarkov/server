@@ -35,7 +35,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -70,7 +70,7 @@
       "Time": -1
     },
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -96,7 +96,7 @@
       "Time": -1
     },
     {
-      "BossChance": 30,
+      "BossChance": 15,
       "BossDifficult": "normal",
       "BossEscortAmount": "3,4",
       "BossEscortDifficult": "normal",
@@ -126,7 +126,7 @@
     "VisibleDistance": 1
   },
   "BotMarksman": 20,
-  "BotMax": 13,
+  "BotMax": 17,
   "BotMaxPlayer": 9,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
@@ -139,8 +139,8 @@
   "Description": "The Priozersk Natural Reserve was recently included into the list of state-protected wildlife reserves of the North-Western Federal District.",
   "DisabledForScav": false,
   "DisabledScavExits": "",
+  "EnableCoop": true,
   "Enabled": true,
-  "EnabledCoop": false,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
   "GenerateLocalLootCache": true,
@@ -159,10 +159,13 @@
   "MinDistToExitPoint": 30,
   "MinDistToFreePoint": 50,
   "MinMaxBots": [],
+  "MinPlayerLvlAccessKeys": 0,
   "MinPlayers": 9,
   "Name": "Woods",
   "NewSpawn": true,
   "OcculsionCullingEnabled": false,
+  "OfflineNewSpawn": true,
+  "OfflineOldSpawn": false,
   "OldSpawn": false,
   "OpenZones": "ZoneClearVill,ZoneHouse,ZoneScavBase2,ZoneHouse,ZoneWoodCutter,ZoneBigRocks,ZoneRoad,ZoneHighRocks,ZoneMiniHouse,ZoneBigRocks",
   "PmcMaxPlayersInGroup": 5,
