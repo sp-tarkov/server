@@ -368,7 +368,7 @@
       ]
     },
     "SessionsToShowHotKeys": 100,
-    "MaxBotsAliveOnMap": 20,
+    "MaxBotsAliveOnMap": 40,
     "SavagePlayCooldown": 1500,
     "SavagePlayCooldownNdaFree": 1500,
     "MarksmanAccuracy": 1.3,
@@ -3659,15 +3659,6 @@
                 "SkillName": ""
               },
               {
-                "BuffType": "DamageModifier",
-                "Chance": 1,
-                "Delay": 1,
-                "Duration": 40,
-                "Value": -0.1,
-                "AbsoluteValue": false,
-                "SkillName": ""
-              },
-              {
                 "BuffType": "SkillRate",
                 "Chance": 1,
                 "Delay": 1,
@@ -3962,25 +3953,25 @@
             "Minimum": 0,
             "Maximum": 60,
             "Default": 60,
-            "OverDamageReceivedMultiplier": 1
+            "OverDamageReceivedMultiplier": 0.7
           },
           "RightArm": {
             "Minimum": 0,
             "Maximum": 60,
             "Default": 60,
-            "OverDamageReceivedMultiplier": 1
+            "OverDamageReceivedMultiplier": 0.7
           },
           "LeftLeg": {
             "Minimum": 0,
             "Maximum": 65,
             "Default": 65,
-            "OverDamageReceivedMultiplier": 1
+            "OverDamageReceivedMultiplier": 0.7
           },
           "RightLeg": {
             "Minimum": 0,
             "Maximum": 65,
             "Default": 65,
-            "OverDamageReceivedMultiplier": 1
+            "OverDamageReceivedMultiplier": 0.7
           }
         },
         "HealthFactorsSettings": {
@@ -5710,6 +5701,153 @@
       "SendRequestDelaySeconds": 60,
       "SecondsForExpiredRequest": 120,
       "CountOfRequestsToOnePlayer": 3
+    },
+    "AudioSettings": {
+      "AudioGroupPresets": [
+        {
+          "Name": "Gunshots",
+          "GroupType": 0,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 1000,
+          "HeightToAllowBinaural": 1000,
+          "AngleToAllowBinaural": 1000
+        },
+        {
+          "Name": "Weaponry",
+          "GroupType": 1,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": true,
+          "DistanceToAllowBinaural": 10,
+          "HeightToAllowBinaural": 2,
+          "AngleToAllowBinaural": 12
+        },
+        {
+          "Name": "Impacts",
+          "GroupType": 2,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Character",
+          "GroupType": 3,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Environment",
+          "GroupType": 4,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Collisions",
+          "GroupType": 5,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": true,
+          "DistanceToAllowBinaural": 10,
+          "HeightToAllowBinaural": 2,
+          "AngleToAllowBinaural": 12
+        },
+        {
+          "Name": "Speech",
+          "GroupType": 6,
+          "OverallVolume": 0.7,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Distant",
+          "GroupType": 7,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "NonspatialBypass",
+          "GroupType": 8,
+          "OverallVolume": 1,
+          "OcclusionEnabled": false,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Nonspatial",
+          "GroupType": 9,
+          "OverallVolume": 1,
+          "OcclusionEnabled": false,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Voip",
+          "GroupType": 10,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": false,
+          "DistanceToAllowBinaural": 60,
+          "HeightToAllowBinaural": 10,
+          "AngleToAllowBinaural": 30
+        },
+        {
+          "Name": "Grenades",
+          "GroupType": 11,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": true,
+          "DistanceToAllowBinaural": 1000,
+          "HeightToAllowBinaural": 1000,
+          "AngleToAllowBinaural": 1000
+        },
+        {
+          "Name": "Windows",
+          "GroupType": 12,
+          "OverallVolume": 1,
+          "OcclusionEnabled": true,
+          "OcclusionIntensity": 1,
+          "DisabledBinauralByDistance": true,
+          "DistanceToAllowBinaural": 10,
+          "HeightToAllowBinaural": 2,
+          "AngleToAllowBinaural": 12
+        }
+      ]
     }
   },
   "bot_presets": [

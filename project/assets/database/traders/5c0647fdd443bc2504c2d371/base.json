@@ -34,7 +34,13 @@
       "57864ada245977548638de91",
       "5447b6194bdc2d67278b4567",
       "5447b6094bdc2dc3278b4567",
-      "5447b6254bdc2dc3278b4568"
+      "5447b6254bdc2dc3278b4568",
+      "55818ae44bdc2dde698b456c",
+      "55818aeb4bdc2ddc698b456a",
+      "55818add4bdc2d5b648b456f",
+      "555ef6e44bdc2de9068b457e",
+      "55818b224bdc2dde698b456f",
+      "55818a594bdc2db9688b456a"
     ],
     "id_list": [
       "5755383e24597772cb798966"
@@ -64,7 +70,7 @@
       "heal_price_coef": 0,
       "insurance_price_coef": 8,
       "minLevel": 15,
-      "minSalesSum": 750000,
+      "minSalesSum": 560000,
       "minStanding": 0.2,
       "repair_price_coef": 0
     },
@@ -74,7 +80,7 @@
       "heal_price_coef": 0,
       "insurance_price_coef": 6,
       "minLevel": 22,
-      "minSalesSum": 1500000,
+      "minSalesSum": 1125000,
       "minStanding": 0.35,
       "repair_price_coef": 0
     },
@@ -84,7 +90,7 @@
       "heal_price_coef": 0,
       "insurance_price_coef": 4,
       "minLevel": 33,
-      "minSalesSum": 2300000,
+      "minSalesSum": 1725000,
       "minStanding": 0.5,
       "repair_price_coef": 0
     }

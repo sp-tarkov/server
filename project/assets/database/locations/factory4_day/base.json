@@ -136,8 +136,8 @@
     "path": "",
     "rcid": ""
   },
-  "RequiredPlayerLevelMin": 0,
   "RequiredPlayerLevelMax": 100,
+  "RequiredPlayerLevelMin": 0,
   "Rules": "AvoidOwnPmc",
   "SafeLocation": false,
   "ScavMaxPlayersInGroup": 4,
@@ -3824,8 +3824,8 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "number": 2,
-      "slots_max": 3,
-      "slots_min": 1,
+      "slots_max": 4,
+      "slots_min": 2,
       "time_max": 300,
       "time_min": 210
     },
@@ -3836,8 +3836,8 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "number": 3,
-      "slots_max": 3,
-      "slots_min": 0,
+      "slots_max": 4,
+      "slots_min": 2,
       "time_max": 350,
       "time_min": 260
     },
@@ -3848,7 +3848,7 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "number": 4,
-      "slots_max": 3,
+      "slots_max": 4,
       "slots_min": 2,
       "time_max": 500,
       "time_min": 410
@@ -3860,8 +3860,8 @@
       "WildSpawnType": "assault",
       "isPlayers": true,
       "number": 5,
-      "slots_max": 3,
-      "slots_min": 1,
+      "slots_max": 4,
+      "slots_min": 3,
       "time_max": 510,
       "time_min": 460
     },

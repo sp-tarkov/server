@@ -762,7 +762,7 @@
     {
       "Id": "545cdae64bdc2d39198b4568",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 41500
+      "Price": 47725
     },
     {
       "Id": "545cdb794bdc2d3a198b456a",
@@ -1067,7 +1067,7 @@
     {
       "Id": "5645bcc04bdc2d363b8b4572",
       "ParentId": "5b5f6f3c86f774094242ef87",
-      "Price": 31709
+      "Price": 38050
     },
     {
       "Id": "5648a69d4bdc2ded0b8b457b",
@@ -1077,7 +1077,7 @@
     {
       "Id": "5648a7494bdc2d9d488b4583",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 22839
+      "Price": 26264
     },
     {
       "Id": "5648ac824bdc2ded0b8b457d",
@@ -1252,12 +1252,12 @@
     {
       "Id": "5696686a4bdc2da3298b456a",
       "ParentId": "5b5f78b786f77447ed5636af",
-      "Price": 119
+      "Price": 130
     },
     {
       "Id": "569668774bdc2da2298b4568",
       "ParentId": "5b5f78b786f77447ed5636af",
-      "Price": 125
+      "Price": 138
     },
     {
       "Id": "56d59856d2720bd8418b456a",
@@ -3362,7 +3362,7 @@
     {
       "Id": "592c2d1a86f7746dbe2af32a",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 46109
+      "Price": 42881
     },
     {
       "Id": "5937ee6486f77408994ba448",
@@ -3952,7 +3952,7 @@
     {
       "Id": "59e763f286f7742ee57895da",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 43565
+      "Price": 50099
     },
     {
       "Id": "59e7643b86f7742cbf2c109a",
@@ -4097,7 +4097,7 @@
     {
       "Id": "59faff1d86f7746c51718c9c",
       "ParentId": "5b47574386f77428ca22b2f1",
-      "Price": 507626
+      "Price": 642157
     },
     {
       "Id": "59fb016586f7746d0d4b423a",
@@ -4437,17 +4437,17 @@
     {
       "Id": "5a154d5cfcdbcb001a3b00da",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 130976
+      "Price": 163720
     },
     {
       "Id": "5a16b672fcdbcb001912fa83",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 11698
+      "Price": 13452
     },
     {
       "Id": "5a16b7e1fcdbcb00165aa6c9",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 26641
+      "Price": 39961
     },
     {
       "Id": "5a16b8a9fcdbcb00165aa6ca",
@@ -4462,7 +4462,7 @@
     {
       "Id": "5a16b9fffcdbcb0176308b34",
       "ParentId": "5b5f6f3c86f774094242ef87",
-      "Price": 46636
+      "Price": 53631
     },
     {
       "Id": "5a16ba61fcdbcb098008728a",
@@ -4790,24 +4790,24 @@
       "Price": 704
     },
     {
-      "Id": "5a6b59a08dc32e000b452fb7",
-      "ParentId": "5b5f72f786f77447ec5d7702",
-      "Price": 1007
-    },
-    {
       "Id": "5a6b5b8a8dc32e001207faf3",
       "ParentId": "5b5f75c686f774094242f19f",
       "Price": 7948
     },
     {
-      "Id": "5a6b5e468dc32e001207faf5",
-      "ParentId": "5b5f75c686f774094242f19f",
-      "Price": 5965
+      "Id": "5a6b59a08dc32e000b452fb7",
+      "ParentId": "5b5f72f786f77447ec5d7702",
+      "Price": 1007
     },
     {
       "Id": "5a6b5ed88dc32e000c52ec86",
       "ParentId": "5b5f75c686f774094242f19f",
       "Price": 11356
+    },
+    {
+      "Id": "5a6b5e468dc32e001207faf5",
+      "ParentId": "5b5f75c686f774094242f19f",
+      "Price": 5965
     },
     {
       "Id": "5a6b5f868dc32e000a311389",
@@ -5252,7 +5252,7 @@
     {
       "Id": "5aa2ba71e5b5b000137b758f",
       "ParentId": "5b5f6f3c86f774094242ef87",
-      "Price": 39154
+      "Price": 45027
     },
     {
       "Id": "5aa66a9be5b5b0214e506e89",
@@ -5282,12 +5282,12 @@
     {
       "Id": "5aa7d193e5b5b000171d063f",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 54403
+      "Price": 42434
     },
     {
       "Id": "5aa7e276e5b5b000171d0647",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 160327
+      "Price": 168343
     },
     {
       "Id": "5aa7e373e5b5b000137b76f0",
@@ -5297,7 +5297,7 @@
     {
       "Id": "5aa7e3abe5b5b000171d064d",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 17351
+      "Price": 26894
     },
     {
       "Id": "5aa7e454e5b5b0214e506fa2",
@@ -5387,7 +5387,7 @@
     {
       "Id": "5ab8dab586f77441cd04f2a2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 43480
+      "Price": 36958
     },
     {
       "Id": "5ab8dced86f774646209ec87",
@@ -5397,12 +5397,12 @@
     {
       "Id": "5ab8e4ed86f7742d8e50c7fa",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 33355
+      "Price": 40026
     },
     {
       "Id": "5ab8e79e86f7742d8b372e78",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 113829
+      "Price": 130903
     },
     {
       "Id": "5ab8e9fcd8ce870019439434",
@@ -5780,14 +5780,14 @@
       "Price": 524
     },
     {
-      "Id": "5ae09bff5acfc4001562219d",
-      "ParentId": "5b5f75c686f774094242f19f",
-      "Price": 4401
-    },
-    {
       "Id": "5ae099925acfc4001a5fc7b3",
       "ParentId": "5b5f746686f77447ec5d7708",
       "Price": 878
+    },
+    {
+      "Id": "5ae09bff5acfc4001562219d",
+      "ParentId": "5b5f75c686f774094242f19f",
+      "Price": 4401
     },
     {
       "Id": "5ae30bad5acfc400185c2dc4",
@@ -6187,22 +6187,22 @@
     {
       "Id": "5b40e1525acfc4771e1c6611",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 77984
+      "Price": 93580
     },
     {
       "Id": "5b40e2bc5acfc40016388216",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 72546
+      "Price": 87427
     },
     {
       "Id": "5b40e3f35acfc40016388218",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 55170
+      "Price": 59583
     },
     {
       "Id": "5b40e4035acfc47a87740943",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 52577
+      "Price": 60463
     },
     {
       "Id": "5b40e5e25acfc4001a599bea",
@@ -6262,7 +6262,7 @@
     {
       "Id": "5b432b965acfc47a8774094e",
       "ParentId": "5b5f6f3c86f774094242ef87",
-      "Price": 13962
+      "Price": 16056
     },
     {
       "Id": "5b432be65acfc433000ed01f",
@@ -6277,7 +6277,7 @@
     {
       "Id": "5b432d215acfc4771e1c6624",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 47364
+      "Price": 54468
     },
     {
       "Id": "5b432f3d5acfc4704b4a1dfb",
@@ -6302,27 +6302,27 @@
     {
       "Id": "5b44c6ae86f7742d1627baea",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 46686
+      "Price": 58357
     },
     {
       "Id": "5b44c8ea86f7742d1627baf1",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 33669
+      "Price": 28618
     },
     {
       "Id": "5b44cad286f77402a54ae7e5",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 91000
+      "Price": 131950
     },
     {
       "Id": "5b44cd8b86f774503d30cba2",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 198796
+      "Price": 288254
     },
     {
       "Id": "5b44cf1486f77431723e3d05",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 137002
+      "Price": 198652
     },
     {
       "Id": "5b44d0de86f774503d30cba8",
@@ -6332,7 +6332,7 @@
     {
       "Id": "5b44d22286f774172b0c9de8",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 48463
+      "Price": 58155
     },
     {
       "Id": "5b46238386f7741a693bcf9c",
@@ -7302,7 +7302,7 @@
     {
       "Id": "5c06c6a80db834001b735491",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 17000
+      "Price": 20400
     },
     {
       "Id": "5c079ec50db834001966a706",
@@ -7362,7 +7362,7 @@
     {
       "Id": "5c0919b50db834001b7ce3b9",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 57800
+      "Price": 72250
     },
     {
       "Id": "5c091a4e0db834001d5addc8",
@@ -7457,12 +7457,12 @@
     {
       "Id": "5c0e3eb886f7742015526062",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 41500
+      "Price": 51045
     },
     {
       "Id": "5c0e446786f7742013381639",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 59300
+      "Price": 68195
     },
     {
       "Id": "5c0e51be86f774598e797894",
@@ -7497,22 +7497,22 @@
     {
       "Id": "5c0e53c886f7747fa54205c7",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 61100
+      "Price": 70265
     },
     {
       "Id": "5c0e541586f7747fa54205c9",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 251100
+      "Price": 276210
     },
     {
       "Id": "5c0e57ba86f7747fa141986d",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 68500
+      "Price": 85625
     },
     {
       "Id": "5c0e5bab86f77461f55ed1f3",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 40300
+      "Price": 46345
     },
     {
       "Id": "5c0e5edb86f77461f55ed1f7",
@@ -7522,27 +7522,27 @@
     {
       "Id": "5c0e625a86f7742d77340f62",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 285000
+      "Price": 356250
     },
     {
       "Id": "5c0e655586f774045612eeb2",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 89000
+      "Price": 120150
     },
     {
       "Id": "5c0e66e2d174af02a96252f4",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 89300
+      "Price": 111625
     },
     {
       "Id": "5c0e6a1586f77404597b4965",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 55100
+      "Price": 41325
     },
     {
       "Id": "5c0e722886f7740458316a57",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 81270
+      "Price": 93460
     },
     {
       "Id": "5c0e746986f7741453628fe5",
@@ -7557,22 +7557,22 @@
     {
       "Id": "5c0e805e86f774683f3dd637",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 61500
+      "Price": 76875
     },
     {
       "Id": "5c0e842486f77443a74d2976",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 87800
+      "Price": 92190
     },
     {
       "Id": "5c0e874186f7745dc7616606",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 126327
+      "Price": 137908
     },
     {
       "Id": "5c0e9f2c86f77432297fe0a3",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 33669
+      "Price": 28618
     },
     {
       "Id": "5c0fa877d174af02a012e1cf",
@@ -7712,7 +7712,7 @@
     {
       "Id": "5c1793902e221602b21d3de2",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 36200
+      "Price": 48125
     },
     {
       "Id": "5c17a7ed2e2216152142459c",
@@ -8357,32 +8357,32 @@
     {
       "Id": "5ca20abf86f77418567a43f2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 26469
+      "Price": 23822
     },
     {
       "Id": "5ca20d5986f774331e7c9602",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 19200
+      "Price": 22080
     },
     {
       "Id": "5ca20ee186f774799474abc2",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 264827
+      "Price": 198620
     },
     {
       "Id": "5ca2113f86f7740b2547e1d2",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 54320
+      "Price": 62468
     },
     {
       "Id": "5ca2151486f774244a3b8d30",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 102874
+      "Price": 205748
     },
     {
       "Id": "5ca21c6986f77479963115a7",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 188296
+      "Price": 254199
     },
     {
       "Id": "5cadc190ae921500103bb3b6",
@@ -9517,17 +9517,17 @@
     {
       "Id": "5d5d646386f7742797261fd9",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 45300
+      "Price": 63420
     },
     {
       "Id": "5d5d85c586f774279a21cbdb",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 39500
+      "Price": 31600
     },
     {
       "Id": "5d5d87f786f77427997cfaef",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 107000
+      "Price": 155150
     },
     {
       "Id": "5d5d8ca986f7742798716522",
@@ -10062,12 +10062,12 @@
     {
       "Id": "5df8a42886f77412640e2e75",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 49200
+      "Price": 43296
     },
     {
       "Id": "5df8a4d786f77412672a1e3b",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 105000
+      "Price": 152250
     },
     {
       "Id": "5df8a58286f77412631087ed",
@@ -10212,12 +10212,12 @@
     {
       "Id": "5e00cdd986f7747473332240",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 31500
+      "Price": 48825
     },
     {
       "Id": "5e00cfa786f77469dc6e5685",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 39200
+      "Price": 49000
     },
     {
       "Id": "5e01e9e273d8eb11426f5bc3",
@@ -10232,17 +10232,17 @@
     {
       "Id": "5e01ef6886f77445f643baa4",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 131200
+      "Price": 164000
     },
     {
       "Id": "5e01f31d86f77465cf261343",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 39200
+      "Price": 49000
     },
     {
       "Id": "5e01f37686f774773c6f6c15",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 31500
+      "Price": 48825
     },
     {
       "Id": "5e023cf8186a883be655e54f",
@@ -10662,7 +10662,7 @@
     {
       "Id": "5e9dacf986f774054d6b89f4",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 290874
+      "Price": 334505
     },
     {
       "Id": "5e9db13186f7742f845ee9d3",
@@ -10747,7 +10747,7 @@
     {
       "Id": "5ea18c84ecf1982c7712d9a2",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 110300
+      "Price": 121330
     },
     {
       "Id": "5ea2a8e200685063ec28c05a",
@@ -11077,12 +11077,12 @@
     {
       "Id": "5f5e467b0bc58666c37e7821",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 46500
+      "Price": 53475
     },
     {
       "Id": "5f5e46b96bdad616ad46d613",
       "ParentId": "5b5f6f6c86f774093f2ecf0b",
-      "Price": 79500
+      "Price": 99375
     },
     {
       "Id": "5f5f41476bdad616ad46d631",
@@ -11097,7 +11097,7 @@
     {
       "Id": "5f60b34a41e30a4ab12a6947",
       "ParentId": "5b47574386f77428ca22b330",
-      "Price": 145976
+      "Price": 82884
     },
     {
       "Id": "5f60b85bbdb8e27dee3dc985",
@@ -11107,7 +11107,7 @@
     {
       "Id": "5f60bf4558eff926626a60f2",
       "ParentId": "5b5f704686f77447ec5d76d7",
-      "Price": 18698
+      "Price": 22437
     },
     {
       "Id": "5f60c076f2bcbb675b00dac2",
@@ -11602,7 +11602,7 @@
     {
       "Id": "5fd4c60f875c30179f5d04c2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 40020
+      "Price": 30015
     },
     {
       "Id": "5fd8d28367cb5e077335170f",
@@ -11842,12 +11842,12 @@
     {
       "Id": "6038b4b292ec1c3103795a0b",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 374500
+      "Price": 385735
     },
     {
       "Id": "6038b4ca92ec1c3103795a0d",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 374500
+      "Price": 393225
     },
     {
       "Id": "6038d614d10cbf667352dd44",
@@ -11872,7 +11872,7 @@
     {
       "Id": "6040dd4ddcf9592f401632d2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 35469
+      "Price": 30148
     },
     {
       "Id": "6040de02647ad86262233012",
@@ -12147,12 +12147,12 @@
     {
       "Id": "60a3c68c37ea821725773ef5",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 155000
+      "Price": 193750
     },
     {
       "Id": "60a3c70cde5f453f634816a3",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 124000
+      "Price": 148784
     },
     {
       "Id": "60a621c49c197e4e8c4455e6",
@@ -12162,7 +12162,7 @@
     {
       "Id": "60a6220e953894617404b00a",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 36000
+      "Price": 32400
     },
     {
       "Id": "60a7acf20c5cb24b01346648",
@@ -13177,7 +13177,7 @@
     {
       "Id": "61bc85697113f767765c7fe7",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 60000
+      "Price": 93000
     },
     {
       "Id": "61bca7cda0eae612383adf57",
@@ -13187,7 +13187,7 @@
     {
       "Id": "61bcc89aef0f505f0c6cd0fc",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 73000
+      "Price": 113150
     },
     {
       "Id": "61bf7b6302b3924be92fa8c3",
@@ -13847,7 +13847,7 @@
     {
       "Id": "628b9784bcf6e2659e09b8a2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 170000
+      "Price": 195500
     },
     {
       "Id": "628b9a40717774443b15e9f2",
@@ -13867,7 +13867,7 @@
     {
       "Id": "628b9c7d45122232a872358f",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 195000
+      "Price": 224250
     },
     {
       "Id": "628baf0b967de16aab5a4f36",
@@ -13887,7 +13887,7 @@
     {
       "Id": "628cd624459354321c4b7fa2",
       "ParentId": "5b5f6f8786f77447ed563642",
-      "Price": 100000
+      "Price": 145000
     },
     {
       "Id": "628d0618d1ba6e4fa07ce5a4",
@@ -13912,7 +13912,7 @@
     {
       "Id": "628e4e576d783146b124c64d",
       "ParentId": "5b5f6f3c86f774094242ef87",
-      "Price": 69000
+      "Price": 79350
     },
     {
       "Id": "62963c18dbc8ab5f0d382d0b",
@@ -13982,7 +13982,7 @@
     {
       "Id": "62a09e08de7ac81993580532",
       "ParentId": "5b47574386f77428ca22b32f",
-      "Price": 35000
+      "Price": 47250
     },
     {
       "Id": "62a09e410b9d3c46de5b6e78",
@@ -14067,7 +14067,7 @@
     {
       "Id": "62a61c988ec41a51b34758d5",
       "ParentId": "5b47574386f77428ca22b331",
-      "Price": 18000
+      "Price": 20700
     },
     {
       "Id": "62a9cb937377a65d7b070cef",
@@ -14362,7 +14362,7 @@
     {
       "Id": "63737f448b28897f2802b874",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 117000
+      "Price": 146250
     },
     {
       "Id": "637b60c3b7afa97bfc3d7001",
@@ -14542,7 +14542,7 @@
     {
       "Id": "639343fce101f4caa40a4ef3",
       "ParentId": "5b5f701386f774093f2ecf0f",
-      "Price": 80000
+      "Price": 116000
     },
     {
       "Id": "63969c9019971040b005049b",

@@ -39,6 +39,7 @@ export interface Props
     IsUnremovable?: boolean
     IsLockedafterEquip?: boolean
     IsSpecialSlotOnly?: boolean
+    IsStationaryWeapon?: boolean
     QuestItem?: boolean
     QuestStashMaxCount?: number
     LootExperience?: number
@@ -260,6 +261,7 @@ export interface Props
     CutoffFreq?: number
     Resonance?: number
     RolloffMultiplier?: number
+    ReverbVolume: number
     CompressorVolume?: number
     AmbientVolume?: number
     DryVolume?: number
