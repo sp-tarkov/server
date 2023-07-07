@@ -77,7 +77,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -112,7 +112,7 @@
       "Time": -1
     },
     {
-      "BossChance": 30,
+      "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -125,7 +125,7 @@
       "Time": -1
     },
     {
-      "BossChance": 12,
+      "BossChance": 15,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -138,7 +138,7 @@
       "Time": -1
     },
     {
-      "BossChance": 30,
+      "BossChance": 15,
       "BossDifficult": "normal",
       "BossEscortAmount": "3,4",
       "BossEscortDifficult": "normal",
@@ -168,7 +168,7 @@
     "VisibleDistance": 1
   },
   "BotMarksman": 20,
-  "BotMax": 13,
+  "BotMax": 17,
   "BotMaxPlayer": 9,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
@@ -181,8 +181,8 @@
   "Description": "Very Big Map",
   "DisabledForScav": false,
   "DisabledScavExits": "",
+  "EnableCoop": true,
   "Enabled": true,
-  "EnabledCoop": false,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 25,
   "GenerateLocalLootCache": true,
@@ -207,10 +207,13 @@
       "min": 2
     }
   ],
+  "MinPlayerLvlAccessKeys": 0,
   "MinPlayers": 9,
   "Name": "Customs",
   "NewSpawn": true,
   "OcculsionCullingEnabled": false,
+  "OfflineNewSpawn": true,
+  "OfflineOldSpawn": false,
   "OldSpawn": false,
   "OpenZones": "ZoneBrige,ZoneCrossRoad,ZoneDormitory,ZoneGasStation,ZoneFactoryCenter,ZoneFactorySide,ZoneOldAZS,ZoneSnipeBrige,ZoneSnipeTower,ZoneSnipeFactory,ZoneBlockPost,ZoneBlockPostSniper,ZoneBlockPostSniper3,ZoneBlockPost,ZoneTankSquare,ZoneWade,ZoneCustoms",
   "PmcMaxPlayersInGroup": 5,
