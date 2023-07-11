@@ -14,7 +14,7 @@
             "exploration": "62825ef60e88d037dc1eb42c"
         }
     },
-	"showNonSeasonalEventQuests": false
+	"showNonSeasonalEventQuests": false,
 	"eventQuests": {
 		"641dbfd7f43eda9d810d7137": {
 			"name": "Important Patient",
@@ -34,14 +34,14 @@
 			"name": "Hint",
 			"season": "None",
 			"startTimestamp": 1338591600000,
-			"endTimestamp": ,
+			"endTimestamp": "",
 			"yearly": false
 		},
 		"649567f359eab30d1b7c9585": {
 			"name": "Hustle",
 			"season": "None",
 			"startTimestamp": 1341270000000,
-			"endTimestamp": ,
+			"endTimestamp": "",
 			"yearly": false
 		},
 		"649570491bb4d158bc4d0168": {
