@@ -78,7 +78,7 @@ export class DialogueHelper
 
         if (rewards.length > 0)
         {
-            const stashId = this.hashUtil.generate();
+            const stashId = rewards[0].parentId;
             items = {
                 stash: stashId,
                 data: []

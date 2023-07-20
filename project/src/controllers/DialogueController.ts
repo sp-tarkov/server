@@ -12,6 +12,8 @@ import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from ".
 import { MemberCategory } from "../models/enums/MemberCategory";
 import { MessageType } from "../models/enums/MessageType";
 import { SaveServer } from "../servers/SaveServer";
+import { GiftService } from "../services/GiftService";
+import { HashUtil } from "../utils/HashUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 
 @injectable()
@@ -21,9 +23,10 @@ export class DialogueController
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
-        @inject("HashUtil") protected hashUtil: HashUtil
+        @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("GiftService") protected giftService: GiftService
     )
-    { }
+    {}
 
     /** Handle onUpdate spt event */
     public update(): void
@@ -99,7 +102,13 @@ export class DialogueController
 
         return result;
     }
-
+    /**
+     *  Todo
+     * @param users 
+     * @param messageType 
+     * @param sessionID 
+     * @returns 
+     */
     public getDialogueUsers(users: IUserDialogInfo[], messageType: MessageType, sessionID: string): IUserDialogInfo[]
     {
         const profile = this.saveServer.getProfile(sessionID);
@@ -183,7 +192,12 @@ export class DialogueController
 
         return profile.dialogues[request.dialogId];
     }
-
+    /**
+     *  TODO
+     * @param pmcProfile 
+     * @param dialogUsers 
+     * @returns 
+     */
     protected getProfilesForMail(pmcProfile: IAkiProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
     {
         const result: IUserDialogInfo[] = [];
@@ -296,7 +310,10 @@ export class DialogueController
             rewardCollected: false,
             text: request.text
         });
-
+        if (request.dialogId.includes("sptfriend"))
+        {
+            this.giftService.sendGiftToPlayer(sessionId, request.text);
+        }
         if (request.dialogId.includes("sptfriend") && request.text.includes("love you"))
         {
             dialog.messages.push({
