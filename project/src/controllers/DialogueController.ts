@@ -20,7 +20,8 @@ export class DialogueController
     constructor(
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
-        @inject("DialogueHelper") protected dialogueHelper: DialogueHelper
+        @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("HashUtil") protected hashUtil: HashUtil
     )
     { }
 
@@ -93,10 +94,30 @@ export class DialogueController
             "new": dialogue.new,
             "attachmentsNew": dialogue.attachmentsNew,
             "pinned": dialogue.pinned,
-            Users: dialogue.Users ? dialogue.Users : undefined
+            Users: this.getDialogueUsers(dialogue.Users, dialogue.type, sessionID)
         };
 
         return result;
+    }
+
+    public getDialogueUsers(users: IUserDialogInfo[], messageType: MessageType, sessionID: string): IUserDialogInfo[]
+    {
+        const profile = this.saveServer.getProfile(sessionID);
+
+        if (messageType === MessageType.USER_MESSAGE && !users.find(x => x._id === profile.characters.pmc._id))
+        {
+            users.push({
+                _id: profile.characters.pmc._id,
+                info: {
+                    Level: profile.characters.pmc.Info.Level,
+                    Nickname: profile.characters.pmc.Info.Nickname,
+                    Side: profile.characters.pmc.Info.Side,
+                    MemberCategory: profile.characters.pmc.Info.MemberCategory
+                }
+            });
+        }
+
+        return users ? users : undefined;
     }
 
     /**
@@ -270,7 +291,7 @@ export class DialogueController
             dt: this.timeUtil.getTimestamp(),
             hasRewards: false,
             items: {},
-            uid: sessionId,
+            uid: profile.characters.pmc._id,
             type: MessageType.USER_MESSAGE,
             rewardCollected: false,
             text: request.text
