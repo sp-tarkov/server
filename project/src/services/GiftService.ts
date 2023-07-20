@@ -2,13 +2,14 @@ import { inject, injectable } from "tsyringe";
 import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { MessageType } from "../models/enums/MessageType";
+import { IGiftsConfig } from "../models/spt/config/IGiftsConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 
 @injectable()
 export class GiftService
 {
-    protected giftConfig: any;
+    protected giftConfig: IGiftsConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -16,7 +17,7 @@ export class GiftService
         @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
-        this.giftConfig = this.configServer.getConfig(ConfigTypes.QUEST);
+        this.giftConfig = this.configServer.getConfig(ConfigTypes.GIFTS);
     }
 
     /**
@@ -26,12 +27,16 @@ export class GiftService
      */
     public sendGiftToPlayer(playerId: string, giftId: string): void
     {
-        //TODO: get gift items
-        const giftItems = [];
-        const maxStoreTime = 999999;
+        const giftData = this.giftConfig.gifts[giftId];
+        if (!giftData)
+        {
+            this.logger.warning(`unable to find gift with id of ${giftId}`);
 
-        const messageContent = this.dialogueHelper.createMessageContext(null, MessageType.SYSTEM_MESSAGE, maxStoreTime);
+            return;
+        }
 
-        this.dialogueHelper.addDialogueMessage("traderId", messageContent, playerId, giftItems, MessageType.SYSTEM_MESSAGE);
+        const messageContent = this.dialogueHelper.createMessageContext(null, MessageType.SYSTEM_MESSAGE, giftData.maxStorageTime);
+
+        this.dialogueHelper.addDialogueMessage("traderId", messageContent, playerId, giftData.items, MessageType.SYSTEM_MESSAGE);
     }
 }
