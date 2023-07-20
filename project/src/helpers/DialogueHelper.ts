@@ -51,7 +51,7 @@ export class DialogueHelper
      * @param sessionID 
      * @param rewards 
      */
-    public addDialogueMessage(dialogueID: string, messageContent: MessageContent, sessionID: string, rewards: Item[] = []): void
+    public addDialogueMessage(dialogueID: string, messageContent: MessageContent, sessionID: string, rewards: Item[] = [], messageType = MessageType.NPC_TRADER): void
     {
         const dialogueData = this.saveServer.getProfile(sessionID).dialogues;
         const isNewDialogue = !(dialogueID in dialogueData);
@@ -61,7 +61,7 @@ export class DialogueHelper
         {
             dialogue = {
                 _id: dialogueID,
-                type: MessageType.NPC_TRADER,
+                type: messageType,
                 messages: [],
                 pinned: false,
                 new: 0,
