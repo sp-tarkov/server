@@ -5,6 +5,7 @@ import { MessageType } from "../models/enums/MessageType";
 import { IGiftsConfig } from "../models/spt/config/IGiftsConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
+import { HashUtil } from "../utils/HashUtil";
 
 @injectable()
 export class GiftService
@@ -14,6 +15,7 @@ export class GiftService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
@@ -37,6 +39,6 @@ export class GiftService
 
         const messageContent = this.dialogueHelper.createMessageContext(null, MessageType.SYSTEM_MESSAGE, giftData.maxStorageTime);
 
-        this.dialogueHelper.addDialogueMessage("traderId", messageContent, playerId, giftData.items, MessageType.SYSTEM_MESSAGE);
+        this.dialogueHelper.addDialogueMessage(this.hashUtil.generate(), messageContent, playerId, giftData.items, MessageType.SYSTEM_MESSAGE);
     }
 }
