@@ -2,5 +2,6 @@ export enum SeasonalEventType
     {
     NONE = "None",
     CHRISTMAS = "Christmas",
-    HALLOWEEN = "Halloween"
+    HALLOWEEN = "Halloween",
+    PROMO = "Promo"
 }
