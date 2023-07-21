@@ -111,7 +111,7 @@ export class DialogueHelper
             type: messageType
         };
 
-        if (!maxStoreTime)
+        if (maxStoreTime)
         {
             result.maxStorageTime = maxStoreTime * TimeUtil.oneHourAsSeconds;
         }
@@ -204,13 +204,18 @@ export class DialogueHelper
             dt: Math.round(Date.now() / 1000),
             text: messageContent.text ?? "",
             templateId: messageContent.templateId,
-            hasRewards: rewards.length > 0,
+            hasRewards: items.data?.length > 0,
             rewardCollected: false,
             items: items,
             maxStorageTime: messageContent.maxStorageTime,
             systemData: messageContent.systemData ? messageContent.systemData : undefined,
             profileChangeEvents: (messageContent.profileChangeEvents?.length === 0) ? messageContent.profileChangeEvents : undefined
         };
+
+        if (!message.templateId)
+        {
+            delete message.templateId;
+        }
 
         dialogue.messages.push(message);
 

@@ -7,10 +7,10 @@
                     "_tpl": "6389c6463485cf0eeb260715"
                 }
             ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "Halloween Event Text",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Halloween"
         },
         "Christmas 2022": {
@@ -23,7 +23,7 @@
                     }
                 }
             ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "Christmas Event Text",
             "timestampToSend": 42069,
             "associatedEvent": "Christmas"
@@ -138,10 +138,10 @@
                   "slotId": "main"
                 }
               ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "<ch>1CLICKDRESSUP</ch><cz>1CLICKDRESSUP</cz><en>1CLICKDRESSUP</en><fr>1CLICKDRESSUP</fr><ge>1CLICKDRESSUP</ge><hu>1CLICKDRESSUP</hu><it>1CLICKDRESSUP</it><jp>1CLICKDRESSUP</jp><kr>1CLICKDRESSUP</kr><pl>1CLICKDRESSUP</pl><po>1CLICKDRESSUP</po><sk>1CLICKDRESSUP</sk><es>1CLICKDRESSUP</es><es-mx>1CLICKDRESSUP</es-mx><tu>1CLICKDRESSUP</tu><ru>1CLICKDRESSUP</ru>",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Promo"
         },
         "BARMALEY": {
@@ -299,10 +299,10 @@
                 "slotId": "mod_pistol_grip"
                 }
             ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "<ch>BARMALEY</ch><cz>BARMALEY</cz><en>BARMALEY</en><fr>BARMALEY</fr><ge>BARMALEY</ge><hu>BARMALEY</hu><it>BARMALEY</it><jp>BARMALEY</jp><kr>BARMALEY</kr><pl>BARMALEY</pl><po>BARMALEY</po><sk>BARMALEY</sk><es>BARMALEY</es><es-mx>BARMALEY</es-mx><tu>BARMALEY</tu><ru>BARMALEY</ru>",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Promo"
         },
         "S00NS00N": {
@@ -380,10 +380,10 @@
                   "slotId": "main"
                 }
               ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "<ch>S00NS00N</ch><cz>S00NS00N</cz><en>S00NS00N</en><fr>S00NS00N</fr><ge>S00NS00N</ge><hu>S00NS00N</hu><it>S00NS00N</it><jp>S00NS00N</jp><kr>S00NS00N</kr><pl>S00NS00N</pl><po>S00NS00N</po><sk>S00NS00N</sk><es>S00NS00N</es><es-mx>S00NS00N</es-mx><tu>S00NS00N</tu><ru>S00NS00N</ru>",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Promo"
         },
         "TRAMBON": {
@@ -413,10 +413,10 @@
                   "slotId": "main"
                 }
               ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "<ch>TRAMBON</ch><cz>TRAMBON</cz><en>TRAMBON</en><fr>TRAMBON</fr><ge>TRAMBON</ge><hu>TRAMBON</hu><it>TRAMBON</it><jp>TRAMBON</jp><kr>TRAMBON</kr><pl>TRAMBON</pl><po>TRAMBON</po><sk>TRAMBON</sk><es>TRAMBON</es><es-mx>TRAMBON</es-mx><tu>TRAMBON</tu><ru>TRAMBON</ru>",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Promo"
         },
         "PINEWOOD": {
@@ -502,10 +502,10 @@
                   "slotId": "mod_handguard"
                 }
               ],
-            "sender": "SYSTEM",
+            "sender": "System",
             "messageText": "<ch>PINEWOOD</ch><cz>PINEWOOD</cz><en>PINEWOOD</en><fr>PINEWOOD</fr><ge>PINEWOOD</ge><hu>PINEWOOD</hu><it>PINEWOOD</it><jp>PINEWOOD</jp><kr>PINEWOOD</kr><pl>PINEWOOD</pl><po>PINEWOOD</po><sk>PINEWOOD</sk><es>PINEWOOD</es><es-mx>PINEWOOD</es-mx><tu>PINEWOOD</tu><ru>PINEWOOD</ru>",
             "timestampToSend": 42069,
-            "maxStorageTime": 172800,
+            "maxStoreTime": 172800,
             "associatedEvent": "Promo"
         }
     }
