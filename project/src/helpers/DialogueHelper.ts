@@ -55,6 +55,12 @@ export class DialogueHelper
         // push message to dialog messages array
     }
 
+    /**
+     * Get a dialog with a specified entity (user/trader)
+     * Create and store empty dialog if none exists in profile
+     * @param messageDetails 
+     * @returns Relevant Dialogue
+     */
     protected getDialog(messageDetails: ISendMessageDetails): Dialogue
     {
         // Does dialog exist

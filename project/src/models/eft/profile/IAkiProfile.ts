@@ -149,6 +149,7 @@ export interface Aki
 {
     version: string
     mods?: ModDetails[]
+    receivedGifts: ReceivedGift[]
 }
 
 export interface ModDetails
@@ -157,6 +158,12 @@ export interface ModDetails
     version: string
     author: string
     dateAdded: number
+}
+
+export interface ReceivedGift
+{
+    giftId: string
+    timestampAccepted: number
 }
 
 export interface Vitality

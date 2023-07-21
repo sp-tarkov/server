@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { DialogueHelper } from "../helpers/DialogueHelper";
+import { ProfileHelper } from "../helpers/ProfileHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { GiftSenderType } from "../models/enums/GiftSenderType";
 import { MessageType } from "../models/enums/MessageType";
@@ -18,10 +19,21 @@ export class GiftService
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
         this.giftConfig = this.configServer.getConfig(ConfigTypes.GIFTS);
+    }
+
+    /**
+     * Does a gift with a specific ID exist in db
+     * @param giftId Gift id to check for
+     * @returns True if it exists in  db
+     */
+    public giftExists(giftId: string): boolean
+    {
+        return !!this.giftConfig.gifts[giftId];
     }
 
     /**
@@ -35,7 +47,14 @@ export class GiftService
         const giftData = this.giftConfig.gifts[giftId];
         if (!giftData)
         {
-            this.logger.warning(`Unable to find gift with id of ${giftId}`);
+            this.logger.warning(`Unable to find gift with id: ${giftId}`);
+
+            return false;
+        }
+
+        if (this.profileHelper.playerHasRecievedGift(playerId, giftId))
+        {
+            this.logger.warning(`Player already recieved gift: ${giftId}`);
 
             return false;
         }
@@ -47,6 +66,8 @@ export class GiftService
         messageContent.text = giftData.messageText;
 
         this.dialogueHelper.addDialogueMessage(senderId, messageContent, playerId, giftData.items, messageType);
+
+        this.profileHelper.addGiftReceivedFlagToProfile(playerId, giftId);
 
         return true;
     }

@@ -294,4 +294,39 @@ export class ProfileHelper
 
         return profile;
     }
+
+    /**
+     *  Flag a profile as having received a gift
+     * Store giftid in profile aki object
+     * @param playerId Player to add gift flag to
+     * @param giftId Gift player received
+     */
+    public addGiftReceivedFlagToProfile(playerId: string, giftId: string): void
+    {
+        const profileToUpdate = this.getFullProfile(playerId);
+        const giftHistory = profileToUpdate.aki.receivedGifts;
+        if (!giftHistory)
+        {
+            profileToUpdate.aki.receivedGifts = [];
+        }
+
+        profileToUpdate.aki.receivedGifts.push({giftId: giftId, timestampAccepted: this.timeUtil.getTimestamp()});
+    }
+
+    /**
+     * Check if profile has recieved a gift by id
+     * @param playerId Player profile to check for gift
+     * @param giftId Gift to check for
+     * @returns True if player has recieved gift previously
+     */
+    public playerHasRecievedGift(playerId: string, giftId: string): boolean
+    {
+        const profile = this.getFullProfile(playerId);
+        if (!profile.aki.receivedGifts)
+        {
+            return false;
+        }
+
+        return !!profile.aki.receivedGifts.find(x => x.giftId === giftId);
+    }
 }
