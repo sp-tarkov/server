@@ -3,6 +3,7 @@ import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { GiftSenderType } from "../models/enums/GiftSenderType";
+import { GiftSentResult } from "../models/enums/GiftSentResult";
 import { MessageType } from "../models/enums/MessageType";
 import { Gift, IGiftsConfig } from "../models/spt/config/IGiftsConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
@@ -42,21 +43,21 @@ export class GiftService
      * @param giftId Id of gift to send player
      * @returns true if gift was sent
      */
-    public sendGiftToPlayer(playerId: string, giftId: string): boolean
+    public sendGiftToPlayer(playerId: string, giftId: string): GiftSentResult
     {
         const giftData = this.giftConfig.gifts[giftId];
         if (!giftData)
         {
             this.logger.warning(`Unable to find gift with id: ${giftId}`);
 
-            return false;
+            return GiftSentResult.FAILED_GIFT_DOESNT_EXIST;
         }
 
         if (this.profileHelper.playerHasRecievedGift(playerId, giftId))
         {
             this.logger.warning(`Player already recieved gift: ${giftId}`);
 
-            return false;
+            return GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED;
         }
 
         const senderId = this.getSenderId(giftData);
@@ -69,7 +70,7 @@ export class GiftService
 
         this.profileHelper.addGiftReceivedFlagToProfile(playerId, giftId);
 
-        return true;
+        return GiftSentResult.SUCCESS;
     }
 
     /**
