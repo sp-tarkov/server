@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { Item } from "../models/eft/common/tables/IItem";
 import { Dialogue, Message, MessageContent, MessageItems, MessagePreview } from "../models/eft/profile/IAkiProfile";
 import { MessageType } from "../models/enums/MessageType";
+import { Traders } from "../models/enums/Traders";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
@@ -13,9 +14,26 @@ import { ItemHelper } from "./ItemHelper";
 import { NotificationSendHelper } from "./NotificationSendHelper";
 import { NotifierHelper } from "./NotifierHelper";
 
+export interface ISendMessageDetails
+{
+    /** Player id */
+    recipientId: string
+    /** Who is sending this message */
+    sender: MessageType
+    /** Optional - if sender is USER, property must be supplied */
+    senderId?: string
+    trader: Traders
+    /** Optinal - Items to send to player */
+    items?: Item[]
+    /** Optional - How long items will be stored in mail before expiry */
+    itemsMaxStorageLifetimeSeconds?: number
+}
+
 @injectable()
 export class DialogueHelper
 {
+    protected readonly systemSenderId = "59e7125688a45068a6249071";
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
@@ -28,20 +46,77 @@ export class DialogueHelper
     )
     { }
 
+    public sendMessageToPlayer(messageDetails: ISendMessageDetails ): void
+    {
+        // Get dialog, create if doesn't exist
+        const senderDialog = this.getDialog(messageDetails);
+
+        // craft message
+        // push message to dialog messages array
+    }
+
+    protected getDialog(messageDetails: ISendMessageDetails): Dialogue
+    {
+        // Does dialog exist
+        const dialogsInProfile = this.saveServer.getProfile(messageDetails.recipientId).dialogues;
+        const senderDialog = dialogsInProfile[messageDetails.sender];
+
+        const senderId = this.getMessageSenderIdByType(messageDetails);
+        if (!senderDialog)
+        {
+            // Create if doesnt
+            dialogsInProfile[messageDetails.sender] = {
+                _id: senderId,
+                type: messageDetails.sender,
+                messages: [],
+                pinned: false,
+                new: 0,
+                attachmentsNew: 0
+            };
+
+        }
+
+        return dialogsInProfile[messageDetails.sender];
+    }
+
+    protected getMessageSenderIdByType(messageDetails: ISendMessageDetails): string
+    {
+        if (messageDetails.sender === MessageType.SYSTEM_MESSAGE)
+        {
+            return this.systemSenderId;
+        }
+
+        if (messageDetails.sender === MessageType.NPC_TRADER)
+        {
+            return messageDetails.trader;
+        }
+
+        if (messageDetails.sender === MessageType.USER_MESSAGE)
+        {
+            return messageDetails.senderId;
+        }
+    }
+
     /**
      * Create basic message context template
-     * @param templateId 
-     * @param messageType 
-     * @param maxStoreTime 
+     * @param templateId optional
+     * @param messageType Who sent the message
+     * @param maxStoreTime How long message items are stored
      * @returns 
      */
-    public createMessageContext(templateId: string, messageType: MessageType, maxStoreTime: number): MessageContent
+    public createMessageContext(templateId: string, messageType: MessageType, maxStoreTime = null): MessageContent
     {
-        return {
+        const result: MessageContent = {
             templateId: templateId,
-            type: messageType,
-            maxStorageTime: maxStoreTime * TimeUtil.oneHourAsSeconds
+            type: messageType
         };
+
+        if (!maxStoreTime)
+        {
+            result.maxStorageTime = maxStoreTime * TimeUtil.oneHourAsSeconds;
+        }
+
+        return result;
     }
 
     /**

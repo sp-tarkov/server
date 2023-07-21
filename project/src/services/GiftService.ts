@@ -1,8 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
+import { GiftSenderType } from "../models/enums/GiftSenderType";
 import { MessageType } from "../models/enums/MessageType";
-import { IGiftsConfig } from "../models/spt/config/IGiftsConfig";
+import { Gift, IGiftsConfig } from "../models/spt/config/IGiftsConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 import { HashUtil } from "../utils/HashUtil";
@@ -11,6 +12,7 @@ import { HashUtil } from "../utils/HashUtil";
 export class GiftService
 {
     protected giftConfig: IGiftsConfig;
+    protected readonly systemSenderId = "59e7125688a45068a6249071";
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -23,22 +25,73 @@ export class GiftService
     }
 
     /**
-     * Send a player a gift
-     * @param playerId Player to send gift to
+     * Send player a gift
+     * @param playerId Player to send gift to / sessionId
      * @param giftId Id of gift to send player
+     * @returns true if gift was sent
      */
-    public sendGiftToPlayer(playerId: string, giftId: string): void
+    public sendGiftToPlayer(playerId: string, giftId: string): boolean
     {
         const giftData = this.giftConfig.gifts[giftId];
         if (!giftData)
         {
-            this.logger.warning(`unable to find gift with id of ${giftId}`);
+            this.logger.warning(`Unable to find gift with id of ${giftId}`);
 
-            return;
+            return false;
         }
 
-        const messageContent = this.dialogueHelper.createMessageContext(null, MessageType.SYSTEM_MESSAGE, giftData.maxStorageTime);
+        const senderId = this.getSenderId(giftData);
+        const messageType = this.getMessageType(giftData);
 
-        this.dialogueHelper.addDialogueMessage(this.hashUtil.generate(), messageContent, playerId, giftData.items, MessageType.SYSTEM_MESSAGE);
+        const messageContent = this.dialogueHelper.createMessageContext(null, messageType, giftData.maxStorageTime);
+        messageContent.text = giftData.messageText;
+
+        this.dialogueHelper.addDialogueMessage(senderId, messageContent, playerId, giftData.items, messageType);
+
+        return true;
+    }
+
+    /**
+     * Get sender id based on gifts sender type enum
+     * @param giftData Gift to send player
+     * @returns trader/user/system id
+     */
+    protected getSenderId(giftData: Gift): string
+    {
+        if (giftData.sender === GiftSenderType.SYSTEM)
+        {
+            return this.systemSenderId;
+        }
+
+        if (giftData.sender === GiftSenderType.TRADER)
+        {
+            return giftData.trader;
+        }
+
+        if (giftData.sender === GiftSenderType.USER)
+        {
+            return giftData.senderId;
+        }
+    }
+
+    /**
+     * Convert GiftSenderType into a dialog MessageType
+     * @param giftData Gift to send player
+     * @returns MessageType enum value
+     */
+    protected getMessageType(giftData: Gift): MessageType
+    {
+        switch (giftData.sender)
+        {
+            case GiftSenderType.SYSTEM:
+                return MessageType.SYSTEM_MESSAGE;
+            case GiftSenderType.TRADER:
+                return MessageType.NPC_TRADER;
+            case GiftSenderType.USER:
+                return MessageType.USER_MESSAGE;
+            default:
+                this.logger.error(`Gift message type: ${giftData.sender} not handled`);
+                break;
+        }
     }
 }

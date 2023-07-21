@@ -310,10 +310,13 @@ export class DialogueController
             rewardCollected: false,
             text: request.text
         });
+
+        // Handle when player types a keyword
         if (request.dialogId.includes("sptfriend"))
         {
-            this.giftService.sendGiftToPlayer(sessionId, request.text);
+            const giftSent = this.giftService.sendGiftToPlayer(sessionId, request.text);
         }
+
         if (request.dialogId.includes("sptfriend") && request.text.includes("love you"))
         {
             dialog.messages.push({

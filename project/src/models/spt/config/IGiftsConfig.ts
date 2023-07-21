@@ -1,5 +1,7 @@
 import { Item } from "../../../models/eft/common/tables/IItem";
+import { GiftSenderType } from "../../../models/enums/GiftSenderType";
 import { SeasonalEventType } from "../../../models/enums/SeasonalEventType";
+import { Traders } from "../../../models/enums/Traders";
 import { IBaseConfig } from "./IBaseConfig";
 
 export interface IGiftsConfig extends IBaseConfig
@@ -10,8 +12,14 @@ export interface IGiftsConfig extends IBaseConfig
 
 export interface Gift
 {
+    /** Items to send to player */
     items: Item[]
-    sender: string
+    /** Who is sending the gift to player */
+    sender: GiftSenderType
+    /** Optinal - supply a users id to send from, not necessary when sending from SYSTEM or TRADER */
+    senderId?: string
+    /** Optional - supply a trader type to send from, not necessary when sending from SYSTEM or USER */
+    trader?: Traders
     messageText: string
     timestampToSend: number
     associatedEvent: SeasonalEventType
