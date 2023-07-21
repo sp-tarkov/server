@@ -356,7 +356,7 @@ export class BotWeaponGenerator
             this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot([EquipmentSlots.SECURED_CONTAINER], id, ammoTpl, [{
                 _id: id,
                 _tpl: ammoTpl,
-                upd: { "StackObjectsCount": stackSize }
+                upd: { StackObjectsCount: stackSize }
             }],
             inventory);
         }
