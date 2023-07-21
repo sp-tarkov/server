@@ -12,6 +12,7 @@ import { ISendMessageRequest } from "../models/eft/dialog/ISendMessageRequest";
 import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "../models/eft/profile/IAkiProfile";
 import { MemberCategory } from "../models/enums/MemberCategory";
 import { MessageType } from "../models/enums/MessageType";
+import { ILogger } from "../models/spt/utils/ILogger";
 import { SaveServer } from "../servers/SaveServer";
 import { GiftService } from "../services/GiftService";
 import { MailSendService } from "../services/MailSendService";
@@ -22,6 +23,7 @@ import { TimeUtil } from "../utils/TimeUtil";
 export class DialogueController
 {
     constructor(
+        @inject("WinstonLogger") protected logger: ILogger,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
@@ -306,18 +308,7 @@ export class DialogueController
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendMessage(sessionId: string, request: ISendMessageRequest): string
     {
-        const profile = this.saveServer.getProfile(sessionId);
-        const dialog = profile.dialogues[request.dialogId];
-        dialog.messages.push({
-            _id: sessionId,
-            dt: this.timeUtil.getTimestamp(),
-            hasRewards: false,
-            items: {},
-            uid: profile.characters.pmc._id,
-            type: MessageType.USER_MESSAGE,
-            rewardCollected: false,
-            text: request.text
-        });
+        this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);
 
         // Handle when player types a keyword to sptfriend user
         if (request.dialogId.includes("sptFriend"))

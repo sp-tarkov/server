@@ -11,6 +11,7 @@ import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
 import { HashUtil } from "../utils/HashUtil";
+import { TimeUtil } from "../utils/TimeUtil";
 import { LocalisationService } from "./LocalisationService";
 
 @injectable()
@@ -21,6 +22,7 @@ export class MailSendService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("NotifierHelper") protected notifierHelper: NotifierHelper,
@@ -184,6 +186,33 @@ export class MailSendService
         // Send message off to player so they get it in client
         const notificationMessage = this.notifierHelper.createNewMessageNotification(message);
         this.notificationSendHelper.sendMessage(messageDetails.recipientId, notificationMessage);
+    }
+
+    /**
+     * Send a message from the player to an NPC
+     * @param sessionId Player id
+     * @param targetNpcId NPC message is sent to
+     * @param message Text to send to NPC
+     */
+    public sendPlayerMessageToNpc(sessionId: string, targetNpcId: string, message: string): void
+    {
+        const playerProfile = this.saveServer.getProfile(sessionId);
+        const dialogWithNpc = playerProfile.dialogues[targetNpcId];
+        if (!dialogWithNpc)
+        {
+            this.logger.error(`Dialog for: ${targetNpcId} does not exist`);
+        }
+
+        dialogWithNpc.messages.push({
+            _id: sessionId, // players id
+            dt: this.timeUtil.getTimestamp(),
+            hasRewards: false,
+            items: {},
+            uid: playerProfile.characters.pmc._id,
+            type: MessageType.USER_MESSAGE,
+            rewardCollected: false,
+            text: message
+        });
     }
 
     /**
