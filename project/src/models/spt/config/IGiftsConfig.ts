@@ -1,4 +1,5 @@
 import { Item } from "../../../models/eft/common/tables/IItem";
+import { IUserDialogInfo } from "../../../models/eft/profile/IAkiProfile";
 import { GiftSenderType } from "../../../models/enums/GiftSenderType";
 import { SeasonalEventType } from "../../../models/enums/SeasonalEventType";
 import { Traders } from "../../../models/enums/Traders";
@@ -18,6 +19,7 @@ export interface Gift
     sender: GiftSenderType
     /** Optinal - supply a users id to send from, not necessary when sending from SYSTEM or TRADER */
     senderId?: string
+    senderDetails: IUserDialogInfo,
     /** Optional - supply a trader type to send from, not necessary when sending from SYSTEM or USER */
     trader?: Traders
     messageText: string

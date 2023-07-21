@@ -6,6 +6,7 @@ import { IBaseConfig } from "./IBaseConfig";
 export interface IQuestConfig extends IBaseConfig
 {
     kind: "aki-quest"
+    // Hours to get/redeem items from quest mail
     redeemTime: number
     questTemplateIds: IPlayerTypeQuestIds
     /** Show non-seasonal quests be shown to player */

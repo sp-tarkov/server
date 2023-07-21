@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { DialogueHelper } from "../helpers/DialogueHelper";
+import { DialogueHelper, ISendMessageDetails } from "../helpers/DialogueHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { GiftSenderType } from "../models/enums/GiftSenderType";
@@ -9,17 +9,18 @@ import { Gift, IGiftsConfig } from "../models/spt/config/IGiftsConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 import { HashUtil } from "../utils/HashUtil";
+import { TimeUtil } from "../utils/TimeUtil";
 
 @injectable()
 export class GiftService
 {
     protected giftConfig: IGiftsConfig;
-    protected readonly systemSenderId = "59e7125688a45068a6249071";
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
@@ -38,35 +39,65 @@ export class GiftService
     }
 
     /**
-     * Send player a gift
+     * Send player a gift from a range of sources
      * @param playerId Player to send gift to / sessionId
-     * @param giftId Id of gift to send player
-     * @returns true if gift was sent
+     * @param giftId Id of gift in configs/gifts.json to send player
+     * @returns outcome of sending gift to player
      */
     public sendGiftToPlayer(playerId: string, giftId: string): GiftSentResult
     {
         const giftData = this.giftConfig.gifts[giftId];
         if (!giftData)
         {
-            this.logger.warning(`Unable to find gift with id: ${giftId}`);
-
             return GiftSentResult.FAILED_GIFT_DOESNT_EXIST;
         }
 
         if (this.profileHelper.playerHasRecievedGift(playerId, giftId))
         {
-            this.logger.warning(`Player already recieved gift: ${giftId}`);
+            this.logger.debug(`Player already recieved gift: ${giftId}`);
 
             return GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED;
         }
 
-        const senderId = this.getSenderId(giftData);
-        const messageType = this.getMessageType(giftData);
+        // Handle system messsages
+        if (giftData.sender === GiftSenderType.SYSTEM)
+        {
+            this.dialogueHelper.sendSystemMessageToPlayer(
+                playerId,
+                giftData.messageText,
+                giftData.items,
+                this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+        }
+        // Handle user messages
+        else if (giftData.sender === GiftSenderType.USER)
+        {
+            this.dialogueHelper.sendUserMessageToPlayer(
+                playerId,
+                giftData.senderDetails,
+                giftData.messageText,
+                giftData.items,
+                this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+        }
+        else
+        {
+            // TODO: further split out into different message systems like above SYSTEM method
+            // Trader / ragfair
+            const details: ISendMessageDetails = {
+                recipientId: playerId,
+                sender: this.getMessageType(giftData),
+                senderDetails: { _id: this.getSenderId(giftData), info: null},
+                messageText: giftData.messageText,
+                items: giftData.items,
+                itemsMaxStorageLifetimeSeconds: this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours)
+            };
 
-        const messageContent = this.dialogueHelper.createMessageContext(null, messageType, giftData.collectionTimeHours);
-        messageContent.text = giftData.messageText;
+            if (giftData.trader)
+            {
+                details.trader = giftData.trader;
+            }
 
-        this.dialogueHelper.addDialogueMessage(senderId, messageContent, playerId, giftData.items, messageType);
+            this.dialogueHelper.sendMessageToPlayer(details);
+        }        
 
         this.profileHelper.addGiftReceivedFlagToProfile(playerId, giftId);
 
@@ -80,11 +111,6 @@ export class GiftService
      */
     protected getSenderId(giftData: Gift): string
     {
-        if (giftData.sender === GiftSenderType.SYSTEM)
-        {
-            return this.systemSenderId;
-        }
-
         if (giftData.sender === GiftSenderType.TRADER)
         {
             return giftData.trader;

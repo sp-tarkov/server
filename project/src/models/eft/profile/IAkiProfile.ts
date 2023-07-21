@@ -81,7 +81,7 @@ export interface DialogueInfo
     _id: string
     type: MessageType
     pinned: boolean
-    Users?: any[]
+    Users?: IUserDialogInfo[]
     message: MessagePreview
 }
 
@@ -97,7 +97,7 @@ export interface Message
     text?: string
     hasRewards: boolean
     rewardCollected: boolean
-    items: MessageItems
+    items?: MessageItems
     maxStorageTime?: number
     systemData?: ISystemData
     profileChangeEvents?: any[]

@@ -386,4 +386,16 @@ export class TraderHelper
 
         return this.highestTraderBuyPriceItems[tpl];
     }
+
+    /**
+     * Get a trader enum key by its value
+     * @param traderId Traders id
+     * @returns Traders key
+     */
+    public getTraderById(traderId: string): Traders
+    {
+        const keys = Object.keys(Traders).filter(x => Traders[x] === traderId);
+
+        return keys.length > 0 ? keys[0] as Traders : null;
+    }
 }

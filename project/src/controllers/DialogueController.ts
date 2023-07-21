@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
 import { DialogueHelper } from "../helpers/DialogueHelper";
 import { IGetAllAttachmentsResponse } from "../models/eft/dialog/IGetAllAttachmentsResponse";
 import { IGetFriendListDataResponse } from "../models/eft/dialog/IGetFriendListDataResponse";
@@ -113,7 +114,7 @@ export class DialogueController
     {
         const profile = this.saveServer.getProfile(sessionID);
 
-        if (messageType === MessageType.USER_MESSAGE && !users.find(x => x._id === profile.characters.pmc._id))
+        if (messageType === MessageType.USER_MESSAGE && !users?.find(x => x._id === profile.characters.pmc._id))
         {
             users.push({
                 _id: profile.characters.pmc._id,
@@ -311,28 +312,42 @@ export class DialogueController
             text: request.text
         });
 
-        // Handle when player types a keyword
+        // Handle when player types a keyword to sptfriend user
         if (request.dialogId.includes("sptfriend"))
         {
-            const giftSent = this.giftService.sendGiftToPlayer(sessionId, request.text);
-        }
-
-        if (request.dialogId.includes("sptfriend") && request.text.includes("love you"))
-        {
-            dialog.messages.push({
-                _id: "sptfriend",
-                dt: this.timeUtil.getTimestamp()+1,
-                hasRewards: false,
-                items: {},
-                uid: "sptfriend",
-                type: MessageType.USER_MESSAGE,
-                rewardCollected: false,
-                text: "i love you too buddy :3"
-            });
-            dialog.new = 1;
+            this.handleChatWithSPTFriend(sessionId, request);
         }
 
         return request.dialogId;
+    }
+
+    protected handleChatWithSPTFriend(sessionId: string, request: ISendMessageRequest): void
+    {
+        const sptFriendUser: IUserDialogInfo = {
+            _id: "sptFriend",
+            info: {
+                Level: 1,
+                MemberCategory: MemberCategory.DEVELOPER,
+                Nickname: "SPT",
+                Side: "Usec"
+            }
+        };
+        const giftSent = this.giftService.sendGiftToPlayer(sessionId, request.text);
+
+        if (giftSent === GiftSentResult.SUCCESS) 
+        {
+            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "hey you got the right code!");
+        }
+
+        if (request.text.toLowerCase().includes("love you")) 
+        {
+            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "I love you too buddy :3!");
+        }
+
+        if (request.text.toLowerCase() === "spt") 
+        {
+            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "its me!!");
+        }
     }
 
     /**
