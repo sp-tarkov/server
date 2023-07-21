@@ -105,7 +105,8 @@ export class ProfileFixerService
         {
             this.logger.debug("Adding aki object to profile");
             fullProfile.aki = {
-                version: this.watermark.getVersionTag()
+                version: this.watermark.getVersionTag(),
+                receivedGifts: []
             };
         }
     }
