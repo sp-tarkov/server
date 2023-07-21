@@ -429,13 +429,13 @@ export class BotGenerator
         if (botInfo.Nickname.toLowerCase() === "nikita")
         {
             botInfo.GameVersion = "edge_of_darkness";
-            botInfo.AccountType = MemberCategory.DEVELOPER;
+            botInfo.MemberCategory = MemberCategory.DEVELOPER;
 
             return;
         }
 
         botInfo.GameVersion = this.weightedRandomHelper.getWeightedValue(this.botConfig.pmc.gameVersionWeight);
-        botInfo.AccountType = Number.parseInt(this.weightedRandomHelper.getWeightedValue(this.botConfig.pmc.accountTypeWeight));
+        botInfo.MemberCategory = Number.parseInt(this.weightedRandomHelper.getWeightedValue(this.botConfig.pmc.accountTypeWeight));
     }
 
     /**
