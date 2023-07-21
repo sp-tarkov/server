@@ -23,6 +23,5 @@ export interface Gift
     messageText: string
     timestampToSend: number
     associatedEvent: SeasonalEventType
-    maxStorageTime: number,
-    redeemTime: number
+    maxStoreTime: number
 }

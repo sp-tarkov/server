@@ -43,7 +43,7 @@ export class GiftService
         const senderId = this.getSenderId(giftData);
         const messageType = this.getMessageType(giftData);
 
-        const messageContent = this.dialogueHelper.createMessageContext(null, messageType, giftData.maxStorageTime);
+        const messageContent = this.dialogueHelper.createMessageContext(null, messageType, giftData.maxStoreTime);
         messageContent.text = giftData.messageText;
 
         this.dialogueHelper.addDialogueMessage(senderId, messageContent, playerId, giftData.items, messageType);
