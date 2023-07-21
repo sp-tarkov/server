@@ -5,6 +5,7 @@ import { ItemHelper } from "../helpers/ItemHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { QuestConditionHelper } from "../helpers/QuestConditionHelper";
 import { QuestHelper } from "../helpers/QuestHelper";
+import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Quest } from "../models/eft/common/tables/IBotBase";
 import { Item } from "../models/eft/common/tables/IItem";
@@ -26,6 +27,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { LocaleService } from "../services/LocaleService";
 import { LocalisationService } from "../services/LocalisationService";
+import { MailSendService } from "../services/MailSendService";
 import { PlayerService } from "../services/PlayerService";
 import { SeasonalEventService } from "../services/SeasonalEventService";
 import { HttpResponseUtil } from "../utils/HttpResponseUtil";
@@ -44,7 +46,9 @@ export class QuestController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("QuestConditionHelper") protected questConditionHelper: QuestConditionHelper,
         @inject("PlayerService") protected playerService: PlayerService,
@@ -427,9 +431,14 @@ export class QuestController
     protected sendSuccessDialogMessageOnQuestComplete(sessionID: string, pmcData: IPmcData, completedQuestId: string, questRewards: Reward[]): void
     {
         const quest = this.questHelper.getQuestFromDb(completedQuestId, pmcData);
-        const messageContent = this.dialogueHelper.createMessageContext(quest.successMessageText, MessageType.QUEST_SUCCESS, this.questConfig.redeemTime);
 
-        this.dialogueHelper.addDialogueMessage(quest.traderId, messageContent, sessionID, questRewards);
+        this.mailSendService.sendLocalisedNpcMessageToPlayer(
+            sessionID,
+            this.traderHelper.getTraderById(quest.traderId),
+            MessageType.QUEST_SUCCESS,
+            quest.successMessageText,
+            questRewards,
+            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime));
     }
 
     /**
