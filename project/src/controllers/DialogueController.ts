@@ -14,6 +14,7 @@ import { MemberCategory } from "../models/enums/MemberCategory";
 import { MessageType } from "../models/enums/MessageType";
 import { SaveServer } from "../servers/SaveServer";
 import { GiftService } from "../services/GiftService";
+import { MailSendService } from "../services/MailSendService";
 import { HashUtil } from "../utils/HashUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 
@@ -24,8 +25,9 @@ export class DialogueController
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
-        @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("GiftService") protected giftService: GiftService
+        @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("GiftService") protected giftService: GiftService,
+        @inject("HashUtil") protected hashUtil: HashUtil
     )
     {}
 
@@ -49,7 +51,7 @@ export class DialogueController
         return {
             "Friends": [
                 {
-                    _id: "sptfriend",
+                    _id: "sptFriend",
                     Info: {
                         Level: 1,
                         MemberCategory: MemberCategory.DEVELOPER,
@@ -92,13 +94,13 @@ export class DialogueController
         const dialogue = this.saveServer.getProfile(sessionID).dialogues[dialogueID];
 
         const result: DialogueInfo = {
-            "_id": dialogueID,
-            "type": dialogue.type ? dialogue.type : MessageType.NPC_TRADER,
-            "message": this.dialogueHelper.getMessagePreview(dialogue),
-            "new": dialogue.new,
-            "attachmentsNew": dialogue.attachmentsNew,
-            "pinned": dialogue.pinned,
-            Users: this.getDialogueUsers(dialogue.Users, dialogue.type, sessionID)
+            _id: dialogueID,
+            type: dialogue.type ? dialogue.type : MessageType.NPC_TRADER,
+            message: this.dialogueHelper.getMessagePreview(dialogue),
+            new: dialogue.new,
+            attachmentsNew: dialogue.attachmentsNew,
+            pinned: dialogue.pinned,
+            Users: this.getDialogueUsers(dialogue, dialogue.type, sessionID)
         };
 
         return result;
@@ -110,13 +112,18 @@ export class DialogueController
      * @param sessionID 
      * @returns 
      */
-    public getDialogueUsers(users: IUserDialogInfo[], messageType: MessageType, sessionID: string): IUserDialogInfo[]
+    public getDialogueUsers(dialog: Dialogue, messageType: MessageType, sessionID: string): IUserDialogInfo[]
     {
         const profile = this.saveServer.getProfile(sessionID);
 
-        if (messageType === MessageType.USER_MESSAGE && !users?.find(x => x._id === profile.characters.pmc._id))
+        if (messageType === MessageType.USER_MESSAGE && !dialog.Users?.find(x => x._id === profile.characters.pmc._id))
         {
-            users.push({
+            if (!dialog.Users)
+            {
+                dialog.Users = [];
+            }
+
+            dialog.Users.push({
                 _id: profile.characters.pmc._id,
                 info: {
                     Level: profile.characters.pmc.Info.Level,
@@ -127,7 +134,7 @@ export class DialogueController
             });
         }
 
-        return users ? users : undefined;
+        return dialog.Users ? dialog.Users : undefined;
     }
 
     /**
@@ -313,7 +320,7 @@ export class DialogueController
         });
 
         // Handle when player types a keyword to sptfriend user
-        if (request.dialogId.includes("sptfriend"))
+        if (request.dialogId.includes("sptFriend"))
         {
             this.handleChatWithSPTFriend(sessionId, request);
         }
@@ -336,17 +343,22 @@ export class DialogueController
 
         if (giftSent === GiftSentResult.SUCCESS) 
         {
-            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "hey you got the right code!");
+            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, "hey! you got the right code!");
+        }
+
+        if (giftSent === GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED) 
+        {
+            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, "You already have that!!");
         }
 
         if (request.text.toLowerCase().includes("love you")) 
         {
-            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "I love you too buddy :3!");
+            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, "I love you too buddy :3!");
         }
 
         if (request.text.toLowerCase() === "spt") 
         {
-            this.dialogueHelper.sendUserMessageToPlayer(sessionId, sptFriendUser, "its me!!");
+            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, "its me!!");
         }
     }
 

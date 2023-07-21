@@ -201,6 +201,7 @@ import { ItemBaseClassService } from "../services/ItemBaseClassService";
 import { ItemFilterService } from "../services/ItemFilterService";
 import { LocaleService } from "../services/LocaleService";
 import { LocalisationService } from "../services/LocalisationService";
+import { MailSendService } from "../services/MailSendService";
 import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
 import { MatchLocationService } from "../services/MatchLocationService";
 import { ModCompilerService } from "../services/ModCompilerService";
@@ -610,6 +611,7 @@ export class Container
         depContainer.register<TraderPurchasePersisterService>("TraderPurchasePersisterService", TraderPurchasePersisterService);
         depContainer.register<PmcChatResponseService>("PmcChatResponseService", PmcChatResponseService);
         depContainer.register<GiftService>("GiftService", GiftService);
+        depContainer.register<MailSendService>("MailSendService", MailSendService);
     }
 
     private static registerServers(depContainer: DependencyContainer): void 

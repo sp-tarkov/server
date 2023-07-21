@@ -1,15 +1,16 @@
 import { inject, injectable } from "tsyringe";
-import { DialogueHelper, ISendMessageDetails } from "../helpers/DialogueHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { GiftSenderType } from "../models/enums/GiftSenderType";
 import { GiftSentResult } from "../models/enums/GiftSentResult";
 import { MessageType } from "../models/enums/MessageType";
 import { Gift, IGiftsConfig } from "../models/spt/config/IGiftsConfig";
+import { ISendMessageDetails } from "../models/spt/dialog/ISendMessageDetails";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 import { HashUtil } from "../utils/HashUtil";
 import { TimeUtil } from "../utils/TimeUtil";
+import { MailSendService } from "./MailSendService";
 
 @injectable()
 export class GiftService
@@ -18,7 +19,7 @@ export class GiftService
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -62,7 +63,7 @@ export class GiftService
         // Handle system messsages
         if (giftData.sender === GiftSenderType.SYSTEM)
         {
-            this.dialogueHelper.sendSystemMessageToPlayer(
+            this.mailSendService.sendSystemMessageToPlayer(
                 playerId,
                 giftData.messageText,
                 giftData.items,
@@ -71,9 +72,19 @@ export class GiftService
         // Handle user messages
         else if (giftData.sender === GiftSenderType.USER)
         {
-            this.dialogueHelper.sendUserMessageToPlayer(
+            this.mailSendService.sendUserMessageToPlayer(
                 playerId,
                 giftData.senderDetails,
+                giftData.messageText,
+                giftData.items,
+                this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+        }
+        else if (giftData.sender === GiftSenderType.TRADER)
+        {
+            this.mailSendService.sendDirectNpcMessageToPlayer(
+                playerId,
+                giftData.trader,
+                MessageType.MESSAGE_WITH_ITEMS,
                 giftData.messageText,
                 giftData.items,
                 this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
@@ -96,7 +107,7 @@ export class GiftService
                 details.trader = giftData.trader;
             }
 
-            this.dialogueHelper.sendMessageToPlayer(details);
+            this.mailSendService.sendMessageToPlayer(details);
         }        
 
         this.profileHelper.addGiftReceivedFlagToProfile(playerId, giftId);
