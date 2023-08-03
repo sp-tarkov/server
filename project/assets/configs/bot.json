@@ -597,8 +597,8 @@
             "lightIsActiveNightChancePercent": 75,
             "laserIsActiveChancePercent": 75,
             "weaponModLimits": {
-                "scopeLimit": 4,
-                "lightLaserLimit": 6
+                "scopeLimit": 1,
+                "lightLaserLimit": 1
             }
         },
         "assaultgroup": {},
