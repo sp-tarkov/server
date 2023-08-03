@@ -1655,7 +1655,7 @@
                 "max": 5
             }
         },
-        "enemyTypes": ["assault", "marksman", "pmcBot", "bossBully", "bossKilla", "bossKojaniy", "bossGluhar", "bossSanitar", "bossTagilla", "bossKnight", "bossZryachiy", "followerBully", "followerKojaniy", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe", "followerSanitar", "followerBirdEye", "followerBigPipe", "followerZryachiy", "sectantWarrior", "sectantPriest"],
+        "enemyTypes": ["assault", "marksman", "pmcBot", "bossBully", "bossKilla", "bossKojaniy", "bossGluhar", "bossSanitar", "bossTagilla", "bossKnight", "bossZryachiy", "followerBully", "followerKojaniy", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe", "followerSanitar", "followerBirdEye", "followerBigPipe", "followerZryachiy", "arenafighter", "arenafighterevent", "crazyassaultevent", "sectantWarrior", "sectantPriest"],
         "forceHealingItemsIntoSecure": true,
 		"addPrefixToSameNamePMCAsPlayerChance": 40,
 		"allPMCsHavePlayerNameWithRandomPrefixChance": 1
