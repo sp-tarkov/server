@@ -180,6 +180,20 @@
                 "minLimitPercent": 15
             }
         },
+        "crazyassaultevent": {
+            "armor": {
+                "maxDelta": 50,
+                "minDelta": 0,
+                "minLimitPercent": 15
+            },
+            "weapon": {
+                "lowestMax": 35,
+                "highestMax": 65,
+                "maxDelta": 45,
+                "minDelta": 30,
+                "minLimitPercent": 15
+            }
+        },
         "exusec": {
             "armor": {
                 "maxDelta": 10,
@@ -230,6 +244,7 @@
         "marksman": 4,
         "arenafighterevent": 4,
         "arenafighter": 4,
+        "crazyassaultevent": 4,
         "bossbully": 4,
         "sptbear": 3,
         "sptusec": 3,
@@ -259,7 +274,6 @@
         "pmcbot": 4,
         "sectantpriest": 4,
         "sectantwarrior": 4,
-		"crazyassaultevent": 4
         "test": 4
     },
     "chanceAssaultScavHasPlayerScavName": 10,
@@ -304,6 +318,7 @@
         "pmcbot": {},
         "arenafighterevent": {},
         "arenafighter": {},
+        "crazyassaultevent": {},
         "assaultgroup": {},
         "gifter": {},
         "pmc": {
@@ -572,6 +587,18 @@
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
+            }
+        },
+        "crazyassaultevent": {
+            "nvgIsActiveChanceDayPercent": 20,
+            "nvgIsActiveChanceNightPercent": 85,
+            "faceShieldIsActiveChancePercent": 80,
+            "lightIsActiveDayChancePercent": 25,
+            "lightIsActiveNightChancePercent": 75,
+            "laserIsActiveChancePercent": 75,
+            "weaponModLimits": {
+                "scopeLimit": 4,
+                "lightLaserLimit": 6
             }
         },
         "assaultgroup": {},
@@ -1234,6 +1261,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "factory4_night": {
@@ -1250,6 +1280,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "bigmap": {
@@ -1265,6 +1298,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "laboratory": {
@@ -1280,6 +1316,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "woods": {
@@ -1296,6 +1335,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "interchange": {
@@ -1311,6 +1353,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "lighthouse": {
@@ -1326,6 +1371,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "rezervbase": {
@@ -1341,6 +1389,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "shoreline": {
@@ -1356,6 +1407,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "tarkovstreets": {
@@ -1371,6 +1425,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 }
             },
@@ -1388,6 +1445,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "factory4_night": {
@@ -1403,6 +1463,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "bigmap": {
@@ -1418,6 +1481,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "laboratory": {
@@ -1433,6 +1499,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "woods": {
@@ -1449,6 +1518,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "interchange": {
@@ -1464,6 +1536,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "lighthouse": {
@@ -1479,6 +1554,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "rezervbase": {
@@ -1494,6 +1572,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "shoreline": {
@@ -1509,6 +1590,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 },
                 "tarkovstreets": {
@@ -1524,6 +1608,9 @@
                     "assault": 5,
                     "cursedAssault": 1,
                     "exUsec": 5,
+                    "arenafighter": 0,
+                    "arenafighterevent": 0,
+                    "crazyassaultevent": 0,
                     "pmcBot": 5
                 }
             }
@@ -1554,10 +1641,22 @@
             "exusec": {
                 "min": 5,
                 "max": 5
+            },
+            "arenafighter": {
+                "min": 0,
+                "max": 0
+            },
+            "arenafighterevent": {
+                "min": 0,
+                "max": 0
+            },
+            "crazyassaultevent": {
+                "min": 5,
+                "max": 10
             }
         },
         "enemyTypes": ["assault", "marksman", "pmcBot", "bossBully", "bossKilla", "bossKojaniy", "bossGluhar", "bossSanitar", "bossTagilla", "bossKnight", "bossZryachiy", "followerBully", "followerKojaniy", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe", "followerSanitar", "followerBirdEye", "followerBigPipe", "followerZryachiy", "sectantWarrior", "sectantPriest"],
-    	"forceHealingItemsIntoSecure": true,
+        "forceHealingItemsIntoSecure": true,
 		"addPrefixToSameNamePMCAsPlayerChance": 40,
 		"allPMCsHavePlayerNameWithRandomPrefixChance": 1
 	},
