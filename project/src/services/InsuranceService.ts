@@ -10,6 +10,7 @@ import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { InsuredItem } from "../models/eft/common/tables/IBotBase";
 import { Item } from "../models/eft/common/tables/IItem";
+import { IInsuredItemsData } from "../models/eft/inRaid/IInsuredItemsData";
 import { ISaveProgressRequestData } from "../models/eft/inRaid/ISaveProgressRequestData";
 import { IUserDialogInfo } from "../models/eft/profile/IAkiProfile";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
@@ -229,7 +230,8 @@ export class InsuranceService
                         "pmcData": pmcData,
                         "insuredItem": insuredItem,
                         "item": preRaidGearHash[insuredItem.itemId],
-                        "sessionID": sessionID
+                        "sessionID": sessionID,
+                        "itemDetails": offraidData.insurance.find(x => x.id === insuredItem.itemId)
                     });
                 }
             }
@@ -238,7 +240,7 @@ export class InsuranceService
         // Process all insured items lost in-raid
         for (const gear of equipmentToSendToPlayer)
         {
-            this.addGearToSend(gear.pmcData, gear.insuredItem, gear.item, gear.sessionID);
+            this.addGearToSend(gear.pmcData, gear.insuredItem, gear.item, gear.sessionID, gear.itemDetails);
         }
     }
 
@@ -265,7 +267,7 @@ export class InsuranceService
      * @param actualItem item to store
      * @param sessionID Session id
      */
-    protected addGearToSend(pmcData: IPmcData, insuredItem: InsuredItem, actualItem: Item, sessionID: string): void
+    protected addGearToSend(pmcData: IPmcData, insuredItem: InsuredItem, actualItem: Item, sessionID: string, inRaidDetails: IInsuredItemsData): void
     {
         // Skip items defined in config
         if (this.insuranceConfig.blacklistedEquipment.includes(actualItem.slotId))
@@ -302,6 +304,21 @@ export class InsuranceService
         if ("upd" in actualItem && "SpawnedInSession" in actualItem.upd)
         {
             actualItem.upd.SpawnedInSession = false;
+        }
+
+        if (inRaidDetails?.durability)
+        {
+            actualItem.upd["Repairable"] = {
+                Durability: inRaidDetails.durability,
+                MaxDurability: inRaidDetails.maxDurability
+            };
+        }
+
+        if (inRaidDetails?.hits)
+        {
+            actualItem.upd["FaceShield"] = {
+                Hits: inRaidDetails.hits
+            };
         }
 
         // Mark to add to insurance
@@ -353,6 +370,7 @@ export class InsuranceService
      */
     public addInsuranceItemToArray(sessionId: string, traderId: string, itemToAdd: Item): void
     {
+		
         this.insured[sessionId][traderId].push(itemToAdd);
     }
 
