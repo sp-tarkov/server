@@ -8,7 +8,6 @@ import { NotificationSendHelper } from "../helpers/NotificationSendHelper";
 import { SecureContainerHelper } from "../helpers/SecureContainerHelper";
 import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
-import { InsuredItem } from "../models/eft/common/tables/IBotBase";
 import { Item } from "../models/eft/common/tables/IItem";
 import { IInsuredItemsData } from "../models/eft/inRaid/IInsuredItemsData";
 import { ISaveProgressRequestData } from "../models/eft/inRaid/ISaveProgressRequestData";
@@ -226,27 +225,29 @@ export class InsuranceService
         const equipmentToSendToPlayer = [];
         for (const insuredItem of pmcData.InsuredItems)
         {
-            // Check insured item was on player during raid
+            // Skip insured items not on player when they started raid
             const preRaidItem = preRaidGearHash[insuredItem.itemId];
-            if (preRaidItem)
+            if (!preRaidItem)
             {
-                // Skip items we should never return
-                if (this.insuranceConfig.blacklistedEquipment.includes(preRaidItem.slotId))
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                // Check if item missing in post-raid gear OR player died
-                // Catches both events: player died with item on + player survied but dropped item in raid
-                if (!offRaidGearHash[insuredItem.itemId] || playerDied)
-                {
-                    equipmentToSendToPlayer.push({
-                        pmcData: pmcData,
-                        insuredItem: this.getInsuredItemDetails(pmcData, preRaidItem, offraidData.insurance.find(x => x.id === insuredItem.itemId)),
-                        preRaidItem: preRaidItem,
-                        sessionID: sessionID
-                    });
-                }
+            // Skip items we should never return
+            if (this.insuranceConfig.blacklistedEquipment.includes(preRaidItem.slotId))
+            {
+                continue;
+            }
+
+            // Check if item missing in post-raid gear OR player died
+            // Catches both events: player died with item on + player survied but dropped item in raid
+            if (!offRaidGearHash[insuredItem.itemId] || playerDied)
+            {
+                equipmentToSendToPlayer.push({
+                    pmcData: pmcData,
+                    itemToReturnToPlayer: this.getInsuredItemDetails(pmcData, preRaidItem, offraidData.insurance.find(x => x.id === insuredItem.itemId)),
+                    traderId: insuredItem.tid,
+                    sessionID: sessionID
+                });
             }
         }
 
@@ -375,17 +376,17 @@ export class InsuranceService
 
     /**
      * Add gear item to InsuredItems array in player profile
-     * @param pmcData profile to store item in
-     * @param insuredItem Item to store in profile
-     * @param actualItem item to store
      * @param sessionID Session id
+     * @param pmcData Player profile
+     * @param itemToReturnToPlayer item to store
+     * @param traderId Id of trader item was insured with
      */
-    protected addGearToSend(gear: { sessionID: string; pmcData: IPmcData; insuredItem: InsuredItem; preRaidItem: Item; }): void
+    protected addGearToSend(gear: { sessionID: string; pmcData: IPmcData; itemToReturnToPlayer: Item; traderId: string}): void
     {
         const sessionId = gear.sessionID;
         const pmcData = gear.pmcData;
-        const insuredItem = gear.insuredItem;
-        const preRaidItem = gear.preRaidItem;
+        const itemToReturnToPlayer = gear.itemToReturnToPlayer;
+        const traderId = gear.traderId;
 
         // Ensure insurance array is init
         if (!this.insuranceExists(sessionId))
@@ -394,17 +395,17 @@ export class InsuranceService
         }
 
         // init trader insurance array
-        if (!this.insuranceTraderArrayExists(sessionId, insuredItem.tid))
+        if (!this.insuranceTraderArrayExists(sessionId, traderId))
         {
-            this.resetInsuranceTraderArray(sessionId, insuredItem.tid);
+            this.resetInsuranceTraderArray(sessionId, traderId);
         }
 
-        this.addInsuranceItemToArray(sessionId, insuredItem.tid, preRaidItem);
+        this.addInsuranceItemToArray(sessionId, traderId, itemToReturnToPlayer);
 
         // Remove item from insured items array as its been processed
         pmcData.InsuredItems = pmcData.InsuredItems.filter((item) =>
         {
-            return item.itemId !== insuredItem.itemId;
+            return item.itemId !== itemToReturnToPlayer._id;
         });
     }
 

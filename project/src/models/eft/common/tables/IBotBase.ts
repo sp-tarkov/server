@@ -341,6 +341,7 @@ export interface BackendCounter
 
 export interface InsuredItem 
 {
+    /** Trader Id item was insured by */
     tid: string
     itemId: string
 }
