@@ -3917,7 +3917,7 @@
     "count": 1,
     "endProduct": "62e910aaf957f2915e0a5e36",
     "isEncoded": true,
-    "locked": true,
+      "locked": false,
     "needFuelForAllProductionTime": true,
     "productionLimitCount": 0,
     "productionTime": 43200,
@@ -3937,10 +3937,6 @@
         "areaType": 11,
         "requiredLevel": 2,
         "type": "Area"
-      },
-      {
-        "questId": "625d700cc48e6c62a440fab5",
-        "type": "QuestComplete"
       },
       {
         "templateId": "590c2d8786f774245b1f03f3",
