@@ -141,7 +141,8 @@
             "5448e53e4bdc2d60728b4567",
             "5448bf274bdc2dfc2f8b456a",
             "543be5e94bdc2df1348b4568",
-            "5448f39d4bdc2d0a728b4568"
+            "5448f39d4bdc2d0a728b4568",
+			"62e910aaf957f2915e0a5e36"
         ],
         "removeSeasonalItemsWhenNotInEvent": true,
         "blacklist": {
@@ -156,6 +157,11 @@
                 "enabled": true,
                 "handbookPriceOverMultiplier": 9,
                 "newPriceHandbookMultiplier": 9
+            },
+			"57864a66245977548f04a81f": {
+                "enabled": true,
+                "handbookPriceOverMultiplier": 11,
+                "newPriceHandbookMultiplier": 11
             }
         }
     }
