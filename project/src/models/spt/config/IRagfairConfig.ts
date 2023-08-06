@@ -85,15 +85,8 @@ export interface Dynamic
     removeSeasonalItemsWhenNotInEvent: boolean
     /** Flea blacklist settings */
     blacklist: Blacklist
-    /** Should prices over the multiplier be adjusted */
-    unreasonableModPrices: IUnreasonableModPrices
-}
-
-export interface IUnreasonableModPrices
-{
-    enabled: boolean
-    handbookPriceOverMultiplier: number
-    newPriceHandbookMultiplier: number
+    /** Dict of price limits keyed by item type */
+    unreasonableModPrices: Record<string, IUnreasonableModPrices>
 }
 
 export interface Barter
@@ -144,5 +137,12 @@ export interface Blacklist
     enableQuestList: boolean
     /** Should trader items that are blacklisted by bsg */
     traderItems: boolean
+}
+
+export interface IUnreasonableModPrices
+{
+    enabled: boolean
+    handbookPriceOverMultiplier: number
+    newPriceHandbookMultiplier: number
 }
   

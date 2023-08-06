@@ -11,7 +11,6 @@ import {
 } from "../models/eft/common/tables/IRepeatableQuests";
 import { StageBonus } from "../models/eft/hideout/IHideoutArea";
 import { IAkiProfile } from "../models/eft/profile/IAkiProfile";
-import { BaseClasses } from "../models/enums/BaseClasses";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { HideoutAreas } from "../models/enums/HideoutAreas";
 import { QuestStatus } from "../models/enums/QuestStatus";
@@ -102,7 +101,7 @@ export class ProfileFixerService
         this.updateProfilePocketsToNewId(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
 
-        if (this.ragfairConfig.dynamic.unreasonableModPrices.enabled)
+        if (Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices).length > 0)
         {
             this.adjustUnreasonableModFleaPrices();
         }
@@ -113,17 +112,29 @@ export class ProfileFixerService
         const db = this.databaseServer.getTables();
         const fleaPrices = db.templates.prices;
         const handbookPrices = db.templates.handbook.Items;
-        for (const itemTpl in fleaPrices)
+
+        for (const itemTypeKey in this.ragfairConfig.dynamic.unreasonableModPrices)
         {
-            if (this.itemHelper.isOfBaseclass(itemTpl, BaseClasses.MOD))
+            const details = this.ragfairConfig.dynamic.unreasonableModPrices[itemTypeKey];
+            if (!details?.enabled)
             {
+                continue;
+            }
+
+            for (const itemTpl in fleaPrices)
+            {
+                if (!this.itemHelper.isOfBaseclass(itemTpl, itemTypeKey))
+                {
+                    continue;
+                }
+
                 const itemHandbookPrice = handbookPrices.find(x => x.Id === itemTpl);
                 if (!itemHandbookPrice)
                 {
                     continue;
                 }
 
-                if (fleaPrices[itemTpl] > (itemHandbookPrice.Price * this.ragfairConfig.dynamic.unreasonableModPrices.handbookPriceOverMultiplier))
+                if (fleaPrices[itemTpl] > (itemHandbookPrice.Price * details.handbookPriceOverMultiplier))
                 {
                     if (fleaPrices[itemTpl] <= 1)
                     {
@@ -131,7 +142,7 @@ export class ProfileFixerService
                     }
 
                     // Price is over limit, adjust
-                    fleaPrices[itemTpl] = itemHandbookPrice.Price * this.ragfairConfig.dynamic.unreasonableModPrices.newPriceHandbookMultiplier;
+                    fleaPrices[itemTpl] = itemHandbookPrice.Price * details.newPriceHandbookMultiplier;
                 }
             }
         }

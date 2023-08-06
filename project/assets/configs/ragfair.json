@@ -1,7 +1,7 @@
 {
     "runIntervalSeconds": 45,
     "sell": {
-		"simulatedSellHours": 12,
+        "simulatedSellHours": 12,
         "fees": true,
         "chance": {
             "base": 50,
@@ -31,29 +31,29 @@
         "ragfair": false
     },
     "dynamic": {
-		"purchasesAreFoundInRaid": false,
-		"useTraderPriceForOffersIfHigher": true,
-		"barter": {
-			"enable": true,
-			"chancePercent": 20,
-			"itemCountMin": 1,
-			"itemCountMax": 3,
-			"priceRangeVariancePercent": 15,
-			"minRoubleCostToBecomeBarter": 20000,
-			"itemTypeBlacklist": [
-				"55802f4a4bdc2ddb688b4569",
-				"55802f3e4bdc2de7118b4584",
-				"543be5cb4bdc2deb348b4568",
-				"55818ac54bdc2d5b648b456e",
-				"5a74651486f7744e73386dd1"
-			]
-		},
-		"offerAdjustment":{
-			"adjustPriceWhenBelowHandbookPrice": false,
-			"maxPriceDifferenceBelowHandbookPercent": 64,
-			"handbookPriceMultipier": 1.1,
-			"priceThreshholdRub": 20000
-		},
+        "purchasesAreFoundInRaid": false,
+        "useTraderPriceForOffersIfHigher": true,
+        "barter": {
+            "enable": true,
+            "chancePercent": 20,
+            "itemCountMin": 1,
+            "itemCountMax": 3,
+            "priceRangeVariancePercent": 15,
+            "minRoubleCostToBecomeBarter": 20000,
+            "itemTypeBlacklist": [
+                "55802f4a4bdc2ddb688b4569",
+                "55802f3e4bdc2de7118b4584",
+                "543be5cb4bdc2deb348b4568",
+                "55818ac54bdc2d5b648b456e",
+                "5a74651486f7744e73386dd1"
+            ]
+        },
+        "offerAdjustment": {
+            "adjustPriceWhenBelowHandbookPrice": false,
+            "maxPriceDifferenceBelowHandbookPercent": 64,
+            "handbookPriceMultipier": 1.1,
+            "priceThreshholdRub": 20000
+        },
         "expiredOfferThreshold": 1500,
         "offerItemCount": {
             "min": 7,
@@ -67,7 +67,7 @@
             "min": 0.95,
             "max": 1.05
         },
-		"showDefaultPresetsOnly": true,
+        "showDefaultPresetsOnly": true,
         "endTimeSeconds": {
             "min": 360,
             "max": 3600
@@ -128,7 +128,7 @@
             "min": 0.1,
             "max": 0.95
         },
-		"_currencies": "what percentage of the offers are in each currency",
+        "_currencies": "what percentage of the offers are in each currency",
         "currencies": {
             "5449016a4bdc2d6f028b456f": 78,
             "5696686a4bdc2da3298b456a": 14,
@@ -143,18 +143,20 @@
             "543be5e94bdc2df1348b4568",
             "5448f39d4bdc2d0a728b4568"
         ],
-		"removeSeasonalItemsWhenNotInEvent": true,
+        "removeSeasonalItemsWhenNotInEvent": true,
         "blacklist": {
-			"damagedAmmoPacks": true,
+            "damagedAmmoPacks": true,
             "custom": [],
             "enableBsgList": true,
             "enableQuestList": true,
             "traderItems": false
         },
-		"unreasonableModPrices": {
-			"enabled": true,
-			"handbookPriceOverMultiplier": 9,
-			"newPriceHandbookMultiplier": 9
-		}
+        "unreasonableModPrices": {
+			"5448fe124bdc2da5018b4567": {
+                "enabled": true,
+                "handbookPriceOverMultiplier": 9,
+                "newPriceHandbookMultiplier": 9
+            }
+        }
     }
 }
