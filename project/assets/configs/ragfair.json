@@ -142,23 +142,23 @@
             "5448bf274bdc2dfc2f8b456a",
             "543be5e94bdc2df1348b4568",
             "5448f39d4bdc2d0a728b4568",
-			"62e910aaf957f2915e0a5e36"
+            "62e910aaf957f2915e0a5e36"
         ],
         "removeSeasonalItemsWhenNotInEvent": true,
         "blacklist": {
             "damagedAmmoPacks": true,
             "custom": [],
-            "enableBsgList": true,
+            "enableBsgList": false,
             "enableQuestList": true,
             "traderItems": false
         },
         "unreasonableModPrices": {
-			"5448fe124bdc2da5018b4567": {
+            "5448fe124bdc2da5018b4567": {
                 "enabled": true,
                 "handbookPriceOverMultiplier": 9,
                 "newPriceHandbookMultiplier": 9
             },
-			"57864a66245977548f04a81f": {
+            "57864a66245977548f04a81f": {
                 "enabled": true,
                 "handbookPriceOverMultiplier": 11,
                 "newPriceHandbookMultiplier": 11
