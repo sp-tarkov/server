@@ -8,6 +8,7 @@ import { INotifierChannel } from "../models/eft/notifier/INotifier";
 import { ISelectProfileRequestData } from "../models/eft/notifier/ISelectProfileRequestData";
 import { ISelectProfileResponse } from "../models/eft/notifier/ISelectProfileResponse";
 import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { JsonUtil } from "../utils/JsonUtil";
 
 @injectable()
 export class NotifierCallbacks
@@ -15,6 +16,7 @@ export class NotifierCallbacks
     constructor(
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("NotifierController") protected notifierController: NotifierController)
     { }
 
@@ -35,7 +37,7 @@ export class NotifierCallbacks
          *  be sent to client as NEWLINE separated strings... yup.
          */
         this.notifierController.notifyAsync(tmpSessionID)
-            .then((messages: any) => messages.map((message: any) => JSON.stringify(message)).join("\n"))
+            .then((messages: any) => messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n"))
             .then((text) => this.httpServerHelper.sendTextJson(resp, text));
     }
 

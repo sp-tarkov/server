@@ -167,7 +167,7 @@ export class LocationGenerator
     protected getWeightedCountOfContainerItems(containerTypeId: string, staticLootDist: Record<string, IStaticLootDetails>, locationName: string): number
     {
         // Create probability array to calcualte the total count of lootable items inside container
-        const itemCountArray = new ProbabilityObjectArray<number>(this.mathUtil);
+        const itemCountArray = new ProbabilityObjectArray<number>(this.mathUtil, this.jsonUtil);
         for (const itemCountDistribution of staticLootDist[containerTypeId].itemcountDistribution)
         {
             // Add each count of items into array
@@ -191,7 +191,7 @@ export class LocationGenerator
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getSeasonalEventItemsToBlock();
 
-        const itemDistribution = new ProbabilityObjectArray<string>(this.mathUtil);
+        const itemDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
         for (const icd of staticLootDist[containerTypeId].itemDistribution)
         {
             if (!seasonalEventActive && seasonalItemTplBlacklist.includes(icd.tpl))
@@ -241,7 +241,7 @@ export class LocationGenerator
             )
         );
 
-        const spawnpointArray = new ProbabilityObjectArray<string, Spawnpoint>(this.mathUtil);
+        const spawnpointArray = new ProbabilityObjectArray<string, Spawnpoint>(this.mathUtil, this.jsonUtil);
         for (const si of dynamicSpawnPoints)
         {
             spawnpointArray.push(
@@ -269,7 +269,7 @@ export class LocationGenerator
         const seasonalItemTplBlacklist = this.seasonalEventService.getSeasonalEventItemsToBlock();
         for (const spawnPoint of spawnPoints)
         {
-            const itemArray = new ProbabilityObjectArray<string>(this.mathUtil);
+            const itemArray = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
             for (const itemDist of spawnPoint.itemDistribution)
             {
                 if (!seasonalEventActive && seasonalItemTplBlacklist.includes(spawnPoint.template.Items.find(x => x._id === itemDist.composedKey.key)._tpl))
@@ -320,7 +320,7 @@ export class LocationGenerator
                 }
 
                 // Create probability array of all spawn positions for this spawn id
-                const spawnpointArray = new ProbabilityObjectArray<string, SpawnpointsForced>(this.mathUtil);
+                const spawnpointArray = new ProbabilityObjectArray<string, SpawnpointsForced>(this.mathUtil, this.jsonUtil);
                 for (const si of items)
                 {
                     // use locationId as template.Id is the same across all items

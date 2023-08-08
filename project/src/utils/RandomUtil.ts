@@ -23,6 +23,7 @@ export class ProbabilityObjectArray<K, V=undefined> extends Array<ProbabilityObj
 {
     constructor(
         private mathUtil: MathUtil,
+        private jsonUtil: JsonUtil,
         ...items: ProbabilityObject<K, V>[]) 
     {
         super();
@@ -31,7 +32,7 @@ export class ProbabilityObjectArray<K, V=undefined> extends Array<ProbabilityObj
 
     filter(callbackfn: (value: ProbabilityObject<K, V>, index: number, array: ProbabilityObject<K, V>[]) => any): ProbabilityObjectArray<K, V>
     {
-        return new ProbabilityObjectArray(this.mathUtil, ...super.filter(callbackfn));
+        return new ProbabilityObjectArray(this.mathUtil, this.jsonUtil, ...super.filter(callbackfn));
     }
 
     /**
@@ -53,8 +54,8 @@ export class ProbabilityObjectArray<K, V=undefined> extends Array<ProbabilityObj
      */
     clone(): ProbabilityObjectArray<K, V>
     {
-        const clone = JSON.parse(JSON.stringify(this));
-        const probabliltyObjects = new ProbabilityObjectArray<K, V>(this.mathUtil);
+        const clone = this.jsonUtil.clone(this);
+        const probabliltyObjects = new ProbabilityObjectArray<K, V>(this.mathUtil, this.jsonUtil);
         for (const ci of clone) 
         {
             probabliltyObjects.push(new ProbabilityObject(ci.key, ci.relativeProbability, ci.data));

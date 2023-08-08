@@ -954,7 +954,7 @@ class ItemHelper
 
     protected drawAmmoTpl(caliber: string, staticAmmoDist: Record<string, IStaticAmmoDetails[]>): string
     {
-        const ammoArray = new ProbabilityObjectArray<string>(this.mathUtil);
+        const ammoArray = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
         for (const icd of staticAmmoDist[caliber])
         {
             ammoArray.push(

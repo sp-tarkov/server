@@ -4,6 +4,7 @@ import { inject, injectable } from "tsyringe";
 import { NotifierController } from "../../controllers/NotifierController";
 import { Serializer } from "../../di/Serializer";
 import { HttpServerHelper } from "../../helpers/HttpServerHelper";
+import { JsonUtil } from "../../utils/JsonUtil";
 
 @injectable()
 export class NotifySerializer extends Serializer
@@ -11,6 +12,7 @@ export class NotifySerializer extends Serializer
 
     constructor(
         @inject("NotifierController") protected notifierController: NotifierController,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper
     )
     {
@@ -28,7 +30,7 @@ export class NotifySerializer extends Serializer
          *  be sent to client as NEWLINE separated strings... yup.
          */
         this.notifierController.notifyAsync(tmpSessionID)
-            .then((messages: any) => messages.map((message: any) => JSON.stringify(message)).join("\n"))
+            .then((messages: any) => messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n"))
             .then((text) => this.httpServerHelper.sendTextJson(resp, text));
     }
 

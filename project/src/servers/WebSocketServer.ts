@@ -8,6 +8,7 @@ import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { IHttpConfig } from "../models/spt/config/IHttpConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { LocalisationService } from "../services/LocalisationService";
+import { JsonUtil } from "../utils/JsonUtil";
 import { RandomUtil } from "../utils/RandomUtil";
 import { ConfigServer } from "./ConfigServer";
 
@@ -20,6 +21,7 @@ export class WebSocketServer
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper
     ) 
     {
@@ -56,7 +58,7 @@ export class WebSocketServer
         {
             if (this.isConnectionWebSocket(sessionID))
             {
-                this.webSockets[sessionID].send(JSON.stringify(output));
+                this.webSockets[sessionID].send(this.jsonUtil.serialize(output));
                 this.logger.debug(this.localisationService.getText("websocket-message_sent"));
             }
             else
@@ -141,7 +143,7 @@ export class WebSocketServer
 
             if (ws.readyState === WebSocket.OPEN) 
             {
-                ws.send(JSON.stringify(this.defaultNotification));
+                ws.send(this.jsonUtil.serialize(this.defaultNotification));
             }
             else 
             {

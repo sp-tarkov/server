@@ -22,6 +22,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { RagfairServer } from "../servers/RagfairServer";
 import { LocalisationService } from "../services/LocalisationService";
 import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { JsonUtil } from "../utils/JsonUtil";
 
 @injectable()
 class TradeController
@@ -35,6 +36,7 @@ class TradeController
         @inject("TradeHelper") protected tradeHelper: TradeHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -70,7 +72,7 @@ class TradeController
                 return this.httpResponse.appendErrorToOutput(output, errorMessage);
             }
 
-            this.logger.debug(JSON.stringify(offer, null, 2));
+            this.logger.debug(this.jsonUtil.serializeAdvanced(offer, null, 2));
 
             const buyData: IProcessBuyTradeRequestData = {
                 Action: "TradingConfirm",

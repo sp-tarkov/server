@@ -24,7 +24,7 @@ export class JsonUtil
      * @param prettify Should output be prettified?
      * @returns string
      */
-    public serialize<T>(data: T, prettify = false): string
+    public serialize(data: any, prettify = false): string
     {
         if (prettify)
         {
@@ -34,6 +34,18 @@ export class JsonUtil
         {
             return JSON.stringify(data);
         }
+    }
+
+    /**
+     * From object to string
+     * @param data object to turn into JSON
+     * @param prettify Should output be prettified?
+     * @returns string
+     */
+    public serializeAdvanced(data: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string
+    {
+
+        return JSON.stringify(data, replacer, space);
     }
 
     /**

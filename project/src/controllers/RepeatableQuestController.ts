@@ -1183,7 +1183,7 @@ export class RepeatableQuestController
     protected probabilityObjectArray<K, V>(configArrayInput: ProbabilityObject<K, V>[]): ProbabilityObjectArray<K, V>
     {
         const configArray = this.jsonUtil.clone(configArrayInput);
-        const probabilityArray = new ProbabilityObjectArray<K, V>(this.mathUtil);
+        const probabilityArray = new ProbabilityObjectArray<K, V>(this.mathUtil, this.jsonUtil);
         for (const configObject of configArray)
         {
             probabilityArray.push(new ProbabilityObject(configObject.key, configObject.relativeProbability, configObject.data));
