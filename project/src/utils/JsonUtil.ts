@@ -23,7 +23,7 @@ export class JsonUtil
     /**
      * From object to string
      * @param data object to turn into JSON
-     * @param prettify Should output be prettified?
+     * @param prettify Should output be prettified
      * @returns string
      */
     public serialize(data: any, prettify = false): string
@@ -41,7 +41,8 @@ export class JsonUtil
     /**
      * From object to string
      * @param data object to turn into JSON
-     * @param prettify Should output be prettified?
+     * @param replacer An array of strings and numbers that acts as an approved list for selecting the object properties that will be stringified.
+     * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
      * @returns string
      */
     public serializeAdvanced(data: any, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string
@@ -136,10 +137,10 @@ export class JsonUtil
     }
 
     /**
-     * From json to object
-     * @param jsonString 
-     * @param filePath 
-     * @returns 
+     * From json string to object
+     * @param jsonString String to turn into object
+     * @param filePath Path to json file being processed
+     * @returns Object
      */
     public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T
     {
