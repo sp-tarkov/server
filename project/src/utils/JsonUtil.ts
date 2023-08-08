@@ -131,11 +131,11 @@ export class JsonUtil
         }
 
         // Match!
-        return JSON.parse(jsonString) as T;
+        return this.deserialize<T>(jsonString);
     }
 
     public clone<T>(data: T): T
     {
-        return JSON.parse(JSON.stringify(data));
+        return this.deserialize<T>(this.serialize(data));
     }
 }
