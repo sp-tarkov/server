@@ -63,7 +63,7 @@ export class DatabaseImporter implements OnLoad
                 const fileWithPath = `${this.filepath}${file}`;
                 if (this.vfs.exists(fileWithPath))
                 {
-                    this.hashedFile = this.jsonUtil.deserialize(this.encodingUtil.fromBase64(this.vfs.readFile(fileWithPath)));
+                    this.hashedFile = this.jsonUtil.deserialize(this.encodingUtil.fromBase64(this.vfs.readFile(fileWithPath)), file);
                 }
                 else
                 {

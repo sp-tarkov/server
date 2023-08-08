@@ -96,13 +96,14 @@ export class JsonUtil
      */
     public deserialize<T>(jsonString: string, filename = ""): T
     {
-        const { data, changed } = fixJson(`${jsonString}`);
-        if (changed)
+        try
         {
-            this.logger.error(`Invalid JSON ${filename} was detected and automatically fixed, please ensure any edits performed recently are valid, always run your JSON through an online JSON validator prior to starting the server`);
+            return JSON.parse(jsonString);
         }
-
-        return data;
+        catch (error)
+        {
+            this.logger.error(`unable to parse json file: ${filename} message: ${error.message}, stack: ${error.stack}`);
+        }
     }
 
     /**
@@ -134,6 +135,12 @@ export class JsonUtil
         });
     }
 
+    /**
+     * From json to object
+     * @param jsonString 
+     * @param filePath 
+     * @returns 
+     */
     public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T
     {
         this.ensureJsonCacheExists(this.jsonCachePath);
