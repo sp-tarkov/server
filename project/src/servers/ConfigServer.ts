@@ -2,14 +2,15 @@ import { JsonUtil } from "../utils/JsonUtil";
 import { VFS } from "../utils/VFS";
 
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { ICoreConfig } from "../models/spt/config/ICoreConfig";
+import { ILogger } from "../models/spt/utils/ILogger";
 
 @injectable()
 export class ConfigServer 
 {
     protected configs: Record<string, any> = {};
+    protected readonly acceptableFileExtensions: string[] = ["json", "json5"];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -34,18 +35,20 @@ export class ConfigServer
     {
         this.logger.debug("Importing configs...");
 
-        // get all filepaths
-        const filepath = (globalThis.G_RELEASE_CONFIGURATION) ? "Aki_Data/Server/configs/" : "./assets/configs/";
+        // Get all filepaths
+        const filepath = (globalThis.G_RELEASE_CONFIGURATION) 
+            ? "Aki_Data/Server/configs/"
+            : "./assets/configs/";
         const files = this.vfs.getFiles(filepath);
 
-        // add file content to result
+        // Add file content to result
         for (const file of files)
         {
-            if (this.vfs.getFileExtension(file) === "json")
+            if (this.acceptableFileExtensions.includes(this.vfs.getFileExtension(file)))
             {
-                const filename = this.vfs.stripExtension(file);
+                const fileName = this.vfs.stripExtension(file);
                 const filePathAndName = `${filepath}${file}`;
-                this.configs[`aki-${filename}`] = this.jsonUtil.deserializeWithCacheCheck(this.vfs.readFile(filePathAndName), filePathAndName);
+                this.configs[`aki-${fileName}`] = this.jsonUtil.deserializeJson5<any>(this.vfs.readFile(filePathAndName), filePathAndName);
             }
         }
         
