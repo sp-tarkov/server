@@ -1,7 +1,7 @@
 import fixJson from "json-fixer";
+import { jsonc } from "jsonc";
+import { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
 import { inject, injectable } from "tsyringe";
-
-import json5 from "json5";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { HashUtil } from "./HashUtil";
 import { VFS } from "./VFS";
@@ -54,37 +54,22 @@ export class JsonUtil
     /**
      * From object to string
      * @param data object to turn into JSON
-     * @param replacer An array of String and Number objects that serve as a
-    * allowlist for selecting/filtering the properties of the value object to be
-    * included in the JSON5 string. If this value is null or not provided, all
-    * properties of the object are included in the resulting JSON5 string.
-    * @param space A String or Number object that's used to insert white space into
-    * the output JSON5 string for readability purposes. If this is a Number, it
-    * indicates the number of space characters to use as white space; this number
-    * is capped at 10 (if it is greater, the value is just 10). Values less than 1
-    * indicate that no space should be used. If this is a String, the string (or
-    * the first 10 characters of the string, if it's longer than that) is used as
-    * white space. If this parameter is not provided (or is null), no white space
-    * is used. If white space is used, trailing commas will be used in objects and
-    * arrays.
-    * @param space A String representing the quote character to use when serializing
     * @param filename Name of file being serialized
-    * @returns The JSON5 string converted from the JavaScript value.
+    * @param options Stringify options or a replacer.
+    * @returns The string converted from the JavaScript value
      */
-    public serializeJson5(
+    public serializeJsonC(
         data: any,
-        replacer?: | ((this: any, key: string, value: any) => any) | (string | number)[] | null,
-        space?: string | number | null,
-        quote?: string | null,
-        filename?: string | null): string
+        filename?: string | null,
+        options?: IStringifyOptions | Reviver): string
     {
         try
         {
-            return json5.stringify(data, {replacer, space, quote});
+            return jsonc.stringify(data, options);
         }
         catch (error)
         {
-            this.logger.error(`unable to stringify json5 file: ${filename} message: ${error.message}, stack: ${error.stack}`);
+            this.logger.error(`unable to stringify jsonC file: ${filename} message: ${error.message}, stack: ${error.stack}`);
         }
         
     }
@@ -111,19 +96,18 @@ export class JsonUtil
      * From string to object
      * @param jsonString json string to turn into object
      * @param filename Name of file being deserialized
-     * @param reviver A function that prescribes how the value originally produced
-     * by parsing is transformed before being returned.
+     * @param options Parsing options
      * @returns object
      */
-    public deserializeJson5<T>(jsonString: string, filename = "", reviver?: ((this: any, key: string, value: any) => any) | null): T
+    public deserializeJsonC<T>(jsonString: string, filename = "", options?: IParseOptions): T
     {
         try
         {
-            return json5.parse(jsonString, reviver);
+            return jsonc.parse(jsonString, options);
         }
         catch (error)
         {
-            this.logger.error(`unable to parse json5 file: ${filename} message: ${error.message}, stack: ${error.stack}`);
+            this.logger.error(`unable to parse jsonC file: ${filename} message: ${error.message}, stack: ${error.stack}`);
         }
         
     }

@@ -10,7 +10,7 @@ import { ILogger } from "../models/spt/utils/ILogger";
 export class ConfigServer 
 {
     protected configs: Record<string, any> = {};
-    protected readonly acceptableFileExtensions: string[] = ["json", "json5"];
+    protected readonly acceptableFileExtensions: string[] = ["json", "jsonc"];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -44,11 +44,11 @@ export class ConfigServer
         // Add file content to result
         for (const file of files)
         {
-            if (this.acceptableFileExtensions.includes(this.vfs.getFileExtension(file)))
+            if (this.acceptableFileExtensions.includes(this.vfs.getFileExtension(file.toLowerCase())))
             {
                 const fileName = this.vfs.stripExtension(file);
                 const filePathAndName = `${filepath}${file}`;
-                this.configs[`aki-${fileName}`] = this.jsonUtil.deserializeJson5<any>(this.vfs.readFile(filePathAndName), filePathAndName);
+                this.configs[`aki-${fileName}`] = this.jsonUtil.deserializeJsonC<any>(this.vfs.readFile(filePathAndName), filePathAndName);
             }
         }
         
