@@ -26,7 +26,7 @@ export class PresetBuildController
     public getUserBuilds(sessionID: string): IUserBuildsResponse
     {
         // TODO, fully implement
-        return Object.values(this.saveServer.getProfile(sessionID).weaponbuilds);
+        return this.saveServer.getProfile(sessionID).userbuilds;
     }
 
     /** Handle SaveBuild event */
@@ -36,7 +36,7 @@ export class PresetBuildController
         body.id = this.hashUtil.generate();
 
         const output = this.eventOutputHolder.getOutput(sessionID);
-        const savedBuilds = this.saveServer.getProfile(sessionID).weaponbuilds;
+        const savedBuilds = this.saveServer.getProfile(sessionID).userbuilds.weaponBuilds;
 
         // replace duplicate ID's. The first item is the base item.
         // The root ID and the base item ID need to match.
@@ -44,7 +44,7 @@ export class PresetBuildController
         body.root = body.items[0]._id;
 
         savedBuilds[body.name] = body;
-        this.saveServer.getProfile(sessionID).weaponbuilds = savedBuilds;
+        this.saveServer.getProfile(sessionID).userbuilds.weaponBuilds = savedBuilds;
 
         output.profileChanges[sessionID].builds.push(body);
         return output;
@@ -53,14 +53,14 @@ export class PresetBuildController
     /** Handle RemoveBuild event*/
     public removeBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
     {
-        const savedBuilds = this.saveServer.getProfile(sessionID).weaponbuilds;
+        const savedBuilds = this.saveServer.getProfile(sessionID).userbuilds.weaponBuilds;
 
         for (const name in savedBuilds)
         {
             if (savedBuilds[name].id === body.id)
             {
                 delete savedBuilds[name];
-                this.saveServer.getProfile(sessionID).weaponbuilds = savedBuilds;
+                this.saveServer.getProfile(sessionID).userbuilds.weaponBuilds = savedBuilds;
                 break;
             }
         }

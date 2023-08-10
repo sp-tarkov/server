@@ -678,9 +678,9 @@ export class ProfileFixerService
         }
 
         // Iterate over player-made weapon builds, look for missing items and remove weapon preset if found
-        for (const buildId in fullProfile.weaponbuilds)
+        for (const buildId in fullProfile.userbuilds.weaponBuilds)
         {
-            for (const item of fullProfile.weaponbuilds[buildId].items)
+            for (const item of fullProfile.userbuilds.weaponBuilds[buildId].items)
             {
                 // Check item exists in itemsDb
                 if (!itemsDb[item._tpl])
@@ -689,7 +689,7 @@ export class ProfileFixerService
 
                     if (this.coreConfig.fixes.removeModItemsFromProfile)
                     {
-                        delete fullProfile.weaponbuilds[buildId];
+                        delete fullProfile.userbuilds.weaponBuilds[buildId];
                         this.logger.warning(`Item: ${item._tpl} has resulted in the deletion of weapon build: ${buildId}`);
                     }
 

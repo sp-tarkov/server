@@ -9,7 +9,7 @@ export interface IAkiProfile
     characters: Characters
     /** Clothing purchases */
     suits: string[]
-    weaponbuilds: Record<string, IWeaponBuild>
+    userbuilds: IUserBuilds
     dialogues: Record<string, Dialogue>
     aki: Aki
     vitality: Vitality
@@ -38,6 +38,12 @@ export interface Characters
 {
     pmc: IPmcData
     scav: IPmcData
+}
+
+export interface IUserBuilds
+{
+    weaponBuilds: IWeaponBuild[],
+    equipmentBuilds: IEquipmentBuild[]
 }
 
 export interface IWeaponBuild 

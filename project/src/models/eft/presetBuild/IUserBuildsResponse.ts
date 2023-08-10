@@ -1,7 +1,3 @@
-import { IEquipmentBuild, IWeaponBuild } from "../../../models/eft/profile/IAkiProfile";
+import { IEquipmentBuild, IUserBuilds, IWeaponBuild } from "../../../models/eft/profile/IAkiProfile";
 
-export interface IUserBuildsResponse
-{
-    weaponBuilds: IWeaponBuild[]
-    equipmentBuilds: IEquipmentBuild[]
-}
+export type IUserBuildsResponse = IUserBuilds

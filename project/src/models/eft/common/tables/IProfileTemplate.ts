@@ -1,4 +1,4 @@
-import { Dialogue, IWeaponBuild } from "../../profile/IAkiProfile";
+import { Dialogue, IUserBuilds, IWeaponBuild } from "../../profile/IAkiProfile";
 import { IPmcData } from "../IPmcData";
 
 export interface IProfileTemplates
@@ -23,7 +23,7 @@ export interface TemplateSide
     character: IPmcData
     suits: string[]
     dialogues: Record<string, Dialogue>
-    weaponbuilds: Record<string, IWeaponBuild>
+    userbuilds: IUserBuilds
     trader: ProfileTraderTemplate
 }
 

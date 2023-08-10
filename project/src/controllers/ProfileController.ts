@@ -158,7 +158,7 @@ export class ProfileController
                 scav: {} as IPmcData
             },
             suits: profile.suits,
-            weaponbuilds: profile.weaponbuilds,
+            userbuilds: profile.userbuilds,
             dialogues: profile.dialogues,
             aki: this.profileHelper.getDefaultAkiDataObject(),
             vitality: {} as Vitality,
