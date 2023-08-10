@@ -19,8 +19,8 @@ export class PresetBuildItemEventRouter extends ItemEventRouterDefinition
     public override getHandledRoutes(): HandledRoute[] 
     {
         return [
-            new HandledRoute(ItemEventActions.SAVE_BUILD, false),
-            new HandledRoute(ItemEventActions.REMOVE_BUILD, false),
+            new HandledRoute(ItemEventActions.SAVE_WEAPON_BUILD, false),
+            new HandledRoute(ItemEventActions.REMOVE_WEAPON_BUILD, false),
             new HandledRoute(ItemEventActions.SAVE_EQUIPMENT_BUILD, false),
             new HandledRoute(ItemEventActions.REMOVE_EQUIPMENT_BUILD, false)
         ];
@@ -30,9 +30,9 @@ export class PresetBuildItemEventRouter extends ItemEventRouterDefinition
     {
         switch (url)
         {
-            case ItemEventActions.SAVE_BUILD:
+            case ItemEventActions.SAVE_WEAPON_BUILD:
                 return this.presetBuildCallbacks.saveWeaponBuild(pmcData, body, sessionID);
-            case ItemEventActions.REMOVE_BUILD:
+            case ItemEventActions.REMOVE_WEAPON_BUILD:
                 return this.presetBuildCallbacks.removeWeaponBuild(pmcData, body, sessionID);
             case ItemEventActions.SAVE_EQUIPMENT_BUILD:
                 return this.presetBuildCallbacks.saveEquipmentBuild(pmcData, body, sessionID);

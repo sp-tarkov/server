@@ -18,8 +18,8 @@ export enum ItemEventActions
     EDIT_MAP_MARKER = "EditMapMarker",
     OPEN_RANDOM_LOOT_CONTAINER = "OpenRandomLootContainer",
     HIDEOUT_QTE_EVENT = "HideoutQuickTimeEvent",
-    SAVE_BUILD = "SaveBuild",
-    REMOVE_BUILD = "RemoveBuild",
+    SAVE_WEAPON_BUILD = "SaveWeaponBuild",
+    REMOVE_WEAPON_BUILD = "RemoveWeaponBuild",
     SAVE_EQUIPMENT_BUILD = "SaveEquipmentBuild",
     REMOVE_EQUIPMENT_BUILD = "RemoveEquipmentBuild"
 }

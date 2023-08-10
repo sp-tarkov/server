@@ -37,7 +37,7 @@ export class PresetBuildController
         return profile.userbuilds;
     }
 
-    /** Handle SaveBuild event */
+    /** Handle SaveWeaponBuild event */
     public saveWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
     {
         return this.saveBuild(pmcData, body, sessionID, "weaponBuilds");
@@ -69,7 +69,7 @@ export class PresetBuildController
         return output;
     }
 
-    /** Handle RemoveBuild event*/
+    /** Handle RemoveWeaponBuild event*/
     public removeWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
     {
         return this.removeBuild(pmcData, body, sessionID, "weaponBuilds");

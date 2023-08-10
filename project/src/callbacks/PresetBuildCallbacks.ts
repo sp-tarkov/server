@@ -25,13 +25,13 @@ export class PresetBuildCallbacks
         return this.httpResponse.getBody(this.presetBuildController.getUserBuilds(sessionID));
     }
 
-    /** Handle SaveBuild event */
+    /** Handle SaveWeaponBuild event */
     public saveWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
     {
         return this.presetBuildController.saveWeaponBuild(pmcData, body, sessionID);
     }
 
-    /** Handle RemoveBuild event*/
+    /** Handle RemoveWeaponBuild event*/
     public removeWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
     {
         return this.presetBuildController.removeWeaponBuild(pmcData, body, sessionID);
