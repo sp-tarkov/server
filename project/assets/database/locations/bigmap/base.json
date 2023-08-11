@@ -73,11 +73,18 @@
         "path": "CONTENT/banners/banner_scavraider.jpg",
         "rcid": ""
       }
+    },
+    {
+      "id": "64c0ad6af99768b777048f4e",
+      "pic": {
+        "path": "CONTENT/banners/banner_emissary.jpg",
+        "rcid": ""
+      }
     }
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 30,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -112,20 +119,20 @@
       "Time": -1
     },
     {
-      "BossChance": 35,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
       "BossEscortType": "followerBully",
       "BossName": "bossBully",
       "BossPlayer": false,
-      "BossZone": "ZoneDormitory,ZoneGasStation",
+      "BossZone": "ZoneDormitory",
       "RandomTimeSpawn": false,
       "Supports": null,
       "Time": -1
     },
     {
-      "BossChance": 15,
+      "BossChance": 5,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -172,11 +179,14 @@
   "BotMaxPlayer": 9,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
+  "BotSpawnCountStep": 4,
+  "BotSpawnPeriodCheck": 15,
   "BotSpawnTimeOffMax": 30,
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 260,
-  "BotStart": 120,
+  "BotStart": 20,
+  "BotStartPlayer": 210,
   "BotStop": 1500,
   "Description": "Very Big Map",
   "DisabledForScav": false,
@@ -186,6 +196,7 @@
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 25,
   "GenerateLocalLootCache": true,
+  "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.8,
   "IconX": 456,
   "IconY": 443,
@@ -241,6 +252,12 @@
   "MinPlayers": 10,
   "Name": "Customs",
   "NewSpawn": true,
+  "NonWaveGroupScenario": {
+    "Chance": 50,
+    "Enabled": true,
+    "MaxToBeGroup": 3,
+    "MinToBeGroup": 2
+  },
   "OcculsionCullingEnabled": false,
   "OfflineNewSpawn": true,
   "OfflineOldSpawn": false,

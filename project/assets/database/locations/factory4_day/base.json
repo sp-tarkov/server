@@ -59,11 +59,18 @@
         "path": "CONTENT/banners/banner_scavraider.jpg",
         "rcid": ""
       }
+    },
+    {
+      "id": "64c0ad6af99768b777048f4e",
+      "pic": {
+        "path": "CONTENT/banners/banner_emissary.jpg",
+        "rcid": ""
+      }
     }
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "0",
       "BossEscortDifficult": "normal",
@@ -97,11 +104,14 @@
   "BotMaxPlayer": 0,
   "BotMaxTimePlayer": 0,
   "BotNormal": 0,
+  "BotSpawnCountStep": 3,
+  "BotSpawnPeriodCheck": 15,
   "BotSpawnTimeOffMax": 0,
   "BotSpawnTimeOffMin": 0,
   "BotSpawnTimeOnMax": 0,
   "BotSpawnTimeOnMin": 0,
   "BotStart": 0,
+  "BotStartPlayer": 0,
   "BotStop": 0,
   "Description": "The industrial estate and facilities of the chemical plant No.16 that were rented out illegally to the TerraGroup company. ",
   "DisabledForScav": false,
@@ -111,6 +121,7 @@
   "EscapeTimeLimit": 20,
   "EscapeTimeLimitCoop": 15,
   "GenerateLocalLootCache": true,
+  "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.2,
   "IconX": 318,
   "IconY": 359,
@@ -148,6 +159,12 @@
   "MinPlayers": 5,
   "Name": "Factory",
   "NewSpawn": false,
+  "NonWaveGroupScenario": {
+    "Chance": 50,
+    "Enabled": true,
+    "MaxToBeGroup": 3,
+    "MinToBeGroup": 2
+  },
   "OcculsionCullingEnabled": true,
   "OfflineNewSpawn": false,
   "OfflineOldSpawn": true,
@@ -613,8 +630,7 @@
     {
       "BotZoneName": "",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -2678,8 +2694,7 @@
     {
       "BotZoneName": "",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -2825,8 +2840,7 @@
     {
       "BotZoneName": "",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -3001,8 +3015,7 @@
     {
       "BotZoneName": "",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -3569,8 +3582,7 @@
     {
       "BotZoneName": "",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",

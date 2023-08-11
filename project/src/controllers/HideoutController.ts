@@ -199,6 +199,22 @@ export class HideoutController
             }
         }
 
+        if (hideoutData.stages[hideoutArea.level].container)
+        {
+            if (!output.profileChanges[sessionID].changedHideoutStashes)
+            {
+                output.profileChanges[sessionID].changedHideoutStashes = {};
+            }
+
+            output.profileChanges[sessionID].changedHideoutStashes[hideoutArea.type] =
+            {
+                Id: hideoutData._id,
+                Tpl: hideoutData.stages[hideoutArea.level].container
+            };
+        }
+
+
+
         // Add Skill Points Per Area Upgrade
         this.playerService.incrementSkillLevel(pmcData, SkillTypes.HIDEOUT_MANAGEMENT, this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.SkillPointsPerAreaUpgrade);
 
@@ -780,16 +796,16 @@ export class HideoutController
     public recordShootingRangePoints(sessionId: string, pmcData: IPmcData, request: IRecordShootingRangePoints): IItemEventRouterResponse
     {
         // Check if counter exists, add placeholder if it doesnt
-        if (!pmcData.Stats.OverallCounters.Items.find(x => x.Key.includes("ShootingRangePoints")))
+        if (!pmcData.Stats.Eft.OverallCounters.Items.find(x => x.Key.includes("ShootingRangePoints")))
         {
-            pmcData.Stats.OverallCounters.Items.push({
+            pmcData.Stats.Eft.OverallCounters.Items.push({
                 Key: ["ShootingRangePoints"],
                 Value: 0
             });
         }
 
         // Find counter by key and update value
-        const shootingRangeHighScore = pmcData.Stats.OverallCounters.Items.find(x => x.Key.includes("ShootingRangePoints"));
+        const shootingRangeHighScore = pmcData.Stats.Eft.OverallCounters.Items.find(x => x.Key.includes("ShootingRangePoints"));
         shootingRangeHighScore.Value = request.points;
 
         // Check against live, maybe a response isnt necessary

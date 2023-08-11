@@ -129,7 +129,8 @@
         "5ca21c6986f77479963115a7": 1,
         "5b44cf1486f77431723e3d05": 1,
         "5b44d0de86f774503d30cba8": 1,
-        "545cdb794bdc2d3a198b456a": 1
+        "545cdb794bdc2d3a198b456a": 1,
+        "64be79e2bf8412471d0d9bcc": 1
       },
       "Eyewear": {
         "61c18d83b00456371a66814b": 1,
@@ -166,7 +167,8 @@
         "5a0ec13bfcdbcb00165aa685": 1,
         "5447a9cd4bdc2dbd208b4567": 1,
         "57c44b372459772d2b39b8ce": 1,
-        "5beed0f50db834001c062b12": 1
+        "5beed0f50db834001c062b12": 1,
+        "6499849fc93611967b034949": 1
       },
       "SecondPrimaryWeapon": {
         "54491c4f4bdc2db1078b4568": 1,
@@ -632,6 +634,39 @@
         "mod_nvg": [
           "5c0696830db834001d23f5da"
         ]
+      },
+      "6499849fc93611967b034949": {
+        "mod_gas_block": [
+          "649ec107961514b22506b10c"
+        ],
+        "mod_pistol_grip": [
+          "5beec8ea0db834001a6f9dbf"
+        ],
+        "mod_handguard": [
+          "649ec127c93611967b034957"
+        ],
+        "mod_muzzle": [
+          "649ec2af961514b22506b10f"
+        ],
+        "mod_stock_001": [
+          "649ec87d8007560a9001ab36"
+        ],
+        "mod_reciever": [
+          "649ec2f3961514b22506b111"
+        ],
+        "mod_magazine": [
+          "5bed61680db834001d2c45ab"
+        ]
+      },
+      "649ec87d8007560a9001ab36": {
+        "mod_stock": [
+          "5beec8c20db834001d2c465c"
+        ]
+      },
+      "649ec2f3961514b22506b111": {
+        "mod_scope": [
+          "609a63b6e2ff132951242d09"
+        ]
       }
     },
     "items": {
@@ -647,7 +682,8 @@
         "59c1383d86f774290a37e0ca",
         "5e32f56fcb6d5863cc5e5ee4",
         "57838f9f2459774a150289a0",
-        "55d482194bdc2d1d4e8b456b"
+        "55d482194bdc2d1d4e8b456b",
+        "5bed61680db834001d2c45ab"
       ],
       "Pockets": [
         "560d5e524bdc2d25448b4571",
@@ -658,8 +694,8 @@
         "5d0376a486f7747d8050965c",
         "5e54f6af86f7742199090bf3",
         "573476f124597737e04bf328",
-        "573476d324597737da2adc13",
         "5df8a72c86f77412640e2e83",
+        "573476d324597737da2adc13",
         "573475fb24597737fb1379e1",
         "5734770f24597738025ee254",
         "5df8a77486f77412672a1e3f",
@@ -696,9 +732,9 @@
     "Ствол",
     "Радар",
     "Осколочный",
-    "Батя",
-    "Кабан",
     "Летёха",
+    "Кабан",
+    "Батя",
     "Осечка",
     "Спецназ",
     "Борец",
@@ -2788,9 +2824,9 @@
   },
   "chances": {
     "equipment": {
-      "Headwear": 90,
-      "Earpiece": 27,
-      "FaceCover": 38,
+      "Headwear": 89,
+      "Earpiece": 26,
+      "FaceCover": 33,
       "ArmorVest": 82,
       "Eyewear": 21,
       "ArmBand": 0,
@@ -2807,23 +2843,23 @@
       "mod_launcher": 0,
       "mod_muzzle": 52,
       "mod_reciever": 100,
-      "mod_sight_rear": 48,
+      "mod_sight_rear": 47,
       "mod_stock": 100,
       "mod_magazine": 100,
       "mod_mount_000": 49,
       "mod_charge": 0,
-      "mod_mount": 15,
+      "mod_mount": 16,
       "mod_scope": 28,
       "mod_tactical": 86,
       "mod_mount_001": 70,
       "mod_tactical_001": 100,
       "mod_tactical_002": 0,
       "mod_tactical_003": 0,
-      "mod_sight_front": 13,
+      "mod_sight_front": 12,
       "mod_mount_002": 0,
       "mod_foregrip": 0,
-      "mod_nvg": 30,
-      "mod_equipment": 21,
+      "mod_nvg": 28,
+      "mod_equipment": 20,
       "mod_stock_akms": 100,
       "mod_stock_000": 100,
       "mod_mount_004": 100,

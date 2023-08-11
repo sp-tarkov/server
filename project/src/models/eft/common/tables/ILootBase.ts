@@ -21,10 +21,10 @@ export interface IStaticContainerDetails
     staticForced: IStaticForcedProps[]
 }
 
-export interface IStaticWeaponProps 
+export interface IStaticPropsBase
 {
     Id: string
-    IsStatic: boolean
+    IsContainer: boolean
     useGravity: boolean
     randomRotation: boolean
     Position: Ixyz
@@ -32,20 +32,16 @@ export interface IStaticWeaponProps
     IsGroupPosition: boolean
     GroupPositions: any[]
     Root: string
+    Items: any[]
+}
+
+export interface IStaticWeaponProps extends IStaticPropsBase
+{
     Items: Item[]
 }
 
-export interface IStaticContainerProps 
+export interface IStaticContainerProps extends IStaticPropsBase
 {
-    Id: string
-    IsStatic: boolean
-    useGravity: boolean
-    randomRotation: boolean
-    Position: Ixyz
-    Rotation: Ixyz
-    IsGroupPosition: boolean
-    GroupPositions: any[]
-    Root: string
     Items: StaticItem[]
 }
 

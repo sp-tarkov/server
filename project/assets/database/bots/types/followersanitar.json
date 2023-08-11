@@ -13,7 +13,8 @@
       "5cc2e5d014c02e15d53d9c03": 1,
       "5d28af3486f774292364a6e7": 1,
       "61922589bb2cea6f7a22d964": 1,
-      "5cde9fb87d6c8b0474535da9": 1
+      "5cde9fb87d6c8b0474535da9": 1,
+      "64a2e970a74bb33d140e6dc5": 1
     },
     "hands": [
       "5df8eac086f77412640e2ea7"
@@ -40,8 +41,8 @@
       "max": 1
     },
     "reward": {
-      "min": 350,
-      "max": 350
+      "min": 325,
+      "max": 325
     },
     "standingForKill": -0.05,
     "aggressorBonus": 0.02
@@ -187,7 +188,9 @@
       "Caliber762x39": {
         "59e0d99486f7744a32234762": 1,
         "59e4cf5286f7741778269d8a": 1,
-        "59e4d3d286f774176a36250a": 1
+        "59e4d3d286f774176a36250a": 1,
+        "64b7af5a8532cf95ee0a0dbd": 1,
+        "64b7af434b75259c590fa893": 1
       },
       "Caliber545x39": {
         "5c0d5e4486f77478390952fe": 1,
@@ -473,8 +476,8 @@
         "5755383e24597772cb798966",
         "56742c2e4bdc2d95058b456d",
         "5d235b4d86f7742e017bc88a",
-        "590c695186f7741e566b64a2",
         "59faff1d86f7746c51718c9c",
+        "590c695186f7741e566b64a2",
         "5fca138c2a7b221b2852a5c6",
         "59fafb5d86f774067a6f2084",
         "60391b0fb847c71012789415",
@@ -543,7 +546,9 @@
         "59e4d3d286f774176a36250a",
         "5e023e88277cce2b522ff2b1",
         "5d6e68a8a4b9360b6c0d54e2",
-        "5efb0c1bd79ff02a1f5e68d9"
+        "5efb0c1bd79ff02a1f5e68d9",
+        "64b7af5a8532cf95ee0a0dbd",
+        "64b7af434b75259c590fa893"
       ],
       "SpecialLoot": []
     }
@@ -568,8 +573,8 @@
     "Травматолог",
     "Психиатр",
     "Кардиолог",
-    "Невролог",
     "Главврач",
+    "Невролог",
     "Иммунолог",
     "Труповоз",
     "Уролог",
@@ -2580,8 +2585,8 @@
     "equipment": {
       "Headwear": 99,
       "Earpiece": 0,
-      "FaceCover": 92,
-      "ArmorVest": 79,
+      "FaceCover": 91,
+      "ArmorVest": 78,
       "Eyewear": 32,
       "ArmBand": 0,
       "TacticalVest": 100,
@@ -2603,15 +2608,15 @@
       "mod_charge": 0,
       "mod_sight_front": 0,
       "mod_mount": 31,
-      "mod_foregrip": 33,
+      "mod_foregrip": 34,
       "mod_scope": 0,
-      "mod_tactical_002": 12,
-      "mod_mount_000": 89,
-      "mod_tactical_000": 82,
+      "mod_tactical_002": 13,
+      "mod_mount_000": 88,
+      "mod_tactical_000": 81,
       "mod_tactical_001": 0,
       "mod_tactical": 100,
-      "mod_equipment": 37,
-      "mod_equipment_000": 28,
+      "mod_equipment": 36,
+      "mod_equipment_000": 30,
       "mod_nvg": 0,
       "mod_equipment_001": 0,
       "mod_equipment_002": 0

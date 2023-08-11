@@ -58,7 +58,8 @@ export interface PresetBatch
     followerTagilla: number
     followerBirdEye: number
     followerBigPipe: number
-    followerTest: number
+    followerTest: number,
+    followerBoar: number
     marksman: number
     pmcBot: number
     sectantPriest: number
@@ -69,6 +70,8 @@ export interface PresetBatch
     arenaFighterEvent: number,
     arenaFighter: number,
     crazyAssaultEvent: number,
+    bossBoar: number,
+    bossBoarSniper: number,
     sptUsec: number,
     sptBear: number
 }

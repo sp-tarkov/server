@@ -124,6 +124,7 @@ export class BotInventoryGenerator
             questRaidItems: questRaidItemsId,
             questStashItems: questStashItemsId,
             sortingTable: sortingTableId,
+            hideoutAreaStashes: {},
             fastPanel: {}
         };
     }

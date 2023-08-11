@@ -113,7 +113,8 @@
         "5648a7494bdc2d9d488b4583": 1,
         "5c0e53c886f7747fa54205c7": 1,
         "5c0e57ba86f7747fa141986d": 1,
-        "609e8540d5c319764c2bc2e9": 1
+        "609e8540d5c319764c2bc2e9": 1,
+        "64be79e2bf8412471d0d9bcc": 1
       },
       "Eyewear": {
         "5b432be65acfc433000ed01f": 1
@@ -157,7 +158,8 @@
       "Caliber9x19PARA": {
         "5a3c16fe86f77452b62de32a": 1,
         "56d59d3ad2720bdb418b4577": 1,
-        "5c3df7d588a4501f290594e5": 1
+        "5c3df7d588a4501f290594e5": 1,
+        "64b7bbb74b75259c590fa897": 1
       },
       "Caliber545x39": {
         "56dff061d2720bb5668b4567": 1
@@ -189,7 +191,8 @@
         ],
         "patron_in_weapon": [
           "5a3c16fe86f77452b62de32a",
-          "56d59d3ad2720bdb418b4577"
+          "56d59d3ad2720bdb418b4577",
+          "64b7bbb74b75259c590fa897"
         ]
       },
       "5926c0df86f77462f647f764": {
@@ -259,6 +262,12 @@
       "5448bd6b4bdc2dfc2f8b4569": {
         "mod_magazine": [
           "5448c12b4bdc2d02308b456f"
+        ],
+        "mod_reciever": [
+          "6374a822e629013b9c0645c8"
+        ],
+        "mod_pistolgrip": [
+          "6374a7e7417239a7bf00f042"
         ]
       },
       "59984ab886f7743e98271174": {
@@ -412,6 +421,11 @@
         "mod_magazine": [
           "59f99a7d86f7745b134aa97b"
         ]
+      },
+      "6374a822e629013b9c0645c8": {
+        "mod_sight_rear": [
+          "63c6adcfb4ba094317063742"
+        ]
       }
     },
     "items": {
@@ -445,7 +459,8 @@
         "59e4cf5286f7741778269d8a",
         "59e6906286f7746c9f75e847",
         "5a269f97c4a282000b151807",
-        "5a26abfac4a28232980eabff"
+        "5a26abfac4a28232980eabff",
+        "64b7bbb74b75259c590fa897"
       ],
       "SpecialLoot": []
     }
@@ -460,11 +475,11 @@
     "Серый",
     "Салобон",
     "Шустрый",
-    "Кулинг",
-    "Лис",
     "Крот",
-    "Мышь",
+    "Кулинг",
     "Ворон",
+    "Лис",
+    "Мышь",
     "Горбатый",
     "Ж-12",
     "Ветеран",
@@ -2558,13 +2573,13 @@
   "chances": {
     "equipment": {
       "Headwear": 96,
-      "Earpiece": 21,
-      "FaceCover": 18,
+      "Earpiece": 19,
+      "FaceCover": 11,
       "ArmorVest": 98,
-      "Eyewear": 61,
+      "Eyewear": 62,
       "ArmBand": 0,
       "TacticalVest": 100,
-      "Backpack": 29,
+      "Backpack": 30,
       "FirstPrimaryWeapon": 100,
       "SecondPrimaryWeapon": 0,
       "Holster": 100,
@@ -2576,10 +2591,10 @@
       "mod_magazine": 100,
       "mod_sight_rear": 47,
       "mod_mount": 0,
-      "mod_foregrip": 11,
+      "mod_foregrip": 12,
       "mod_tactical_000": 60,
       "mod_tactical_001": 100,
-      "mod_muzzle": 85,
+      "mod_muzzle": 84,
       "mod_launcher": 0,
       "mod_reciever": 100,
       "mod_stock": 100,
@@ -2587,10 +2602,10 @@
       "mod_charge": 0,
       "mod_nvg": 0,
       "mod_equipment": 0,
-      "mod_scope": 35,
-      "mod_tactical": 60,
+      "mod_scope": 33,
+      "mod_tactical": 61,
       "mod_stock_akms": 100,
-      "mod_sight_front": 33,
+      "mod_sight_front": 35,
       "mod_mount_001": 100,
       "mod_mount_002": 0,
       "mod_stock_000": 100,

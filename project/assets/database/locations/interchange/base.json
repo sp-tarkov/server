@@ -31,11 +31,18 @@
         "path": "CONTENT/banners/banner_scavraider.jpg",
         "rcid": ""
       }
+    },
+    {
+      "id": "64c0acf85174e095610734a0",
+      "pic": {
+        "path": "CONTENT/banners/banner_sherpa.jpg",
+        "rcid": ""
+      }
     }
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "0",
       "BossEscortDifficult": "normal",
@@ -66,11 +73,14 @@
   "BotMaxPlayer": 9,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
+  "BotSpawnCountStep": 4,
+  "BotSpawnPeriodCheck": 15,
   "BotSpawnTimeOffMax": 30,
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 240,
-  "BotStart": 120,
+  "BotStart": 20,
+  "BotStartPlayer": 200,
   "BotStop": 2400,
   "Description": "The South-Eastern highway interchange is a critical point in the transportation system of the city. Essentially, it is a strategical node connecting the port and harbour infrastructure with the industrial outskirts of Tarkov. ",
   "DisabledForScav": false,
@@ -80,6 +90,7 @@
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
   "GenerateLocalLootCache": true,
+  "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.64,
   "IconX": 506,
   "IconY": 503,
@@ -129,6 +140,12 @@
   "MinPlayers": 10,
   "Name": "Interchange",
   "NewSpawn": true,
+  "NonWaveGroupScenario": {
+    "Chance": 50,
+    "Enabled": true,
+    "MaxToBeGroup": 3,
+    "MinToBeGroup": 2
+  },
   "OcculsionCullingEnabled": true,
   "OfflineNewSpawn": true,
   "OfflineOldSpawn": false,

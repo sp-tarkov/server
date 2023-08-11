@@ -171,8 +171,8 @@ export class InRaidHelper
         profileData.SurvivorClass = saveProgressRequest.profile.SurvivorClass;
 
         // add experience points
-        profileData.Info.Experience += profileData.Stats.TotalSessionExperience;
-        profileData.Stats.TotalSessionExperience = 0;
+        profileData.Info.Experience += profileData.Stats.Eft.TotalSessionExperience;
+        profileData.Stats.Eft.TotalSessionExperience = 0;
 
         // Remove the Lab card
         this.removeMapAccessKey(saveProgressRequest, sessionID);

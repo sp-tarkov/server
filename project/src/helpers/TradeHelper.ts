@@ -127,12 +127,13 @@ export class TradeHelper
 
     /**
      * Sell item to trader
-     * @param pmcData Profile to update
+     * @param profileWithItemsToSell Profile to remove items from
+     * @param profileToReceiveMoney Profile to accept the money for selling item
      * @param sellRequest Request data
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
-    public sellItem(pmcData: IPmcData, sellRequest: IProcessSellTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public sellItem(profileWithItemsToSell: IPmcData, profileToReceiveMoney: IPmcData, sellRequest: IProcessSellTradeRequestData, sessionID: string): IItemEventRouterResponse
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
@@ -142,7 +143,7 @@ export class TradeHelper
             const itemIdToFind = itemToBeRemoved.id.replace(/\s+/g, ""); // Strip out whitespace
 
             // Find item in player inventory, or show error to player if not found
-            const matchingItemInInventory = pmcData.Inventory.items.find(x => x._id === itemIdToFind);
+            const matchingItemInInventory = profileWithItemsToSell.Inventory.items.find(x => x._id === itemIdToFind);
             if (!matchingItemInInventory)
             {
                 const errorMessage = `Unable to sell item ${itemToBeRemoved.id}, cannot be found in player inventory`;
@@ -152,11 +153,11 @@ export class TradeHelper
             }
 
             this.logger.debug(`Selling: id: ${matchingItemInInventory._id} tpl: ${matchingItemInInventory._tpl}`);
-            output = this.inventoryHelper.removeItem(pmcData, itemToBeRemoved.id, sessionID, output);
+            output = this.inventoryHelper.removeItem(profileWithItemsToSell, itemToBeRemoved.id, sessionID, output);
         }
 
         // Give player money for sold item(s)
-        return this.paymentService.getMoney(pmcData, sellRequest.price, sellRequest, output, sessionID);
+        return this.paymentService.getMoney(profileToReceiveMoney, sellRequest.price, sellRequest, output, sessionID);
     }
 
     /**

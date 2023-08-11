@@ -170,7 +170,7 @@ export class MatchController
         const extractName = info.exitName;
 
         // Save time spent in raid
-        pmcData.Stats.TotalInGameTime += info.raidSeconds;
+        pmcData.Stats.Eft.TotalInGameTime += info.raidSeconds;
 
         // clean up cached bots now raid is over
         this.botGenerationCacheService.clearStoredBots();

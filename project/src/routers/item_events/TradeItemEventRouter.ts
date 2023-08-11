@@ -4,6 +4,7 @@ import { TradeCallbacks } from "../../callbacks/TradeCallbacks";
 import { HandledRoute, ItemEventRouterDefinition } from "../../di/Router";
 import { IPmcData } from "../../models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "../../models/eft/itemEvent/IItemEventRouterResponse";
+import { ItemEventActions } from "@spt-aki/models/enums/ItemEventActions";
 
 @injectable()
 export class TradeItemEventRouter extends ItemEventRouterDefinition 
@@ -19,7 +20,8 @@ export class TradeItemEventRouter extends ItemEventRouterDefinition
     {
         return [
             new HandledRoute("TradingConfirm", false),
-            new HandledRoute("RagFairBuyOffer", false)
+            new HandledRoute("RagFairBuyOffer", false),
+            new HandledRoute("SellAllFromSavage", false)
         ];
     }
 
@@ -31,6 +33,8 @@ export class TradeItemEventRouter extends ItemEventRouterDefinition
                 return this.tradeCallbacks.processTrade(pmcData, body, sessionID);
             case "RagFairBuyOffer":
                 return this.tradeCallbacks.processRagfairTrade(pmcData, body, sessionID);
+            case "SellAllFromSavage":
+                return this.tradeCallbacks.sellAllFromSavage(pmcData, body, sessionID);
         }
     }
 }

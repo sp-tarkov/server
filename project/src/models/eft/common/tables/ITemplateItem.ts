@@ -13,6 +13,7 @@ export interface ITemplateItem
 export interface Props 
 {
     AllowSpawnOnLocations?: any[]
+    BeltMagazineRefreshCount?: number
     ChangePriceCoef?: number
     FixedPrice?: boolean
     SendToClient?: boolean
@@ -87,6 +88,7 @@ export interface Props
     Velocity?: number
     RaidModdable?: boolean
     ToolModdable?: boolean
+    UniqueAnimationModID?: number
     BlocksFolding?: boolean
     BlocksCollapsible?: boolean
     IsAnimated?: boolean
@@ -110,10 +112,12 @@ export interface Props
     Intensity?: number
     Mask?: string
     MaskSize?: number
+    IsMagazineForStationaryWeapon?: boolean
     NoiseIntensity?: number
     NoiseScale?: number
     Color?: IColor
     DiffuseIntensity?: number
+    MagazineWithBelt?: boolean
     HasHinge?: boolean
     RampPalette?: string
     DepthFade?: number
@@ -216,6 +220,7 @@ export interface Props
     MinRepairDegradation?: number
     MaxRepairDegradation?: number
     IronSightRange?: number
+    IsBeltMachineGun?: boolean
     IsFlareGun?: boolean
     IsGrenadeLauncher?: boolean
     IsOneoff?: boolean

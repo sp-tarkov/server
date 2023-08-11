@@ -27,8 +27,8 @@
       "max": 1
     },
     "reward": {
-      "min": 2100,
-      "max": 2100
+      "min": 1100,
+      "max": 1100
     },
     "standingForKill": -0.2,
     "aggressorBonus": 0.05
@@ -674,7 +674,11 @@
         "5d03784a86f774203e7e0c4d",
         "62a08f4c4f842e1bd12d9d62",
         "591382d986f774465a6413a7",
-        "5d03775b86f774203e7e0c4b"
+        "5d03775b86f774203e7e0c4b",
+        "59148f8286f7741b951ea113",
+        "6389c6463485cf0eeb260715",
+        "62987e26a77ec735f90a2995",
+        "61a64428a8c6aa1b795f0ba1"
       ],
       "SecuredContainer": [
         "59e77a2386f7742ee578960a",

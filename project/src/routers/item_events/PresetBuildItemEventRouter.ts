@@ -4,6 +4,7 @@ import { PresetBuildCallbacks } from "../../callbacks/PresetBuildCallbacks";
 import { HandledRoute, ItemEventRouterDefinition } from "../../di/Router";
 import { IPmcData } from "../../models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "../../models/eft/itemEvent/IItemEventRouterResponse";
+import { ItemEventActions } from "@spt-aki/models/enums/ItemEventActions";
 
 @injectable()
 export class PresetBuildItemEventRouter extends ItemEventRouterDefinition 
@@ -18,8 +19,10 @@ export class PresetBuildItemEventRouter extends ItemEventRouterDefinition
     public override getHandledRoutes(): HandledRoute[] 
     {
         return [
-            new HandledRoute("SaveBuild", false),
-            new HandledRoute("RemoveBuild", false)
+            new HandledRoute(ItemEventActions.SAVE_WEAPON_BUILD, false),
+            new HandledRoute(ItemEventActions.REMOVE_WEAPON_BUILD, false),
+            new HandledRoute(ItemEventActions.SAVE_EQUIPMENT_BUILD, false),
+            new HandledRoute(ItemEventActions.REMOVE_EQUIPMENT_BUILD, false)
         ];
     }
 
@@ -27,10 +30,14 @@ export class PresetBuildItemEventRouter extends ItemEventRouterDefinition
     {
         switch (url)
         {
-            case "SaveBuild":
-                return this.presetBuildCallbacks.saveBuild(pmcData, body, sessionID);
-            case "RemoveBuild":
-                return this.presetBuildCallbacks.removeBuild(pmcData, body, sessionID);         
+            case ItemEventActions.SAVE_WEAPON_BUILD:
+                return this.presetBuildCallbacks.saveWeaponBuild(pmcData, body, sessionID);
+            case ItemEventActions.REMOVE_WEAPON_BUILD:
+                return this.presetBuildCallbacks.removeWeaponBuild(pmcData, body, sessionID);
+            case ItemEventActions.SAVE_EQUIPMENT_BUILD:
+                return this.presetBuildCallbacks.saveEquipmentBuild(pmcData, body, sessionID);
+            case ItemEventActions.REMOVE_EQUIPMENT_BUILD:
+                return this.presetBuildCallbacks.removeEquipmentBuild(pmcData, body, sessionID);
         }
     }
 }

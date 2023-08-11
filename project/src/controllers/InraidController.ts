@@ -139,13 +139,13 @@ export class InraidController
 
         if (isDead)
         {
-            this.pmcChatResponseService.sendKillerResponse(sessionID, pmcData, offraidData.profile.Stats.Aggressor);
+            this.pmcChatResponseService.sendKillerResponse(sessionID, pmcData, offraidData.profile.Stats.Eft.Aggressor);
             this.matchBotDetailsCacheService.clearCache();
 
             pmcData = this.performPostRaidActionsWhenDead(offraidData, pmcData, insuranceEnabled, preRaidGear, sessionID);
         }
 
-        const victims = offraidData.profile.Stats.Victims.filter(x => x.Role === "sptBear" || x.Role === "sptUsec");
+        const victims = offraidData.profile.Stats.Eft.Victims.filter(x => x.Role === "sptBear" || x.Role === "sptUsec");
         if (victims?.length > 0)
         {
             this.pmcChatResponseService.sendVictimResponse(sessionID, victims, pmcData);
@@ -175,13 +175,13 @@ export class InraidController
         // Remove quest items
         if (this.inRaidHelper.removeQuestItemsOnDeath())
         {
-            for (const questItem of postRaidSaveRequest.profile.Stats.CarriedQuestItems)
+            for (const questItem of postRaidSaveRequest.profile.Stats.Eft.CarriedQuestItems)
             {
                 const findItemConditionIds = this.questHelper.getFindItemIdForQuestHandIn(questItem);
                 this.profileHelper.resetProfileQuestCondition(sessionID, findItemConditionIds);
             }
 
-            pmcData.Stats.CarriedQuestItems = [];
+            pmcData.Stats.Eft.CarriedQuestItems = [];
         }
 
         return pmcData;
@@ -322,7 +322,7 @@ export class InraidController
 
         let fenceStanding = Number(pmcData.TradersInfo[fenceId].standing);
         this.logger.debug(`Old fence standing: ${fenceStanding}`);
-        fenceStanding = this.inRaidHelper.calculateFenceStandingChangeFromKills(fenceStanding, offraidData.profile.Stats.Victims);
+        fenceStanding = this.inRaidHelper.calculateFenceStandingChangeFromKills(fenceStanding, offraidData.profile.Stats.Eft.Victims);
 
         // Successful extract with scav adds 0.01 standing
         if (offraidData.exit === PlayerRaidEndState.SURVIVED)

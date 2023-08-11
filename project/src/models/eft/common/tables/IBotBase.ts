@@ -148,6 +148,7 @@ export interface Inventory
     sortingTable: string
     questRaidItems: string
     questStashItems: string
+    hideoutAreaStashes: Record<string, any>
     fastPanel: Record<string, string>
 }
 
@@ -183,6 +184,11 @@ export interface Mastering extends IBaseSkill
 {}
 
 export interface Stats 
+{
+    Eft: IEftStats
+}
+
+export interface IEftStats
 {
     CarriedQuestItems: string[]
     Victims: Victim[]

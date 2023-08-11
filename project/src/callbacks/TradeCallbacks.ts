@@ -30,4 +30,11 @@ export class TradeCallbacks
     {
         return this.tradeController.confirmRagfairTrading(pmcData, body, sessionID);
     }
+
+    /** Handle SellAllFromSavage event */
+    public sellAllFromSavage(pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse
+    {
+        // TODO: Type the request body (if it is a new model).
+        return this.tradeController.sellScavItemsToFence(pmcData, body, sessionID);
+    }
 }

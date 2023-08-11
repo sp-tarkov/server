@@ -52,7 +52,8 @@ export class EventOutputHolder
             experience: pmcData.Info.Experience,
             quests: [],
             ragFairOffers: [],
-            builds: [],
+            weaponBuilds: [],
+            equipmentBuilds: [],
             items: {
                 new: [],
                 change: [],

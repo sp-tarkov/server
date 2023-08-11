@@ -59,12 +59,19 @@ export class ProfileFixerService
         this.addLighthouseKeeperIfMissing(pmcProfile);
         this.addUnlockedInfoObjectIfMissing(pmcProfile);
 
+        if (pmcProfile.Inventory)
+        {
+            this.addHideoutAreaStashes(pmcProfile);
+        }
+
         if (pmcProfile.Hideout)
         {
             this.addMissingBonusesProperty(pmcProfile);
             this.addMissingArmorRepairSkill(pmcProfile);
             this.addMissingWorkbenchWeaponSkills(pmcProfile);
             this.addMissingWallImprovements(pmcProfile);
+            this.addMissingEquipmentBuildProperty(pmcProfile);
+            this.addMissingHideoutWallAreas(pmcProfile);
 
             this.removeResourcesFromSlotsInHideoutWithoutLocationIndexValue(pmcProfile);
 
@@ -104,6 +111,57 @@ export class ProfileFixerService
         if (Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices).length > 0)
         {
             this.adjustUnreasonableModFleaPrices();
+        }
+    }
+    
+    protected addHideoutAreaStashes(pmcProfile: IPmcData): void
+    {
+        if (!pmcProfile?.Inventory?.hideoutAreaStashes)
+        {
+            pmcProfile.Inventory.hideoutAreaStashes = {};
+        }
+    }
+
+    protected addMissingEquipmentBuildProperty(pmcProfile: IPmcData)
+    {
+        if (pmcProfile)
+        {
+
+        }
+    }
+
+    protected addMissingHideoutWallAreas(pmcProfile: IPmcData): void
+    {
+        if (!pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND))
+        {
+            pmcProfile.Hideout.Areas.push(
+                {
+                    type: 24,
+                    level: 0,
+                    active: true,
+                    passiveBonusesEnabled: true,
+                    completeTime: 0,
+                    constructing: false,
+                    slots: [],
+                    lastRecipe: ""
+                }
+            );
+        }
+
+        if (!pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND_SECONDARY))
+        {
+            pmcProfile.Hideout.Areas.push(
+                {
+                    type: 25,
+                    level: 0,
+                    active: true,
+                    passiveBonusesEnabled: true,
+                    completeTime: 0,
+                    constructing: false,
+                    slots: [],
+                    lastRecipe: ""
+                }
+            );
         }
     }
 
@@ -678,9 +736,9 @@ export class ProfileFixerService
         }
 
         // Iterate over player-made weapon builds, look for missing items and remove weapon preset if found
-        for (const buildId in fullProfile.weaponbuilds)
+        for (const buildId in fullProfile.userbuilds?.weaponBuilds)
         {
-            for (const item of fullProfile.weaponbuilds[buildId].items)
+            for (const item of fullProfile.userbuilds.weaponBuilds[buildId].items)
             {
                 // Check item exists in itemsDb
                 if (!itemsDb[item._tpl])
@@ -689,7 +747,7 @@ export class ProfileFixerService
 
                     if (this.coreConfig.fixes.removeModItemsFromProfile)
                     {
-                        delete fullProfile.weaponbuilds[buildId];
+                        delete fullProfile.userbuilds.weaponBuilds[buildId];
                         this.logger.warning(`Item: ${item._tpl} has resulted in the deletion of weapon build: ${buildId}`);
                     }
 

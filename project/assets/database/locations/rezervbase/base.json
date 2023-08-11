@@ -31,11 +31,18 @@
         "path": "CONTENT/banners/banner_scavraider.jpg",
         "rcid": ""
       }
+    },
+    {
+      "id": "64c0ad6af99768b777048f4e",
+      "pic": {
+        "path": "CONTENT/banners/banner_emissary.jpg",
+        "rcid": ""
+      }
     }
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "0",
       "BossEscortDifficult": "normal",
@@ -152,11 +159,14 @@
   "BotMaxPlayer": 7,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 50,
+  "BotSpawnCountStep": 3,
+  "BotSpawnPeriodCheck": 15,
   "BotSpawnTimeOffMax": 30,
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 260,
   "BotStart": 20,
+  "BotStartPlayer": 100,
   "BotStop": 1500,
   "Description": "The secret Federal State Reserve Agency base that, according to urban legends, contains enough supplies to last for years: food, medications and other resources, enough to survive an all-out nuclear war.",
   "DisabledForScav": false,
@@ -166,6 +176,7 @@
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
   "GenerateLocalLootCache": true,
+  "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.33,
   "IconX": 156,
   "IconY": 286,
@@ -215,6 +226,12 @@
   "MinPlayers": 10,
   "Name": "ReserveBase",
   "NewSpawn": false,
+  "NonWaveGroupScenario": {
+    "Chance": 50,
+    "Enabled": false,
+    "MaxToBeGroup": 3,
+    "MinToBeGroup": 2
+  },
   "OcculsionCullingEnabled": false,
   "OfflineNewSpawn": false,
   "OfflineOldSpawn": true,

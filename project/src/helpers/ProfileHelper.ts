@@ -254,13 +254,15 @@ export class ProfileHelper
     public getDefaultCounters(): Stats
     {
         return {
-            CarriedQuestItems: [],
-            Victims: [],
-            TotalSessionExperience: 0,
-            LastSessionDate: this.timeUtil.getTimestamp(),
-            SessionCounters: { Items: [] },
-            OverallCounters: { Items: [] },
-            TotalInGameTime: 0
+            Eft: {
+                CarriedQuestItems: [],
+                Victims: [],
+                TotalSessionExperience: 0,
+                LastSessionDate: this.timeUtil.getTimestamp(),
+                SessionCounters: { Items: [] },
+                OverallCounters: { Items: [] },
+                TotalInGameTime: 0
+            }
         };
     }
     

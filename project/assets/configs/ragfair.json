@@ -148,7 +148,7 @@
         "blacklist": {
             "damagedAmmoPacks": true,
             "custom": [],
-            "enableBsgList": true,
+            "enableBsgList": false,
             "enableQuestList": true,
             "traderItems": false
         },
