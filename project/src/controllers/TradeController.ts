@@ -106,12 +106,12 @@ class TradeController
     }
 
     /** Handle SellAllFromSavage event */
-    public sellScavItemsToFence(pmcData: IPmcData, request: ISellScavItemsToFenceRequestData, sessionId: string): IItemEventRouterResponse
+    public sellScavItemsToFence(pmcData: IPmcData, body: ISellScavItemsToFenceRequestData, sessionId: string): IItemEventRouterResponse
     {
         const scavProfile = this.profileHelper.getFullProfile(sessionId)?.characters?.scav;
         if (!scavProfile)
         {
-            return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionId), `Profile ${request.fromOwner.id} has no scav account`);
+            return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionId), `Profile ${body.fromOwner.id} has no scav account`);
         }
 
         return this.sellInventoryToTrader(sessionId, scavProfile, pmcData, Traders.FENCE);

@@ -1,11 +1,8 @@
+import { OwnerInfo } from "../common/request/IBaseInteractionRequestData"
+
 export interface ISellScavItemsToFenceRequestData
 {
     Action: "SellAllFromSavage",
-    fromOwner: IPerson
-}
-
-export interface IPerson
-{
-    id: string
-    type: string
+    fromOwner: OwnerInfo
+    toOwner: OwnerInfo
 }
