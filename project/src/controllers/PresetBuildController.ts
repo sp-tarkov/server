@@ -49,7 +49,7 @@ export class PresetBuildController
         return this.saveBuild(pmcData, body, sessionID, "equipmentBuilds");
     }
 
-    private saveBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string, buildType: string): IItemEventRouterResponse
+    protected saveBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string, buildType: string): IItemEventRouterResponse
     {
         delete body.Action;
         body.id = this.hashUtil.generate();
@@ -65,7 +65,7 @@ export class PresetBuildController
         savedBuilds[body.name] = body;
         this.saveServer.getProfile(sessionID).userbuilds[buildType] = savedBuilds;
 
-        output.profileChanges[sessionID].builds.push(body);
+        output.profileChanges[sessionID][buildType].push(body);
         return output;
     }
 
@@ -81,7 +81,7 @@ export class PresetBuildController
         return this.removeBuild(pmcData, body, sessionID, "equipmentBuilds");
     }
     
-    private removeBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string, buildType: string): IItemEventRouterResponse
+    protected removeBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string, buildType: string): IItemEventRouterResponse
     {
         const savedBuilds = this.saveServer.getProfile(sessionID).userbuilds[buildType];
 

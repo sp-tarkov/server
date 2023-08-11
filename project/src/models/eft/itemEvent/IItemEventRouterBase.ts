@@ -1,3 +1,4 @@
+import { EquipmentBuildType } from "../../../models/enums/EquipmentBuildType";
 import { QuestStatus } from "../../../models/enums/QuestStatus";
 import { Health, Productive, Skills, TraderInfo } from "../common/tables/IBotBase";
 import { Item, Upd } from "../common/tables/IItem";
@@ -27,7 +28,8 @@ export interface ProfileChange
     experience: number
     quests: IQuest[]
     ragFairOffers: IRagfairOffer[]
-    builds: BuildChange[]
+    weaponBuilds: IWeaponBuildChange[]
+    equipmentBuilds: IEquipmentBuildChange[]
     items: ItemChanges
     production: Record<string, Productive>
     /** Hideout area improvement id */
@@ -50,12 +52,23 @@ export interface QuestStatusChange
     availableAfter: number
 }
 
-export interface BuildChange
+export interface IWeaponBuildChange
 {
     id: string
     name: string
     root: string
     items: Item[]
+}
+
+export interface IEquipmentBuildChange
+{
+    id: string
+    name: string
+    root: string
+    items: Item[] 
+    type: string
+    fastpanel: any[]
+    buildType: EquipmentBuildType
 }
 
 export interface ItemChanges 

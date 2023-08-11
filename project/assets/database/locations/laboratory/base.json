@@ -26,6 +26,13 @@
         "path": "CONTENT/banners/banner_scavraider.jpg",
         "rcid": ""
       }
+    },
+    {
+      "id": "64c0acf85174e095610734a0",
+      "pic": {
+        "path": "CONTENT/banners/banner_sherpa.jpg",
+        "rcid": ""
+      }
     }
   ],
   "BossLocationSpawn": [
@@ -291,11 +298,14 @@
   "BotMaxPlayer": 14,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 30,
+  "BotSpawnCountStep": 3,
+  "BotSpawnPeriodCheck": 15,
   "BotSpawnTimeOffMax": 30,
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 330,
   "BotSpawnTimeOnMin": 300,
-  "BotStart": 120,
+  "BotStart": 10,
+  "BotStartPlayer": 15,
   "BotStop": 1400,
   "Description": "Laboratory description",
   "DisabledForScav": true,
@@ -305,6 +315,7 @@
   "EscapeTimeLimit": 35,
   "EscapeTimeLimitCoop": 30,
   "GenerateLocalLootCache": true,
+  "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.65,
   "IconX": 288,
   "IconY": 611,
@@ -346,14 +357,20 @@
   "MaxBotPerZone": 5,
   "MaxCoopGroup": 10,
   "MaxDistToFreePoint": 900,
-  "MaxPlayers": 11,
+  "MaxPlayers": 10,
   "MinDistToExitPoint": 30,
   "MinDistToFreePoint": 35,
   "MinMaxBots": [],
   "MinPlayerLvlAccessKeys": 0,
-  "MinPlayers": 5,
+  "MinPlayers": 8,
   "Name": "Laboratory",
   "NewSpawn": false,
+  "NonWaveGroupScenario": {
+    "Chance": 50,
+    "Enabled": false,
+    "MaxToBeGroup": 3,
+    "MinToBeGroup": 2
+  },
   "OcculsionCullingEnabled": true,
   "OfflineNewSpawn": false,
   "OfflineOldSpawn": true,

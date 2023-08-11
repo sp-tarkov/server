@@ -99,6 +99,15 @@ class TradeController
         return output;
     }
 
+    public sellScavItemsToFence(pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse
+    {
+        console.log(body)
+        // TODO: Implement and type the request body (if it is a new model).
+        let output = this.eventOutputHolder.getOutput(sessionID);
+
+        return output;
+    }
+
     protected confirmTradingInternal(pmcData: IPmcData, body: IProcessBaseTradeRequestData, sessionID: string, foundInRaid = false, upd: Upd = null): IItemEventRouterResponse
     {
         // buying

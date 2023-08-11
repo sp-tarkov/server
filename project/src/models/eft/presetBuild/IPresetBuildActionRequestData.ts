@@ -1,4 +1,4 @@
-import { Upd } from "../common/tables/IItem";
+import { Item } from "../common/tables/IItem";
 
 export interface IPresetBuildActionRequestData 
 {
@@ -7,13 +7,4 @@ export interface IPresetBuildActionRequestData
     name: string
     root: string
     items: Item[]
-}
-
-export interface Item 
-{
-    _id: string
-    _tpl: string
-    upd?: Upd
-    parentId?: string
-    slotId?: string
 }
