@@ -83,15 +83,15 @@ export class BotEquipmentModPoolService
                     if (!pool[item._id][slot._name].some(x => x === itemToAdd))
                     {
                         pool[item._id][slot._name].push(itemToAdd);
-                    }
-                    
-                    // Check item added into array for slots, need to iterate over those
-                    const subItemDetails = this.databaseServer.getTables().templates.items[itemToAdd];
-                    const hasSubItemsToAdd = subItemDetails?._props?.Slots?.length > 0;
-                    if (hasSubItemsToAdd)
-                    {
-                        // Recursive call
-                        this.generatePool([subItemDetails], poolType);
+
+                        // Check item added into array for slots, need to iterate over those
+                        const subItemDetails = this.databaseServer.getTables().templates.items[itemToAdd];
+                        const hasSubItemsToAdd = subItemDetails?._props?.Slots?.length > 0;
+                        if (hasSubItemsToAdd && !pool[subItemDetails._id])
+                        {
+                            // Recursive call
+                            this.generatePool([subItemDetails], poolType);
+                        }
                     }
                 }
             }
