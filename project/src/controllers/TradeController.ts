@@ -181,7 +181,7 @@ class TradeController
             }
 
             // Get price of item multiplied by how many are in stack
-            totalPrice += (handbookPrices[itemToSell._tpl] ?? 0) * itemToSell.upd?.StackObjectsCount ?? 1;
+            totalPrice += (handbookPrices[itemToSell._tpl] ?? 0) * (itemToSell.upd?.StackObjectsCount ?? 1);
         }
 
         return totalPrice;
