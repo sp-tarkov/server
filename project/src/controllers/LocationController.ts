@@ -120,14 +120,12 @@ export class LocationController
         const staticContainerGroupData: IStaticContainer  = db.locations[name].statics;
         const containerGroupLimits = this.prepareContainerGroupLimitData(staticContainerGroupData.containersGroups);
         
-        for (const staticContainer of this.randomUtil.shuffle(staticContainers ?? []) ) // Shuffle containers so we dont always add the first ones in the list
+        for (const staticContainer of staticContainers)
         {
-            // Container type can be randomised + randomisation is enabled
             if (this.locationConfig.containerRandomisationSettings.enabled
                 && !this.locationConfig.containerRandomisationSettings.containerTypesToNotRandomise.includes(staticContainer.template.Items[0]._tpl))
             {
-                // Only randomise containers with a less than 100% chance of spawning OR container has type we dont want to randomise
-                if (staticContainer.probability < 1 && this.locationConfig.containerRandomisationSettings.maps[name])
+                if (staticContainer.probability >= this.randomUtil.getFloat(0,1))
                 {
                     // Find matching static container group data
                     const containerGroupData = staticContainerGroupData.containers[staticContainer.template.Id];
@@ -145,12 +143,11 @@ export class LocationController
                         // Increment counter
                         containerGroup.current ++;
                     }
+                    const container = this.locationGenerator.generateContainerLoot(staticContainer, staticForced, staticLootDist, staticAmmoDist, name);
+                    output.Loot.push(container.template);
+                    staticContainerCount++;
                 }  
             }
-
-            const container = this.locationGenerator.generateContainerLoot(staticContainer, staticForced, staticLootDist, staticAmmoDist, name);
-            output.Loot.push(container.template);
-            staticContainerCount++;
         }
 
         this.logger.success(this.localisationService.getText("location-containers_generated_success", staticContainerCount));
