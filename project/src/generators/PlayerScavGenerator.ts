@@ -9,6 +9,7 @@ import { IPmcData } from "../models/eft/common/IPmcData";
 import { Settings, Skills, Stats } from "../models/eft/common/tables/IBotBase";
 import { IBotType } from "../models/eft/common/tables/IBotType";
 import { Item } from "../models/eft/common/tables/IItem";
+import { AccountTypes } from "../models/enums/AccountTypes";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { Traders } from "../models/enums/Traders";
 import { IPlayerScavConfig, KarmaLevel } from "../models/spt/config/IPlayerScavConfig";
@@ -296,10 +297,17 @@ export class PlayerScavGenerator
 
         const fenceInfo = this.fenceService.getFenceInfo(pmcData);
         modifier *= fenceInfo.SavageCooldownModifier;
-
         scavLockDuration *= modifier;
-        scavData.Info.SavageLockTime = (Date.now() / 1000) + scavLockDuration;
+        
+        const fullProfile = this.profileHelper.getFullProfile(pmcData?.sessionId);
+        if (fullProfile?.info?.edition?.toLowerCase?.().startsWith?.(AccountTypes.SPT_DEVELOPER))
+        {
+            // Set scav cooldown timer to 10 seconds for spt developer account
+            scavLockDuration = 10;
+        }
 
+        scavData.Info.SavageLockTime = (Date.now() / 1000) + scavLockDuration;
+            
         return scavData;
     }
 }

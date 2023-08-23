@@ -15,6 +15,7 @@ import { IGameConfigResponse } from "../models/eft/game/IGameConfigResponse";
 import { IGameKeepAliveResponse } from "../models/eft/game/IGameKeepAliveResponse";
 import { IServerDetails } from "../models/eft/game/IServerDetails";
 import { IAkiProfile } from "../models/eft/profile/IAkiProfile";
+import { AccountTypes } from "../models/enums/AccountTypes";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { Traders } from "../models/enums/Traders";
 import { IBotConfig } from "../models/spt/config/IBotConfig";
@@ -127,7 +128,7 @@ export class GameController
                 this.updateProfileHealthValues(pmcProfile);
             }
 
-            if (fullProfile.info.edition.toLowerCase().startsWith("spt developer"))
+            if (fullProfile.info.edition.toLowerCase().startsWith(AccountTypes.SPT_DEVELOPER))
             {
                 // Set all hideout crafts to 30secs
                 this.setHideoutAreasAndCraftsTo30Secs();
