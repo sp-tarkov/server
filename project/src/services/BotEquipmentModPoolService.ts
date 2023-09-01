@@ -40,6 +40,13 @@ export class BotEquipmentModPoolService
      */
     protected generatePool(items: ITemplateItem[], poolType: string): void
     {
+        if (!items)
+        {
+            this.logger.error(`No items provided when attempting to generate ${poolType} pool, skipping`);
+
+            return;
+        }
+
         // Get weapon or gear pool
         const pool = (poolType === "weapon" ? this.weaponModPool : this.gearModPool);
         for (const item of items)
