@@ -312,7 +312,7 @@
 	"pmcresponse-victim_positive_64": "Bracie, byłeś cichy jak cień. Naucz mnie",
 	"pmcresponse-victim_positive_65": "Nie mogę uwierzyć, że mnie tak wyeliminowałeś. Świetna robota",
 	"pmcresponse-victim_positive_66": "Powinniśmy razem zagrać",
-	"pmcresponse-victim_positive_67": "Znasz się na rzeczy, zagrajmy razem"
+	"pmcresponse-victim_positive_67": "Znasz się na rzeczy, zagrajmy razem",
 	"pmcresponse-victim_negative_1": "Świetny aimbot",
 	"pmcresponse-victim_negative_2": "Tani strzał",
 	"pmcresponse-victim_negative_3": "Wow, fajny esp",
@@ -558,4 +558,4 @@
 	"launcher-profile_spteasystart": "Dużo rubli/dolarów/euro, niektóre pomocne umiejętności na poziomie 20, maksymalna reputacja u handlarzy, początkowy poziom to 69, żadne zadania nie zostały ukończone",
 	"launcher-profile_sptzerotohero": "Zaczynaj praktycznie od zera, bez rubli/dolarów/euro, bez reputacji u handlarzy, 1 nóż, żadne zadania nie zostały ukończone",
 	"launcher-profile_sptdeveloper": "Profil testowy, początkowy poziom to 69, dużo rubli/dolarów/euro, USEC zaczyna z wszystkimi zadaniami gotowymi do rozpoczęcia, BEAR zaczyna z wszystkimi zadaniami gotowymi do oddania, kominiarka nieśmiertelności"
-	}
+}
