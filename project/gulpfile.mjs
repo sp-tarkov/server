@@ -97,6 +97,48 @@ const clean = (cb) =>
 };
 const removeCompiled = async () => fs.rmSync("./obj", { recursive: true, force: true });
 
+// JSON Validation
+function getJSONFiles(dir, files = []) 
+{
+    const fileList = fs.readdirSync(dir);
+    for (const file of fileList) 
+    {
+        const name = path.resolve(dir,file);
+        if (fs.statSync(name).isDirectory()) 
+        {
+            getJSONFiles(name, files); 
+        }
+        else if (name.slice(-5) === ".json")
+        {
+            files.push(name);
+        }
+    }
+    return files;
+}
+  
+const validateJSONs = (cb) => 
+{
+    const assetsPath = path.resolve("assets");
+    const jsonFileList = getJSONFiles(assetsPath);
+    let jsonFileInProcess = "";
+    try 
+    {
+        jsonFileList.forEach((jsonFile) => 
+        {
+            jsonFileInProcess = jsonFile;
+            const jsonString = fs.readFileSync(jsonFile).toString();
+            JSON.parse(jsonString);
+        });
+        cb();
+    }
+    catch (error) 
+    {
+        throw new Error(`${error.message} | ${jsonFileInProcess}`);
+    }
+};
+
+
+
 // Versioning
 const writeCommitHashToCoreJSON = async (cb) => 
 {
@@ -179,7 +221,7 @@ gulp.task("test:debug", async () => exec("ts-node-dev -r tsconfig-paths/register
 // Generation
 const generate = (packaging) => 
 {
-    const tasks = [clean, compileTest, fetchAndPatchPackageImage, packaging, addAssets, writeCommitHashToCoreJSON, removeCompiled];
+    const tasks = [clean, validateJSONs, compileTest, fetchAndPatchPackageImage, packaging, addAssets, writeCommitHashToCoreJSON, removeCompiled];
     return gulp.series(tasks);
 };
 gulp.task("gen:debug", generate(packagingDebug));
