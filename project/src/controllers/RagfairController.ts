@@ -130,12 +130,13 @@ export class RagfairController
         // Set categories count (needed for categories to show when choosing 'Linked search')
         this.ragfairHelper.countCategories(result);
 
-        // Handle paging before returning results
         result.offersCount = result.offers.length;
-        const start = searchRequest.page * searchRequest.limit;
-        const end = Math.min(((searchRequest.page + 1) * searchRequest.limit), result.offers.length);
-        result.offers = result.offers.slice(start, end);
-
+        // Handle paging before returning results only if searching for general items, not preset items
+        if (searchRequest.buildCount === 0) {
+            const start = searchRequest.page * searchRequest.limit;
+            const end = Math.min(((searchRequest.page + 1) * searchRequest.limit), result.offers.length);
+            result.offers = result.offers.slice(start, end);
+        }
         return result;
     }
 
