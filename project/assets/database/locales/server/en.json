@@ -173,7 +173,7 @@
 	"ragfair-unable_to_place_offer_with_no_requirements": "Unable to place offer with no requirements",
 	"ragfair-unable_to_find_locale_by_key": "Unable to find EFT locale with key: %s",
 	"ragfair-unable_to_adjust_stack_count_assort_not_found": "Trader: {traderId} flea offer: {{offerId}} could not have its stack count adjusted to match traders assort value (assort not found)",
-	"ragfair-unable_to_remove_offer_not_found_in_profile": "Unable to find offer: {{offerId}} in profile: {{profileId}} as offers is undefined, creating",
+	"ragfair-unable_to_remove_offer_not_found_in_profile": "Unable to find offer: {{offerId}} in profile: {{profileId}} as offer is undefined, creating",
 	"ragfair-unable_to_find_item_price_for_item_in_flea_handbook": "Unable to find live-flea or handbook price for {{tplId}}, defaulting to 1, if this is a modded item contact the mod author",
 	"ragfair-unable_to_find_preset_with_id": "Unable to find preset with id: %s, using existing price of existing weapon base",
 	"ragfair-unable_to_remove_offer_doesnt_exist": "Unable to remove offer with id: %s as it cannot be found in flea market",
