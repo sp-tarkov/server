@@ -280,7 +280,6 @@ export class PreAkiModLoader implements IModLoader
         // sort mods load order
         const source = this.sortModsLoadOrder();
 
-        const promiseLoad = new Array<Promise<void>>();
         // import mod classes
         for (const mod of source)
         {
@@ -308,15 +307,18 @@ export class PreAkiModLoader implements IModLoader
                 }
                 if (this.modTypeCheck.isPreAkiLoadAsync(requiredMod.mod))
                 {
-                    promiseLoad.push(
-                        (requiredMod.mod as IPreAkiLoadModAsync).preAkiLoadAsync(container)
-                            .then(() => globalThis[mod] = requiredMod)
-                            .catch((err) => this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`)))
-                    );
+                    try 
+                    {
+                        await (requiredMod.mod as IPreAkiLoadModAsync).preAkiLoadAsync(container);
+                        globalThis[mod] = requiredMod;
+                    }
+                    catch (err) 
+                    {
+                        this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`));
+                    }
                 }
             }
         }
-        await Promise.all(promiseLoad);
     }
 
     public sortModsLoadOrder(): string[]

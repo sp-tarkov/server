@@ -39,7 +39,6 @@ export class PostAkiModLoader implements IModLoader
     protected async executeMods(container: DependencyContainer): Promise<void>
     {
         const mods = this.preAkiModLoader.sortModsLoadOrder();
-        const promises = new Array<Promise<any>>();
         for (const modName of mods)
         {
             // // import class
@@ -53,13 +52,16 @@ export class PostAkiModLoader implements IModLoader
             }
             if (this.modTypeCheck.isPostAkiLoadAsync(mod.mod))
             {
-                promises.push(
-                    (mod.mod as IPostAkiLoadModAsync).postAkiLoadAsync(container)
-                        .catch((err) => this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`)))
-                );
+                try 
+                {
+                    await (mod.mod as IPostAkiLoadModAsync).postAkiLoadAsync(container);
+                }
+                catch (err) 
+                {
+                    this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`));
+                }
             }
         }
-        await Promise.all(promises);
     }
 
     protected addBundles(): void
