@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import fs from "fs";
 import path from "path";
+import os from "os";
 import { inject, injectable } from "tsyringe";
 import { CompilerOptions, ModuleKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
 import type { ILogger } from "../models/spt/utils/ILogger";
@@ -92,8 +93,16 @@ export class ModCompilerService
             if (globalThis.G_RELEASE_CONFIGURATION)
             {
                 // The path is hardcoded here since it references node_modules in PKG's internal virtual file system
-                replacedText = text.replace(/(@spt-aki)/g, "C:/snapshot/project/obj");
-                replacedText = replacedText.replace("\"tsyringe\"", "\"C:/snapshot/project/node_modules/tsyringe\"");
+                if (os.platform() === "win32")
+                {
+                    replacedText = text.replace(/(@spt-aki)/g, "C:/snapshot/project/obj");
+                    replacedText = replacedText.replace("\"tsyringe\"", "\"C:/snapshot/project/node_modules/tsyringe\"");
+                }
+                else
+                {
+                    replacedText = text.replace(/(@spt-aki)/g, "/snapshot/project/obj");
+                    replacedText = replacedText.replace("\"tsyringe\"", "\"/snapshot/project/node_modules/tsyringe\"");
+                }
             }
             else
             {
