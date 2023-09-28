@@ -3,6 +3,7 @@ import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ItemHelper } from "../helpers/ItemHelper";
 import { NotificationSendHelper } from "../helpers/NotificationSendHelper";
 import { NotifierHelper } from "../helpers/NotifierHelper";
+import { TraderHelper } from "../helpers/TraderHelper";
 import { Item } from "../models/eft/common/tables/IItem";
 import { Dialogue, IUserDialogInfo, Message, MessageItems } from "../models/eft/profile/IAkiProfile";
 import { MessageType } from "../models/enums/MessageType";
@@ -30,7 +31,8 @@ export class MailSendService
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ItemHelper") protected itemHelper: ItemHelper
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("TraderHelper") protected traderHelper: TraderHelper
     )
     { }
 
@@ -444,7 +446,7 @@ export class MailSendService
 
         if (messageDetails.sender === MessageType.NPC_TRADER || messageDetails.dialogType === MessageType.NPC_TRADER)
         {
-            return Traders[messageDetails.trader];
+            return this.traderHelper.getValidTraderIdByEnumValue(messageDetails.trader);
         }
 
         if (messageDetails.sender === MessageType.USER_MESSAGE)
@@ -459,7 +461,7 @@ export class MailSendService
 
         if (messageDetails.trader)
         {
-            return Traders[messageDetails.trader];
+            return this.traderHelper.getValidTraderIdByEnumValue(messageDetails.trader);
         }
 
         this.logger.warning(`Unable to handle message of type: ${messageDetails.sender}`);
