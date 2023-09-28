@@ -1,10 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
+import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ItemHelper } from "../helpers/ItemHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
+import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Item } from "../models/eft/common/tables/IItem";
+import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
 import { IGetInsuranceCostRequestData } from "../models/eft/insurance/IGetInsuranceCostRequestData";
 import {
     IGetInsuranceCostResponseData
@@ -13,7 +16,6 @@ import { IInsureRequestData } from "../models/eft/insurance/IInsureRequestData";
 import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
 import { Insurance } from "../models/eft/profile/IAkiProfile";
 import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import { BaseClasses } from "../models/enums/BaseClasses";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { IInsuranceConfig } from "../models/spt/config/IInsuranceConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
@@ -22,6 +24,7 @@ import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { SaveServer } from "../servers/SaveServer";
 import { InsuranceService } from "../services/InsuranceService";
+import { MailSendService } from "../services/MailSendService";
 import { PaymentService } from "../services/PaymentService";
 import { RandomUtil } from "../utils/RandomUtil";
 import { TimeUtil } from "../utils/TimeUtil";
@@ -41,8 +44,10 @@ export class InsuranceController
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
+        @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
     {
@@ -50,139 +55,321 @@ export class InsuranceController
     }
 
     /**
-     * Process insurance items prior to being given to player in mail
-     */
+     * Process insurance items of all profiles prior to being given back to the player through the mail service.
+     * 
+     * @returns void
+    */
     public processReturn(): void
     {
-        const time = this.timeUtil.getTimestamp();
-
-        // Process each profile in turn
+        // Process each installed profile.
         for (const sessionID in this.saveServer.getProfiles())
         {
-            const insuranceDetails = this.saveServer.getProfile(sessionID).insurance;
-            let insuredItemCount = insuranceDetails.length;
-
-            // Skip profile with no insurance items
-            if (insuredItemCount === 0)
-            {
-                continue;
-            }
-
-            // Use count as array index
-            while (insuredItemCount-- > 0)
-            {
-                const insured = insuranceDetails[insuredItemCount];
-
-                // Return time not reached, skip
-                if (time < insured.scheduledTime)
-                {
-                    continue;
-                }
-
-                // Items to be removed from inventory
-                const toDelete: string[] = [];
-
-                // Loop over insurance items, find items to delete from player inventory
-                for (const insuredItem of insured.items)
-                {
-                    if (this.itemShouldBeLost(insuredItem, insured.traderId, toDelete))
-                    {
-                        // Skip if not an item
-                        const itemDbDetails = this.itemHelper.getItem(insuredItem._tpl);
-                        if (!itemDbDetails[0])
-                        {
-                            continue;
-                        }
-
-                        // Keep if not base item + not raid moddable
-                        if (insuredItem.slotId !== "hideout" && !itemDbDetails[1]._props.RaidModdable)
-                        {
-                            continue;
-                        }
-
-                        // Remove item and its sub-items to prevent orphans
-                        toDelete.push(...this.itemHelper.findAndReturnChildrenByItems(insured.items, insuredItem._id));
-                    }
-                }
-                
-                for (let index = insured.items.length - 1; index >= 0; --index)
-                {
-                    if (toDelete.includes(insured.items[index]._id))
-                    {
-                        insured.items.splice(index, 1);
-                    }
-                }
-                
-                this.updateSlotIdOfContainersChildren(insured);
-
-                // No items to return as they all failed the above check, adjust insurance mail template
-                if (insured.items.length === 0)
-                {
-                    const insuranceFailedTemplates = this.databaseServer.getTables().traders[insured.traderId].dialogue.insuranceFailed;
-                    insured.messageContent.templateId = this.randomUtil.getArrayValue(insuranceFailedTemplates);
-                }
-
-                this.dialogueHelper.addDialogueMessage(insured.traderId, insured.messageContent, sessionID, insured.items);
-
-                // Remove insurance package from profile now we've processed it
-                insuranceDetails.splice(insuredItemCount, 1);
-            }
-
-            this.saveServer.getProfile(sessionID).insurance = insuranceDetails;
+            this.processReturnByProfile(sessionID);
         }
     }
 
     /**
-     * Change SlotId of children inside Containers to be a root item
-     * @param insured Insured Items
-     */
-    protected updateSlotIdOfContainersChildren(insured: Insurance): void
+     * Process insurance items of a single profile prior to being given back to the player through the mail service.
+     * 
+     * @returns void
+    */
+    public processReturnByProfile(sessionID: string): void
     {
-        for (const itemCheck of insured.items) 
+        // Filter out items that don't need to be processed yet.
+        const insuranceDetails = this.filterInsuredItems(sessionID);
+
+        // Skip profile if no insured items to process
+        if (insuranceDetails.length === 0)
         {
-            const confirmedItem = this.itemHelper.isOfBaseclasses(itemCheck._tpl, [BaseClasses.VEST, BaseClasses.BACKPACK]);
-            if (confirmedItem) 
-            {
-                const itemWithChildren = this.itemHelper.findAndReturnChildrenByItems(insured.items, itemCheck._id);
+            return;
+        }
 
-                for (const item of insured.items) 
-                {
-                    // Skips root item only want its children
-                    if (item._id === itemCheck._id) 
-                    {
-                        continue;
-                    }
-                    
-                    if (itemWithChildren.includes(item._id)) 
-                    {
-                        item.slotId = "hideout";
-                        delete item.location;
-                    }
-                }
-            }
+        this.processInsuredItems(insuranceDetails, sessionID);
+    }
+
+    /**
+     * Get all insured items that are ready to be processed in a specific profile.
+     * 
+     * @param sessionID Session ID of the profile to check.
+     * @param time The time to check ready status against. Current time by default.
+     * @returns All insured items that are ready to be processed.
+     */
+    protected filterInsuredItems(sessionID: string, time?: number): Insurance[]
+    {
+        // Use the current time by default.
+        if (!time)
+        {
+            time = this.timeUtil.getTimestamp();
+        }
+
+        const profileInsuranceDetails = this.saveServer.getProfile(sessionID).insurance;
+        this.logger.debug(`Found ${profileInsuranceDetails.length} insurance packages in profile ${sessionID}`);
+
+        return profileInsuranceDetails.filter((insured) => time >= insured.scheduledTime);
+    }
+
+    /**
+     * This method orchestrates the processing of insured items in a profile.
+     * 
+     * @param insuranceDetails The insured items to process.
+     * @param sessionID The session ID that should receive the processed items.
+     * @returns void
+     */
+    protected processInsuredItems(insuranceDetails: Insurance[], sessionID: string): void
+    {
+        this.logger.debug(`Processing ${insuranceDetails.length} insurance packages, which include ${insuranceDetails.map(ins => ins.items.length).reduce((acc, len) => acc + len, 0)} items, for profile ${sessionID}`);
+
+        // We start from the end of the array and move towards the beginning, removing elements as we go. This way, the
+        // indices of the elements that have not been processed yet do not change, which ensures deletions never miss.
+        for (let i = insuranceDetails.length - 1; i >= 0; i--)
+        {
+            const insured = insuranceDetails[i];
+
+            // Find items that should be deleted from the insured items.
+            const itemsToDelete = this.findItemsToDelete(insured);
+
+            // Actually remove them.
+            this.removeItemsFromInsurance(insured, itemsToDelete);
+            
+            // Send the mail to the player.
+            this.sendMail(sessionID, insured, itemsToDelete.length === insured.items.length);
+
+            // Remove the insurance package from the profile now that it's been fully processed.
+            this.saveServer.getProfile(sessionID).insurance.splice(i, 1);
         }
     }
 
     /**
-     * Should the passed in item be removed from player inventory
-     * @param insuredItem Insurued item to roll to lose
-     * @param traderId Trader the item was insured by
-     * @param itemsBeingDeleted All items to remove from player
-     * @returns True if item should be removed
+     * Build an array of items to delete from the insured items.
+     * 
+     * This method orchestrates several steps:
+     *  - Filters items based on their presence in the database and their raid moddability.
+     *  - Sorts base and independent child items to consider for deletion.
+     *  - Groups child items by their parent for later evaluation.
+     *  - Evaluates grouped child items to decide which should be deleted, based on their value and a random roll.
+     * 
+     * @param insured - The insured items to build a removal array from.
+     * @returns An array of IDs representing items that should be deleted.
      */
-    protected itemShouldBeLost(insuredItem: Item, traderId: string, itemsBeingDeleted: string[]): boolean
+    protected findItemsToDelete(insured: Insurance): string[]
     {
-        // Roll from 0 to 9999, then divide it by 100: 9999 =  99.99%
-        const returnChance = this.randomUtil.getInt(0, 9999) / 100;
+        const toDelete: string[] = [];
+        const childrenGroupedByParent = new Map<string, Item[]>();
+        
+        insured.items.forEach(insuredItem =>
+        {
+            const itemDbDetails = this.itemHelper.getItem(insuredItem._tpl);
+
+            // Use the _tpl property from the parent item to get the parent item details
+            const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
+            const parentItemDbDetailsArray = parentItem ? this.itemHelper.getItem(parentItem._tpl) : null;
+            const parentItemDbDetails = parentItemDbDetailsArray ? parentItemDbDetailsArray[1] : null;
+
+            // Filter out items not in the database or not raid moddable.
+            if (!this.filterByRaidModdability(insuredItem, parentItemDbDetails, itemDbDetails)) return;
+        
+            // Check for base or independent child items.
+            if (this.isBaseOrIndependentChild(insuredItem))
+            {
+                // Find child IDs if the item is a parent.
+                const childrenIds = this.itemHelper.findAndReturnChildrenByItems(insured.items, insuredItem._id);
+                
+                // Make a roll to decide if this item should be deleted, and if so, add it and its children to the deletion list.
+                if (this.makeRollAndMarkForDeletion(insuredItem, insured.traderId, toDelete))
+                {
+                    toDelete.push(...childrenIds);
+                }
+            }
+            else if (insuredItem.parentId)
+            {
+                // This is a child item equipped to a parent... Group this child item by its parent.
+                this.groupChildrenByParent(insuredItem, childrenGroupedByParent);
+            }
+        });
+        
+        // Iterate through each group of children and sort and filter them for deletion.
+        childrenGroupedByParent.forEach((children) =>
+        {
+            this.sortAndFilterChildren(children, insured.traderId, toDelete);
+        });
+        
+        this.logger.debug(`Marked ${toDelete.length} items for deletion from insurance.`);
+        return toDelete;
+    }
+
+    /**
+     * Filters an item based on its existence in the database, raid moddability, and slot requirements.
+     * 
+     * @param item The item to be filtered.
+     * @param parentItemDbDetails The database details of the parent item, or null if the item has no parent.
+     * @param itemDbDetails A tuple where the first element is a boolean indicating if the item exists in the database,
+     *                      and the second element is the item details if it does.
+     * @returns true if the item exists in the database and neither of the following conditions are met:
+     *           - The item has the RaidModdable property set to false.
+     *           - The item is attached to a required slot in its parent item.
+     *          Otherwise, returns false.
+     */
+    protected filterByRaidModdability(item: Item, parentItemDbDetails: ITemplateItem | null, itemDbDetails: [boolean, ITemplateItem]): boolean
+    {
+        // Check for RaidModdable property.
+        const isNotRaidModdable = itemDbDetails[1]?._props?.RaidModdable === false;
+
+        // Check for Slots in parent item details.
+        let isRequiredSlot = false;
+        if (parentItemDbDetails?._props?.Slots) 
+        {
+            // Check if a Slot in parent details matches the slotId of the current item and is marked as required
+            isRequiredSlot = parentItemDbDetails._props.Slots.some(slot => slot._name === item.slotId && slot._required);
+        }
+
+        return itemDbDetails[0] && !(isNotRaidModdable || isRequiredSlot);
+    }
+
+    /**
+     * Determines if an item is either a base item or a child item that is not equipped to its parent.
+     * 
+     * @param item The item to check.
+     * @returns true if the item is a base or an independent child item, otherwise false.
+     */
+    protected isBaseOrIndependentChild(item: Item): boolean
+    {
+        return item.slotId === "hideout" || item.slotId === "main" || !isNaN(Number(item.slotId));
+    }
+
+    /**
+     * Makes a roll to determine if a given item should be deleted. If the roll is successful, the item's ID is added 
+     * to the `toDelete` array.
+     * 
+     * @param item The item for which the roll is made.
+     * @param traderId The ID of the trader to consider in the rollForItemDelete method.
+     * @param toDelete The array accumulating the IDs of items to be deleted.
+     * @returns true if the item is marked for deletion, otherwise false.
+     */
+    protected makeRollAndMarkForDeletion(item: Item, traderId: string, toDelete: string[]): boolean
+    {
+        if (this.rollForItemDelete(item, traderId, toDelete))
+        {
+            toDelete.push(item._id);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Groups child items by their parent IDs in a Map data structure.
+     * 
+     * @param item The child item to be grouped by its parent.
+     * @param childrenGroupedByParent The Map that holds arrays of children items grouped by their parent IDs.
+     * @returns void
+     */
+    protected groupChildrenByParent(item: Item, childrenGroupedByParent: Map<string, Item[]>): void
+    {
+        if (!childrenGroupedByParent.has(item.parentId!))
+        {
+            childrenGroupedByParent.set(item.parentId!, []);
+        }
+        childrenGroupedByParent.get(item.parentId!)?.push(item);
+    }
+
+    /**
+     * Sorts the array of children items in descending order by their maximum price. For each child, a roll is made to 
+     * determine if it should be deleted. The method then deletes the most valuable children based on the number of 
+     * successful rolls made.
+     * 
+     * @param children The array of children items to sort and filter.
+     * @param traderId The ID of the trader to consider in the rollForItemDelete method.
+     * @param toDelete The array that accumulates the IDs of the items to be deleted.
+     * @returns void
+     */
+    protected sortAndFilterChildren(children: Item[], traderId: string, toDelete: string[]): void
+    {
+        // Sort the children by their max price in descending order.
+        children.sort((a, b) => this.itemHelper.getItemMaxPrice(b._tpl) - this.itemHelper.getItemMaxPrice(a._tpl));
+        
+        // Count the number of successful rolls.
+        let successfulRolls = 0;
+        for (const child of children)
+        {
+            if (this.rollForItemDelete(child, traderId, toDelete))
+            {
+                successfulRolls++;
+            }
+        }
+        
+        // Delete the most valuable children based on the number of successful rolls.
+        const mostValuableChildrenToDelete = children.slice(0, successfulRolls).map(child => child._id);
+        toDelete.push(...mostValuableChildrenToDelete);
+    }
+
+    /**
+     * Remove items from the insured items that should not be returned to the player.
+     * 
+     * @param insured The insured items to process.
+     * @param toDelete The items that should be deleted.
+     * @returns void
+     */
+    protected removeItemsFromInsurance(insured: Insurance, toDelete: string[]): void
+    {
+        insured.items = insured.items.filter(item => !toDelete.includes(item._id));
+    }
+
+    /**
+     * Handle sending the insurance message to the user that potentially contains the valid insurance items.
+     * 
+     * @param sessionID The session ID that should receive the insurance message.
+     * @param insurance The context of insurance to use.
+     * @param noItems Whether or not there are any items to return to the player.
+     * @returns void
+     */
+    protected sendMail(sessionID: string, insurance: Insurance, noItems: boolean): void
+    {
+        // After all of the item filtering that we've done, if there are no items remaining, the insurance has 
+        // successfully "failed" to return anything and an appropriate message should be sent to the player.
+        if (noItems)
+        {
+            const insuranceFailedTemplates = this.databaseServer.getTables().traders[insurance.traderId].dialogue.insuranceFailed;
+            insurance.messageContent.templateId = this.randomUtil.getArrayValue(insuranceFailedTemplates);
+        }
+    
+        // Send the insurance message
+        this.mailSendService.sendLocalisedNpcMessageToPlayer(
+            sessionID,
+            this.traderHelper.getTraderById(insurance.traderId),
+            MessageType.INSURANCE_RETURN,
+            insurance.messageContent.templateId,
+            insurance.items,
+            insurance.messageContent.maxStorageTime,
+            insurance.messageContent.systemData
+        );
+    }
+
+    /**
+     * Determines whether a valid insured item should be removed from the player's inventory based on a random roll and 
+     * trader-specific return chance.
+     * 
+     * @param insuredItem The insured item being evaluated for removal.
+     * @param traderId The ID of the trader who insured the item.
+     * @param itemsBeingDeleted List of items that are already slated for removal.
+     * @returns true if the insured item should be removed from inventory, false otherwise.
+     */
+    protected rollForItemDelete(insuredItem: Item, traderId: string, itemsBeingDeleted: string[]): boolean 
+    {
+        const maxRoll = 9999;
+        const conversionFactor = 100;
+        
+        const returnChance = this.randomUtil.getInt(0, maxRoll) / conversionFactor;
         const traderReturnChance = this.insuranceConfig.returnChancePercent[traderId];
 
-        const slotIdsThatCanFail = this.insuranceConfig.slotIdsWithChanceOfNotReturning;
-        return (slotIdsThatCanFail.includes(insuredItem.slotId)) && returnChance >= traderReturnChance && !itemsBeingDeleted.includes(insuredItem._id);
+        const exceedsTraderReturnChance = returnChance >= traderReturnChance;
+        const isItemAlreadyBeingDeleted = itemsBeingDeleted.includes(insuredItem._id);
+
+        return exceedsTraderReturnChance && !isItemAlreadyBeingDeleted;
     }
 
     /**
      * Handle Insure event
      * Add insurance to an item
+     * 
      * @param pmcData Player profile
      * @param body Insurance request
      * @param sessionID Session id
@@ -243,6 +430,7 @@ export class InsuranceController
     /**
      * Handle client/insurance/items/list/cost
      * Calculate insurance cost
+     * 
      * @param request request object
      * @param sessionID session id
      * @returns IGetInsuranceCostResponseData object to send to client
