@@ -36,24 +36,24 @@ export class MailSendService
 
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items using direct message text, do not look up any locale
-     * @param playerId Players id to send message to
+     * @param sessionId The session ID to send the message to
      * @param sender The trader sending the message
      * @param messageType What type the message will assume (e.g. QUEST_SUCCESS)
      * @param message Text to send to the player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendDirectNpcMessageToPlayer(playerId: string, sender: Traders, messageType: MessageType, message: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendDirectNpcMessageToPlayer(sessionId: string, sender: Traders, messageType: MessageType, message: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
     {
         if (!sender)
         {
-            this.logger.error(`Unable to send message type: ${messageType} to player: ${playerId}, provided trader enum was null`);
+            this.logger.error(`Unable to send message type: ${messageType} to player: ${sessionId}, provided trader enum was null`);
 
             return;
         }
 
         const details: ISendMessageDetails = {
-            recipientId: playerId,
+            recipientId: sessionId,
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
             trader: sender,
@@ -82,24 +82,24 @@ export class MailSendService
 
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items
-     * @param playerId Players id to send message to
+     * @param sessionId The session ID to send the message to
      * @param sender The trader sending the message
      * @param messageType What type the message will assume (e.g. QUEST_SUCCESS)
      * @param messageLocaleId The localised text to send to player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendLocalisedNpcMessageToPlayer(playerId: string, sender: Traders, messageType: MessageType, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendLocalisedNpcMessageToPlayer(sessionId: string, sender: Traders, messageType: MessageType, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
     {
         if (!sender)
         {
-            this.logger.error(`Unable to send message type: ${messageType} to player: ${playerId}, provided trader enum was null`);
+            this.logger.error(`Unable to send message type: ${messageType} to player: ${sessionId}, provided trader enum was null`);
 
             return;
         }
 
         const details: ISendMessageDetails = {
-            recipientId: playerId,
+            recipientId: sessionId,
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
             trader: sender,
@@ -128,15 +128,15 @@ export class MailSendService
 
     /**
      * Send a message from SYSTEM to the player with or without items
-     * @param playerId Players id to send message to
+     * @param sessionId The session ID to send the message to
      * @param message The text to send to player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendSystemMessageToPlayer(playerId: string, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendSystemMessageToPlayer(sessionId: string, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
     {
         const details: ISendMessageDetails = {
-            recipientId: playerId,
+            recipientId: sessionId,
             sender: MessageType.SYSTEM_MESSAGE,
             messageText: message
         };
@@ -152,16 +152,16 @@ export class MailSendService
     }
 
     /**
-     * Send a message from SYSTEM to the player with or without items with loalised text
-     * @param playerId Players id to send message to
+     * Send a message from SYSTEM to the player with or without items with localised text
+     * @param sessionId The session ID to send the message to
      * @param messageLocaleId Id of key from locale file to send to player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendLocalisedSystemMessageToPlayer(playerId: string, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendLocalisedSystemMessageToPlayer(sessionId: string, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null): void
     {
         const details: ISendMessageDetails = {
-            recipientId: playerId,
+            recipientId: sessionId,
             sender: MessageType.SYSTEM_MESSAGE,
             templateId: messageLocaleId
         };
@@ -178,16 +178,16 @@ export class MailSendService
 
     /**
      * Send a USER message to a player with or without items
-     * @param playerId Players id to send message to
+     * @param sessionId The session ID to send the message to
      * @param senderId Who is sending the message
      * @param message The text to send to player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendUserMessageToPlayer(playerId: string, senderDetails: IUserDialogInfo, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendUserMessageToPlayer(sessionId: string, senderDetails: IUserDialogInfo, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
     {
         const details: ISendMessageDetails = {
-            recipientId: playerId,
+            recipientId: sessionId,
             sender: MessageType.USER_MESSAGE,
             senderDetails: senderDetails,
             messageText: message
@@ -205,7 +205,7 @@ export class MailSendService
 
     /**
      * Large function to send messages to players from a variety of sources (SYSTEM/NPC/USER)
-     * Helper functions in this class are availble to simplify common actions
+     * Helper functions in this class are available to simplify common actions
      * @param messageDetails Details needed to send a message to the player
      */
     public sendMessageToPlayer(messageDetails: ISendMessageDetails): void
@@ -341,7 +341,7 @@ export class MailSendService
         let itemsToSendToPlayer: MessageItems = {};
         if (messageDetails.items?.length > 0)
         {
-            // No parent id, generate random id and add (doesnt need to be actual parentId from db, only unique)
+            // No parent id, generate random id and add (doesn't need to be actual parentId from db, only unique)
             if (!messageDetails.items[0]?.parentId)
             {
                 messageDetails.items[0].parentId = this.hashUtil.generate();
@@ -352,7 +352,7 @@ export class MailSendService
                 data: []
             };
             
-            // Ensure Ids are unique and cont collide with items in player invenory later
+            // Ensure Ids are unique and cont collide with items in player inventory later
             messageDetails.items = this.itemHelper.replaceIDs(null, messageDetails.items);
 
             for (const reward of messageDetails.items)
@@ -414,7 +414,7 @@ export class MailSendService
         let senderDialog = dialogsInProfile[senderId];
         if (!senderDialog)
         {
-            // Create if doesnt
+            // Create if doesn't
             dialogsInProfile[senderId] = {
                 _id: senderId,
                 type: messageDetails.dialogType ? messageDetails.dialogType : messageDetails.sender,
