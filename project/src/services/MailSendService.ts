@@ -37,15 +37,15 @@ export class MailSendService
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items using direct message text, do not look up any locale
      * @param sessionId The session ID to send the message to
-     * @param sender The trader sending the message
+     * @param trader The trader sending the message
      * @param messageType What type the message will assume (e.g. QUEST_SUCCESS)
      * @param message Text to send to the player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendDirectNpcMessageToPlayer(sessionId: string, sender: Traders, messageType: MessageType, message: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendDirectNpcMessageToPlayer(sessionId: string, trader: Traders, messageType: MessageType, message: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
     {
-        if (!sender)
+        if (!trader)
         {
             this.logger.error(`Unable to send message type: ${messageType} to player: ${sessionId}, provided trader enum was null`);
 
@@ -56,7 +56,7 @@ export class MailSendService
             recipientId: sessionId,
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
-            trader: sender,
+            trader: trader,
             messageText: message
         };
 
@@ -83,15 +83,15 @@ export class MailSendService
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items
      * @param sessionId The session ID to send the message to
-     * @param sender The trader sending the message
+     * @param trader The trader sending the message
      * @param messageType What type the message will assume (e.g. QUEST_SUCCESS)
      * @param messageLocaleId The localised text to send to player
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendLocalisedNpcMessageToPlayer(sessionId: string, sender: Traders, messageType: MessageType, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendLocalisedNpcMessageToPlayer(sessionId: string, trader: Traders, messageType: MessageType, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
     {
-        if (!sender)
+        if (!trader)
         {
             this.logger.error(`Unable to send message type: ${messageType} to player: ${sessionId}, provided trader enum was null`);
 
@@ -102,7 +102,7 @@ export class MailSendService
             recipientId: sessionId,
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
-            trader: sender,
+            trader: trader,
             templateId: messageLocaleId
         };
 
