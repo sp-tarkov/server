@@ -15,7 +15,6 @@ import { IInsureRequestData } from "../models/eft/insurance/IInsureRequestData";
 import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
 import { Insurance } from "../models/eft/profile/IAkiProfile";
 import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import { BaseClasses } from "../models/enums/BaseClasses";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { MessageType } from "../models/enums/MessageType";
 import { IInsuranceConfig } from "../models/spt/config/IInsuranceConfig";
@@ -131,9 +130,6 @@ export class InsuranceController
 
             // Actually remove them.
             this.removeItemsFromInsurance(insured, itemsToDelete);
-
-            // In live, items are flattened before being returned
-            this.reparentItemsInsideRigsAndBackpacks(insured);
             
             // Send the mail to the player.
             this.sendMail(sessionID, insured, itemsToDelete.length === insured.items.length);
@@ -472,37 +468,5 @@ export class InsuranceController
         }
 
         return output;
-    }
-
-    /**
-     * Reparent items inside rigs/backpacks to be a root item
-     * @param insurance Insured Items to reparent
-     */
-    protected reparentItemsInsideRigsAndBackpacks(insurance: Insurance): void
-    {
-        for (const itemCheck of insurance.items) 
-        {
-            const itemIsVestOrBackpack = this.itemHelper.isOfBaseclasses(itemCheck._tpl, [BaseClasses.VEST, BaseClasses.BACKPACK]);
-            if (itemIsVestOrBackpack) 
-            {
-                const containerWithContents = this.itemHelper.findAndReturnChildrenByItems(insurance.items, itemCheck._id);
-                for (const item of insurance.items) 
-                {
-                    // Skips root item only want its children
-                    if (item._id === itemCheck._id) 
-                    {
-                        continue;
-                    }
-                    
-                    // Container has item, time to reparent it
-                    if (containerWithContents.includes(item._id)) 
-                    {
-                        item.slotId = "hideout";
-                        delete item.location;
-                        item.parentId = itemCheck.parentId;
-                    }
-                }
-            }
-        }
     }
 }
