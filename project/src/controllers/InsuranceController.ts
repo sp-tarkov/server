@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 
-import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { DialogueHelper } from "../helpers/DialogueHelper";
 import { ItemHelper } from "../helpers/ItemHelper";
 import { ProfileHelper } from "../helpers/ProfileHelper";
@@ -17,6 +16,7 @@ import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRout
 import { Insurance } from "../models/eft/profile/IAkiProfile";
 import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
+import { MessageType } from "../models/enums/MessageType";
 import { IInsuranceConfig } from "../models/spt/config/IInsuranceConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { EventOutputHolder } from "../routers/EventOutputHolder";
