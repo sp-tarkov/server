@@ -172,12 +172,12 @@ export class InsuranceController
             if (this.isBaseOrIndependentChild(insuredItem))
             {
                 // Find child IDs if the item is a parent.
-                const childrenIds = this.itemHelper.findAndReturnChildrenByItems(insured.items, insuredItem._id);
+                const itemWithChildren = this.itemHelper.findAndReturnChildrenByItems(insured.items, insuredItem._id);
                 
                 // Make a roll to decide if this item should be deleted, and if so, add it and its children to the deletion list.
                 if (this.makeRollAndMarkForDeletion(insuredItem, insured.traderId, toDelete))
                 {
-                    toDelete.push(...childrenIds);
+                    toDelete.push(...itemWithChildren);
                 }
             }
             else if (insuredItem.parentId)
@@ -359,9 +359,6 @@ export class InsuranceController
         
         const returnChance = this.randomUtil.getInt(0, maxRoll) / conversionFactor;
         const traderReturnChance = this.insuranceConfig.returnChancePercent[traderId];
-
-        // TODO: add some kind of multipler based on item handbook price?
-
         const exceedsTraderReturnChance = returnChance >= traderReturnChance;
         const isItemAlreadyBeingDeleted = itemsBeingDeleted.includes(insuredItem._id);
 

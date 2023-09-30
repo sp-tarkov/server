@@ -343,14 +343,22 @@ export class MailSendService
         let itemsToSendToPlayer: MessageItems = {};
         if (messageDetails.items?.length > 0)
         {
-            // No parent id, generate random id and add (doesn't need to be actual parentId from db, only unique)
-            if (!messageDetails.items[0]?.parentId)
+            // Find base item and update check its parentid value exists
+            const parentItem = messageDetails.items.find(x => x.slotId === "hideout");
+            if (!parentItem)
             {
-                messageDetails.items[0].parentId = this.hashUtil.generate();
+                this.logger.error(`unable to find an item with slotId of: hideout for message to: ${messageDetails.trader} sender: ${messageDetails.sender}`);
+                return itemsToSendToPlayer;
+            }
+
+            // No parent id, generate random id and add (doesn't need to be actual parentId from db, only unique)
+            if (!parentItem?.parentId)
+            {
+                parentItem.parentId = this.hashUtil.generate();
             }
 
             itemsToSendToPlayer = {
-                stash: messageDetails.items[0].parentId,
+                stash: parentItem.parentId,
                 data: []
             };
             
@@ -373,7 +381,7 @@ export class MailSendService
                 if (!("slotId" in reward) || reward.slotId === "hideout")
                 {
                     // Reward items NEED a parent id + slotid
-                    reward.parentId = messageDetails.items[0].parentId;
+                    reward.parentId = parentItem.parentId;
                     reward.slotId = "main";
                 }
 
@@ -381,7 +389,7 @@ export class MailSendService
                 itemsToSendToPlayer.data.push(reward);
 
                 // Item can contain sub-items, add those to array e.g. ammo boxes
-                if ("StackSlots" in itemTemplate._props)
+                if (itemTemplate._props.StackSlots)
                 {
                     const stackSlotItems = this.itemHelper.generateItemsFromStackSlot(itemTemplate, reward._id);
                     for (const itemToAdd of stackSlotItems)
