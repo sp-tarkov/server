@@ -123,6 +123,20 @@ class ItemHelper
     }
 
     /**
+     * Returns the item price based on the handbook or as a fallback from the prices.json if the item is not
+     * found in the handbook. If the price can't be found at all return 0
+     * @param tpl Item to look price up of
+     * @returns Price in roubles
+     */
+    public getItemMaxPrice(tpl: string): number
+    {
+        const staticPrice = this.getStaticItemPrice(tpl);
+        const dynamicPrice = this.getDynamicItemPrice(tpl);
+        
+        return Math.max(staticPrice, dynamicPrice);
+    }
+
+    /**
      * Get the static (handbook) price in roubles for an item by tpl
      * @param tpl Items tpl id to look up price
      * @returns Price in roubles (0 if not found)
