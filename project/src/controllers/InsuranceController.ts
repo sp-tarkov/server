@@ -132,7 +132,7 @@ export class InsuranceController
             this.removeItemsFromInsurance(insured, itemsToDelete);
             
             // Send the mail to the player.
-            this.sendMail(sessionID, insured, itemsToDelete.length === insured.items.length);
+            this.sendMail(sessionID, insured, insured.items.length === 0);
 
             // Remove the insurance package from the profile now that it's been fully processed.
             this.saveServer.getProfile(sessionID).insurance.splice(i, 1);
