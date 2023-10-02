@@ -83,7 +83,7 @@ const addAssets = async (cb) =>
     await gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(gulp.dest(dataDir));
     await gulp.src([licenseFile]).pipe(rename("LICENSE-Server.txt")).pipe(gulp.dest(buildDir));
     // Write dynamic hashed of asset files for the build 
-    const hashFileDir = `${dataDir}\\checks.dat`;
+    const hashFileDir = path.resolve(dataDir, "checks.dat");
     await fs.createFile(hashFileDir);
     await fs.writeFile(hashFileDir, Buffer.from(JSON.stringify(await loadRecursiveAsync("assets/")), "utf-8").toString("base64"));
     cb();
