@@ -126,10 +126,10 @@ export class PreAkiModLoader implements IModLoader
         {
             const modToValidate = modPackageData[modFolderName];
             
-            // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
-            if (modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
+            // if features.autoDownloadModDependencies is set to true, and the mod has library dependencies check if these dependencies are bundled in the server, if not install them
+            if (this.akiConfig.features.autoDownloadModDependencies && modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
             {
-                this.handleModDependencies(`${this.basepath}${modFolderName}`, modToValidate);
+                this.autoInstallModDependencies(`${this.basepath}${modFolderName}`, modToValidate);
             }
 
             // Returns if any mod dependency is not satisfied
@@ -380,7 +380,7 @@ export class PreAkiModLoader implements IModLoader
         this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: packageData.name, version: packageData.version, author: packageData.author}));
     }
 
-    protected handleModDependencies(modPath: string, pkg: IPackageJsonData): void 
+    protected autoInstallModDependencies(modPath: string, pkg: IPackageJsonData): void 
     {
         const dependenciesToInstall: [string, string][] = Object.entries(pkg.dependencies);
 

@@ -4,9 +4,12 @@
     "compatibleTarkovVersion": "0.13.5.26282",
     "serverName": "SPT Server",
     "profileSaveIntervalSeconds": 15,
-	"sptFriendNickname": "SPT",
-	"fixes": {
-		"fixShotgunDispersion": true,
-		"removeModItemsFromProfile": false
-	}
+    "sptFriendNickname": "SPT",
+    "fixes": {
+        "fixShotgunDispersion": true,
+        "removeModItemsFromProfile": false
+    },
+    "features": {
+        "autoInstallModDependencies": false
+    }
 }
