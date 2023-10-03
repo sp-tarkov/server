@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import fs from "fs";
-import path from "path";
 import os from "os";
+import path from "path";
 import { inject, injectable } from "tsyringe";
 import { CompilerOptions, ModuleKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
 import type { ILogger } from "../models/spt/utils/ILogger";
@@ -11,12 +11,17 @@ import { HashCacheService } from "./HashCacheService";
 @injectable()
 export class ModCompilerService
 {
+    protected serverDependencies: Record<string, string>;
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashCacheService") protected hashCacheService: HashCacheService,
         @inject("VFS") protected vfs: VFS
     )
-    { }
+    {
+        const packageJsonPath = globalThis.G_RELEASE_CONFIGURATION ? "C:/snapshot/project/package.json" : "./package.json";
+        this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
+    }
 
     /**
      * Convert a mods TS into JS
@@ -96,12 +101,18 @@ export class ModCompilerService
                 if (os.platform() === "win32")
                 {
                     replacedText = text.replace(/(@spt-aki)/g, "C:/snapshot/project/obj");
-                    replacedText = replacedText.replace("\"tsyringe\"", "\"C:/snapshot/project/node_modules/tsyringe\"");
+                    for (const dependency of Object.keys(this.serverDependencies)) 
+                    {
+                        replacedText = replacedText.replace(`"${dependency}"`, `"C:/snapshot/project/node_modules/${dependency}"`);
+                    }
                 }
                 else
                 {
                     replacedText = text.replace(/(@spt-aki)/g, "/snapshot/project/obj");
-                    replacedText = replacedText.replace("\"tsyringe\"", "\"/snapshot/project/node_modules/tsyringe\"");
+                    for (const dependency of Object.keys(this.serverDependencies)) 
+                    {
+                        replacedText = replacedText.replace(`"${dependency}"`, `"/snapshot/project/node_modules/${dependency}"`);
+                    }
                 }
             }
             else

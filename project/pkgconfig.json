@@ -4,7 +4,8 @@
             "obj/**/*.js"
         ],
         "assets": [
-            "obj/**/*.d.ts"
+            "obj/**/*.d.ts",
+            "package.json"
         ]
     }
 }

@@ -100,6 +100,28 @@ export class SeasonalEventService
     }
 
     /**
+     * Get an array of items that appear during a seasonal event
+     * returns multiple seasonal event items if they are both active
+     * @returns array of tpl strings
+     */
+    public getAllSeasonalEventItems(): string[]
+    {
+        const items = [];
+
+        if (!this.christmasEventEnabled())
+        {
+            items.push(...this.christmasEventItems);
+        }
+
+        if (!this.halloweenEventEnabled())
+        {
+            items.push(...this.halloweenEventItems);
+        }
+
+        return items;
+    }
+
+    /**
      * Get an array of seasonal items that should be blocked as season is not currently active
      * @returns Array of tpl strings
      */

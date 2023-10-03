@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import semver from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
@@ -14,6 +15,7 @@ import { JsonUtil } from "../utils/JsonUtil";
 import { VFS } from "../utils/VFS";
 import { BundleLoader } from "./BundleLoader";
 import { ModTypeCheck } from "./ModTypeCheck";
+import path from "path";
 
 @injectable()
 export class PreAkiModLoader implements IModLoader
@@ -25,6 +27,7 @@ export class PreAkiModLoader implements IModLoader
     protected order: Record<string, number> = {};
     protected imported: Record<string, IPackageJsonData> = {};
     protected akiConfig: ICoreConfig;
+    protected serverDependencies: Record<string, string>;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -38,6 +41,9 @@ export class PreAkiModLoader implements IModLoader
     )
     {
         this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+
+        const packageJsonPath = globalThis.G_RELEASE_CONFIGURATION ? "C:/snapshot/project/package.json" : "./package.json";
+        this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
     }
 
     public async load(container: DependencyContainer): Promise<void>
@@ -119,6 +125,12 @@ export class PreAkiModLoader implements IModLoader
         for (const modFolderName in modPackageData)
         {
             const modToValidate = modPackageData[modFolderName];
+            
+            // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
+            if (modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
+            {
+                this.handleModDependencies(`${this.basepath}${modFolderName}`, modToValidate);
+            }
 
             // Returns if any mod dependency is not satisfied
             if (!this.areModDependenciesFulfilled(modToValidate, modPackageData))
@@ -366,6 +378,47 @@ export class PreAkiModLoader implements IModLoader
         // add mod to imported list
         this.imported[mod] = {...packageData, dependencies: packageData.modDependencies};
         this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: packageData.name, version: packageData.version, author: packageData.author}));
+    }
+
+    protected handleModDependencies(modPath: string, pkg: IPackageJsonData): void 
+    {
+        const dependenciesToInstall: [string, string][] = Object.entries(pkg.dependencies);
+
+        for (let i = 0; i < dependenciesToInstall.length; i++) 
+        {
+            // currently not checking for version mismatches, i'm assuming people are smart enough, that if and when using internal dependencies they use the same version, but i could check it, just don't know what i would do afterwards
+
+            // if a dependency from the mod exists in the server dependencies we can safely remove it from the list of dependencies to install since it already comes bundled in the server.
+            if (this.serverDependencies[dependenciesToInstall[i][0]]) 
+            {
+                dependenciesToInstall.splice(i, 1);
+            }
+        }
+
+        //temporarily rename package.json because otherwise npm, pnpm and any other package manager will forcefully download all packages in dependencies without any way of disabling this behavior afaik
+        this.vfs.copyFile(`${modPath}/package.json`, `${modPath}/package.json.bak`);
+        this.vfs.writeFile(`${modPath}/package.json`, "{}");
+        
+        const command: string[] = [];
+        command.push(globalThis.G_RELEASE_CONFIGURATION ? path.join(process.cwd(), "Aki_Data/Server/@pnpm/exe/pnpm.exe") : path.join(process.cwd(), "node_modules/@pnpm/exe/pnpm.exe"));
+        command.push("install");
+        command.push(...dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`));
+
+        //if no dependencies pushed into the command list
+        if (command.length === 2) 
+        {
+            return;
+        }
+
+        this.logger.info(`Mod: Installing dependencies for ${pkg.name} by: ${pkg.author}`);
+
+
+        execSync(command.join(" "), { cwd: modPath });
+
+        // delete the new blank package.json then rename the backup back to the original name
+        this.vfs.removeFile(`${modPath}/package.json`);
+        this.vfs.copyFile(`${modPath}/package.json.bak`, `${modPath}/package.json`);
+        this.vfs.removeFile(`${modPath}/package.json.bak`);
     }
 
     protected areModDependenciesFulfilled(pkg: IPackageJsonData, loadedMods: Record<string, IPackageJsonData>): boolean
