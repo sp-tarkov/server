@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import path from "path";
 import semver from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
@@ -15,7 +16,6 @@ import { JsonUtil } from "../utils/JsonUtil";
 import { VFS } from "../utils/VFS";
 import { BundleLoader } from "./BundleLoader";
 import { ModTypeCheck } from "./ModTypeCheck";
-import path from "path";
 
 @injectable()
 export class PreAkiModLoader implements IModLoader
@@ -395,23 +395,22 @@ export class PreAkiModLoader implements IModLoader
             }
         }
 
+        //if no dependencies pushed into the command list return as there's nothing to do.
+        if (dependenciesToInstall.length === 0) 
+        {
+            return;
+        }
+
         //temporarily rename package.json because otherwise npm, pnpm and any other package manager will forcefully download all packages in dependencies without any way of disabling this behavior afaik
         this.vfs.copyFile(`${modPath}/package.json`, `${modPath}/package.json.bak`);
         this.vfs.writeFile(`${modPath}/package.json`, "{}");
-        
+
         const command: string[] = [];
         command.push(globalThis.G_RELEASE_CONFIGURATION ? path.join(process.cwd(), "Aki_Data/Server/@pnpm/exe/pnpm.exe") : path.join(process.cwd(), "node_modules/@pnpm/exe/pnpm.exe"));
         command.push("install");
         command.push(...dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`));
 
-        //if no dependencies pushed into the command list
-        if (command.length === 2) 
-        {
-            return;
-        }
-
         this.logger.info(`Mod: Installing dependencies for ${pkg.name} by: ${pkg.author}`);
-
 
         execSync(command.join(" "), { cwd: modPath });
 
