@@ -89,11 +89,11 @@ export class PaymentService
 
         // set current sale sum
         // convert barterPrice itemTpl into RUB then convert RUB into trader currency
-        const costOfPurchaseInRoubles = (barterPrice === 0)
-            ? this.getTraderItemHandbookPrice(request.item_id, request.tid)
+        const costOfPurchaseInCurrency = (barterPrice === 0)
+            ? this.handbookHelper.fromRUB(this.getTraderItemHandbookPriceRouble(request.item_id, request.tid), this.paymentHelper.getCurrency(trader.currency))
             : this.handbookHelper.fromRUB(this.handbookHelper.inRUB(barterPrice, currencyTpl), this.paymentHelper.getCurrency(trader.currency));
 
-        pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInRoubles;
+        pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
         this.traderHelper.lvlUp(request.tid, pmcData);
         Object.assign(output.profileChanges[sessionID].traderRelations, { [request.tid]: pmcData.TradersInfo[request.tid] });
 
@@ -107,7 +107,7 @@ export class PaymentService
      * @param traderId Id of trader with assort
      * @returns Handbook rouble price of item
      */
-    protected getTraderItemHandbookPrice(traderAssortId: string, traderId: string): number
+    protected getTraderItemHandbookPriceRouble(traderAssortId: string, traderId: string): number
     {
         const purchasedAssortItem = this.traderHelper.getTraderAssortItemByAssortId(traderId, traderAssortId);
         if (!purchasedAssortItem)
