@@ -269,7 +269,7 @@ export class PreAkiModLoader implements IModLoader
         if (!semver.satisfies(akiVersion, mod.akiVersion))
         {
             this.logger.warning(this.localisationService.getText("modloader-outdated_akiversion_field", modName));
-            return false;
+            return true;
         }
 
         return true;
