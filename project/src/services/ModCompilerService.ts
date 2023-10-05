@@ -96,15 +96,17 @@ export class ModCompilerService
             let replacedText: string;
             if (globalThis.G_RELEASE_CONFIGURATION)
             {
-                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "obj"));
+                // C:/snapshot/project || /snapshot/project
+                const baseDir: string = __dirname.replace(/\\/g,"/").split("/").slice(0, 3).join("/");
+                replacedText = text.replace(/(@spt-aki)/g, `${baseDir}/obj`);
                 for (const dependency of this.serverDependencies) 
                 {
-                    replacedText = replacedText.replace(`"${dependency}"`, `"${path.join(__dirname, "node_modules", dependency)}"`);
+                    replacedText = replacedText.replace(`"${dependency}"`, `"${baseDir}/node_modules/${dependency}"`);
                 }
             }
             else
             {
-                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, ".."));
+                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g,"/"));
             }
 
             const output = transpileModule(replacedText, tranOptions);
