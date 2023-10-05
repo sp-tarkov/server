@@ -70,9 +70,9 @@ const fetchAndPatchPackageImage = async () =>
         console.error(e);
     }
 };
-const packagingRelease = async () => pkg.exec([entries.release, "--compression", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
-const packagingDebug = async () => pkg.exec([entries.debug, "--compression", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
-const packagingBleeding = async () => pkg.exec([entries.bleeding, "--compression", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
+const packagingRelease = async () => pkg.exec([entries.release, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
+const packagingDebug = async () => pkg.exec([entries.debug, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
+const packagingBleeding = async () => pkg.exec([entries.bleeding, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
 
 
 // Assets
