@@ -1,5 +1,6 @@
 import fixJson from "json-fixer";
 import { jsonc } from "jsonc";
+import JSON5 from "json5";
 import { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
 import { inject, injectable } from "tsyringe";
 import { ILogger } from "../models/spt/utils/ILogger";
@@ -71,7 +72,28 @@ export class JsonUtil
         {
             this.logger.error(`unable to stringify jsonC file: ${filename} message: ${error.message}, stack: ${error.stack}`);
         }
-        
+    }
+
+    public serializeJson5(
+        data: any,
+        filename?: string | null,
+        prettify = false): string
+    {
+        try
+        {
+            if (prettify)
+            {
+                return JSON5.stringify(data, null, "\t");
+            }
+            else
+            {
+                return JSON5.stringify(data);
+            }
+        }
+        catch (error)
+        {
+            this.logger.error(`unable to stringify json5 file: ${filename} message: ${error.message}, stack: ${error.stack}`);
+        }
     }
 
     /**
@@ -109,7 +131,18 @@ export class JsonUtil
         {
             this.logger.error(`unable to parse jsonC file: ${filename} message: ${error.message}, stack: ${error.stack}`);
         }
-        
+    }
+
+    public deserializeJson5<T>(jsonString: string, filename = ""): T
+    {
+        try
+        {
+            return JSON5.parse(jsonString);
+        }
+        catch (error)
+        {
+            this.logger.error(`unable to parse json file: ${filename} message: ${error.message}, stack: ${error.stack}`);
+        }
     }
 
     public async deserializeWithCacheCheckAsync<T>(jsonString: string, filePath: string): Promise<T>
