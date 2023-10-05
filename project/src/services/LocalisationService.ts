@@ -6,6 +6,7 @@ import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { RandomUtil } from "../utils/RandomUtil";
 import { LocaleService } from "./LocaleService";
+import path from "path";
 
 /**
  * Handles translating server text into different langauges
@@ -23,7 +24,7 @@ export class LocalisationService
         @inject("LocaleService") protected localeService: LocaleService
     )
     {
-        const localeFileDirectory = (globalThis.G_RELEASE_CONFIGURATION) ? "Aki_Data/Server/database/locales/server" : "./assets/database/locales/server";
+        const localeFileDirectory = path.join(process.cwd(), globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/database/locales/server" : "./assets/database/locales/server");
         this.i18n = new I18n(
             {
                 locales: this.localeService.getServerSupportedLocales(),

@@ -11,7 +11,7 @@ import { HashCacheService } from "./HashCacheService";
 @injectable()
 export class ModCompilerService
 {
-    protected serverDependencies: Record<string, string>;
+    protected serverDependencies: string[];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -19,8 +19,8 @@ export class ModCompilerService
         @inject("VFS") protected vfs: VFS
     )
     {
-        const packageJsonPath = globalThis.G_RELEASE_CONFIGURATION ? "C:/snapshot/project/package.json" : "./package.json";
-        this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
+        const packageJsonPath: string = path.join(__dirname, "../../package.json");
+        this.serverDependencies = Object.keys(JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies);
     }
 
     /**
@@ -97,22 +97,10 @@ export class ModCompilerService
             let replacedText: string;
             if (globalThis.G_RELEASE_CONFIGURATION)
             {
-                // The path is hardcoded here since it references node_modules in PKG's internal virtual file system
-                if (os.platform() === "win32")
+                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "obj"));
+                for (const dependency of this.serverDependencies) 
                 {
-                    replacedText = text.replace(/(@spt-aki)/g, "C:/snapshot/project/obj");
-                    for (const dependency of Object.keys(this.serverDependencies)) 
-                    {
-                        replacedText = replacedText.replace(`"${dependency}"`, `"C:/snapshot/project/node_modules/${dependency}"`);
-                    }
-                }
-                else
-                {
-                    replacedText = text.replace(/(@spt-aki)/g, "/snapshot/project/obj");
-                    for (const dependency of Object.keys(this.serverDependencies)) 
-                    {
-                        replacedText = replacedText.replace(`"${dependency}"`, `"/snapshot/project/node_modules/${dependency}"`);
-                    }
+                    replacedText = replacedText.replace(`"${dependency}"`, path.join(__dirname, "node_modules", dependency));
                 }
             }
             else

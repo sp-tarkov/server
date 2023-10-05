@@ -28,6 +28,7 @@ export class PreAkiModLoader implements IModLoader
     protected imported: Record<string, IPackageJsonData> = {};
     protected akiConfig: ICoreConfig;
     protected serverDependencies: Record<string, string>;
+    protected skippedMods: string[] = [];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -42,7 +43,7 @@ export class PreAkiModLoader implements IModLoader
     {
         this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
 
-        const packageJsonPath = globalThis.G_RELEASE_CONFIGURATION ? "C:/snapshot/project/package.json" : "./package.json";
+        const packageJsonPath: string = path.join(__dirname, "../../package.json");
         this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
     }
 
@@ -125,11 +126,11 @@ export class PreAkiModLoader implements IModLoader
         for (const modFolderName in modPackageData)
         {
             const modToValidate = modPackageData[modFolderName];
-            
-            // if features.autoDownloadModDependencies is set to true, and the mod has library dependencies check if these dependencies are bundled in the server, if not install them
-            if (this.akiConfig.features.autoDownloadModDependencies && modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
+
+            // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
+            if (modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
             {
-                this.autoInstallModDependencies(`${this.basepath}${modFolderName}`, modToValidate);
+                this.autoInstallDependencies(`${this.basepath}${modFolderName}`, modToValidate);
             }
 
             // Returns if any mod dependency is not satisfied
@@ -352,6 +353,12 @@ export class PreAkiModLoader implements IModLoader
         const modPath = this.getModPath(mod);
         const packageData = this.jsonUtil.deserialize<IPackageJsonData>(this.vfs.readFile(`${modPath}/package.json`));
 
+        if (this.skippedMods.includes(packageData.name))
+        {
+            this.logger.warning(this.localisationService.getText("modloader-skipped_mod", {name: packageData.name, author: packageData.author}));
+            return;
+        }
+
         const isBundleMod = packageData.isBundleMod ?? false;
 
         if (isBundleMod)
@@ -380,44 +387,59 @@ export class PreAkiModLoader implements IModLoader
         this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: packageData.name, version: packageData.version, author: packageData.author}));
     }
 
-    protected autoInstallModDependencies(modPath: string, pkg: IPackageJsonData): void 
+    protected autoInstallDependencies(modPath: string, pkg: IPackageJsonData): void
     {
         const dependenciesToInstall: [string, string][] = Object.entries(pkg.dependencies);
 
-        for (let i = 0; i < dependenciesToInstall.length; i++) 
+        let depIdx = 0;
+        for (const [depName, depVersion] of dependenciesToInstall)
         {
-            // currently not checking for version mismatches, i'm assuming people are smart enough, that if and when using internal dependencies they use the same version, but i could check it, just don't know what i would do afterwards
+            // currently not checking for version mismatches, but we could check it, just don't know what we would do afterwards, some options would be:
+            // 1 - throw an error
+            // 2 - use the server's version (which is what's currently happening by not checking the version)
+            // 3 - use the mod's version (don't know the reprecursions this would have, or if it would even work)
 
             // if a dependency from the mod exists in the server dependencies we can safely remove it from the list of dependencies to install since it already comes bundled in the server.
-            if (this.serverDependencies[dependenciesToInstall[i][0]]) 
+            if (this.serverDependencies[depName])
             {
-                dependenciesToInstall.splice(i, 1);
+                dependenciesToInstall.splice(depIdx, 1);
             }
+            depIdx++;
         }
 
-        //if no dependencies pushed into the command list return as there's nothing to do.
-        if (dependenciesToInstall.length === 0) 
+        //if the mod has no extra dependencies return as there's nothing that needs to be done.
+        if (dependenciesToInstall.length === 0)
         {
             return;
         }
 
-        //temporarily rename package.json because otherwise npm, pnpm and any other package manager will forcefully download all packages in dependencies without any way of disabling this behavior afaik
-        this.vfs.copyFile(`${modPath}/package.json`, `${modPath}/package.json.bak`);
+        //if this feature flag is set to false, we warn the user he has a mod that requires extra dependencies and might not work, point them in the right direction on how to enable this feature.
+        if (!this.akiConfig.features.autoInstallModDependencies)
+        {
+            this.logger.warning(this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
+                name: pkg.name,
+                author: pkg.author,
+                configPath: path.join(globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/configs" : "assets/configs", "core.json"),
+                configOption: "autoInstallModDependencies"
+            }));
+
+            this.skippedMods.push(pkg.name);
+            return;
+        }
+
+        //temporarily rename package.json because otherwise npm, pnpm and any other package manager will forcefully download all packages in dependencies without any way of disabling this behavior
+        this.vfs.rename(`${modPath}/package.json`, `${modPath}/package.json.bak`);
         this.vfs.writeFile(`${modPath}/package.json`, "{}");
 
-        const command: string[] = [];
-        command.push(globalThis.G_RELEASE_CONFIGURATION ? path.join(process.cwd(), "Aki_Data/Server/@pnpm/exe/pnpm.exe") : path.join(process.cwd(), "node_modules/@pnpm/exe/pnpm.exe"));
-        command.push("install");
-        command.push(...dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`));
+        this.logger.info(this.localisationService.getText("modloader-installing_external_dependencies", {name: pkg.name, author: pkg.author}));
 
-        this.logger.info(`Mod: Installing dependencies for ${pkg.name} by: ${pkg.author}`);
-
-        execSync(command.join(" "), { cwd: modPath });
+        let command: string = `${path.join(process.cwd(), globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe/pnpm.exe" : "node_modules/@pnpm/exe/pnpm.exe")} install `;
+        command += dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`).join(" ");
+        execSync(command, { cwd: modPath });
 
         // delete the new blank package.json then rename the backup back to the original name
         this.vfs.removeFile(`${modPath}/package.json`);
-        this.vfs.copyFile(`${modPath}/package.json.bak`, `${modPath}/package.json`);
-        this.vfs.removeFile(`${modPath}/package.json.bak`);
+        this.vfs.rename(`${modPath}/package.json.bak`, `${modPath}/package.json`);
     }
 
     protected areModDependenciesFulfilled(pkg: IPackageJsonData, loadedMods: Record<string, IPackageJsonData>): boolean
