@@ -11,7 +11,7 @@ import pkgfetch from "pkg-fetch";
 import rcedit from "rcedit";
 import manifest from "./package.json" assert { type: "json" };
 
-const nodeVersion = "node16";
+const nodeVersion = "node18"; // As of pkg-fetch v3.5, it's v18.15.0
 const stdio = "inherit";
 const buildDir = "build/";
 const dataDir = path.join(buildDir, "Aki_Data", "Server");
