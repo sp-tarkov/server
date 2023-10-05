@@ -136,29 +136,21 @@ const validateJSONs = (cb) =>
     }
 };
 
-
-
 // Versioning
 const writeCommitHashToCoreJSON = async (cb) => 
 {
     const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
-    const watcher = gulp.watch([coreJSONPath]);
-    watcher.on("add", async () => 
+    if (fs.existsSync(coreJSONPath)) 
     {
-        if (fs.existsSync(coreJSONPath)) 
-        {
-            // Read the core.json and execute git command
-            const coreJSON = fs.readFileSync(coreJSONPath).toString();
-            const parsed = JSON.parse(coreJSON);
-            const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
-            parsed.commit = gitResult.stdout || "";
-            
-            // Write the commit hash to core.json
-            fs.writeFileSync(coreJSONPath, JSON.stringify(parsed, null, 4));
-        }
-        watcher.close();
-    });
-        
+        // Read the core.json and execute git command
+        const coreJSON = fs.readFileSync(coreJSONPath).toString();
+        const parsed = JSON.parse(coreJSON);
+        const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
+        parsed.commit = gitResult.stdout || "";
+
+        // Write the commit hash to core.json
+        fs.writeFileSync(coreJSONPath, JSON.stringify(parsed, null, 4));
+    }
     cb();
 };
 
