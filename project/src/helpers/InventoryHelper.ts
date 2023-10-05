@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IPmcData } from "../models/eft/common/IPmcData";
+import { Inventory } from "../models/eft/common/tables/IBotBase";
 import { Item, Location, Upd } from "../models/eft/common/tables/IItem";
 import { AddItem, IAddItemRequestData } from "../models/eft/inventory/IAddItemRequestData";
 import { IAddItemTempObject } from "../models/eft/inventory/IAddItemTempObject";
@@ -75,7 +76,7 @@ export class InventoryHelper
      * @param useSortingTable Allow items to go into sorting table when stash has no space
      * @returns IItemEventRouterResponse
      */
-    public addItem(pmcData: IPmcData, request: IAddItemRequestData, output: IItemEventRouterResponse, sessionID: string, callback: { (): void }, foundInRaid = false, addUpd = null, useSortingTable = false): IItemEventRouterResponse
+    public addItem(pmcData: IPmcData, request: IAddItemRequestData, output: IItemEventRouterResponse, sessionID: string, callback: () => void, foundInRaid = false, addUpd = null, useSortingTable = false): IItemEventRouterResponse
     {
         const itemLib: Item[] = []; // TODO: what is the purpose of this property
         const itemsToAdd: IAddItemTempObject[] = [];
@@ -127,72 +128,15 @@ export class InventoryHelper
         }
 
         // Find an empty slot in stash for each of the items being added
-        let stashFS2D = this.getStashSlotMap(pmcData, sessionID);
-        let sortingTableFS2D = this.getSortingTableSlotMap(pmcData);
+        const stashFS2D = this.getStashSlotMap(pmcData, sessionID);
+        const sortingTableFS2D = this.getSortingTableSlotMap(pmcData);
 
         for (const itemToAdd of itemsToAdd)
         {
-            const itemSize = this.getItemSize(itemToAdd.itemRef._tpl, itemToAdd.itemRef._id, itemLib);
-            const findSlotResult = this.containerHelper.findSlotForItem(stashFS2D, itemSize[0], itemSize[1]);
-
-            if (findSlotResult.success)
+            const errorOutput = this.placeItemInInventory(itemToAdd, stashFS2D, sortingTableFS2D, itemLib, pmcData.Inventory, useSortingTable, output);
+            if (errorOutput)
             {
-                /* Fill in the StashFS_2D with an imaginary item, to simulate it already being added
-                * so the next item to search for a free slot won't find the same one */
-                const itemSizeX = findSlotResult.rotation ? itemSize[1] : itemSize[0];
-                const itemSizeY = findSlotResult.rotation ? itemSize[0] : itemSize[1];
-
-                try
-                {
-                    stashFS2D = this.containerHelper.fillContainerMapWithItem(stashFS2D, findSlotResult.x, findSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
-                }
-                catch (err)
-                {
-                    const errorText = typeof err === "string" ? ` -> ${err}` : "";
-                    this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
-
-                    return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
-                }
-                // Store details for object, incuding container item will be placed in
-                itemToAdd.containerId = pmcData.Inventory.stash;
-                itemToAdd.location = {
-                    x: findSlotResult.x,
-                    y: findSlotResult.y,
-                    r: findSlotResult.rotation ? 1 : 0,
-                    rotation: findSlotResult.rotation };
-            }
-            else
-            {
-                // Space not foundin main stash, use sorting table or just error out
-                if (useSortingTable)
-                {
-                    const findSortingSlotResult = this.containerHelper.findSlotForItem(sortingTableFS2D, itemSize[0], itemSize[1]);
-                    const itemSizeX = findSortingSlotResult.rotation ? itemSize[1] : itemSize[0];
-                    const itemSizeY = findSortingSlotResult.rotation ? itemSize[0] : itemSize[1];
-                    try
-                    {
-                        sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(sortingTableFS2D, findSortingSlotResult.x, findSortingSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
-                    }
-                    catch (err)
-                    {
-                        const errorText = typeof err === "string" ? ` -> ${err}` : "";
-                        this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
-    
-                        return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
-                    }
-    
-                    // Store details for object, incuding container item will be placed in
-                    itemToAdd.containerId = pmcData.Inventory.sortingTable;
-                    itemToAdd.location = {
-                        x: findSortingSlotResult.x,
-                        y: findSortingSlotResult.y,
-                        r: findSortingSlotResult.rotation ? 1 : 0,
-                        rotation: findSortingSlotResult.rotation};
-                }
-                else
-                {
-                    return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
-                }
+                return errorOutput;
             }
         }
 
@@ -257,10 +201,20 @@ export class InventoryHelper
                 upd.SpawnedInSession = true;
             }
             
-            // Remove invalid property prior to adding to inventory
-            if (upd.UnlimitedCount)
+            // Remove invalid properties prior to adding to inventory
+            if (upd.UnlimitedCount !== undefined)
             {
                 delete upd.UnlimitedCount;
+            }
+
+            if (upd.BuyRestrictionCurrent !== undefined)
+            {
+                delete upd.BuyRestrictionCurrent;
+            }
+
+            if (upd.BuyRestrictionMax !== undefined)
+            {
+                delete upd.BuyRestrictionMax;
             }
 
             output.profileChanges[sessionID].items.new.push({
@@ -269,7 +223,7 @@ export class InventoryHelper
                 parentId: itemToAdd.containerId,
                 slotId: "hideout",
                 location: { x: itemToAdd.location.x, y: itemToAdd.location.y, r: itemToAdd.location.rotation ? 1 : 0 },
-                upd: upd
+                upd: this.jsonUtil.clone(upd)
             });
 
             pmcData.Inventory.items.push({
@@ -290,86 +244,87 @@ export class InventoryHelper
             {
                 for (const tmpKey in itemLib)
                 {
-                    if (itemLib[tmpKey].parentId && itemLib[tmpKey].parentId === toDo[0][0])
+                    if (itemLib[tmpKey]?.parentId !== toDo[0][0])
                     {
-                        idForItemToAdd = this.hashUtil.generate();
-
-                        const slotID = itemLib[tmpKey].slotId;
-
-                        // if it is from ItemPreset, load preset's upd data too.
-                        if (itemToAdd.isPreset)
-                        {
-                            upd = { "StackObjectsCount": itemToAdd.count };
-
-                            for (const updID in itemLib[tmpKey].upd)
-                            {
-                                upd[updID] = itemLib[tmpKey].upd[updID];
-                            }
-
-                            if (foundInRaid || this.inventoryConfig.newItemsMarkedFound)
-                            {
-                                upd.SpawnedInSession = true;
-                            }
-                        }
-
-                        if (slotID === "hideout")
-                        {
-                            output.profileChanges[sessionID].items.new.push({
-                                _id: idForItemToAdd,
-                                _tpl: itemLib[tmpKey]._tpl,
-                                parentId: toDo[0][1],
-                                slotId: slotID,
-                                location: {
-                                    x: itemToAdd.location.x,
-                                    y: itemToAdd.location.y,
-                                    r: "Horizontal" },
-                                upd: upd
-                            });
-
-                            pmcData.Inventory.items.push({
-                                _id: idForItemToAdd,
-                                _tpl: itemLib[tmpKey]._tpl,
-                                parentId: toDo[0][1],
-                                slotId: itemLib[tmpKey].slotId,
-                                location: {
-                                    x: itemToAdd.location.x,
-                                    y: itemToAdd.location.y,
-                                    r: "Horizontal" },
-                                upd: upd
-                            });
-                        }
-                        else
-                        {
-                            const itemLocation = {};
-
-                            // Item already has location property, use it
-                            if (itemLib[tmpKey]["location"] !== undefined)
-                            {
-                                itemLocation["location"] = itemLib[tmpKey]["location"];
-                            }
-
-                            output.profileChanges[sessionID].items.new.push({
-                                _id: idForItemToAdd,
-                                _tpl: itemLib[tmpKey]._tpl,
-                                parentId: toDo[0][1],
-                                slotId: slotID,
-                                ...itemLocation,
-                                upd: upd
-                            });
-
-                            pmcData.Inventory.items.push({
-                                _id: idForItemToAdd,
-                                _tpl: itemLib[tmpKey]._tpl,
-                                parentId: toDo[0][1],
-                                slotId: itemLib[tmpKey].slotId,
-                                ...itemLocation,
-                                upd: upd
-                            });
-                            this.logger.debug(`Added ${itemLib[tmpKey]._tpl} with id: ${idForItemToAdd} to inventory`);
-                        }
-
-                        toDo.push([itemLib[tmpKey]._id, idForItemToAdd]);
+                        continue;
                     }
+
+                    idForItemToAdd = this.hashUtil.generate();
+                    const slotID = itemLib[tmpKey].slotId;
+
+                    // If its from ItemPreset, load preset's upd data too.
+                    if (itemToAdd.isPreset)
+                    {
+                        upd = { StackObjectsCount: itemToAdd.count };
+
+                        for (const updID in itemLib[tmpKey].upd)
+                        {
+                            upd[updID] = itemLib[tmpKey].upd[updID];
+                        }
+
+                        if (foundInRaid || this.inventoryConfig.newItemsMarkedFound)
+                        {
+                            upd.SpawnedInSession = true;
+                        }
+                    }
+
+                    if (slotID === "hideout")
+                    {
+                        output.profileChanges[sessionID].items.new.push({
+                            _id: idForItemToAdd,
+                            _tpl: itemLib[tmpKey]._tpl,
+                            parentId: toDo[0][1],
+                            slotId: slotID,
+                            location: {
+                                x: itemToAdd.location.x,
+                                y: itemToAdd.location.y,
+                                r: "Horizontal" },
+                            upd: this.jsonUtil.clone(upd)
+                        });
+
+                        pmcData.Inventory.items.push({
+                            _id: idForItemToAdd,
+                            _tpl: itemLib[tmpKey]._tpl,
+                            parentId: toDo[0][1],
+                            slotId: itemLib[tmpKey].slotId,
+                            location: {
+                                x: itemToAdd.location.x,
+                                y: itemToAdd.location.y,
+                                r: "Horizontal" },
+                            upd: this.jsonUtil.clone(upd)
+                        });
+                    }
+                    else
+                    {
+                        const itemLocation = {};
+
+                        // Item already has location property, use it
+                        if (itemLib[tmpKey]["location"] !== undefined)
+                        {
+                            itemLocation["location"] = itemLib[tmpKey]["location"];
+                        }
+
+                        output.profileChanges[sessionID].items.new.push({
+                            _id: idForItemToAdd,
+                            _tpl: itemLib[tmpKey]._tpl,
+                            parentId: toDo[0][1],
+                            slotId: slotID,
+                            ...itemLocation,
+                            upd: this.jsonUtil.clone(upd)
+                        });
+
+                        pmcData.Inventory.items.push({
+                            _id: idForItemToAdd,
+                            _tpl: itemLib[tmpKey]._tpl,
+                            parentId: toDo[0][1],
+                            slotId: itemLib[tmpKey].slotId,
+                            ...itemLocation,
+                            upd: this.jsonUtil.clone(upd)
+                        });
+                        this.logger.debug(`Added ${itemLib[tmpKey]._tpl} with id: ${idForItemToAdd} to inventory`);
+                    }
+
+                    toDo.push([itemLib[tmpKey]._id, idForItemToAdd]);
                 }
 
                 toDo.splice(0, 1);
@@ -377,6 +332,89 @@ export class InventoryHelper
         }
 
         return output;
+    }
+
+    /**
+     * Take the given item, find a free slot in passed in inventory and place it there
+     * If no space in inventory, place in sorting table
+     * @param itemToAdd Item to add to inventory
+     * @param stashFS2D Two dimentional stash map
+     * @param sortingTableFS2D Two dimentional sorting table stash map
+     * @param itemLib 
+     * @param pmcData Player profile
+     * @param useSortingTable Should sorting table be used for overflow items when no inventory space for item
+     * @param output Client output object
+     * @returns Client error output if placing item failed
+     */
+    protected placeItemInInventory(itemToAdd: IAddItemTempObject, stashFS2D: number[][], sortingTableFS2D: number[][], itemLib: Item[], playerInventory: Inventory, useSortingTable: boolean, output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        const itemSize = this.getItemSize(itemToAdd.itemRef._tpl, itemToAdd.itemRef._id, itemLib);
+
+        const findSlotResult = this.containerHelper.findSlotForItem(stashFS2D, itemSize[0], itemSize[1]);
+        if (findSlotResult.success)
+        {
+            /* Fill in the StashFS_2D with an imaginary item, to simulate it already being added
+            * so the next item to search for a free slot won't find the same one */
+            const itemSizeX = findSlotResult.rotation ? itemSize[1] : itemSize[0];
+            const itemSizeY = findSlotResult.rotation ? itemSize[0] : itemSize[1];
+
+            try
+            {
+                stashFS2D = this.containerHelper.fillContainerMapWithItem(stashFS2D, findSlotResult.x, findSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
+            }
+            catch (err)
+            {
+                const errorText = typeof err === "string"
+                    ? ` -> ${err}`
+                    : "";
+                this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
+
+                return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            }
+            // Store details for object, incuding container item will be placed in
+            itemToAdd.containerId = playerInventory.stash;
+            itemToAdd.location = {
+                x: findSlotResult.x,
+                y: findSlotResult.y,
+                r: findSlotResult.rotation ? 1 : 0,
+                rotation: findSlotResult.rotation
+            };
+
+            // Success! exit
+            return;
+        }
+
+        // Space not found in main stash, use sorting table
+        if (useSortingTable)
+        {
+            const findSortingSlotResult = this.containerHelper.findSlotForItem(sortingTableFS2D, itemSize[0], itemSize[1]);
+            const itemSizeX = findSortingSlotResult.rotation ? itemSize[1] : itemSize[0];
+            const itemSizeY = findSortingSlotResult.rotation ? itemSize[0] : itemSize[1];
+            try
+            {
+                sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(sortingTableFS2D, findSortingSlotResult.x, findSortingSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
+            }
+            catch (err)
+            {
+                const errorText = typeof err === "string" ? ` -> ${err}` : "";
+                this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
+
+                return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            }
+
+            // Store details for object, incuding container item will be placed in
+            itemToAdd.containerId = playerInventory.sortingTable;
+            itemToAdd.location = {
+                x: findSortingSlotResult.x,
+                y: findSortingSlotResult.y,
+                r: findSortingSlotResult.rotation ? 1 : 0,
+                rotation: findSortingSlotResult.rotation
+            };
+        }
+        else
+        {
+            return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+        }
     }
 
     /**

@@ -80,10 +80,12 @@ export class BotLootGenerator
             this.addForcedMedicalItemsToPmcSecure(botInventory, botRole);
         }
 
+        const containersBotHasAvailable = this.getAvailableContainersBotCanStoreItemsIn(botInventory);
+
         // Special items
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.SPECIAL, botJsonTemplate),
-            [EquipmentSlots.POCKETS, EquipmentSlots.BACKPACK, EquipmentSlots.TACTICAL_VEST],
+            containersBotHasAvailable,
             specialLootItemCount,
             botInventory,
             botRole);
@@ -91,7 +93,7 @@ export class BotLootGenerator
         // Meds
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.HEALING_ITEMS, botJsonTemplate),
-            [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS, EquipmentSlots.BACKPACK, EquipmentSlots.SECURED_CONTAINER],
+            containersBotHasAvailable,
             healingItemCount,
             botInventory,
             botRole,
@@ -102,7 +104,7 @@ export class BotLootGenerator
         // Drugs
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.DRUG_ITEMS, botJsonTemplate),
-            [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS, EquipmentSlots.BACKPACK, EquipmentSlots.SECURED_CONTAINER],
+            containersBotHasAvailable,
             drugItemCount,
             botInventory,
             botRole,
@@ -113,7 +115,7 @@ export class BotLootGenerator
         // Stims
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.STIM_ITEMS, botJsonTemplate),
-            [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS, EquipmentSlots.BACKPACK, EquipmentSlots.SECURED_CONTAINER],
+            containersBotHasAvailable,
             stimItemCount,
             botInventory,
             botRole,
@@ -124,7 +126,7 @@ export class BotLootGenerator
         // Grenades
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.GRENADE_ITEMS, botJsonTemplate),
-            [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS],
+            [EquipmentSlots.POCKETS, EquipmentSlots.TACTICAL_VEST], // Can't use containersBotHasEquipped as we dont want grenades added to backpack
             grenadeCount,
             botInventory,
             botRole,
@@ -134,7 +136,7 @@ export class BotLootGenerator
 
 
         // Backpack - generate loot if they have one
-        if (botInventory.items.find(x => x.slotId === EquipmentSlots.BACKPACK))
+        if (containersBotHasAvailable.includes(EquipmentSlots.BACKPACK))
         {
             // Add randomly generated weapon to PMC backpacks
             if (isPmc && this.randomUtil.getChance100(this.pmcConfig.looseWeaponInBackpackChancePercent))
@@ -154,7 +156,7 @@ export class BotLootGenerator
         }
         
         // TacticalVest - generate loot if they have one
-        if (botInventory.items.find(x => x.slotId === EquipmentSlots.TACTICAL_VEST))
+        if (containersBotHasAvailable.includes(EquipmentSlots.TACTICAL_VEST))
         {
             // Vest
             this.addLootFromPool(
@@ -179,6 +181,29 @@ export class BotLootGenerator
             true,
             this.pmcConfig.maxPocketLootTotalRub,
             isPmc);
+    }
+
+    /**
+     * Get an array of the containers a bot has on them (pockets/backpack/vest)
+     * @param botInventory Bot to check
+     * @returns Array of available slots
+     */
+    protected getAvailableContainersBotCanStoreItemsIn(botInventory: PmcInventory): EquipmentSlots[]
+    {
+        const result = [EquipmentSlots.POCKETS];
+
+        if (botInventory.items.find(x => x.slotId === EquipmentSlots.TACTICAL_VEST))
+        {
+
+            result.push(EquipmentSlots.TACTICAL_VEST);
+        }
+
+        if (botInventory.items.find(x => x.slotId === EquipmentSlots.BACKPACK))
+        {
+            result.push(EquipmentSlots.BACKPACK);
+        }
+
+        return result;
     }
 
     /**
@@ -460,7 +485,7 @@ export class BotLootGenerator
             // Prevent edge-case of small loot pools + code trying to add limited item over and over infinitely
             if (limitCount[idToCheckFor] > itemSpawnLimits[idToCheckFor] * 10)
             {
-                this.logger.warning(this.localisationService.getText("bot-item_spawn_limit_reached_skipping_item", {botRole: botRole, itemName: itemTemplate._name, attempts: limitCount[idToCheckFor]}));
+                this.logger.debug(this.localisationService.getText("bot-item_spawn_limit_reached_skipping_item", {botRole: botRole, itemName: itemTemplate._name, attempts: limitCount[idToCheckFor]}));
 
                 return false;
             }

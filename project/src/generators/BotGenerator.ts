@@ -10,7 +10,7 @@ import {
     Health as PmcHealth,
     Skills as botSkills
 } from "../models/eft/common/tables/IBotBase";
-import { Health, IBotType } from "../models/eft/common/tables/IBotType";
+import { Appearance, Health, IBotType } from "../models/eft/common/tables/IBotType";
 import { Item, Upd } from "../models/eft/common/tables/IItem";
 import { BaseClasses } from "../models/enums/BaseClasses";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
@@ -171,10 +171,9 @@ export class BotGenerator
         bot.Info.Voice = this.randomUtil.getArrayValue(botJsonTemplate.appearance.voice);
         bot.Health = this.generateHealth(botJsonTemplate.health, bot.Info.Side === "Savage");
         bot.Skills = this.generateSkills(<any>botJsonTemplate.skills); // TODO: fix bad type, bot jsons store skills in dict, output needs to be array
-        bot.Customization.Head = this.randomUtil.getArrayValue(botJsonTemplate.appearance.head);
-        bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(botJsonTemplate.appearance.body);
-        bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(botJsonTemplate.appearance.feet);
-        bot.Customization.Hands = this.randomUtil.getArrayValue(botJsonTemplate.appearance.hands);
+
+        this.setBotAppearance(bot, botJsonTemplate.appearance, botGenerationDetails);
+
         bot.Inventory = this.botInventoryGenerator.generateInventory(sessionId, botJsonTemplate, botRole, botGenerationDetails.isPmc, botLevel.level);
 
         if (this.botHelper.isBotPmc(botRole))
@@ -191,6 +190,21 @@ export class BotGenerator
         bot = this.generateInventoryID(bot);
 
         return bot;
+    }
+
+    /**
+     * Choose various appearance settings for a bot using weights
+     * @param bot Bot to adjust
+     * @param appearance Appearance settings to choose from
+     * @param botGenerationDetails Generation details
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
+    {
+        bot.Customization.Head = this.randomUtil.getArrayValue(appearance.head);
+        bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
+        bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
+        bot.Customization.Hands = this.randomUtil.getArrayValue(appearance.hands);
     }
 
     /**

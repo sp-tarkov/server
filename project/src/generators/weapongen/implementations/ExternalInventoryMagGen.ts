@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { BotWeaponGeneratorHelper } from "../../../helpers/BotWeaponGeneratorHelper";
 import { ItemHelper } from "../../../helpers/ItemHelper";
 import { EquipmentSlots } from "../../../models/enums/EquipmentSlots";
+import { ItemAddedResult } from "../../../models/enums/ItemAddedResult";
 import { ILogger } from "../../../models/spt/utils/ILogger";
 import { LocalisationService } from "../../../services/LocalisationService";
 import { IInventoryMagGen } from "../IInventoryMagGen";
@@ -35,7 +36,7 @@ export class ExternalInventoryMagGen implements IInventoryMagGen
     {
         let magTemplate = inventoryMagGen.getMagazineTemplate();
         let magazineTpl = magTemplate._id;
-        const randomizedMagazineCount = this.botWeaponGeneratorHelper.getRandomizedMagazineCount(inventoryMagGen.getMagCount());
+        const randomizedMagazineCount = Number(this.botWeaponGeneratorHelper.getRandomizedMagazineCount(inventoryMagGen.getMagCount()));
         for (let i = 0; i < randomizedMagazineCount; i++)
         {
             const magazineWithAmmo = this.botWeaponGeneratorHelper.createMagazineWithAmmo(magazineTpl, inventoryMagGen.getAmmoTemplate()._id, magTemplate);
@@ -47,7 +48,7 @@ export class ExternalInventoryMagGen implements IInventoryMagGen
                 magazineWithAmmo,
                 inventoryMagGen.getPmcInventory());
 
-            if (!ableToFitMagazinesIntoBotInventory && i < randomizedMagazineCount)
+            if (ableToFitMagazinesIntoBotInventory === ItemAddedResult.NO_SPACE && i < randomizedMagazineCount)
             {
                 /* We were unable to fit at least the minimum amount of magazines,
                      * so we fallback to default magazine and try again.

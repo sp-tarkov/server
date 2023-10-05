@@ -123,12 +123,17 @@ export class BotWeaponGeneratorHelper
 
         for (const ammoItem of ammoItems)
         {
-            this.addItemWithChildrenToEquipmentSlot(
+            const result = this.addItemWithChildrenToEquipmentSlot(
                 equipmentSlotsToAddTo,
                 ammoItem._id,
                 ammoItem._tpl,
                 [ammoItem],
                 inventory);
+
+            if (result === ItemAddedResult.NO_SPACE)
+            {
+                this.logger.debug(`Unable to add ammo: ${ammoItem._tpl} to bot equipment`);
+            }
         }
     }
 
