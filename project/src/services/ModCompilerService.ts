@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import fs from "fs";
-import os from "os";
 import path from "path";
 import { inject, injectable } from "tsyringe";
 import { CompilerOptions, ModuleKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
@@ -100,12 +99,12 @@ export class ModCompilerService
                 replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "obj"));
                 for (const dependency of this.serverDependencies) 
                 {
-                    replacedText = replacedText.replace(`"${dependency}"`, path.join(__dirname, "node_modules", dependency));
+                    replacedText = replacedText.replace(`"${dependency}"`, `"${path.join(__dirname, "node_modules", dependency)}"`);
                 }
             }
             else
             {
-                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g,"/"));
+                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, ".."));
             }
 
             const output = transpileModule(replacedText, tranOptions);
