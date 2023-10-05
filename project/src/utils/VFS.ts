@@ -20,6 +20,7 @@ export class VFS
     statPromisify: (path: fs.PathLike, options?: fs.StatOptions & { bigint?: false; }) => Promise<fs.Stats>;
     unlinkPromisify: (path: fs.PathLike) => Promise<void>;
     rmdirPromisify: (path: fs.PathLike) => Promise<void>;
+    renamePromisify: (oldPath: fs.PathLike, newPath: fs.PathLike) => Promise<void>;
 
     constructor(
         @inject("AsyncQueue") protected asyncQueue: IAsyncQueue,
@@ -35,6 +36,7 @@ export class VFS
         this.statPromisify = promisify(fs.stat);
         this.unlinkPromisify = promisify(fs.unlinkSync);
         this.rmdirPromisify = promisify(fs.rmdir);
+        this.renamePromisify = promisify(fs.renameSync);
     }
 
     public exists(filepath: fs.PathLike): boolean 
@@ -294,6 +296,16 @@ export class VFS
 
         await Promise.all(promises);
         await this.rmdirPromisify(filepath);
+    }
+
+    public rename(oldPath: string, newPath: string): void 
+    {
+        fs.renameSync(oldPath, newPath);
+    }
+
+    public async renameAsync(oldPath: string, newPath: string): Promise<void> 
+    {
+        await this.renamePromisify(oldPath, newPath);
     }
 
     protected lockFileSync(filepath: any): void 
