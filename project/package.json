@@ -1,14 +1,14 @@
 {
     "name": "aki-server",
-    "version": "3.5.1",
-    "author": "SPT-AKI",
+    "version": "3.7.0",
+    "author": "SPT-AKI Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
     "repository": "https://dev.sp-tarkov.com/SPT-AKI/Server",
-    "description": "Modding framework for Escape From Tarkov",
+    "description": "The single-player modding framework for Escape From Tarkov.",
     "icon": "assets/images/icon.ico",
     "engines": {
-        "node": "18.18.0"
+        "node": "18.15.0"
     },
     "scripts": {
         "profilerCompile": "tsc -p test_tsconfig.json",
@@ -43,10 +43,10 @@
         "ws": "8.13.0"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.22.9",
-        "@babel/preset-typescript": "^7.22.5",
+        "@babel/preset-env": "7.22.9",
+        "@babel/preset-typescript": "7.22.5",
         "@jest/globals": "29.6.2",
-        "@pnpm/exe": "^8.8.0",
+        "@pnpm/exe": "8.8.0",
         "@swc/cli": "0.1.62",
         "@swc/core": "1.3.72",
         "@swc/jest": "0.2.27",
@@ -70,7 +70,7 @@
         "madge": "6.1.0",
         "pkg": "5.8.1",
         "pkg-fetch": "3.5.2",
-        "rcedit": "3.0.1",
+        "resedit": "2.0.0",
         "rome": "12.1.3",
         "ts-jest": "29.1.1",
         "ts-node-dev": "2.0.0",

@@ -9,7 +9,7 @@ import rename from "gulp-rename";
 import path from "path";
 import pkg from "pkg";
 import pkgfetch from "pkg-fetch";
-import rcedit from "rcedit";
+import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 
 const nodeVersion = "node18"; // As of pkg-fetch v3.5, it's v18.15.0
@@ -25,25 +25,12 @@ const entries = {
     bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js")
 };
 const licenseFile = "../LICENSE.md";
-const rceditOptions = {
-    icon: manifest.icon,
-    "product-version": manifest.version,
-    "file-version": manifest.version,
-    "version-string": {
-        ProductName: manifest.name,
-        CompanyName: manifest.author,
-        LegalCopyright: licenseFile,
-        OriginalFilename: serverExeName,
-        InternalFilename: "Aki.Server",
-        FileDescription: manifest.description
-    }
-};
 
 // Compilation
 const compileTest = async () => exec("swc src -d obj", { stdio });
 
 // Packaging
-const fetchAndPatchPackageImage = async () =>
+const fetchPackageImage = async () =>
 {
     try
     {
@@ -64,12 +51,49 @@ const fetchAndPatchPackageImage = async () =>
                 stdio
             });
         }
-        await rcedit(builtPkg, rceditOptions);
     }
-    catch (e)
+    catch (e) 
     {
-        console.error(e);
+        console.error(`Error while fetching and patching package image: ${e.message}`);
+        console.error(e.stack);
     }
+};
+
+const updateBuildProperties = async (cb) =>
+{
+    const exe = ResEdit.NtExecutable.from(fs.readFileSync(serverExe));
+    const res = ResEdit.NtExecutableResource.from(exe);
+    
+    const iconPath = path.resolve(manifest.icon);
+    const iconFile = ResEdit.Data.IconFile.from(fs.readFileSync(iconPath));
+
+    ResEdit.Resource.IconGroupEntry.replaceIconsForResource(
+        res.entries,
+        1,
+        1033,
+        iconFile.icons.map(item => item.data)
+    );
+
+    const vi = ResEdit.Resource.VersionInfo.fromEntries(res.entries)[0];
+
+    vi.setStringValues(
+        {lang: 1033, codepage: 1200},
+        {
+            ProductName: manifest.author,
+            FileDescription: manifest.description,
+            CompanyName: manifest.name,
+            LegalCopyright:  manifest.license
+        }
+    );
+    vi.removeStringValue({lang: 1033, codepage: 1200}, "OriginalFilename");
+    vi.removeStringValue({lang: 1033, codepage: 1200}, "InternalName");
+    vi.setFileVersion(...manifest.version.split(".").map(Number));
+    vi.setProductVersion(...manifest.version.split(".").map(Number));
+    vi.outputToResourceEntries(res.entries);
+    res.outputResource(exe, true);
+    fs.writeFileSync(serverExe, Buffer.from(exe.generate()));
+
+    cb();
 };
 
 // Assets
@@ -211,7 +235,7 @@ const build = (packagingType) =>
 {
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
-    const tasks = [clean, validateJSONs, compileTest, fetchAndPatchPackageImage, anonPackaging, addAssets, writeCommitHashToCoreJSON, removeCompiled];
+    const tasks = [clean, validateJSONs, compileTest, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, writeCommitHashToCoreJSON, removeCompiled];
     return gulp.series(tasks);
 };
 
