@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+
 import crypto from "crypto";
 import { deleteSync } from "del";
 import fs from "fs-extra";
@@ -46,7 +47,7 @@ const fetchAndPatchPackageImage = async () =>
 {
     try
     {
-        const output = "./.pkg-cache/v3.4";
+        const output = "./.pkg-cache/v3.5";
         const fetchedPkg = await pkgfetch.need({ arch: process.arch, nodeRange: nodeVersion, platform: process.platform, output });
         console.log(`fetched node binary at ${fetchedPkg}`);
         const builtPkg = fetchedPkg.replace("node", "built");
@@ -70,10 +71,6 @@ const fetchAndPatchPackageImage = async () =>
         console.error(e);
     }
 };
-const packagingRelease = async () => pkg.exec([entries.release, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
-const packagingDebug = async () => pkg.exec([entries.debug, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
-const packagingBleeding = async () => pkg.exec([entries.bleeding, "--compress", "GZip", "--target", `${nodeVersion}-${process.platform}`, "--output", serverExe, "--config", pkgConfig]);
-
 
 // Assets
 const addAssets = async (cb) =>
@@ -209,15 +206,29 @@ const loadRecursiveAsync = async (filepath) =>
 // Testing
 gulp.task("test:debug", async () => exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
 
-// Generation
-const generate = (packaging) => 
+// Main Tasks Generation
+const build = (packagingType) => 
 {
-    const tasks = [clean, validateJSONs, compileTest, fetchAndPatchPackageImage, packaging, addAssets, writeCommitHashToCoreJSON, removeCompiled];
+    const anonPackaging = () => packaging(entries[packagingType]);
+    anonPackaging.displayName = `packaging-${packagingType}`;
+    const tasks = [clean, validateJSONs, compileTest, fetchAndPatchPackageImage, anonPackaging, addAssets, writeCommitHashToCoreJSON, removeCompiled];
     return gulp.series(tasks);
 };
-gulp.task("gen:debug", generate(packagingDebug));
-gulp.task("gen:release", generate(packagingRelease));
-gulp.task("gen:bleeding", generate(packagingBleeding));
+
+// Packaging Arguments
+const packaging = async (entry) => 
+{
+    const target = `${nodeVersion}-${process.platform}-${process.arch}`;
+    const args = [entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig];
+    try 
+    {
+        await pkg.exec(args);
+    }
+    catch (error) 
+    {
+        console.error(`Error occurred during packaging: ${error}`);
+    }
+};
 
 // Run server
 const runSrv = async (cb) =>
@@ -225,4 +236,8 @@ const runSrv = async (cb) =>
     await exec("Aki.Server.exe", { stdio, cwd: buildDir });
     cb();
 };
+
+gulp.task("build:debug", build("debug"));
+gulp.task("build:release", build("release"));
+gulp.task("build:bleeding", build("bleeding"));
 gulp.task("run:server", runSrv);
