@@ -96,18 +96,74 @@ const updateBuildProperties = async (cb) =>
     cb();
 };
 
-// Assets
-const addAssets = async (cb) =>
+// Copy various asset files to the destination directory
+function copyAssets()
 {
-    await gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(gulp.dest(dataDir));
-    await gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(`${dataDir}\\@pnpm\\exe`));
-    await gulp.src([licenseFile]).pipe(rename("LICENSE-Server.txt")).pipe(gulp.dest(buildDir));
-    // Write dynamic hashed of asset files for the build 
+    return gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"])
+        .pipe(gulp.dest(dataDir));
+}
+
+// Copy executables from node_modules
+function copyExecutables() 
+{
+    return gulp.src(["node_modules/@pnpm/exe/**/*"])
+        .pipe(gulp.dest(`${dataDir}\\@pnpm\\exe`));
+}
+
+// Rename and copy the license file
+function copyLicense() 
+{
+    return gulp.src([licenseFile])
+        .pipe(rename("LICENSE-Server.txt"))
+        .pipe(gulp.dest(buildDir));
+}
+
+// Writes the latest Git commit hash to the core.json configuration file.
+async function writeCommitHashToCoreJSON(cb) 
+{
+    const coreJSONPath = path.resolve("build", "Aki_Data", "Server", "configs", "core.json");
+    if (fs.existsSync(coreJSONPath)) 
+    {
+        try 
+        {
+            const coreJSON = fs.readFileSync(coreJSONPath, "utf8");
+            const parsed = JSON.parse(coreJSON);
+            
+            // Fetch the latest Git commit hash
+            const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
+            
+            // Update the commit hash in the core.json object
+            parsed.commit = gitResult.stdout.trim() || "";
+            
+            // Write the updated object back to core.json
+            fs.writeFileSync(coreJSONPath, JSON.stringify(parsed, null, 4));
+        }
+        catch (error) 
+        {
+            throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
+        }
+    }
+    else 
+    {
+        console.warn(`core.json not found at ${coreJSONPath}. Skipping commit hash update.`);
+    }
+    
+    cb();
+}
+
+
+// Create a hash file for asset checks
+async function createHashFile() 
+{
     const hashFileDir = path.resolve(dataDir, "checks.dat");
     await fs.createFile(hashFileDir);
-    await fs.writeFile(hashFileDir, Buffer.from(JSON.stringify(await loadRecursiveAsync("assets/")), "utf-8").toString("base64"));
-    cb();
-};
+    const assetData = await loadRecursiveAsync("assets/");
+    const assetDataString = Buffer.from(JSON.stringify(assetData), "utf-8").toString("base64");
+    await fs.writeFile(hashFileDir, assetDataString);
+}
+
+// Combine all tasks into addAssets
+const addAssets = gulp.series(copyAssets, copyExecutables, copyLicense, writeCommitHashToCoreJSON, createHashFile);
 
 // Cleanup
 const clean = (cb) =>
@@ -155,24 +211,6 @@ const validateJSONs = (cb) =>
     {
         throw new Error(`${error.message} | ${jsonFileInProcess}`);
     }
-};
-
-// Versioning
-const writeCommitHashToCoreJSON = async (cb) => 
-{
-    const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
-    if (fs.existsSync(coreJSONPath)) 
-    {
-        // Read the core.json and execute git command
-        const coreJSON = fs.readFileSync(coreJSONPath).toString();
-        const parsed = JSON.parse(coreJSON);
-        const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
-        parsed.commit = gitResult.stdout || "";
-
-        // Write the commit hash to core.json
-        fs.writeFileSync(coreJSONPath, JSON.stringify(parsed, null, 4));
-    }
-    cb();
 };
 
 // Hash helper function
@@ -235,7 +273,7 @@ const build = (packagingType) =>
 {
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
-    const tasks = [clean, validateJSONs, compileTest, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, writeCommitHashToCoreJSON, removeCompiled];
+    const tasks = [clean, validateJSONs, compileTest, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, removeCompiled];
     return gulp.series(tasks);
 };
 
