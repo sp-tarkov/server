@@ -79,6 +79,11 @@
         "typemoq": "2.1.0",
         "utf-8-validate": "6.0.3"
     },
+    "overrides": {
+        "pkg": {
+            "pkg-fetch": "3.5.2"
+        }
+    },
     "targets": {
         "default": {
             "includeNodeModules": true
