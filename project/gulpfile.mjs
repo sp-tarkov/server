@@ -6,6 +6,7 @@ import fs from "fs-extra";
 import gulp from "gulp";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
+import os from "os";
 import path from "path";
 import pkg from "pkg";
 import pkgfetch from "pkg-fetch";
@@ -61,6 +62,11 @@ const fetchPackageImage = async () =>
 
 const updateBuildProperties = async (cb) =>
 {
+    if(os.platform() !== "win32") {
+        cb();
+        return;
+    }
+
     const exe = ResEdit.NtExecutable.from(fs.readFileSync(serverExe));
     const res = ResEdit.NtExecutableResource.from(exe);
     
