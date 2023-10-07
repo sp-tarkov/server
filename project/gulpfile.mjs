@@ -107,7 +107,7 @@ function copyAssets()
 function copyExecutables() 
 {
     return gulp.src(["node_modules/@pnpm/exe/**/*"])
-        .pipe(gulp.dest(`${dataDir}\\@pnpm\\exe`));
+        .pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
 }
 
 // Rename and copy the license file

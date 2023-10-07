@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import os from "os";
 import path from "path";
 import semver from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
@@ -433,7 +434,8 @@ export class PreAkiModLoader implements IModLoader
 
         this.logger.info(this.localisationService.getText("modloader-installing_external_dependencies", {name: pkg.name, author: pkg.author}));
 
-        let command: string = `${path.join(process.cwd(), globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe/pnpm.exe" : "node_modules/@pnpm/exe/pnpm.exe")} install `;
+        const pnpmPath = path.join(process.cwd(), (globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe"), (os.platform() === "win32" ? "pnpm.exe" : "pnpm"));
+        let command: string = `${pnpmPath} install `;
         command += dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`).join(" ");
         execSync(command, { cwd: modPath });
 
