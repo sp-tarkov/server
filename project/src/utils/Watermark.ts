@@ -112,7 +112,7 @@ export class Watermark
     public getVersionTag(withEftVersion = false): string
     {
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} RC2 - ${this.localisationService.getText("bleeding_edge_build")}`
+            ? `${this.akiConfig.akiVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
             : this.akiConfig.akiVersion;
 
         if (withEftVersion)
@@ -132,7 +132,7 @@ export class Watermark
     public getInGameVersionLabel(): string
     {
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion}-RC2 - BLEEDINGEDGE`
+            ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE`
             : this.akiConfig.akiVersion;
 
         return `${this.akiConfig.projectName} ${versionTag}`;
