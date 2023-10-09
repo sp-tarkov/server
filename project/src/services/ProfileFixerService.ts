@@ -21,6 +21,7 @@ import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { ConfigServer } from "../servers/ConfigServer";
 import { DatabaseServer } from "../servers/DatabaseServer";
+import { HashUtil } from "../utils/HashUtil";
 import { JsonUtil } from "../utils/JsonUtil";
 import { TimeUtil } from "../utils/TimeUtil";
 import { Watermark } from "../utils/Watermark";
@@ -43,6 +44,7 @@ export class ProfileFixerService
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer
     )
@@ -879,13 +881,9 @@ export class ProfileFixerService
                                     this.logger.warning(`Non-default quest: ${activeQuest._id} from trader: ${activeQuest.traderId} removed from RepeatableQuests list in profile`);
                                     repeatable.activeQuests.splice(repeatable.activeQuests.findIndex(x => x._id === activeQuest._id), 1);
                                 }
-
-                                continue;
                             }
                         }
                     }
-
-                    
                 }
             }
         }
@@ -968,6 +966,43 @@ export class ProfileFixerService
     }
 
     /**
+     * 3.7.0 moved AIDs to be numeric, old profiles need to be migrated
+     * We store the old AID value in new field `sessionId`
+     * @param fullProfile Profile to update
+     */
+    public fixIncorrectAidValue(fullProfile: IAkiProfile): void
+    {
+        // Not a number, regenerate
+        if (isNaN(fullProfile.characters.pmc.aid))
+        {
+            fullProfile.characters.pmc.sessionId = <string><unknown>fullProfile.characters.pmc.aid;
+            fullProfile.characters.pmc.aid = this.hashUtil.generateAccountId();
+
+            fullProfile.characters.scav.sessionId = <string><unknown>fullProfile.characters.pmc.sessionId;
+            fullProfile.characters.scav.aid = fullProfile.characters.pmc.aid;
+
+            fullProfile.info.aid = fullProfile.characters.pmc.aid;
+
+            this.logger.debug(`Migrated AccountId from: ${fullProfile.characters.pmc.sessionId} to numeric to: ${fullProfile.characters.pmc.aid}`);
+        }
+    }
+
+    /**
+     * Bsg nested `stats` into a sub object called 'eft'
+     * @param fullProfile Profile to check for and migrate stats data
+     */
+    public migrateStatsToNewStructure(fullProfile: IAkiProfile): void
+    {
+        // Data is in old structure, migrate
+        if ("OverallCounters" in fullProfile.characters.pmc.Stats)
+        {
+            this.logger.debug("Migrating stats object into new structure");
+            const statsCopy = this.jsonUtil.clone(fullProfile.characters.pmc.Stats);
+            fullProfile.characters.pmc.Stats.Eft = <any><unknown>statsCopy;
+        }
+    }
+
+    /**
      * 26126 (7th August) requires bonuses to have an ID, these were not included in the default profile presets
      * @param pmcProfile Profile to add missing IDs to
      */
@@ -976,31 +1011,35 @@ export class ProfileFixerService
         let foundBonus = false;
         for (const bonus of pmcProfile.Bonuses)
         {
-            // Bonus lacks id, find matching hideout area / stage / bonus
-            if (!bonus.id)
+            if (bonus.id)
             {
-                for (const area of this.databaseServer.getTables().hideout.areas)
-                { // TODO: skip if no stages
-                    for (const stageIndex in area.stages)
-                    {
-                        const stageInfo = area.stages[stageIndex];
-                        const matchingBonus = stageInfo.bonuses.find(x => x.templateId === bonus.templateId && x.type === bonus.type);
-                        if (matchingBonus)
-                        {
-                            // Add id to bonus, flag bonus as found and exit stage loop
-                            bonus.id = matchingBonus.id;
-                            this.logger.warning(`Added missing Id: ${bonus.id} to bonus: ${bonus.type}`);
-                            foundBonus = true;
-                            break;
-                        }
-                    }
+                // Exists already, skip
+                continue;
+            }
 
-                    // We've found the bonus we're after, break out of area loop
-                    if (foundBonus)
+            // Bonus lacks id, find matching hideout area / stage / bonus
+            for (const area of this.databaseServer.getTables().hideout.areas)
+            { 
+                // TODO: skip if no stages
+                for (const stageIndex in area.stages)
+                {
+                    const stageInfo = area.stages[stageIndex];
+                    const matchingBonus = stageInfo.bonuses.find(x => x.templateId === bonus.templateId && x.type === bonus.type);
+                    if (matchingBonus)
                     {
-                        foundBonus = false;
+                        // Add id to bonus, flag bonus as found and exit stage loop
+                        bonus.id = matchingBonus.id;
+                        this.logger.debug(`Added missing Id: ${bonus.id} to bonus: ${bonus.type}`);
+                        foundBonus = true;
                         break;
                     }
+                }
+
+                // We've found the bonus we're after, break out of area loop
+                if (foundBonus)
+                {
+                    foundBonus = false;
+                    break;
                 }
             }
         }
@@ -1008,12 +1047,13 @@ export class ProfileFixerService
 
     /**
      * At some point the property name was changed,migrate data across to new name
-     * @param pmcProfile 
+     * @param pmcProfile Profile to migrate improvements in
      */
     protected migrateImprovements(pmcProfile: IPmcData): void
     {
         if (pmcProfile.Hideout["Improvements"])
         {
+            // Correct name is `Improvement`
             pmcProfile.Hideout.Improvement = this.jsonUtil.clone(pmcProfile.Hideout["Improvements"]);
             delete pmcProfile.Hideout["Improvements"];
             this.logger.success("Successfully migrated hideout Improvements data to new location, deleted old data");

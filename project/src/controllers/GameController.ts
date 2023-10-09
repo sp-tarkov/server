@@ -36,7 +36,6 @@ import { LocalisationService } from "../services/LocalisationService";
 import { OpenZoneService } from "../services/OpenZoneService";
 import { ProfileFixerService } from "../services/ProfileFixerService";
 import { SeasonalEventService } from "../services/SeasonalEventService";
-import { HashUtil } from "../utils/HashUtil";
 import { JsonUtil } from "../utils/JsonUtil";
 import { RandomUtil } from "../utils/RandomUtil";
 import { TimeUtil } from "../utils/TimeUtil";
@@ -58,7 +57,6 @@ export class GameController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
-        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -120,8 +118,6 @@ export class GameController
             this.adjustMapBotLimits();
         }
 
-        
-
         this.adjustLooseLootSpawnProbabilities();
 
         // repeatableQuests are stored by in profile.Quests due to the responses of the client (e.g. Quests in offraidData)
@@ -166,7 +162,9 @@ export class GameController
             if (pmcProfile.Inventory)
             {
                 // MUST occur prior to `profileFixerService.checkForAndFixPmcProfileIssues()`
-                this.fixIncorrectAidValue(fullProfile);
+                this.profileFixerService.fixIncorrectAidValue(fullProfile);
+
+                this.profileFixerService.migrateStatsToNewStructure(fullProfile);
                 
                 this.sendPraporGiftsToNewProfiles(pmcProfile);
 
@@ -326,28 +324,6 @@ export class GameController
         this.logger.warning("DEVELOPER: SETTING ALL SCAV CASES TO 40 SECONDS");
     }
 
-    /**
-     * 3.7.0 moved AIDs to be numeric, old profiles need to be migrated
-     * We store the old AID value in new field `sessionId`
-     * @param fullProfile Profile to update
-     */
-    protected fixIncorrectAidValue(fullProfile: IAkiProfile): void
-    {
-        // Not a number, regenerate
-        if (isNaN(fullProfile.characters.pmc.aid))
-        {
-            fullProfile.characters.pmc.sessionId = <string><unknown>fullProfile.characters.pmc.aid;
-            fullProfile.characters.pmc.aid = this.hashUtil.generateAccountId();
-
-            fullProfile.characters.scav.sessionId = <string><unknown>fullProfile.characters.pmc.sessionId;
-            fullProfile.characters.scav.aid = fullProfile.characters.pmc.aid;
-
-            fullProfile.info.aid = fullProfile.characters.pmc.aid;
-
-            this.logger.debug(`Migrated AccountId from: ${fullProfile.characters.pmc.sessionId} to numeric to: ${fullProfile.characters.pmc.aid}`);
-        }
-    }
-
     /** Apply custom limits on bot types as defined in configs/location.json/botTypeLimits */
     protected adjustMapBotLimits(): void
     {
@@ -386,9 +362,7 @@ export class GameController
                         }
                     );
                 }
-                
             }
-            
         }
     }
 
