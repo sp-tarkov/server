@@ -419,15 +419,12 @@ export class QuestController
         // Show modal on player screen
         this.sendSuccessDialogMessageOnQuestComplete(sessionID, pmcData, completedQuestId, questRewards);
 
-        // Send completed + failed quests into function
-        this.addTimeLockedQuestsToProfile(pmcData, [completedQuest, ...questsToFail], body.qid);
-
         // Add diff of quests before completion vs after for client response
         const questDelta = this.questHelper.getDeltaQuests(beforeQuests, this.getClientQuests(sessionID));
         completeQuestResponse.profileChanges[sessionID].quests = questDelta;
 
-        // Update trader info data on response
-        Object.assign(completeQuestResponse.profileChanges[sessionID].traderRelations, pmcData.TradersInfo);
+        // Send newly available + failed quests into function
+        this.addTimeLockedQuestsToProfile(pmcData, [...questDelta, ...questsToFail], body.qid);
 
         // Check if it's a repeatable quest. If so, remove from Quests and repeatable.activeQuests list + move to repeatable.inactiveQuests
         for (const currentRepeatable of pmcData.RepeatableQuests)
@@ -512,13 +509,14 @@ export class QuestController
         // Iterate over quests, look for quests with right criteria
         for (const quest of quests)
         {
-            // If newly available quest has prereq of completed quest + availableAfter value > 0 (quest has wait time)
+            // If quest has prereq of completed quest + availableAfter value > 0 (quest has wait time)
             const nextQuestWaitCondition = quest.conditions.AvailableForStart.find(x => x._props.target === completedQuestId && x._props.availableAfter > 0);
             if (nextQuestWaitCondition)
             {
+                // Now + wait time
                 const availableAfterTimestamp = this.timeUtil.getTimestamp() + nextQuestWaitCondition._props.availableAfter;
 
-                // Add/update quest to profile with status of AvailableAfter
+                // Update quest in profile with status of AvailableAfter
                 const existingQuestInProfile = pmcData.Quests.find(x => x.qid === quest._id);
                 if (existingQuestInProfile)
                 {
