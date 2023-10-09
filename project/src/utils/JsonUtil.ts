@@ -1,6 +1,6 @@
 import fixJson from "json-fixer";
-import { jsonc } from "jsonc";
 import JSON5 from "json5";
+import { jsonc } from "jsonc";
 import { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
 import { inject, injectable } from "tsyringe";
 import { ILogger } from "../models/spt/utils/ILogger";
@@ -243,6 +243,6 @@ export class JsonUtil
      */
     public clone<T>(objectToClone: T): T
     {
-        return this.deserialize<T>(this.serialize(objectToClone));
+        return structuredClone(objectToClone);
     }
 }
