@@ -998,6 +998,10 @@ export class ProfileFixerService
         {
             this.logger.debug("Migrating stats object into new structure");
             const statsCopy = this.jsonUtil.clone(fullProfile.characters.pmc.Stats);
+
+            // Clear stats object
+            fullProfile.characters.pmc.Stats = {Eft: null};
+
             fullProfile.characters.pmc.Stats.Eft = <any><unknown>statsCopy;
         }
     }
