@@ -730,7 +730,7 @@
     },
     "rogueLighthouseSpawnTimeSettings": {
         "enabled": true,
-        "waitTimeSeconds": 180
+        "waitTimeSeconds": 120
     },
     "fixEmptyBotWavesSettings": {
         "enabled": true,
