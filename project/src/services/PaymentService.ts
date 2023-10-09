@@ -95,9 +95,9 @@ export class PaymentService
 
         pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
         this.traderHelper.lvlUp(request.tid, pmcData);
-        Object.assign(output.profileChanges[sessionID].traderRelations, { [request.tid]: pmcData.TradersInfo[request.tid] });
-
+        
         this.logger.debug("Item(s) taken. Status OK.");
+
         return output;
     }
 
@@ -200,7 +200,6 @@ export class PaymentService
 
         pmcData.TradersInfo[body.tid].salesSum = saleSum;
         this.traderHelper.lvlUp(body.tid, pmcData);
-        Object.assign(output.profileChanges[sessionID].traderRelations, { [body.tid]: { "salesSum": saleSum } });
 
         return output;
     }
