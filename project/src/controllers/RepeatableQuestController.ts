@@ -1219,46 +1219,49 @@ export class RepeatableQuestController
                 const repeatableConfig = this.questConfig.repeatableQuests.find(x => x.name === currentRepeatable.name);
                 const questTypePool = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
                 // TODO: somehow we need to reduce the questPool by the currently active quests (for all repeatables)
-                let quest: IRepeatableQuest = null;
-                let lifeline = 0;
-                while (!quest && questTypePool.types.length > 0)
+                let newRepeatableQuest: IRepeatableQuest = null;
+                let attemptsToGenerateQuest = 0;
+                while (!newRepeatableQuest && questTypePool.types.length > 0)
                 {
-                    quest = this.generateRepeatableQuest(
+                    newRepeatableQuest = this.generateRepeatableQuest(
                         pmcData.Info.Level,
                         pmcData.TradersInfo,
                         questTypePool,
                         repeatableConfig
                     );
-                    lifeline++;
-                    if (lifeline > 10)
+                    attemptsToGenerateQuest++;
+                    if (attemptsToGenerateQuest > 10)
                     {
                         this.logger.debug("We were stuck in repeatable quest generation. This should never happen. Please report");
                         break;
                     }
                 }
-                if (quest)
+
+                if (newRepeatableQuest)
                 {
                     // Add newly generated quest to daily/weekly array
-                    quest.side = repeatableConfig.side;
-                    currentRepeatable.activeQuests.push(quest);
-                    currentRepeatable.changeRequirement[quest._id] = {
-                        changeCost: quest.changeCost,
-                        changeStandingCost: quest.changeStandingCost
+                    newRepeatableQuest.side = repeatableConfig.side;
+                    currentRepeatable.activeQuests.push(newRepeatableQuest);
+                    currentRepeatable.changeRequirement[newRepeatableQuest._id] = {
+                        changeCost: newRepeatableQuest.changeCost,
+                        changeStandingCost: newRepeatableQuest.changeStandingCost
                     };
                 }
-                // we found and replaced the quest in current repeatable
+
+                // Found and replaced the quest in current repeatable
                 repeatableToChange = this.jsonUtil.clone(currentRepeatable);
                 delete repeatableToChange.inactiveQuests;
                 break;
             }
         }
-        let output = this.eventOutputHolder.getOutput(sessionID);
 
+        let output = this.eventOutputHolder.getOutput(sessionID);
         if (!repeatableToChange)
         {
-            return this.httpResponse.appendErrorToOutput(output, "Could not find repeatable to replace");
+            return this.httpResponse.appendErrorToOutput(output, "Unable to find repeatable quest to replace");
         }
 
+        // Charge player money for replacing quest
         for (const cost of changeRequirement.changeCost)
         {
             output = this.paymentService.addPaymentToOutput(pmcData, cost.templateId, cost.count, sessionID, output);
@@ -1270,13 +1273,9 @@ export class RepeatableQuestController
 
         // Reduce standing with trader for not doing their quest
         const droppedQuestTrader = pmcData.TradersInfo[existingQuestTraderId];
-        output.profileChanges[sessionID].traderRelations = {
-            traderId: {
-                saleSum: droppedQuestTrader.salesSum,
-                standing: droppedQuestTrader.standing
-            }
-        };
+        droppedQuestTrader.standing -= changeRequirement.changeStandingCost;
 
+        // Update client output with new repeatable
         output.profileChanges[sessionID].repeatableQuests = [repeatableToChange];
 
         return output;
