@@ -97,7 +97,7 @@ export class EventOutputHolder
     /**
      * Convert the internal trader data object into an object we can send to the client
      * @param traderData server data for traders
-     * @returns 
+     * @returns dict of trader id + TraderData
      */
     protected constructTraderRelations(traderData: Record<string, TraderInfo>): Record<string, TraderData>
     {
