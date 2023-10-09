@@ -7,10 +7,10 @@
         "weapon": 0.045,
         "armor": 0.03
     },
-	"maxIntellectGainPerRepair": {
-		"kit": 0.6,
-		"trader": 0.6
-	},
+    "maxIntellectGainPerRepair": {
+        "kit": 0.6,
+        "trader": 0.6
+    },
     "repairKit": {
         "armor": {
             "rarityWeight": {
