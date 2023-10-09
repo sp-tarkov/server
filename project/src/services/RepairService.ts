@@ -142,7 +142,8 @@ export class RepairService
      * @param repairDetails details of item repaired, cost/item
      * @param pmcData Profile to add points to
      */
-    public addRepairSkillPoints(sessionId: string,
+    public addRepairSkillPoints(
+        sessionId: string,
         repairDetails: RepairDetails,
         pmcData: IPmcData): void
     {
@@ -158,6 +159,7 @@ export class RepairService
             const itemDetails = this.itemHelper.getItem(repairDetails.repairedItem._tpl);
             if (!itemDetails[0])
             {
+                // No item found
                 this.logger.error(this.localisationService.getText("repair-unable_to_find_item_in_db", repairDetails.repairedItem._tpl));
 
                 return;
@@ -170,7 +172,24 @@ export class RepairService
             this.questHelper.rewardSkillPoints(sessionId, pmcData, vestSkillToLevel, pointsToAddToVestSkill);
         }
 
-        this.questHelper.rewardSkillPoints(sessionId, pmcData, SkillTypes.INTELLECT, repairDetails.repairAmount / 10);
+        // Handle giving INT to player - differs if using kit/trader and weapon vs armor
+        let intellectGainedFromRepair: number;
+        if (repairDetails.repairedByKit)
+        {
+            const intRepairMultiplier = (this.itemHelper.isOfBaseclass(repairDetails.repairedItem._tpl, BaseClasses.WEAPON))
+                ? this.repairConfig.repairKitIntellectGainMultiplier.weapon
+                : this.repairConfig.repairKitIntellectGainMultiplier.armor;
+
+            // limit gain to a max value defined in config.maxIntellectGainPerRepair
+            intellectGainedFromRepair = Math.min(repairDetails.repairAmount * intRepairMultiplier, this.repairConfig.maxIntellectGainPerRepair.kit);
+        }
+        else
+        {
+            // Trader repair - Not as accurate as kit, needs data from live
+            intellectGainedFromRepair = Math.min(repairDetails.repairAmount / 10, this.repairConfig.maxIntellectGainPerRepair.trader);
+        }
+
+        this.questHelper.rewardSkillPoints(sessionId, pmcData, SkillTypes.INTELLECT, intellectGainedFromRepair);
     }
     
     /**
