@@ -7,6 +7,7 @@
         {
             "name": "Debug",
             "type": "node",
+            "runtimeVersion": "18.15.0",
             "request": "launch",
             "runtimeExecutable": "npm",
             "sourceMaps": true,
@@ -23,6 +24,7 @@
         {
             "name": "Run Jest UnitTests",
             "type": "node",
+            "runtimeVersion": "18.15.0",
             "request": "launch",
             "program": "${workspaceFolder}/node_modules/.bin/jest",
             "args": [
