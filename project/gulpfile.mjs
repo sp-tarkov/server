@@ -62,7 +62,8 @@ const fetchPackageImage = async () =>
 
 const updateBuildProperties = async (cb) =>
 {
-    if(os.platform() !== "win32") {
+    if (os.platform() !== "win32")
+    {
         cb();
         return;
     }
