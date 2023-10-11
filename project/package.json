@@ -13,7 +13,7 @@
     "scripts": {
         "profilerCompile": "tsc -p test_tsconfig.json",
         "run:profiler": "npm run profilerCompile && node --prof --inspect --trace-warnings obj/ide/TestEntry.js",
-        "check:circular": "npx madge --circular --extensions ts ./src/",
+        "check:circular": "madge --circular --extensions ts ./src/",
         "lint": "rome ci src --formatter-enabled=false --max-diagnostics=200",
         "lint:fix": "eslint --fix --ext .ts src/**",
         "test:debug": "gulp test:debug",
@@ -66,7 +66,6 @@
         "gulp-execa": "5.0.0",
         "gulp-rename": "2.0.0",
         "jest": "29.6.2",
-        "jshint": "2.13.6",
         "madge": "6.1.0",
         "pkg": "5.8.1",
         "pkg-fetch": "3.5.2",
@@ -76,8 +75,7 @@
         "ts-node-dev": "2.0.0",
         "tsconfig-paths": "4.2.0",
         "typedoc": "0.24.8",
-        "typemoq": "2.1.0",
-        "utf-8-validate": "6.0.3"
+        "typemoq": "2.1.0"
     },
     "overrides": {
         "pkg": {
