@@ -2,7 +2,7 @@
 
 !src
 !types
-!base_tsconfig.json
+!tsconfig.base.json
 !tsconfig.json
 !package.json
 !typedoc.json

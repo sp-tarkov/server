@@ -1,5 +1,5 @@
 {
-    "extends": "./base_tsconfig.json",
+    "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "resolveJsonModule": true,
         "outDir": "obj",

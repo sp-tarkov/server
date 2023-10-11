@@ -11,7 +11,7 @@
         "node": "18.15.0"
     },
     "scripts": {
-        "profilerCompile": "tsc -p test_tsconfig.json",
+        "profilerCompile": "tsc -p tsconfig.test.json",
         "run:profiler": "npm run profilerCompile && node --prof --inspect --trace-warnings obj/ide/TestEntry.js",
         "check:circular": "madge --circular --extensions ts ./src/",
         "lint": "rome ci src --formatter-enabled=false --max-diagnostics=200",
@@ -22,7 +22,7 @@
         "build:release": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:release",
         "build:debug": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:debug",
         "build:bleeding": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleeding",
-        "gen:types": "tsc -p typedef_tsconfig.json",
+        "gen:types": "tsc -p tsconfig.typedef.json",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "run:server": "gulp run:server"
     },

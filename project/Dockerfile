@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json .
 RUN yarn
 
-COPY .parcelrc tsconfig.json base_tsconfig.json ./
+COPY .parcelrc tsconfig.json tsconfig.base.json ./
 COPY src ./src
 RUN yarn test:comp-linux
 
