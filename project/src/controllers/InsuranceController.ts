@@ -13,7 +13,7 @@ import {
 } from "../models/eft/insurance/IGetInsuranceCostResponseData";
 import { IInsureRequestData } from "../models/eft/insurance/IInsureRequestData";
 import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { Insurance } from "../models/eft/profile/IAkiProfile";
+import { Insurance, ISystemData } from "../models/eft/profile/IAkiProfile";
 import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
 import { ConfigTypes } from "../models/enums/ConfigTypes";
 import { MessageType } from "../models/enums/MessageType";
@@ -117,14 +117,11 @@ export class InsuranceController
      */
     protected processInsuredItems(insuranceDetails: Insurance[], sessionID: string): void
     {
-        this.logger.debug(`Processing ${insuranceDetails.length} insurance packages, which include ${insuranceDetails.map(ins => ins.items.length).reduce((acc, len) => acc + len, 0)} items, for profile ${sessionID}`);
+        this.logger.debug(`Processing ${insuranceDetails.length} insurance packages, which includes a total of ${insuranceDetails.map(ins => ins.items.length).reduce((acc, len) => acc + len, 0)} items, in profile ${sessionID}`);
 
-        // We start from the end of the array and move towards the beginning, removing elements as we go. This way, the
-        // indices of the elements that have not been processed yet do not change, which ensures deletions never miss.
-        for (let i = insuranceDetails.length - 1; i >= 0; i--)
+        // Iterate over each of the insurance packages.
+        insuranceDetails.forEach(insured => 
         {
-            const insured = insuranceDetails[i];
-
             // Find items that should be deleted from the insured items.
             const itemsToDelete = this.findItemsToDelete(insured);
 
@@ -134,9 +131,28 @@ export class InsuranceController
             // Send the mail to the player.
             this.sendMail(sessionID, insured, insured.items.length === 0);
 
-            // Remove the insurance package from the profile now that it's been fully processed.
-            this.saveServer.getProfile(sessionID).insurance.splice(i, 1);
-        }
+            // Remove the fully processed insurance package from the profile.
+            this.removeInsurancePackageFromProfile(sessionID, insured.messageContent.systemData);
+        });
+    }
+
+    /**
+     * Remove an insurance package from a profile using the package's system data information.
+     * 
+     * @param sessionID The session ID of the profile to remove the package from.
+     * @param index The array index of the insurance package to remove.
+     * @returns void
+     */
+    protected removeInsurancePackageFromProfile(sessionID: string, packageInfo: ISystemData): void
+    {
+        const profile = this.saveServer.getProfile(sessionID);
+        profile.insurance = profile.insurance.filter(insurance => 
+            insurance.messageContent.systemData.date !== packageInfo.date ||
+            insurance.messageContent.systemData.time !== packageInfo.time ||
+            insurance.messageContent.systemData.location !== packageInfo.location
+        );
+        
+        this.logger.debug(`Removed insurance package with date: ${packageInfo.date}, time: ${packageInfo.time}, and location: ${packageInfo.location} from profile ${sessionID}. Remaining packages: ${profile.insurance.length}`);
     }
 
     /**
