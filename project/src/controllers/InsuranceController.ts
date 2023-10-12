@@ -151,14 +151,16 @@ export class InsuranceController
      * @param insured - The insured items to build a removal array from.
      * @returns An array of IDs representing items that should be deleted.
      */
-    protected findItemsToDelete(insured: Insurance): string[]
+    protected findItemsToDelete(insured: Insurance): Set<string>
     {
-        const toDelete: string[] = [];
+        const toDelete = new Set<string>();
         const childrenGroupedByParent = new Map<string, Item[]>();
+        const itemNamesToDelete: string[] = [];
         
         insured.items.forEach(insuredItem =>
         {
             const itemDbDetails = this.itemHelper.getItem(insuredItem._tpl);
+            const itemName = itemDbDetails ? itemDbDetails[1]?._props?.ShortName : "Unknown Item";
 
             // Use the _tpl property from the parent item to get the parent item details
             const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
@@ -177,7 +179,8 @@ export class InsuranceController
                 // Make a roll to decide if this item should be deleted, and if so, add it and its children to the deletion list.
                 if (this.makeRollAndMarkForDeletion(insuredItem, insured.traderId, toDelete))
                 {
-                    toDelete.push(...itemWithChildren);
+                    itemWithChildren.forEach(childId => toDelete.add(childId));
+                    itemNamesToDelete.push(itemName);
                 }
             }
             else if (insuredItem.parentId)
@@ -192,8 +195,13 @@ export class InsuranceController
         {
             this.sortAndFilterChildren(children, insured.traderId, toDelete);
         });
-        
-        this.logger.debug(`Marked ${toDelete.length} items for deletion from insurance.`);
+
+        // When items are selected for deletion, log the number of items and their names.
+        if (toDelete.size) 
+        {
+            this.logger.debug(`Marked ${toDelete.size} items for deletion from insurance. Items: ${itemNamesToDelete.join(", ")}`);
+        }
+
         return toDelete;
     }
 
@@ -245,11 +253,11 @@ export class InsuranceController
      * @param toDelete The array accumulating the IDs of items to be deleted.
      * @returns true if the item is marked for deletion, otherwise false.
      */
-    protected makeRollAndMarkForDeletion(item: Item, traderId: string, toDelete: string[]): boolean
+    protected makeRollAndMarkForDeletion(item: Item, traderId: string, toDelete: Set<string>): boolean
     {
         if (this.rollForItemDelete(item, traderId, toDelete))
         {
-            toDelete.push(item._id);
+            toDelete.add(item._id);
             return true;
         }
         return false;
@@ -281,7 +289,7 @@ export class InsuranceController
      * @param toDelete The array that accumulates the IDs of the items to be deleted.
      * @returns void
      */
-    protected sortAndFilterChildren(children: Item[], traderId: string, toDelete: string[]): void
+    protected sortAndFilterChildren(children: Item[], traderId: string, toDelete: Set<string>): void
     {
         // Sort the children by their max price in descending order.
         children.sort((a, b) => this.itemHelper.getItemMaxPrice(b._tpl) - this.itemHelper.getItemMaxPrice(a._tpl));
@@ -298,7 +306,7 @@ export class InsuranceController
         
         // Delete the most valuable children based on the number of successful rolls.
         const mostValuableChildrenToDelete = children.slice(0, successfulRolls).map(child => child._id);
-        toDelete.push(...mostValuableChildrenToDelete);
+        mostValuableChildrenToDelete.forEach(valuableChild => toDelete.add(valuableChild));
     }
 
     /**
@@ -308,9 +316,9 @@ export class InsuranceController
      * @param toDelete The items that should be deleted.
      * @returns void
      */
-    protected removeItemsFromInsurance(insured: Insurance, toDelete: string[]): void
+    protected removeItemsFromInsurance(insured: Insurance, toDelete: Set<string>): void
     {
-        insured.items = insured.items.filter(item => !toDelete.includes(item._id));
+        insured.items = insured.items.filter(item => !toDelete.has(item._id));
     }
 
     /**
@@ -352,7 +360,7 @@ export class InsuranceController
      * @param itemsBeingDeleted List of items that are already slated for removal.
      * @returns true if the insured item should be removed from inventory, false otherwise.
      */
-    protected rollForItemDelete(insuredItem: Item, traderId: string, itemsBeingDeleted: string[]): boolean 
+    protected rollForItemDelete(insuredItem: Item, traderId: string, itemsBeingDeleted: Set<string>): boolean 
     {
         const maxRoll = 9999;
         const conversionFactor = 100;
@@ -360,7 +368,7 @@ export class InsuranceController
         const returnChance = this.randomUtil.getInt(0, maxRoll) / conversionFactor;
         const traderReturnChance = this.insuranceConfig.returnChancePercent[traderId];
         const exceedsTraderReturnChance = returnChance >= traderReturnChance;
-        const isItemAlreadyBeingDeleted = itemsBeingDeleted.includes(insuredItem._id);
+        const isItemAlreadyBeingDeleted = itemsBeingDeleted.has(insuredItem._id);
 
         return exceedsTraderReturnChance && !isItemAlreadyBeingDeleted;
     }
