@@ -23,7 +23,8 @@
         "Interchange Cooperation",
         "tunnel_shared",
         "EXFIL_ScavCooperation",
-        "Factory Gate"
+        "Factory Gate",
+		"Exit_E10_coop"
     ],
     "carExtractBaseStandingGain": 0.4,
     "scavExtractGain": 0.01,
