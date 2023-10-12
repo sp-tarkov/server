@@ -171,12 +171,10 @@ export class InsuranceController
     {
         const toDelete = new Set<string>();
         const childrenGroupedByParent = new Map<string, Item[]>();
-        const itemNamesToDelete: string[] = [];
         
         insured.items.forEach(insuredItem =>
         {
             const itemDbDetails = this.itemHelper.getItem(insuredItem._tpl);
-            const itemName = itemDbDetails ? itemDbDetails[1]?._props?.ShortName : "Unknown Item";
 
             // Use the _tpl property from the parent item to get the parent item details
             const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
@@ -196,7 +194,6 @@ export class InsuranceController
                 if (this.makeRollAndMarkForDeletion(insuredItem, insured.traderId, toDelete))
                 {
                     itemWithChildren.forEach(childId => toDelete.add(childId));
-                    itemNamesToDelete.push(itemName);
                 }
             }
             else if (insuredItem.parentId)
@@ -215,7 +212,7 @@ export class InsuranceController
         // When items are selected for deletion, log the number of items and their names.
         if (toDelete.size) 
         {
-            this.logger.debug(`Marked ${toDelete.size} items for deletion from insurance. Items: ${itemNamesToDelete.join(", ")}`);
+            this.logger.debug(`Marked ${toDelete.size} items for deletion from insurance.`);
         }
 
         return toDelete;
