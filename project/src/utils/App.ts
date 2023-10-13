@@ -1,6 +1,7 @@
 import sourcemapSupport from "source-map-support";
 import { inject, injectable, injectAll } from "tsyringe";
 
+import os from "node:os";
 import { OnLoad } from "../di/OnLoad";
 import { OnUpdate } from "../di/OnUpdate";
 import { ILogger } from "../models/spt/utils/ILogger";
@@ -12,7 +13,6 @@ import { TimeUtil } from "./TimeUtil";
 export class App
 {
     protected onUpdateLastRun = {};
-    protected os = require("os");
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -32,9 +32,9 @@ export class App
         // execute onLoad callbacks
         this.logger.info(this.localisationService.getText("executing_startup_callbacks"));
 
-        this.logger.debug(`OS: ${this.os.arch()} | ${this.os.version()} | ${process.platform}`);
-        this.logger.debug(`CPU: ${this.os?.cpus()[0]?.model} cores: ${this.os.availableParallelism()}`);
-        this.logger.debug(`RAM: ${(this.os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB`);
+        this.logger.debug(`OS: ${os.arch()} | ${os.version()} | ${process.platform}`);
+        this.logger.debug(`CPU: ${os.cpus()[0]?.model} cores: ${os.cpus().length}`);
+        this.logger.debug(`RAM: ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.argv[0])}`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.execPath)}`);
 

@@ -43,8 +43,6 @@ import { TimeUtil } from "../utils/TimeUtil";
 @injectable()
 export class GameController
 {
-    protected os = require("os");
-
     protected httpConfig: IHttpConfig;
     protected coreConfig: ICoreConfig;
     protected locationConfig: ILocationConfig;
