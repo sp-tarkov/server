@@ -6,7 +6,6 @@ import { ProfileHelper } from "../helpers/ProfileHelper";
 import { TraderHelper } from "../helpers/TraderHelper";
 import { IPmcData } from "../models/eft/common/IPmcData";
 import { Item } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
 import { IGetInsuranceCostRequestData } from "../models/eft/insurance/IGetInsuranceCostRequestData";
 import {
     IGetInsuranceCostResponseData
@@ -127,7 +126,10 @@ export class InsuranceController
 
             // Actually remove them.
             this.removeItemsFromInsurance(insured, itemsToDelete);
-            
+
+            // Fix any orphaned items.
+            this.adoptOrphanedItems(insured);
+
             // Send the mail to the player.
             this.sendMail(sessionID, insured, insured.items.length === 0);
 
@@ -156,61 +158,28 @@ export class InsuranceController
     }
 
     /**
-     * Build an array of items to delete from the insured items.
-     * 
-     * This method orchestrates several steps:
-     *  - Filters items based on their presence in the database and their raid moddability.
-     *  - Sorts base and independent child items to consider for deletion.
-     *  - Groups child items by their parent for later evaluation.
-     *  - Evaluates grouped child items to decide which should be deleted, based on their value and a random roll.
-     * 
-     * @param insured - The insured items to build a removal array from.
-     * @returns An array of IDs representing items that should be deleted.
+     * Finds the items that should be deleted based on the given Insurance object.
+     *
+     * @param insured The insurance object containing the items to evaluate for deletion.
+     * @returns A Set containing the IDs of items that should be deleted.
      */
     protected findItemsToDelete(insured: Insurance): Set<string>
     {
         const toDelete = new Set<string>();
-        const childrenGroupedByParent = new Map<string, Item[]>();
-        
-        insured.items.forEach(insuredItem =>
-        {
-            const itemDbDetails = this.itemHelper.getItem(insuredItem._tpl);
 
-            // Use the _tpl property from the parent item to get the parent item details
-            const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
-            const parentItemDbDetailsArray = parentItem ? this.itemHelper.getItem(parentItem._tpl) : null;
-            const parentItemDbDetails = parentItemDbDetailsArray ? parentItemDbDetailsArray[1] : null;
+        // Populate a Map object of items for quick lookup by their ID and use it to populate a Map of main-parent items
+        // and each of their attachments. For example, a gun mapped to each of its attachments.
+        const itemsMap = this.populateItemsMap(insured);
+        const parentAttachmentsMap = this.populateParentAttachmentsMap(insured, itemsMap);
 
-            // Filter out items not in the database or not raid moddable.
-            if (!this.filterByRaidModdability(insuredItem, parentItemDbDetails, itemDbDetails)) return;
-        
-            // Check for base or independent child items.
-            if (this.isBaseOrIndependentChild(insuredItem))
-            {
-                // Find child IDs if the item is a parent.
-                const itemWithChildren = this.itemHelper.findAndReturnChildrenByItems(insured.items, insuredItem._id);
-                
-                // Make a roll to decide if this item should be deleted, and if so, add it and its children to the deletion list.
-                if (this.makeRollAndMarkForDeletion(insuredItem, insured.traderId, toDelete))
-                {
-                    itemWithChildren.forEach(childId => toDelete.add(childId));
-                }
-            }
-            else if (insuredItem.parentId)
-            {
-                // This is a child item equipped to a parent... Group this child item by its parent.
-                this.groupChildrenByParent(insuredItem, childrenGroupedByParent);
-            }
-        });
-        
-        // Iterate through each group of children and sort and filter them for deletion.
-        childrenGroupedByParent.forEach((children) =>
-        {
-            this.sortAndFilterChildren(children, insured.traderId, toDelete);
-        });
+        // Process all items that are not attached, attachments. Those are handled separately, by value.
+        this.processRegularItems(insured, toDelete);
 
-        // When items are selected for deletion, log the number of items and their names.
-        if (toDelete.size) 
+        // Process attached, attachments, by value.
+        this.processAttachments(parentAttachmentsMap, itemsMap, insured.traderId, toDelete);
+
+        // Log the number of items marked for deletion, if any
+        if (toDelete.size)
         {
             this.logger.debug(`Marked ${toDelete.size} items for deletion from insurance.`);
         }
@@ -219,107 +188,217 @@ export class InsuranceController
     }
 
     /**
-     * Filters an item based on its existence in the database, raid moddability, and slot requirements.
-     * 
-     * @param item The item to be filtered.
-     * @param parentItemDbDetails The database details of the parent item, or null if the item has no parent.
-     * @param itemDbDetails A tuple where the first element is a boolean indicating if the item exists in the database,
-     *                      and the second element is the item details if it does.
-     * @returns true if the item exists in the database and neither of the following conditions are met:
-     *           - The item has the RaidModdable property set to false.
-     *           - The item is attached to a required slot in its parent item.
-     *          Otherwise, returns false.
+     * Populate a Map object of items for quick lookup by their ID.
+     *
+     * @param insured The insurance object containing the items to populate the map with.
+     * @returns A Map where the keys are the item IDs and the values are the corresponding Item objects.
      */
-    protected filterByRaidModdability(item: Item, parentItemDbDetails: ITemplateItem | null, itemDbDetails: [boolean, ITemplateItem]): boolean
+    protected populateItemsMap(insured: Insurance): Map<string, Item>
     {
-        // Check for RaidModdable property.
-        const isNotRaidModdable = itemDbDetails[1]?._props?.RaidModdable === false;
+        const itemsMap = new Map<string, Item>();
+        insured.items.forEach(item => itemsMap.set(item._id, item));
+        return itemsMap;
+    }
 
-        // Check for Slots in parent item details.
-        let isRequiredSlot = false;
-        if (parentItemDbDetails?._props?.Slots) 
+    /**
+     * Initialize a Map object that holds main-parents to all of their attachments. Note that "main-parent" in this
+     * context refers to the parent item that an attachment is attached to. For example, a suppressor attached to a gun,
+     * not the backpack that the gun is located in (the gun's parent).
+     *
+     * @param insured - The insurance object containing the items to evaluate.
+     * @param itemsMap - A Map object for quick item look-up by item ID.
+     * @returns A Map object containing parent item IDs to arrays of their attachment items.
+     */
+    protected populateParentAttachmentsMap(insured: Insurance, itemsMap: Map<string, Item>): Map<string, Item[]>
+    {
+        const mainParentToAttachmentsMap = new Map<string, Item[]>();
+        for (const insuredItem of insured.items)
         {
-            // Check if a Slot in parent details matches the slotId of the current item and is marked as required
-            isRequiredSlot = parentItemDbDetails._props.Slots.some(slot => slot._name === item.slotId && slot._required);
+            // Use the template ID from the item to get the parent item's template details.
+            const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
+
+            // Check if this is an attachment currently attached to its parent.
+            if (this.itemHelper.isAttachmentAttached(insuredItem))
+            {
+                // Filter out items not in the database or not raid moddable.
+                if (!this.itemHelper.isRaidModdable(insuredItem, parentItem))
+                {
+                    continue;
+                }
+
+                // Get the main parent of this attachment. (e.g., The gun that this suppressor is attached to.)
+                const mainParent = this.itemHelper.getAttachmentMainParent(insuredItem._id, itemsMap);
+                if (!mainParent)
+                {
+                    // Odd. The parent couldn't be found. Skip this attachment and warn.
+                    this.logger.warning(`Could not find main-parent for insured attachment: ${this.itemHelper.getItemName(insuredItem._tpl)}`);
+                    continue;
+                }
+
+                // Update (or add to) the main-parent to attachments map.
+                if (mainParentToAttachmentsMap.has(mainParent._id))
+                {
+                    mainParentToAttachmentsMap.get(mainParent._id).push(insuredItem);
+                }
+                else
+                {
+                    mainParentToAttachmentsMap.set(mainParent._id, [insuredItem]);
+                }
+            }
         }
-
-        return itemDbDetails[0] && !(isNotRaidModdable || isRequiredSlot);
+        return mainParentToAttachmentsMap;
     }
 
     /**
-     * Determines if an item is either a base item or a child item that is not equipped to its parent.
-     * 
-     * @param item The item to check.
-     * @returns true if the item is a base or an independent child item, otherwise false.
-     */
-    protected isBaseOrIndependentChild(item: Item): boolean
-    {
-        return item.slotId === "hideout" || item.slotId === "main" || !isNaN(Number(item.slotId));
-    }
-
-    /**
-     * Makes a roll to determine if a given item should be deleted. If the roll is successful, the item's ID is added 
-     * to the `toDelete` array.
-     * 
-     * @param item The item for which the roll is made.
-     * @param traderId The ID of the trader to consider in the rollForItemDelete method.
-     * @param toDelete The array accumulating the IDs of items to be deleted.
-     * @returns true if the item is marked for deletion, otherwise false.
-     */
-    protected makeRollAndMarkForDeletion(item: Item, traderId: string, toDelete: Set<string>): boolean
-    {
-        if (this.rollForItemDelete(item, traderId, toDelete))
-        {
-            toDelete.add(item._id);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Groups child items by their parent IDs in a Map data structure.
-     * 
-     * @param item The child item to be grouped by its parent.
-     * @param childrenGroupedByParent The Map that holds arrays of children items grouped by their parent IDs.
+     * Process "regular" insurance items. Any insured item that is not an attached, attachment is considered a "regular"
+     * item. This method iterates over them, preforming item deletion rolls to see if they should be deleted. If so,
+     * they (and their attached, attachments, if any) are marked for deletion in the toDelete Set.
+     *
+     * @param insured The insurance object containing the items to evaluate.
+     * @param toDelete A Set to keep track of items marked for deletion.
      * @returns void
      */
-    protected groupChildrenByParent(item: Item, childrenGroupedByParent: Map<string, Item[]>): void
+    protected processRegularItems(insured: Insurance, toDelete: Set<string>): void
     {
-        if (!childrenGroupedByParent.has(item.parentId!))
+        for (const insuredItem of insured.items)
         {
-            childrenGroupedByParent.set(item.parentId!, []);
+            // Skip if the item is an attachment. These are handled separately.
+            if (this.itemHelper.isAttachmentAttached(insuredItem))
+            {
+                continue;
+            }
+
+            // Check if the item has any children
+            const itemAndChildren = this.itemHelper.findAndReturnChildrenAsItems(insured.items, insuredItem._id);
+
+            // Roll for item deletion
+            const itemRoll = this.rollForDelete(insured.traderId, insuredItem);
+            if (itemRoll)
+            {
+                // Mark the item for deletion
+                toDelete.add(insuredItem._id);
+
+                // Check if the item has any children and mark those for deletion as well, but only if those
+                // children are currently attached attachments.
+                const directChildren = insured.items.filter(item => item.parentId === insuredItem._id);
+                const allChildrenAreAttachments = directChildren.every(child => this.itemHelper.isAttachmentAttached(child));
+                if (allChildrenAreAttachments)
+                {
+                    itemAndChildren.forEach(item => toDelete.add(item._id));
+                }
+            }
         }
-        childrenGroupedByParent.get(item.parentId!)?.push(item);
     }
 
     /**
-     * Sorts the array of children items in descending order by their maximum price. For each child, a roll is made to 
-     * determine if it should be deleted. The method then deletes the most valuable children based on the number of 
-     * successful rolls made.
-     * 
-     * @param children The array of children items to sort and filter.
-     * @param traderId The ID of the trader to consider in the rollForItemDelete method.
+     * Process parent items and their attachments, updating the toDelete Set accordingly.
+     *
+     * This method iterates over a map of parent items to their attachments and performs evaluations on each.
+     * It marks items for deletion based on certain conditions and updates the toDelete Set accordingly.
+     *
+     * @param mainParentToAttachmentsMap A Map object containing parent item IDs to arrays of their attachment items.
+     * @param itemsMap A Map object for quick item look-up by item ID.
+     * @param traderId The trader ID from the Insurance object.
+     * @param toDelete A Set object to keep track of items marked for deletion.
+     */
+    protected processAttachments(mainParentToAttachmentsMap: Map<string, Item[]>, itemsMap: Map<string, Item>, traderId: string, toDelete: Set<string>): void
+    {
+        mainParentToAttachmentsMap.forEach((attachmentItems, parentId) =>
+        {
+            // Log the parent item's name.
+            const parentItem = itemsMap.get(parentId);
+            const parentName = this.itemHelper.getItemName(parentItem._tpl);
+            this.logger.debug(`Processing attachments for parent item: ${parentName}`);
+
+            // Your existing logic for sorting and filtering children of this parent item
+            this.processAttachmentByParent(attachmentItems, traderId, toDelete);
+        });
+    }
+
+    /**
+     * Takes an array of attachment items that belong to the same main-parent item, sorts them in descending order by
+     * their maximum price. For each attachment, a roll is made to determine if a deletion should be made. Once the
+     * number of deletions has been counted, the attachments are added to the toDelete Set, starting with the most
+     * valuable attachments first.
+     *
+     * @param attachments The array of attachment items to sort, filter, and roll.
+     * @param traderId The ID of the trader to that has ensured these items.
      * @param toDelete The array that accumulates the IDs of the items to be deleted.
      * @returns void
      */
-    protected sortAndFilterChildren(children: Item[], traderId: string, toDelete: Set<string>): void
+    protected processAttachmentByParent(attachments: Item[], traderId: string, toDelete: Set<string>): void
     {
-        // Sort the children by their max price in descending order.
-        children.sort((a, b) => this.itemHelper.getItemMaxPrice(b._tpl) - this.itemHelper.getItemMaxPrice(a._tpl));
-        
-        // Count the number of successful rolls.
-        let successfulRolls = 0;
-        for (const child of children)
+        const sortedAttachments = this.sortAttachmentsByPrice(attachments);
+        this.logAttachmentsDetails(sortedAttachments);
+
+        const successfulRolls = this.countSuccessfulRolls(sortedAttachments, traderId);
+        this.logger.debug(`Number of successful rolls: ${successfulRolls}`);
+
+        this.attachmentDeletionByValue(sortedAttachments, successfulRolls, toDelete);
+    }
+
+    /**
+     * Sorts the attachment items by their max price in descending order.
+     *
+     * @param attachments The array of attachments items.
+     * @returns An array of items enriched with their max price and common locale-name.
+     */
+    protected sortAttachmentsByPrice(attachments: Item[]): EnrichedItem[]
+    {
+        return attachments.map(item => ({
+            ...item,
+            name: this.itemHelper.getItemName(item._tpl),
+            maxPrice: this.itemHelper.getItemMaxPrice(item._tpl)
+        })).sort((a, b) => b.maxPrice - a.maxPrice);
+    }
+
+    /**
+     * Logs the details of each attachment item.
+     *
+     * @param attachments The array of attachment items.
+     */
+    protected logAttachmentsDetails(attachments: EnrichedItem[]): void
+    {
+        attachments.forEach(({ name, maxPrice }) =>
         {
-            if (this.rollForItemDelete(child, traderId, toDelete))
+            this.logger.debug(`Child Item - Name: ${name}, Max Price: ${maxPrice}`);
+        });
+    }
+
+    /**
+     * Counts the number of successful rolls for the attachment items.
+     *
+     * @param attachments The array of attachment items.
+     * @param traderId The ID of the trader that has insured these attachments.
+     * @returns The number of successful rolls.
+     */
+    protected countSuccessfulRolls(attachments: Item[], traderId: string): number
+    {
+        const rolls = Array.from({ length: attachments.length }, () => this.rollForDelete(traderId));
+        return rolls.filter(Boolean).length;
+    }
+
+    /**
+     * Marks the most valuable attachments for deletion based on the number of successful rolls made.
+     *
+     * @param attachments The array of attachment items.
+     * @param successfulRolls The number of successful rolls.
+     * @param toDelete The array that accumulates the IDs of the items to be deleted.
+     */
+    protected attachmentDeletionByValue(attachments: EnrichedItem[], successfulRolls: number, toDelete: Set<string>): void
+    {
+        const valuableToDelete = attachments.slice(0, successfulRolls).map(({ _id }) => _id);
+
+        valuableToDelete.forEach(attachmentsId =>
+        {
+            const valuableChild = attachments.find(({ _id }) => _id === attachmentsId);
+            if (valuableChild)
             {
-                successfulRolls++;
+                const { name, maxPrice } = valuableChild;
+                this.logger.debug(`Marked for removal - Child Item: ${name}, Max Price: ${maxPrice}`);
+                toDelete.add(attachmentsId);
             }
-        }
-        
-        // Delete the most valuable children based on the number of successful rolls.
-        const mostValuableChildrenToDelete = children.slice(0, successfulRolls).map(child => child._id);
-        mostValuableChildrenToDelete.forEach(valuableChild => toDelete.add(valuableChild));
+        });
     }
 
     /**
@@ -332,6 +411,45 @@ export class InsuranceController
     protected removeItemsFromInsurance(insured: Insurance, toDelete: Set<string>): void
     {
         insured.items = insured.items.filter(item => !toDelete.has(item._id));
+    }
+
+    /**
+     * Adopts orphaned items by resetting them as base-level items. Helpful in situations where a parent has been
+     * deleted from insurance, but any insured items within the parent should remain. This method will remove the
+     * reference from the children to the parent and set item properties to main-level values.
+     *
+     * @param insured Insurance object containing items.
+     */
+    protected adoptOrphanedItems(insured: Insurance): void
+    {
+        const hideoutParentId = this.fetchHideoutItemParent(insured.items);
+
+        insured.items.forEach(item =>
+        {
+            // Check if the item's parent exists in the insured items list.
+            const parentExists = insured.items.some(parentItem => parentItem._id === item.parentId);
+
+            // If the parent does not exist and the item is not already a 'hideout' item, adopt the orphaned item.
+            if (!parentExists && item.parentId !== hideoutParentId && item.slotId !== "hideout")
+            {
+                item.parentId = hideoutParentId;
+                item.slotId = "hideout";
+                delete item.location;
+            }
+        });
+    }
+
+    /**
+     * Fetches the parentId property of an item with a slotId "hideout". Not sure if this is actually dynamic, but this
+     * method should be a reliable way to fetch it, if it ever does change.
+     *
+     * @param items Array of items to search through.
+     * @returns The parentId of an item with slotId 'hideout'. Empty string if not found.
+     */
+    protected fetchHideoutItemParent(items: Item[]): string
+    {
+        const hideoutItem = items.find(item => item.slotId === "hideout");
+        return hideoutItem ? hideoutItem?.parentId : "";
     }
 
     /**
@@ -365,25 +483,29 @@ export class InsuranceController
     }
 
     /**
-     * Determines whether a valid insured item should be removed from the player's inventory based on a random roll and 
+     * Determines whether a insured item should be removed from the player's inventory based on a random roll and
      * trader-specific return chance.
-     * 
-     * @param insuredItem The insured item being evaluated for removal.
+     *
      * @param traderId The ID of the trader who insured the item.
-     * @param itemsBeingDeleted List of items that are already slated for removal.
+     * @param insuredItem Optional. The item to roll for. Only used for logging.
      * @returns true if the insured item should be removed from inventory, false otherwise.
      */
-    protected rollForItemDelete(insuredItem: Item, traderId: string, itemsBeingDeleted: Set<string>): boolean 
+    protected rollForDelete(traderId: string, insuredItem?: Item): boolean
     {
         const maxRoll = 9999;
         const conversionFactor = 100;
-        
+
         const returnChance = this.randomUtil.getInt(0, maxRoll) / conversionFactor;
         const traderReturnChance = this.insuranceConfig.returnChancePercent[traderId];
-        const exceedsTraderReturnChance = returnChance >= traderReturnChance;
-        const isItemAlreadyBeingDeleted = itemsBeingDeleted.has(insuredItem._id);
+        const roll = returnChance >= traderReturnChance;
 
-        return exceedsTraderReturnChance && !isItemAlreadyBeingDeleted;
+        // Log the roll with as much detail as possible.
+        const itemName = insuredItem ? ` for "${this.itemHelper.getItemName(insuredItem._tpl)}"` : "";
+        const trader = this.traderHelper.getTraderById(traderId);
+        const status = roll ? "Delete" : "Keep";
+        this.logger.debug(`Rolling deletion${itemName} with ${trader} - Return ${traderReturnChance}% - Roll: ${returnChance} - Status: ${status}`);
+
+        return roll;
     }
 
     /**
@@ -487,4 +609,11 @@ export class InsuranceController
 
         return output;
     }
+}
+
+// Represents an insurance item that has had it's common locale-name and max price added to it.
+interface EnrichedItem extends Item
+{
+    name: string;
+    maxPrice: number;
 }
