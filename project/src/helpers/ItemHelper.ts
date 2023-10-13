@@ -132,7 +132,7 @@ class ItemHelper
     {
         const staticPrice = this.getStaticItemPrice(tpl);
         const dynamicPrice = this.getDynamicItemPrice(tpl);
-        
+
         return Math.max(staticPrice, dynamicPrice);
     }
 
@@ -166,7 +166,7 @@ class ItemHelper
         }
 
         return 0;
-    }  
+    }
 
     /**
      * Update items upd.StackObjectsCount to be 1 if its upd is missing or StackObjectsCount is undefined
@@ -293,7 +293,7 @@ class ItemHelper
 
     /**
      * get normalized value (0-1) based on item condition
-     * @param item 
+     * @param item
      * @returns number between 0 and 1
      */
     public getItemQualityModifier(item: Item): number
@@ -413,9 +413,9 @@ class ItemHelper
 
     /**
      * A variant of findAndReturnChildren where the output is list of item objects instead of their ids.
-     * @param items 
-     * @param baseItemId 
-     * @returns An array of Item objects 
+     * @param items
+     * @param baseItemId
+     * @returns An array of Item objects
      */
     public findAndReturnChildrenAsItems(items: Item[], baseItemId: string): Item[]
     {
@@ -488,7 +488,7 @@ class ItemHelper
 
     /**
      * Gets the identifier for a child using slotId, locationX and locationY.
-     * @param item 
+     * @param item
      * @returns "slotId OR slotid,locationX,locationY"
      */
     public getChildId(item: Item): string
@@ -558,7 +558,7 @@ class ItemHelper
      * @returns Array of Item objects
      */
     public findBarterItems(by: "tpl" | "id", items: Item[], barterItemId: string): Item[]
-    { 
+    {
         // find required items to take after buying (handles multiple items)
         const barterIDs = typeof barterItemId === "string"
             ? [barterItemId]
@@ -577,11 +577,11 @@ class ItemHelper
             barterItems = Object.assign(barterItems, filterResult);
         }
 
-        if (barterItems.length === 0) 
+        if (barterItems.length === 0)
         {
             this.logger.warning(`No items found for barter Id: ${barterIDs}`);
         }
-    
+
         return barterItems;
     }
 
@@ -590,7 +590,7 @@ class ItemHelper
      * @param pmcData Player profile
      * @param items Items to adjust ID values of
      * @param insuredItems insured items to not replace ids for
-     * @param fastPanel 
+     * @param fastPanel
      * @returns Item[]
      */
     public replaceIDs(pmcData: IPmcData, items: Item[], insuredItems: InsuredItem[] = null, fastPanel = null): Item[]
@@ -845,7 +845,7 @@ class ItemHelper
     /**
      * Get the inventory size of an item
      * @param items Item with children
-     * @param rootItemId 
+     * @param rootItemId
      * @returns ItemSize object (width and height)
      */
     public getItemSize(items: Item[], rootItemId: string): ItemHelper.ItemSize
@@ -1091,7 +1091,7 @@ class ItemHelper
      * Create a basic cartrige object
      * @param parentId container cartridges will be placed in
      * @param ammoTpl Cartridge to insert
-     * @param stackCount Count of cartridges inside parent 
+     * @param stackCount Count of cartridges inside parent
      * @param location Location inside parent (e.g. 0, 1)
      * @returns Item
      */
@@ -1109,7 +1109,7 @@ class ItemHelper
 
     /**
      * Get the size of a stack, return 1 if no stack object count property found
-     * @param item Item to get stack size of 
+     * @param item Item to get stack size of
      * @returns size of stack
      */
     public getItemStackSize(item: Item): number

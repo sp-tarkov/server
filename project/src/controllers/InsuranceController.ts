@@ -55,7 +55,7 @@ export class InsuranceController
 
     /**
      * Process insurance items of all profiles prior to being given back to the player through the mail service.
-     * 
+     *
      * @returns void
     */
     public processReturn(): void
@@ -69,7 +69,7 @@ export class InsuranceController
 
     /**
      * Process insurance items of a single profile prior to being given back to the player through the mail service.
-     * 
+     *
      * @returns void
     */
     public processReturnByProfile(sessionID: string): void
@@ -88,7 +88,7 @@ export class InsuranceController
 
     /**
      * Get all insured items that are ready to be processed in a specific profile.
-     * 
+     *
      * @param sessionID Session ID of the profile to check.
      * @param time The time to check ready status against. Current time by default.
      * @returns All insured items that are ready to be processed.
@@ -109,7 +109,7 @@ export class InsuranceController
 
     /**
      * This method orchestrates the processing of insured items in a profile.
-     * 
+     *
      * @param insuranceDetails The insured items to process.
      * @param sessionID The session ID that should receive the processed items.
      * @returns void
@@ -119,7 +119,7 @@ export class InsuranceController
         this.logger.debug(`Processing ${insuranceDetails.length} insurance packages, which includes a total of ${insuranceDetails.map(ins => ins.items.length).reduce((acc, len) => acc + len, 0)} items, in profile ${sessionID}`);
 
         // Iterate over each of the insurance packages.
-        insuranceDetails.forEach(insured => 
+        insuranceDetails.forEach(insured =>
         {
             // Find items that should be deleted from the insured items.
             const itemsToDelete = this.findItemsToDelete(insured);
@@ -140,7 +140,7 @@ export class InsuranceController
 
     /**
      * Remove an insurance package from a profile using the package's system data information.
-     * 
+     *
      * @param sessionID The session ID of the profile to remove the package from.
      * @param index The array index of the insurance package to remove.
      * @returns void
@@ -148,12 +148,12 @@ export class InsuranceController
     protected removeInsurancePackageFromProfile(sessionID: string, packageInfo: ISystemData): void
     {
         const profile = this.saveServer.getProfile(sessionID);
-        profile.insurance = profile.insurance.filter(insurance => 
+        profile.insurance = profile.insurance.filter(insurance =>
             insurance.messageContent.systemData.date !== packageInfo.date ||
             insurance.messageContent.systemData.time !== packageInfo.time ||
             insurance.messageContent.systemData.location !== packageInfo.location
         );
-        
+
         this.logger.debug(`Removed insurance package with date: ${packageInfo.date}, time: ${packageInfo.time}, and location: ${packageInfo.location} from profile ${sessionID}. Remaining packages: ${profile.insurance.length}`);
     }
 
@@ -403,7 +403,7 @@ export class InsuranceController
 
     /**
      * Remove items from the insured items that should not be returned to the player.
-     * 
+     *
      * @param insured The insured items to process.
      * @param toDelete The items that should be deleted.
      * @returns void
@@ -454,7 +454,7 @@ export class InsuranceController
 
     /**
      * Handle sending the insurance message to the user that potentially contains the valid insurance items.
-     * 
+     *
      * @param sessionID The session ID that should receive the insurance message.
      * @param insurance The context of insurance to use.
      * @param noItems Whether or not there are any items to return to the player.
@@ -462,14 +462,14 @@ export class InsuranceController
      */
     protected sendMail(sessionID: string, insurance: Insurance, noItems: boolean): void
     {
-        // After all of the item filtering that we've done, if there are no items remaining, the insurance has 
+        // After all of the item filtering that we've done, if there are no items remaining, the insurance has
         // successfully "failed" to return anything and an appropriate message should be sent to the player.
         if (noItems)
         {
             const insuranceFailedTemplates = this.databaseServer.getTables().traders[insurance.traderId].dialogue.insuranceFailed;
             insurance.messageContent.templateId = this.randomUtil.getArrayValue(insuranceFailedTemplates);
         }
-    
+
         // Send the insurance message
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionID,
@@ -511,7 +511,7 @@ export class InsuranceController
     /**
      * Handle Insure event
      * Add insurance to an item
-     * 
+     *
      * @param pmcData Player profile
      * @param body Insurance request
      * @param sessionID Session id
@@ -572,7 +572,7 @@ export class InsuranceController
     /**
      * Handle client/insurance/items/list/cost
      * Calculate insurance cost
-     * 
+     *
      * @param request request object
      * @param sessionID session id
      * @returns IGetInsuranceCostResponseData object to send to client
