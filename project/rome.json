@@ -35,7 +35,7 @@
             "**/*.js",
             "**/*.json",
             "**/*.mjs",
-            "**/*.Dockerfile",
+            "**/Dockerfile.*",
             "**/node_modules/**/*"
         ]
     } 

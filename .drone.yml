@@ -181,7 +181,7 @@ steps:
         from_secret: DOCKER_PASSWORD
       username:
         from_secret: DOCKER_USERNAME
-      dockerfile: project/docs.Dockerfile
+      dockerfile: project/Dockerfile.docs
       context: project/
       tags: latest
     depends_on:
