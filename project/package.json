@@ -11,20 +11,19 @@
         "node": "18.15.0"
     },
     "scripts": {
-        "profilerCompile": "tsc -p tsconfig.test.json",
-        "run:profiler": "npm run profilerCompile && node --prof --inspect --trace-warnings obj/ide/TestEntry.js",
         "check:circular": "madge --circular --extensions ts ./src/",
         "lint": "rome ci src --formatter-enabled=false --max-diagnostics=200",
         "lint:fix": "eslint --fix --ext .ts src/**",
-        "test:debug": "gulp test:debug",
         "test:run": "jest --colors --runInBand",
         "test:coverage": "jest --coverage --maxWorkers=1 --no-cache",
         "build:release": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:release",
         "build:debug": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:debug",
         "build:bleeding": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleeding",
+        "run:build": "gulp run:build",
+        "run:debug": "gulp run:debug",
+        "run:profiler": "gulp run:profiler",
         "gen:types": "tsc -p tsconfig.typedef.json",
-        "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
-        "run:server": "gulp run:server"
+        "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src"
     },
     "dependencies": {
         "atomically": "1.7.0",
@@ -59,9 +58,7 @@
         "@typescript-eslint/eslint-plugin": "6.2.0",
         "@typescript-eslint/parser": "6.2.0",
         "cross-env": "7.0.3",
-        "del": "7.0.0",
         "eslint": "8.46.0",
-        "fs-extra": "11.1.1",
         "gulp": "4.0.2",
         "gulp-execa": "5.0.0",
         "gulp-rename": "2.0.0",

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { deleteSync } from "del";
-import fs from "fs-extra";
 import gulp from "gulp";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
 import crypto from "node:crypto";
+import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import pkg from "pkg";
@@ -27,8 +26,15 @@ const entries = {
 };
 const licenseFile = "../LICENSE.md";
 
-// Compilation
-const compileTest = async () => exec("swc src -d obj", { stdio });
+/**
+ * Transpiles the src files into javascript with swc
+ */
+const compile = async () => await exec("swc src -d obj", { stdio });
+
+/**
+ * Transpiles the src files into javascript with tsc for the profiler run
+ */
+const compileProfiler = async () => await exec("tsc -p tsconfig.test.json", { stdio });
 
 // Packaging
 const fetchPackageImage = async () =>
@@ -40,39 +46,26 @@ const fetchPackageImage = async () =>
         console.log(`fetched node binary at ${fetchedPkg}`);
         const builtPkg = fetchedPkg.replace("node", "built");
         await fs.copyFile(fetchedPkg, builtPkg);
-        if (process.platform === "win32" || process.platform === "win64") 
-        {
-            await exec(`dir ${output}`, {
-                stdio
-            });
-        }
-        else 
-        {
-            await exec(`ls ${output}`, {
-                stdio
-            });
-        }
     }
-    catch (e) 
+    catch (e)
     {
         console.error(`Error while fetching and patching package image: ${e.message}`);
         console.error(e.stack);
     }
 };
 
-const updateBuildProperties = async (cb) =>
+const updateBuildProperties = async () =>
 {
     if (os.platform() !== "win32")
     {
-        cb();
         return;
     }
 
-    const exe = ResEdit.NtExecutable.from(fs.readFileSync(serverExe));
+    const exe = ResEdit.NtExecutable.from(await fs.readFile(serverExe));
     const res = ResEdit.NtExecutableResource.from(exe);
-    
+
     const iconPath = path.resolve(manifest.icon);
-    const iconFile = ResEdit.Data.IconFile.from(fs.readFileSync(iconPath));
+    const iconFile = ResEdit.Data.IconFile.from(await fs.readFile(iconPath));
 
     ResEdit.Resource.IconGroupEntry.replaceIconsForResource(
         res.entries,
@@ -98,104 +91,93 @@ const updateBuildProperties = async (cb) =>
     vi.setProductVersion(...manifest.version.split(".").map(Number));
     vi.outputToResourceEntries(res.entries);
     res.outputResource(exe, true);
-    fs.writeFileSync(serverExe, Buffer.from(exe.generate()));
-
-    cb();
+    await fs.writeFile(serverExe, Buffer.from(exe.generate()));
 };
 
-// Copy various asset files to the destination directory
-function copyAssets()
-{
-    return gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"])
-        .pipe(gulp.dest(dataDir));
-}
+/**
+ * Copy various asset files to the destination directory
+ */
+const copyAssets = () => gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(gulp.dest(dataDir));
 
-// Copy executables from node_modules
-function copyExecutables() 
-{
-    return gulp.src(["node_modules/@pnpm/exe/**/*"])
-        .pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
-}
+/**
+ * Copy executables from node_modules
+ */
+const copyExecutables = () => gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
 
-// Rename and copy the license file
-function copyLicense() 
-{
-    return gulp.src([licenseFile])
-        .pipe(rename("LICENSE-Server.txt"))
-        .pipe(gulp.dest(buildDir));
-}
+/**
+ * Rename and copy the license file
+ */
+const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.txt")).pipe(gulp.dest(buildDir));
 
 /**
  * Writes the latest Git commit hash to the core.json configuration file.
- * @param {*} cb Callback to run after completion of function
  */
-async function writeCommitHashToCoreJSON(cb) 
+const writeCommitHashToCoreJSON = async () =>
 {
-    const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
-    if (fs.existsSync(coreJSONPath)) 
+    try
     {
-        try 
-        {
-            const coreJSON = fs.readFileSync(coreJSONPath, "utf8");
-            const parsed = JSON.parse(coreJSON);
-            
-            // Fetch the latest Git commit hash
-            const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
-            
-            // Update the commit hash in the core.json object
-            parsed.commit = gitResult.stdout.trim() || "";
+        const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
+        const coreJSON = await fs.readFile(coreJSONPath, "utf8");
+        const parsed = JSON.parse(coreJSON);
 
-            // Add build timestamp
-            parsed.buildTime = new Date().getTime();
-            
-            // Write the updated object back to core.json
-            fs.writeFileSync(coreJSONPath, JSON.stringify(parsed, null, 4));
-        }
-        catch (error) 
-        {
-            throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
-        }
+        // Fetch the latest Git commit hash
+        const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
+
+        // Update the commit hash in the core.json object
+        parsed.commit = gitResult.stdout.trim() || "";
+
+        // Add build timestamp
+        parsed.buildTime = new Date().getTime();
+
+        // Write the updated object back to core.json
+        await fs.writeFile(coreJSONPath, JSON.stringify(parsed, null, 4));
     }
-    else 
+    catch (error)
     {
-        console.warn(`core.json not found at ${coreJSONPath}. Skipping commit hash update.`);
+        throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
     }
-    
-    cb();
-}
+};
 
-
-// Create a hash file for asset checks
-async function createHashFile() 
+/**
+ * Create a hash file for asset checks
+ */
+const createHashFile = async () =>
 {
     const hashFileDir = path.resolve(dataDir, "checks.dat");
-    await fs.createFile(hashFileDir);
     const assetData = await loadRecursiveAsync("assets/");
     const assetDataString = Buffer.from(JSON.stringify(assetData), "utf-8").toString("base64");
     await fs.writeFile(hashFileDir, assetDataString);
-}
+};
 
 // Combine all tasks into addAssets
 const addAssets = gulp.series(copyAssets, copyExecutables, copyLicense, writeCommitHashToCoreJSON, createHashFile);
 
-// Cleanup
-const clean = (cb) =>
-{
-    deleteSync(buildDir, { force: true });
-    cb();
-};
-const removeCompiled = async () => fs.rmSync("./obj", { recursive: true, force: true });
+/**
+ * Cleans the build directory.
+ */
+const cleanBuild = async () => await fs.rm(buildDir, { recursive: true, force: true });
 
-// JSON Validation
-function getJSONFiles(dir, files = []) 
+/**
+ * Cleans the transpiled javascript directory.
+ */
+const cleanCompiled = async () => await fs.rm("./obj", { recursive: true, force: true });
+
+/**
+ * Recursively builds an array of paths for json files.
+ * 
+ * @param {fs.PathLike} dir 
+ * @param {string[]} files 
+ * @returns {Promise<string[]>}
+ */
+const getJSONFiles = async (dir, files = []) =>
 {
-    const fileList = fs.readdirSync(dir);
-    for (const file of fileList) 
+    const fileList = await fs.readdir(dir);
+    for (const file of fileList)
     {
-        const name = path.resolve(dir,file);
-        if (fs.statSync(name).isDirectory()) 
+        const name = path.resolve(dir, file);
+        if ((await fs.stat(name)).isDirectory())
         {
-            getJSONFiles(name, files); 
+            getJSONFiles(name, files);
         }
         else if (name.slice(-5) === ".json")
         {
@@ -203,30 +185,36 @@ function getJSONFiles(dir, files = [])
         }
     }
     return files;
-}
-  
-const validateJSONs = (cb) => 
+};
+
+/**
+ * Goes through every json file in assets and makes sure they're valid json.
+ */
+const validateJSONs = async () =>
 {
     const assetsPath = path.resolve("assets");
-    const jsonFileList = getJSONFiles(assetsPath);
+    const jsonFileList = await getJSONFiles(assetsPath);
     let jsonFileInProcess = "";
-    try 
+    try
     {
-        jsonFileList.forEach((jsonFile) => 
+        for (const jsonFile of jsonFileList)
         {
             jsonFileInProcess = jsonFile;
-            const jsonString = fs.readFileSync(jsonFile).toString();
-            JSON.parse(jsonString);
-        });
-        cb();
+            JSON.parse(await fs.readFile(jsonFile));
+        }
     }
-    catch (error) 
+    catch (error)
     {
         throw new Error(`${error.message} | ${jsonFileInProcess}`);
     }
 };
 
-// Hash helper function
+/**
+ * Hash helper function
+ * 
+ * @param {crypto.BinaryLike} data 
+ * @returns {string}
+ */
 const generateHashForData = (data) =>
 {
     const hashSum = crypto.createHash("sha1");
@@ -234,36 +222,29 @@ const generateHashForData = (data) =>
     return hashSum.digest("hex");
 };
 
-// Loader to recursively find all json files in a folder
+/**
+ * Loader to recursively find all json files in a folder
+ * 
+ * @param {fs.PathLike} filepath 
+ * @returns {}
+ */
 const loadRecursiveAsync = async (filepath) =>
 {
     const result = {};
 
-    // get all filepaths
-    const files = fs.readdirSync(filepath).filter((item) => 
-    {
-        return fs.statSync(path.join(filepath, item)).isFile();
-    });
-    const directories = fs.readdirSync(filepath).filter((item) => 
-    {
-        return fs.statSync(path.join(filepath, item)).isDirectory();
-    });
+    const filesList = await fs.readdir(filepath);
 
-    // add file content to result
-    for (const file of files)
+    for (const file of filesList)
     {
-        if (file.split(".").pop() === "json")
+        const curPath = path.parse(path.join(filepath, file));
+        if ((await fs.stat(path.join(curPath.dir, curPath.base))).isDirectory())
         {
-            const filename = file.split(".").slice(0, -1).join(".");
-            const filePathAndName = `${filepath}${file}`;
-            result[filename] = generateHashForData(fs.readFileSync(filePathAndName));
+            result[curPath.name] = loadRecursiveAsync(`${filepath}${file}/`);
         }
-    }
-
-    // deep tree search
-    for (const dir of directories)
-    {
-        result[dir] = loadRecursiveAsync(`${filepath}${dir}/`);
+        else if (curPath.ext === ".json")
+        {
+            result[curPath.name] = generateHashForData(await fs.readFile(`${filepath}${file}`));
+        }
     }
 
     // set all loadRecursive to be executed asynchronously
@@ -273,46 +254,44 @@ const loadRecursiveAsync = async (filepath) =>
     {
         resEntries[resIdx][1] = resResolved[resIdx];
     }
-    
+
     // return the result of all async fetch
     return Object.fromEntries(resEntries);
 };
 
-// Testing
-gulp.task("test:debug", async () => exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
-
 // Main Tasks Generation
-const build = (packagingType) => 
+const build = (packagingType) =>
 {
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
-    const tasks = [clean, validateJSONs, compileTest, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, removeCompiled];
+    const tasks = [cleanBuild, validateJSONs, compile, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, cleanCompiled];
     return gulp.series(tasks);
 };
 
 // Packaging Arguments
-const packaging = async (entry) => 
+const packaging = async (entry) =>
 {
     const target = `${nodeVersion}-${process.platform}-${process.arch}`;
+    console.log("target", target);
     const args = [entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig];
-    try 
+    try
     {
         await pkg.exec(args);
     }
-    catch (error) 
+    catch (error)
     {
         console.error(`Error occurred during packaging: ${error}`);
     }
 };
 
-// Run server
-const runSrv = async (cb) =>
-{
-    await exec("Aki.Server.exe", { stdio, cwd: buildDir });
-    cb();
-};
-
 gulp.task("build:debug", build("debug"));
 gulp.task("build:release", build("release"));
 gulp.task("build:bleeding", build("bleeding"));
-gulp.task("run:server", runSrv);
+
+gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: buildDir }));
+gulp.task("run:debug", async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
+gulp.task("run:profiler", async () =>
+{
+    await compileProfiler();
+    await exec("node --prof --inspect --trace-warnings obj/ide/TestEntry.js", { stdio });
+});
