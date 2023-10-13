@@ -10,21 +10,22 @@ import { LocalisationService } from "../services/LocalisationService";
 @injectable()
 export class WatermarkLocale
 {
+    protected description: string[];
+    protected warning: string[];
+    protected modding: string[];
+
     constructor(
         @inject("LocalisationService") protected localisationService: LocalisationService
     )
-    {}
-
-    protected watermark = {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        "description": [
+    {
+        this.description = [
             this.localisationService.getText("watermark-discord_url"),
             "",
             this.localisationService.getText("watermark-free_of_charge"),
             this.localisationService.getText("watermark-paid_scammed"),
             this.localisationService.getText("watermark-commercial_use_prohibited")
-        ],
-        "warning": [
+        ];
+        this.warning = [
             "",
             this.localisationService.getText("watermark-testing_build"),
             this.localisationService.getText("watermark-no_support"),
@@ -33,29 +34,29 @@ export class WatermarkLocale
             this.localisationService.getText("watermark-issue_tracker_url"),
             "",
             this.localisationService.getText("watermark-use_at_own_risk")
-        ],
-        "modding": [
+        ];
+        this.modding = [
             "",
             this.localisationService.getText("watermark-modding_disabled"),
             "",
             this.localisationService.getText("watermark-not_an_issue"),
             this.localisationService.getText("watermark-do_not_report")
-        ]
-    };
+        ];
+    }
 
     public getDescription(): string[]
     {
-        return this.watermark.description;
+        return this.description;
     }
 
     public getWarning(): string[]
     {
-        return this.watermark.warning;
+        return this.warning;
     }
 
     public getModding(): string[]
     {
-        return this.watermark.modding;
+        return this.modding;
     }
 }
 
