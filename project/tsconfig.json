@@ -4,8 +4,6 @@
         "resolveJsonModule": true,
         "outDir": "obj",
         "declaration": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
         "baseUrl": ".",
         "paths": {
             "@spt-aki/*": [

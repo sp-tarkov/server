@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "allowJs": false,
-        "module": "commonjs",
-        "target": "es2021",
+        "module": "CommonJS",
+        "target": "ES2022",
         "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node10",
         "esModuleInterop": true,
         "downlevelIteration": true,
         "experimentalDecorators": true,

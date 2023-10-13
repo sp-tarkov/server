@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { inject, injectable } from "tsyringe";
-import { CompilerOptions, ModuleKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
+import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
 import type { ILogger } from "../models/spt/utils/ILogger";
 import { VFS } from "../utils/VFS";
 import { HashCacheService } from "./HashCacheService";
@@ -64,8 +64,9 @@ export class ModCompilerService
             {
                 noEmitOnError: true,
                 noImplicitAny: false,
-                target: ScriptTarget.ES2020,
+                target: ScriptTarget.ES2022,
                 module: ModuleKind.CommonJS,
+                moduleResolution: ModuleResolutionKind.Node10,
                 resolveJsonModule: true,
                 allowJs: true,
                 esModuleInterop: true,
