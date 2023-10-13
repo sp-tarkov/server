@@ -1,4 +1,4 @@
-import { IncomingMessage } from "http";
+import { IncomingMessage } from "node:http";
 import { injectable, injectAll } from "tsyringe";
 
 import { DynamicRouter, Router, StaticRouter } from "../di/Router";

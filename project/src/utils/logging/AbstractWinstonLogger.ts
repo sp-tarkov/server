@@ -1,5 +1,5 @@
-import fs from "fs";
-import { promisify } from "util";
+import fs from "node:fs";
+import { promisify } from "node:util";
 import winston, { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 

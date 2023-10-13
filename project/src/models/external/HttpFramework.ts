@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 import { injectable } from "tsyringe";
 import { HttpMethods } from "../../servers/http/HttpMethods";
 

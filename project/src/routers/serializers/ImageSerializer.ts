@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 import { inject, injectable } from "tsyringe";
 
 import { Serializer } from "../../di/Serializer";

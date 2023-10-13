@@ -1,5 +1,5 @@
-import fs from "fs";
-import { ServerResponse } from "http";
+import fs from "node:fs";
+import { ServerResponse } from "node:http";
 import { inject, injectable } from "tsyringe";
 import { HttpServerHelper } from "../helpers/HttpServerHelper";
 

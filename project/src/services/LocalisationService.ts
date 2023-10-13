@@ -1,12 +1,12 @@
 import { I18n } from "i18n";
 import { inject, injectable } from "tsyringe";
 
+import path from "node:path";
 import { ILocaleConfig } from "../models/spt/config/ILocaleConfig";
 import { ILogger } from "../models/spt/utils/ILogger";
 import { DatabaseServer } from "../servers/DatabaseServer";
 import { RandomUtil } from "../utils/RandomUtil";
 import { LocaleService } from "./LocaleService";
-import path from "path";
 
 /**
  * Handles translating server text into different langauges

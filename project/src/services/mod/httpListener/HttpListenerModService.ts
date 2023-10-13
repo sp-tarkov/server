@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 import { DependencyContainer, injectable } from "tsyringe";
 import { IHttpListener } from "../../../servers/http/IHttpListener";
 import { HttpListenerMod } from "./HttpListenerMod";

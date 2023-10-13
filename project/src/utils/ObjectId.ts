@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { TimeUtil } from "./TimeUtil";
 
 import { inject, injectable } from "tsyringe";

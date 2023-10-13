@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "node:http";
 import { IHttpListener } from "../../../servers/http/IHttpListener";
 
 export class HttpListenerMod implements IHttpListener

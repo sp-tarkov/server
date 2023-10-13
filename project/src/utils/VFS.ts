@@ -1,10 +1,10 @@
 import { writeFileSync } from "atomically";
-import fs from "fs";
-import path, { resolve } from "path";
+import fs from "node:fs";
+import path, { resolve } from "node:path";
+import { promisify } from "node:util";
 import lockfile from "proper-lockfile";
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
-import { promisify } from "util";
 import { IAsyncQueue } from "../models/spt/utils/IAsyncQueue";
 import { IUUidGenerator } from "../models/spt/utils/IUuidGenerator";
 

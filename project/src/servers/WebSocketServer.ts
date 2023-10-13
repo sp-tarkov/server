@@ -1,4 +1,4 @@
-import http, { IncomingMessage } from "http";
+import http, { IncomingMessage } from "node:http";
 import { inject, injectable } from "tsyringe";
 import WebSocket from "ws";
 

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import crypto from "crypto";
 import { deleteSync } from "del";
 import fs from "fs-extra";
 import gulp from "gulp";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
-import os from "os";
-import path from "path";
+import crypto from "node:crypto";
+import os from "node:os";
+import path from "node:path";
 import pkg from "pkg";
 import pkgfetch from "pkg-fetch";
 import * as ResEdit from "resedit";

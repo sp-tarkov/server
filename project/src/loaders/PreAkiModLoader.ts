@@ -1,6 +1,6 @@
-import { execSync } from "child_process";
-import os from "os";
-import path from "path";
+import { execSync } from "node:child_process";
+import os from "node:os";
+import path from "node:path";
 import semver from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
 import { ModDetails } from "../models/eft/profile/IAkiProfile";

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { inject, injectable } from "tsyringe";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget, TranspileOptions, transpileModule } from "typescript";
 import type { ILogger } from "../models/spt/utils/ILogger";
