@@ -1,4 +1,4 @@
-﻿import http, { IncomingMessage, ServerResponse } from "node:http";
+import http, { IncomingMessage, ServerResponse } from "node:http";
 import { inject, injectable, injectAll } from "tsyringe";
 
 import { ApplicationContext } from "../context/ApplicationContext";

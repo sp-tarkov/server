@@ -1,4 +1,4 @@
-﻿# NCSA Open Source License  
+# NCSA Open Source License  
 
 Copyright (c) 2022 Merijn Hendriks. All rights reserved.  
 
