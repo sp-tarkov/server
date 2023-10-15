@@ -272,11 +272,9 @@ const build = (packagingType) =>
 const packaging = async (entry) =>
 {
     const target = `${nodeVersion}-${process.platform}-${process.arch}`;
-    console.log("target", target);
-    const args = [entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig];
     try
     {
-        await pkg.exec(args);
+        await pkg.exec([entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig, "--public"]);
     }
     catch (error)
     {

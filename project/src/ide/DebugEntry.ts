@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "source-map-support/register";
 import { Program } from "../Program";
 
 globalThis.G_DEBUG_CONFIGURATION = true;

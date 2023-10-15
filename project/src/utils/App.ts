@@ -1,4 +1,3 @@
-import sourcemapSupport from "source-map-support";
 import { inject, injectable, injectAll } from "tsyringe";
 
 import os from "node:os";
@@ -26,9 +25,6 @@ export class App
 
     public async load(): Promise<void>
     {
-        // bind callbacks
-        sourcemapSupport.install();
-
         // execute onLoad callbacks
         this.logger.info(this.localisationService.getText("executing_startup_callbacks"));
 
