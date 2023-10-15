@@ -67,6 +67,7 @@ export class ModCompilerService
                 target: ScriptTarget.ES2022,
                 module: ModuleKind.CommonJS,
                 moduleResolution: ModuleResolutionKind.Node10,
+                inlineSourceMap: true,
                 resolveJsonModule: true,
                 allowJs: true,
                 esModuleInterop: true,
