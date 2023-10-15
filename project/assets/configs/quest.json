@@ -138,7 +138,7 @@
                 "Exploration"
             ],
             "resetTime": 86400,
-            "numQuests": 15,
+            "numQuests": 3,
             "minPlayerLevel": 5,
             "rewardScaling": {
                 "levels": [1, 20, 46, 100],
