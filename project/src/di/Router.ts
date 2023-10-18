@@ -1,6 +1,6 @@
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IAkiProfile } from "../models/eft/profile/IAkiProfile";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 export class Router 
 {

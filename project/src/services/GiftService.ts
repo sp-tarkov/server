@@ -1,17 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { GiftSenderType } from "../models/enums/GiftSenderType";
-import { GiftSentResult } from "../models/enums/GiftSentResult";
-import { MessageType } from "../models/enums/MessageType";
-import { Traders } from "../models/enums/Traders";
-import { Gift, IGiftsConfig } from "../models/spt/config/IGiftsConfig";
-import { ISendMessageDetails } from "../models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { HashUtil } from "../utils/HashUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { MailSendService } from "./MailSendService";
+
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { GiftSenderType } from "@spt-aki/models/enums/GiftSenderType";
+import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { Gift, IGiftsConfig } from "@spt-aki/models/spt/config/IGiftsConfig";
+import { ISendMessageDetails } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class GiftService

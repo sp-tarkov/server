@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { PaymentHelper } from "../helpers/PaymentHelper";
-import { RagfairOfferService } from "../services/RagfairOfferService";
-import { ILogger } from "../models/spt/utils/ILogger";
+import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
 
 @injectable()
 export class RagfairRequiredItemsService

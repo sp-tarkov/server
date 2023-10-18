@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { DataCallbacks } from "../../callbacks/DataCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { DataCallbacks } from "@spt-aki/callbacks/DataCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class DataStaticRouter extends StaticRouter 

@@ -1,24 +1,24 @@
 import { inject, injectable } from "tsyringe";
 
-import { ItemHelper } from "../helpers/ItemHelper";
-import { Product } from "../models/eft/common/tables/IBotBase";
-import { Upd } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { IHideoutScavCase } from "../models/eft/hideout/IHideoutScavCase";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { IScavCaseConfig } from "../models/spt/config/IScavCaseConfig";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { Product } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { IHideoutScavCase } from "@spt-aki/models/eft/hideout/IHideoutScavCase";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { IScavCaseConfig } from "@spt-aki/models/spt/config/IScavCaseConfig";
 import {
     RewardCountAndPriceDetails, ScavCaseRewardCountsAndPrices
-} from "../models/spt/hideout/ScavCaseRewardCountsAndPrices";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { RagfairPriceService } from "../services/RagfairPriceService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
+} from "@spt-aki/models/spt/hideout/ScavCaseRewardCountsAndPrices";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
+import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 /** 
  * Handle the creation of randomised scav case rewards

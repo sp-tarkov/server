@@ -1,32 +1,30 @@
 import { inject, injectable } from "tsyringe";
 
-import { DialogueHelper } from "../helpers/DialogueHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { IGetInsuranceCostRequestData } from "../models/eft/insurance/IGetInsuranceCostRequestData";
-import {
-    IGetInsuranceCostResponseData
-} from "../models/eft/insurance/IGetInsuranceCostResponseData";
-import { IInsureRequestData } from "../models/eft/insurance/IInsureRequestData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { Insurance, ISystemData } from "../models/eft/profile/IAkiProfile";
-import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MessageType } from "../models/enums/MessageType";
-import { IInsuranceConfig } from "../models/spt/config/IInsuranceConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { InsuranceService } from "../services/InsuranceService";
-import { MailSendService } from "../services/MailSendService";
-import { PaymentService } from "../services/PaymentService";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { IGetInsuranceCostRequestData } from "@spt-aki/models/eft/insurance/IGetInsuranceCostRequestData";
+import { IGetInsuranceCostResponseData } from "@spt-aki/models/eft/insurance/IGetInsuranceCostResponseData";
+import { IInsureRequestData } from "@spt-aki/models/eft/insurance/IInsureRequestData";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { Insurance, ISystemData } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { IInsuranceConfig } from "@spt-aki/models/spt/config/IInsuranceConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { InsuranceService } from "@spt-aki/services/InsuranceService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { PaymentService } from "@spt-aki/services/PaymentService";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class InsuranceController

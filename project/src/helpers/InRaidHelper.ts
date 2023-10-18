@@ -1,26 +1,26 @@
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData, IPostRaidPmcData } from "../models/eft/common/IPmcData";
-import { IQuestStatus, TraderInfo, Victim } from "../models/eft/common/tables/IBotBase";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ISaveProgressRequestData } from "../models/eft/inRaid/ISaveProgressRequestData";
-import { IFailQuestRequestData } from "../models/eft/quests/IFailQuestRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { QuestStatus } from "../models/enums/QuestStatus";
-import { Traders } from "../models/enums/Traders";
-import { IInRaidConfig } from "../models/spt/config/IInRaidConfig";
-import { ILostOnDeathConfig } from "../models/spt/config/ILostOnDeathConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { ProfileFixerService } from "../services/ProfileFixerService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { InventoryHelper } from "./InventoryHelper";
-import { ItemHelper } from "./ItemHelper";
-import { PaymentHelper } from "./PaymentHelper";
-import { QuestHelper } from "./QuestHelper";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
+import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
+import { IPmcData, IPostRaidPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IQuestStatus, TraderInfo, Victim } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
+import { IFailQuestRequestData } from "@spt-aki/models/eft/quests/IFailQuestRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IInRaidConfig } from "@spt-aki/models/spt/config/IInRaidConfig";
+import { ILostOnDeathConfig } from "@spt-aki/models/spt/config/ILostOnDeathConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class InRaidHelper

@@ -1,10 +1,10 @@
-import { JsonUtil } from "../utils/JsonUtil";
-import { VFS } from "../utils/VFS";
-
 import { inject, injectable } from "tsyringe";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
+
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
 export class ConfigServer 

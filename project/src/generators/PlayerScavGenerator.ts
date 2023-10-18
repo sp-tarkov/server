@@ -1,30 +1,30 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotGeneratorHelper } from "../helpers/BotGeneratorHelper";
-import { BotHelper } from "../helpers/BotHelper";
-import { BotWeaponGeneratorHelper } from "../helpers/BotWeaponGeneratorHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Settings, Skills, Stats } from "../models/eft/common/tables/IBotBase";
-import { IBotType } from "../models/eft/common/tables/IBotType";
-import { Item } from "../models/eft/common/tables/IItem";
-import { AccountTypes } from "../models/enums/AccountTypes";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MemberCategory } from "../models/enums/MemberCategory";
-import { Traders } from "../models/enums/Traders";
-import { IPlayerScavConfig, KarmaLevel } from "../models/spt/config/IPlayerScavConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { BotLootCacheService } from "../services/BotLootCacheService";
-import { FenceService } from "../services/FenceService";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { BotGenerator } from "./BotGenerator";
+import { BotGenerator } from "@spt-aki/generators/BotGenerator";
+import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Settings, Skills, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IPlayerScavConfig, KarmaLevel } from "@spt-aki/models/spt/config/IPlayerScavConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
+import { FenceService } from "@spt-aki/services/FenceService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class PlayerScavGenerator

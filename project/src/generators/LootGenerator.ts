@@ -1,23 +1,23 @@
 import { inject, injectable } from "tsyringe";
 
-import { InventoryHelper } from "../helpers/InventoryHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { PresetHelper } from "../helpers/PresetHelper";
-import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
-import { IPreset } from "../models/eft/common/IGlobals";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { AddItem } from "../models/eft/inventory/IAddItemRequestData";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ISealedAirdropContainerSettings, RewardDetails } from "../models/spt/config/IInventoryConfig";
-import { LootItem } from "../models/spt/services/LootItem";
-import { LootRequest } from "../models/spt/services/LootRequest";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { LocalisationService } from "../services/LocalisationService";
-import { RagfairLinkedItemService } from "../services/RagfairLinkedItemService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { AddItem } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ISealedAirdropContainerSettings, RewardDetails } from "@spt-aki/models/spt/config/IInventoryConfig";
+import { LootItem } from "@spt-aki/models/spt/services/LootItem";
+import { LootRequest } from "@spt-aki/models/spt/services/LootRequest";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 type ItemLimit = {
     current: number,

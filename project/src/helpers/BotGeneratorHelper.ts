@@ -1,24 +1,22 @@
 import { inject, injectable } from "tsyringe";
 
-import { ApplicationContext } from "../context/ApplicationContext";
-import { ContextVariableType } from "../context/ContextVariableType";
-import { DurabilityLimitsHelper } from "../helpers/DurabilityLimitsHelper";
-import { Item, Repairable, Upd } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import {
-    IGetRaidConfigurationRequestData
-} from "../models/eft/match/IGetRaidConfigurationRequestData";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { EquipmentFilters, IBotConfig, IRandomisedResourceValues } from "../models/spt/config/IBotConfig";
-import { IPmcConfig } from "../models/spt/config/IPmcConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { ItemHelper } from "./ItemHelper";
+import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
+import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
+import { DurabilityLimitsHelper } from "@spt-aki/helpers/DurabilityLimitsHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { Item, Repairable, Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { EquipmentFilters, IBotConfig, IRandomisedResourceValues } from "@spt-aki/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BotGeneratorHelper 

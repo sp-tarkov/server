@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { Money } from "../models/enums/Money";
-import { DatabaseServer } from "../servers/DatabaseServer";
+import { Money } from "@spt-aki/models/enums/Money";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 
 class LookupItem<T, I>
 {

@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
 
-import { RagfairOfferGenerator } from "../generators/RagfairOfferGenerator";
-import { TraderAssortHelper } from "../helpers/TraderAssortHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IRagfairOffer } from "../models/eft/ragfair/IRagfairOffer";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Traders } from "../models/enums/Traders";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { LocalisationService } from "../services/LocalisationService";
-import { RagfairCategoriesService } from "../services/RagfairCategoriesService";
-import { RagfairOfferService } from "../services/RagfairOfferService";
-import { RagfairRequiredItemsService } from "../services/RagfairRequiredItemsService";
-import { ConfigServer } from "./ConfigServer";
+import { RagfairOfferGenerator } from "@spt-aki/generators/RagfairOfferGenerator";
+import { TraderAssortHelper } from "@spt-aki/helpers/TraderAssortHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { RagfairCategoriesService } from "@spt-aki/services/RagfairCategoriesService";
+import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
+import { RagfairRequiredItemsService } from "@spt-aki/services/RagfairRequiredItemsService";
 
 @injectable()
 export class RagfairServer

@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
-import { ITraderBase } from "../models/eft/common/tables/ITrader";
 
-import { DialogueHelper } from "../helpers/DialogueHelper";
-import { HandbookHelper } from "../helpers/HandbookHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { SecureContainerHelper } from "../helpers/SecureContainerHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { IInsuredItemsData } from "../models/eft/inRaid/IInsuredItemsData";
-import { ISaveProgressRequestData } from "../models/eft/inRaid/ISaveProgressRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MessageType } from "../models/enums/MessageType";
-import { Traders } from "../models/enums/Traders";
-import { IInsuranceConfig } from "../models/spt/config/IInsuranceConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { LocaleService } from "./LocaleService";
-import { LocalisationService } from "./LocalisationService";
-import { MailSendService } from "./MailSendService";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { SecureContainerHelper } from "@spt-aki/helpers/SecureContainerHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
+import { IInsuredItemsData } from "@spt-aki/models/eft/inRaid/IInsuredItemsData";
+import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IInsuranceConfig } from "@spt-aki/models/spt/config/IInsuranceConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { LocaleService } from "@spt-aki/services/LocaleService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class InsuranceService

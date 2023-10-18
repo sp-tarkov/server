@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { MatchCallbacks } from "../../callbacks/MatchCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { MatchCallbacks } from "@spt-aki/callbacks/MatchCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class MatchStaticRouter extends StaticRouter 

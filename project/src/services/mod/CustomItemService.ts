@@ -1,14 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
-import { ITemplateItem, Props } from "../../models/eft/common/tables/ITemplateItem";
-import {
-    CreateItemResult, LocaleDetails, NewItemDetails, NewItemFromCloneDetails
-} from "../../models/spt/mod/NewItemDetails";
-import { IDatabaseTables } from "../../models/spt/server/IDatabaseTables";
-import { ILogger } from "../../models/spt/utils/ILogger";
-import { DatabaseServer } from "../../servers/DatabaseServer";
-import { HashUtil } from "../../utils/HashUtil";
-import { JsonUtil } from "../../utils/JsonUtil";
+import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { CreateItemResult, LocaleDetails, NewItemDetails, NewItemFromCloneDetails } from "@spt-aki/models/spt/mod/NewItemDetails";
+import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class CustomItemService

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { BundleCallbacks } from "../../callbacks/BundleCallbacks";
-import { DynamicRouter, RouteAction } from "../../di/Router";
+import { BundleCallbacks } from "@spt-aki/callbacks/BundleCallbacks";
+import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
 
 @injectable()
 export class BundleDynamicRouter extends DynamicRouter 

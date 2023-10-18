@@ -1,21 +1,21 @@
 import { inject, injectable } from "tsyringe";
 
-import { HttpServerHelper } from "../helpers/HttpServerHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { PreAkiModLoader } from "../loaders/PreAkiModLoader";
-import { IChangeRequestData } from "../models/eft/launcher/IChangeRequestData";
-import { ILoginRequestData } from "../models/eft/launcher/ILoginRequestData";
-import { IRegisterData } from "../models/eft/launcher/IRegisterData";
-import { Info, ModDetails } from "../models/eft/profile/IAkiProfile";
-import { IConnectResponse } from "../models/eft/profile/IConnectResponse";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { IPackageJsonData } from "../models/spt/mod/IPackageJsonData";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
+import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
+import { IChangeRequestData } from "@spt-aki/models/eft/launcher/IChangeRequestData";
+import { ILoginRequestData } from "@spt-aki/models/eft/launcher/ILoginRequestData";
+import { IRegisterData } from "@spt-aki/models/eft/launcher/IRegisterData";
+import { Info, ModDetails } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IConnectResponse } from "@spt-aki/models/eft/profile/IConnectResponse";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { IPackageJsonData } from "@spt-aki/models/spt/mod/IPackageJsonData";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
 
 @injectable()
 export class LauncherController

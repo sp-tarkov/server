@@ -1,28 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
-import { ItemHelper } from "../helpers/ItemHelper";
-import { QuestHelper } from "../helpers/QuestHelper";
-import { RepairHelper } from "../helpers/RepairHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
-import { IArmorType } from "../models/eft/common/IGlobals";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { RepairKitsInfo } from "../models/eft/repair/IRepairActionDataRequest";
-import { RepairItem } from "../models/eft/repair/ITraderRepairActionDataRequest";
-import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { SkillTypes } from "../models/enums/SkillTypes";
-import { BonusSettings, IRepairConfig } from "../models/spt/config/IRepairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { RandomUtil } from "../utils/RandomUtil";
-import { LocalisationService } from "./LocalisationService";
-import { PaymentService } from "./PaymentService";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
+import { RepairHelper } from "@spt-aki/helpers/RepairHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { IArmorType } from "@spt-aki/models/eft/common/IGlobals";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { RepairKitsInfo } from "@spt-aki/models/eft/repair/IRepairActionDataRequest";
+import { RepairItem } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
+import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
+import { BonusSettings, IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { PaymentService } from "@spt-aki/services/PaymentService";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class RepairService

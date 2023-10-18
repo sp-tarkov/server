@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { TraderCallbacks } from "../../callbacks/TraderCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { TraderCallbacks } from "@spt-aki/callbacks/TraderCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class TraderStaticRouter extends StaticRouter 

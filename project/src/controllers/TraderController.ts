@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
 
-import { FenceBaseAssortGenerator } from "../generators/FenceBaseAssortGenerator";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TraderAssortHelper } from "../helpers/TraderAssortHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { ITraderAssort, ITraderBase } from "../models/eft/common/tables/ITrader";
-import { Traders } from "../models/enums/Traders";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { FenceService } from "../services/FenceService";
-import { TraderAssortService } from "../services/TraderAssortService";
-import { TraderPurchasePersisterService } from "../services/TraderPurchasePersisterService";
-import { JsonUtil } from "../utils/JsonUtil";
+import { FenceBaseAssortGenerator } from "@spt-aki/generators/FenceBaseAssortGenerator";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderAssortHelper } from "@spt-aki/helpers/TraderAssortHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { ITraderAssort, ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { FenceService } from "@spt-aki/services/FenceService";
+import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
+import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class TraderController

@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
-import { BundleLoader } from "../loaders/BundleLoader";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IHttpConfig } from "../models/spt/config/IHttpConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { HttpFileUtil } from "../utils/HttpFileUtil";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { BundleLoader } from "@spt-aki/loaders/BundleLoader";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { HttpFileUtil } from "@spt-aki/utils/HttpFileUtil";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class BundleCallbacks

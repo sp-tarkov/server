@@ -1,39 +1,37 @@
 import { inject, injectable } from "tsyringe";
 
-import { ApplicationContext } from "../context/ApplicationContext";
-import { ContextVariableType } from "../context/ContextVariableType";
-import { LootGenerator } from "../generators/LootGenerator";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ICreateGroupRequestData } from "../models/eft/match/ICreateGroupRequestData";
-import { IEndOfflineRaidRequestData } from "../models/eft/match/IEndOfflineRaidRequestData";
-import { IGetGroupStatusRequestData } from "../models/eft/match/IGetGroupStatusRequestData";
-import { IGetProfileRequestData } from "../models/eft/match/IGetProfileRequestData";
-import {
-    IGetRaidConfigurationRequestData
-} from "../models/eft/match/IGetRaidConfigurationRequestData";
-import { IJoinMatchRequestData } from "../models/eft/match/IJoinMatchRequestData";
-import { IJoinMatchResult } from "../models/eft/match/IJoinMatchResult";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MessageType } from "../models/enums/MessageType";
-import { Traders } from "../models/enums/Traders";
-import { IInRaidConfig } from "../models/spt/config/IInRaidConfig";
-import { IMatchConfig } from "../models/spt/config/IMatchConfig";
-import { IPmcConfig } from "../models/spt/config/IPmcConfig";
-import { ITraderConfig } from "../models/spt/config/ITraderConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { SaveServer } from "../servers/SaveServer";
-import { BotGenerationCacheService } from "../services/BotGenerationCacheService";
-import { BotLootCacheService } from "../services/BotLootCacheService";
-import { MailSendService } from "../services/MailSendService";
-import { MatchLocationService } from "../services/MatchLocationService";
-import { ProfileSnapshotService } from "../services/ProfileSnapshotService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
+import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
+import { LootGenerator } from "@spt-aki/generators/LootGenerator";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ICreateGroupRequestData } from "@spt-aki/models/eft/match/ICreateGroupRequestData";
+import { IEndOfflineRaidRequestData } from "@spt-aki/models/eft/match/IEndOfflineRaidRequestData";
+import { IGetGroupStatusRequestData } from "@spt-aki/models/eft/match/IGetGroupStatusRequestData";
+import { IGetProfileRequestData } from "@spt-aki/models/eft/match/IGetProfileRequestData";
+import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
+import { IJoinMatchRequestData } from "@spt-aki/models/eft/match/IJoinMatchRequestData";
+import { IJoinMatchResult } from "@spt-aki/models/eft/match/IJoinMatchResult";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IInRaidConfig } from "@spt-aki/models/spt/config/IInRaidConfig";
+import { IMatchConfig } from "@spt-aki/models/spt/config/IMatchConfig";
+import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { BotGenerationCacheService } from "@spt-aki/services/BotGenerationCacheService";
+import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { MatchLocationService } from "@spt-aki/services/MatchLocationService";
+import { ProfileSnapshotService } from "@spt-aki/services/ProfileSnapshotService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class MatchController

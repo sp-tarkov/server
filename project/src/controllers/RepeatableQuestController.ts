@@ -1,36 +1,30 @@
 import { inject, injectable } from "tsyringe";
 
-import { RepeatableQuestGenerator } from "../generators/RepeatableQuestGenerator";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { RagfairServerHelper } from "../helpers/RagfairServerHelper";
-import { RepeatableQuestHelper } from "../helpers/RepeatableQuestHelper";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import {
-    IChangeRequirement,
-    IPmcDataRepeatableQuest,
-    IRepeatableQuest
-} from "../models/eft/common/tables/IRepeatableQuests";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IRepeatableQuestChangeRequest } from "../models/eft/quests/IRepeatableQuestChangeRequest";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ELocationName } from "../models/enums/ELocationName";
-import { HideoutAreas } from "../models/enums/HideoutAreas";
-import { QuestStatus } from "../models/enums/QuestStatus";
-import {
-    IQuestConfig, IRepeatableQuestConfig
-} from "../models/spt/config/IQuestConfig";
-import { IQuestTypePool } from "../models/spt/repeatable/IQuestTypePool";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { PaymentService } from "../services/PaymentService";
-import { ProfileFixerService } from "../services/ProfileFixerService";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { ObjectId } from "../utils/ObjectId";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { RepeatableQuestGenerator } from "@spt-aki/generators/RepeatableQuestGenerator";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
+import { RepeatableQuestHelper } from "@spt-aki/helpers/RepeatableQuestHelper";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IChangeRequirement, IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IRepeatableQuestChangeRequest } from "@spt-aki/models/eft/quests/IRepeatableQuestChangeRequest";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ELocationName } from "@spt-aki/models/enums/ELocationName";
+import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { IQuestConfig, IRepeatableQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
+import { IQuestTypePool } from "@spt-aki/models/spt/repeatable/IQuestTypePool";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { PaymentService } from "@spt-aki/services/PaymentService";
+import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { ObjectId } from "@spt-aki/utils/ObjectId";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class RepeatableQuestController

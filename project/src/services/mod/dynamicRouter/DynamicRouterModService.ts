@@ -1,6 +1,7 @@
 import { DependencyContainer, injectable } from "tsyringe";
-import { RouteAction } from "../../../di/Router";
-import { DynamicRouterMod } from "./DynamicRouterMod";
+
+import { RouteAction } from "@spt-aki/di/Router";
+import { DynamicRouterMod } from "@spt-aki/services/mod/dynamicRouter/DynamicRouterMod";
 
 @injectable()
 export class DynamicRouterModService 

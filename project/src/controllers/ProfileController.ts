@@ -1,37 +1,33 @@
 import { inject, injectable } from "tsyringe";
 
-import { PlayerScavGenerator } from "../generators/PlayerScavGenerator";
-import { DialogueHelper } from "../helpers/DialogueHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { QuestHelper } from "../helpers/QuestHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { TemplateSide } from "../models/eft/common/tables/IProfileTemplate";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IMiniProfile } from "../models/eft/launcher/IMiniProfile";
-import { IAkiProfile, Inraid, Vitality } from "../models/eft/profile/IAkiProfile";
-import {
-    IProfileChangeNicknameRequestData
-} from "../models/eft/profile/IProfileChangeNicknameRequestData";
-import {
-    IProfileChangeVoiceRequestData
-} from "../models/eft/profile/IProfileChangeVoiceRequestData";
-import { IProfileCreateRequestData } from "../models/eft/profile/IProfileCreateRequestData";
-import { ISearchFriendRequestData } from "../models/eft/profile/ISearchFriendRequestData";
-import { ISearchFriendResponse } from "../models/eft/profile/ISearchFriendResponse";
-import { IValidateNicknameRequestData } from "../models/eft/profile/IValidateNicknameRequestData";
-import { MessageType } from "../models/enums/MessageType";
-import { QuestStatus } from "../models/enums/QuestStatus";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { MailSendService } from "../services/MailSendService";
-import { ProfileFixerService } from "../services/ProfileFixerService";
-import { HashUtil } from "../utils/HashUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { PlayerScavGenerator } from "@spt-aki/generators/PlayerScavGenerator";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { TemplateSide } from "@spt-aki/models/eft/common/tables/IProfileTemplate";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IMiniProfile } from "@spt-aki/models/eft/launcher/IMiniProfile";
+import { IAkiProfile, Inraid, Vitality } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IProfileChangeNicknameRequestData } from "@spt-aki/models/eft/profile/IProfileChangeNicknameRequestData";
+import { IProfileChangeVoiceRequestData } from "@spt-aki/models/eft/profile/IProfileChangeVoiceRequestData";
+import { IProfileCreateRequestData } from "@spt-aki/models/eft/profile/IProfileCreateRequestData";
+import { ISearchFriendRequestData } from "@spt-aki/models/eft/profile/ISearchFriendRequestData";
+import { ISearchFriendResponse } from "@spt-aki/models/eft/profile/ISearchFriendResponse";
+import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class ProfileController

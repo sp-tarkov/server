@@ -1,29 +1,27 @@
 import { inject, injectable } from "tsyringe";
 
-import { ApplicationContext } from "../context/ApplicationContext";
-import { ContextVariableType } from "../context/ContextVariableType";
-import { BotGenerator } from "../generators/BotGenerator";
-import { BotDifficultyHelper } from "../helpers/BotDifficultyHelper";
-import { BotHelper } from "../helpers/BotHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { IGenerateBotsRequestData } from "../models/eft/bot/IGenerateBotsRequestData";
-import { IBotBase } from "../models/eft/common/tables/IBotBase";
-import { IBotCore } from "../models/eft/common/tables/IBotCore";
-import { Difficulty } from "../models/eft/common/tables/IBotType";
-import {
-    IGetRaidConfigurationRequestData
-} from "../models/eft/match/IGetRaidConfigurationRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { BotGenerationDetails } from "../models/spt/bots/BotGenerationDetails";
-import { IBotConfig } from "../models/spt/config/IBotConfig";
-import { IPmcConfig } from "../models/spt/config/IPmcConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { BotGenerationCacheService } from "../services/BotGenerationCacheService";
-import { LocalisationService } from "../services/LocalisationService";
-import { MatchBotDetailsCacheService } from "../services/MatchBotDetailsCacheService";
-import { JsonUtil } from "../utils/JsonUtil";
+import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
+import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
+import { BotGenerator } from "@spt-aki/generators/BotGenerator";
+import { BotDifficultyHelper } from "@spt-aki/helpers/BotDifficultyHelper";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IGenerateBotsRequestData } from "@spt-aki/models/eft/bot/IGenerateBotsRequestData";
+import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IBotCore } from "@spt-aki/models/eft/common/tables/IBotCore";
+import { Difficulty } from "@spt-aki/models/eft/common/tables/IBotType";
+import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { BotGenerationDetails } from "@spt-aki/models/spt/bots/BotGenerationDetails";
+import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { BotGenerationCacheService } from "@spt-aki/services/BotGenerationCacheService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCacheService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class BotController

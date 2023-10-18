@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { NotifierCallbacks } from "../../callbacks/NotifierCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { NotifierCallbacks } from "@spt-aki/callbacks/NotifierCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class NotifierStaticRouter extends StaticRouter 

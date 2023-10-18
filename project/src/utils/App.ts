@@ -1,12 +1,12 @@
+import os from "node:os";
 import { inject, injectable, injectAll } from "tsyringe";
 
-import os from "node:os";
-import { OnLoad } from "../di/OnLoad";
-import { OnUpdate } from "../di/OnUpdate";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { LocalisationService } from "../services/LocalisationService";
-import { EncodingUtil } from "./EncodingUtil";
-import { TimeUtil } from "./TimeUtil";
+import { OnLoad } from "@spt-aki/di/OnLoad";
+import { OnUpdate } from "@spt-aki/di/OnUpdate";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class App

@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotWeaponGeneratorHelper } from "../../../helpers/BotWeaponGeneratorHelper";
-import { ItemHelper } from "../../../helpers/ItemHelper";
-import { EquipmentSlots } from "../../../models/enums/EquipmentSlots";
-import { ItemAddedResult } from "../../../models/enums/ItemAddedResult";
-import { ILogger } from "../../../models/spt/utils/ILogger";
-import { LocalisationService } from "../../../services/LocalisationService";
-import { IInventoryMagGen } from "../IInventoryMagGen";
-import { InventoryMagGen } from "../InventoryMagGen";
+import { IInventoryMagGen } from "@spt-aki/generators/weapongen/IInventoryMagGen";
+import { InventoryMagGen } from "@spt-aki/generators/weapongen/InventoryMagGen";
+import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
+import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
 
 @injectable()
 export class ExternalInventoryMagGen implements IInventoryMagGen

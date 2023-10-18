@@ -1,7 +1,7 @@
-import { MinMax } from "../../../models/common/MinMax";
-import { SeasonalEventType } from "../../../models/enums/SeasonalEventType";
-import { ELocationName } from "../../enums/ELocationName";
-import { IBaseConfig } from "./IBaseConfig";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { ELocationName } from "@spt-aki/models/enums/ELocationName";
+import { SeasonalEventType } from "@spt-aki/models/enums/SeasonalEventType";
+import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface IQuestConfig extends IBaseConfig
 {

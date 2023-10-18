@@ -1,13 +1,14 @@
 import { DependencyContainer, inject, injectable } from "tsyringe";
-import { IPostAkiLoadMod } from "../models/external/IPostAkiLoadMod";
-import { IPostAkiLoadModAsync } from "../models/external/IPostAkiLoadModAsync";
-import { IModLoader } from "../models/spt/mod/IModLoader";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { LocalisationService } from "../services/LocalisationService";
-import { VFS } from "../utils/VFS";
-import { BundleLoader } from "./BundleLoader";
-import { ModTypeCheck } from "./ModTypeCheck";
-import { PreAkiModLoader } from "./PreAkiModLoader";
+
+import { BundleLoader } from "@spt-aki/loaders/BundleLoader";
+import { ModTypeCheck } from "@spt-aki/loaders/ModTypeCheck";
+import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
+import { IPostAkiLoadMod } from "@spt-aki/models/external/IPostAkiLoadMod";
+import { IPostAkiLoadModAsync } from "@spt-aki/models/external/IPostAkiLoadModAsync";
+import { IModLoader } from "@spt-aki/models/spt/mod/IModLoader";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
 export class PostAkiModLoader implements IModLoader

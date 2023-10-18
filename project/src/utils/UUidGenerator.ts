@@ -1,5 +1,6 @@
 import { injectable } from "tsyringe";
-import { IUUidGenerator } from "../models/spt/utils/IUuidGenerator";
+
+import { IUUidGenerator } from "@spt-aki/models/spt/utils/IUuidGenerator";
 
 @injectable()
 export class UUidGenerator implements IUUidGenerator 

@@ -1,7 +1,7 @@
-import { IGetLocationRequestData } from "../../eft/location/IGetLocationRequestData";
-import { IGetBodyResponseData } from "../../eft/httpResponse/IGetBodyResponseData";
-import { ILocationsGenerateAllResponse } from "../../eft/common/ILocationsSourceDestinationBase";
-import { ILocationBase } from "../../eft/common/ILocationBase";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { ILocationsGenerateAllResponse } from "@spt-aki/models/eft/common/ILocationsSourceDestinationBase";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
 
 export interface ILocationCallbacks
 {

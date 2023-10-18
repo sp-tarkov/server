@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
-import { INotification } from "../models/eft/notifier/INotifier";
 
+import { INotification } from "@spt-aki/models/eft/notifier/INotifier";
 
 @injectable()
 export class NotificationService

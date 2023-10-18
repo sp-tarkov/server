@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
 
-import { Item } from "../models/eft/common/tables/IItem";
-import { Dialogue, Message, MessageContent, MessageItems, MessagePreview } from "../models/eft/profile/IAkiProfile";
-import { MessageType } from "../models/enums/MessageType";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { ItemHelper } from "./ItemHelper";
-import { NotificationSendHelper } from "./NotificationSendHelper";
-import { NotifierHelper } from "./NotifierHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { NotificationSendHelper } from "@spt-aki/helpers/NotificationSendHelper";
+import { NotifierHelper } from "@spt-aki/helpers/NotifierHelper";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { Dialogue, Message, MessageContent, MessageItems, MessagePreview } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class DialogueHelper

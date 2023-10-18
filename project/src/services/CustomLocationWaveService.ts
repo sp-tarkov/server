@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { BossLocationSpawn, ILocationBase, Wave } from "../models/eft/common/ILocationBase";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ILocationConfig } from "../models/spt/config/ILocationConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
+import { BossLocationSpawn, ILocationBase, Wave } from "@spt-aki/models/eft/common/ILocationBase";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class CustomLocationWaveService

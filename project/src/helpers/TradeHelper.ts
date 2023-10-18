@@ -1,23 +1,23 @@
 import { inject, injectable } from "tsyringe";
 
-import { InventoryHelper } from "../helpers/InventoryHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item, Upd } from "../models/eft/common/tables/IItem";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import { IProcessSellTradeRequestData } from "../models/eft/trade/IProcessSellTradeRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Traders } from "../models/enums/Traders";
-import { ITraderConfig } from "../models/spt/config/ITraderConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { RagfairServer } from "../servers/RagfairServer";
-import { FenceService } from "../services/FenceService";
-import { PaymentService } from "../services/PaymentService";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
+import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { RagfairServer } from "@spt-aki/servers/RagfairServer";
+import { FenceService } from "@spt-aki/services/FenceService";
+import { PaymentService } from "@spt-aki/services/PaymentService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class TradeHelper

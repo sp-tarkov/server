@@ -5,8 +5,9 @@ import { promisify } from "node:util";
 import lockfile from "proper-lockfile";
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";
-import { IAsyncQueue } from "../models/spt/utils/IAsyncQueue";
-import { IUUidGenerator } from "../models/spt/utils/IUuidGenerator";
+
+import { IAsyncQueue } from "@spt-aki/models/spt/utils/IAsyncQueue";
+import { IUUidGenerator } from "@spt-aki/models/spt/utils/IUuidGenerator";
 
 @injectable()
 export class VFS 

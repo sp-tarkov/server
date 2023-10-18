@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
-import { WeatherController } from "../controllers/WeatherController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { IWeatherData } from "../models/eft/weather/IWeatherData";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { WeatherController } from "@spt-aki/controllers/WeatherController";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { IWeatherData } from "@spt-aki/models/eft/weather/IWeatherData";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class WeatherCallbacks

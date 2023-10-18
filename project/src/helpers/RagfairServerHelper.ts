@@ -1,28 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MemberCategory } from "../models/enums/MemberCategory";
-import { MessageType } from "../models/enums/MessageType";
-import { Traders } from "../models/enums/Traders";
-import { IQuestConfig } from "../models/spt/config/IQuestConfig";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { LocaleService } from "../services/LocaleService";
-import { MailSendService } from "../services/MailSendService";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { DialogueHelper } from "./DialogueHelper";
-import { ItemHelper } from "./ItemHelper";
-import { ProfileHelper } from "./ProfileHelper";
-import { TraderHelper } from "./TraderHelper";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
+import { LocaleService } from "@spt-aki/services/LocaleService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 /**
  * Helper class for common ragfair server actions

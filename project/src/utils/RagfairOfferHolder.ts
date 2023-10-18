@@ -1,4 +1,4 @@
-import { IRagfairOffer } from "../models/eft/ragfair/IRagfairOffer";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 
 export class RagfairOfferHolder
 {

@@ -1,4 +1,4 @@
-import { IBotBase, IEftStats } from "./tables/IBotBase";
+import { IBotBase, IEftStats } from "@spt-aki/models/eft/common/tables/IBotBase";
 
 export interface IPmcData extends IBotBase
 {}

@@ -1,6 +1,6 @@
-import { MinMax } from "../../../models/common/MinMax";
-import { LootRequest } from "../services/LootRequest";
-import { IBaseConfig } from "./IBaseConfig";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
+import { LootRequest } from "@spt-aki/models/spt/services/LootRequest";
 
 export interface ITraderConfig extends IBaseConfig
 {

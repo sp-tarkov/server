@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { HideoutCallbacks } from "../../callbacks/HideoutCallbacks";
-import { InventoryCallbacks } from "../../callbacks/InventoryCallbacks";
-import { HandledRoute, ItemEventRouterDefinition } from "../../di/Router";
-import { IPmcData } from "../../models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "../../models/eft/itemEvent/IItemEventRouterResponse";
-import { ItemEventActions } from "../../models/enums/ItemEventActions";
+import { HideoutCallbacks } from "@spt-aki/callbacks/HideoutCallbacks";
+import { InventoryCallbacks } from "@spt-aki/callbacks/InventoryCallbacks";
+import { HandledRoute, ItemEventRouterDefinition } from "@spt-aki/di/Router";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { ItemEventActions } from "@spt-aki/models/enums/ItemEventActions";
 
 @injectable()
 export class InventoryItemEventRouter extends ItemEventRouterDefinition 

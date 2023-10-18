@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotController } from "../controllers/BotController";
-import { IGenerateBotsRequestData } from "../models/eft/bot/IGenerateBotsRequestData";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IBotBase } from "../models/eft/common/tables/IBotBase";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { BotController } from "@spt-aki/controllers/BotController";
+import { IGenerateBotsRequestData } from "@spt-aki/models/eft/bot/IGenerateBotsRequestData";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class BotCallbacks

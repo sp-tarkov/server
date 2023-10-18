@@ -1,4 +1,4 @@
-import { ITemplateItem } from "../../eft/common/tables/ITemplateItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 
 export interface IBotLootCache
 {

@@ -1,34 +1,32 @@
 import { inject, injectable } from "tsyringe";
 
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TradeHelper } from "../helpers/TradeHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item, Upd } from "../models/eft/common/tables/IItem";
-import { ITraderBase } from "../models/eft/common/tables/ITrader";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IProcessBaseTradeRequestData } from "../models/eft/trade/IProcessBaseTradeRequestData";
-import { IProcessBuyTradeRequestData } from "../models/eft/trade/IProcessBuyTradeRequestData";
-import {
-    IProcessRagfairTradeRequestData
-} from "../models/eft/trade/IProcessRagfairTradeRequestData";
-import { IProcessSellTradeRequestData } from "../models/eft/trade/IProcessSellTradeRequestData";
-import { ISellScavItemsToFenceRequestData } from "../models/eft/trade/ISellScavItemsToFenceRequestData";
-import { BackendErrorCodes } from "../models/enums/BackendErrorCodes";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MemberCategory } from "../models/enums/MemberCategory";
-import { Traders } from "../models/enums/Traders";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ITraderConfig } from "../models/spt/config/ITraderConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { RagfairServer } from "../servers/RagfairServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { RagfairPriceService } from "../services/RagfairPriceService";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { JsonUtil } from "../utils/JsonUtil";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TradeHelper } from "@spt-aki/helpers/TradeHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IProcessBaseTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBaseTradeRequestData";
+import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
+import { IProcessRagfairTradeRequestData } from "@spt-aki/models/eft/trade/IProcessRagfairTradeRequestData";
+import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
+import { ISellScavItemsToFenceRequestData } from "@spt-aki/models/eft/trade/ISellScavItemsToFenceRequestData";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { RagfairServer } from "@spt-aki/servers/RagfairServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 class TradeController

@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { CounterKeyValue, Stats } from "../models/eft/common/tables/IBotBase";
-import { IAkiProfile } from "../models/eft/profile/IAkiProfile";
-import { IValidateNicknameRequestData } from "../models/eft/profile/IValidateNicknameRequestData";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { ProfileSnapshotService } from "../services/ProfileSnapshotService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { Watermark } from "../utils/Watermark";
-import { ItemHelper } from "./ItemHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { CounterKeyValue, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { ProfileSnapshotService } from "@spt-aki/services/ProfileSnapshotService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { Watermark } from "@spt-aki/utils/Watermark";
 
 @injectable()
 export class ProfileHelper

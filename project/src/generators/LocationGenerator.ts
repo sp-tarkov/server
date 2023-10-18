@@ -1,32 +1,27 @@
 import { inject, injectable } from "tsyringe";
 
-import { ContainerHelper } from "../helpers/ContainerHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { PresetHelper } from "../helpers/PresetHelper";
-import { RagfairServerHelper } from "../helpers/RagfairServerHelper";
-import { IContainerMinMax, IStaticContainer } from "../models/eft/common/ILocation";
-import { ILocationBase } from "../models/eft/common/ILocationBase";
-import {
-    ILooseLoot, Spawnpoint, SpawnpointTemplate, SpawnpointsForced
-} from "../models/eft/common/ILooseLoot";
-import { Item } from "../models/eft/common/tables/IItem";
-import {
-    IStaticAmmoDetails, IStaticContainerData,
-    IStaticForcedProps, IStaticLootDetails
-} from "../models/eft/common/tables/ILootBase";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { ILocationConfig } from "../models/spt/config/ILocationConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { SeasonalEventService } from "../services/SeasonalEventService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { MathUtil } from "../utils/MathUtil";
-import { ObjectId } from "../utils/ObjectId";
-import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "../utils/RandomUtil";
+import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
+import { IContainerMinMax, IStaticContainer } from "@spt-aki/models/eft/common/ILocation";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { ILooseLoot, Spawnpoint, SpawnpointTemplate, SpawnpointsForced } from "@spt-aki/models/eft/common/ILooseLoot";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { IStaticAmmoDetails, IStaticContainerData, IStaticForcedProps, IStaticLootDetails } from "@spt-aki/models/eft/common/tables/ILootBase";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { MathUtil } from "@spt-aki/utils/MathUtil";
+import { ObjectId } from "@spt-aki/utils/ObjectId";
+import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 export interface IContainerItem
 {

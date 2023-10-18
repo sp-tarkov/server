@@ -1,10 +1,9 @@
-import { NotifierHelper } from "../helpers/NotifierHelper";
-import { NotificationService } from "../services/NotificationService";
-
-import { INotifierChannel } from "../models/eft/notifier/INotifier";
-
 import { inject, injectable } from "tsyringe";
-import { HttpServerHelper } from "../helpers/HttpServerHelper";
+
+import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { NotifierHelper } from "@spt-aki/helpers/NotifierHelper";
+import { INotifierChannel } from "@spt-aki/models/eft/notifier/INotifier";
+import { NotificationService } from "@spt-aki/services/NotificationService";
 
 @injectable()
 export class NotifierController

@@ -1,5 +1,6 @@
 import { injectable } from "tsyringe";
-import { IDatabaseTables } from "../models/spt/server/IDatabaseTables";
+
+import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 
 @injectable()
 export class DatabaseServer

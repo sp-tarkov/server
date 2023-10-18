@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotHelper } from "../helpers/BotHelper";
-import { IBotBase } from "../models/eft/common/tables/IBotBase";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { LocalisationService } from "./LocalisationService";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BotGenerationCacheService

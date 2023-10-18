@@ -1,31 +1,29 @@
 import { inject, injectable } from "tsyringe";
 
-import { HideoutHelper } from "../helpers/HideoutHelper";
-import { InventoryHelper } from "../helpers/InventoryHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Bonus, HideoutSlot, IQuestStatus } from "../models/eft/common/tables/IBotBase";
-import {
-    IPmcDataRepeatableQuest, IRepeatableQuest
-} from "../models/eft/common/tables/IRepeatableQuests";
-import { StageBonus } from "../models/eft/hideout/IHideoutArea";
-import { IAkiProfile } from "../models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { HideoutAreas } from "../models/enums/HideoutAreas";
-import { QuestStatus } from "../models/enums/QuestStatus";
-import { Traders } from "../models/enums/Traders";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { Watermark } from "../utils/Watermark";
-import { LocalisationService } from "./LocalisationService";
+import { HideoutHelper } from "@spt-aki/helpers/HideoutHelper";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Bonus, HideoutSlot, IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
+import { StageBonus } from "@spt-aki/models/eft/hideout/IHideoutArea";
+import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { Watermark } from "@spt-aki/utils/Watermark";
 
 @injectable()
 export class ProfileFixerService

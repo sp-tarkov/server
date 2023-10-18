@@ -1,22 +1,22 @@
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { InsuredItem } from "../models/eft/common/tables/IBotBase";
-import { Item, Location, Repairable } from "../models/eft/common/tables/IItem";
-import { IStaticAmmoDetails } from "../models/eft/common/tables/ILootBase";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemBaseClassService } from "../services/ItemBaseClassService";
-import { LocaleService } from "../services/LocaleService";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { MathUtil } from "../utils/MathUtil";
-import { ObjectId } from "../utils/ObjectId";
-import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "../utils/RandomUtil";
-import { HandbookHelper } from "./HandbookHelper";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { InsuredItem } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Item, Location, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
+import { IStaticAmmoDetails } from "@spt-aki/models/eft/common/tables/ILootBase";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
+import { LocaleService } from "@spt-aki/services/LocaleService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { MathUtil } from "@spt-aki/utils/MathUtil";
+import { ObjectId } from "@spt-aki/utils/ObjectId";
+import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 class ItemHelper

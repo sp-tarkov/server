@@ -1,28 +1,24 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotGeneratorHelper } from "../helpers/BotGeneratorHelper";
-import { BotHelper } from "../helpers/BotHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
-import { Inventory as PmcInventory } from "../models/eft/common/tables/IBotBase";
-import {
-    Chances, Generation, IBotType, Inventory, Mods
-} from "../models/eft/common/tables/IBotType";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { EquipmentSlots } from "../models/enums/EquipmentSlots";
-import {
-    EquipmentFilterDetails, IBotConfig, RandomisationDetails
-} from "../models/spt/config/IBotConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { BotEquipmentModPoolService } from "../services/BotEquipmentModPoolService";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { BotEquipmentModGenerator } from "./BotEquipmentModGenerator";
-import { BotLootGenerator } from "./BotLootGenerator";
-import { BotWeaponGenerator } from "./BotWeaponGenerator";
+import { BotEquipmentModGenerator } from "@spt-aki/generators/BotEquipmentModGenerator";
+import { BotLootGenerator } from "@spt-aki/generators/BotLootGenerator";
+import { BotWeaponGenerator } from "@spt-aki/generators/BotWeaponGenerator";
+import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { Inventory as PmcInventory } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Chances, Generation, IBotType, Inventory, Mods } from "@spt-aki/models/eft/common/tables/IBotType";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
+import { EquipmentFilterDetails, IBotConfig, RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { BotEquipmentModPoolService } from "@spt-aki/services/BotEquipmentModPoolService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BotInventoryGenerator

@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "../di/OnLoad";
-import { OnUpdate } from "../di/OnUpdate";
 
-import { TraderController } from "../controllers/TraderController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { ITraderAssort, ITraderBase } from "../models/eft/common/tables/ITrader";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { TraderController } from "@spt-aki/controllers/TraderController";
+import { OnLoad } from "@spt-aki/di/OnLoad";
+import { OnUpdate } from "@spt-aki/di/OnUpdate";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { ITraderAssort, ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class TraderCallbacks implements OnLoad, OnUpdate

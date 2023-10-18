@@ -1,7 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IAsyncQueue } from "../../models/spt/utils/IAsyncQueue";
-import { IUUidGenerator } from "../../models/spt/utils/IUuidGenerator";
-import { AbstractWinstonLogger } from "./AbstractWinstonLogger";
+
+import { IAsyncQueue } from "@spt-aki/models/spt/utils/IAsyncQueue";
+import { IUUidGenerator } from "@spt-aki/models/spt/utils/IUuidGenerator";
+import { AbstractWinstonLogger } from "@spt-aki/utils/logging/AbstractWinstonLogger";
 
 @injectable()
 export class WinstonRequestLogger extends AbstractWinstonLogger 

@@ -1,8 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { VFS } from "../utils/VFS";
+
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
 export class HashCacheService

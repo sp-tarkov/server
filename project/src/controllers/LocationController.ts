@@ -1,30 +1,28 @@
 import { inject, injectable } from "tsyringe";
 
-import { LocationGenerator } from "../generators/LocationGenerator";
-import { LootGenerator } from "../generators/LootGenerator";
-import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
-import { ILocation } from "../models/eft/common/ILocation";
-import { ILocationBase } from "../models/eft/common/ILocationBase";
-import {
-    ILocationsGenerateAllResponse
-} from "../models/eft/common/ILocationsSourceDestinationBase";
-import { ILooseLoot, SpawnpointTemplate } from "../models/eft/common/ILooseLoot";
-import { IAirdropLootResult } from "../models/eft/location/IAirdropLootResult";
-import { IGetLocationRequestData } from "../models/eft/location/IGetLocationRequestData";
-import { AirdropTypeEnum } from "../models/enums/AirdropType";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IAirdropConfig } from "../models/spt/config/IAirdropConfig";
-import { ILocationConfig } from "../models/spt/config/ILocationConfig";
-import { ILocations } from "../models/spt/server/ILocations";
-import { LootRequest } from "../models/spt/services/LootRequest";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { LocationGenerator } from "@spt-aki/generators/LocationGenerator";
+import { LootGenerator } from "@spt-aki/generators/LootGenerator";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { ILocation } from "@spt-aki/models/eft/common/ILocation";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { ILocationsGenerateAllResponse } from "@spt-aki/models/eft/common/ILocationsSourceDestinationBase";
+import { ILooseLoot, SpawnpointTemplate } from "@spt-aki/models/eft/common/ILooseLoot";
+import { IAirdropLootResult } from "@spt-aki/models/eft/location/IAirdropLootResult";
+import { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
+import { AirdropTypeEnum } from "@spt-aki/models/enums/AirdropType";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IAirdropConfig } from "@spt-aki/models/spt/config/IAirdropConfig";
+import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
+import { ILocations } from "@spt-aki/models/spt/server/ILocations";
+import { LootRequest } from "@spt-aki/models/spt/services/LootRequest";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class LocationController

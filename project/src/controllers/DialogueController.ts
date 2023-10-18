@@ -1,28 +1,26 @@
 import { inject, injectable } from "tsyringe";
 
-import { DialogueHelper } from "../helpers/DialogueHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { IGetAllAttachmentsResponse } from "../models/eft/dialog/IGetAllAttachmentsResponse";
-import { IGetFriendListDataResponse } from "../models/eft/dialog/IGetFriendListDataResponse";
-import { IGetMailDialogViewRequestData } from "../models/eft/dialog/IGetMailDialogViewRequestData";
-import {
-    IGetMailDialogViewResponseData
-} from "../models/eft/dialog/IGetMailDialogViewResponseData";
-import { ISendMessageRequest } from "../models/eft/dialog/ISendMessageRequest";
-import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "../models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { GiftSentResult } from "../models/enums/GiftSentResult";
-import { MemberCategory } from "../models/enums/MemberCategory";
-import { MessageType } from "../models/enums/MessageType";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { SaveServer } from "../servers/SaveServer";
-import { GiftService } from "../services/GiftService";
-import { MailSendService } from "../services/MailSendService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
+import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
+import { IGetMailDialogViewRequestData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewRequestData";
+import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
+import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
+import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { GiftService } from "@spt-aki/services/GiftService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class DialogueController

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { QuestCallbacks } from "../../callbacks/QuestCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { QuestCallbacks } from "@spt-aki/callbacks/QuestCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class QuestStaticRouter extends StaticRouter 

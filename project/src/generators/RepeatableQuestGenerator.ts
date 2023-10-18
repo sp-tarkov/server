@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { HandbookHelper } from "../helpers/HandbookHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { PresetHelper } from "../helpers/PresetHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { RagfairServerHelper } from "../helpers/RagfairServerHelper";
-import { RepeatableQuestHelper } from "../helpers/RepeatableQuestHelper";
-import { Exit, ILocationBase } from "../models/eft/common/ILocationBase";
-import { TraderInfo } from "../models/eft/common/tables/IBotBase";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
+import { RepeatableQuestHelper } from "@spt-aki/helpers/RepeatableQuestHelper";
+import { Exit, ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { TraderInfo } from "@spt-aki/models/eft/common/tables/IBotBase";
 import {
     ICompletion,
     ICompletionAvailableFor,
@@ -18,30 +18,28 @@ import {
     IExplorationCondition, IKillConditionProps,
     IPickup,
     IRepeatableQuest, IReward, IRewards
-} from "../models/eft/common/tables/IRepeatableQuests";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { Traders } from "../models/enums/Traders";
-import {
-    IQuestConfig, IRepeatableQuestConfig
-} from "../models/spt/config/IQuestConfig";
-import { IQuestTypePool } from "../models/spt/repeatable/IQuestTypePool";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { LocalisationService } from "../services/LocalisationService";
-import { PaymentService } from "../services/PaymentService";
-import { ProfileFixerService } from "../services/ProfileFixerService";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { MathUtil } from "../utils/MathUtil";
-import { ObjectId } from "../utils/ObjectId";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+} from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { IQuestConfig, IRepeatableQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
+import { IQuestTypePool } from "@spt-aki/models/spt/repeatable/IQuestTypePool";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { PaymentService } from "@spt-aki/services/PaymentService";
+import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { MathUtil } from "@spt-aki/utils/MathUtil";
+import { ObjectId } from "@spt-aki/utils/ObjectId";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class RepeatableQuestGenerator

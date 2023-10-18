@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { RagfairCallbacks } from "../../callbacks/RagfairCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { RagfairCallbacks } from "@spt-aki/callbacks/RagfairCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class RagfairStaticRouter extends StaticRouter 

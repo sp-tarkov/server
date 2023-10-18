@@ -1,5 +1,5 @@
-import { MinMax } from "../../../common/MinMax";
-import { Skills } from "./IBotBase";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { Skills } from "@spt-aki/models/eft/common/tables/IBotBase";
 
 export interface IBotType 
 {

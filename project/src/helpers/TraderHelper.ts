@@ -1,25 +1,25 @@
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ProfileTraderTemplate } from "../models/eft/common/tables/IProfileTemplate";
-import { ITraderAssort, ITraderBase, LoyaltyLevel } from "../models/eft/common/tables/ITrader";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { Traders } from "../models/enums/Traders";
-import { ITraderConfig } from "../models/spt/config/ITraderConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { FenceService } from "../services/FenceService";
-import { LocalisationService } from "../services/LocalisationService";
-import { PlayerService } from "../services/PlayerService";
-import { RandomUtil } from "../utils/RandomUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { HandbookHelper } from "./HandbookHelper";
-import { ItemHelper } from "./ItemHelper";
-import { ProfileHelper } from "./ProfileHelper";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ProfileTraderTemplate } from "@spt-aki/models/eft/common/tables/IProfileTemplate";
+import { ITraderAssort, ITraderBase, LoyaltyLevel } from "@spt-aki/models/eft/common/tables/ITrader";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { FenceService } from "@spt-aki/services/FenceService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { PlayerService } from "@spt-aki/services/PlayerService";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class TraderHelper

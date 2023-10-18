@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "../di/OnLoad";
-import { OnUpdate } from "../di/OnUpdate";
 
-import { RagfairController } from "../controllers/RagfairController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "../models/eft/httpResponse/INullResponseData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IAddOfferRequestData } from "../models/eft/ragfair/IAddOfferRequestData";
-import { IExtendOfferRequestData } from "../models/eft/ragfair/IExtendOfferRequestData";
-import { IGetItemPriceResult } from "../models/eft/ragfair/IGetItemPriceResult";
-import { IGetMarketPriceRequestData } from "../models/eft/ragfair/IGetMarketPriceRequestData";
-import { IGetOffersResult } from "../models/eft/ragfair/IGetOffersResult";
-import { IRemoveOfferRequestData } from "../models/eft/ragfair/IRemoveOfferRequestData";
-import { ISearchRequestData } from "../models/eft/ragfair/ISearchRequestData";
-import { ISendRagfairReportRequestData } from "../models/eft/ragfair/ISendRagfairReportRequestData";
-import { IStorePlayerOfferTaxAmountRequestData } from "../models/eft/ragfair/IStorePlayerOfferTaxAmountRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { RagfairServer } from "../servers/RagfairServer";
-import { RagfairTaxService } from "../services/RagfairTaxService";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { JsonUtil } from "../utils/JsonUtil";
+import { RagfairController } from "@spt-aki/controllers/RagfairController";
+import { OnLoad } from "@spt-aki/di/OnLoad";
+import { OnUpdate } from "@spt-aki/di/OnUpdate";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAddOfferRequestData } from "@spt-aki/models/eft/ragfair/IAddOfferRequestData";
+import { IExtendOfferRequestData } from "@spt-aki/models/eft/ragfair/IExtendOfferRequestData";
+import { IGetItemPriceResult } from "@spt-aki/models/eft/ragfair/IGetItemPriceResult";
+import { IGetMarketPriceRequestData } from "@spt-aki/models/eft/ragfair/IGetMarketPriceRequestData";
+import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
+import { IRemoveOfferRequestData } from "@spt-aki/models/eft/ragfair/IRemoveOfferRequestData";
+import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
+import { ISendRagfairReportRequestData } from "@spt-aki/models/eft/ragfair/ISendRagfairReportRequestData";
+import { IStorePlayerOfferTaxAmountRequestData } from "@spt-aki/models/eft/ragfair/IStorePlayerOfferTaxAmountRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { RagfairServer } from "@spt-aki/servers/RagfairServer";
+import { RagfairTaxService } from "@spt-aki/services/RagfairTaxService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 /**
  * Handle ragfair related callback events

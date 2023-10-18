@@ -1,6 +1,7 @@
 
 import { injectable } from "tsyringe";
-import { AvailableForConditions } from "../models/eft/common/tables/IQuest";
+
+import { AvailableForConditions } from "@spt-aki/models/eft/common/tables/IQuest";
 
 @injectable()
 export class QuestConditionHelper

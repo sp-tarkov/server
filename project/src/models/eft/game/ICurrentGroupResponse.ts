@@ -1,4 +1,4 @@
-import { MemberCategory } from "../../../models/enums/MemberCategory";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 
 export interface ICurrentGroupResponse
 {

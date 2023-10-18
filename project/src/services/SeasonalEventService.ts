@@ -1,21 +1,21 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotHelper } from "../helpers/BotHelper";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { IConfig } from "../models/eft/common/IGlobals";
-import { Inventory } from "../models/eft/common/tables/IBotType";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { SeasonalEventType } from "../models/enums/SeasonalEventType";
-import { IHttpConfig } from "../models/spt/config/IHttpConfig";
-import { IQuestConfig } from "../models/spt/config/IQuestConfig";
-import { ISeasonalEvent, ISeasonalEventConfig } from "../models/spt/config/ISeasonalEventConfig";
-import { ILocationData } from "../models/spt/server/ILocations";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { DatabaseImporter } from "../utils/DatabaseImporter";
-import { GiftService } from "./GiftService";
-import { LocalisationService } from "./LocalisationService";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { IConfig } from "@spt-aki/models/eft/common/IGlobals";
+import { Inventory } from "@spt-aki/models/eft/common/tables/IBotType";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { SeasonalEventType } from "@spt-aki/models/enums/SeasonalEventType";
+import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
+import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
+import { ISeasonalEvent, ISeasonalEventConfig } from "@spt-aki/models/spt/config/ISeasonalEventConfig";
+import { ILocationData } from "@spt-aki/models/spt/server/ILocations";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { GiftService } from "@spt-aki/services/GiftService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { DatabaseImporter } from "@spt-aki/utils/DatabaseImporter";
 
 @injectable()
 export class SeasonalEventService

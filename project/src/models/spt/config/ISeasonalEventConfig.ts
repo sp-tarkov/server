@@ -1,5 +1,5 @@
-import { SeasonalEventType } from "../../../models/enums/SeasonalEventType";
-import { IBaseConfig } from "./IBaseConfig";
+import { SeasonalEventType } from "@spt-aki/models/enums/SeasonalEventType";
+import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface ISeasonalEventConfig extends IBaseConfig
 {

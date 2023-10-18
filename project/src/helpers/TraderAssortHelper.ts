@@ -1,26 +1,26 @@
 import { inject, injectable } from "tsyringe";
 
-import { RagfairAssortGenerator } from "../generators/RagfairAssortGenerator";
-import { RagfairOfferGenerator } from "../generators/RagfairOfferGenerator";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITrader, ITraderAssort } from "../models/eft/common/tables/ITrader";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Traders } from "../models/enums/Traders";
-import { ITraderConfig } from "../models/spt/config/ITraderConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { FenceService } from "../services/FenceService";
-import { LocalisationService } from "../services/LocalisationService";
-import { TraderAssortService } from "../services/TraderAssortService";
-import { TraderPurchasePersisterService } from "../services/TraderPurchasePersisterService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { MathUtil } from "../utils/MathUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { AssortHelper } from "./AssortHelper";
-import { PaymentHelper } from "./PaymentHelper";
-import { ProfileHelper } from "./ProfileHelper";
-import { TraderHelper } from "./TraderHelper";
+import { RagfairAssortGenerator } from "@spt-aki/generators/RagfairAssortGenerator";
+import { RagfairOfferGenerator } from "@spt-aki/generators/RagfairOfferGenerator";
+import { AssortHelper } from "@spt-aki/helpers/AssortHelper";
+import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITrader, ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Traders } from "@spt-aki/models/enums/Traders";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { FenceService } from "@spt-aki/services/FenceService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
+import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { MathUtil } from "@spt-aki/utils/MathUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class TraderAssortHelper

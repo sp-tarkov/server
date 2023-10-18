@@ -1,21 +1,21 @@
 import { inject, injectable } from "tsyringe";
 
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITraderAssort } from "../models/eft/common/tables/ITrader";
-import { IGetOffersResult } from "../models/eft/ragfair/IGetOffersResult";
-import { ISearchRequestData } from "../models/eft/ragfair/ISearchRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { RagfairLinkedItemService } from "../services/RagfairLinkedItemService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { HandbookHelper } from "./HandbookHelper";
-import { ItemHelper } from "./ItemHelper";
-import { TraderAssortHelper } from "./TraderAssortHelper";
-import { UtilityHelper } from "./UtilityHelper";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { TraderAssortHelper } from "@spt-aki/helpers/TraderAssortHelper";
+import { UtilityHelper } from "@spt-aki/helpers/UtilityHelper";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
+import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
+import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class RagfairHelper

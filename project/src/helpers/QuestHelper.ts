@@ -1,36 +1,34 @@
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IQuestStatus } from "../models/eft/common/tables/IBotBase";
-import { Item } from "../models/eft/common/tables/IItem";
-import {
-    AvailableForConditions, AvailableForProps, IQuest, Reward
-} from "../models/eft/common/tables/IQuest";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IAcceptQuestRequestData } from "../models/eft/quests/IAcceptQuestRequestData";
-import { IFailQuestRequestData } from "../models/eft/quests/IFailQuestRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MessageType } from "../models/enums/MessageType";
-import { QuestRewardType } from "../models/enums/QuestRewardType";
-import { QuestStatus } from "../models/enums/QuestStatus";
-import { IQuestConfig } from "../models/spt/config/IQuestConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocaleService } from "../services/LocaleService";
-import { LocalisationService } from "../services/LocalisationService";
-import { MailSendService } from "../services/MailSendService";
-import { HashUtil } from "../utils/HashUtil";
-import { JsonUtil } from "../utils/JsonUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { DialogueHelper } from "./DialogueHelper";
-import { ItemHelper } from "./ItemHelper";
-import { PaymentHelper } from "./PaymentHelper";
-import { ProfileHelper } from "./ProfileHelper";
-import { QuestConditionHelper } from "./QuestConditionHelper";
-import { RagfairServerHelper } from "./RagfairServerHelper";
-import { TraderHelper } from "./TraderHelper";
+import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { QuestConditionHelper } from "@spt-aki/helpers/QuestConditionHelper";
+import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { AvailableForConditions, AvailableForProps, IQuest, Reward } from "@spt-aki/models/eft/common/tables/IQuest";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAcceptQuestRequestData } from "@spt-aki/models/eft/quests/IAcceptQuestRequestData";
+import { IFailQuestRequestData } from "@spt-aki/models/eft/quests/IFailQuestRequestData";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { QuestRewardType } from "@spt-aki/models/enums/QuestRewardType";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocaleService } from "@spt-aki/services/LocaleService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class QuestHelper

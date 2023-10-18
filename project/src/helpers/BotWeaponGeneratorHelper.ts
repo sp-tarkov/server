@@ -1,21 +1,21 @@
 import { inject, injectable } from "tsyringe";
 
-import { Inventory } from "../models/eft/common/tables/IBotBase";
-import { GenerationData } from "../models/eft/common/tables/IBotType";
-import { Item } from "../models/eft/common/tables/IItem";
-import { Grid, ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { EquipmentSlots } from "../models/enums/EquipmentSlots";
-import { ItemAddedResult } from "../models/enums/ItemAddedResult";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { ContainerHelper } from "./ContainerHelper";
-import { InventoryHelper } from "./InventoryHelper";
-import { ItemHelper } from "./ItemHelper";
-import { WeightedRandomHelper } from "./WeightedRandomHelper";
+import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { Inventory } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { GenerationData } from "@spt-aki/models/eft/common/tables/IBotType";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { Grid, ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
+import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BotWeaponGeneratorHelper

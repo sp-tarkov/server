@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotGeneratorHelper } from "../helpers/BotGeneratorHelper";
-import { BotWeaponGeneratorHelper } from "../helpers/BotWeaponGeneratorHelper";
-import { HandbookHelper } from "../helpers/HandbookHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
-import { Inventory as PmcInventory } from "../models/eft/common/tables/IBotBase";
-import { IBotType, Inventory, ModsChances } from "../models/eft/common/tables/IBotType";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { EquipmentSlots } from "../models/enums/EquipmentSlots";
-import { ItemAddedResult } from "../models/enums/ItemAddedResult";
-import { LootCacheType } from "../models/spt/bots/IBotLootCache";
-import { IBotConfig } from "../models/spt/config/IBotConfig";
-import { IPmcConfig } from "../models/spt/config/IPmcConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { BotLootCacheService } from "../services/BotLootCacheService";
-import { LocalisationService } from "../services/LocalisationService";
-import { HashUtil } from "../utils/HashUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { BotWeaponGenerator } from "./BotWeaponGenerator";
+import { BotWeaponGenerator } from "@spt-aki/generators/BotWeaponGenerator";
+import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
+import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
+import { Inventory as PmcInventory } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IBotType, Inventory, ModsChances } from "@spt-aki/models/eft/common/tables/IBotType";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
+import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
+import { LootCacheType } from "@spt-aki/models/spt/bots/IBotLootCache";
+import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BotLootGenerator

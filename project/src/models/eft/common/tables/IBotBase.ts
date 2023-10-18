@@ -1,9 +1,9 @@
-import { HideoutAreas } from "../../../enums/HideoutAreas";
-import { MemberCategory } from "../../../enums/MemberCategory";
-import { QuestStatus } from "../../../enums/QuestStatus";
-import { IRagfairOffer } from "../../ragfair/IRagfairOffer";
-import { Item, Upd } from "./IItem";
-import { IPmcDataRepeatableQuest } from "./IRepeatableQuests";
+import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { IPmcDataRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
 
 export interface IBotBase 
 {

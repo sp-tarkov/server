@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { PresetController } from "../controllers/PresetController";
-import { OnLoad } from "../di/OnLoad";
+import { PresetController } from "@spt-aki/controllers/PresetController";
+import { OnLoad } from "@spt-aki/di/OnLoad";
 
 @injectable()
 export class PresetCallbacks implements OnLoad

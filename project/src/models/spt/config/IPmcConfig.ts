@@ -1,6 +1,6 @@
-import { MemberCategory } from "../../../models/enums/MemberCategory";
-import { MinMax } from "../../common/MinMax";
-import { IBaseConfig } from "./IBaseConfig";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface IPmcConfig extends IBaseConfig
 {

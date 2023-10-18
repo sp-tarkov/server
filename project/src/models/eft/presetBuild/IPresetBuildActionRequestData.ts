@@ -1,4 +1,4 @@
-import { Item } from "../common/tables/IItem";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 
 export interface IPresetBuildActionRequestData 
 {

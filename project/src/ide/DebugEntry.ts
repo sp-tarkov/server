@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import "source-map-support/register";
-import { Program } from "../Program";
+
+import { Program } from "@spt-aki/Program";
 
 globalThis.G_DEBUG_CONFIGURATION = true;
 globalThis.G_RELEASE_CONFIGURATION = true;

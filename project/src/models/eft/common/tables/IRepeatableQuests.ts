@@ -1,4 +1,5 @@
-import { Item } from "./IItem";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+
 export interface IReward 
 {
     index: number

@@ -1,7 +1,7 @@
-import { QuestRewardType } from "../../../enums/QuestRewardType";
-import { QuestStatus } from "../../../enums/QuestStatus";
-import { QuestTypeEnum } from "../../../enums/QuestTypeEnum";
-import { Item } from "./IItem";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { QuestRewardType } from "@spt-aki/models/enums/QuestRewardType";
+import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
+import { QuestTypeEnum } from "@spt-aki/models/enums/QuestTypeEnum";
 
 export interface IQuest 
 {

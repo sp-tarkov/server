@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { IRagfairOffer } from "../models/eft/ragfair/IRagfairOffer";
-import { ILogger } from "../models/spt/utils/ILogger";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 
 @injectable()
 export class RagfairCategoriesService

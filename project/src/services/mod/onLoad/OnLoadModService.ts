@@ -1,5 +1,6 @@
 import { DependencyContainer, injectable } from "tsyringe";
-import { OnLoadMod } from "./OnLoadMod";
+
+import { OnLoadMod } from "@spt-aki/services/mod/onLoad/OnLoadMod";
 
 @injectable()
 export class OnLoadModService 

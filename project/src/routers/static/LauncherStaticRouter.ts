@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { LauncherCallbacks } from "../../callbacks/LauncherCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { LauncherCallbacks } from "@spt-aki/callbacks/LauncherCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class LauncherStaticRouter extends StaticRouter 

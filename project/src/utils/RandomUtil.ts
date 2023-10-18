@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { JsonUtil } from "./JsonUtil";
-import { MathUtil } from "./MathUtil";
 
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { MathUtil } from "@spt-aki/utils/MathUtil";
 
 /**
      * Array of ProbabilityObjectArray which allow to randomly draw of the contained objects

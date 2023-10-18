@@ -2,14 +2,14 @@ import { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "node:http"
 import zlib from "node:zlib";
 import { inject, injectAll, injectable } from "tsyringe";
 
-import { Serializer } from "../../di/Serializer";
-import { ILogger } from "../../models/spt/utils/ILogger";
-import { HttpRouter } from "../../routers/HttpRouter";
-import { LocalisationService } from "../../services/LocalisationService";
-import { HttpResponseUtil } from "../../utils/HttpResponseUtil";
-import { JsonUtil } from "../../utils/JsonUtil";
-import { HttpBufferHandler } from "./HttpBufferHandler";
-import { IHttpListener } from "./IHttpListener";
+import { Serializer } from "@spt-aki/di/Serializer";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { HttpRouter } from "@spt-aki/routers/HttpRouter";
+import { HttpBufferHandler } from "@spt-aki/servers/http/HttpBufferHandler";
+import { IHttpListener } from "@spt-aki/servers/http/IHttpListener";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class AkiHttpListener implements IHttpListener

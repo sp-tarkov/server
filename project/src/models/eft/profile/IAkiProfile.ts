@@ -1,8 +1,8 @@
-import { EquipmentBuildType } from "../../../models/enums/EquipmentBuildType";
-import { MemberCategory } from "../../../models/enums/MemberCategory";
-import { MessageType } from "../../enums/MessageType";
-import { IPmcData } from "../common/IPmcData";
-import { Item } from "../common/tables/IItem";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { EquipmentBuildType } from "@spt-aki/models/enums/EquipmentBuildType";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
 
 export interface IAkiProfile
 {

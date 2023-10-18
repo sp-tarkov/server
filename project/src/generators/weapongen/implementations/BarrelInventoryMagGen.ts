@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { BotWeaponGeneratorHelper } from "../../../helpers/BotWeaponGeneratorHelper";
 
-import { RandomUtil } from "../../../utils/RandomUtil";
-import { IInventoryMagGen } from "../IInventoryMagGen";
-import { InventoryMagGen } from "../InventoryMagGen";
+import { IInventoryMagGen } from "@spt-aki/generators/weapongen/IInventoryMagGen";
+import { InventoryMagGen } from "@spt-aki/generators/weapongen/InventoryMagGen";
+import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
 export class BarrelInventoryMagGen implements IInventoryMagGen

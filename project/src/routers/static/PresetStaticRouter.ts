@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { PresetBuildCallbacks } from "../../callbacks/PresetBuildCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { PresetBuildCallbacks } from "@spt-aki/callbacks/PresetBuildCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class PresetStaticRouter extends StaticRouter 

@@ -1,7 +1,7 @@
-import { IEmptyRequestData } from "../../eft/common/IEmptyRequestData";
-import { IGetBodyResponseData } from "../../eft/httpResponse/IGetBodyResponseData";
-import { INotifierChannel } from "../../eft/notifier/INotifier";
-import { ISelectProfileRequestData } from "../../eft/notifier/ISelectProfileRequestData";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { INotifierChannel } from "@spt-aki/models/eft/notifier/INotifier";
+import { ISelectProfileRequestData } from "@spt-aki/models/eft/notifier/ISelectProfileRequestData";
 
 export interface INotifierCallbacks
 {

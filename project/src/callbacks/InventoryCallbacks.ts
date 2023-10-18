@@ -1,37 +1,25 @@
 import { inject, injectable } from "tsyringe";
 
-import { InventoryController } from "../controllers/InventoryController";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IInventoryBindRequestData } from "../models/eft/inventory/IInventoryBindRequestData";
-import {
-    IInventoryCreateMarkerRequestData
-} from "../models/eft/inventory/IInventoryCreateMarkerRequestData";
-import {
-    IInventoryDeleteMarkerRequestData
-} from "../models/eft/inventory/IInventoryDeleteMarkerRequestData";
-import {
-    IInventoryEditMarkerRequestData
-} from "../models/eft/inventory/IInventoryEditMarkerRequestData";
-import { IInventoryExamineRequestData } from "../models/eft/inventory/IInventoryExamineRequestData";
-import { IInventoryFoldRequestData } from "../models/eft/inventory/IInventoryFoldRequestData";
-import { IInventoryMergeRequestData } from "../models/eft/inventory/IInventoryMergeRequestData";
-import { IInventoryMoveRequestData } from "../models/eft/inventory/IInventoryMoveRequestData";
-import {
-    IInventoryReadEncyclopediaRequestData
-} from "../models/eft/inventory/IInventoryReadEncyclopediaRequestData";
-import { IInventoryRemoveRequestData } from "../models/eft/inventory/IInventoryRemoveRequestData";
-import { IInventorySortRequestData } from "../models/eft/inventory/IInventorySortRequestData";
-import { IInventorySplitRequestData } from "../models/eft/inventory/IInventorySplitRequestData";
-import { IInventorySwapRequestData } from "../models/eft/inventory/IInventorySwapRequestData";
-import { IInventoryTagRequestData } from "../models/eft/inventory/IInventoryTagRequestData";
-import { IInventoryToggleRequestData } from "../models/eft/inventory/IInventoryToggleRequestData";
-import {
-    IInventoryTransferRequestData
-} from "../models/eft/inventory/IInventoryTransferRequestData";
-import {
-    IOpenRandomLootContainerRequestData
-} from "../models/eft/inventory/IOpenRandomLootContainerRequestData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
+import { InventoryController } from "@spt-aki/controllers/InventoryController";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IInventoryBindRequestData } from "@spt-aki/models/eft/inventory/IInventoryBindRequestData";
+import { IInventoryCreateMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryCreateMarkerRequestData";
+import { IInventoryDeleteMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryDeleteMarkerRequestData";
+import { IInventoryEditMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryEditMarkerRequestData";
+import { IInventoryExamineRequestData } from "@spt-aki/models/eft/inventory/IInventoryExamineRequestData";
+import { IInventoryFoldRequestData } from "@spt-aki/models/eft/inventory/IInventoryFoldRequestData";
+import { IInventoryMergeRequestData } from "@spt-aki/models/eft/inventory/IInventoryMergeRequestData";
+import { IInventoryMoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryMoveRequestData";
+import { IInventoryReadEncyclopediaRequestData } from "@spt-aki/models/eft/inventory/IInventoryReadEncyclopediaRequestData";
+import { IInventoryRemoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryRemoveRequestData";
+import { IInventorySortRequestData } from "@spt-aki/models/eft/inventory/IInventorySortRequestData";
+import { IInventorySplitRequestData } from "@spt-aki/models/eft/inventory/IInventorySplitRequestData";
+import { IInventorySwapRequestData } from "@spt-aki/models/eft/inventory/IInventorySwapRequestData";
+import { IInventoryTagRequestData } from "@spt-aki/models/eft/inventory/IInventoryTagRequestData";
+import { IInventoryToggleRequestData } from "@spt-aki/models/eft/inventory/IInventoryToggleRequestData";
+import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
+import { IOpenRandomLootContainerRequestData } from "@spt-aki/models/eft/inventory/IOpenRandomLootContainerRequestData";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 
 @injectable()
 export class InventoryCallbacks

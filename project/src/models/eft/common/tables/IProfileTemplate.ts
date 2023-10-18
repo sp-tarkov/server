@@ -1,5 +1,5 @@
-import { Dialogue, IUserBuilds, IWeaponBuild } from "../../profile/IAkiProfile";
-import { IPmcData } from "../IPmcData";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { Dialogue, IUserBuilds } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 export interface IProfileTemplates
 {

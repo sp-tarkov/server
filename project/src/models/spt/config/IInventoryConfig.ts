@@ -1,5 +1,5 @@
-import { MinMax } from "../../../models/common/MinMax";
-import { IBaseConfig } from "./IBaseConfig";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface IInventoryConfig extends IBaseConfig
 {

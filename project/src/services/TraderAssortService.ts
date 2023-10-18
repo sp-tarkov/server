@@ -1,4 +1,4 @@
-import { ITraderAssort } from "../models/eft/common/tables/ITrader";
+import { ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
 
 export class TraderAssortService 
 {

@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { Warning } from "../models/eft/itemEvent/IItemEventRouterBase";
-import { IItemEventRouterRequest } from "../models/eft/itemEvent/IItemEventRouterRequest";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { BackendErrorCodes } from "../models/enums/BackendErrorCodes";
-import { ItemEventRouter } from "../routers/ItemEventRouter";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { Warning } from "@spt-aki/models/eft/itemEvent/IItemEventRouterBase";
+import { IItemEventRouterRequest } from "@spt-aki/models/eft/itemEvent/IItemEventRouterRequest";
+import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
+import { ItemEventRouter } from "@spt-aki/routers/ItemEventRouter";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
 export class ItemEventCallbacks

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { GameCallbacks } from "../../callbacks/GameCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
+import { GameCallbacks } from "@spt-aki/callbacks/GameCallbacks";
+import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 
 @injectable()
 export class GameStaticRouter extends StaticRouter 

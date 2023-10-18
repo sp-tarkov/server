@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import { OnLoad } from "../di/OnLoad";
-import { OnUpdate } from "../di/OnUpdate";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { SaveServer } from "../servers/SaveServer";
+import { OnLoad } from "@spt-aki/di/OnLoad";
+import { OnUpdate } from "@spt-aki/di/OnUpdate";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { SaveServer } from "@spt-aki/servers/SaveServer";
 
 @injectable()
 export class SaveCallbacks implements OnLoad, OnUpdate

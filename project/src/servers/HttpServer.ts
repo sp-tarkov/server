@@ -1,17 +1,17 @@
 import http, { IncomingMessage, ServerResponse } from "node:http";
-import { inject, injectable, injectAll } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
-import { ApplicationContext } from "../context/ApplicationContext";
-import { ContextVariableType } from "../context/ContextVariableType";
-import { HttpServerHelper } from "../helpers/HttpServerHelper";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IHttpConfig } from "../models/spt/config/IHttpConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { LocalisationService } from "../services/LocalisationService";
-import { ConfigServer } from "./ConfigServer";
-import { DatabaseServer } from "./DatabaseServer";
-import { IHttpListener } from "./http/IHttpListener";
-import { WebSocketServer } from "./WebSocketServer";
+import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
+import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
+import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { WebSocketServer } from "@spt-aki/servers/WebSocketServer";
+import { IHttpListener } from "@spt-aki/servers/http/IHttpListener";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
 
 @injectable()
 export class HttpServer

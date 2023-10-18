@@ -1,25 +1,21 @@
 import { inject, injectable } from "tsyringe";
 
-import { ProfileController } from "../controllers/ProfileController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "../models/eft/httpResponse/INullResponseData";
-import { IGetMiniProfileRequestData } from "../models/eft/launcher/IGetMiniProfileRequestData";
-import { GetProfileStatusResponseData } from "../models/eft/profile/GetProfileStatusResponseData";
-import { IGetProfileSettingsRequest } from "../models/eft/profile/IGetProfileSettingsRequest";
-import {
-    IProfileChangeNicknameRequestData
-} from "../models/eft/profile/IProfileChangeNicknameRequestData";
-import {
-    IProfileChangeVoiceRequestData
-} from "../models/eft/profile/IProfileChangeVoiceRequestData";
-import { IProfileCreateRequestData } from "../models/eft/profile/IProfileCreateRequestData";
-import { ISearchFriendRequestData } from "../models/eft/profile/ISearchFriendRequestData";
-import { ISearchFriendResponse } from "../models/eft/profile/ISearchFriendResponse";
-import { IValidateNicknameRequestData } from "../models/eft/profile/IValidateNicknameRequestData";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { TimeUtil } from "../utils/TimeUtil";
+import { ProfileController } from "@spt-aki/controllers/ProfileController";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { IGetMiniProfileRequestData } from "@spt-aki/models/eft/launcher/IGetMiniProfileRequestData";
+import { GetProfileStatusResponseData } from "@spt-aki/models/eft/profile/GetProfileStatusResponseData";
+import { IGetProfileSettingsRequest } from "@spt-aki/models/eft/profile/IGetProfileSettingsRequest";
+import { IProfileChangeNicknameRequestData } from "@spt-aki/models/eft/profile/IProfileChangeNicknameRequestData";
+import { IProfileChangeVoiceRequestData } from "@spt-aki/models/eft/profile/IProfileChangeVoiceRequestData";
+import { IProfileCreateRequestData } from "@spt-aki/models/eft/profile/IProfileCreateRequestData";
+import { ISearchFriendRequestData } from "@spt-aki/models/eft/profile/ISearchFriendRequestData";
+import { ISearchFriendResponse } from "@spt-aki/models/eft/profile/ISearchFriendResponse";
+import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
+import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 /** Handle profile related client events */
 @injectable()

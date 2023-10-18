@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { INotification, NotificationType } from "../models/eft/notifier/INotifier";
-import { Message, MessageContentRagfair } from "../models/eft/profile/IAkiProfile";
-import { HttpServerHelper } from "./HttpServerHelper";
+import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { INotification, NotificationType } from "@spt-aki/models/eft/notifier/INotifier";
+import { Message, MessageContentRagfair } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 @injectable()
 export class NotifierHelper

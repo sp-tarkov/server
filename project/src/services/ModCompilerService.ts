@@ -3,9 +3,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { inject, injectable } from "tsyringe";
 import ts from "typescript";
-import type { ILogger } from "../models/spt/utils/ILogger";
-import { VFS } from "../utils/VFS";
-import { HashCacheService } from "./HashCacheService";
+
+import type { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { HashCacheService } from "@spt-aki/services/HashCacheService";
+import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
 export class ModCompilerService

@@ -3,22 +3,23 @@ import os from "node:os";
 import path from "node:path";
 import semver from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
-import { ModDetails } from "../models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IPreAkiLoadMod } from "../models/external/IPreAkiLoadMod";
-import { IPreAkiLoadModAsync } from "../models/external/IPreAkiLoadModAsync";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { IModLoader } from "../models/spt/mod/IModLoader";
-import { IPackageJsonData } from "../models/spt/mod/IPackageJsonData";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { ModCompilerService } from "../services/ModCompilerService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { VFS } from "../utils/VFS";
-import { BundleLoader } from "./BundleLoader";
-import { ModLoadOrder } from "./ModLoadOrder";
-import { ModTypeCheck } from "./ModTypeCheck";
+
+import { BundleLoader } from "@spt-aki/loaders/BundleLoader";
+import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
+import { ModTypeCheck } from "@spt-aki/loaders/ModTypeCheck";
+import { ModDetails } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
+import { IPreAkiLoadModAsync } from "@spt-aki/models/external/IPreAkiLoadModAsync";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { IModLoader } from "@spt-aki/models/spt/mod/IModLoader";
+import { IPackageJsonData } from "@spt-aki/models/spt/mod/IPackageJsonData";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ModCompilerService } from "@spt-aki/services/ModCompilerService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
 export class PreAkiModLoader implements IModLoader

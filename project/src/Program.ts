@@ -1,9 +1,10 @@
 import { container } from "tsyringe";
-import { App } from "./utils/App";
-import { Container } from "./di/Container";
-import type { PreAkiModLoader } from "./loaders/PreAkiModLoader";
-import { Watermark } from "./utils/Watermark";
-import { ErrorHandler } from "./ErrorHandler";
+
+import { ErrorHandler } from "@spt-aki/ErrorHandler";
+import { Container } from "@spt-aki/di/Container";
+import type { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
+import { App } from "@spt-aki/utils/App";
+import { Watermark } from "@spt-aki/utils/Watermark";
 
 export class Program
 {

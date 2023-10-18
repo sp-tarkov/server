@@ -1,23 +1,23 @@
 import { inject, injectable } from "tsyringe";
 
-import { OnLoad } from "../di/OnLoad";
-import { HandbookHelper } from "../helpers/HandbookHelper";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { PresetHelper } from "../helpers/PresetHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { MinMax } from "../models/common/MinMax";
-import { IPreset } from "../models/eft/common/IGlobals";
-import { Item } from "../models/eft/common/tables/IItem";
-import { IBarterScheme } from "../models/eft/common/tables/ITrader";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { IRagfairServerPrices } from "../models/spt/ragfair/IRagfairServerPrices";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { RandomUtil } from "../utils/RandomUtil";
-import { LocalisationService } from "./LocalisationService";
+import { OnLoad } from "@spt-aki/di/OnLoad";
+import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
+import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { IRagfairServerPrices } from "@spt-aki/models/spt/ragfair/IRagfairServerPrices";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 /**
  * Stores flea prices for items as well as methods to interact with them

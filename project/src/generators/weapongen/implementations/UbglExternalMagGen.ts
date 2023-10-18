@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
-import { BotWeaponGeneratorHelper } from "../../../helpers/BotWeaponGeneratorHelper";
-import { BaseClasses } from "../../../models/enums/BaseClasses";
-import { EquipmentSlots } from "../../../models/enums/EquipmentSlots";
-import { IInventoryMagGen } from "../IInventoryMagGen";
-import { InventoryMagGen } from "../InventoryMagGen";
+import { IInventoryMagGen } from "@spt-aki/generators/weapongen/IInventoryMagGen";
+import { InventoryMagGen } from "@spt-aki/generators/weapongen/InventoryMagGen";
+import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
 
 @injectable()
 export class UbglExternalMagGen implements IInventoryMagGen

@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IPmcConfig } from "../models/spt/config/IPmcConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { SeasonalEventService } from "../services/SeasonalEventService";
+import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
+import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 
 /**
  * Handle the generation of dynamic PMC loot in pockets and backpacks 

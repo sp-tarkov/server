@@ -1,8 +1,9 @@
 import readline from "readline";
-import { ILogger } from "./models/spt/utils/ILogger";
-import { AsyncQueue } from "./utils/AsyncQueue";
-import { WinstonMainLogger } from "./utils/logging/WinstonMainLogger";
-import { UUidGenerator } from "./utils/UUidGenerator";
+
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { AsyncQueue } from "@spt-aki/utils/AsyncQueue";
+import { UUidGenerator } from "@spt-aki/utils/UUidGenerator";
+import { WinstonMainLogger } from "@spt-aki/utils/logging/WinstonMainLogger";
 
 export class ErrorHandler
 {
