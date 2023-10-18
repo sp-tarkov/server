@@ -1,5 +1,5 @@
-import { IPackageJsonData } from "@spt-aki/models/spt/mod/IPackageJsonData";
 import { injectable } from "tsyringe";
+import { IPackageJsonData } from "../models/spt/mod/IPackageJsonData";
 
 @injectable()
 export class ModLoadOrder

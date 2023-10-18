@@ -1,6 +1,5 @@
 import { DependencyContainer, Lifecycle } from "tsyringe";
 
-import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
 import { BotCallbacks } from "../callbacks/BotCallbacks";
 import { BundleCallbacks } from "../callbacks/BundleCallbacks";
 import { CustomizationCallbacks } from "../callbacks/CustomizationCallbacks";
@@ -123,6 +122,7 @@ import { TraderHelper } from "../helpers/TraderHelper";
 import { UtilityHelper } from "../helpers/UtilityHelper";
 import { WeightedRandomHelper } from "../helpers/WeightedRandomHelper";
 import { BundleLoader } from "../loaders/BundleLoader";
+import { ModLoadOrder } from "../loaders/ModLoadOrder";
 import { ModTypeCheck } from "../loaders/ModTypeCheck";
 import { PostAkiModLoader } from "../loaders/PostAkiModLoader";
 import { PostDBModLoader } from "../loaders/PostDBModLoader";
