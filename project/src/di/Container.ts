@@ -1,5 +1,6 @@
 import { DependencyContainer, Lifecycle } from "tsyringe";
 
+import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
 import { BotCallbacks } from "../callbacks/BotCallbacks";
 import { BundleCallbacks } from "../callbacks/BundleCallbacks";
 import { CustomizationCallbacks } from "../callbacks/CustomizationCallbacks";
@@ -383,6 +384,7 @@ export class Container
         depContainer.register<IAsyncQueue>("AsyncQueue", AsyncQueue, { lifecycle: Lifecycle.Singleton });
         depContainer.register<IUUidGenerator>("UUidGenerator", UUidGenerator, { lifecycle: Lifecycle.Singleton });
         depContainer.register<HttpFileUtil>("HttpFileUtil", HttpFileUtil, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ModLoadOrder>("ModLoadOrder", ModLoadOrder, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModTypeCheck>("ModTypeCheck", ModTypeCheck, { lifecycle: Lifecycle.Singleton });
     }
 

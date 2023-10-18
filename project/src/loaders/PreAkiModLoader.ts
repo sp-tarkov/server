@@ -17,6 +17,7 @@ import { ModCompilerService } from "../services/ModCompilerService";
 import { JsonUtil } from "../utils/JsonUtil";
 import { VFS } from "../utils/VFS";
 import { BundleLoader } from "./BundleLoader";
+import { ModLoadOrder } from "./ModLoadOrder";
 import { ModTypeCheck } from "./ModTypeCheck";
 
 @injectable()
@@ -40,6 +41,7 @@ export class PreAkiModLoader implements IModLoader
         @inject("BundleLoader") protected bundleLoader: BundleLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("ModLoadOrder") protected modLoadOrder: ModLoadOrder,
         @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck
     )
     {
@@ -206,6 +208,8 @@ export class PreAkiModLoader implements IModLoader
         {
             await this.addMod(mod);
         }
+
+        this.modLoadOrder.setModList(this.imported);
     }
 
     protected sortMods(prev: string, next: string, missingFromOrderJSON: Record<string, boolean>): number
@@ -380,7 +384,7 @@ export class PreAkiModLoader implements IModLoader
         }
         else
         {
-            return Object.keys(this.getLoadOrder(this.imported));
+            return this.modLoadOrder.getLoadOrder();
         }
     }
 
@@ -621,72 +625,6 @@ export class PreAkiModLoader implements IModLoader
         }
 
         return !issue;
-    }
-
-    protected getLoadOrderRecursive(mod: string, result: Record<string, string>, visited: Record<string, string>): void
-    {
-        // validate package
-        if (mod in result)
-        {
-            return;
-        }
-
-        if (mod in visited)
-        {
-            // front: white, back: red
-            this.logger.error(this.localisationService.getText("modloader-cyclic_dependency"));
-
-            // additional info
-            this.logger.debug(this.localisationService.getText("modloader-checking_mod", mod));
-            this.logger.debug(`${this.localisationService.getText("modloader-checked")}:`);
-            this.logger.debug(result);
-            this.logger.debug(`${this.localisationService.getText("modloader-visited")}:`);
-            this.logger.debug(visited);
-
-            // wait for input
-            process.exit(1);
-        }
-
-        // check dependencies
-        const config = this.imported[mod];
-
-        if (typeof config === "undefined")
-        {
-            this.logger.error(this.localisationService.getText("modloader-missing_dependency"));
-            throw new Error(this.localisationService.getText("modloader-error_parsing_mod_load_order"));
-        }
-
-        const dependencies: Record<string, string> = config.dependencies || {};
-
-        visited[mod] = config.version;
-
-        for (const dependency in dependencies)
-        {
-            this.getLoadOrderRecursive(dependency, result, visited);
-        }
-
-        delete visited[mod];
-
-        // fully checked package
-        result[mod] = config.version;
-    }
-
-    protected getLoadOrder(mods: Record<string, IPackageJsonData>): Record<string, string>
-    {
-        const result: Record<string, string> = {};
-        const visited: Record<string, string> = {};
-
-        for (const mod in mods)
-        {
-            if (mods[mod][0] in result)
-            {
-                continue;
-            }
-
-            this.getLoadOrderRecursive(mod, result, visited);
-        }
-
-        return result;
     }
 
     public getContainer(): DependencyContainer
