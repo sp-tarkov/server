@@ -12,7 +12,6 @@ import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { BodyPartHealth } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IRegisterPlayerRequestData } from "@spt-aki/models/eft/inRaid/IRegisterPlayerRequestData";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -159,7 +158,7 @@ export class InraidController
             this.pmcChatResponseService.sendKillerResponse(sessionID, serverPmcData, postRaidRequest.profile.Stats.Eft.Aggressor);
             this.matchBotDetailsCacheService.clearCache();
 
-            serverPmcData = this.performPostRaidActionsWhenDead(postRaidRequest, serverPmcData, mapHasInsuranceEnabled, preRaidGear, sessionID);
+            serverPmcData = this.performPostRaidActionsWhenDead(postRaidRequest, serverPmcData, sessionID);
         }
 
         const victims = postRaidRequest.profile.Stats.Eft.Victims.filter(x => ["sptbear", "sptusec"].includes(x.Role.toLowerCase()));
@@ -179,12 +178,10 @@ export class InraidController
      * Alter bodypart hp, handle insurance, delete inventory items, remove carried quest items
      * @param postRaidSaveRequest Post-raid save request 
      * @param pmcData Pmc profile
-     * @param insuranceEnabled Is insurance enabled
-     * @param preRaidGear Gear player had before raid
      * @param sessionID Session id
      * @returns Updated profile object
      */
-    protected performPostRaidActionsWhenDead(postRaidSaveRequest: ISaveProgressRequestData, pmcData: IPmcData, insuranceEnabled: boolean, preRaidGear: Item[], sessionID: string): IPmcData
+    protected performPostRaidActionsWhenDead(postRaidSaveRequest: ISaveProgressRequestData, pmcData: IPmcData, sessionID: string): IPmcData
     {
         this.updatePmcHealthPostRaid(postRaidSaveRequest, pmcData);
         this.inRaidHelper.deleteInventory(pmcData, sessionID);
@@ -389,7 +386,7 @@ export class InraidController
         this.saveServer.getProfile(sessionID).characters.scav = scavData;
 
         // Scav karma
-        this.handlePostRaidPlayerScavKarmaChanges(pmcData, offraidData, scavData, sessionID);
+        this.handlePostRaidPlayerScavKarmaChanges(pmcData, offraidData);
 
         // Scav died, regen scav loadout and set timer
         if (isDead)
@@ -407,10 +404,8 @@ export class InraidController
      * Update profile with scav karma values based on in-raid actions
      * @param pmcData Pmc profile
      * @param offraidData Post-raid save request
-     * @param scavData Scav profile
-     * @param sessionID Session id
      */
-    protected handlePostRaidPlayerScavKarmaChanges(pmcData: IPmcData, offraidData: ISaveProgressRequestData, scavData: IPmcData, sessionID: string): void
+    protected handlePostRaidPlayerScavKarmaChanges(pmcData: IPmcData, offraidData: ISaveProgressRequestData): void
     {
         const fenceId = Traders.FENCE;
 

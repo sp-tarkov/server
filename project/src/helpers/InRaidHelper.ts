@@ -532,8 +532,7 @@ export class InRaidHelper
             "pocket1",
             "pocket2",
             "pocket3",
-            "pocket4",
-            "SecuredContainer"
+            "pocket4"
         ];
 
         let inventoryItems: Item[] = [];
