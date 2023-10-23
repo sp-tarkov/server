@@ -1,4 +1,4 @@
-import readline from "readline";
+import readline from "node:readline";
 
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { AsyncQueue } from "@spt-aki/utils/AsyncQueue";
