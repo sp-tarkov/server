@@ -42,62 +42,72 @@ export class PaymentService
     public payMoney(pmcData: IPmcData, request: IProcessBuyTradeRequestData, sessionID: string, output: IItemEventRouterResponse):  IItemEventRouterResponse
     {
         const trader = this.traderHelper.getTrader(request.tid, sessionID);
-        let currencyTpl = this.paymentHelper.getCurrency(trader.currency);
 
-        // Delete barter items(not money) from inventory
+        // Track the amounts of each type of currency involved in the trade.
+        const currencyAmounts: { [key: string]: number } = {};
+
+        // Delete barter items and track currencies if the action is "TradingConfirm".
         if (request.Action === "TradingConfirm")
         {
             for (const index in request.scheme_items)
             {
+                // Find the corresponding item in the player's inventory.
                 const item = pmcData.Inventory.items.find(i => i._id === request.scheme_items[index].id);
                 if (item !== undefined)
                 {
                     if (!this.paymentHelper.isMoneyTpl(item._tpl))
                     {
+                        // If the item is not money, remove it from the inventory.
                         output = this.inventoryHelper.removeItem(pmcData, item._id, sessionID, output);
                         request.scheme_items[index].count = 0;
                     }
                     else
                     {
-                        currencyTpl = item._tpl;
-                        break;
+                        // If the item is money, add its count to the currencyAmounts object.
+                        currencyAmounts[item._tpl] = (currencyAmounts[item._tpl] || 0) + request.scheme_items[index].count;
                     }
                 }
             }
         }
 
-        // prepare a price for barter
-        let barterPrice = 0;
-        barterPrice = request.scheme_items.reduce((accumulator, item) => accumulator + item.count, 0);
+        // Track the total amount of all currencies.
+        let totalCurrencyAmount = 0;
 
-        // Nothing to do here, since we dont need to pay money.
-        if (barterPrice === 0)
+        // Loop through each type of currency involved in the trade.
+        for (const currencyTpl in currencyAmounts)
         {
-            this.logger.debug(this.localisationService.getText("payment-zero_price_no_payment"));
-        }
+            const currencyAmount = currencyAmounts[currencyTpl];
+            totalCurrencyAmount += currencyAmount;
 
-        // Only perform if paying with currency (not barters)
-        if (barterPrice > 0)
-        {
-            output = this.addPaymentToOutput(pmcData, currencyTpl, barterPrice, sessionID, output);
-            if (output.warnings.length > 0)
+            if (currencyAmount > 0)
             {
-                // Something failed
-                return output;
+                output = this.addPaymentToOutput(pmcData, currencyTpl, currencyAmount, sessionID, output);
+
+                // If there are warnings, exit early.
+                if (output.warnings.length > 0)
+                {
+                    return output;
+                }
+
+                // Convert the amount to the trader's currency and update the sales sum.
+                const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(this.handbookHelper.inRUB(currencyAmount, currencyTpl), this.paymentHelper.getCurrency(trader.currency));
+                pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
             }
         }
 
-        // set current sale sum
-        // convert barterPrice itemTpl into RUB then convert RUB into trader currency
-        const costOfPurchaseInCurrency = (barterPrice === 0)
-            ? this.handbookHelper.fromRUB(this.getTraderItemHandbookPriceRouble(request.item_id, request.tid), this.paymentHelper.getCurrency(trader.currency))
-            : this.handbookHelper.fromRUB(this.handbookHelper.inRUB(barterPrice, currencyTpl), this.paymentHelper.getCurrency(trader.currency));
+        // If no currency-based payment is involved, handle it separately
+        if (totalCurrencyAmount === 0)
+        {
+            this.logger.debug(this.localisationService.getText("payment-zero_price_no_payment"));
 
-        pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
+            // Convert the handbook price to the trader's currency and update the sales sum.
+            const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(this.getTraderItemHandbookPriceRouble(request.item_id, request.tid), this.paymentHelper.getCurrency(trader.currency));
+            pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
+        }
+
         this.traderHelper.lvlUp(request.tid, pmcData);
-        
-        this.logger.debug("Item(s) taken. Status OK.");
 
+        this.logger.debug("Item(s) taken. Status OK.");
         return output;
     }
 
