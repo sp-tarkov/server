@@ -1,4 +1,4 @@
-import { LogLevel } from "./LogLevel";
+import { LogLevel } from "@spt-aki/models/spt/logging/LogLevel";
 
 export interface IClientLogRequest 
 {
