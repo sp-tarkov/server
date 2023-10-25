@@ -2,6 +2,7 @@ import { DependencyContainer, Lifecycle } from "tsyringe";
 
 import { BotCallbacks } from "@spt-aki/callbacks/BotCallbacks";
 import { BundleCallbacks } from "@spt-aki/callbacks/BundleCallbacks";
+import { ClientLogCallbacks } from "@spt-aki/callbacks/ClientLogCallbacks";
 import { CustomizationCallbacks } from "@spt-aki/callbacks/CustomizationCallbacks";
 import { DataCallbacks } from "@spt-aki/callbacks/DataCallbacks";
 import { DialogueCallbacks } from "@spt-aki/callbacks/DialogueCallbacks";
@@ -33,6 +34,7 @@ import { WeatherCallbacks } from "@spt-aki/callbacks/WeatherCallbacks";
 import { WishlistCallbacks } from "@spt-aki/callbacks/WishlistCallbacks";
 import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
 import { BotController } from "@spt-aki/controllers/BotController";
+import { ClientLogController } from "@spt-aki/controllers/ClientLogController";
 import { CustomizationController } from "@spt-aki/controllers/CustomizationController";
 import { DialogueController } from "@spt-aki/controllers/DialogueController";
 import { GameController } from "@spt-aki/controllers/GameController";
@@ -157,6 +159,7 @@ import { ImageSerializer } from "@spt-aki/routers/serializers/ImageSerializer";
 import { NotifySerializer } from "@spt-aki/routers/serializers/NotifySerializer";
 import { BotStaticRouter } from "@spt-aki/routers/static/BotStaticRouter";
 import { BundleStaticRouter } from "@spt-aki/routers/static/BundleStaticRouter";
+import { ClientLogStaticRouter } from "@spt-aki/routers/static/ClientLogStaticRouter";
 import { CustomizationStaticRouter } from "@spt-aki/routers/static/CustomizationStaticRouter";
 import { DataStaticRouter } from "@spt-aki/routers/static/DataStaticRouter";
 import { DialogStaticRouter } from "@spt-aki/routers/static/DialogStaticRouter";
@@ -305,6 +308,7 @@ export class Container
         depContainer.registerType("OnUpdate", "SaveCallbacks");
 
         depContainer.registerType("StaticRoutes", "BotStaticRouter");
+        depContainer.registerType("StaticRoutes", "ClientLogStaticRouter");
         depContainer.registerType("StaticRoutes", "CustomizationStaticRouter");
         depContainer.registerType("StaticRoutes", "DataStaticRouter");
         depContainer.registerType("StaticRoutes", "DialogStaticRouter");
@@ -429,6 +433,7 @@ export class Container
         // Static routes
         depContainer.register<BotStaticRouter>("BotStaticRouter", { useClass: BotStaticRouter });
         depContainer.register<BundleStaticRouter>("BundleStaticRouter", { useClass: BundleStaticRouter });
+        depContainer.register<ClientLogStaticRouter>("ClientLogStaticRouter", { useClass: ClientLogStaticRouter });
         depContainer.register<CustomizationStaticRouter>("CustomizationStaticRouter", { useClass: CustomizationStaticRouter });
         depContainer.register<DataStaticRouter>("DataStaticRouter", { useClass: DataStaticRouter });
         depContainer.register<DialogStaticRouter>("DialogStaticRouter", { useClass: DialogStaticRouter });
@@ -538,6 +543,7 @@ export class Container
         // Callbacks
         depContainer.register<BotCallbacks>("BotCallbacks", { useClass: BotCallbacks });
         depContainer.register<BundleCallbacks>("BundleCallbacks", { useClass: BundleCallbacks });
+        depContainer.register<ClientLogCallbacks>("ClientLogCallbacks", { useClass: ClientLogCallbacks });
         depContainer.register<CustomizationCallbacks>("CustomizationCallbacks", { useClass: CustomizationCallbacks });
         depContainer.register<DataCallbacks>("DataCallbacks", { useClass: DataCallbacks });
         depContainer.register<DialogueCallbacks>("DialogueCallbacks", { useClass: DialogueCallbacks });
@@ -632,6 +638,7 @@ export class Container
     {
         // Controllers
         depContainer.register<BotController>("BotController", { useClass: BotController });
+        depContainer.register<ClientLogController>("ClientLogController", { useClass: ClientLogController });
         depContainer.register<CustomizationController>("CustomizationController", { useClass: CustomizationController });
         depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController });
         depContainer.register<GameController>("GameController", { useClass: GameController });
