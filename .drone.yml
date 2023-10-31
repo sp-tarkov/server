@@ -27,7 +27,7 @@ steps:
       - cd ./project
       - pnpm install
 
-  - name: Run Rome
+  - name: Run Biome
     image: registry.sp-tarkov.com/spt/pnpm:7.25.1
     commands:
       - cd ./project
@@ -84,7 +84,7 @@ steps:
       - cd ./project
       - pnpm install
 
-  - name: Run Rome
+  - name: Run Biome
     image: registry.sp-tarkov.com/spt/pnpm:7.25.1
     commands:
       - cd ./project
@@ -102,7 +102,7 @@ steps:
   #     - cd ./project
   #     - pnpm run test:coverage
   #   depends_on:
-  #     - Run Rome
+  #     - Run Biome
   #   when:
   #     event:
   #       - push
@@ -128,7 +128,7 @@ steps:
         -Dsonar.javascript.lcov.reportPaths=./project/coverage/lcov.info
     depends_on:
       # - Jest coverage
-      - Run Rome
+      - Run Biome
     when:
       event:
         - push
@@ -165,7 +165,7 @@ steps:
         -Dsonar.projectVersion=$DRONE_TAG
     depends_on:
       # - Jest coverage
-      - Run Rome
+      - Run Biome
     when:
       event:
         - tag
