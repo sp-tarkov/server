@@ -147,10 +147,11 @@ export class RepairService
         repairDetails: RepairDetails,
         pmcData: IPmcData): void
     {
-        if (this.itemHelper.isOfBaseclass(repairDetails.repairedItem._tpl, BaseClasses.WEAPON))
+        if (repairDetails.repairedByKit && this.itemHelper.isOfBaseclass(repairDetails.repairedItem._tpl, BaseClasses.WEAPON))
         {
-            const progress = this.databaseServer.getTables().globals.config.SkillsSettings.WeaponTreatment.SkillPointsPerRepair;
-            this.questHelper.rewardSkillPoints(sessionId, pmcData, "WeaponTreatment", progress);
+            const skillPoints = this.getWeaponRepairSkillPoints(repairDetails);
+
+            this.questHelper.rewardSkillPoints(sessionId, pmcData, "WeaponTreatment", skillPoints, true);
         }
 
         // Handle kit repairs of armor
@@ -167,7 +168,7 @@ export class RepairService
 
             const isHeavyArmor = itemDetails[1]._props.ArmorType === "Heavy";
             const vestSkillToLevel = (isHeavyArmor) ? "HeavyVests" : "LightVests";
-            const pointsToAddToVestSkill = repairDetails.repairAmount * this.repairConfig.armorKitSkillPointGainPerRepairPointMultiplier;
+            const pointsToAddToVestSkill = repairDetails.repairPoints * this.repairConfig.armorKitSkillPointGainPerRepairPointMultiplier;
 
             this.questHelper.rewardSkillPoints(sessionId, pmcData, vestSkillToLevel, pointsToAddToVestSkill);
         }
@@ -181,7 +182,7 @@ export class RepairService
                 : this.repairConfig.repairKitIntellectGainMultiplier.armor;
 
             // limit gain to a max value defined in config.maxIntellectGainPerRepair
-            intellectGainedFromRepair = Math.min(repairDetails.repairAmount * intRepairMultiplier, this.repairConfig.maxIntellectGainPerRepair.kit);
+            intellectGainedFromRepair = Math.min(repairDetails.repairPoints * intRepairMultiplier, this.repairConfig.maxIntellectGainPerRepair.kit);
         }
         else
         {
@@ -190,6 +191,43 @@ export class RepairService
         }
 
         this.questHelper.rewardSkillPoints(sessionId, pmcData, SkillTypes.INTELLECT, intellectGainedFromRepair);
+    }
+
+    /**
+     * Return an appromixation of the amount of skill points live would return for the given repairDetails
+     * @param repairDetails the repair details to calculate skill points for
+     * @returns the number of skill points to reward the user
+     */
+    protected getWeaponRepairSkillPoints(
+        repairDetails: RepairDetails): number
+    {
+        // This formula and associated configs is calculated based on 30 repairs done on live
+        // The points always came out 2-aligned, which is why there's a divide/multiply by 2 with ceil calls
+        const gainMult = this.repairConfig.weaponTreatment.pointGainMultiplier;
+
+        // First we get a baseline based on our repair amount, and gain multiplier with a bit of rounding
+        const step1 = Math.ceil(repairDetails.repairAmount / 2) * gainMult;
+
+        // Then we have to get the next even number
+        const step2 = Math.ceil(step1 / 2) * 2;
+
+        // Then multiply by 2 again to hopefully get to what live would give us
+        let skillPoints = step2 * 2;
+
+        // You can both crit fail and succeed at the same time, for fun (Balances out to 0 with default settings)
+        // Add a random chance to crit-fail
+        if (Math.random() <= this.repairConfig.weaponTreatment.critFailureChance)
+        {
+            skillPoints -= this.repairConfig.weaponTreatment.critFailureAmount;
+        }
+
+        // Add a random chance to crit-succeed
+        if (Math.random() <= this.repairConfig.weaponTreatment.critSuccessChance)
+        {
+            skillPoints += this.repairConfig.weaponTreatment.critSuccessAmount;
+        }
+        
+        return skillPoints;
     }
     
     /**
@@ -218,12 +256,13 @@ export class RepairService
         const itemsDb = this.databaseServer.getTables().templates.items;
         const itemToRepairDetails = itemsDb[itemToRepair._tpl];
         const repairItemIsArmor = (!!itemToRepairDetails._props.ArmorMaterial);
+        const repairAmount = repairKits[0].count / this.getKitDivisor(itemToRepairDetails, repairItemIsArmor, pmcData);
 
         this.repairHelper.updateItemDurability(
             itemToRepair,
             itemToRepairDetails,
             repairItemIsArmor,
-            repairKits[0].count / this.getKitDivisor(itemToRepairDetails, repairItemIsArmor, pmcData),
+            repairAmount,
             true,
             1,
             this.repairConfig.applyRandomizeDurabilityLoss);
@@ -244,9 +283,10 @@ export class RepairService
         }
 
         return {
+            repairPoints: repairKits[0].count,
             repairedItem: itemToRepair,
             repairedItemIsArmor: repairItemIsArmor,
-            repairAmount: repairKits[0].count,
+            repairAmount: repairAmount,
             repairedByKit: true
         };
     }
@@ -414,7 +454,7 @@ export class RepairService
 
         const skillLevel = Math.trunc((pmcData?.Skills?.Common?.find(s => s.Id === itemSkillType)?.Progress ?? 0) / 100);
 
-        const durabilityToRestorePercent = repairDetails.repairAmount / template._props.MaxDurability;
+        const durabilityToRestorePercent = repairDetails.repairPoints / template._props.MaxDurability;
         const durabilityMultiplier = this.getDurabilityMultiplier(receivedDurabilityMaxPercent, durabilityToRestorePercent);
 
         const doBuff = commonBuffMinChanceValue + commonBuffChanceLevelBonus * skillLevel * durabilityMultiplier;
@@ -483,6 +523,7 @@ export class RepairService
 export class RepairDetails
 {
     repairCost?: number;
+    repairPoints?: number;
     repairedItem: Item;
     repairedItemIsArmor: boolean;
     repairAmount: number;

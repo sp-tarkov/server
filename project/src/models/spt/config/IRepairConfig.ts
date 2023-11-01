@@ -12,6 +12,7 @@ export interface IRepairConfig extends IBaseConfig
     repairKitIntellectGainMultiplier: IIntellectGainValues
     //** How much INT can be given to player per repair action */
     maxIntellectGainPerRepair: IMaxIntellectGainValues;
+    weaponTreatment: IWeaponTreatmentRepairValues;
     repairKit: RepairKit
 }
 
@@ -25,6 +26,18 @@ export interface IMaxIntellectGainValues
 {
     kit: number
     trader: number
+}
+
+export interface IWeaponTreatmentRepairValues
+{
+    /** The chance to gain more weapon maintenance skill */
+    critSuccessChance: number
+    critSuccessAmount: number
+    /** The chance to gain less weapon maintenance skill  */
+    critFailureChance: number
+    critFailureAmount: number
+    /** The multiplier used for calculating weapon maintenance XP */
+    pointGainMultiplier: number
 }
 
 export interface RepairKit

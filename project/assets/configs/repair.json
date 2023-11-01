@@ -11,6 +11,13 @@
         "kit": 0.6,
         "trader": 0.6
     },
+    "weaponTreatment": {
+        "critSuccessChance": 0.10,
+        "critSuccessAmount": 4,
+        "critFailureChance": 0.10,
+        "critFailureAmount": 4,
+        "pointGainMultiplier": 0.6
+    },
     "repairKit": {
         "armor": {
             "rarityWeight": {

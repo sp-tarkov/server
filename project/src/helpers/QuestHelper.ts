@@ -8,7 +8,7 @@ import { QuestConditionHelper } from "@spt-aki/helpers/QuestConditionHelper";
 import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Common, IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { AvailableForConditions, AvailableForProps, IQuest, Reward } from "@spt-aki/models/eft/common/tables/IQuest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
@@ -135,7 +135,7 @@ export class QuestHelper
      * @param skillName Name of skill to increase skill points of
      * @param progressAmount Amount of skill points to add to skill
      */
-    public rewardSkillPoints(sessionID: string, pmcData: IPmcData, skillName: string, progressAmount: number): void
+    public rewardSkillPoints(sessionID: string, pmcData: IPmcData, skillName: string, progressAmount: number, scaleToSkillLevel: boolean = false): void
     {
         const indexOfSkillToUpdate = pmcData.Skills.Common.findIndex(s => s.Id === skillName);
         if (indexOfSkillToUpdate === -1)
@@ -153,8 +153,64 @@ export class QuestHelper
             return;
         }
 
+        // Tarkov has special handling of skills under level 9 to scale them to the lower XP requirement
+        if (scaleToSkillLevel)
+        {
+            progressAmount = this.adjustSkillExpForLowLevels(profileSkill, progressAmount);
+        }
+
         profileSkill.Progress += progressAmount;
         profileSkill.LastAccess = this.timeUtil.getTimestamp();
+    }
+
+    /**
+     * Adjust skill experience for low skill levels, mimicing the official client
+     * @param profileSkill the skill experience is being added to
+     * @param progressAmount the amount of experience being added to the skill
+     * @returns the adjusted skill progress gain
+     */
+    public adjustSkillExpForLowLevels(profileSkill: Common, progressAmount: number): number
+    {
+        let currentLevel = Math.floor(profileSkill.Progress / 100);
+
+        // Only run this if the current level is under 9
+        if (currentLevel >= 9)
+        {
+            return progressAmount;
+        }
+
+        // This calculates how much progress we have in the skill's starting level
+        let startingLevelProgress = (profileSkill.Progress % 100) * ((currentLevel + 1) / 10);
+
+        // The code below assumes a 1/10th progress skill amount
+        let remainingProgress = progressAmount / 10;
+
+        // We have to do this loop to handle edge cases where the provided XP bumps your level up
+        // See "CalculateExpOnFirstLevels" in client for original logic
+        let adjustedSkillProgress = 0;
+        while (remainingProgress > 0 && currentLevel < 9)
+        {
+            // Calculate how much progress to add, limiting it to the current level max progress
+            const currentLevelRemainingProgress = ((currentLevel + 1) * 10) - startingLevelProgress;
+            this.logger.debug(`currentLevelRemainingProgress: ${currentLevelRemainingProgress}`);
+            const progressToAdd = Math.min(remainingProgress, currentLevelRemainingProgress);
+            const adjustedProgressToAdd = (10 / (currentLevel + 1)) * progressToAdd;
+            this.logger.debug(`Progress To Add: ${progressToAdd}  Adjusted for level: ${adjustedProgressToAdd}`);
+
+            // Add the progress amount adjusted by level
+            adjustedSkillProgress += adjustedProgressToAdd;
+            remainingProgress -= progressToAdd;
+            startingLevelProgress = 0;
+            currentLevel++;
+        }
+
+        // If there's any remaining progress, add it. This handles if you go from level 8 -> 9
+        if (remainingProgress > 0)
+        {
+            adjustedSkillProgress += remainingProgress;
+        }
+
+        return adjustedSkillProgress;
     }
 
     /**
