@@ -84,7 +84,6 @@
     "modloader-mod_order_error": "ModLoader: order.json dosyasında hata bulundu, VARSAYILAN SIRALAMA ILE DEVAM EDILECEK",
     "modloader-mod_order_missing_from_json": "ModLoader: %s modu order.json dosyasında eksik",
     "modloader-visited": "ziyaret",
-    "modloader-x_duplicates_found": "Bir veya daha fazla yinelenen mod bulundu: %s, Bir modun yalnızca bir sürümü yüklenmelidir",
     "payment-not_enough_money_to_complete_transation": "Profilde işlemi tamamlamak için yeterli para yoktu: gerekli {{amountToPay}}, sahip olmak {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "İşlemi tamamlamak için yeterli para yok",
     "payment-zero_price_no_payment": "Fiyatı 0, ödemeye gerek yok",

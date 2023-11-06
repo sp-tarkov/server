@@ -32,7 +32,7 @@ export class PreAkiModLoader implements IModLoader
     protected imported: Record<string, IPackageJsonData> = {};
     protected akiConfig: ICoreConfig;
     protected serverDependencies: Record<string, string>;
-    protected skippedMods: string[] = [];
+    protected skippedMods: Set<string>;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -50,6 +50,7 @@ export class PreAkiModLoader implements IModLoader
 
         const packageJsonPath: string = path.join(__dirname, "../../package.json");
         this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
+        this.skippedMods = new Set();
     }
 
     public async load(container: DependencyContainer): Promise<void>
@@ -125,7 +126,10 @@ export class PreAkiModLoader implements IModLoader
             return;
         }
 
-        let mods: string[] = this.vfs.getDirs(this.basepath);
+        /**
+         * array of mod folder names
+         */
+        const mods: string[] = this.vfs.getDirs(this.basepath);
         
         this.logger.info(this.localisationService.getText("modloader-loading_mods", mods.length));
 
@@ -153,18 +157,22 @@ export class PreAkiModLoader implements IModLoader
             }
         }
 
+        // Validate and remove broken mods from mod list
+        const validMods = this.getValidMods(mods);
+
+        const modPackageData = this.getModsPackageData(validMods);
+        this.checkForDuplicateMods(modPackageData);
+
         // Used to check all errors before stopping the load execution
         let errorsFound = false;
 
-        // Validate and remove broken mods from mod list
-        const brokenMods: string[] = this.getBrokenMods(mods);
-        mods = mods.filter( ( mod ) => !brokenMods.includes( mod ) );
-
-        const modPackageData = this.getModsPackageData(mods);
-        this.checkForDuplicateMods(modPackageData);
-        for (const modFolderName in modPackageData)
+        for (const [modFolderName, modToValidate] of modPackageData)
         {
-            const modToValidate = modPackageData[modFolderName];
+            if (this.shouldSkipMod(modToValidate))
+            {
+                // skip error checking and dependency install for mods already marked as skipped.
+                continue;
+            }
 
             // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
             if (modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
@@ -199,15 +207,23 @@ export class PreAkiModLoader implements IModLoader
 
         // sort mod order
         const missingFromOrderJSON = {};
-        const sortedMods = mods.sort((prev, next) => this.sortMods(prev, next, missingFromOrderJSON));
+        validMods.sort((prev, next) => this.sortMods(prev, next, missingFromOrderJSON));
 
         // log the missing mods from order.json
         Object.keys(missingFromOrderJSON).forEach((missingMod) => (this.logger.debug(this.localisationService.getText("modloader-mod_order_missing_from_json", missingMod))));
 
         // add mods
-        for (const mod of sortedMods)
+        for (const mod of validMods)
         {
-            await this.addModAsync(mod);
+            const pkg = modPackageData.get(mod);
+
+            if (this.shouldSkipMod(pkg))
+            {
+                this.logger.warning(this.localisationService.getText("modloader-skipped_mod", { mod: mod }));
+                continue;
+            }
+
+            await this.addModAsync(mod, pkg);
         }
 
         this.modLoadOrder.setModList(this.imported);
@@ -237,63 +253,64 @@ export class PreAkiModLoader implements IModLoader
 
     /**
      * Check for duplicate mods loaded, show error if any
-     * @param modPackageData Dictionary of mod package.json data
+     * @param modPackageData map of mod package.json data
      */
-    protected checkForDuplicateMods(modPackageData: Record<string, IPackageJsonData>): void
+    protected checkForDuplicateMods(modPackageData: Map<string, IPackageJsonData>): void
     {
-        const modNames = [];
-        for (const modKey in modPackageData)
-        {
-            const mod = modPackageData[modKey];
-            modNames.push(`${mod.author}-${mod.name}`);
-        }
-        const dupes = this.getDuplicates(modNames);
-        if (dupes?.length > 0)
-        {
-            this.logger.error(this.localisationService.getText("modloader-x_duplicates_found", dupes.join(",")));
-        }
-    }
+        const grouppedMods: Map<string, IPackageJsonData[]> = new Map();
 
-    /**
-     * Check for and return duplicate strings inside an array
-     * @param stringArray Array to check for duplicates
-     * @returns string array of duplicates, empty if none found
-     */
-    protected getDuplicates(stringArray: string[]): string[]
-    {
-        return stringArray.filter((s => v => s.has(v) || !s.add(v))(new Set));
-    }
-
-    /**
-     * Get an array of mods with errors that prevent them from working with SPT
-     * @param mods mods to validate
-     * @returns Mod names as array
-     */
-    protected getBrokenMods(mods: string[]): string[]
-    {
-        const brokenMods: string[] = [];
-        for (const mod of mods)
+        for (const mod of modPackageData.values())
         {
-            if (!this.validMod(mod))
+            const name = `${mod.author}-${mod.name}`;
+            grouppedMods.set(name, [...(grouppedMods.get(name) ?? []), mod]);
+
+            // if there's more than one entry for a given mod it means there's at least 2 mods with the same author and name trying to load.
+            if (grouppedMods.get(name).length > 1 && !this.skippedMods.has(name))
             {
-                brokenMods.push(mod);
+                this.skippedMods.add(name);
             }
         }
 
-        return brokenMods;
+        // at this point this.skippedMods only contains mods that are duplicated, so we can just go through every single entry and log it
+        for (const modName of this.skippedMods)
+        {
+            this.logger.error(this.localisationService.getText("modloader-x_duplicates_found", modName));
+        }
+    }
+
+    /**
+     * Returns an array of valid mods.
+     * 
+     * @param mods mods to validate
+     * @returns array of mod folder names
+     */
+    protected getValidMods(mods: string[]): string[]
+    {
+        const validMods: string[] = [];
+
+        for (const mod of mods)
+        {
+            if (this.validMod(mod))
+            {
+                validMods.push(mod);
+            }
+        }
+
+        return validMods;
     }
 
     /**
      * Get packageJson data for mods
      * @param mods mods to get packageJson for
-     * @returns dictionary <modName - package.json>
+     * @returns map <modFolderName - package.json>
      */
-    protected getModsPackageData(mods: string[]): Record<string, IPackageJsonData>
+    protected getModsPackageData(mods: string[]): Map<string, IPackageJsonData>
     {
-        const loadedMods: Record<string, IPackageJsonData> = {};
+        const loadedMods = new Map<string, IPackageJsonData>();
+
         for (const mod of mods)
         {
-            loadedMods[mod] = this.jsonUtil.deserialize(this.vfs.readFile(`${this.getModPath(mod)}/package.json`));
+            loadedMods.set(mod, this.jsonUtil.deserialize(this.vfs.readFile(`${this.getModPath(mod)}/package.json`)));
         }
 
         return loadedMods;
@@ -414,18 +431,11 @@ export class PreAkiModLoader implements IModLoader
      * Compile mod and add into class property "imported"
      * @param mod Name of mod to compile/add
      */
-    protected async addModAsync(mod: string): Promise<void>
+    protected async addModAsync(mod: string, pkg: IPackageJsonData): Promise<void>
     {
         const modPath = this.getModPath(mod);
-        const packageData = this.jsonUtil.deserialize<IPackageJsonData>(this.vfs.readFile(`${modPath}/package.json`));
 
-        if (this.skippedMods.includes(packageData.name))
-        {
-            this.logger.warning(this.localisationService.getText("modloader-skipped_mod", {name: packageData.name, author: packageData.author}));
-            return;
-        }
-
-        const isBundleMod = packageData.isBundleMod ?? false;
+        const isBundleMod = pkg.isBundleMod ?? false;
 
         if (isBundleMod)
         {
@@ -444,16 +454,27 @@ export class PreAkiModLoader implements IModLoader
             else
             {
                 // rename the mod entry point to .ts if it's set to .js because G_MODS_TRANSPILE_TS is set to false
-                packageData.main = (packageData.main).replace(".js", ".ts");
+                pkg.main = (pkg.main).replace(".js", ".ts");
             }
         }
 
         // Purge scripts data from package object
-        packageData.scripts = {};
+        pkg.scripts = {};
 
         // Add mod to imported list
-        this.imported[mod] = {...packageData, dependencies: packageData.modDependencies};
-        this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: packageData.name, version: packageData.version, author: packageData.author}));
+        this.imported[mod] = {...pkg, dependencies: pkg.modDependencies};
+        this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: pkg.name, version: pkg.version, author: pkg.author}));
+    }
+
+    /**
+     * Checks if a given mod should be loaded or skipped.
+     * 
+     * @param pkg mod package.json data
+     * @returns 
+     */
+    protected shouldSkipMod(pkg: IPackageJsonData): boolean
+    {
+        return this.skippedMods.has(`${pkg.author}-${pkg.name}`);
     }
 
     protected autoInstallDependencies(modPath: string, pkg: IPackageJsonData): void
@@ -492,7 +513,7 @@ export class PreAkiModLoader implements IModLoader
                 configOption: "autoInstallModDependencies"
             }));
 
-            this.skippedMods.push(pkg.name);
+            this.skippedMods.add(`${pkg.author}-${pkg.name}`);
             return;
         }
 
@@ -512,7 +533,7 @@ export class PreAkiModLoader implements IModLoader
         this.vfs.rename(`${modPath}/package.json.bak`, `${modPath}/package.json`);
     }
 
-    protected areModDependenciesFulfilled(pkg: IPackageJsonData, loadedMods: Record<string, IPackageJsonData>): boolean
+    protected areModDependenciesFulfilled(pkg: IPackageJsonData, loadedMods: Map<string, IPackageJsonData>): boolean
     {
         if (!pkg.modDependencies)
         {
@@ -524,15 +545,15 @@ export class PreAkiModLoader implements IModLoader
         for (const [modDependency, requiredVersion ] of Object.entries(pkg.modDependencies))
         {
             // Raise dependency version incompatible if the dependency is not found in the mod list
-            if (!(modDependency in loadedMods))
+            if (!loadedMods.has(modDependency))
             {
                 this.logger.error(this.localisationService.getText("modloader-missing_dependency", {mod: modName, modDependency: modDependency}));
                 return false;
             }
 
-            if (!semver.satisfies(loadedMods[modDependency].version, requiredVersion))
+            if (!semver.satisfies(loadedMods.get(modDependency).version, requiredVersion))
             {
-                this.logger.error(this.localisationService.getText("modloader-outdated_dependency", {mod: modName, modDependency: modDependency, currentVersion: loadedMods[modDependency].version, requiredVersion: requiredVersion}));
+                this.logger.error(this.localisationService.getText("modloader-outdated_dependency", {mod: modName, modDependency: modDependency, currentVersion: loadedMods.get(modDependency).version, requiredVersion: requiredVersion}));
                 return false;
             }
         }
@@ -540,7 +561,7 @@ export class PreAkiModLoader implements IModLoader
         return true;
     }
 
-    protected isModCompatible(mod: IPackageJsonData, loadedMods: Record<string, IPackageJsonData>): boolean
+    protected isModCompatible(mod: IPackageJsonData, loadedMods: Map<string, IPackageJsonData>): boolean
     {
         const incompatbileModsList = mod.incompatibilities;
         if (!incompatbileModsList)
@@ -551,7 +572,7 @@ export class PreAkiModLoader implements IModLoader
         for (const incompatibleModName of incompatbileModsList)
         {
             // Raise dependency version incompatible if any incompatible mod is found
-            if (incompatibleModName in loadedMods)
+            if (loadedMods.has(incompatibleModName))
             {
                 this.logger.error(this.localisationService.getText("modloader-incompatible_mod_found", {author: mod.author, modName: mod.name, incompatibleModName: incompatibleModName}));
                 return false;

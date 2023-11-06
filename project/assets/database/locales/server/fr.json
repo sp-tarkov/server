@@ -141,7 +141,6 @@
     "modloader-mod_order_error": "ModLoader: des erreurs ont été trouvées dans order.json, REMISE A DEFAUT DE L'ORDRE DE CHARGEMENT",
     "modloader-mod_order_missing_from_json": "ModLoader: Mod %s is missing from order.json",
     "modloader-visited": "visité",
-    "modloader-x_duplicates_found": "un ou plusiers mod dupliqués ont été trouvés: %s, seulement une seule version de ce mod doit être installée",
     "openzone-unable_to_find_map": "Impossible d'ajouter des zones à la localisation: %s car elle n'existe pas",
     "payment-not_enough_money_to_complete_transation": "le profil n'a pas assez d'argent pour completer la transaction : somme requise {{amountToPay}}, possède uniquement {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "pas assez d'argent pour compléter la transaction",

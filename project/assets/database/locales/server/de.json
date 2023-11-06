@@ -81,7 +81,6 @@
     "modloader-outdated_dependency": "Mod {{mod}} benötigt {{modDependency}} {{requiredVersion}}. Vorhandene Version ist {{currentVersion}}",
     "modloader-user_mod_folder_missing": "ModLoader: User/Mod Ordner fehlt, wird erzeugt...",
     "modloader-visited": "kontrolliert",
-    "modloader-x_duplicates_found": "ModLoader: Ein oder mehrere Mods sind mehrfach vorhanden: %s, jeweils nur eine Version sollte geladen werden",
     "payment-not_enough_money_to_complete_transation": "Nicht genug Geld vorhanden um Transaktion abzuschließen, benötigt: {{amountToPay}}, vorhanden: {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "Nicht genug Geld vorhanden um Transaktion abzuschließen",
     "payment-zero_price_no_payment": "Preis ist 0, keine Bezahlung nötig",

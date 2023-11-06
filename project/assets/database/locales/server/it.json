@@ -114,7 +114,6 @@
 	"modloader-outdated_dependency": "Mod {{mod}} richiede {{modDependency}} versione {{requiredVersion}}. Attualmente è installata la versione {{currentVersion}}",
 	"modloader-user_mod_folder_missing": "ModLoader: manca la cartella 'user/mod', creazione in corso...",
 	"modloader-visited": "visitato",
-	"modloader-x_duplicates_found": "Trovate una o piu mod duplicate: %s, Solo una sola versione di una mod puo essere caricata",
 	"openzone-unable_to_find_map": "Impossibile aggiungere zone al luogo: %s non esiste",
 	"payment-not_enough_money_to_complete_transation": "Il profilo non ha abbastanza soldi per completare la transizione: servono {{amountToPay}}, ha {{amountAvailable}}",
 	"payment-not_enough_money_to_complete_transation_short": "Soldi insufficienti per completare la transizione",

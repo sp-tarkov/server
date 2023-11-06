@@ -141,7 +141,6 @@
     "modloader-mod_order_error": "Загрузчик модов: В файле order.json найдены ошибки, БУДЕТ ИСПОЛЬЗОВАТЬСЯ СТАНДАРТНЫЙ ПОРЯДОК ЗАГРУЗКИ",
     "modloader-mod_order_missing_from_json": "Загрузчик модов: Мод %s отсутствует в файле order.json",
     "modloader-visited": "посетил",
-    "modloader-x_duplicates_found": "Один или более дубликат(ов) мода обнаружено: %s, только одна версия мода должна быть загружена",
     "openzone-unable_to_find_map": "Невозможно добавить зоны в локацию: %s, так как она не существует",
     "payment-not_enough_money_to_complete_transation": "В профиле не хватает денег для завершения сделки: необходимо {{amountToPay}}, имеется {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "Не хватает денег для завершения сделки",

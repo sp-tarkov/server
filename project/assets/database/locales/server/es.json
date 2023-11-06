@@ -123,7 +123,6 @@
     "modloader-mod_order_error": "ModLoader: Errores encontrados en order.json, volviendo a orden de carga por defecto.",
     "modloader-mod_order_missing_from_json": "ModLoader: Mod %s no está en order.json",
     "modloader-visited": "visitado",
-    "modloader-x_duplicates_found": "Una o más modificaciones duplicadas fueron encontradas: %s, Solo una versión de una modificación debería estar instalada",
     "openzone-unable_to_find_map": "No se pueden añadir zonas a la localización: %s ya que no existe.",
     "payment-not_enough_money_to_complete_transation": "El perfil no tenía suficiente dinero para completar la transacción: necesitado {{amountToPay}}, tiene {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "Insuficiente dinero para completar la transacción",

@@ -81,7 +81,6 @@
     "modloader-outdated_dependency": "モッド {{mod}} の前提条件である {{modDependency}} はバージョン {{requiredVersion}}　を要求されています。現在インストールされているバージョンは {{currentVersion}}",
     "modloader-user_mod_folder_missing": "モッド読み込むツール: user/mod フォルダーが見つかりません、フォルダー作成中...",
     "modloader-visited": "ビジットをカウントした。",
-    "modloader-x_duplicates_found": "一点以上の重複モッドを発見しました： %s、 読み込まれるモッドは一バージョンのみです。",
     "payment-not_enough_money_to_complete_transation": "プロファイルに通貨が足りません： {{amountToPay}}　が必要で、 {{amountAvailable}}　が所持しています。",
     "payment-not_enough_money_to_complete_transation_short": "プロファイルに通貨が足りません。",
     "payment-zero_price_no_payment": "価額が０なので、支払いは要りません。",

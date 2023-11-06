@@ -115,7 +115,6 @@
     "modloader-outdated_dependency": "Mod {{mod}} kräver {{modDependency}} version {{requiredVersion}}. Aktuell installerad version är {{currentVersion}}",
     "modloader-user_mod_folder_missing": "ModLoader: användare/mod-mapp saknas, skapar...",
     "modloader-visited": "besökta",
-    "modloader-x_duplicates_found": "En eller flera dubbletter av mods hittades: %s, Endast en version av en mod bör laddas",
     "openzone-unable_to_find_map": "Det går inte att lägga till zoner på plats: %s eftersom den inte finns",
     "payment-not_enough_money_to_complete_transation": "Profilen hade inte tillräckligt med pengar för att slutföra transaktionen: behövde {{amountToPay}}, har {{amountAvailable}}",
     "payment-not_enough_money_to_complete_transation_short": "Inte tillräckligt med pengar för att slutföra transaktionen",
