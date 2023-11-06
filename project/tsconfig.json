@@ -3,13 +3,7 @@
     "compilerOptions": {
         "resolveJsonModule": true,
         "outDir": "obj",
-        "declaration": true,
-        "baseUrl": ".",
-        "paths": {
-            "@spt-aki/*": [
-                "src/*"
-            ]
-        }
+        "declaration": true
     },
     "include": [
         "./src/**/*",
