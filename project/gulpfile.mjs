@@ -31,11 +31,6 @@ const licenseFile = "../LICENSE.md";
  */
 const compile = async () => await exec("swc src -d obj", { stdio });
 
-/**
- * Transpiles the src files into javascript with tsc for the profiler run
- */
-const compileProfiler = async () => await exec("tsc -p tsconfig.test.json", { stdio });
-
 // Packaging
 const fetchPackageImage = async () =>
 {
@@ -290,6 +285,7 @@ gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: bu
 gulp.task("run:debug", async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
 gulp.task("run:profiler", async () =>
 {
-    await compileProfiler();
+    await cleanCompiled();
+    await compile();
     await exec("node --prof --inspect --trace-warnings obj/ide/TestEntry.js", { stdio });
 });
