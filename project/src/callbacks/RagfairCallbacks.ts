@@ -74,7 +74,6 @@ export class RagfairCallbacks implements OnLoad, OnUpdate {
     }
 
     /** Handle client/ragfair/itemMarketPrice */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getMarketPrice(
         url: string,
         info: IGetMarketPriceRequestData,
@@ -102,7 +101,6 @@ export class RagfairCallbacks implements OnLoad, OnUpdate {
      * Handle /client/items/prices
      * Called when clicking an item to list on flea
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getFleaPrices(
         url: string,
         request: IEmptyRequestData,
@@ -112,7 +110,6 @@ export class RagfairCallbacks implements OnLoad, OnUpdate {
     }
 
     /** Handle client/reports/ragfair/send */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendReport(url: string, info: ISendRagfairReportRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }

@@ -322,7 +322,6 @@ export class ProfileController {
     /**
      * Handle client/game/profile/search
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getFriends(info: ISearchFriendRequestData, sessionID: string): ISearchFriendResponse[] {
         return [
             {

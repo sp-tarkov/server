@@ -277,7 +277,6 @@ export class TraderHelper {
      * @param sessionID Session id
      * @param newPurchaseDetails New item assort id + count
      */
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     public addTraderPurchasesToPlayerProfile(
         sessionID: string,
         newPurchaseDetails: { items: { item_id: string; count: number }[]; tid: string }

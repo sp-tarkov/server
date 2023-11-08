@@ -79,9 +79,7 @@ export interface IBotTypeLimit extends MinMax {
 export interface LootMultiplier {
     bigmap: number;
     develop: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     factory4_day: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     factory4_night: number;
     interchange: number;
     laboratory: number;

@@ -103,12 +103,9 @@ class TradeController {
                 Action: "TradingConfirm",
                 type: "buy_from_trader",
                 tid: fleaOffer.user.memberType !== MemberCategory.TRADER ? "ragfair" : fleaOffer.user.id,
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 item_id: fleaOffer.root,
                 count: offer.count,
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 scheme_id: 0,
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 scheme_items: offer.items,
             };
 
@@ -189,7 +186,6 @@ class TradeController {
             );
 
             // Add item details to request
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             sellRequest.items.push({
                 id: itemToSell._id,
                 count: itemToSell?.upd?.StackObjectsCount ?? 1,

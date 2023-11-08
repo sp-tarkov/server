@@ -110,7 +110,6 @@ export class LocationController {
      * @param sessionId Players Id
      * @returns ILocationsGenerateAllResponse
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public generateAll(sessionId: string): ILocationsGenerateAllResponse {
         const locationsFromDb = this.databaseServer.getTables().locations;
         const locations: ILocations = {};

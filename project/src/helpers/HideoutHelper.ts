@@ -896,7 +896,6 @@ export class HideoutHelper {
         return {
             items: [
                 {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: HideoutHelper.bitcoin,
                     count: pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products.length,
                 },

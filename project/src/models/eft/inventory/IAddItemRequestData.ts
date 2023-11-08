@@ -7,6 +7,5 @@ export interface IAddItemRequestData {
 export interface AddItem {
     count: number;
     isPreset?: boolean;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     item_id: string;
 }

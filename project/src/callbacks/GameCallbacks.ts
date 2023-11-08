@@ -40,7 +40,6 @@ class GameCallbacks implements OnLoad {
      * Handle client/game/version/validate
      * @returns INullResponseData
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public versionValidate(url: string, info: IVersionValidateRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }
@@ -58,7 +57,6 @@ class GameCallbacks implements OnLoad {
         const startTimeStampMS = Date.parse(today);
         this.gameController.gameStart(url, info, sessionID, startTimeStampMS);
         return this.httpResponse.getBody({
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             utc_time: startTimeStampMS / 1000,
         });
     }
@@ -68,7 +66,6 @@ class GameCallbacks implements OnLoad {
      * Save profiles on game close
      * @returns IGameLogoutResponseData
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public gameLogout(
         url: string,
         info: IEmptyRequestData,
@@ -95,7 +92,6 @@ class GameCallbacks implements OnLoad {
     /**
      * Handle client/server/list
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getServer(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IServerDetails[]> {
         return this.httpResponse.getBody(this.gameController.getServer(sessionID));
     }
@@ -114,7 +110,6 @@ class GameCallbacks implements OnLoad {
     /**
      * Handle client/checkVersion
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public validateGameVersion(
         url: string,
         info: IEmptyRequestData,
@@ -127,7 +122,6 @@ class GameCallbacks implements OnLoad {
      * Handle client/game/keepalive
      * @returns IGameKeepAliveResponse
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public gameKeepalive(
         url: string,
         info: IEmptyRequestData,
@@ -140,14 +134,12 @@ class GameCallbacks implements OnLoad {
      * Handle singleplayer/settings/version
      * @returns string
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getVersion(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.noBody({
             Version: this.watermark.getInGameVersionLabel(),
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public reportNickname(url: string, info: IReportNicknameRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }

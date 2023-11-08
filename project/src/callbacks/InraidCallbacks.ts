@@ -53,7 +53,6 @@ export class InraidCallbacks {
      * Handle singleplayer/settings/raid/menu
      * @returns JSON as string
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getRaidMenuSettings(): string {
         return this.httpResponse.noBody(this.inraidController.getInraidConfig().raidMenuSettings);
     }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Ixyz } from "@spt-aki/models/eft/common/Ixyz";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 

@@ -238,7 +238,6 @@ export class SeasonalEventService {
             }
 
             const equipment: Record<string, number> = nodeInventory.equipment[equipmentSlotKey];
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             nodeInventory.equipment[equipmentSlotKey] = Object.fromEntries(
                 Object.entries(equipment).filter(([index]) => !christmasItems.includes(index))
             );

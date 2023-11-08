@@ -11,6 +11,5 @@ export interface IProcessSellTradeRequestData extends IProcessBaseTradeRequestDa
 export interface Item {
     id: string;
     count: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     scheme_id: number;
 }

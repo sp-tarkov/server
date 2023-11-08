@@ -218,7 +218,6 @@ export class BotGenerator {
      * @param appearance Appearance settings to choose from
      * @param botGenerationDetails Generation details
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected setBotAppearance(
         bot: IBotBase,
         appearance: Appearance,

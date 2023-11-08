@@ -9,7 +9,6 @@ export class CustomizationDynamicRouter extends DynamicRouter {
         super([
             new RouteAction(
                 "/client/trading/customization/",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.customizationCallbacks.getTraderSuits(url, info, sessionID);
                 }

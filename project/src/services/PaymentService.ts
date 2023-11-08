@@ -189,7 +189,6 @@ export class PaymentService {
             const request = {
                 items: [
                     {
-                        // eslint-disable-next-line @typescript-eslint/naming-convention
                         item_id: currency,
                         count: calcAmount,
                     },

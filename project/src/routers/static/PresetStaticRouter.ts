@@ -9,7 +9,6 @@ export class PresetStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/client/handbook/builds/my/list",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.presetCallbacks.getHandbookUserlist(url, info, sessionID);
                 }

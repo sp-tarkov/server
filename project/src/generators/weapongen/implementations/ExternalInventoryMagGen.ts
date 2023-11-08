@@ -22,7 +22,6 @@ export class ExternalInventoryMagGen implements IInventoryMagGen {
         return 99;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     canHandleInventoryMagGen(inventoryMagGen: InventoryMagGen): boolean {
         return true; // Fallback, if code reaches here it means no other implementation can handle this type of magazine
     }

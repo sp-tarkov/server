@@ -330,7 +330,6 @@ export class PreAkiModLoader implements IModLoader {
             // Import class
             const modFilePath = `${process.cwd()}/${filepath}`;
 
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const requiredMod = require(modFilePath);
 
             if (!this.modTypeCheck.isPostV3Compatible(requiredMod.mod)) {

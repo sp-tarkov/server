@@ -67,7 +67,6 @@ export class ItemEventRouterDefinition extends Router {
     constructor() {
         super();
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse {
         throw new Error("This method needs to be overrode by the router classes");
     }
@@ -77,7 +76,6 @@ export class SaveLoadRouter extends Router {
     constructor() {
         super();
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleLoad(profile: IAkiProfile): IAkiProfile {
         throw new Error("This method needs to be overrode by the router classes");
     }

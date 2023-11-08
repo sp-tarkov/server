@@ -345,9 +345,7 @@ export class FenceService {
     protected createBaseTraderAssortItem(): ITraderAssort {
         return {
             items: [],
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             barter_scheme: {},
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             loyal_level_items: {},
             nextResupply: this.getNextFenceUpdateTimestamp(),
         };

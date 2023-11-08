@@ -17,7 +17,6 @@ export class ImageRouter {
         this.imageRouteService.addRoute(key, valueToAdd);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendImage(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
         // remove file extension
         const url = this.vfs.stripExtension(req.url);

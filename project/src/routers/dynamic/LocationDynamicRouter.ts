@@ -9,7 +9,6 @@ export class LocationDynamicRouter extends DynamicRouter {
         super([
             new RouteAction(
                 "/client/location/getLocalloot",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, _output: string): any => {
                     return this.locationCallbacks.getLocation(url, info, sessionID);
                 }

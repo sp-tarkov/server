@@ -151,7 +151,6 @@ export class BotWeaponModLimitService {
      * @param botRole role of bot we're checking weapon of
      * @returns true if limit reached
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected weaponModLimitReached(
         modTpl: string,
         currentCount: { count: number },

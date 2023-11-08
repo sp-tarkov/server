@@ -7,13 +7,9 @@ import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 export class ClientLogStaticRouter extends StaticRouter {
     constructor(@inject("ClientLogCallbacks") protected clientLogCallbacks: ClientLogCallbacks) {
         super([
-            new RouteAction(
-                "/singleplayer/log",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                (url: string, info: any, sessionID: string, output: string): any => {
-                    return this.clientLogCallbacks.clientLog(url, info, sessionID);
-                }
-            ),
+            new RouteAction("/singleplayer/log", (url: string, info: any, sessionID: string, output: string): any => {
+                return this.clientLogCallbacks.clientLog(url, info, sessionID);
+            }),
         ]);
     }
 }

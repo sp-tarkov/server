@@ -361,7 +361,6 @@ export class RagfairOfferHelper {
             while (foundNewItems) {
                 foundNewItems = false;
 
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 for (const id of idsToRemove) {
                     const newIds = offer.items
                         .filter((i) => !idsToRemove.includes(i._id) && idsToRemove.includes(i.parentId))

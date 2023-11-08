@@ -219,9 +219,7 @@ export class TraderAssortHelper {
     protected getRagfairDataAsTraderAssort(): ITraderAssort {
         return {
             items: this.ragfairAssortGenerator.getAssortItems(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             barter_scheme: {},
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             loyal_level_items: {},
             nextResupply: null,
         };

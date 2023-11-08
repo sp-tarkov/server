@@ -5,9 +5,7 @@ import { ILocationsBase } from "@spt-aki/models/eft/common/tables/ILocationsBase
 export interface ILocations {
     bigmap?: ILocationData;
     develop?: ILocationData;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     factory4_day?: ILocationData;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     factory4_night?: ILocationData;
     hideout?: ILocationData;
     interchange?: ILocationData;

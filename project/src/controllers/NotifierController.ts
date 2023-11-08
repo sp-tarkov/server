@@ -73,7 +73,6 @@ export class NotifierController {
     public getChannel(sessionID: string): INotifierChannel {
         return {
             server: this.httpServerHelper.buildUrl(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             channel_id: sessionID,
             url: "",
             notifierServer: this.getServer(sessionID),

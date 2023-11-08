@@ -9,7 +9,6 @@ export class BundleStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/singleplayer/bundles",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.bundleCallbacks.getBundles(url, info, sessionID);
                 }

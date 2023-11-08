@@ -60,7 +60,6 @@ export class PmcChatResponseService {
      * @param pmcData Players profile
      * @param killer The bot who killed the player
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendKillerResponse(sessionId: string, pmcData: IPmcData, killer: Aggressor): void {
         if (!killer) {
             return;

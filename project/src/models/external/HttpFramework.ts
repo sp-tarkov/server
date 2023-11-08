@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { IncomingMessage, ServerResponse } from "node:http";
 import { injectable } from "tsyringe";
 

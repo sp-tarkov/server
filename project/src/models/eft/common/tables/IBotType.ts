@@ -44,7 +44,6 @@ export interface EquipmentChances {
     TacticalVest: number;
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
 export interface ModsChances {
     mod_charge: number;
     mod_equipment: number;

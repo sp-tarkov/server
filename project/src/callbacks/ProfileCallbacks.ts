@@ -112,7 +112,6 @@ export class ProfileCallbacks {
     /**
      * Handle client/game/profile/nickname/reserved
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getReservedNickname(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string> {
         return this.httpResponse.getBody("SPTarkov");
     }
@@ -159,7 +158,6 @@ export class ProfileCallbacks {
     /**
      * Handle client/profile/settings
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getProfileSettings(
         url: string,
         info: IGetProfileSettingsRequest,
@@ -189,7 +187,6 @@ export class ProfileCallbacks {
     /**
      * Handle /launcher/profiles
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getAllMiniProfiles(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.noBody(this.profileController.getMiniProfiles());
     }

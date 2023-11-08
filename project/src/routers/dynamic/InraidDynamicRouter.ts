@@ -9,7 +9,6 @@ export class InraidDynamicRouter extends DynamicRouter {
         super([
             new RouteAction(
                 "/client/location/getLocalloot",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.inraidCallbacks.registerPlayer(url, info, sessionID);
                 }

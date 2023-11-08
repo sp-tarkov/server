@@ -16,7 +16,6 @@ export class LocationCallbacks {
     ) {}
 
     /** Handle client/locations */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getLocationData(
         url: string,
         info: IEmptyRequestData,
@@ -26,7 +25,6 @@ export class LocationCallbacks {
     }
 
     /** Handle client/location/getLocalloot */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getLocation(
         url: string,
         info: IGetLocationRequestData,
@@ -36,7 +34,6 @@ export class LocationCallbacks {
     }
 
     /** Handle client/location/getAirdropLoot */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getAirdropLoot(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.noBody(this.locationController.getAirdropLoot());
     }

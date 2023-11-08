@@ -117,7 +117,6 @@ export class RepairService {
         output: IItemEventRouterResponse
     ): void {
         const options: IProcessBuyTradeRequestData = {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_items: [
                 {
                     id: repairedItemId,
@@ -127,10 +126,8 @@ export class RepairService {
             tid: traderId,
             Action: "",
             type: "",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: "",
             count: 0,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_id: 0,
         };
 

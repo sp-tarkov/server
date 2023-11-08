@@ -692,7 +692,6 @@ export class RagfairController {
         return {
             tid: "ragfair",
             Action: "TradingConfirm",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_items: [
                 {
                     id: this.paymentHelper.getCurrency(currency),
@@ -700,10 +699,8 @@ export class RagfairController {
                 },
             ],
             type: "",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: "",
             count: 0,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_id: 0,
         };
     }

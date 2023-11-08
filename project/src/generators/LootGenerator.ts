@@ -297,7 +297,6 @@ export class LootGenerator {
         // Add preset to return object
         itemsToReturn.push({
             count: 1,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: chosenWeaponPreset._id,
             isPreset: true,
         });
@@ -355,7 +354,6 @@ export class LootGenerator {
                 const chosenAmmoBox = this.randomUtil.getArrayValue(ammoBoxesMatchingCaliber);
                 rewards.push({
                     count: rewardCount,
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: chosenAmmoBox._id,
                     isPreset: false,
                 });
@@ -465,7 +463,6 @@ export class LootGenerator {
             // Exists in array already, increment count
             resultsArray[existingItemIndex].count++;
         } else {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             resultsArray.push({ item_id: itemTplToAdd, count: 1, isPreset: false });
         }
     }

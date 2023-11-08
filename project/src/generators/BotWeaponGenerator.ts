@@ -114,7 +114,6 @@ export class BotWeaponGenerator {
      * @param isPmc Is weapon being generated for a pmc
      * @returns GenerateWeaponResult object
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public generateWeaponByTpl(
         sessionId: string,
         weaponTpl: string,
@@ -454,7 +453,6 @@ export class BotWeaponGenerator {
 
         // Define min/max of how many grenades bot will have
         const ubglMinMax: GenerationData = {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             weights: { "1": 1, "2": 1 },
             whitelist: [],
         };

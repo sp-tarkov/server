@@ -24,7 +24,6 @@ export class BotLevelGenerator {
      * @param bot being level is being generated for
      * @returns IRandomisedBotLevelResult object
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public generateBotLevel(
         levelDetails: MinMax,
         botGenerationDetails: BotGenerationDetails,

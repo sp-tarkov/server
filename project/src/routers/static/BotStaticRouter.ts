@@ -9,7 +9,6 @@ export class BotStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/client/game/bot/generate",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.botCallbacks.generateBots(url, info, sessionID);
                 }

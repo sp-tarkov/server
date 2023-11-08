@@ -155,13 +155,10 @@ export class HealthController {
         const payMoneyRequest: IProcessBuyTradeRequestData = {
             Action: healthTreatmentRequest.Action,
             tid: Traders.THERAPIST,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_items: healthTreatmentRequest.items,
             type: "",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: "",
             count: 0,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_id: 0,
         };
 
@@ -204,7 +201,6 @@ export class HealthController {
      * @param info Request data
      * @param sessionID
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public applyWorkoutChanges(pmcData: IPmcData, info: IWorkoutData, sessionId: string): void {
         // https://dev.sp-tarkov.com/SPT-AKI/Server/issues/2674
         // TODO:

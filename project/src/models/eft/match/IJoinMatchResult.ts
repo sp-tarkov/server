@@ -15,6 +15,5 @@ export interface IJoinMatchPlayerProfile {
     raidMode: string;
     mode: string;
     shortid: string;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     additional_info: any[];
 }

@@ -92,14 +92,10 @@ export class WeatherGenerator {
 
         const result: IWeather = {
             cloud: this.getWeightedClouds(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             wind_speed: this.getWeightedWindSpeed(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             wind_direction: this.getWeightedWindDirection(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             wind_gustiness: this.getRandomFloat("windGustiness"),
             rain: rain,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             rain_intensity: rain > 1 ? this.getRandomFloat("rainIntensity") : 0,
             fog: this.getWeightedFog(),
             temp: this.getRandomFloat("temp"),

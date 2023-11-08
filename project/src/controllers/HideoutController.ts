@@ -469,7 +469,6 @@ export class HideoutController {
         const newReq = {
             items: [
                 {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: itemToReturn._tpl,
                     count: 1,
                 },
@@ -748,7 +747,6 @@ export class HideoutController {
         const newReq = {
             items: [
                 {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: id,
                     count: recipe.count,
                 },
@@ -891,7 +889,6 @@ export class HideoutController {
                     id = this.presetHelper.getDefaultPreset(id)._id;
                 }
                 const numOfItems = !x.upd?.StackObjectsCount ? 1 : x.upd.StackObjectsCount;
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 return { item_id: id, count: numOfItems };
             }
         );
@@ -930,7 +927,6 @@ export class HideoutController {
      * @param sessionId Session id
      * @returns IQteData array
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getQteList(sessionId: string): IQteData[] {
         return this.databaseServer.getTables().hideout.qte;
     }
@@ -942,7 +938,6 @@ export class HideoutController {
      * @param pmcData Profile to adjust
      * @param request QTE result object
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleQTEEventOutcome(
         sessionId: string,
         pmcData: IPmcData,

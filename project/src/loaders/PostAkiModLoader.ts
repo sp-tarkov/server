@@ -40,7 +40,6 @@ export class PostAkiModLoader implements IModLoader {
                 this.preAkiModLoader.getImportedModDetails()[modName].main
             }`;
             const modpath = `${process.cwd()}/${filepath}`;
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const mod = require(modpath);
 
             if (this.modTypeCheck.isPostAkiLoadAsync(mod.mod)) {

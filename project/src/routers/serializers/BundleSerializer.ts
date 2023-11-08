@@ -16,7 +16,6 @@ export class BundleSerializer extends Serializer {
         super();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
         this.logger.info(`[BUNDLE]: ${req.url}`);
 

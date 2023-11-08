@@ -25,7 +25,6 @@ export class NotifierCallbacks {
      * until we actually have something to send because otherwise we'd spam the client
      * and the client would abort the connection due to spam.
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendNotification(sessionID: string, req: any, resp: any, data: any): void {
         const splittedUrl = req.url.split("/");
         const tmpSessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];
@@ -42,7 +41,6 @@ export class NotifierCallbacks {
 
     /** Handle push/notifier/get */
     /** Handle push/notifier/getwebsocket */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getNotifier(url: string, info: any, sessionID: string): IGetBodyResponseData<any[]> {
         return this.httpResponse.emptyArrayResponse();
     }
@@ -60,7 +58,6 @@ export class NotifierCallbacks {
      * Handle client/game/profile/select
      * @returns ISelectProfileResponse
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public selectProfile(
         url: string,
         info: ISelectProfileRequestData,
@@ -71,7 +68,6 @@ export class NotifierCallbacks {
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public notify(url: string, info: any, sessionID: string): string {
         return "NOTIFY";
     }

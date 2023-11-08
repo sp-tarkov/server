@@ -274,9 +274,7 @@ export interface Props {
     foodUseTime?: number;
     foodEffectType?: string;
     StimulatorBuffs?: string;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     effects_health?: IHealthEffect[] | Record<string, Record<string, number>>;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     effects_damage?: Record<string, IEffectDamageProps>;
     MaximumNumberOfUsage?: number;
     knifeHitDelay?: number;
@@ -430,7 +428,6 @@ export interface Slot {
     _id: string;
     _parent: string;
     _props: SlotProps;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     _max_count?: number;
     _required?: boolean;
     _mergeSlotWithChildren?: boolean;
@@ -451,7 +448,6 @@ export interface StackSlot {
     _name?: string;
     _id: string;
     _parent: string;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     _max_count: number;
     _props: StackSlotProps;
     _proto: string;

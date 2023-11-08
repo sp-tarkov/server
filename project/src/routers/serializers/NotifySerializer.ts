@@ -16,7 +16,6 @@ export class NotifySerializer extends Serializer {
         super();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public override serialize(_sessionID: string, req: IncomingMessage, resp: ServerResponse, _: any): void {
         const splittedUrl = req.url.split("/");
         const tmpSessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];

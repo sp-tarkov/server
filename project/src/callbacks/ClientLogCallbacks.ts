@@ -15,7 +15,6 @@ export class ClientLogCallbacks {
     /**
      * Handle /singleplayer/log
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public clientLog(url: string, info: IClientLogRequest, sessionID: string): INullResponseData {
         this.clientLogController.clientLog(info);
         return this.httpResponse.nullResponse();

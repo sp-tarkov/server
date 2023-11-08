@@ -1017,17 +1017,14 @@ export class RepeatableQuestGenerator {
         // check for specific baseclasses which don't make sense as reward item
         // also check if the price is greater than 0; there are some items whose price can not be found
         // those are not in the game yet (e.g. AGS grenade launcher)
-        return Object.entries(this.databaseServer.getTables().templates.items).filter(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ([tpl, itemTemplate]) => {
-                // Base "Item" item has no parent, ignore it
-                if (itemTemplate._parent === "") {
-                    return false;
-                }
-
-                return this.isValidRewardItem(tpl, repeatableQuestConfig);
+        return Object.entries(this.databaseServer.getTables().templates.items).filter(([tpl, itemTemplate]) => {
+            // Base "Item" item has no parent, ignore it
+            if (itemTemplate._parent === "") {
+                return false;
             }
-        );
+
+            return this.isValidRewardItem(tpl, repeatableQuestConfig);
+        });
     }
 
     /**
@@ -1090,7 +1087,7 @@ export class RepeatableQuestGenerator {
 
         /*  in locale, these id correspond to the text of quests
             template ids -pmc  : Elimination = 616052ea3054fc0e2c24ce6e / Completion = 61604635c725987e815b1a46 / Exploration = 616041eb031af660100c9967
-            template ids -scav : Elimination = 62825ef60e88d037dc1eb428 / Completion = 628f588ebb558574b2260fe5 / Exploration = 62825ef60e88d037dc1eb42c               
+            template ids -scav : Elimination = 62825ef60e88d037dc1eb428 / Completion = 628f588ebb558574b2260fe5 / Exploration = 62825ef60e88d037dc1eb42c
         */
 
         // Get template id from config based on side and type of quest

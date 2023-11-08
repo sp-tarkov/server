@@ -22,7 +22,6 @@ export class ErrorHandler {
         this.logger.error(`Exception produced: ${err}`);
         if (err.stack) this.logger.error(`\nStacktrace:\n ${err.stack}`);
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         this.readLine.question("Press Enter to close the window", (_ans) => this.readLine.close());
         this.readLine.on("close", () => process.exit(0));
     }

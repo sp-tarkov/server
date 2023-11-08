@@ -202,7 +202,7 @@ export class BotLootCacheService {
         // Get pocket loot
         const pocketLootItems = pocketLootTemplates.filter(
             (template) =>
-                // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
+                // biome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
                 !this.isBulletOrGrenade(template._props) &&
                 !this.isMagazine(template._props) &&
                 !this.isMedicalItem(template._props) &&

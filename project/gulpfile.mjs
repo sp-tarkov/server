@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";

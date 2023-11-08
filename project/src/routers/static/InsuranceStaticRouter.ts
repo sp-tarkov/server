@@ -9,7 +9,6 @@ export class InsuranceStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/client/insurance/items/list/cost",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.insuranceCallbacks.getInsuranceCost(url, info, sessionID);
                 }

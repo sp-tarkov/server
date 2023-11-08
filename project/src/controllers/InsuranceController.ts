@@ -517,15 +517,12 @@ export class InsuranceController {
         }
 
         const options: IProcessBuyTradeRequestData = {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_items: itemsToPay,
             tid: body.tid,
             Action: "",
             type: "",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: "",
             count: 0,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_id: 0,
         };
 

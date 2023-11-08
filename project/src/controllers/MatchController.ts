@@ -91,7 +91,6 @@ export class MatchController {
     }
 
     /** Handle match/group/start_game */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public joinMatch(info: IJoinMatchRequestData, sessionId: string): IJoinMatchResult {
         const output: IJoinMatchResult = {
             maxPveCountExceeded: false,
@@ -111,7 +110,6 @@ export class MatchController {
             raidMode: "Online",
             mode: "deathmatch",
             shortid: null,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             additional_info: null,
         });
 
@@ -119,7 +117,6 @@ export class MatchController {
     }
 
     /** Handle client/match/group/status */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getGroupStatus(info: IGetGroupStatusRequestData): any {
         return {
             players: [],

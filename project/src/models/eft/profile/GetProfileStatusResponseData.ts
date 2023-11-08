@@ -15,6 +15,5 @@ export interface ProfileData {
     raidMode?: string;
     mode?: string;
     shortId?: string;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     additional_info?: any[];
 }

@@ -9,7 +9,6 @@ export class ItemEventStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/client/game/profile/items/moving",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.itemEventCallbacks.handleEvents(url, info, sessionID);
                 }

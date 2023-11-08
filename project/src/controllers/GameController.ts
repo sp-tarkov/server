@@ -369,7 +369,6 @@ export class GameController {
                 RagFair: this.httpServerHelper.getBackendUrl(),
             },
             useProtobuf: false,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             utc_time: new Date().getTime() / 1000,
             totalInGame: profile.Stats?.Eft?.TotalInGameTime ?? 0,
         };
@@ -380,7 +379,6 @@ export class GameController {
     /**
      * Handle client/server/list
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getServer(sessionId: string): IServerDetails[] {
         return [
             {
@@ -393,7 +391,6 @@ export class GameController {
     /**
      * Handle client/match/group/current
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getCurrentGroup(sessionId: string): ICurrentGroupResponse {
         return {
             squad: [],
@@ -403,7 +400,6 @@ export class GameController {
     /**
      * Handle client/checkVersion
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getValidGameVersion(sessionId: string): ICheckVersionResponse {
         return {
             isvalid: true,
@@ -414,11 +410,9 @@ export class GameController {
     /**
      * Handle client/game/keepalive
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getKeepAlive(sessionId: string): IGameKeepAliveResponse {
         return {
             msg: "OK",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             utc_time: new Date().getTime() / 1000,
         };
     }

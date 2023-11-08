@@ -19,7 +19,6 @@ export class BotCallbacks {
      * Is called by client to define each bot roles wave limit
      * @returns string
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getBotLimit(url: string, info: IEmptyRequestData, sessionID: string): string {
         const splittedUrl = url.split("/");
         const type = splittedUrl[splittedUrl.length - 1];
@@ -30,7 +29,6 @@ export class BotCallbacks {
      * Handle singleplayer/settings/bot/difficulty
      * @returns string
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getBotDifficulty(url: string, info: IEmptyRequestData, sessionID: string): string {
         const splittedUrl = url.split("/");
         const type = splittedUrl[splittedUrl.length - 2].toLowerCase();

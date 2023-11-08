@@ -144,13 +144,11 @@ export class AkiHttpListener implements IHttpListener {
     }
 
     public sendJson(resp: ServerResponse, output: string, sessionID: string): void {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         resp.writeHead(200, "OK", { "Content-Type": "application/json", "Set-Cookie": `PHPSESSID=${sessionID}` });
         resp.end(output);
     }
 
     public sendZlibJson(resp: ServerResponse, output: string, sessionID: string): void {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         resp.writeHead(200, "OK", { "Content-Type": "application/json", "Set-Cookie": `PHPSESSID=${sessionID}` });
         zlib.deflate(output, (_, buf) => resp.end(buf));
     }

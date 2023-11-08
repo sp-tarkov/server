@@ -9,7 +9,6 @@ export class CustomizationStaticRouter extends StaticRouter {
         super([
             new RouteAction(
                 "/client/trading/customization/storage",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 (url: string, info: any, sessionID: string, output: string): any => {
                     return this.customizationCallbacks.getSuits(url, info, sessionID);
                 }
