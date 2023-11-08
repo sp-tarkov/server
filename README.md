@@ -6,32 +6,40 @@ Modding framework for Escape From Tarkov
 [![Quality Gate Status](https://sonar.sp-tarkov.com/api/project_badges/measure?project=AKI&metric=alert_status&token=d3b87ff5fac591c1f49a57d4a2883c92bfe6a77f)](https://sonar.sp-tarkov.com/dashboard?id=AKI)
 
 ## Privacy
-SPT is an open source project. Your commit credentials as author of a commit will be visible by anyone. Please make sure you understand this before submitting a PR.
-Feel free to use a "fake" username and email on your commits by using the following commands:
+
+SPT is an open source project. Your commit credentials as author of a commit will be visible by anyone. Please make sure you understand this before submitting a PR. Feel free to use a "fake" username and email on your commits by using the following commands:
+
 ```bash
 git config --local user.name "USERNAME"
 git config --local user.email "USERNAME@SOMETHING.com"
 ```
 
-## Requirements
+## Project Requirements
 
-- NodeJS (with npm)
-- Visual Studio Code
-- git [LFS](https://git-lfs.github.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Node.js](https://nodejs.org/en/) via [nvm](https://github.com/coreybutler/nvm-windows)
+- [git](https://git-scm.com/downloads) and git-lfs
+- [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) VSC extension
 
-## Observations
+## Important Notes
 
-- The server was tested to work with **NodeJS 18.15.0**, if you are using a different version and experiencing difficulties change it before looking for support
+- The server was built and tested with **Node.ca 18.15.0**. It will not function with older versions and there be unexpected issues using a newer version.
 - If you are updating a branch you've had for some time, run `npm ci` before running any tasks. This will run the clean and install target from npm.
-- You can debug your mods using the server, just copy your mod files into the `user/mods` folder and put breakpoints on the **JS** files. **DO NOT** contact the dev team for support on this.
+- If you plan to debug mods using the server, copy your mod files into the `user/mods` folder (run server once for these folders to be created).
 
-## Pulling
-- Run `git lfs fetch` and `git lfs pull` to acquire loot files
+## Pulling Repository
+
+- Run `git clone https://dev.sp-tarkov.com/SPT-AKI/Server.git spt-server` to clone the code repository into a `spt-server` directory.
+- Run `git lfs fetch` then `git lfs pull` to acquire large files.
 
 ## Setup
 
-1. Visual Studio Code > File > Open Workspace... > `project\Server.code-workspace`
-2. Visual Studio Code > Terminal > Run Task... > npm > npm: Install
+1. Clone the repository.
+2. Open the `project/Server.code-workspace` file in Visual Studio Code (VSC).
+3. Install the [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) VSC extension.
+5. Run `nvm use 18.15.0` (or install that version directly)
+6. Run `npm install`
+7. Run `npm run run:debug` to start the server
 
 ## Build
 
@@ -336,6 +344,6 @@ Player profile is stored in SPT folder as a JSON file, allowing for changes to p
 - TypeScript
 	- Majority of EFT request/response classes passed from client to server have been mapped
 - Unit Tests
-	- Supports tests via jest
+	- Supports tests via Vitest
 - Dependency injection
 - Config files accessible from `Aki_Data\Server\configs` / `project\assets\configs`

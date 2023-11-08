@@ -5,18 +5,26 @@
         }
     ],
     "extensions": {
-        "recommendations": ["dbaeumer.vscode-eslint"],
+        "recommendations": [
+            "biomejs.biome"
+        ]
     },
     "settings": {
         "window.title": "SPT-AKI Server",
-        "[typescript]": {
-            "editor.formatOnSave": true,
-            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-        },
-        "eslint.validate": ["typescript"],
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll.eslint": true
+            "source.organizeImports.biome": true,
+            "quickfix.biome": true
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "biomejs.biome",
+            "editor.formatOnSave": true
+        },
+        "[json]": {
+            "editor.defaultFormatter": "vscode.json-language-features",
+            "editor.detectIndentation": false,
+            "editor.tabSize": 4,
+            "editor.insertSpaces": true,
+            "editor.formatOnSave": true
         }
-    },
+    }
 }

@@ -30,13 +30,50 @@
                 "useSimplifiedLogicExpression": "warn",
                 "useOptionalChain": "warn"
             }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120
+    },
+    "javascript": {
+        "formatter": {
+            "enabled": true,
+            "quoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "trailingComma": "es5",
+            "semicolons": "always",
+            "arrowParentheses": "always",
+            "indentStyle": "space",
+            "indentWidth": 4,
+            "lineWidth": 120
         },
+        "parser": {
+            "unsafeParameterDecoratorsEnabled": true
+        }
+    },
+    "files": {
         "ignore": [
             "**/*.js",
             "**/*.json",
-            "**/*.mjs",
+            "**/*.d.ts",
             "**/Dockerfile.*",
-            "**/node_modules/**/*"
+            "**/.git/**/*",
+            "**/.vscode/**/*",
+            "**/node_modules/**/*",
+            "**/build/**/*",
+            "**/obj/**/*",
+            "**/dist/**/*",
+            "**/user/**/*",
+            "**/logs/**/*",
+            "**/assets/**/*",
+            "**/Aki_Data/**/*",
+            "**/types/**/*",
+            "**/tests/__cache__/**/*",
+            "**/tests/__coverage__/**/*"
         ]
-    } 
+    }
 }
