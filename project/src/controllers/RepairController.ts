@@ -15,8 +15,7 @@ import { PaymentService } from "@spt-aki/services/PaymentService";
 import { RepairService } from "@spt-aki/services/RepairService";
 
 @injectable()
-export class RepairController
-{
+export class RepairController {
     protected repairConfig: IRepairConfig;
 
     constructor(
@@ -28,8 +27,7 @@ export class RepairController
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("RepairHelper") protected repairHelper: RepairHelper,
         @inject("RepairService") protected repairService: RepairService
-    )
-    { }
+    ) {}
 
     /**
      * Handle TraderRepair event
@@ -39,19 +37,27 @@ export class RepairController
      * @param pmcData player profile
      * @returns item event router action
      */
-    public traderRepair(sessionID: string, body: ITraderRepairActionDataRequest, pmcData: IPmcData): IItemEventRouterResponse
-    {
+    public traderRepair(
+        sessionID: string,
+        body: ITraderRepairActionDataRequest,
+        pmcData: IPmcData
+    ): IItemEventRouterResponse {
         const output = this.eventOutputHolder.getOutput(sessionID);
-        
+
         // find the item to repair
-        for (const repairItem of body.repairItems)
-        {
+        for (const repairItem of body.repairItems) {
             const repairDetails = this.repairService.repairItemByTrader(sessionID, pmcData, repairItem, body.tid);
 
-            this.repairService.payForRepair(sessionID, pmcData, repairItem._id, repairDetails.repairCost, body.tid, output);
+            this.repairService.payForRepair(
+                sessionID,
+                pmcData,
+                repairItem._id,
+                repairDetails.repairCost,
+                body.tid,
+                output
+            );
 
-            if (output.warnings.length > 0)
-            {
+            if (output.warnings.length > 0) {
                 return output;
             }
 
@@ -73,12 +79,21 @@ export class RepairController
      * @param pmcData player profile
      * @returns item event router action
      */
-    public repairWithKit(sessionID: string, body: IRepairActionDataRequest, pmcData: IPmcData): IItemEventRouterResponse
-    {
+    public repairWithKit(
+        sessionID: string,
+        body: IRepairActionDataRequest,
+        pmcData: IPmcData
+    ): IItemEventRouterResponse {
         const output = this.eventOutputHolder.getOutput(sessionID);
 
         // repair item
-        const repairDetails = this.repairService.repairItemByKit(sessionID, pmcData, body.repairKitsInfo, body.target, output);
+        const repairDetails = this.repairService.repairItemByKit(
+            sessionID,
+            pmcData,
+            body.repairKitsInfo,
+            body.target,
+            output
+        );
 
         this.repairService.addBuffToItem(repairDetails, pmcData);
 

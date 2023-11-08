@@ -14,8 +14,7 @@ import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchase
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class TraderController
-{
+export class TraderController {
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
@@ -23,29 +22,25 @@ export class TraderController
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("TraderAssortService") protected traderAssortService: TraderAssortService,
-        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService: TraderPurchasePersisterService,
+        @inject("TraderPurchasePersisterService")
+        protected traderPurchasePersisterService: TraderPurchasePersisterService,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
         @inject("JsonUtil") protected jsonUtil: JsonUtil
-    )
-    { }
+    ) {}
 
     /**
      * Runs when onLoad event is fired
      * Iterate over traders, ensure an unmolested copy of their assorts is stored in traderAssortService
      * Store timestamp of next assort refresh in nextResupply property of traders .base object
      */
-    public load(): void
-    {
-        for (const traderId in this.databaseServer.getTables().traders)
-        {
-            if (traderId === "ragfair" || traderId === Traders.LIGHTHOUSEKEEPER)
-            {
+    public load(): void {
+        for (const traderId in this.databaseServer.getTables().traders) {
+            if (traderId === "ragfair" || traderId === Traders.LIGHTHOUSEKEEPER) {
                 continue;
             }
 
-            if (traderId === Traders.FENCE)
-            {
+            if (traderId === Traders.FENCE) {
                 this.fenceBaseAssortGenerator.generateFenceBaseAssorts();
                 this.fenceService.generateFenceAssorts();
                 continue;
@@ -54,8 +49,7 @@ export class TraderController
             const trader = this.databaseServer.getTables().traders[traderId];
 
             // Create dict of trader assorts on server start
-            if (!this.traderAssortService.getPristineTraderAssort(traderId))
-            {
+            if (!this.traderAssortService.getPristineTraderAssort(traderId)) {
                 const assorts = this.jsonUtil.clone(trader.assort);
                 this.traderAssortService.setPristineTraderAssort(traderId, assorts);
             }
@@ -73,19 +67,14 @@ export class TraderController
      * Fence is handled slightly differently
      * @returns has run
      */
-    public update(): boolean
-    {
-        for (const traderId in this.databaseServer.getTables().traders)
-        {
-            if (traderId === "ragfair" || traderId === Traders.LIGHTHOUSEKEEPER)
-            {
+    public update(): boolean {
+        for (const traderId in this.databaseServer.getTables().traders) {
+            if (traderId === "ragfair" || traderId === Traders.LIGHTHOUSEKEEPER) {
                 continue;
             }
 
-            if (traderId === Traders.FENCE)
-            {
-                if (this.fenceService.needsPartialRefresh())
-                {
+            if (traderId === Traders.FENCE) {
+                if (this.fenceService.needsPartialRefresh()) {
                     this.fenceService.performPartialRefresh();
                 }
 
@@ -93,10 +82,9 @@ export class TraderController
             }
 
             const trader = this.databaseServer.getTables().traders[traderId];
-            
+
             // trader needs to be refreshed
-            if (this.traderAssortHelper.traderAssortsHaveExpired(traderId))
-            {
+            if (this.traderAssortHelper.traderAssortsHaveExpired(traderId)) {
                 this.traderAssortHelper.resetExpiredTrader(trader);
 
                 // Reset purchase data per trader as they have independent reset times
@@ -113,26 +101,22 @@ export class TraderController
      * @param sessionID Session id
      * @returns array if ITraderBase objects
      */
-    public getAllTraders(sessionID: string): ITraderBase[]
-    {
+    public getAllTraders(sessionID: string): ITraderBase[] {
         const traders: ITraderBase[] = [];
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
-        for (const traderID in this.databaseServer.getTables().traders)
-        {
-            if (this.databaseServer.getTables().traders[traderID].base._id === "ragfair")
-            {
+        for (const traderID in this.databaseServer.getTables().traders) {
+            if (this.databaseServer.getTables().traders[traderID].base._id === "ragfair") {
                 continue;
             }
 
             traders.push(this.traderHelper.getTrader(traderID, sessionID));
 
-            if (pmcData.Info)
-            {
+            if (pmcData.Info) {
                 this.traderHelper.lvlUp(traderID, pmcData);
             }
         }
 
-        return traders.sort((a, b) => this.sortByTraderId(a,b));
+        return traders.sort((a, b) => this.sortByTraderId(a, b));
     }
 
     /**
@@ -141,15 +125,12 @@ export class TraderController
      * @param traderB Second trader to compare
      * @returns 1,-1 or 0
      */
-    protected sortByTraderId(traderA: ITraderBase, traderB: ITraderBase): number
-    {
-        if (traderA._id > traderB._id)
-        {
+    protected sortByTraderId(traderA: ITraderBase, traderB: ITraderBase): number {
+        if (traderA._id > traderB._id) {
             return 1;
         }
 
-        if (traderA._id < traderB._id)
-        {
+        if (traderA._id < traderB._id) {
             return -1;
         }
 
@@ -157,14 +138,12 @@ export class TraderController
     }
 
     /** Handle client/trading/api/getTrader */
-    public getTrader(sessionID: string, traderID: string): ITraderBase
-    {
+    public getTrader(sessionID: string, traderID: string): ITraderBase {
         return this.traderHelper.getTrader(sessionID, traderID);
     }
 
     /** Handle client/trading/api/getTraderAssort */
-    public getAssort(sessionId: string, traderId: string): ITraderAssort
-    {
+    public getAssort(sessionId: string, traderId: string): ITraderAssort {
         return this.traderAssortHelper.getAssort(sessionId, traderId);
     }
 }

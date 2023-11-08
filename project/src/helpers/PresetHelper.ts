@@ -5,30 +5,24 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class PresetHelper
-{
+export class PresetHelper {
     protected lookup: Record<string, string[]> = {};
     protected defaultPresets: Record<string, IPreset>;
 
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer
-    )
-    { }
+    ) {}
 
-    public hydratePresetStore(input: Record<string, string[]>): void
-    {
+    public hydratePresetStore(input: Record<string, string[]>): void {
         this.lookup = input;
     }
 
-    public getDefaultPresets(): Record<string, IPreset>
-    {
-        if (!this.defaultPresets)
-        {
+    public getDefaultPresets(): Record<string, IPreset> {
+        if (!this.defaultPresets) {
             this.defaultPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets)
-                .filter(x => x._encyclopedia !== undefined)
-                .reduce((acc, cur) =>
-                {
+                .filter((x) => x._encyclopedia !== undefined)
+                .reduce((acc, cur) => {
                     acc[cur._id] = cur;
                     return acc;
                 }, {});
@@ -37,33 +31,27 @@ export class PresetHelper
         return this.defaultPresets;
     }
 
-    public isPreset(id: string): boolean
-    {
+    public isPreset(id: string): boolean {
         return id in this.databaseServer.getTables().globals.ItemPresets;
     }
 
-    public hasPreset(templateId: string): boolean
-    {
+    public hasPreset(templateId: string): boolean {
         return templateId in this.lookup;
     }
 
-    public getPreset(id: string): IPreset
-    {
+    public getPreset(id: string): IPreset {
         return this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[id]);
     }
 
-    public getPresets(templateId: string): IPreset[]
-    {
-        if (!this.hasPreset(templateId))
-        {
+    public getPresets(templateId: string): IPreset[] {
+        if (!this.hasPreset(templateId)) {
             return [];
         }
 
         const presets = [];
         const ids = this.lookup[templateId];
 
-        for (const id of ids)
-        {
+        for (const id of ids) {
             presets.push(this.getPreset(id));
         }
 
@@ -75,19 +63,15 @@ export class PresetHelper
      * @param templateId Weapon id to get preset for
      * @returns Null if no default preset, otherwise IPreset
      */
-    public getDefaultPreset(templateId: string): IPreset
-    {
-        if (!this.hasPreset(templateId))
-        {
+    public getDefaultPreset(templateId: string): IPreset {
+        if (!this.hasPreset(templateId)) {
             return null;
         }
 
         const allPresets = this.getPresets(templateId);
 
-        for (const preset of allPresets)
-        {
-            if ("_encyclopedia" in preset)
-            {
+        for (const preset of allPresets) {
+            if ("_encyclopedia" in preset) {
                 return preset;
             }
         }
@@ -95,16 +79,12 @@ export class PresetHelper
         return allPresets[0];
     }
 
-    public getBaseItemTpl(presetId: string): string
-    {
-        if (this.isPreset(presetId))
-        {
+    public getBaseItemTpl(presetId: string): string {
+        if (this.isPreset(presetId)) {
             const preset = this.getPreset(presetId);
 
-            for (const item of preset._items)
-            {
-                if (preset._parent === item._id)
-                {
+            for (const item of preset._items) {
+                if (preset._parent === item._id) {
                     return item._tpl;
                 }
             }

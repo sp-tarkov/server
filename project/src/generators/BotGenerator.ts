@@ -8,9 +8,12 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import {
     Common,
-    IBaseJsonSkills, IBaseSkill, IBotBase, Info,
     Health as PmcHealth,
-    Skills as botSkills
+    IBaseJsonSkills,
+    IBaseSkill,
+    IBotBase,
+    Info,
+    Skills as botSkills,
 } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Appearance, Health, IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
 import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
@@ -32,8 +35,7 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
-export class BotGenerator
-{
+export class BotGenerator {
     protected botConfig: IBotConfig;
     protected pmcConfig: IPmcConfig;
 
@@ -54,8 +56,7 @@ export class BotGenerator
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
@@ -65,10 +66,9 @@ export class BotGenerator
      * @param role e.g. assault / pmcbot
      * @param difficulty easy/normal/hard/impossible
      * @param botTemplate base bot template to use  (e.g. assault/pmcbot)
-     * @returns 
+     * @returns
      */
-    public generatePlayerScav(sessionId: string, role: string, difficulty: string, botTemplate: IBotType): IBotBase
-    {
+    public generatePlayerScav(sessionId: string, role: string, difficulty: string, botTemplate: IBotType): IBotBase {
         let bot = this.getCloneOfBotBase();
         bot.Info.Settings.BotDifficulty = difficulty;
         bot.Info.Settings.Role = role;
@@ -82,7 +82,7 @@ export class BotGenerator
             botRelativeLevelDeltaMax: 0,
             botCountToGenerate: 1,
             botDifficulty: difficulty,
-            isPlayerScav: true
+            isPlayerScav: true,
         };
 
         bot = this.generateBot(sessionId, bot, botTemplate, botGenDetails);
@@ -93,30 +93,25 @@ export class BotGenerator
     /**
      * Create x number of bots of the type/side/difficulty defined in botGenerationDetails
      * @param sessionId Session id
-     * @param botGenerationDetails details on how to generate bots 
+     * @param botGenerationDetails details on how to generate bots
      * @returns array of bots
      */
-    public prepareAndGenerateBots(
-        sessionId: string,
-        botGenerationDetails: BotGenerationDetails): IBotBase[]
-    {
+    public prepareAndGenerateBots(sessionId: string, botGenerationDetails: BotGenerationDetails): IBotBase[] {
         const output: IBotBase[] = [];
-        for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
-        {
+        for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++) {
             let bot = this.getCloneOfBotBase();
 
             bot.Info.Settings.Role = botGenerationDetails.role;
             bot.Info.Side = botGenerationDetails.side;
             bot.Info.Settings.BotDifficulty = botGenerationDetails.botDifficulty;
-    
+
             // Get raw json data for bot (Cloned)
-            const botJsonTemplate = this.jsonUtil.clone(this.botHelper.getBotTemplate(
-                (botGenerationDetails.isPmc)
-                    ? bot.Info.Side
-                    : botGenerationDetails.role));
+            const botJsonTemplate = this.jsonUtil.clone(
+                this.botHelper.getBotTemplate(botGenerationDetails.isPmc ? bot.Info.Side : botGenerationDetails.role)
+            );
 
             bot = this.generateBot(sessionId, bot, botJsonTemplate, botGenerationDetails);
-    
+
             output.push(bot);
         }
 
@@ -127,8 +122,7 @@ export class BotGenerator
      * Get a clone of the database\bots\base.json file
      * @returns IBotBase object
      */
-    protected getCloneOfBotBase(): IBotBase
-    {
+    protected getCloneOfBotBase(): IBotBase {
         return this.jsonUtil.clone(this.databaseServer.getTables().bots.base);
     }
 
@@ -140,33 +134,54 @@ export class BotGenerator
      * @param botGenerationDetails details on how to generate the bot
      * @returns IBotBase object
      */
-    protected generateBot(sessionId: string, bot: IBotBase, botJsonTemplate: IBotType, botGenerationDetails: BotGenerationDetails): IBotBase
-    {
+    protected generateBot(
+        sessionId: string,
+        bot: IBotBase,
+        botJsonTemplate: IBotType,
+        botGenerationDetails: BotGenerationDetails
+    ): IBotBase {
         const botRole = botGenerationDetails.role.toLowerCase();
-        const botLevel = this.botLevelGenerator.generateBotLevel(botJsonTemplate.experience.level, botGenerationDetails, bot);
+        const botLevel = this.botLevelGenerator.generateBotLevel(
+            botJsonTemplate.experience.level,
+            botGenerationDetails,
+            bot
+        );
 
-        if (!botGenerationDetails.isPlayerScav)
-        {
-            this.botEquipmentFilterService.filterBotEquipment(sessionId, botJsonTemplate, botLevel.level, botGenerationDetails);
+        if (!botGenerationDetails.isPlayerScav) {
+            this.botEquipmentFilterService.filterBotEquipment(
+                sessionId,
+                botJsonTemplate,
+                botLevel.level,
+                botGenerationDetails
+            );
         }
 
-        bot.Info.Nickname = this.generateBotNickname(botJsonTemplate, botGenerationDetails.isPlayerScav, botRole, sessionId);
+        bot.Info.Nickname = this.generateBotNickname(
+            botJsonTemplate,
+            botGenerationDetails.isPlayerScav,
+            botRole,
+            sessionId
+        );
 
         const skipChristmasItems = !this.seasonalEventService.christmasEventEnabled();
-        if (skipChristmasItems)
-        {
-            this.seasonalEventService.removeChristmasItemsFromBotInventory(botJsonTemplate.inventory, botGenerationDetails.role);
+        if (skipChristmasItems) {
+            this.seasonalEventService.removeChristmasItemsFromBotInventory(
+                botJsonTemplate.inventory,
+                botGenerationDetails.role
+            );
         }
 
         // Remove hideout data if bot is not a PMC or pscav
-        if (!(botGenerationDetails.isPmc || botGenerationDetails.isPlayerScav))
-        {
+        if (!(botGenerationDetails.isPmc || botGenerationDetails.isPlayerScav)) {
             bot.Hideout = null;
         }
 
         bot.Info.Experience = botLevel.exp;
         bot.Info.Level = botLevel.level;
-        bot.Info.Settings.Experience = this.randomUtil.getInt(botJsonTemplate.experience.reward.min, botJsonTemplate.experience.reward.max);
+        bot.Info.Settings.Experience = this.randomUtil.getInt(
+            botJsonTemplate.experience.reward.min,
+            botJsonTemplate.experience.reward.max
+        );
         bot.Info.Settings.StandingForKill = botJsonTemplate.experience.standingForKill;
         bot.Info.Voice = this.randomUtil.getArrayValue(botJsonTemplate.appearance.voice);
         bot.Health = this.generateHealth(botJsonTemplate.health, bot.Info.Side === "Savage");
@@ -174,10 +189,15 @@ export class BotGenerator
 
         this.setBotAppearance(bot, botJsonTemplate.appearance, botGenerationDetails);
 
-        bot.Inventory = this.botInventoryGenerator.generateInventory(sessionId, botJsonTemplate, botRole, botGenerationDetails.isPmc, botLevel.level);
+        bot.Inventory = this.botInventoryGenerator.generateInventory(
+            sessionId,
+            botJsonTemplate,
+            botRole,
+            botGenerationDetails.isPmc,
+            botLevel.level
+        );
 
-        if (this.botHelper.isBotPmc(botRole))
-        {
+        if (this.botHelper.isBotPmc(botRole)) {
             this.getRandomisedGameVersionAndCategory(bot.Info);
             bot = this.generateDogtag(bot);
             bot.Info.IsStreamerModeAvailable = true; // Set to true so client patches can pick it up later - client sometimes alters botrole to assaultGroup
@@ -199,8 +219,11 @@ export class BotGenerator
      * @param botGenerationDetails Generation details
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
-    {
+    protected setBotAppearance(
+        bot: IBotBase,
+        appearance: Appearance,
+        botGenerationDetails: BotGenerationDetails
+    ): void {
         bot.Customization.Head = this.randomUtil.getArrayValue(appearance.head);
         bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
         bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
@@ -209,44 +232,44 @@ export class BotGenerator
 
     /**
      * Create a bot nickname
-     * @param botJsonTemplate x.json from database 
+     * @param botJsonTemplate x.json from database
      * @param isPlayerScav Will bot be player scav
      * @param botRole role of bot e.g. assault
      * @returns Nickname for bot
      */
-    protected generateBotNickname(botJsonTemplate: IBotType, isPlayerScav: boolean, botRole: string, sessionId: string): string
-    {
-        let name = `${this.randomUtil.getArrayValue(botJsonTemplate.firstName)} ${this.randomUtil.getArrayValue(botJsonTemplate.lastName) || ""}`;
+    protected generateBotNickname(
+        botJsonTemplate: IBotType,
+        isPlayerScav: boolean,
+        botRole: string,
+        sessionId: string
+    ): string {
+        let name = `${this.randomUtil.getArrayValue(botJsonTemplate.firstName)} ${
+            this.randomUtil.getArrayValue(botJsonTemplate.lastName) || ""
+        }`;
         name = name.trim();
         const playerProfile = this.profileHelper.getPmcProfile(sessionId);
-        
+
         // Simulate bot looking like a Player scav with the pmc name in brackets
-        if (botRole === "assault" && this.randomUtil.getChance100(this.botConfig.chanceAssaultScavHasPlayerScavName))
-        {
-            if (isPlayerScav)
-            {
+        if (botRole === "assault" && this.randomUtil.getChance100(this.botConfig.chanceAssaultScavHasPlayerScavName)) {
+            if (isPlayerScav) {
                 return name;
             }
 
             const pmcNames = [
                 ...this.databaseServer.getTables().bots.types["usec"].firstName,
-                ...this.databaseServer.getTables().bots.types["bear"].firstName
+                ...this.databaseServer.getTables().bots.types["bear"].firstName,
             ];
 
             return `${name} (${this.randomUtil.getArrayValue(pmcNames)})`;
         }
 
-        if (this.botConfig.showTypeInNickname && !isPlayerScav)
-        {
+        if (this.botConfig.showTypeInNickname && !isPlayerScav) {
             name += ` ${botRole}`;
         }
 
         // If bot name matches current players name, chance to add localised prefix to name
-        if (name.toLowerCase() === playerProfile.Info.Nickname.toLowerCase())
-        {
-            if (this.randomUtil.getChance100(this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance))
-            {
-
+        if (name.toLowerCase() === playerProfile.Info.Nickname.toLowerCase()) {
+            if (this.randomUtil.getChance100(this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance)) {
                 const prefix = this.localisationService.getRandomTextThatMatchesPartialKey("pmc-name_prefix_");
                 name = `${prefix} ${name}`;
             }
@@ -259,9 +282,11 @@ export class BotGenerator
      * Log the number of PMCs generated to the debug console
      * @param output Generated bot array, ready to send to client
      */
-    protected logPmcGeneratedCount(output: IBotBase[]): void
-    {
-        const pmcCount = output.reduce((acc, cur) => cur.Info.Side === "Bear" || cur.Info.Side === "Usec" ? ++acc : acc, 0);
+    protected logPmcGeneratedCount(output: IBotBase[]): void {
+        const pmcCount = output.reduce(
+            (acc, cur) => (cur.Info.Side === "Bear" || cur.Info.Side === "Usec" ? ++acc : acc),
+            0
+        );
         this.logger.debug(`Generated ${output.length} total bots. Replaced ${pmcCount} with PMCs`);
     }
 
@@ -271,70 +296,67 @@ export class BotGenerator
      * @param playerScav Is a pscav bot being generated
      * @returns PmcHealth object
      */
-    protected generateHealth(healthObj: Health, playerScav = false): PmcHealth
-    {
-        const bodyParts = (playerScav)
-            ? healthObj.BodyParts[0]
-            : this.randomUtil.getArrayValue(healthObj.BodyParts);
+    protected generateHealth(healthObj: Health, playerScav = false): PmcHealth {
+        const bodyParts = playerScav ? healthObj.BodyParts[0] : this.randomUtil.getArrayValue(healthObj.BodyParts);
 
         const newHealth: PmcHealth = {
             Hydration: {
                 Current: this.randomUtil.getInt(healthObj.Hydration.min, healthObj.Hydration.max),
-                Maximum:  healthObj.Hydration.max
+                Maximum: healthObj.Hydration.max,
             },
             Energy: {
                 Current: this.randomUtil.getInt(healthObj.Energy.min, healthObj.Energy.max),
-                Maximum: healthObj.Energy.max
+                Maximum: healthObj.Energy.max,
             },
             Temperature: {
                 Current: this.randomUtil.getInt(healthObj.Temperature.min, healthObj.Temperature.max),
-                Maximum: healthObj.Temperature.max
+                Maximum: healthObj.Temperature.max,
             },
             BodyParts: {
                 Head: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.Head.min, bodyParts.Head.max),
-                        Maximum: Math.round(bodyParts.Head.max)
-                    }
+                        Maximum: Math.round(bodyParts.Head.max),
+                    },
                 },
                 Chest: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.Chest.min, bodyParts.Chest.max),
-                        Maximum: Math.round(bodyParts.Chest.max)
-                    }
+                        Maximum: Math.round(bodyParts.Chest.max),
+                    },
                 },
                 Stomach: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.Stomach.min, bodyParts.Stomach.max),
-                        Maximum: Math.round(bodyParts.Stomach.max)
-                    }
+                        Maximum: Math.round(bodyParts.Stomach.max),
+                    },
                 },
                 LeftArm: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.LeftArm.min, bodyParts.LeftArm.max),
-                        Maximum: Math.round(bodyParts.LeftArm.max)
-                    }
+                        Maximum: Math.round(bodyParts.LeftArm.max),
+                    },
                 },
                 RightArm: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.RightArm.min, bodyParts.RightArm.max),
-                        Maximum: Math.round(bodyParts.RightArm.max)
-                    }
+                        Maximum: Math.round(bodyParts.RightArm.max),
+                    },
                 },
                 LeftLeg: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.LeftLeg.min, bodyParts.LeftLeg.max),
-                        Maximum: Math.round(bodyParts.LeftLeg.max)
-                    }
+                        Maximum: Math.round(bodyParts.LeftLeg.max),
+                    },
                 },
                 RightLeg: {
                     Health: {
                         Current: this.randomUtil.getInt(bodyParts.RightLeg.min, bodyParts.RightLeg.max),
-                        Maximum: Math.round(bodyParts.RightLeg.max)
-                    }
-                }
+                        Maximum: Math.round(bodyParts.RightLeg.max),
+                    },
+                },
             },
-            UpdateTime: this.timeUtil.getTimestamp()
+            UpdateTime: this.timeUtil.getTimestamp(),
         };
 
         return newHealth;
@@ -343,14 +365,13 @@ export class BotGenerator
     /**
      * Get a bots skills with randomsied progress value between the min and max values
      * @param botSkills Skills that should have their progress value randomised
-     * @returns 
+     * @returns
      */
-    protected generateSkills(botSkills: IBaseJsonSkills): botSkills
-    {
+    protected generateSkills(botSkills: IBaseJsonSkills): botSkills {
         const skillsToReturn: botSkills = {
             Common: this.getSkillsWithRandomisedProgressValue(botSkills.Common, true),
             Mastering: this.getSkillsWithRandomisedProgressValue(botSkills.Mastering, false),
-            Points: 0
+            Points: 0,
         };
 
         return skillsToReturn;
@@ -362,37 +383,37 @@ export class BotGenerator
      * @param isCommonSkills Are the skills 'common' skills
      * @returns Skills with randomised progress values as an array
      */
-    protected getSkillsWithRandomisedProgressValue(skills: Record<string, IBaseSkill>, isCommonSkills: boolean): IBaseSkill[]
-    {
-        if (Object.keys(skills ?? []).length === 0)
-        {
+    protected getSkillsWithRandomisedProgressValue(
+        skills: Record<string, IBaseSkill>,
+        isCommonSkills: boolean
+    ): IBaseSkill[] {
+        if (Object.keys(skills ?? []).length === 0) {
             return [];
         }
 
-        return Object.keys(skills).map((skillKey): IBaseSkill =>
-        {
-            // Get skill from dict, skip if not found
-            const skill = skills[skillKey];
-            if (!skill)
-            {
-                return null;
-            }
-    
-            // All skills have id and progress props
-            const skillToAdd: IBaseSkill = {
-                Id: skillKey,
-                Progress: this.randomUtil.getInt(skill.min, skill.max)
-            };
-    
-            // Common skills have additional props
-            if (isCommonSkills)
-            {
-                (skillToAdd as Common).PointsEarnedDuringSession = 0;
-                (skillToAdd as Common).LastAccess = 0;
-            }
-    
-            return skillToAdd;
-        }).filter(x => x !== null);
+        return Object.keys(skills)
+            .map((skillKey): IBaseSkill => {
+                // Get skill from dict, skip if not found
+                const skill = skills[skillKey];
+                if (!skill) {
+                    return null;
+                }
+
+                // All skills have id and progress props
+                const skillToAdd: IBaseSkill = {
+                    Id: skillKey,
+                    Progress: this.randomUtil.getInt(skill.min, skill.max),
+                };
+
+                // Common skills have additional props
+                if (isCommonSkills) {
+                    (skillToAdd as Common).PointsEarnedDuringSession = 0;
+                    (skillToAdd as Common).LastAccess = 0;
+                }
+
+                return skillToAdd;
+            })
+            .filter((x) => x !== null);
     }
 
     /**
@@ -400,8 +421,7 @@ export class BotGenerator
      * @param bot bot to update
      * @returns updated IBotBase object
      */
-    protected generateId(bot: IBotBase): IBotBase
-    {
+    protected generateId(bot: IBotBase): IBotBase {
         const botId = this.hashUtil.generate();
 
         bot._id = botId;
@@ -410,31 +430,26 @@ export class BotGenerator
         return bot;
     }
 
-    protected generateInventoryID(profile: IBotBase): IBotBase
-    {
+    protected generateInventoryID(profile: IBotBase): IBotBase {
         const defaultInventory = "55d7217a4bdc2d86028b456d";
         const itemsByParentHash: Record<string, Item[]> = {};
         const inventoryItemHash: Record<string, Item> = {};
-        
+
         // Generate inventoryItem list
         let inventoryId = "";
-        for (const item of profile.Inventory.items)
-        {
+        for (const item of profile.Inventory.items) {
             inventoryItemHash[item._id] = item;
 
-            if (item._tpl === defaultInventory)
-            {
+            if (item._tpl === defaultInventory) {
                 inventoryId = item._id;
                 continue;
             }
 
-            if (!("parentId" in item))
-            {
+            if (!("parentId" in item)) {
                 continue;
             }
 
-            if (!(item.parentId in itemsByParentHash))
-            {
+            if (!(item.parentId in itemsByParentHash)) {
                 itemsByParentHash[item.parentId] = [];
             }
 
@@ -447,10 +462,8 @@ export class BotGenerator
         profile.Inventory.equipment = newInventoryId;
 
         // update inventoryItem id
-        if (inventoryId in itemsByParentHash)
-        {
-            for (const item of itemsByParentHash[inventoryId])
-            {
+        if (inventoryId in itemsByParentHash) {
+            for (const item of itemsByParentHash[inventoryId]) {
                 item.parentId = newInventoryId;
             }
         }
@@ -464,10 +477,8 @@ export class BotGenerator
      * Chooses account type (default, Sherpa, etc)
      * @param botInfo bot info object to update
      */
-    protected getRandomisedGameVersionAndCategory(botInfo: Info): void
-    {
-        if (botInfo.Nickname.toLowerCase() === "nikita")
-        {
+    protected getRandomisedGameVersionAndCategory(botInfo: Info): void {
+        if (botInfo.Nickname.toLowerCase() === "nikita") {
             botInfo.GameVersion = "edge_of_darkness";
             botInfo.MemberCategory = MemberCategory.DEVELOPER;
 
@@ -475,7 +486,9 @@ export class BotGenerator
         }
 
         botInfo.GameVersion = this.weightedRandomHelper.getWeightedValue(this.pmcConfig.gameVersionWeight);
-        botInfo.MemberCategory = Number.parseInt(this.weightedRandomHelper.getWeightedValue(this.pmcConfig.accountTypeWeight));
+        botInfo.MemberCategory = Number.parseInt(
+            this.weightedRandomHelper.getWeightedValue(this.pmcConfig.accountTypeWeight)
+        );
     }
 
     /**
@@ -483,8 +496,7 @@ export class BotGenerator
      * @param bot bot to add dogtag to
      * @returns Bot with dogtag added
      */
-    protected generateDogtag(bot: IBotBase): IBotBase
-    {
+    protected generateDogtag(bot: IBotBase): IBotBase {
         const upd: Upd = {
             SpawnedInSession: true,
             Dogtag: {
@@ -493,22 +505,22 @@ export class BotGenerator
                 Nickname: bot.Info.Nickname,
                 Side: bot.Info.Side,
                 Level: bot.Info.Level,
-                Time: (new Date().toISOString()),
+                Time: new Date().toISOString(),
                 Status: "Killed by ",
                 KillerAccountId: "Unknown",
                 KillerProfileId: "Unknown",
                 KillerName: "Unknown",
-                WeaponName: "Unknown"
-            }
+                WeaponName: "Unknown",
+            },
         };
 
         const inventoryItem: Item = {
             _id: this.hashUtil.generate(),
-            _tpl: ((bot.Info.Side === "Usec") ? BaseClasses.DOG_TAG_USEC : BaseClasses.DOG_TAG_BEAR),
+            _tpl: bot.Info.Side === "Usec" ? BaseClasses.DOG_TAG_USEC : BaseClasses.DOG_TAG_BEAR,
             parentId: bot.Inventory.equipment,
             slotId: "Dogtag",
             location: undefined,
-            upd: upd
+            upd: upd,
         };
 
         bot.Inventory.items.push(inventoryItem);

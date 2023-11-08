@@ -1,7 +1,6 @@
-export interface IInsuredItemsData 
-{
-    id: string
-    durability?: number
-    maxDurability?: number
-    hits?: number
+export interface IInsuredItemsData {
+    id: string;
+    durability?: number;
+    maxDurability?: number;
+    hits?: number;
 }

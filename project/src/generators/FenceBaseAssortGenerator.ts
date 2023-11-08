@@ -16,8 +16,7 @@ import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 
 @injectable()
-export class FenceBaseAssortGenerator
-{
+export class FenceBaseAssortGenerator {
     protected traderConfig: ITraderConfig;
 
     constructor(
@@ -28,60 +27,55 @@ export class FenceBaseAssortGenerator
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
     /**
      * Create base fence assorts dynamically and store in db
      */
-    public generateFenceBaseAssorts(): void
-    {
+    public generateFenceBaseAssorts(): void {
         const blockedSeasonalItems = this.seasonalEventService.getAllSeasonalEventItems();
 
         const baseFenceAssort = this.databaseServer.getTables().traders[Traders.FENCE].assort;
 
         const dbItems = Object.values(this.databaseServer.getTables().templates.items);
-        for (const item of dbItems.filter(x => this.isValidFenceItem(x)))
-        {
+        for (const item of dbItems.filter((x) => this.isValidFenceItem(x))) {
             // Skip blacklisted items
-            if (this.itemFilterService.isItemBlacklisted(item._id))
-            {
+            if (this.itemFilterService.isItemBlacklisted(item._id)) {
                 continue;
             }
 
-            if (!this.itemHelper.isValidItem(item._id))
-            {
+            if (!this.itemHelper.isValidItem(item._id)) {
                 continue;
             }
 
             // Skip quest items
-            if (item._props.QuestItem)
-            {
+            if (item._props.QuestItem) {
                 continue;
             }
 
             // Skip items on fence ignore list
-            if (this.traderConfig.fence.blacklist.length > 0)
-            {
-                if (this.traderConfig.fence.blacklist.includes(item._id) 
-                    || this.itemHelper.isOfBaseclasses(item._id, this.traderConfig.fence.blacklist))
-                {
+            if (this.traderConfig.fence.blacklist.length > 0) {
+                if (
+                    this.traderConfig.fence.blacklist.includes(item._id) ||
+                    this.itemHelper.isOfBaseclasses(item._id, this.traderConfig.fence.blacklist)
+                ) {
                     continue;
                 }
             }
 
             // Skip seasonal event items when not in seasonal event
-            if (this.traderConfig.fence.blacklistSeasonalItems && blockedSeasonalItems.includes(item._id))
-            {
+            if (this.traderConfig.fence.blacklistSeasonalItems && blockedSeasonalItems.includes(item._id)) {
                 continue;
             }
 
             // Create barter scheme object
             const barterSchemeToAdd: IBarterScheme = {
-                count: Math.round(this.handbookHelper.getTemplatePrice(item._id) * this.traderConfig.fence.itemPriceMult),
-                _tpl: Money.ROUBLES
+                count: Math.round(
+                    this.handbookHelper.getTemplatePrice(item._id) * this.traderConfig.fence.itemPriceMult
+                ),
+                _tpl: Money.ROUBLES,
             };
 
             // Add barter data to base
@@ -95,8 +89,8 @@ export class FenceBaseAssortGenerator
                 slotId: "hideout",
                 upd: {
                     StackObjectsCount: 9999999,
-                    UnlimitedCount: true
-                }
+                    UnlimitedCount: true,
+                },
             };
 
             // Add item to base
@@ -112,10 +106,8 @@ export class FenceBaseAssortGenerator
      * @param item Item to check
      * @returns true if valid fence item
      */
-    protected isValidFenceItem(item: ITemplateItem): boolean
-    {
-        if (item._type === "Item")
-        {
+    protected isValidFenceItem(item: ITemplateItem): boolean {
+        if (item._type === "Item") {
             return true;
         }
 

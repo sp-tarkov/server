@@ -1,4 +1,3 @@
-export interface IAcceptGroupInviteRequest
-{
-    requestId: string
+export interface IAcceptGroupInviteRequest {
+    requestId: string;
 }

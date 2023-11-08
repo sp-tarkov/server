@@ -1,5 +1,4 @@
-export enum ELocationName 
-    {
+export enum ELocationName {
     FACTORY_DAY = "factory4_day",
     FACTORY_NIGHT = "factory4_night",
     BIGMAP = "bigmap",
@@ -10,5 +9,5 @@ export enum ELocationName
     LABORATORY = "laboratory",
     RESERVE = "RezervBase",
     STREETS = "TarkovStreets",
-    ANY = "any"
+    ANY = "any",
 }

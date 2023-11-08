@@ -6,28 +6,26 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 
 @injectable()
-export class RagfairItemEventRouter extends ItemEventRouterDefinition 
-{
-    constructor(
-        @inject("RagfairCallbacks") protected ragfairCallbacks: RagfairCallbacks
-    ) 
-    {
+export class RagfairItemEventRouter extends ItemEventRouterDefinition {
+    constructor(@inject("RagfairCallbacks") protected ragfairCallbacks: RagfairCallbacks) {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
+    public override getHandledRoutes(): HandledRoute[] {
         return [
             new HandledRoute("RagFairAddOffer", false),
             new HandledRoute("RagFairRemoveOffer", false),
-            new HandledRoute("RagFairRenewOffer", false)
+            new HandledRoute("RagFairRenewOffer", false),
         ];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
-    {
-        switch (url)
-        {
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string
+    ): IItemEventRouterResponse {
+        switch (url) {
             case "RagFairAddOffer":
                 return this.ragfairCallbacks.addOffer(pmcData, body, sessionID);
             case "RagFairRemoveOffer":

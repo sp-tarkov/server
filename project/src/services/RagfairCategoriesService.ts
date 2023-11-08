@@ -4,21 +4,16 @@ import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 
 @injectable()
-export class RagfairCategoriesService
-{
+export class RagfairCategoriesService {
     protected categories: Record<string, number> = {};
 
-    constructor(
-        @inject("WinstonLogger") protected logger: ILogger
-    )
-    { }
+    constructor(@inject("WinstonLogger") protected logger: ILogger) {}
 
     /**
      * Get all flea categories and their count of offers
      * @returns item categories and count
      */
-    public getAllCategories(): Record<string, number> 
-    {
+    public getAllCategories(): Record<string, number> {
         return this.categories;
     }
 
@@ -26,8 +21,7 @@ export class RagfairCategoriesService
      * With the supplied items, get custom categories
      * @returns a custom list of categories
      */
-    public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number> 
-    {
+    public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number> {
         return this.processOffersIntoCategories(offers);
     }
 
@@ -36,11 +30,9 @@ export class RagfairCategoriesService
      * @param offers ragfair offers
      * @returns categories and count
      */
-    protected processOffersIntoCategories(offers: IRagfairOffer[]): Record<string, number> 
-    {
+    protected processOffersIntoCategories(offers: IRagfairOffer[]): Record<string, number> {
         const result = {};
-        for (const offer of offers)
-        {
+        for (const offer of offers) {
             this.addOrIncrementCategory(offer, result);
         }
 
@@ -53,25 +45,17 @@ export class RagfairCategoriesService
      * @param categories Categories to update
      * @param increment (Optional) Should item be incremented or decremented
      */
-    protected addOrIncrementCategory(offer: IRagfairOffer, categories: Record<string, number>, increment = true ): void
-    {
+    protected addOrIncrementCategory(offer: IRagfairOffer, categories: Record<string, number>, increment = true): void {
         const itemId = offer.items[0]._tpl;
-        if (increment)
-        {
-            categories[itemId] = categories[itemId]
-                ? categories[itemId] + 1
-                : 1;
-        }
-        else
-        {
+        if (increment) {
+            categories[itemId] = categories[itemId] ? categories[itemId] + 1 : 1;
+        } else {
             // No category, no work to do
-            if (categories[itemId])
-            {
+            if (categories[itemId]) {
                 categories[itemId]--;
 
                 // Remove category entirely as its 0 or less
-                if (categories[itemId] < 1)
-                {
+                if (categories[itemId] < 1) {
                     delete categories[itemId];
                 }
             }
@@ -80,20 +64,18 @@ export class RagfairCategoriesService
 
     /**
      * Increase category count by 1
-     * @param offer 
+     * @param offer
      */
-    public incrementCategory(offer: IRagfairOffer): void
-    {
+    public incrementCategory(offer: IRagfairOffer): void {
         this.addOrIncrementCategory(offer, this.categories);
         this.categories[offer.items[0]._tpl]++;
     }
 
     /**
      * Reduce category count by 1
-     * @param offer 
+     * @param offer
      */
-    public decrementCategory(offer: IRagfairOffer): void
-    {
+    public decrementCategory(offer: IRagfairOffer): void {
         this.addOrIncrementCategory(offer, this.categories, false);
         this.categories[offer.items[0]._tpl]--;
     }

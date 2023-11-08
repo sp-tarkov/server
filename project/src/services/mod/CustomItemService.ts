@@ -1,7 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
 import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { CreateItemResult, LocaleDetails, NewItemDetails, NewItemFromCloneDetails } from "@spt-aki/models/spt/mod/NewItemDetails";
+import {
+    CreateItemResult,
+    LocaleDetails,
+    NewItemDetails,
+    NewItemFromCloneDetails,
+} from "@spt-aki/models/spt/mod/NewItemDetails";
 import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -9,8 +14,7 @@ import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class CustomItemService
-{
+export class CustomItemService {
     protected tables: IDatabaseTables;
 
     constructor(
@@ -18,8 +22,7 @@ export class CustomItemService
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer
-    )
-    {
+    ) {
         this.tables = this.databaseServer.getTables();
     }
 
@@ -33,8 +36,7 @@ export class CustomItemService
      * @param newItemDetails Item details for the new item to be created
      * @returns tplId of the new item created
      */
-    public createItemFromClone(newItemDetails: NewItemFromCloneDetails): CreateItemResult
-    {
+    public createItemFromClone(newItemDetails: NewItemFromCloneDetails): CreateItemResult {
         const result = new CreateItemResult();
         const tables = this.databaseServer.getTables();
 
@@ -42,8 +44,7 @@ export class CustomItemService
         const newItemId = this.getOrGenerateIdForItem(newItemDetails.newId);
 
         // Fail if itemId already exists
-        if (tables.templates.items[newItemId])
-        {
+        if (tables.templates.items[newItemId]) {
             result.errors.push(`ItemId already exists. ${tables.templates.items[newItemId]._name}`);
             return result;
         }
@@ -80,16 +81,14 @@ export class CustomItemService
      * @param newItemDetails Details on what the item to be created
      * @returns CreateItemResult containing the completed items Id
      */
-    public createItem(newItemDetails: NewItemDetails): CreateItemResult
-    {
+    public createItem(newItemDetails: NewItemDetails): CreateItemResult {
         const result = new CreateItemResult();
         const tables = this.databaseServer.getTables();
 
         const newItem = newItemDetails.newItem;
 
         // Fail if itemId already exists
-        if (tables.templates.items[newItem._id])
-        {
+        if (tables.templates.items[newItem._id]) {
             result.errors.push(`ItemId already exists. ${tables.templates.items[newItem._id]._name}`);
             return result;
         }
@@ -113,11 +112,8 @@ export class CustomItemService
      * @param newId id supplied to code
      * @returns item id
      */
-    protected getOrGenerateIdForItem(newId: string): string
-    {
-        return (newId === "")
-            ? this.hashUtil.generate()
-            : newId;
+    protected getOrGenerateIdForItem(newId: string): string {
+        return newId === "" ? this.hashUtil.generate() : newId;
     }
 
     /**
@@ -126,10 +122,8 @@ export class CustomItemService
      * @param overrideProperties new properties to apply
      * @param itemClone item to update
      */
-    protected updateBaseItemPropertiesWithOverrides(overrideProperties: Props, itemClone: ITemplateItem): void
-    {
-        for (const propKey in overrideProperties)
-        {
+    protected updateBaseItemPropertiesWithOverrides(overrideProperties: Props, itemClone: ITemplateItem): void {
+        for (const propKey in overrideProperties) {
             itemClone._props[propKey] = overrideProperties[propKey];
         }
     }
@@ -139,8 +133,7 @@ export class CustomItemService
      * @param newItemId id of the item to add to items.json
      * @param itemToAdd Item to add against the new id
      */
-    protected addToItemsDb(newItemId: string, itemToAdd: ITemplateItem): void
-    {
+    protected addToItemsDb(newItemId: string, itemToAdd: ITemplateItem): void {
         this.tables.templates.items[newItemId] = itemToAdd;
     }
 
@@ -150,15 +143,12 @@ export class CustomItemService
      * @param parentId parent id of the item being added
      * @param priceRoubles price of the item being added
      */
-    protected addToHandbookDb(newItemId: string, parentId: string, priceRoubles: number): void
-    {
-        this.tables.templates.handbook.Items.push(
-            {
-                Id: newItemId,
-                ParentId: parentId,
-                Price: priceRoubles
-            }
-        );
+    protected addToHandbookDb(newItemId: string, parentId: string, priceRoubles: number): void {
+        this.tables.templates.handbook.Items.push({
+            Id: newItemId,
+            ParentId: parentId,
+            Price: priceRoubles,
+        });
     }
 
     /**
@@ -167,20 +157,17 @@ export class CustomItemService
      * e.g.
      * en[0]
      * fr[1]
-     * 
+     *
      * No jp provided, so english will be used as a substitute
      * @param localeDetails key is language, value are the new locale details
      * @param newItemId id of the item being created
      */
-    protected addToLocaleDbs(localeDetails: Record<string, LocaleDetails>, newItemId: string): void
-    {
+    protected addToLocaleDbs(localeDetails: Record<string, LocaleDetails>, newItemId: string): void {
         const languages = this.tables.locales.languages;
-        for (const shortNameKey in languages)
-        {
+        for (const shortNameKey in languages) {
             // Get locale details passed in, if not provided by caller use first record in newItemDetails.locales
             let newLocaleDetails = localeDetails[shortNameKey];
-            if (!newLocaleDetails)
-            {
+            if (!newLocaleDetails) {
                 newLocaleDetails = localeDetails[Object.keys(localeDetails)[0]];
             }
 
@@ -196,8 +183,7 @@ export class CustomItemService
      * @param newItemId id of the new item
      * @param fleaPriceRoubles Price of the new item
      */
-    protected addToFleaPriceDb(newItemId: string, fleaPriceRoubles: number): void
-    {
+    protected addToFleaPriceDb(newItemId: string, fleaPriceRoubles: number): void {
         this.tables.templates.prices[newItemId] = fleaPriceRoubles;
     }
 }

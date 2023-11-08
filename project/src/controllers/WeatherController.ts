@@ -8,27 +8,24 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 
 @injectable()
-export class WeatherController
-{
+export class WeatherController {
     protected weatherConfig: IWeatherConfig;
 
     constructor(
         @inject("WeatherGenerator") protected weatherGenerator: WeatherGenerator,
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
     }
 
     /** Handle client/weather */
-    public generate(): IWeatherData
-    {
+    public generate(): IWeatherData {
         let result: IWeatherData = {
             acceleration: 0,
             time: "",
             date: "",
-            weather: null
+            weather: null,
         };
 
         result = this.weatherGenerator.calculateGameTime(result);
@@ -41,8 +38,7 @@ export class WeatherController
      * Get the current in-raid time (MUST HAVE PLAYER LOGGED INTO CLIENT TO WORK)
      * @returns Date object
      */
-    public getCurrentInRaidTime(): Date
-    {
+    public getCurrentInRaidTime(): Date {
         return this.weatherGenerator.getInRaidTime(new Date());
     }
 }

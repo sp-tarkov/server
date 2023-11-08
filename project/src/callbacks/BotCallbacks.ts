@@ -8,12 +8,11 @@ import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyR
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class BotCallbacks
-{
+export class BotCallbacks {
     constructor(
         @inject("BotController") protected botController: BotController,
-        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil)
-    { }
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil
+    ) {}
 
     /**
      * Handle singleplayer/settings/bot/limit
@@ -21,8 +20,7 @@ export class BotCallbacks
      * @returns string
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getBotLimit(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
+    public getBotLimit(url: string, info: IEmptyRequestData, sessionID: string): string {
         const splittedUrl = url.split("/");
         const type = splittedUrl[splittedUrl.length - 1];
         return this.httpResponse.noBody(this.botController.getBotPresetGenerationLimit(type));
@@ -33,13 +31,11 @@ export class BotCallbacks
      * @returns string
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getBotDifficulty(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
+    public getBotDifficulty(url: string, info: IEmptyRequestData, sessionID: string): string {
         const splittedUrl = url.split("/");
         const type = splittedUrl[splittedUrl.length - 2].toLowerCase();
         const difficulty = splittedUrl[splittedUrl.length - 1];
-        if (difficulty === "core")
-        {
+        if (difficulty === "core") {
             return this.httpResponse.noBody(this.botController.getBotCoreDifficulty());
         }
 
@@ -50,8 +46,11 @@ export class BotCallbacks
      * Handle client/game/bot/generate
      * @returns IGetBodyResponseData
      */
-    public generateBots(url: string, info: IGenerateBotsRequestData, sessionID: string): IGetBodyResponseData<IBotBase[]>
-    {
+    public generateBots(
+        url: string,
+        info: IGenerateBotsRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IBotBase[]> {
         return this.httpResponse.getBody(this.botController.generate(sessionID, info));
     }
 
@@ -59,8 +58,7 @@ export class BotCallbacks
      * Handle singleplayer/settings/bot/maxCap
      * @returns string
      */
-    public getBotCap(): string
-    {
+    public getBotCap(): string {
         return this.httpResponse.noBody(this.botController.getBotCap());
     }
 
@@ -68,8 +66,7 @@ export class BotCallbacks
      * Handle singleplayer/settings/bot/getBotBehaviours
      * @returns string
      */
-    public getBotBehaviours(): string
-    {
+    public getBotBehaviours(): string {
         return this.httpResponse.noBody(this.botController.getAiBotBrainTypes());
     }
 }

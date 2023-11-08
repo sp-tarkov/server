@@ -13,8 +13,7 @@ import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class RagfairAssortGenerator
-{
+export class RagfairAssortGenerator {
     protected generatedAssortItems: Item[] = [];
     protected ragfairConfig: IRagfairConfig;
 
@@ -25,8 +24,7 @@ export class RagfairAssortGenerator
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
     }
 
@@ -34,10 +32,8 @@ export class RagfairAssortGenerator
      * Get an array of unique items that can be sold on the flea
      * @returns array of unique items
      */
-    public getAssortItems(): Item[]
-    {
-        if (!this.assortsAreGenerated())
-        {
+    public getAssortItems(): Item[] {
+        if (!this.assortsAreGenerated()) {
             this.generatedAssortItems = this.generateRagfairAssortItems();
         }
 
@@ -48,8 +44,7 @@ export class RagfairAssortGenerator
      * Check internal generatedAssortItems array has objects
      * @returns true if array has objects
      */
-    protected assortsAreGenerated(): boolean
-    {
+    protected assortsAreGenerated(): boolean {
         return this.generatedAssortItems.length > 0;
     }
 
@@ -57,12 +52,11 @@ export class RagfairAssortGenerator
      * Generate an array of items the flea can sell
      * @returns array of unique items
      */
-    protected generateRagfairAssortItems(): Item[]
-    {
+    protected generateRagfairAssortItems(): Item[] {
         const results: Item[] = [];
         const items = this.itemHelper.getItems();
 
-        const weaponPresets = (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
+        const weaponPresets = this.ragfairConfig.dynamic.showDefaultPresetsOnly
             ? this.getDefaultPresets()
             : this.getPresets();
 
@@ -72,40 +66,39 @@ export class RagfairAssortGenerator
             BaseClasses.SORTING_TABLE,
             BaseClasses.INVENTORY,
             BaseClasses.STATIONARY_CONTAINER,
-            BaseClasses.POCKETS
+            BaseClasses.POCKETS,
         ];
 
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getAllSeasonalEventItems();
-        for (const item of items)
-        {
-            if (!this.itemHelper.isValidItem(item._id, ragfairItemInvalidBaseTypes))
-            {
+        for (const item of items) {
+            if (!this.itemHelper.isValidItem(item._id, ragfairItemInvalidBaseTypes)) {
                 continue;
             }
 
-            if (this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent && !seasonalEventActive && seasonalItemTplBlacklist.includes(item._id))
-            {
+            if (
+                this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent &&
+                !seasonalEventActive &&
+                seasonalItemTplBlacklist.includes(item._id)
+            ) {
                 continue;
             }
 
             results.push(this.createRagfairAssortItem(item._id, item._id)); // tplid and id must be the same so hideout recipe reworks work
         }
 
-        for (const weapon of weaponPresets)
-        {
+        for (const weapon of weaponPresets) {
             results.push(this.createRagfairAssortItem(weapon._items[0]._tpl, weapon._id)); // preset id must be passed thruogh to ensure flea shows presets
         }
 
         return results;
     }
-    
+
     /**
      * Get presets from globals.json
      * @returns Preset object array
      */
-    protected getPresets(): IPreset[]
-    {
+    protected getPresets(): IPreset[] {
         const presets = Object.values(this.databaseServer.getTables().globals.ItemPresets);
         return presets;
     }
@@ -114,19 +107,17 @@ export class RagfairAssortGenerator
      * Get default presets from globals.json
      * @returns Preset object array
      */
-    protected getDefaultPresets(): IPreset[]
-    {
-        return this.getPresets().filter(x => x._encyclopedia);
+    protected getDefaultPresets(): IPreset[] {
+        return this.getPresets().filter((x) => x._encyclopedia);
     }
-    
+
     /**
      * Create a base assort item and return it with populated values + 999999 stack count + unlimited count = true
      * @param tplId tplid to add to item
      * @param id id to add to item
      * @returns hydrated Item object
      */
-    protected createRagfairAssortItem(tplId: string, id = this.hashUtil.generate()): Item
-    {
+    protected createRagfairAssortItem(tplId: string, id = this.hashUtil.generate()): Item {
         return {
             _id: id,
             _tpl: tplId,
@@ -134,8 +125,8 @@ export class RagfairAssortGenerator
             slotId: "hideout",
             upd: {
                 StackObjectsCount: 99999999,
-                UnlimitedCount: true
-            }
+                UnlimitedCount: true,
+            },
         };
     }
 }

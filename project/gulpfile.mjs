@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import gulp from "gulp";
-import { exec } from "gulp-execa";
-import rename from "gulp-rename";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import gulp from "gulp";
+import { exec } from "gulp-execa";
+import rename from "gulp-rename";
 import pkg from "pkg";
 import pkgfetch from "pkg-fetch";
 import * as ResEdit from "resedit";
@@ -22,7 +22,7 @@ const pkgConfig = "pkgconfig.json";
 const entries = {
     release: path.join("obj", "ide", "ReleaseEntry.js"),
     debug: path.join("obj", "ide", "DebugEntry.js"),
-    bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js")
+    bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js"),
 };
 const licenseFile = "../LICENSE.md";
 
@@ -32,27 +32,26 @@ const licenseFile = "../LICENSE.md";
 const compile = async () => await exec("swc src -d obj", { stdio });
 
 // Packaging
-const fetchPackageImage = async () =>
-{
-    try
-    {
+const fetchPackageImage = async () => {
+    try {
         const output = "./.pkg-cache/v3.5";
-        const fetchedPkg = await pkgfetch.need({ arch: process.arch, nodeRange: nodeVersion, platform: process.platform, output });
+        const fetchedPkg = await pkgfetch.need({
+            arch: process.arch,
+            nodeRange: nodeVersion,
+            platform: process.platform,
+            output,
+        });
         console.log(`fetched node binary at ${fetchedPkg}`);
         const builtPkg = fetchedPkg.replace("node", "built");
         await fs.copyFile(fetchedPkg, builtPkg);
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.error(`Error while fetching and patching package image: ${e.message}`);
         console.error(e.stack);
     }
 };
 
-const updateBuildProperties = async () =>
-{
-    if (os.platform() !== "win32")
-    {
+const updateBuildProperties = async () => {
+    if (os.platform() !== "win32") {
         return;
     }
 
@@ -66,22 +65,22 @@ const updateBuildProperties = async () =>
         res.entries,
         1,
         1033,
-        iconFile.icons.map(item => item.data)
+        iconFile.icons.map((item) => item.data)
     );
 
     const vi = ResEdit.Resource.VersionInfo.fromEntries(res.entries)[0];
 
     vi.setStringValues(
-        {lang: 1033, codepage: 1200},
+        { lang: 1033, codepage: 1200 },
         {
             ProductName: manifest.author,
             FileDescription: manifest.description,
             CompanyName: manifest.name,
-            LegalCopyright:  manifest.license
+            LegalCopyright: manifest.license,
         }
     );
-    vi.removeStringValue({lang: 1033, codepage: 1200}, "OriginalFilename");
-    vi.removeStringValue({lang: 1033, codepage: 1200}, "InternalName");
+    vi.removeStringValue({ lang: 1033, codepage: 1200 }, "OriginalFilename");
+    vi.removeStringValue({ lang: 1033, codepage: 1200 }, "InternalName");
     vi.setFileVersion(...manifest.version.split(".").map(Number));
     vi.setProductVersion(...manifest.version.split(".").map(Number));
     vi.outputToResourceEntries(res.entries);
@@ -92,12 +91,16 @@ const updateBuildProperties = async () =>
 /**
  * Copy various asset files to the destination directory
  */
-const copyAssets = () => gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(gulp.dest(dataDir));
+const copyAssets = () =>
+    gulp
+        .src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"])
+        .pipe(gulp.dest(dataDir));
 
 /**
  * Copy executables from node_modules
  */
-const copyExecutables = () => gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
+const copyExecutables = () =>
+    gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
 
 /**
  * Rename and copy the license file
@@ -107,10 +110,8 @@ const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.tx
 /**
  * Writes the latest Git commit hash to the core.json configuration file.
  */
-const writeCommitHashToCoreJSON = async () =>
-{
-    try
-    {
+const writeCommitHashToCoreJSON = async () => {
+    try {
         const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
         const coreJSON = await fs.readFile(coreJSONPath, "utf8");
         const parsed = JSON.parse(coreJSON);
@@ -126,9 +127,7 @@ const writeCommitHashToCoreJSON = async () =>
 
         // Write the updated object back to core.json
         await fs.writeFile(coreJSONPath, JSON.stringify(parsed, null, 4));
-    }
-    catch (error)
-    {
+    } catch (error) {
         throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
     }
 };
@@ -136,8 +135,7 @@ const writeCommitHashToCoreJSON = async () =>
 /**
  * Create a hash file for asset checks
  */
-const createHashFile = async () =>
-{
+const createHashFile = async () => {
     const hashFileDir = path.resolve(dataDir, "checks.dat");
     const assetData = await loadRecursiveAsync("assets/");
     const assetDataString = Buffer.from(JSON.stringify(assetData), "utf-8").toString("base64");
@@ -159,23 +157,18 @@ const cleanCompiled = async () => await fs.rm("./obj", { recursive: true, force:
 
 /**
  * Recursively builds an array of paths for json files.
- * 
- * @param {fs.PathLike} dir 
- * @param {string[]} files 
+ *
+ * @param {fs.PathLike} dir
+ * @param {string[]} files
  * @returns {Promise<string[]>}
  */
-const getJSONFiles = async (dir, files = []) =>
-{
+const getJSONFiles = async (dir, files = []) => {
     const fileList = await fs.readdir(dir);
-    for (const file of fileList)
-    {
+    for (const file of fileList) {
         const name = path.resolve(dir, file);
-        if ((await fs.stat(name)).isDirectory())
-        {
+        if ((await fs.stat(name)).isDirectory()) {
             getJSONFiles(name, files);
-        }
-        else if (name.slice(-5) === ".json")
-        {
+        } else if (name.slice(-5) === ".json") {
             files.push(name);
         }
     }
@@ -185,33 +178,27 @@ const getJSONFiles = async (dir, files = []) =>
 /**
  * Goes through every json file in assets and makes sure they're valid json.
  */
-const validateJSONs = async () =>
-{
+const validateJSONs = async () => {
     const assetsPath = path.resolve("assets");
     const jsonFileList = await getJSONFiles(assetsPath);
     let jsonFileInProcess = "";
-    try
-    {
-        for (const jsonFile of jsonFileList)
-        {
+    try {
+        for (const jsonFile of jsonFileList) {
             jsonFileInProcess = jsonFile;
             JSON.parse(await fs.readFile(jsonFile));
         }
-    }
-    catch (error)
-    {
+    } catch (error) {
         throw new Error(`${error.message} | ${jsonFileInProcess}`);
     }
 };
 
 /**
  * Hash helper function
- * 
- * @param {crypto.BinaryLike} data 
+ *
+ * @param {crypto.BinaryLike} data
  * @returns {string}
  */
-const generateHashForData = (data) =>
-{
+const generateHashForData = (data) => {
     const hashSum = crypto.createHash("sha1");
     hashSum.update(data);
     return hashSum.digest("hex");
@@ -219,34 +206,28 @@ const generateHashForData = (data) =>
 
 /**
  * Loader to recursively find all json files in a folder
- * 
- * @param {fs.PathLike} filepath 
+ *
+ * @param {fs.PathLike} filepath
  * @returns {}
  */
-const loadRecursiveAsync = async (filepath) =>
-{
+const loadRecursiveAsync = async (filepath) => {
     const result = {};
 
     const filesList = await fs.readdir(filepath);
 
-    for (const file of filesList)
-    {
+    for (const file of filesList) {
         const curPath = path.parse(path.join(filepath, file));
-        if ((await fs.stat(path.join(curPath.dir, curPath.base))).isDirectory())
-        {
+        if ((await fs.stat(path.join(curPath.dir, curPath.base))).isDirectory()) {
             result[curPath.name] = loadRecursiveAsync(`${filepath}${file}/`);
-        }
-        else if (curPath.ext === ".json")
-        {
+        } else if (curPath.ext === ".json") {
             result[curPath.name] = generateHashForData(await fs.readFile(`${filepath}${file}`));
         }
     }
 
     // set all loadRecursive to be executed asynchronously
     const resEntries = Object.entries(result);
-    const resResolved = await Promise.all(resEntries.map(ent => ent[1]));
-    for (let resIdx = 0; resIdx < resResolved.length; resIdx++)
-    {
+    const resResolved = await Promise.all(resEntries.map((ent) => ent[1]));
+    for (let resIdx = 0; resIdx < resResolved.length; resIdx++) {
         resEntries[resIdx][1] = resResolved[resIdx];
     }
 
@@ -255,24 +236,39 @@ const loadRecursiveAsync = async (filepath) =>
 };
 
 // Main Tasks Generation
-const build = (packagingType) =>
-{
+const build = (packagingType) => {
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
-    const tasks = [cleanBuild, validateJSONs, compile, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, cleanCompiled];
+    const tasks = [
+        cleanBuild,
+        validateJSONs,
+        compile,
+        fetchPackageImage,
+        anonPackaging,
+        addAssets,
+        updateBuildProperties,
+        cleanCompiled,
+    ];
     return gulp.series(tasks);
 };
 
 // Packaging Arguments
-const packaging = async (entry) =>
-{
+const packaging = async (entry) => {
     const target = `${nodeVersion}-${process.platform}-${process.arch}`;
-    try
-    {
-        await pkg.exec([entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig, "--public"]);
-    }
-    catch (error)
-    {
+    try {
+        await pkg.exec([
+            entry,
+            "--compress",
+            "GZip",
+            "--target",
+            target,
+            "--output",
+            serverExe,
+            "--config",
+            pkgConfig,
+            "--public",
+        ]);
+    } catch (error) {
         console.error(`Error occurred during packaging: ${error}`);
     }
 };
@@ -282,9 +278,11 @@ gulp.task("build:release", build("release"));
 gulp.task("build:bleeding", build("bleeding"));
 
 gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: buildDir }));
-gulp.task("run:debug", async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
-gulp.task("run:profiler", async () =>
-{
+gulp.task(
+    "run:debug",
+    async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio })
+);
+gulp.task("run:profiler", async () => {
     await cleanCompiled();
     await compile();
     await exec("node --prof --inspect --trace-warnings obj/ide/TestEntry.js", { stdio });

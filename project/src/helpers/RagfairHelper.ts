@@ -18,8 +18,7 @@ import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemSer
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class RagfairHelper
-{
+export class RagfairHelper {
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
@@ -32,20 +31,17 @@ export class RagfairHelper
         @inject("RagfairLinkedItemService") protected ragfairLinkedItemService: RagfairLinkedItemService,
         @inject("UtilityHelper") protected utilityHelper: UtilityHelper,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
     }
 
     /**
-    * Gets currency TAG from TPL
-    * @param {string} currency
-    * @returns string
-    */
-    public getCurrencyTag(currency: string): string
-    {
-        switch (currency)
-        {
+     * Gets currency TAG from TPL
+     * @param {string} currency
+     * @returns string
+     */
+    public getCurrencyTag(currency: string): string {
+        switch (currency) {
             case "569668774bdc2da2298b4568":
                 return "EUR";
 
@@ -60,36 +56,27 @@ export class RagfairHelper
         }
     }
 
-    public filterCategories(sessionID: string, info: ISearchRequestData): string[]
-    {
+    public filterCategories(sessionID: string, info: ISearchRequestData): string[] {
         let result: string[] = [];
 
         // Case: weapon builds
-        if (info.buildCount)
-        {
+        if (info.buildCount) {
             return Object.keys(info.buildItems);
         }
 
         // Case: search
-        if (info.linkedSearchId)
-        {
+        if (info.linkedSearchId) {
             const data = this.ragfairLinkedItemService.getLinkedItems(info.linkedSearchId);
-            result = !data
-                ? []
-                : [...data];
+            result = !data ? [] : [...data];
         }
 
         // Case: category
-        if (info.handbookId)
-        {
+        if (info.handbookId) {
             const handbook = this.getCategoryList(info.handbookId);
 
-            if (result.length)
-            {
+            if (result.length) {
                 result = this.utilityHelper.arrayIntersect(result, handbook);
-            }
-            else
-            {
+            } else {
                 result = handbook;
             }
         }
@@ -97,14 +84,11 @@ export class RagfairHelper
         return result;
     }
 
-    public getDisplayableAssorts(sessionID: string): Record<string, ITraderAssort>
-    {
+    public getDisplayableAssorts(sessionID: string): Record<string, ITraderAssort> {
         const result: Record<string, ITraderAssort> = {};
 
-        for (const traderID in this.databaseServer.getTables().traders)
-        {
-            if (this.ragfairConfig.traders[traderID])
-            {
+        for (const traderID in this.databaseServer.getTables().traders) {
+            if (this.ragfairConfig.traders[traderID]) {
                 result[traderID] = this.traderAssortHelper.getAssort(sessionID, traderID, true);
             }
         }
@@ -112,17 +96,13 @@ export class RagfairHelper
         return result;
     }
 
-    protected getCategoryList(handbookId: string): string[]
-    {
+    protected getCategoryList(handbookId: string): string[] {
         let result: string[] = [];
 
         // if its "mods" great-parent category, do double recursive loop
-        if (handbookId === "5b5f71a686f77447ed5636ab")
-        {
-            for (const categ of this.handbookHelper.childrenCategories(handbookId))
-            {
-                for (const subcateg of this.handbookHelper.childrenCategories(categ))
-                {
+        if (handbookId === "5b5f71a686f77447ed5636ab") {
+            for (const categ of this.handbookHelper.childrenCategories(handbookId)) {
+                for (const subcateg of this.handbookHelper.childrenCategories(categ)) {
                     result = [...result, ...this.handbookHelper.templatesWithParent(subcateg)];
                 }
             }
@@ -131,13 +111,11 @@ export class RagfairHelper
         }
 
         // item is in any other category
-        if (this.handbookHelper.isCategory(handbookId))
-        {
+        if (this.handbookHelper.isCategory(handbookId)) {
             // list all item of the category
             result = this.handbookHelper.templatesWithParent(handbookId);
 
-            for (const categ of this.handbookHelper.childrenCategories(handbookId))
-            {
+            for (const categ of this.handbookHelper.childrenCategories(handbookId)) {
                 result = [...result, ...this.handbookHelper.templatesWithParent(categ)];
             }
 
@@ -150,12 +128,10 @@ export class RagfairHelper
     }
 
     /* Because of presets, categories are not always 1 */
-    public countCategories(result: IGetOffersResult): void
-    {
+    public countCategories(result: IGetOffersResult): void {
         const categories = {};
 
-        for (const offer of result.offers)
-        {
+        for (const offer of result.offers) {
             // only the first item can have presets
             const item = offer.items[0];
             categories[item._tpl] = categories[item._tpl] || 0;
@@ -163,10 +139,8 @@ export class RagfairHelper
         }
 
         // not in search mode, add back non-weapon items
-        for (const category in result.categories)
-        {
-            if (!categories[category])
-            {
+        for (const category in result.categories) {
+            if (!categories[category]) {
                 categories[category] = 1;
             }
         }
@@ -178,31 +152,23 @@ export class RagfairHelper
      * Merges Root Items
      * Ragfair allows abnormally large stacks.
      */
-    public mergeStackable(items: Item[]): Item[]
-    {
+    public mergeStackable(items: Item[]): Item[] {
         const list = [];
         let rootItem = null;
 
-        for (let item of items)
-        {
+        for (let item of items) {
             item = this.itemHelper.fixItemStackCount(item);
-            const isChild = items.find(it => it._id === item.parentId);
+            const isChild = items.find((it) => it._id === item.parentId);
 
-            if (!isChild)
-            {
-                if (!rootItem)
-                {
+            if (!isChild) {
+                if (!rootItem) {
                     rootItem = this.jsonUtil.clone(item);
                     rootItem.upd.OriginalStackObjectsCount = rootItem.upd.StackObjectsCount;
-                }
-                else
-                {
+                } else {
                     rootItem.upd.StackObjectsCount += item.upd.StackObjectsCount;
                     list.push(item);
                 }
-            }
-            else
-            {
+            } else {
                 list.push(item);
             }
         }
@@ -210,10 +176,8 @@ export class RagfairHelper
         return [...[rootItem], ...list];
     }
 
-    public getCurrencySymbol(currencyTpl: string): string
-    {
-        switch (currencyTpl)
-        {
+    public getCurrencySymbol(currencyTpl: string): string {
+        switch (currencyTpl) {
             case Money.EUROS:
                 return "€";
 

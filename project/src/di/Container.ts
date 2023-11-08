@@ -249,17 +249,13 @@ import { WinstonRequestLogger } from "@spt-aki/utils/logging/WinstonRequestLogge
 /**
  * Handle the registration of classes to be used by the Dependency Injection code
  */
-export class Container 
-{
-    
-    public static registerPostLoadTypes(container: DependencyContainer, childContainer: DependencyContainer):void 
-    {
-        container.register<AkiHttpListener>("AkiHttpListener", AkiHttpListener, {lifecycle: Lifecycle.Singleton});
+export class Container {
+    public static registerPostLoadTypes(container: DependencyContainer, childContainer: DependencyContainer): void {
+        container.register<AkiHttpListener>("AkiHttpListener", AkiHttpListener, { lifecycle: Lifecycle.Singleton });
         childContainer.registerType("HttpListener", "AkiHttpListener");
     }
 
-    public static registerTypes(depContainer: DependencyContainer): void 
-    {
+    public static registerTypes(depContainer: DependencyContainer): void {
         depContainer.register("ApplicationContext", ApplicationContext, { lifecycle: Lifecycle.Singleton });
         Container.registerUtils(depContainer);
 
@@ -274,14 +270,13 @@ export class Container
         Container.registerCallbacks(depContainer);
 
         Container.registerServers(depContainer);
-        
+
         Container.registerServices(depContainer);
 
         Container.registerControllers(depContainer);
     }
 
-    public static registerListTypes(depContainer: DependencyContainer): void 
-    {
+    public static registerListTypes(depContainer: DependencyContainer): void {
         depContainer.register("OnLoadModService", { useValue: new OnLoadModService(depContainer) });
         depContainer.register("HttpListenerModService", { useValue: new HttpListenerModService(depContainer) });
         depContainer.register("OnUpdateModService", { useValue: new OnUpdateModService(depContainer) });
@@ -359,18 +354,23 @@ export class Container
         depContainer.registerType("SaveLoadRouter", "ProfileSaveLoadRouter");
     }
 
-    private static registerUtils(depContainer: DependencyContainer): void 
-    {
+    private static registerUtils(depContainer: DependencyContainer): void {
         // Utils
         depContainer.register<App>("App", App, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<DatabaseImporter>("DatabaseImporter", DatabaseImporter, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<DatabaseImporter>("DatabaseImporter", DatabaseImporter, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<HashUtil>("HashUtil", HashUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ImporterUtil>("ImporterUtil", ImporterUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<HttpResponseUtil>("HttpResponseUtil", HttpResponseUtil);
         depContainer.register<EncodingUtil>("EncodingUtil", EncodingUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<JsonUtil>("JsonUtil", JsonUtil);
-        depContainer.register<WinstonMainLogger>("WinstonLogger", WinstonMainLogger, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<WinstonRequestLogger>("RequestsLogger", WinstonRequestLogger, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<WinstonMainLogger>("WinstonLogger", WinstonMainLogger, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<WinstonRequestLogger>("RequestsLogger", WinstonRequestLogger, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<MathUtil>("MathUtil", MathUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ObjectId>("ObjectId", ObjectId);
         depContainer.register<RandomUtil>("RandomUtil", RandomUtil, { lifecycle: Lifecycle.Singleton });
@@ -385,18 +385,21 @@ export class Container
         depContainer.register<ModTypeCheck>("ModTypeCheck", ModTypeCheck, { lifecycle: Lifecycle.Singleton });
     }
 
-    private static registerRouters(depContainer: DependencyContainer): void 
-    {
+    private static registerRouters(depContainer: DependencyContainer): void {
         // Routers
         depContainer.register<HttpRouter>("HttpRouter", HttpRouter, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ImageRouter>("ImageRouter", ImageRouter);
-        depContainer.register<EventOutputHolder>("EventOutputHolder", EventOutputHolder, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<EventOutputHolder>("EventOutputHolder", EventOutputHolder, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<ItemEventRouter>("ItemEventRouter", ItemEventRouter);
 
         // Dynamic routes
         depContainer.register<BotDynamicRouter>("BotDynamicRouter", { useClass: BotDynamicRouter });
         depContainer.register<BundleDynamicRouter>("BundleDynamicRouter", { useClass: BundleDynamicRouter });
-        depContainer.register<CustomizationDynamicRouter>("CustomizationDynamicRouter", { useClass: CustomizationDynamicRouter });
+        depContainer.register<CustomizationDynamicRouter>("CustomizationDynamicRouter", {
+            useClass: CustomizationDynamicRouter,
+        });
         depContainer.register<DataDynamicRouter>("DataDynamicRouter", { useClass: DataDynamicRouter });
         depContainer.register<HttpDynamicRouter>("HttpDynamicRouter", { useClass: HttpDynamicRouter });
         depContainer.register<InraidDynamicRouter>("InraidDynamicRouter", { useClass: InraidDynamicRouter });
@@ -405,23 +408,35 @@ export class Container
         depContainer.register<TraderDynamicRouter>("TraderDynamicRouter", { useClass: TraderDynamicRouter });
 
         // Item event routes
-        depContainer.register<CustomizationItemEventRouter>("CustomizationItemEventRouter", { useClass: CustomizationItemEventRouter });
+        depContainer.register<CustomizationItemEventRouter>("CustomizationItemEventRouter", {
+            useClass: CustomizationItemEventRouter,
+        });
         depContainer.register<HealthItemEventRouter>("HealthItemEventRouter", { useClass: HealthItemEventRouter });
         depContainer.register<HideoutItemEventRouter>("HideoutItemEventRouter", { useClass: HideoutItemEventRouter });
-        depContainer.register<InsuranceItemEventRouter>("InsuranceItemEventRouter", { useClass: InsuranceItemEventRouter });
-        depContainer.register<InventoryItemEventRouter>("InventoryItemEventRouter", { useClass: InventoryItemEventRouter });
+        depContainer.register<InsuranceItemEventRouter>("InsuranceItemEventRouter", {
+            useClass: InsuranceItemEventRouter,
+        });
+        depContainer.register<InventoryItemEventRouter>("InventoryItemEventRouter", {
+            useClass: InventoryItemEventRouter,
+        });
         depContainer.register<NoteItemEventRouter>("NoteItemEventRouter", { useClass: NoteItemEventRouter });
-        depContainer.register<PresetBuildItemEventRouter>("PresetBuildItemEventRouter", { useClass: PresetBuildItemEventRouter });
+        depContainer.register<PresetBuildItemEventRouter>("PresetBuildItemEventRouter", {
+            useClass: PresetBuildItemEventRouter,
+        });
         depContainer.register<QuestItemEventRouter>("QuestItemEventRouter", { useClass: QuestItemEventRouter });
         depContainer.register<RagfairItemEventRouter>("RagfairItemEventRouter", { useClass: RagfairItemEventRouter });
         depContainer.register<RepairItemEventRouter>("RepairItemEventRouter", { useClass: RepairItemEventRouter });
         depContainer.register<TradeItemEventRouter>("TradeItemEventRouter", { useClass: TradeItemEventRouter });
-        depContainer.register<WishlistItemEventRouter>("WishlistItemEventRouter", { useClass: WishlistItemEventRouter });
+        depContainer.register<WishlistItemEventRouter>("WishlistItemEventRouter", {
+            useClass: WishlistItemEventRouter,
+        });
 
         // save load routes
         depContainer.register<HealthSaveLoadRouter>("HealthSaveLoadRouter", { useClass: HealthSaveLoadRouter });
         depContainer.register<InraidSaveLoadRouter>("InraidSaveLoadRouter", { useClass: InraidSaveLoadRouter });
-        depContainer.register<InsuranceSaveLoadRouter>("InsuranceSaveLoadRouter", { useClass: InsuranceSaveLoadRouter });
+        depContainer.register<InsuranceSaveLoadRouter>("InsuranceSaveLoadRouter", {
+            useClass: InsuranceSaveLoadRouter,
+        });
         depContainer.register<ProfileSaveLoadRouter>("ProfileSaveLoadRouter", { useClass: ProfileSaveLoadRouter });
 
         // Route serializers
@@ -433,7 +448,9 @@ export class Container
         depContainer.register<BotStaticRouter>("BotStaticRouter", { useClass: BotStaticRouter });
         depContainer.register<BundleStaticRouter>("BundleStaticRouter", { useClass: BundleStaticRouter });
         depContainer.register<ClientLogStaticRouter>("ClientLogStaticRouter", { useClass: ClientLogStaticRouter });
-        depContainer.register<CustomizationStaticRouter>("CustomizationStaticRouter", { useClass: CustomizationStaticRouter });
+        depContainer.register<CustomizationStaticRouter>("CustomizationStaticRouter", {
+            useClass: CustomizationStaticRouter,
+        });
         depContainer.register<DataStaticRouter>("DataStaticRouter", { useClass: DataStaticRouter });
         depContainer.register<DialogStaticRouter>("DialogStaticRouter", { useClass: DialogStaticRouter });
         depContainer.register<GameStaticRouter>("GameStaticRouter", { useClass: GameStaticRouter });
@@ -453,42 +470,51 @@ export class Container
         depContainer.register<WeatherStaticRouter>("WeatherStaticRouter", { useClass: WeatherStaticRouter });
     }
 
-    private static registerGenerators(depContainer: DependencyContainer): void 
-    {
+    private static registerGenerators(depContainer: DependencyContainer): void {
         // Generators
         depContainer.register<BotGenerator>("BotGenerator", BotGenerator);
         depContainer.register<BotWeaponGenerator>("BotWeaponGenerator", BotWeaponGenerator);
         depContainer.register<BotLootGenerator>("BotLootGenerator", BotLootGenerator);
         depContainer.register<BotInventoryGenerator>("BotInventoryGenerator", BotInventoryGenerator);
         depContainer.register<LocationGenerator>("LocationGenerator", { useClass: LocationGenerator });
-        depContainer.register<PMCLootGenerator>("PMCLootGenerator", PMCLootGenerator, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<ScavCaseRewardGenerator>("ScavCaseRewardGenerator", ScavCaseRewardGenerator, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<PMCLootGenerator>("PMCLootGenerator", PMCLootGenerator, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<ScavCaseRewardGenerator>("ScavCaseRewardGenerator", ScavCaseRewardGenerator, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<RagfairAssortGenerator>("RagfairAssortGenerator", { useClass: RagfairAssortGenerator });
         depContainer.register<RagfairOfferGenerator>("RagfairOfferGenerator", { useClass: RagfairOfferGenerator });
         depContainer.register<WeatherGenerator>("WeatherGenerator", { useClass: WeatherGenerator });
         depContainer.register<PlayerScavGenerator>("PlayerScavGenerator", { useClass: PlayerScavGenerator });
         depContainer.register<LootGenerator>("LootGenerator", { useClass: LootGenerator });
-        depContainer.register<FenceBaseAssortGenerator>("FenceBaseAssortGenerator", { useClass: FenceBaseAssortGenerator });
+        depContainer.register<FenceBaseAssortGenerator>("FenceBaseAssortGenerator", {
+            useClass: FenceBaseAssortGenerator,
+        });
         depContainer.register<BotLevelGenerator>("BotLevelGenerator", { useClass: BotLevelGenerator });
-        depContainer.register<BotEquipmentModGenerator>("BotEquipmentModGenerator", { useClass: BotEquipmentModGenerator });
-        depContainer.register<RepeatableQuestGenerator>("RepeatableQuestGenerator", { useClass: RepeatableQuestGenerator });
-        
-        
+        depContainer.register<BotEquipmentModGenerator>("BotEquipmentModGenerator", {
+            useClass: BotEquipmentModGenerator,
+        });
+        depContainer.register<RepeatableQuestGenerator>("RepeatableQuestGenerator", {
+            useClass: RepeatableQuestGenerator,
+        });
+
         depContainer.register<BarrelInventoryMagGen>("BarrelInventoryMagGen", { useClass: BarrelInventoryMagGen });
-        depContainer.register<ExternalInventoryMagGen>("ExternalInventoryMagGen", { useClass: ExternalInventoryMagGen });
-        depContainer.register<InternalMagazineInventoryMagGen>("InternalMagazineInventoryMagGen", { useClass: InternalMagazineInventoryMagGen });
+        depContainer.register<ExternalInventoryMagGen>("ExternalInventoryMagGen", {
+            useClass: ExternalInventoryMagGen,
+        });
+        depContainer.register<InternalMagazineInventoryMagGen>("InternalMagazineInventoryMagGen", {
+            useClass: InternalMagazineInventoryMagGen,
+        });
         depContainer.register<UbglExternalMagGen>("UbglExternalMagGen", { useClass: UbglExternalMagGen });
 
         depContainer.registerType("InventoryMagGen", "BarrelInventoryMagGen");
         depContainer.registerType("InventoryMagGen", "ExternalInventoryMagGen");
         depContainer.registerType("InventoryMagGen", "InternalMagazineInventoryMagGen");
         depContainer.registerType("InventoryMagGen", "UbglExternalMagGen");
-
-
     }
 
-    private static registerHelpers(depContainer: DependencyContainer): void 
-    {
+    private static registerHelpers(depContainer: DependencyContainer): void {
         // Helpers
         depContainer.register<AssortHelper>("AssortHelper", { useClass: AssortHelper });
         depContainer.register<BotHelper>("BotHelper", { useClass: BotHelper });
@@ -515,7 +541,9 @@ export class Container
         depContainer.register<RagfairServerHelper>("RagfairServerHelper", { useClass: RagfairServerHelper });
         depContainer.register<RepairHelper>("RepairHelper", { useClass: RepairHelper });
         depContainer.register<TraderHelper>("TraderHelper", TraderHelper);
-        depContainer.register<TraderAssortHelper>("TraderAssortHelper", TraderAssortHelper, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<TraderAssortHelper>("TraderAssortHelper", TraderAssortHelper, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<TradeHelper>("TradeHelper", { useClass: TradeHelper });
         depContainer.register<NotifierHelper>("NotifierHelper", { useClass: NotifierHelper });
         depContainer.register<UtilityHelper>("UtilityHelper", UtilityHelper);
@@ -524,21 +552,23 @@ export class Container
         depContainer.register<NotificationSendHelper>("NotificationSendHelper", { useClass: NotificationSendHelper });
         depContainer.register<SecureContainerHelper>("SecureContainerHelper", { useClass: SecureContainerHelper });
         depContainer.register<ProbabilityHelper>("ProbabilityHelper", { useClass: ProbabilityHelper });
-        depContainer.register<BotWeaponGeneratorHelper>("BotWeaponGeneratorHelper", { useClass: BotWeaponGeneratorHelper });
+        depContainer.register<BotWeaponGeneratorHelper>("BotWeaponGeneratorHelper", {
+            useClass: BotWeaponGeneratorHelper,
+        });
         depContainer.register<BotDifficultyHelper>("BotDifficultyHelper", { useClass: BotDifficultyHelper });
         depContainer.register<RepeatableQuestHelper>("RepeatableQuestHelper", { useClass: RepeatableQuestHelper });
     }
 
-    private static registerLoaders(depContainer: DependencyContainer): void 
-    {
+    private static registerLoaders(depContainer: DependencyContainer): void {
         // Loaders
         depContainer.register<BundleLoader>("BundleLoader", BundleLoader, { lifecycle: Lifecycle.Singleton });
         depContainer.register<PreAkiModLoader>("PreAkiModLoader", PreAkiModLoader, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<PostAkiModLoader>("PostAkiModLoader", PostAkiModLoader, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<PostAkiModLoader>("PostAkiModLoader", PostAkiModLoader, {
+            lifecycle: Lifecycle.Singleton,
+        });
     }
 
-    private static registerCallbacks(depContainer: DependencyContainer): void 
-    {
+    private static registerCallbacks(depContainer: DependencyContainer): void {
         // Callbacks
         depContainer.register<BotCallbacks>("BotCallbacks", { useClass: BotCallbacks });
         depContainer.register<BundleCallbacks>("BundleCallbacks", { useClass: BundleCallbacks });
@@ -575,53 +605,100 @@ export class Container
         depContainer.register<WishlistCallbacks>("WishlistCallbacks", { useClass: WishlistCallbacks });
     }
 
-    private static registerServices(depContainer: DependencyContainer): void 
-    {
+    private static registerServices(depContainer: DependencyContainer): void {
         // Services
-        depContainer.register<ImageRouteService>("ImageRouteService", ImageRouteService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ImageRouteService>("ImageRouteService", ImageRouteService, {
+            lifecycle: Lifecycle.Singleton,
+        });
 
         depContainer.register<FenceService>("FenceService", FenceService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<PlayerService>("PlayerService", { useClass: PlayerService });
         depContainer.register<PaymentService>("PaymentService", { useClass: PaymentService });
-        depContainer.register<InsuranceService>("InsuranceService", InsuranceService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<TraderAssortService>("TraderAssortService", TraderAssortService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<InsuranceService>("InsuranceService", InsuranceService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<TraderAssortService>("TraderAssortService", TraderAssortService, {
+            lifecycle: Lifecycle.Singleton,
+        });
 
-        depContainer.register<RagfairPriceService>("RagfairPriceService", RagfairPriceService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<RagfairCategoriesService>("RagfairCategoriesService", RagfairCategoriesService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<RagfairOfferService>("RagfairOfferService", RagfairOfferService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<RagfairLinkedItemService>("RagfairLinkedItemService", RagfairLinkedItemService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<RagfairRequiredItemsService>("RagfairRequiredItemsService", RagfairRequiredItemsService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<RagfairPriceService>("RagfairPriceService", RagfairPriceService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<RagfairCategoriesService>("RagfairCategoriesService", RagfairCategoriesService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<RagfairOfferService>("RagfairOfferService", RagfairOfferService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<RagfairLinkedItemService>("RagfairLinkedItemService", RagfairLinkedItemService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<RagfairRequiredItemsService>("RagfairRequiredItemsService", RagfairRequiredItemsService, {
+            lifecycle: Lifecycle.Singleton,
+        });
 
-        depContainer.register<NotificationService>("NotificationService", NotificationService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<MatchLocationService>("MatchLocationService", MatchLocationService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<NotificationService>("NotificationService", NotificationService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<MatchLocationService>("MatchLocationService", MatchLocationService, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<ModCompilerService>("ModCompilerService", ModCompilerService);
-        depContainer.register<HashCacheService>("HashCacheService", HashCacheService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<HashCacheService>("HashCacheService", HashCacheService, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<LocaleService>("LocaleService", LocaleService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ProfileFixerService>("ProfileFixerService", ProfileFixerService);
         depContainer.register<RepairService>("RepairService", RepairService);
-        depContainer.register<BotLootCacheService>("BotLootCacheService", BotLootCacheService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<BotLootCacheService>("BotLootCacheService", BotLootCacheService, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<CustomItemService>("CustomItemService", CustomItemService);
         depContainer.register<BotEquipmentFilterService>("BotEquipmentFilterService", BotEquipmentFilterService);
-        depContainer.register<ProfileSnapshotService>("ProfileSnapshotService", ProfileSnapshotService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<ItemFilterService>("ItemFilterService", ItemFilterService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<BotGenerationCacheService>("BotGenerationCacheService", BotGenerationCacheService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<LocalisationService>("LocalisationService", LocalisationService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<CustomLocationWaveService>("CustomLocationWaveService", CustomLocationWaveService, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ProfileSnapshotService>("ProfileSnapshotService", ProfileSnapshotService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<ItemFilterService>("ItemFilterService", ItemFilterService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<BotGenerationCacheService>("BotGenerationCacheService", BotGenerationCacheService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<LocalisationService>("LocalisationService", LocalisationService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<CustomLocationWaveService>("CustomLocationWaveService", CustomLocationWaveService, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<OpenZoneService>("OpenZoneService", OpenZoneService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<ItemBaseClassService>("ItemBaseClassService", ItemBaseClassService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<BotEquipmentModPoolService>("BotEquipmentModPoolService", BotEquipmentModPoolService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<BotWeaponModLimitService>("BotWeaponModLimitService", BotWeaponModLimitService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<SeasonalEventService>("SeasonalEventService", SeasonalEventService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<MatchBotDetailsCacheService>("MatchBotDetailsCacheService", MatchBotDetailsCacheService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<RagfairTaxService>("RagfairTaxService", RagfairTaxService, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<TraderPurchasePersisterService>("TraderPurchasePersisterService", TraderPurchasePersisterService);
+        depContainer.register<ItemBaseClassService>("ItemBaseClassService", ItemBaseClassService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<BotEquipmentModPoolService>("BotEquipmentModPoolService", BotEquipmentModPoolService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<BotWeaponModLimitService>("BotWeaponModLimitService", BotWeaponModLimitService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<SeasonalEventService>("SeasonalEventService", SeasonalEventService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<MatchBotDetailsCacheService>("MatchBotDetailsCacheService", MatchBotDetailsCacheService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<RagfairTaxService>("RagfairTaxService", RagfairTaxService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<TraderPurchasePersisterService>(
+            "TraderPurchasePersisterService",
+            TraderPurchasePersisterService
+        );
         depContainer.register<PmcChatResponseService>("PmcChatResponseService", PmcChatResponseService);
         depContainer.register<GiftService>("GiftService", GiftService);
         depContainer.register<MailSendService>("MailSendService", MailSendService);
     }
 
-    private static registerServers(depContainer: DependencyContainer): void 
-    {
+    private static registerServers(depContainer: DependencyContainer): void {
         // Servers
         depContainer.register<DatabaseServer>("DatabaseServer", DatabaseServer, { lifecycle: Lifecycle.Singleton });
         depContainer.register<HttpServer>("HttpServer", HttpServer, { lifecycle: Lifecycle.Singleton });
@@ -631,12 +708,13 @@ export class Container
         depContainer.register<ConfigServer>("ConfigServer", ConfigServer, { lifecycle: Lifecycle.Singleton });
     }
 
-    private static registerControllers(depContainer: DependencyContainer): void 
-    {
+    private static registerControllers(depContainer: DependencyContainer): void {
         // Controllers
         depContainer.register<BotController>("BotController", { useClass: BotController });
         depContainer.register<ClientLogController>("ClientLogController", { useClass: ClientLogController });
-        depContainer.register<CustomizationController>("CustomizationController", { useClass: CustomizationController });
+        depContainer.register<CustomizationController>("CustomizationController", {
+            useClass: CustomizationController,
+        });
         depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController });
         depContainer.register<GameController>("GameController", { useClass: GameController });
         depContainer.register<HandbookController>("HandbookController", { useClass: HandbookController });
@@ -656,7 +734,9 @@ export class Container
         depContainer.register<QuestController>("QuestController", { useClass: QuestController });
         depContainer.register<RagfairController>("RagfairController", { useClass: RagfairController });
         depContainer.register<RepairController>("RepairController", { useClass: RepairController });
-        depContainer.register<RepeatableQuestController>("RepeatableQuestController", { useClass: RepeatableQuestController });
+        depContainer.register<RepeatableQuestController>("RepeatableQuestController", {
+            useClass: RepeatableQuestController,
+        });
         depContainer.register<TradeController>("TradeController", { useClass: TradeController });
         depContainer.register<TraderController>("TraderController", { useClass: TraderController });
         depContainer.register<WeatherController>("WeatherController", { useClass: WeatherController });

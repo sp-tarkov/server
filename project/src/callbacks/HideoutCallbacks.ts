@@ -22,126 +22,157 @@ import { IHideoutConfig } from "@spt-aki/models/spt/config/IHideoutConfig";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 
 @injectable()
-export class HideoutCallbacks implements OnUpdate
-{
+export class HideoutCallbacks implements OnUpdate {
     protected hideoutConfig: IHideoutConfig;
 
     constructor(
         @inject("HideoutController") protected hideoutController: HideoutController, // TODO: delay needed
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
     }
 
     /**
      * Handle HideoutUpgrade event
      */
-    public upgrade(pmcData: IPmcData, body: IHideoutUpgradeRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public upgrade(pmcData: IPmcData, body: IHideoutUpgradeRequestData, sessionID: string): IItemEventRouterResponse {
         return this.hideoutController.startUpgrade(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutUpgradeComplete event
      */
-    public upgradeComplete(pmcData: IPmcData, body: IHideoutUpgradeCompleteRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public upgradeComplete(
+        pmcData: IPmcData,
+        body: IHideoutUpgradeCompleteRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.upgradeComplete(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutPutItemsInAreaSlots
      */
-    public putItemsInAreaSlots(pmcData: IPmcData, body: IHideoutPutItemInRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public putItemsInAreaSlots(
+        pmcData: IPmcData,
+        body: IHideoutPutItemInRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.putItemsInAreaSlots(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutTakeItemsFromAreaSlots event
      */
-    public takeItemsFromAreaSlots(pmcData: IPmcData, body: IHideoutTakeItemOutRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public takeItemsFromAreaSlots(
+        pmcData: IPmcData,
+        body: IHideoutTakeItemOutRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.takeItemsFromAreaSlots(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutToggleArea event
      */
-    public toggleArea(pmcData: IPmcData, body: IHideoutToggleAreaRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public toggleArea(
+        pmcData: IPmcData,
+        body: IHideoutToggleAreaRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.toggleArea(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutSingleProductionStart event
      */
-    public singleProductionStart(pmcData: IPmcData, body: IHideoutSingleProductionStartRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public singleProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutSingleProductionStartRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.singleProductionStart(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutScavCaseProductionStart event
      */
-    public scavCaseProductionStart(pmcData: IPmcData, body: IHideoutScavCaseStartRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public scavCaseProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutScavCaseStartRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.scavCaseProductionStart(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutContinuousProductionStart
      */
-    public continuousProductionStart(pmcData: IPmcData, body: IHideoutContinuousProductionStartRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public continuousProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutContinuousProductionStartRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.continuousProductionStart(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutTakeProduction event
      */
-    public takeProduction(pmcData: IPmcData, body: IHideoutTakeProductionRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public takeProduction(
+        pmcData: IPmcData,
+        body: IHideoutTakeProductionRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.takeProduction(pmcData, body, sessionID);
     }
 
     /**
      * Handle HideoutQuickTimeEvent
      */
-    public handleQTEEvent(pmcData: IPmcData, request: IHandleQTEEventRequestData, sessionId: string): IItemEventRouterResponse
-    {
+    public handleQTEEvent(
+        pmcData: IPmcData,
+        request: IHandleQTEEventRequestData,
+        sessionId: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.handleQTEEventOutcome(sessionId, pmcData, request);
     }
 
     /**
      * Handle client/game/profile/items/moving - RecordShootingRangePoints
      */
-    public recordShootingRangePoints(pmcData: IPmcData, request: IRecordShootingRangePoints, sessionId: string): IItemEventRouterResponse
-    {
+    public recordShootingRangePoints(
+        pmcData: IPmcData,
+        request: IRecordShootingRangePoints,
+        sessionId: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.recordShootingRangePoints(sessionId, pmcData, request);
     }
 
     /**
      * Handle client/game/profile/items/moving - RecordShootingRangePoints
      */
-    public improveArea(pmcData: IPmcData, request: IHideoutImproveAreaRequestData, sessionId: string): IItemEventRouterResponse
-    {
+    public improveArea(
+        pmcData: IPmcData,
+        request: IHideoutImproveAreaRequestData,
+        sessionId: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.improveArea(sessionId, pmcData, request);
     }
 
     /**
      * Handle client/game/profile/items/moving - HideoutCancelProductionCommand
      */
-    public cancelProduction(pmcData: IPmcData, request: IHideoutCancelProductionRequestData, sessionId: string): IItemEventRouterResponse
-    {
+    public cancelProduction(
+        pmcData: IPmcData,
+        request: IHideoutCancelProductionRequestData,
+        sessionId: string
+    ): IItemEventRouterResponse {
         return this.hideoutController.cancelProduction(sessionId, pmcData, request);
     }
 
-    public async onUpdate(timeSinceLastRun: number): Promise<boolean>
-    {
-        if (timeSinceLastRun > this.hideoutConfig.runIntervalSeconds)
-        {
+    public async onUpdate(timeSinceLastRun: number): Promise<boolean> {
+        if (timeSinceLastRun > this.hideoutConfig.runIntervalSeconds) {
             this.hideoutController.update();
             return true;
         }
@@ -149,8 +180,7 @@ export class HideoutCallbacks implements OnUpdate
         return false;
     }
 
-    public getRoute() :string
-    {
+    public getRoute(): string {
         return "aki-hideout";
     }
 }

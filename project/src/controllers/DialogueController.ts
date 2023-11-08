@@ -23,8 +23,7 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
-export class DialogueController
-{
+export class DialogueController {
     protected coreConfig: ICoreConfig;
 
     constructor(
@@ -38,17 +37,14 @@ export class DialogueController
         @inject("GiftService") protected giftService: GiftService,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
     }
 
     /** Handle onUpdate spt event */
-    public update(): void
-    {
+    public update(): void {
         const profiles = this.saveServer.getProfiles();
-        for (const sessionID in profiles)
-        {
+        for (const sessionID in profiles) {
             this.removeExpiredItemsFromMessages(sessionID);
         }
     }
@@ -58,13 +54,12 @@ export class DialogueController
      * @returns IGetFriendListDataResponse
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getFriendList(sessionID: string): IGetFriendListDataResponse
-    {
+    public getFriendList(sessionID: string): IGetFriendListDataResponse {
         // Force a fake friend called SPT into friend list
         return {
-            "Friends": [this.getSptFriendData()],
-            "Ignore": [],
-            "InIgnoreList": []
+            Friends: [this.getSptFriendData()],
+            Ignore: [],
+            InIgnoreList: [],
         };
     }
 
@@ -75,11 +70,9 @@ export class DialogueController
      * @param sessionID Session Id
      * @returns array of dialogs
      */
-    public generateDialogueList(sessionID: string): DialogueInfo[]
-    {
+    public generateDialogueList(sessionID: string): DialogueInfo[] {
         const data: DialogueInfo[] = [];
-        for (const dialogueId in this.dialogueHelper.getDialogsForProfile(sessionID))
-        {
+        for (const dialogueId in this.dialogueHelper.getDialogsForProfile(sessionID)) {
             data.push(this.getDialogueInfo(dialogueId, sessionID));
         }
 
@@ -92,8 +85,7 @@ export class DialogueController
      * @param sessionID Session Id
      * @returns DialogueInfo
      */
-    public getDialogueInfo(dialogueID: string, sessionID: string): DialogueInfo
-    {
+    public getDialogueInfo(dialogueID: string, sessionID: string): DialogueInfo {
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionID);
         const dialogue = dialogs[dialogueID];
 
@@ -104,7 +96,7 @@ export class DialogueController
             new: dialogue.new,
             attachmentsNew: dialogue.attachmentsNew,
             pinned: dialogue.pinned,
-            Users: this.getDialogueUsers(dialogue, dialogue.type, sessionID)
+            Users: this.getDialogueUsers(dialogue, dialogue.type, sessionID),
         };
 
         return result;
@@ -116,15 +108,15 @@ export class DialogueController
      * @param sessionID Player id
      * @returns IUserDialogInfo array
      */
-    public getDialogueUsers(dialog: Dialogue, messageType: MessageType, sessionID: string): IUserDialogInfo[]
-    {
+    public getDialogueUsers(dialog: Dialogue, messageType: MessageType, sessionID: string): IUserDialogInfo[] {
         const profile = this.saveServer.getProfile(sessionID);
 
         // User to user messages are special in that they need the player to exist in them, add if they don't
-        if (messageType === MessageType.USER_MESSAGE && !dialog.Users?.find(x => x._id === profile.characters.pmc._id))
-        {
-            if (!dialog.Users)
-            {
+        if (
+            messageType === MessageType.USER_MESSAGE &&
+            !dialog.Users?.find((x) => x._id === profile.characters.pmc._id)
+        ) {
+            if (!dialog.Users) {
                 dialog.Users = [];
             }
 
@@ -134,8 +126,8 @@ export class DialogueController
                     Level: profile.characters.pmc.Info.Level,
                     Nickname: profile.characters.pmc.Info.Nickname,
                     Side: profile.characters.pmc.Info.Side,
-                    MemberCategory: profile.characters.pmc.Info.MemberCategory
-                }
+                    MemberCategory: profile.characters.pmc.Info.MemberCategory,
+                },
             });
         }
 
@@ -151,8 +143,10 @@ export class DialogueController
      * @param sessionId Session id
      * @returns IGetMailDialogViewResponseData object
      */
-    public generateDialogueView(request: IGetMailDialogViewRequestData, sessionId: string): IGetMailDialogViewResponseData
-    {
+    public generateDialogueView(
+        request: IGetMailDialogViewRequestData,
+        sessionId: string
+    ): IGetMailDialogViewResponseData {
         const dialogueId = request.dialogId;
         const fullProfile = this.saveServer.getProfile(sessionId);
         const dialogue = this.getDialogByIdFromProfile(fullProfile, request);
@@ -163,10 +157,10 @@ export class DialogueController
         // Set number of new attachments, but ignore those that have expired.
         dialogue.attachmentsNew = this.getUnreadMessagesWithAttachmentsCount(sessionId, dialogueId);
 
-        return { 
+        return {
             messages: dialogue.messages,
             profiles: this.getProfilesForMail(fullProfile, dialogue.Users),
-            hasMessagesWithRewards: this.messagesHaveUncollectedRewards(dialogue.messages)
+            hasMessagesWithRewards: this.messagesHaveUncollectedRewards(dialogue.messages),
         };
     }
 
@@ -176,21 +170,18 @@ export class DialogueController
      * @param request get dialog request (params used when dialog doesnt exist in profile)
      * @returns Dialogue
      */
-    protected getDialogByIdFromProfile(profile: IAkiProfile, request: IGetMailDialogViewRequestData): Dialogue
-    {
-        if (!profile.dialogues[request.dialogId])
-        {
+    protected getDialogByIdFromProfile(profile: IAkiProfile, request: IGetMailDialogViewRequestData): Dialogue {
+        if (!profile.dialogues[request.dialogId]) {
             profile.dialogues[request.dialogId] = {
                 _id: request.dialogId,
                 attachmentsNew: 0,
                 pinned: false,
                 messages: [],
                 new: 0,
-                type: request.type
+                type: request.type,
             };
 
-            if (request.type === MessageType.USER_MESSAGE)
-            {
+            if (request.type === MessageType.USER_MESSAGE) {
                 profile.dialogues[request.dialogId].Users = [];
                 profile.dialogues[request.dialogId].Users.push(this.getSptFriendData(request.dialogId));
             }
@@ -204,16 +195,13 @@ export class DialogueController
      * @param dialogUsers The participants of the mail
      * @returns IUserDialogInfo array
      */
-    protected getProfilesForMail(fullProfile: IAkiProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
-    {
+    protected getProfilesForMail(fullProfile: IAkiProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[] {
         const result: IUserDialogInfo[] = [];
-        if (dialogUsers)
-        {
+        if (dialogUsers) {
             result.push(...dialogUsers);
 
             // Player doesnt exist, add them in before returning
-            if (!result.find(x => x._id === fullProfile.info.id))
-            {
+            if (!result.find((x) => x._id === fullProfile.info.id)) {
                 const pmcProfile = fullProfile.characters.pmc;
                 result.push({
                     _id: fullProfile.info.id,
@@ -221,8 +209,8 @@ export class DialogueController
                         Nickname: pmcProfile.Info.Nickname,
                         Side: pmcProfile.Info.Side,
                         Level: pmcProfile.Info.Level,
-                        MemberCategory: pmcProfile.Info.MemberCategory
-                    }
+                        MemberCategory: pmcProfile.Info.MemberCategory,
+                    },
                 });
             }
         }
@@ -236,14 +224,11 @@ export class DialogueController
      * @param dialogueID Dialog id
      * @returns Count of messages with attachments
      */
-    protected getUnreadMessagesWithAttachmentsCount(sessionID: string, dialogueID: string): number
-    {
+    protected getUnreadMessagesWithAttachmentsCount(sessionID: string, dialogueID: string): number {
         let newAttachmentCount = 0;
         const activeMessages = this.getActiveMessagesFromDialog(sessionID, dialogueID);
-        for (const message of activeMessages)
-        {
-            if (message.hasRewards && !message.rewardCollected)
-            {
+        for (const message of activeMessages) {
+            if (message.hasRewards && !message.rewardCollected) {
                 newAttachmentCount++;
             }
         }
@@ -256,9 +241,8 @@ export class DialogueController
      * @param messages Messages to check
      * @returns true if uncollected rewards found
      */
-    protected messagesHaveUncollectedRewards(messages: Message[]): boolean
-    {
-        return messages.some(x => x.items?.data?.length > 0);
+    protected messagesHaveUncollectedRewards(messages: Message[]): boolean {
+        return messages.some((x) => x.items?.data?.length > 0);
     }
 
     /**
@@ -267,12 +251,10 @@ export class DialogueController
      * @param dialogueId id of the dialog to remove
      * @param sessionId Player id
      */
-    public removeDialogue(dialogueId: string, sessionId: string): void
-    {
+    public removeDialogue(dialogueId: string, sessionId: string): void {
         const profile = this.saveServer.getProfile(sessionId);
         const dialog = profile.dialogues[dialogueId];
-        if (!dialog)
-        {
+        if (!dialog) {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
 
             return;
@@ -282,11 +264,9 @@ export class DialogueController
     }
 
     /** Handle client/mail/dialog/pin && Handle client/mail/dialog/unpin */
-    public setDialoguePin(dialogueId: string, shouldPin: boolean, sessionId: string): void
-    {
+    public setDialoguePin(dialogueId: string, shouldPin: boolean, sessionId: string): void {
         const dialog = this.dialogueHelper.getDialogsForProfile(sessionId)[dialogueId];
-        if (!dialog)
-        {
+        if (!dialog) {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
 
             return;
@@ -301,18 +281,15 @@ export class DialogueController
      * @param dialogueIds Dialog ids to set as read
      * @param sessionId Player profile id
      */
-    public setRead(dialogueIds: string[], sessionId: string): void
-    {
+    public setRead(dialogueIds: string[], sessionId: string): void {
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
-        if (!dialogs)
-        {
+        if (!dialogs) {
             this.logger.error(`No dialog object in profile: ${sessionId}`);
 
             return;
         }
 
-        for (const dialogId of dialogueIds)
-        {
+        for (const dialogId of dialogueIds) {
             dialogs[dialogId].new = 0;
             dialogs[dialogId].attachmentsNew = 0;
         }
@@ -323,14 +300,12 @@ export class DialogueController
      * Get all uncollected items attached to mail in a particular dialog
      * @param dialogueId Dialog to get mail attachments from
      * @param sessionId Session id
-     * @returns 
+     * @returns
      */
-    public getAllAttachments(dialogueId: string, sessionId: string): IGetAllAttachmentsResponse
-    {
+    public getAllAttachments(dialogueId: string, sessionId: string): IGetAllAttachmentsResponse {
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
         const dialog = dialogs[dialogueId];
-        if (!dialog)
-        {
+        if (!dialog) {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
 
             return;
@@ -338,26 +313,24 @@ export class DialogueController
 
         // Removes corner 'new messages' tag
         dialog.attachmentsNew = 0;
-        
+
         const activeMessages = this.getActiveMessagesFromDialog(sessionId, dialogueId);
         const messagesWithAttachments = this.getMessagesWithAttachments(activeMessages);
 
-        return { 
+        return {
             messages: messagesWithAttachments,
             profiles: [],
-            hasMessagesWithRewards: this.messagesHaveUncollectedRewards(messagesWithAttachments)
+            hasMessagesWithRewards: this.messagesHaveUncollectedRewards(messagesWithAttachments),
         };
     }
 
     /** client/mail/msg/send */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sendMessage(sessionId: string, request: ISendMessageRequest): string
-    {
+    public sendMessage(sessionId: string, request: ISendMessageRequest): string {
         this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);
 
         // Handle when player types a keyword to sptFriend user
-        if (request.dialogId.includes("sptFriend"))
-        {
+        if (request.dialogId.includes("sptFriend")) {
             this.handleChatWithSPTFriend(sessionId, request);
         }
 
@@ -369,64 +342,108 @@ export class DialogueController
      * @param sessionId Session Id
      * @param request send message request
      */
-    protected handleChatWithSPTFriend(sessionId: string, request: ISendMessageRequest): void
-    {
+    protected handleChatWithSPTFriend(sessionId: string, request: ISendMessageRequest): void {
         const sender = this.profileHelper.getPmcProfile(sessionId);
 
         const sptFriendUser = this.getSptFriendData();
 
         const giftSent = this.giftService.sendGiftToPlayer(sessionId, request.text);
 
-        if (giftSent === GiftSentResult.SUCCESS) 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["Hey! you got the right code!", "A secret code, how exciting!", "You found a gift code!"]));
+        if (giftSent === GiftSentResult.SUCCESS) {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue([
+                    "Hey! you got the right code!",
+                    "A secret code, how exciting!",
+                    "You found a gift code!",
+                ])
+            );
 
             return;
         }
 
-        if (giftSent === GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED) 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"]));
+        if (giftSent === GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED) {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"])
+            );
 
             return;
         }
 
-        if (request.text.toLowerCase().includes("love you")) 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["That's quite forward but i love you too in a purely chatbot-human way", "I love you too buddy :3!", "uwu", `love you too ${sender?.Info?.Nickname}`]));
+        if (request.text.toLowerCase().includes("love you")) {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue([
+                    "That's quite forward but i love you too in a purely chatbot-human way",
+                    "I love you too buddy :3!",
+                    "uwu",
+                    `love you too ${sender?.Info?.Nickname}`,
+                ])
+            );
         }
 
-        if (request.text.toLowerCase() === "spt") 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"]));
+        if (request.text.toLowerCase() === "spt") {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"])
+            );
         }
 
-        if (["hello", "hi", "sup", "yo", "hey"].includes(request.text.toLowerCase())) 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["Howdy", "Hi", "Greetings", "Hello", "bonjor", "Yo", "Sup", "Heyyyyy", "Hey there", `Hello ${sender?.Info?.Nickname}`]));
+        if (["hello", "hi", "sup", "yo", "hey"].includes(request.text.toLowerCase())) {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue([
+                    "Howdy",
+                    "Hi",
+                    "Greetings",
+                    "Hello",
+                    "bonjor",
+                    "Yo",
+                    "Sup",
+                    "Heyyyyy",
+                    "Hey there",
+                    `Hello ${sender?.Info?.Nickname}`,
+                ])
+            );
         }
 
-        if (request.text.toLowerCase() === "nikita") 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["I know that guy!", "Cool guy, he made EFT!", "Legend", "Remember when he said webel-webel-webel-webel, classic nikita moment"]));
+        if (request.text.toLowerCase() === "nikita") {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue([
+                    "I know that guy!",
+                    "Cool guy, he made EFT!",
+                    "Legend",
+                    "Remember when he said webel-webel-webel-webel, classic nikita moment",
+                ])
+            );
         }
 
-        if (request.text.toLowerCase() === "are you a bot") 
-        {
-            this.mailSendService.sendUserMessageToPlayer(sessionId, sptFriendUser, this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"]));
+        if (request.text.toLowerCase() === "are you a bot") {
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"])
+            );
         }
     }
 
-    protected getSptFriendData(friendId = "sptFriend"): IUserDialogInfo
-    {
+    protected getSptFriendData(friendId = "sptFriend"): IUserDialogInfo {
         return {
             _id: friendId,
             info: {
                 Level: 1,
                 MemberCategory: MemberCategory.DEVELOPER,
                 Nickname: this.coreConfig.sptFriendNickname,
-                Side: "Usec"
-            }
+                Side: "Usec",
+            },
         };
     }
 
@@ -436,11 +453,10 @@ export class DialogueController
      * @param dialogueId Dialog to get mail attachments from
      * @returns Message array
      */
-    protected getActiveMessagesFromDialog(sessionId: string, dialogueId: string): Message[]
-    {
+    protected getActiveMessagesFromDialog(sessionId: string, dialogueId: string): Message[] {
         const timeNow = this.timeUtil.getTimestamp();
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
-        return dialogs[dialogueId].messages.filter(x => timeNow < (x.dt + x.maxStorageTime));
+        return dialogs[dialogueId].messages.filter((x) => timeNow < x.dt + x.maxStorageTime);
     }
 
     /**
@@ -448,19 +464,16 @@ export class DialogueController
      * @param messages Messages to parse
      * @returns messages with items to collect
      */
-    protected getMessagesWithAttachments(messages: Message[]): Message[]
-    {
-        return messages.filter(x => x.items?.data?.length > 0);
+    protected getMessagesWithAttachments(messages: Message[]): Message[] {
+        return messages.filter((x) => x.items?.data?.length > 0);
     }
 
     /**
      * Delete expired items from all messages in player profile. triggers when updating traders.
      * @param sessionId Session id
      */
-    protected removeExpiredItemsFromMessages(sessionId: string): void
-    {
-        for (const dialogueId in this.dialogueHelper.getDialogsForProfile(sessionId))
-        {
+    protected removeExpiredItemsFromMessages(sessionId: string): void {
+        for (const dialogueId in this.dialogueHelper.getDialogsForProfile(sessionId)) {
             this.removeExpiredItemsFromMessage(sessionId, dialogueId);
         }
     }
@@ -470,19 +483,15 @@ export class DialogueController
      * @param sessionId Session id
      * @param dialogueId Dialog id
      */
-    protected removeExpiredItemsFromMessage(sessionId: string, dialogueId: string): void
-    {
+    protected removeExpiredItemsFromMessage(sessionId: string, dialogueId: string): void {
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
         const dialog = dialogs[dialogueId];
-        if (!dialog.messages)
-        {
+        if (!dialog.messages) {
             return;
         }
 
-        for (const message of dialog.messages)
-        {
-            if (this.messageHasExpired(message))
-            {
+        for (const message of dialog.messages) {
+            if (this.messageHasExpired(message)) {
                 message.items = {};
             }
         }
@@ -493,8 +502,7 @@ export class DialogueController
      * @param message Message to check expiry of
      * @returns true or false
      */
-    protected messageHasExpired(message: Message): boolean
-    {
-        return (this.timeUtil.getTimestamp()) > (message.dt + message.maxStorageTime);
+    protected messageHasExpired(message: Message): boolean {
+        return this.timeUtil.getTimestamp() > message.dt + message.maxStorageTime;
     }
 }

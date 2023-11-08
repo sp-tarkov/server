@@ -10,8 +10,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class CustomLocationWaveService
-{
+export class CustomLocationWaveService {
     protected locationConfig: ILocationConfig;
 
     constructor(
@@ -20,8 +19,7 @@ export class CustomLocationWaveService
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
 
@@ -30,8 +28,7 @@ export class CustomLocationWaveService
      * @param locationId e.g. factory4_day, bigmap
      * @param waveToAdd Boss wave to add to map
      */
-    public addBossWaveToMap(locationId: string, waveToAdd: BossLocationSpawn): void
-    {
+    public addBossWaveToMap(locationId: string, waveToAdd: BossLocationSpawn): void {
         this.locationConfig.customWaves.boss[locationId].push(waveToAdd);
     }
 
@@ -40,8 +37,7 @@ export class CustomLocationWaveService
      * @param locationId e.g. factory4_day, bigmap
      * @param waveToAdd Wave to add to map
      */
-    public addNormalWaveToMap(locationId: string, waveToAdd: Wave): void
-    {
+    public addNormalWaveToMap(locationId: string, waveToAdd: Wave): void {
         this.locationConfig.customWaves.normal[locationId].push(waveToAdd);
     }
 
@@ -49,8 +45,7 @@ export class CustomLocationWaveService
      * Clear all custom boss waves from a map
      * @param locationId e.g. factory4_day, bigmap
      */
-    public clearBossWavesForMap(locationId: string): void
-    {
+    public clearBossWavesForMap(locationId: string): void {
         this.locationConfig.customWaves.boss[locationId] = [];
     }
 
@@ -58,41 +53,35 @@ export class CustomLocationWaveService
      * Clear all custom normal waves from a map
      * @param locationId e.g. factory4_day, bigmap
      */
-    public clearNormalWavesForMap(locationId: string): void
-    {
+    public clearNormalWavesForMap(locationId: string): void {
         this.locationConfig.customWaves.normal[locationId] = [];
     }
 
     /**
      * Add custom boss and normal waves to maps found in config/location.json to db
      */
-    public applyWaveChangesToAllMaps(): void
-    {
+    public applyWaveChangesToAllMaps(): void {
         const bossWavesToApply = this.locationConfig.customWaves.boss;
         const normalWavesToApply = this.locationConfig.customWaves.normal;
 
-        for (const mapKey in bossWavesToApply)
-        {
+        for (const mapKey in bossWavesToApply) {
             const location: ILocationBase = this.databaseServer.getTables().locations[mapKey].base;
-            for (const bossWave of bossWavesToApply[mapKey])
-            {
-                if (location.BossLocationSpawn.find(x => x.sptId === bossWave.sptId))
-                {
+            for (const bossWave of bossWavesToApply[mapKey]) {
+                if (location.BossLocationSpawn.find((x) => x.sptId === bossWave.sptId)) {
                     // Already exists, skip
                     continue;
                 }
                 location.BossLocationSpawn.push(bossWave);
-                this.logger.debug(`Added custom boss wave to ${mapKey} of type ${bossWave.BossName}, time: ${bossWave.Time}, chance: ${bossWave.BossChance}, zone: ${bossWave.BossZone}`);
+                this.logger.debug(
+                    `Added custom boss wave to ${mapKey} of type ${bossWave.BossName}, time: ${bossWave.Time}, chance: ${bossWave.BossChance}, zone: ${bossWave.BossZone}`
+                );
             }
         }
 
-        for (const mapKey in normalWavesToApply)
-        {
+        for (const mapKey in normalWavesToApply) {
             const location: ILocationBase = this.databaseServer.getTables().locations[mapKey].base;
-            for (const normalWave of normalWavesToApply[mapKey])
-            {
-                if (location.waves.find(x => x.sptId === normalWave.sptId))
-                {
+            for (const normalWave of normalWavesToApply[mapKey]) {
+                if (location.waves.find((x) => x.sptId === normalWave.sptId)) {
                     // Already exists, skip
                     continue;
                 }

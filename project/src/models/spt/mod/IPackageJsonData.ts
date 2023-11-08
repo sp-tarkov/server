@@ -1,5 +1,4 @@
-export interface IPackageJsonData
-{
+export interface IPackageJsonData {
     incompatibilities?: string[];
     loadBefore?: string[];
     loadAfter?: string[];

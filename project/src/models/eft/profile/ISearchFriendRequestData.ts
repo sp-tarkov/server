@@ -1,4 +1,3 @@
-export interface ISearchFriendRequestData
-{
-    nickname: string
+export interface ISearchFriendRequestData {
+    nickname: string;
 }

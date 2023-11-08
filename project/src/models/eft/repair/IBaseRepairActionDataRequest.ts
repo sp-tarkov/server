@@ -1,4 +1,3 @@
-export interface IBaseRepairActionDataRequest
-{
-    Action: string
+export interface IBaseRepairActionDataRequest {
+    Action: string;
 }

@@ -12,8 +12,7 @@ import { ICommand } from "@spt-aki/models/spt/utils/ICommand";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { IUUidGenerator } from "@spt-aki/models/spt/utils/IUuidGenerator";
 
-export abstract class AbstractWinstonLogger implements ILogger 
-{
+export abstract class AbstractWinstonLogger implements ILogger {
     protected showDebugInConsole = false;
     protected filePath: string;
     protected logLevels = {
@@ -23,7 +22,7 @@ export abstract class AbstractWinstonLogger implements ILogger
             succ: 2,
             info: 3,
             custom: 4,
-            debug: 5
+            debug: 5,
         },
         colors: {
             error: "red",
@@ -31,7 +30,7 @@ export abstract class AbstractWinstonLogger implements ILogger
             succ: "green",
             info: "white",
             custom: "black",
-            debug: "gray"
+            debug: "gray",
         },
         bgColors: {
             default: "",
@@ -42,44 +41,36 @@ export abstract class AbstractWinstonLogger implements ILogger
             blueBG: "blueBG",
             magentaBG: "magentaBG",
             cyanBG: "cyanBG",
-            whiteBG: "whiteBG"
-        }
+            whiteBG: "whiteBG",
+        },
     };
     protected logger: winston.Logger & SptLogger;
     protected writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>;
 
-    constructor(
-        protected asyncQueue: IAsyncQueue,
-        protected uuidGenerator: IUUidGenerator
-    ) 
-    {
+    constructor(protected asyncQueue: IAsyncQueue, protected uuidGenerator: IUUidGenerator) {
         this.filePath = `${this.getFilePath()}${this.getFileName()}`;
         this.writeFilePromisify = promisify(fs.writeFile);
         this.showDebugInConsole = globalThis.G_DEBUG_CONFIGURATION;
-        if (!fs.existsSync(this.getFilePath())) 
-        {
+        if (!fs.existsSync(this.getFilePath())) {
             fs.mkdirSync(this.getFilePath(), { recursive: true });
         }
 
         const transportsList: winston.transport[] = [];
 
-        if (this.isLogToConsole())
-        {
+        if (this.isLogToConsole()) {
             transportsList.push(
                 new transports.Console({
                     level: this.showDebugInConsole ? "debug" : "custom",
                     format: format.combine(
                         format.colorize({ all: true, colors: this.logLevels.colors }),
-                        format.printf(({ message }) => 
-                        {
+                        format.printf(({ message }) => {
                             return `${message}`;
                         })
-                    )
+                    ),
                 })
             );
         }
-        if (this.isLogToFile())
-        {
+        if (this.isLogToFile()) {
             transportsList.push(
                 new DailyRotateFile({
                     level: "debug",
@@ -92,11 +83,10 @@ export abstract class AbstractWinstonLogger implements ILogger
                         format.timestamp(),
                         format.align(),
                         format.json(),
-                        format.printf(({ timestamp, level, message }) => 
-                        {
+                        format.printf(({ timestamp, level, message }) => {
                             return `[${timestamp}] ${level}: ${message}`;
                         })
-                    )
+                    ),
                 })
             );
         }
@@ -104,13 +94,11 @@ export abstract class AbstractWinstonLogger implements ILogger
         winston.addColors(this.logLevels.colors);
         this.logger = createLogger({
             levels: this.logLevels.levels,
-            transports: [...transportsList]
+            transports: [...transportsList],
         });
 
-        if (this.isLogExceptions())
-        {
-            process.on("uncaughtException", (error) => 
-            {
+        if (this.isLogExceptions()) {
+            process.on("uncaughtException", (error) => {
                 this.error(`${error.name}: ${error.message}`);
                 this.error(error.stack);
             });
@@ -124,94 +112,89 @@ export abstract class AbstractWinstonLogger implements ILogger
     protected abstract isLogExceptions(): boolean;
 
     protected abstract getFilePath(): string;
-    
+
     protected abstract getFileName(): string;
-    
-    protected getLogMaxSize(): string
-    {
+
+    protected getLogMaxSize(): string {
         return "5m";
     }
 
-    protected getLogMaxFiles(): string
-    {
+    protected getLogMaxFiles(): string {
         return "14d";
     }
 
-    public async writeToLogFile(data: string | Daum): Promise<void> 
-    {
+    public async writeToLogFile(data: string | Daum): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.writeFilePromisify(this.filePath, `${data}\n`, true)
+            cmd: async () => await this.writeFilePromisify(this.filePath, `${data}\n`, true),
         };
         await this.asyncQueue.waitFor(command);
     }
 
-    public async log(data: string | Error | Record<string, unknown>, color: string, backgroundColor = "" ): Promise<void> 
-    {
+    public async log(
+        data: string | Error | Record<string, unknown>,
+        color: string,
+        backgroundColor = ""
+    ): Promise<void> {
         const textColor = `${color} ${backgroundColor}`.trimEnd();
         const tmpLogger = createLogger({
             levels: { custom: 0 },
             level: "custom",
-            transports: [new transports.Console({
-                format: format.combine(
-                    format.colorize({ all: true, colors: { custom: textColor } }),
-                    format.printf(({ message }) => message)
-                )
-            })]
+            transports: [
+                new transports.Console({
+                    format: format.combine(
+                        format.colorize({ all: true, colors: { custom: textColor } }),
+                        format.printf(({ message }) => message)
+                    ),
+                }),
+            ],
         });
 
         let command: ICommand;
 
-        if (typeof (data) === "string") 
-        {
+        if (typeof data === "string") {
             command = {
                 uuid: this.uuidGenerator.generate(),
-                cmd: async () => await tmpLogger.log("custom", data)
+                cmd: async () => await tmpLogger.log("custom", data),
             };
-        }
-        else 
-        {
+        } else {
             command = {
                 uuid: this.uuidGenerator.generate(),
-                cmd: async () => await tmpLogger.log("custom", JSON.stringify(data, null, 4))
+                cmd: async () => await tmpLogger.log("custom", JSON.stringify(data, null, 4)),
             };
         }
 
         await this.asyncQueue.waitFor(command);
     }
 
-    public async error(data: string | Record<string, unknown>): Promise<void> 
-    {
+    public async error(data: string | Record<string, unknown>): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.logger.error(data)
+            cmd: async () => await this.logger.error(data),
         };
         await this.asyncQueue.waitFor(command);
     }
 
-    public async warning(data: string | Record<string, unknown>): Promise<void> 
-    {
+    public async warning(data: string | Record<string, unknown>): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.logger.warn(data)
+            cmd: async () => await this.logger.warn(data),
         };
         await this.asyncQueue.waitFor(command);
     }
 
-    public async success(data: string | Record<string, unknown>): Promise<void> 
-    {
+    public async success(data: string | Record<string, unknown>): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.logger.succ(data)
+            cmd: async () => await this.logger.succ(data),
         };
         await this.asyncQueue.waitFor(command);
     }
 
-    public async info(data: string | Record<string, unknown>): Promise<void> 
-    {
+    public async info(data: string | Record<string, unknown>): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.logger.info(data)
+            cmd: async () => await this.logger.info(data),
         };
         await this.asyncQueue.waitFor(command);
     }
@@ -222,32 +205,31 @@ export abstract class AbstractWinstonLogger implements ILogger
      * @param textColor color of text
      * @param backgroundColor color of background
      */
-    public async logWithColor(data: string | Record<string, unknown>, textColor: LogTextColor, backgroundColor = LogBackgroundColor.DEFAULT): Promise<void>
-    {
+    public async logWithColor(
+        data: string | Record<string, unknown>,
+        textColor: LogTextColor,
+        backgroundColor = LogBackgroundColor.DEFAULT
+    ): Promise<void> {
         const command: ICommand = {
             uuid: this.uuidGenerator.generate(),
-            cmd: async () => await this.log(data, textColor.toString(), backgroundColor.toString())
+            cmd: async () => await this.log(data, textColor.toString(), backgroundColor.toString()),
         };
 
         await this.asyncQueue.waitFor(command);
     }
 
-    public async debug(data: string | Record<string, unknown>, onlyShowInConsole = false): Promise<void> 
-    {
+    public async debug(data: string | Record<string, unknown>, onlyShowInConsole = false): Promise<void> {
         let command: ICommand;
 
-        if (onlyShowInConsole) 
-        {
+        if (onlyShowInConsole) {
             command = {
                 uuid: this.uuidGenerator.generate(),
-                cmd: async () => await this.log(data, this.logLevels.colors.debug)
+                cmd: async () => await this.log(data, this.logLevels.colors.debug),
             };
-        }
-        else 
-        {
+        } else {
             command = {
                 uuid: this.uuidGenerator.generate(),
-                cmd: async () => await this.logger.debug(data)
+                cmd: async () => await this.logger.debug(data),
             };
         }
 

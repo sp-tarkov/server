@@ -1,7 +1,6 @@
-export enum GiftSentResult
-    {
+export enum GiftSentResult {
     FAILED_UNKNOWN = 1,
     FAILED_GIFT_ALREADY_RECEIVED = 2,
     FAILED_GIFT_DOESNT_EXIST = 3,
-    SUCCESS = 4
+    SUCCESS = 4,
 }

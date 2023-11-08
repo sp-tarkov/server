@@ -1,5 +1,4 @@
-export interface IExtendOfferRequestData 
-{
-    offerId: string
-    renewalTime: number
+export interface IExtendOfferRequestData {
+    offerId: string;
+    renewalTime: number;
 }

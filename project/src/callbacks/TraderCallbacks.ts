@@ -9,44 +9,42 @@ import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyR
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class TraderCallbacks implements OnLoad, OnUpdate
-{
+export class TraderCallbacks implements OnLoad, OnUpdate {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("TraderController") protected traderController: TraderController) // TODO: delay required
-    {
+        @inject("TraderController") protected traderController: TraderController
+    ) {
+        // TODO: delay required
     }
-    public async onLoad(): Promise<void>
-    {
+    public async onLoad(): Promise<void> {
         this.traderController.load();
     }
 
-    public async onUpdate(): Promise<boolean>
-    {
+    public async onUpdate(): Promise<boolean> {
         return this.traderController.update();
     }
 
-    public getRoute(): string 
-    {
+    public getRoute(): string {
         return "aki-traders";
     }
 
     /** Handle client/trading/api/traderSettings */
-    public getTraderSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderBase[]>
-    {
+    public getTraderSettings(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<ITraderBase[]> {
         return this.httpResponse.getBody(this.traderController.getAllTraders(sessionID));
     }
 
     /** Handle client/trading/api/getTrader */
-    public getTrader(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderBase>
-    {
+    public getTrader(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderBase> {
         const traderID = url.replace("/client/trading/api/getTrader/", "");
         return this.httpResponse.getBody(this.traderController.getTrader(sessionID, traderID));
     }
 
     /** Handle client/trading/api/getTraderAssort */
-    public getAssort(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderAssort>
-    {
+    public getAssort(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderAssort> {
         const traderID = url.replace("/client/trading/api/getTraderAssort/", "");
         return this.httpResponse.getBody(this.traderController.getAssort(sessionID, traderID));
     }

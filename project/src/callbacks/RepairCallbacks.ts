@@ -7,11 +7,8 @@ import { IRepairActionDataRequest } from "@spt-aki/models/eft/repair/IRepairActi
 import { ITraderRepairActionDataRequest } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
 
 @injectable()
-export class RepairCallbacks
-{
-    constructor(
-        @inject("RepairController") protected repairController: RepairController)
-    { }
+export class RepairCallbacks {
+    constructor(@inject("RepairController") protected repairController: RepairController) {}
 
     /**
      * Handle TraderRepair event
@@ -21,8 +18,11 @@ export class RepairCallbacks
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
-    public traderRepair(pmcData: IPmcData, traderRepairRequest: ITraderRepairActionDataRequest, sessionID: string): IItemEventRouterResponse
-    {
+    public traderRepair(
+        pmcData: IPmcData,
+        traderRepairRequest: ITraderRepairActionDataRequest,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.repairController.traderRepair(sessionID, traderRepairRequest, pmcData);
     }
 
@@ -34,8 +34,11 @@ export class RepairCallbacks
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
-    public repair(pmcData: IPmcData, repairRequest: IRepairActionDataRequest, sessionID: string): IItemEventRouterResponse
-    {
+    public repair(
+        pmcData: IPmcData,
+        repairRequest: IRepairActionDataRequest,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.repairController.repairWithKit(sessionID, repairRequest, pmcData);
     }
 }

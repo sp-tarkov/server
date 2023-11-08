@@ -10,12 +10,19 @@ import { IHandoverQuestRequestData } from "@spt-aki/models/eft/quests/IHandoverQ
 import { IListQuestsRequestData } from "@spt-aki/models/eft/quests/IListQuestsRequestData";
 import { IRepeatableQuestChangeRequest } from "@spt-aki/models/eft/quests/IRepeatableQuestChangeRequest";
 
-export interface IQuestCallbacks
-{
-    changeRepeatableQuest(pmcData: IPmcData, body: IRepeatableQuestChangeRequest, sessionID: string): IItemEventRouterResponse;
+export interface IQuestCallbacks {
+    changeRepeatableQuest(
+        pmcData: IPmcData,
+        body: IRepeatableQuestChangeRequest,
+        sessionID: string
+    ): IItemEventRouterResponse;
     acceptQuest(pmcData: IPmcData, body: IAcceptQuestRequestData, sessionID: string): IItemEventRouterResponse;
     completeQuest(pmcData: IPmcData, body: ICompleteQuestRequestData, sessionID: string): IItemEventRouterResponse;
     handoverQuest(pmcData: IPmcData, body: IHandoverQuestRequestData, sessionID: string): IItemEventRouterResponse;
     listQuests(url: string, info: IListQuestsRequestData, sessionID: string): IGetBodyResponseData<IQuest[]>;
-    activityPeriods(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IPmcDataRepeatableQuest[]>;
+    activityPeriods(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IPmcDataRepeatableQuest[]>;
 }

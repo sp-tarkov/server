@@ -6,21 +6,14 @@ import { IWishlistActionData } from "@spt-aki/models/eft/wishlist/IWishlistActio
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 
 @injectable()
-export class WishlistController
-{
-    constructor(
-        @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder
-    )
-    { }
+export class WishlistController {
+    constructor(@inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder) {}
 
     /** Handle AddToWishList */
-    public addToWishList(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse
-    {
-        for (const item in pmcData.WishList)
-        {
+    public addToWishList(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse {
+        for (const item in pmcData.WishList) {
             // don't add the item
-            if (pmcData.WishList[item] === body.templateId)
-            {
+            if (pmcData.WishList[item] === body.templateId) {
                 return this.eventOutputHolder.getOutput(sessionID);
             }
         }
@@ -31,12 +24,13 @@ export class WishlistController
     }
 
     /** Handle RemoveFromWishList event */
-    public removeFromWishList(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse
-    {
-        for (let i = 0; i < pmcData.WishList.length; i++)
-        {
-            if (pmcData.WishList[i] === body.templateId)
-            {
+    public removeFromWishList(
+        pmcData: IPmcData,
+        body: IWishlistActionData,
+        sessionID: string
+    ): IItemEventRouterResponse {
+        for (let i = 0; i < pmcData.WishList.length; i++) {
+            if (pmcData.WishList[i] === body.templateId) {
                 pmcData.WishList.splice(i, 1);
             }
         }

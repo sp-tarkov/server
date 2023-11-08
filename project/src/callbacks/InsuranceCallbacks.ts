@@ -15,16 +15,14 @@ import { InsuranceService } from "@spt-aki/services/InsuranceService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class InsuranceCallbacks implements OnUpdate
-{
+export class InsuranceCallbacks implements OnUpdate {
     protected insuranceConfig: IInsuranceConfig;
     constructor(
         @inject("InsuranceController") protected insuranceController: InsuranceController,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);
     }
 
@@ -32,8 +30,11 @@ export class InsuranceCallbacks implements OnUpdate
      * Handle client/insurance/items/list/cost
      * @returns IGetInsuranceCostResponseData
      */
-    public getInsuranceCost(url: string, info: IGetInsuranceCostRequestData, sessionID: string): IGetBodyResponseData<IGetInsuranceCostResponseData>
-    {
+    public getInsuranceCost(
+        url: string,
+        info: IGetInsuranceCostRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGetInsuranceCostResponseData> {
         return this.httpResponse.getBody(this.insuranceController.cost(info, sessionID));
     }
 
@@ -41,15 +42,12 @@ export class InsuranceCallbacks implements OnUpdate
      * Handle Insure event
      * @returns IItemEventRouterResponse
      */
-    public insure(pmcData: IPmcData, body: IInsureRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public insure(pmcData: IPmcData, body: IInsureRequestData, sessionID: string): IItemEventRouterResponse {
         return this.insuranceController.insure(pmcData, body, sessionID);
     }
 
-    public async onUpdate(secondsSinceLastRun: number): Promise<boolean>
-    {
-        if (secondsSinceLastRun > this.insuranceConfig.runIntervalSeconds)
-        {
+    public async onUpdate(secondsSinceLastRun: number): Promise<boolean> {
+        if (secondsSinceLastRun > this.insuranceConfig.runIntervalSeconds) {
             this.insuranceController.processReturn();
             return true;
         }
@@ -57,8 +55,7 @@ export class InsuranceCallbacks implements OnUpdate
         return false;
     }
 
-    public getRoute(): string
-    {
+    public getRoute(): string {
         return "aki-insurance";
     }
 }

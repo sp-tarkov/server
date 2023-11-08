@@ -1,7 +1,6 @@
 import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 
-export abstract class NewItemDetailsBase
-{
+export abstract class NewItemDetailsBase {
     /** Price of the item on flea market */
     fleaPriceRoubles: number;
 
@@ -9,7 +8,7 @@ export abstract class NewItemDetailsBase
     handbookPriceRoubles: number;
 
     /** Handbook ParentId for the new item */
-    handbookParentId : string;
+    handbookParentId: string;
 
     /**
      * A dictionary for locale settings, key = langauge (e.g. en,cn,es-mx,jp,fr)
@@ -18,8 +17,7 @@ export abstract class NewItemDetailsBase
     locales: Record<string, LocaleDetails>;
 }
 
-export class NewItemFromCloneDetails extends NewItemDetailsBase
-{
+export class NewItemFromCloneDetails extends NewItemDetailsBase {
     /** Id of the item to copy and use as a base */
     itemTplToClone: string;
 
@@ -29,29 +27,25 @@ export class NewItemFromCloneDetails extends NewItemDetailsBase
     /** ParentId for the new item (item type) */
     parentId: string;
 
-    /** 
+    /**
      * the id the new item should have, leave blank to have one generated for you
      * This is often known as the TplId, or TemplateId
      */
     newId = "";
 }
 
-export class NewItemDetails extends NewItemDetailsBase
-{
+export class NewItemDetails extends NewItemDetailsBase {
     newItem: ITemplateItem;
 }
 
-export class LocaleDetails
-{
+export class LocaleDetails {
     name: string;
     shortName: string;
     description: string;
 }
 
-export class CreateItemResult
-{
-    constructor()
-    {
+export class CreateItemResult {
+    constructor() {
         this.success = false;
     }
 

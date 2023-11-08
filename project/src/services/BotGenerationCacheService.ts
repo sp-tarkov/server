@@ -8,33 +8,26 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class BotGenerationCacheService
-{
+export class BotGenerationCacheService {
     protected storedBots: Map<string, IBotBase[]> = new Map();
-    
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotHelper") protected botHelper: BotHelper
-    )
-    { }
-    
+    ) {}
+
     /**
      * Store array of bots in cache, shuffle results before storage
      * @param botsToStore Bots we want to store in the cache
      */
-    public storeBots(key: string, botsToStore: IBotBase[]): void
-    {   
-        botsToStore.forEach(e => 
-        {
-            if (this.storedBots.has(key))
-            {
+    public storeBots(key: string, botsToStore: IBotBase[]): void {
+        botsToStore.forEach((e) => {
+            if (this.storedBots.has(key)) {
                 this.storedBots.get(key).unshift(e);
-            }
-            else
-            {
+            } else {
                 this.storedBots.set(key, [e]);
             }
         });
@@ -46,13 +39,10 @@ export class BotGenerationCacheService
      * @param key role to retreive (assault/bossTagilla etc)
      * @returns IBotBase object
      */
-    public getBot(key: string): IBotBase
-    {
-        if (this.storedBots.has(key))
-        {
+    public getBot(key: string): IBotBase {
+        if (this.storedBots.has(key)) {
             const cachedOfType = this.storedBots.get(key);
-            if (cachedOfType.length > 0)
-            {
+            if (cachedOfType.length > 0) {
                 return cachedOfType.pop();
             }
 
@@ -63,21 +53,19 @@ export class BotGenerationCacheService
 
         return undefined;
     }
-    
+
     /**
      * Remove all cached bot profiles from memory
      */
-    public clearStoredBots(): void
-    {
+    public clearStoredBots(): void {
         this.storedBots = new Map();
     }
-    
+
     /**
      * Does cache have a bot with requested key
      * @returns false if empty
      */
-    public cacheHasBotOfRole(key: string): boolean
-    {
+    public cacheHasBotOfRole(key: string): boolean {
         return this.storedBots.has(key) && this.storedBots.get(key).length > 0;
     }
 }

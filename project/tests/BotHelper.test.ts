@@ -18,7 +18,6 @@ let configServer: ConfigServer;
 let localisationService: LocalisationService;
 let databaseServer: DatabaseServer;
 
-
 describe("BotHelper", () => {
     beforeAll(async () => {
         testHelper = await TestHelper.fetchTestHelper();
@@ -28,35 +27,31 @@ describe("BotHelper", () => {
         configServer = testHelper.getTestConfigServer();
         localisationService = testHelper.getTestLocalisationService();
         databaseServer = testHelper.getTestDatabaseServer();
-    })
+    });
 
     let helper: BotHelper;
     beforeEach(() => {
         helper = new BotHelper(logger, jsonUtil, databaseServer, randomUtil, localisationService, configServer);
     });
 
-    it("BotHelper type check", () =>
-    {
+    it("BotHelper type check", () => {
         expect(helper).toBeInstanceOf(BotHelper);
     });
 
-    it("isBotPmc()", () =>
-    {
+    it("isBotPmc()", () => {
         expect(helper.isBotPmc("usec")).toBe(true);
         expect(helper.isBotPmc("bear")).toBe(true);
         expect(helper.isBotPmc("faketype")).toBe(false);
     });
 
-    it("isBotFollower()", () =>
-    {
+    it("isBotFollower()", () => {
         expect(helper.isBotFollower("followerBully")).toBe(true);
         expect(helper.isBotFollower("FoLlOwErBULlY")).toBe(true);
         expect(helper.isBotFollower("followerSanitar")).toBe(true);
         expect(helper.isBotFollower("botFollower")).toBe(false);
     });
 
-    it("getBotTemplate()", () =>
-    {
+    it("getBotTemplate()", () => {
         expect(helper.getBotTemplate("assault")).not.toBeFalsy();
         expect(helper.getBotTemplate("fakebottype")).toBeFalsy();
         expect(helper.getBotTemplate("")).toBeFalsy();

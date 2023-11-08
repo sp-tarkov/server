@@ -3,43 +3,36 @@ import { injectable } from "tsyringe";
 import { INotification } from "@spt-aki/models/eft/notifier/INotifier";
 
 @injectable()
-export class NotificationService
-{
+export class NotificationService {
     protected messageQueue: Record<string, any[]> = {};
 
-    public getMessageQueue(): Record<string, any[]>
-    {
+    public getMessageQueue(): Record<string, any[]> {
         return this.messageQueue;
     }
 
-    public getMessageFromQueue(sessionId: string): any[]
-    {
+    public getMessageFromQueue(sessionId: string): any[] {
         return this.messageQueue[sessionId];
     }
 
-    public updateMessageOnQueue(sessionId: string, value: any[]): void
-    {
+    public updateMessageOnQueue(sessionId: string, value: any[]): void {
         this.messageQueue[sessionId] = value;
     }
 
-    public has(sessionID: string): boolean
-    {
+    public has(sessionID: string): boolean {
         return this.get(sessionID).length > 0;
     }
 
     /**
      * Pop first message from queue.
      */
-    public pop(sessionID: string): any
-    {
+    public pop(sessionID: string): any {
         return this.get(sessionID).shift();
     }
 
     /**
      * Add message to queue
      */
-    public add(sessionID: string, message: INotification): void
-    {
+    public add(sessionID: string, message: INotification): void {
         this.get(sessionID).push(message);
     }
 
@@ -47,15 +40,12 @@ export class NotificationService
      * Get message queue for session
      * @param sessionID
      */
-    public get(sessionID: string): any[]
-    {
-        if (!sessionID)
-        {
+    public get(sessionID: string): any[] {
+        if (!sessionID) {
             throw new Error("sessionID missing");
         }
 
-        if (!this.messageQueue[sessionID])
-        {
+        if (!this.messageQueue[sessionID]) {
             this.messageQueue[sessionID] = [];
         }
 

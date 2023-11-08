@@ -13,40 +13,35 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class HealthCallbacks
-{
+export class HealthCallbacks {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("HealthController") protected healthController: HealthController)
-    { }
+        @inject("HealthController") protected healthController: HealthController
+    ) {}
 
     /**
      * Custom aki server request found in modules/HealthSynchronizer.cs
-     * @param url 
+     * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id
      * @returns empty response, no data sent back to client
      */
-    public syncHealth(url: string, info: ISyncHealthRequestData, sessionID: string): IGetBodyResponseData<string>
-    {
+    public syncHealth(url: string, info: ISyncHealthRequestData, sessionID: string): IGetBodyResponseData<string> {
         this.healthController.saveVitality(this.profileHelper.getPmcProfile(sessionID), info, sessionID);
         return this.httpResponse.emptyResponse();
     }
 
     /**
      * Custom aki server request found in modules/QTEPatch.cs
-     * @param url 
+     * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id
      * @returns empty response, no data sent back to client
      */
-    public handleWorkoutEffects(url: string, info: IWorkoutData, sessionID: string): IGetBodyResponseData<string>
-    {
-        this.healthController.applyWorkoutChanges(
-            this.profileHelper.getPmcProfile(sessionID), info, sessionID
-        );
-        
+    public handleWorkoutEffects(url: string, info: IWorkoutData, sessionID: string): IGetBodyResponseData<string> {
+        this.healthController.applyWorkoutChanges(this.profileHelper.getPmcProfile(sessionID), info, sessionID);
+
         return this.httpResponse.emptyResponse();
     }
 
@@ -54,8 +49,7 @@ export class HealthCallbacks
      * Handle Eat
      * @returns IItemEventRouterResponse
      */
-    public offraidEat(pmcData: IPmcData, body: IOffraidEatRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public offraidEat(pmcData: IPmcData, body: IOffraidEatRequestData, sessionID: string): IItemEventRouterResponse {
         return this.healthController.offraidEat(pmcData, body, sessionID);
     }
 
@@ -63,8 +57,7 @@ export class HealthCallbacks
      * Handle Heal
      * @returns IItemEventRouterResponse
      */
-    public offraidHeal(pmcData: IPmcData, body: IOffraidHealRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public offraidHeal(pmcData: IPmcData, body: IOffraidHealRequestData, sessionID: string): IItemEventRouterResponse {
         return this.healthController.offraidHeal(pmcData, body, sessionID);
     }
 
@@ -72,8 +65,11 @@ export class HealthCallbacks
      * Handle RestoreHealth
      * @returns IItemEventRouterResponse
      */
-    public healthTreatment(pmcData: IPmcData, info: IHealthTreatmentRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public healthTreatment(
+        pmcData: IPmcData,
+        info: IHealthTreatmentRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.healthController.healthTreatment(pmcData, info, sessionID);
     }
 }

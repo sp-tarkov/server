@@ -13,24 +13,21 @@ import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class CustomizationCallbacks
-{
+export class CustomizationCallbacks {
     constructor(
         @inject("CustomizationController") protected customizationController: CustomizationController,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil
-    )
-    { }
+    ) {}
 
     /**
      * Handle client/trading/customization/storage
      * @returns IGetSuitsResponse
      */
-    public getSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetSuitsResponse>
-    {
+    public getSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetSuitsResponse> {
         const result: IGetSuitsResponse = {
             _id: `pmc${sessionID}`,
-            suites: this.saveServer.getProfile(sessionID).suits
+            suites: this.saveServer.getProfile(sessionID).suits,
         };
         return this.httpResponse.getBody(result);
     }
@@ -39,8 +36,7 @@ export class CustomizationCallbacks
      * Handle client/trading/customization
      * @returns ISuit[]
      */
-    public getTraderSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISuit[]>
-    {
+    public getTraderSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISuit[]> {
         const splittedUrl = url.split("/");
         const traderID = splittedUrl[splittedUrl.length - 2];
 
@@ -50,16 +46,18 @@ export class CustomizationCallbacks
     /**
      * Handle CustomizationWear event
      */
-    public wearClothing(pmcData: IPmcData, body: IWearClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public wearClothing(
+        pmcData: IPmcData,
+        body: IWearClothingRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         return this.customizationController.wearClothing(pmcData, body, sessionID);
     }
 
     /**
      * Handle CustomizationBuy event
      */
-    public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse {
         return this.customizationController.buyClothing(pmcData, body, sessionID);
     }
 }

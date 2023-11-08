@@ -23,8 +23,7 @@ import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
-export class InRaidHelper
-{
+export class InRaidHelper {
     protected lostOnDeathConfig: ILostOnDeathConfig;
     protected inRaidConfig: IInRaidConfig;
 
@@ -40,8 +39,7 @@ export class InRaidHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
         this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
     }
@@ -50,8 +48,7 @@ export class InRaidHelper
      * Lookup quest item loss from lostOnDeath config
      * @returns True if items should be removed from inventory
      */
-    public removeQuestItemsOnDeath(): boolean
-    {
+    public removeQuestItemsOnDeath(): boolean {
         return this.lostOnDeathConfig.questItems;
     }
 
@@ -60,19 +57,14 @@ export class InRaidHelper
      * Single stack money items have no upd object and thus no StackObjectsCount, causing issues
      * @param items Items array to check
      */
-    public addUpdToMoneyFromRaid(items: Item[]): void
-    {
-        for (const item of items)
-        {
-            if (this.paymentHelper.isMoneyTpl(item._tpl))
-            {
-                if (!item.upd)
-                {
+    public addUpdToMoneyFromRaid(items: Item[]): void {
+        for (const item of items) {
+            if (this.paymentHelper.isMoneyTpl(item._tpl)) {
+                if (!item.upd) {
                     item.upd = {};
                 }
 
-                if (!item.upd.StackObjectsCount)
-                {
+                if (!item.upd.StackObjectsCount) {
                     item.upd.StackObjectsCount = 1;
                 }
             }
@@ -85,18 +77,20 @@ export class InRaidHelper
      * @param victims Array of kills player performed
      * @returns adjusted karma level after kills are taken into account
      */
-    public calculateFenceStandingChangeFromKills(existingFenceStanding: number, victims: Victim[]): number
-    {
+    public calculateFenceStandingChangeFromKills(existingFenceStanding: number, victims: Victim[]): number {
         // Run callback on every victim, adding up the standings gained/lossed, starting value is existing fence standing
-        const newFenceStanding = victims.reduce((acc, victim) =>
-        {
+        const newFenceStanding = victims.reduce((acc, victim) => {
             const standingForKill = this.getFenceStandingChangeForKillAsScav(victim);
-            if (standingForKill)
-            {
+            if (standingForKill) {
                 return acc + standingForKill;
             }
-            this.logger.warning(this.localisationService.getText("inraid-missing_standing_for_kill", {victimSide: victim.Side, victimRole: victim.Role}));
-            
+            this.logger.warning(
+                this.localisationService.getText("inraid-missing_standing_for_kill", {
+                    victimSide: victim.Side,
+                    victimRole: victim.Role,
+                })
+            );
+
             return acc;
         }, existingFenceStanding);
 
@@ -108,15 +102,13 @@ export class InRaidHelper
      * @param victim Who was killed by player
      * @returns a numerical standing gain or loss
      */
-    protected getFenceStandingChangeForKillAsScav(victim: Victim): number
-    {
+    protected getFenceStandingChangeForKillAsScav(victim: Victim): number {
         const botTypes = this.databaseServer.getTables().bots.types;
-        if (victim.Side.toLowerCase() === "savage")
-        {
+        if (victim.Side.toLowerCase() === "savage") {
             // Scavs and bosses
             return botTypes[victim.Role.toLowerCase()]?.experience?.standingForKill;
         }
-        
+
         // PMCs - get by bear/usec
         return botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
     }
@@ -131,8 +123,11 @@ export class InRaidHelper
      * @param sessionID Session id
      * @returns Reset profile object
      */
-    public updateProfileBaseStats(profileData: IPmcData, saveProgressRequest: ISaveProgressRequestData, sessionID: string): IPmcData
-    {
+    public updateProfileBaseStats(
+        profileData: IPmcData,
+        saveProgressRequest: ISaveProgressRequestData,
+        sessionID: string
+    ): IPmcData {
         // remove old skill fatigue
         this.resetSkillPointsEarnedDuringRaid(saveProgressRequest.profile);
 
@@ -143,32 +138,29 @@ export class InRaidHelper
         profileData.Encyclopedia = saveProgressRequest.profile.Encyclopedia;
         profileData.ConditionCounters = saveProgressRequest.profile.ConditionCounters;
 
-        for (const backendCounterKey in saveProgressRequest.profile.BackendCounters)
-        {
+        for (const backendCounterKey in saveProgressRequest.profile.BackendCounters) {
             // Skip counters with no id
-            if (!saveProgressRequest.profile.BackendCounters[backendCounterKey].id)
-            {
+            if (!saveProgressRequest.profile.BackendCounters[backendCounterKey].id) {
                 continue;
             }
 
             const postRaidValue = saveProgressRequest.profile.BackendCounters[backendCounterKey]?.value;
-            if (typeof postRaidValue === "undefined")
-            {
+            if (typeof postRaidValue === "undefined") {
                 // No value, skip
                 continue;
             }
 
             const matchingPreRaidCounter = profileData.BackendCounters[backendCounterKey];
-            if (!matchingPreRaidCounter)
-            {
+            if (!matchingPreRaidCounter) {
                 this.logger.error(`Backendcounter: ${backendCounterKey} cannot be found in pre-raid data`);
 
                 continue;
             }
 
-            if (matchingPreRaidCounter.value !== postRaidValue)
-            {
-                this.logger.error(`Backendcounter: ${backendCounterKey} value is different post raid, old: ${matchingPreRaidCounter.value} new: ${postRaidValue}`);
+            if (matchingPreRaidCounter.value !== postRaidValue) {
+                this.logger.error(
+                    `Backendcounter: ${backendCounterKey} value is different post raid, old: ${matchingPreRaidCounter.value} new: ${postRaidValue}`
+                );
             }
         }
 
@@ -191,14 +183,12 @@ export class InRaidHelper
 
         this.setPlayerInRaidLocationStatusToNone(sessionID);
 
-        if (!saveProgressRequest.isPlayerScav)
-        {
+        if (!saveProgressRequest.isPlayerScav) {
             this.profileFixerService.checkForAndFixPmcProfileIssues(profileData);
         }
 
         return profileData;
     }
-
 
     /**
      * Look for quests not are now status = fail that were not failed pre-raid and run the failQuest() function
@@ -207,42 +197,39 @@ export class InRaidHelper
      * @param preRaidQuests Quests prior to starting raid
      * @param postRaidQuests Quest after raid
      */
-    protected processFailedQuests(sessionId: string, pmcData: IPmcData, preRaidQuests: IQuestStatus[], postRaidQuests: IQuestStatus[]): void
-    {
-        if (!preRaidQuests)
-        {
+    protected processFailedQuests(
+        sessionId: string,
+        pmcData: IPmcData,
+        preRaidQuests: IQuestStatus[],
+        postRaidQuests: IQuestStatus[]
+    ): void {
+        if (!preRaidQuests) {
             // No quests to compare against, skip
             return;
         }
 
         // Loop over all quests from post-raid profile
-        for (const postRaidQuest of postRaidQuests)
-        {
+        for (const postRaidQuest of postRaidQuests) {
             // Find matching pre-raid quest
-            const preRaidQuest = preRaidQuests?.find(x => x.qid === postRaidQuest.qid);
-            if (preRaidQuest)
-            {
+            const preRaidQuest = preRaidQuests?.find((x) => x.qid === postRaidQuest.qid);
+            if (preRaidQuest) {
                 // Post-raid quest is failed but wasn't pre-raid
                 // postRaidQuest.status has a weird value, need to do some nasty casting to compare it
-                if (<string><unknown>postRaidQuest.status === "Fail" && preRaidQuest.status !== QuestStatus.Fail)
-                {
+                if (<string>(<unknown>postRaidQuest.status) === "Fail" && preRaidQuest.status !== QuestStatus.Fail) {
                     // Send failed message
                     const failBody: IFailQuestRequestData = {
                         Action: "QuestComplete",
                         qid: postRaidQuest.qid,
-                        removeExcessItems: true
+                        removeExcessItems: true,
                     };
                     this.questHelper.failQuest(pmcData, failBody, sessionId);
                 }
             }
-
         }
     }
 
-    protected resetSkillPointsEarnedDuringRaid(profile: IPmcData): void
-    {
-        for (const skill of profile.Skills.Common)
-        {
+    protected resetSkillPointsEarnedDuringRaid(profile: IPmcData): void {
+        for (const skill of profile.Skills.Common) {
             skill.PointsEarnedDuringSession = 0.0;
         }
     }
@@ -252,32 +239,30 @@ export class InRaidHelper
      * @param saveProgressRequest post-raid request
      * @param profileData player profile on server
      */
-    protected transferPostRaidLimbEffectsToProfile(saveProgressRequest: ISaveProgressRequestData, profileData: IPmcData): void
-    {
+    protected transferPostRaidLimbEffectsToProfile(
+        saveProgressRequest: ISaveProgressRequestData,
+        profileData: IPmcData
+    ): void {
         // Iterate over each body part
-        for (const bodyPartId in saveProgressRequest.profile.Health.BodyParts)
-        {
+        for (const bodyPartId in saveProgressRequest.profile.Health.BodyParts) {
             // Get effects on body part from profile
             const bodyPartEffects = saveProgressRequest.profile.Health.BodyParts[bodyPartId].Effects;
-            for (const effect in bodyPartEffects)
-            {
+            for (const effect in bodyPartEffects) {
                 const effectDetails = bodyPartEffects[effect];
 
                 // Null guard
-                if (!profileData.Health.BodyParts[bodyPartId].Effects)
-                {
+                if (!profileData.Health.BodyParts[bodyPartId].Effects) {
                     profileData.Health.BodyParts[bodyPartId].Effects = {};
                 }
 
                 // Already exists on server profile, skip
                 const profileBodyPartEffects = profileData.Health.BodyParts[bodyPartId].Effects;
-                if (profileBodyPartEffects[effect])
-                {
+                if (profileBodyPartEffects[effect]) {
                     continue;
                 }
 
                 // Add effect to server profile
-                profileBodyPartEffects[effect] = {Time: effectDetails.Time ?? -1};
+                profileBodyPartEffects[effect] = { Time: effectDetails.Time ?? -1 };
             }
         }
     }
@@ -287,25 +272,23 @@ export class InRaidHelper
      * @param tradersServerProfile Server
      * @param tradersClientProfile Client
      */
-    protected applyTraderStandingAdjustments(tradersServerProfile: Record<string, TraderInfo>, tradersClientProfile: Record<string, TraderInfo>): void
-    {
-        for (const traderId in tradersClientProfile)
-        {
-            if (traderId === Traders.FENCE)
-            {
+    protected applyTraderStandingAdjustments(
+        tradersServerProfile: Record<string, TraderInfo>,
+        tradersClientProfile: Record<string, TraderInfo>
+    ): void {
+        for (const traderId in tradersClientProfile) {
+            if (traderId === Traders.FENCE) {
                 // Taking a car extract adjusts fence rep values via client/match/offline/end, skip fence for this check
                 continue;
             }
 
             const serverProfileTrader = tradersServerProfile[traderId];
             const clientProfileTrader = tradersClientProfile[traderId];
-            if (!(serverProfileTrader && clientProfileTrader))
-            {
+            if (!(serverProfileTrader && clientProfileTrader)) {
                 continue;
             }
 
-            if (clientProfileTrader.standing !== serverProfileTrader.standing)
-            {
+            if (clientProfileTrader.standing !== serverProfileTrader.standing) {
                 // Difference found, update server profile with values from client profile
                 tradersServerProfile[traderId].standing = clientProfileTrader.standing;
             }
@@ -318,20 +301,16 @@ export class InRaidHelper
      * @param offraidData post-raid data
      * @param sessionID Session id
      */
-    protected removeMapAccessKey(offraidData: ISaveProgressRequestData, sessionID: string): void
-    {
+    protected removeMapAccessKey(offraidData: ISaveProgressRequestData, sessionID: string): void {
         const locationName = this.saveServer.getProfile(sessionID).inraid.location.toLowerCase();
         const mapKey = this.databaseServer.getTables().locations[locationName].base.AccessKeys[0];
 
-        if (!mapKey)
-        {
+        if (!mapKey) {
             return;
         }
 
-        for (const item of offraidData.profile.Inventory.items)
-        {
-            if (item._tpl === mapKey && item.slotId.toLowerCase() !== "hideout")
-            {
+        for (const item of offraidData.profile.Inventory.items) {
+            if (item._tpl === mapKey && item.slotId.toLowerCase() !== "hideout") {
                 this.inventoryHelper.removeItem(offraidData.profile, item._id, sessionID);
                 break;
             }
@@ -342,8 +321,7 @@ export class InRaidHelper
      * Set the SPT inraid location Profile property to 'none'
      * @param sessionID Session id
      */
-    protected setPlayerInRaidLocationStatusToNone(sessionID: string): void
-    {
+    protected setPlayerInRaidLocationStatusToNone(sessionID: string): void {
         this.saveServer.getProfile(sessionID).inraid.location = "none";
     }
 
@@ -353,19 +331,22 @@ export class InRaidHelper
      * @param postRaidProfile profile to update items for
      * @returns Updated profile with SpawnedInSession removed
      */
-    public removeSpawnedInSessionPropertyFromItems(postRaidProfile: IPostRaidPmcData): IPostRaidPmcData
-    {
+    public removeSpawnedInSessionPropertyFromItems(postRaidProfile: IPostRaidPmcData): IPostRaidPmcData {
         const dbItems = this.databaseServer.getTables().templates.items;
-        const itemsToRemovePropertyFrom = postRaidProfile.Inventory.items.filter(x =>
-        {
+        const itemsToRemovePropertyFrom = postRaidProfile.Inventory.items.filter((x) => {
             // Has upd object + upd.SpawnedInSession property + not a quest item
-            return "upd" in x && "SpawnedInSession" in x.upd
-                && !dbItems[x._tpl]._props.QuestItem
-                && !(this.inRaidConfig.keepFiRSecureContainerOnDeath && this.itemHelper.itemIsInsideContainer(x, "SecuredContainer", postRaidProfile.Inventory.items));
+            return (
+                "upd" in x &&
+                "SpawnedInSession" in x.upd &&
+                !dbItems[x._tpl]._props.QuestItem &&
+                !(
+                    this.inRaidConfig.keepFiRSecureContainerOnDeath &&
+                    this.itemHelper.itemIsInsideContainer(x, "SecuredContainer", postRaidProfile.Inventory.items)
+                )
+            );
         });
 
-        itemsToRemovePropertyFrom.forEach(item =>
-        {
+        itemsToRemovePropertyFrom.forEach((item) => {
             delete item.upd.SpawnedInSession;
         });
 
@@ -382,8 +363,7 @@ export class InRaidHelper
      * @param postRaidProfile Profile returned by client after a raid
      * @returns Updated profile
      */
-    public setInventory(sessionID: string, serverProfile: IPmcData, postRaidProfile: IPmcData): IPmcData
-    {
+    public setInventory(sessionID: string, serverProfile: IPmcData, postRaidProfile: IPmcData): IPmcData {
         // Store insurance (as removeItem() removes insurance also)
         const insured = this.jsonUtil.clone(serverProfile.InsuredItems);
 
@@ -406,12 +386,10 @@ export class InRaidHelper
      * @param pmcData Player profile
      * @param sessionID Session id
      */
-    public deleteInventory(pmcData: IPmcData, sessionID: string): void
-    {
+    public deleteInventory(pmcData: IPmcData, sessionID: string): void {
         // Get inventory item ids to remove from players profile
-        const itemIdsToDeleteFromProfile = this.getInventoryItemsLostOnDeath(pmcData).map(x => x._id);
-        itemIdsToDeleteFromProfile.forEach(x =>
-        {
+        const itemIdsToDeleteFromProfile = this.getInventoryItemsLostOnDeath(pmcData).map((x) => x._id);
+        itemIdsToDeleteFromProfile.forEach((x) => {
             this.inventoryHelper.removeItem(pmcData, x, sessionID);
         });
 
@@ -424,32 +402,27 @@ export class InRaidHelper
      * @param pmcProfile Profile to get items from
      * @returns Array of items lost on death
      */
-    protected getInventoryItemsLostOnDeath(pmcProfile: IPmcData): Item[]
-    {
-        const inventoryItems = pmcProfile.Inventory.items ?? []; 
+    protected getInventoryItemsLostOnDeath(pmcProfile: IPmcData): Item[] {
+        const inventoryItems = pmcProfile.Inventory.items ?? [];
         const equipment = pmcProfile?.Inventory?.equipment;
         const questRaidItems = pmcProfile?.Inventory?.questRaidItems;
 
-        return inventoryItems.filter(x =>
-        {
+        return inventoryItems.filter((x) => {
             // Keep items flagged as kept after death
-            if (this.isItemKeptAfterDeath(pmcProfile, x))
-            {
+            if (this.isItemKeptAfterDeath(pmcProfile, x)) {
                 return false;
             }
-    
+
             // Remove normal items or quest raid items
-            if (x.parentId === equipment || x.parentId === questRaidItems)
-            {
+            if (x.parentId === equipment || x.parentId === questRaidItems) {
                 return true;
             }
-    
+
             // Pocket items are not lost on death
-            if (x.slotId.startsWith("pocket"))
-            {
+            if (x.slotId.startsWith("pocket")) {
                 return true;
             }
-    
+
             return false;
         });
     }
@@ -459,15 +432,14 @@ export class InRaidHelper
      * @param pmcData Player profile
      * @returns Item array
      */
-    protected getBaseItemsInRigPocketAndBackpack(pmcData: IPmcData): Item[]
-    {
-        const rig = pmcData.Inventory.items.find(x => x.slotId === "TacticalVest");
-        const pockets = pmcData.Inventory.items.find(x => x.slotId === "Pockets");
-        const backpack = pmcData.Inventory.items.find(x => x.slotId === "Backpack");
+    protected getBaseItemsInRigPocketAndBackpack(pmcData: IPmcData): Item[] {
+        const rig = pmcData.Inventory.items.find((x) => x.slotId === "TacticalVest");
+        const pockets = pmcData.Inventory.items.find((x) => x.slotId === "Pockets");
+        const backpack = pmcData.Inventory.items.find((x) => x.slotId === "Backpack");
 
-        const baseItemsInRig = pmcData.Inventory.items.filter(x => x.parentId === rig?._id);
-        const baseItemsInPockets = pmcData.Inventory.items.filter(x => x.parentId === pockets?._id);
-        const baseItemsInBackpack = pmcData.Inventory.items.filter(x => x.parentId === backpack?._id);
+        const baseItemsInRig = pmcData.Inventory.items.filter((x) => x.parentId === rig?._id);
+        const baseItemsInPockets = pmcData.Inventory.items.filter((x) => x.parentId === pockets?._id);
+        const baseItemsInBackpack = pmcData.Inventory.items.filter((x) => x.parentId === backpack?._id);
 
         return [...baseItemsInRig, ...baseItemsInPockets, ...baseItemsInBackpack];
     }
@@ -478,21 +450,17 @@ export class InRaidHelper
      * @itemToCheck Item to check should be kept
      * @returns true if item is kept after death
      */
-    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item): boolean
-    {
+    protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item): boolean {
         // No parentid means its a base inventory item, always keep
-        if (!itemToCheck.parentId)
-        {
+        if (!itemToCheck.parentId) {
             return true;
         }
 
         // Is item equipped on player
-        if (itemToCheck.parentId === pmcData.Inventory.equipment)
-        {
+        if (itemToCheck.parentId === pmcData.Inventory.equipment) {
             // Check slot id against config, true = delete, false = keep, undefined = delete
             const discard = this.lostOnDeathConfig.equipment[itemToCheck.slotId];
-            if (discard === undefined)
-            {
+            if (discard === undefined) {
                 return false;
             }
 
@@ -500,14 +468,12 @@ export class InRaidHelper
         }
 
         // Is quest item + quest item not lost on death
-        if (!this.lostOnDeathConfig.questItems && itemToCheck.parentId === pmcData.Inventory.questRaidItems)
-        {
+        if (!this.lostOnDeathConfig.questItems && itemToCheck.parentId === pmcData.Inventory.questRaidItems) {
             return true;
         }
 
         // special slots are always kept after death
-        if (itemToCheck.slotId?.includes("SpecialSlot") && this.lostOnDeathConfig.specialSlotItems)
-        {
+        if (itemToCheck.slotId?.includes("SpecialSlot") && this.lostOnDeathConfig.specialSlotItems) {
             return true;
         }
 
@@ -519,8 +485,7 @@ export class InRaidHelper
      * @param items Players inventory to search through
      * @returns an array of equipped items
      */
-    public getPlayerGear(items: Item[]): Item[]
-    {
+    public getPlayerGear(items: Item[]): Item[] {
         // Player Slots we care about
         const inventorySlots = [
             "FirstPrimaryWeapon",
@@ -539,43 +504,34 @@ export class InRaidHelper
             "pocket1",
             "pocket2",
             "pocket3",
-            "pocket4"
+            "pocket4",
         ];
 
         let inventoryItems: Item[] = [];
 
         // Get an array of root player items
-        for (const item of items)
-        {
-            if (inventorySlots.includes(item.slotId))
-            {
+        for (const item of items) {
+            if (inventorySlots.includes(item.slotId)) {
                 inventoryItems.push(item);
             }
         }
 
         // Loop through these items and get all of their children
         let newItems = inventoryItems;
-        while (newItems.length > 0)
-        {
+        while (newItems.length > 0) {
             const foundItems = [];
 
-            for (const item of newItems)
-            {
+            for (const item of newItems) {
                 // Find children of this item
-                for (const newItem of items)
-                {
-                    if (newItem.parentId === item._id)
-                    {
+                for (const newItem of items) {
+                    if (newItem.parentId === item._id) {
                         foundItems.push(newItem);
                     }
                 }
             }
 
             // Add these new found items to our list of inventory items
-            inventoryItems = [
-                ...inventoryItems,
-                ...foundItems
-            ];
+            inventoryItems = [...inventoryItems, ...foundItems];
 
             // Now find the children of these items
             newItems = foundItems;

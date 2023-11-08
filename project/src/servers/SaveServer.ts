@@ -1,4 +1,4 @@
-import { inject, injectable, injectAll } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
 import { SaveLoadRouter } from "@spt-aki/di/Router";
 import { IAkiProfile, Info } from "@spt-aki/models/eft/profile/IAkiProfile";
@@ -9,8 +9,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
-export class SaveServer
-{
+export class SaveServer {
     protected profileFilepath = "user/profiles/";
     protected profiles = {};
     // onLoad = require("../bindings/SaveLoad");
@@ -24,16 +23,14 @@ export class SaveServer
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WinstonLogger") protected logger: ILogger
-    )
-    { }
+    ) {}
 
     /**
      * Add callback to occur prior to saving profile changes
      * @param id Id for save callback
      * @param callback Callback to execute prior to running SaveServer.saveProfile()
      */
-    public addBeforeSaveCallback(id: string, callback: (profile: Partial<IAkiProfile>) => Partial<IAkiProfile>): void
-    {
+    public addBeforeSaveCallback(id: string, callback: (profile: Partial<IAkiProfile>) => Partial<IAkiProfile>): void {
         this.onBeforeSaveCallbacks[id] = callback;
     }
 
@@ -41,30 +38,25 @@ export class SaveServer
      * Remove a callback from being executed prior to saving profile in SaveServer.saveProfile()
      * @param id Id of callback to remove
      */
-    public removeBeforeSaveCallback(id: string): void
-    {
+    public removeBeforeSaveCallback(id: string): void {
         this.onBeforeSaveCallbacks[id] = null;
     }
 
     /**
      * Load all profiles in /user/profiles folder into memory (this.profiles)
      */
-    public load(): void
-    {
+    public load(): void {
         // get files to load
-        if (!this.vfs.exists(this.profileFilepath))
-        {
+        if (!this.vfs.exists(this.profileFilepath)) {
             this.vfs.createDir(this.profileFilepath);
         }
 
-        const files = this.vfs.getFiles(this.profileFilepath).filter((item) =>
-        {
+        const files = this.vfs.getFiles(this.profileFilepath).filter((item) => {
             return this.vfs.getFileExtension(item) === "json";
         });
 
         // load profiles
-        for (const file of files)
-        {
+        for (const file of files) {
             this.loadProfile(this.vfs.stripExtension(file));
         }
     }
@@ -72,11 +64,9 @@ export class SaveServer
     /**
      * Save changes for each profile from memory into user/profiles json
      */
-    public save(): void
-    {
+    public save(): void {
         // Save every profile
-        for (const sessionID in this.profiles)
-        {
+        for (const sessionID in this.profiles) {
             this.saveProfile(sessionID);
         }
     }
@@ -86,20 +76,16 @@ export class SaveServer
      * @param sessionId Session id
      * @returns IAkiProfile
      */
-    public getProfile(sessionId: string): IAkiProfile
-    {
-        if (!sessionId)
-        {
+    public getProfile(sessionId: string): IAkiProfile {
+        if (!sessionId) {
             throw new Error("session id provided was empty, did you restart the server while the game was running?");
         }
 
-        if (this.profiles === null)
-        {
+        if (this.profiles === null) {
             throw new Error(`no profiles found in saveServer with id: ${sessionId}`);
         }
 
-        if (this.profiles[sessionId] === null)
-        {
+        if (this.profiles[sessionId] === null) {
             throw new Error(`no profile found for sessionId: ${sessionId}`);
         }
 
@@ -110,8 +96,7 @@ export class SaveServer
      * Get all profiles from memory
      * @returns Dictionary of IAkiProfile
      */
-    public getProfiles(): Record<string, IAkiProfile>
-    {
+    public getProfiles(): Record<string, IAkiProfile> {
         return this.profiles;
     }
 
@@ -120,10 +105,8 @@ export class SaveServer
      * @param sessionID Id of profile to remove
      * @returns true when deleted, false when profile not found
      */
-    public deleteProfileById(sessionID: string): boolean
-    {
-        if (this.profiles[sessionID] != null)
-        {
+    public deleteProfileById(sessionID: string): boolean {
+        if (this.profiles[sessionID] != null) {
             delete this.profiles[sessionID];
             return true;
         }
@@ -135,16 +118,14 @@ export class SaveServer
      * Create a new profile in memory with empty pmc/scav objects
      * @param profileInfo Basic profile data
      */
-    public createProfile(profileInfo: Info): void
-    {
-        if (this.profiles[profileInfo.id] != null)
-        {
+    public createProfile(profileInfo: Info): void {
+        if (this.profiles[profileInfo.id] != null) {
             throw new Error(`profile already exists for sessionId: ${profileInfo.id}`);
         }
 
         this.profiles[profileInfo.id] = {
             info: profileInfo,
-            characters: { pmc: {}, scav: {}}
+            characters: { pmc: {}, scav: {} },
         };
     }
 
@@ -152,8 +133,7 @@ export class SaveServer
      * Add full profile in memory by key (info.id)
      * @param profileDetails Profile to save
      */
-    public addProfile(profileDetails: IAkiProfile): void
-    {
+    public addProfile(profileDetails: IAkiProfile): void {
         this.profiles[profileDetails.info.id] = profileDetails;
     }
 
@@ -162,42 +142,34 @@ export class SaveServer
      * Execute saveLoadRouters callbacks after being loaded into memory
      * @param sessionID Id of profile to store in memory
      */
-    public loadProfile(sessionID: string): void
-    {
+    public loadProfile(sessionID: string): void {
         const filename = `${sessionID}.json`;
         const filePath = `${this.profileFilepath}${filename}`;
-        if (this.vfs.exists(filePath))
-        {
+        if (this.vfs.exists(filePath)) {
             // File found, store in profiles[]
             this.profiles[sessionID] = this.jsonUtil.deserialize(this.vfs.readFile(filePath), filename);
         }
 
         // Run callbacks
-        for (const callback of this.saveLoadRouters)
-        {
+        for (const callback of this.saveLoadRouters) {
             this.profiles[sessionID] = callback.handleLoad(this.getProfile(sessionID));
         }
     }
 
     /**
-     * Save changes from in-memory profile to user/profiles json 
+     * Save changes from in-memory profile to user/profiles json
      * Execute onBeforeSaveCallbacks callbacks prior to being saved to json
      * @param sessionID profile id (user/profiles/id.json)
      */
-    public saveProfile(sessionID: string): void
-    {
+    public saveProfile(sessionID: string): void {
         const filePath = `${this.profileFilepath}${sessionID}.json`;
-        
+
         // run callbacks
-        for (const callback in this.onBeforeSaveCallbacks)
-        {
+        for (const callback in this.onBeforeSaveCallbacks) {
             const previous = this.profiles[sessionID];
-            try
-            {
+            try {
                 this.profiles[sessionID] = this.onBeforeSaveCallbacks[callback](this.profiles[sessionID]);
-            }
-            catch (error)
-            {
+            } catch (error) {
                 this.logger.error(this.localisationService.getText("profile_save_callback_error", { callback, error }));
                 this.profiles[sessionID] = previous;
             }
@@ -205,8 +177,7 @@ export class SaveServer
 
         const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], true);
         const fmd5 = this.hashUtil.generateMd5ForData(jsonProfile);
-        if (typeof(this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
-        {
+        if (typeof this.saveMd5[sessionID] !== "string" || this.saveMd5[sessionID] !== fmd5) {
             this.saveMd5[sessionID] = String(fmd5);
             // save profile to disk
             this.vfs.writeFile(filePath, jsonProfile);
@@ -219,8 +190,7 @@ export class SaveServer
      * @param sessionID Profile id to remove
      * @returns true if file no longer exists
      */
-    public removeProfile(sessionID: string): boolean
-    {
+    public removeProfile(sessionID: string): boolean {
         const file = `${this.profileFilepath}${sessionID}.json`;
 
         delete this.profiles[sessionID];

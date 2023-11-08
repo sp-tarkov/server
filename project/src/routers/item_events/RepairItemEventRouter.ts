@@ -6,27 +6,22 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 
 @injectable()
-export class RepairItemEventRouter extends ItemEventRouterDefinition 
-{
-    constructor(
-        @inject("RepairCallbacks") protected repairCallbacks: RepairCallbacks
-    ) 
-    {
+export class RepairItemEventRouter extends ItemEventRouterDefinition {
+    constructor(@inject("RepairCallbacks") protected repairCallbacks: RepairCallbacks) {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
-        return [
-            new HandledRoute("Repair", false),
-            new HandledRoute("TraderRepair", false)
-        ];
+    public override getHandledRoutes(): HandledRoute[] {
+        return [new HandledRoute("Repair", false), new HandledRoute("TraderRepair", false)];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
-    {
-        switch (url)
-        {
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string
+    ): IItemEventRouterResponse {
+        switch (url) {
             case "Repair":
                 return this.repairCallbacks.repair(pmcData, body, sessionID);
             case "TraderRepair":

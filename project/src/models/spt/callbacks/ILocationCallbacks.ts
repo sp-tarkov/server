@@ -3,8 +3,7 @@ import { ILocationsGenerateAllResponse } from "@spt-aki/models/eft/common/ILocat
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
 import { IGetLocationRequestData } from "@spt-aki/models/eft/location/IGetLocationRequestData";
 
-export interface ILocationCallbacks
-{
+export interface ILocationCallbacks {
     getLocationData(url: string, info: any, sessionID: string): IGetBodyResponseData<ILocationsGenerateAllResponse>;
     getLocation(url: string, info: IGetLocationRequestData, sessionID: string): IGetBodyResponseData<ILocationBase>;
 }

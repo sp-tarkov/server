@@ -1,26 +1,22 @@
 import { Message } from "@spt-aki/models/eft/profile/IAkiProfile";
 
-export interface INotifierChannel
-{
-    server: string
+export interface INotifierChannel {
+    server: string;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    channel_id: string,
-    url: string
-    notifierServer: string
-    ws: string
+    channel_id: string;
+    url: string;
+    notifierServer: string;
+    ws: string;
 }
 
-
-export interface INotification
-{
+export interface INotification {
     type: NotificationType;
-    eventId: string
-    dialogId?: string
-    message?: Message
+    eventId: string;
+    dialogId?: string;
+    message?: Message;
 }
 
-export enum NotificationType
-    {
+export enum NotificationType {
     RAGFAIR_OFFER_SOLD = "RagfairOfferSold",
     RAGFAIR_RATING_CHANGE = "RagfairRatingChange",
     /** ChatMessageReceived */
@@ -28,5 +24,5 @@ export enum NotificationType
     PING = "ping",
     TRADER_SUPPLY = "TraderSupply",
     TRADER_STANDING = "TraderStanding",
-    UNLOCK_TRADER = "UnlockTrader"
+    UNLOCK_TRADER = "UnlockTrader",
 }

@@ -22,8 +22,7 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { MockHelper } from "./MockHelper";
 import WinstonLogger from "./__mocks__/WinstonLogger";
 
-export class TestHelper 
-{
+export class TestHelper {
     logger: ILogger;
     asyncQueue: AsyncQueue;
     uuidGenerator: UUidGenerator;
@@ -45,8 +44,7 @@ export class TestHelper
     itemBaseClassService: ItemBaseClassService;
     botHelper: BotHelper;
 
-    public static async fetchTestHelper() 
-    {
+    public static async fetchTestHelper() {
         const initTestHelper = new TestHelper();
         const mockHelper = new MockHelper();
 
@@ -65,9 +63,7 @@ export class TestHelper
         return initTestHelper;
     }
 
-    constructor() 
-    {
-
+    constructor() {
         this.logger = new WinstonLogger();
         this.asyncQueue = new AsyncQueue();
         this.uuidGenerator = new UUidGenerator();
@@ -88,69 +84,79 @@ export class TestHelper
         this.importerUtil = new ImporterUtil(this.vfs, this.jsonUtil);
 
         this.handbookHelper = new HandbookHelper(this.databaseServer);
-        this.itemBaseClassService = new ItemBaseClassService(this.logger, this.localisationService, this.databaseServer);
-        this.itemHelper = new ItemHelper(this.logger, this.hashUtil, this.jsonUtil, this.randomUtil, this.objectId, this.mathUtil, this.databaseServer, this.handbookHelper, this.itemBaseClassService, this.localisationService, this.localeService);
-        this.botHelper = new BotHelper(this.logger, this.jsonUtil, this.databaseServer, this.randomUtil, this.localisationService, this.configServer);
+        this.itemBaseClassService = new ItemBaseClassService(
+            this.logger,
+            this.localisationService,
+            this.databaseServer
+        );
+        this.itemHelper = new ItemHelper(
+            this.logger,
+            this.hashUtil,
+            this.jsonUtil,
+            this.randomUtil,
+            this.objectId,
+            this.mathUtil,
+            this.databaseServer,
+            this.handbookHelper,
+            this.itemBaseClassService,
+            this.localisationService,
+            this.localeService
+        );
+        this.botHelper = new BotHelper(
+            this.logger,
+            this.jsonUtil,
+            this.databaseServer,
+            this.randomUtil,
+            this.localisationService,
+            this.configServer
+        );
     }
 
-    public getTestLogger(): ILogger
-    {
+    public getTestLogger(): ILogger {
         return this.logger;
     }
 
-    public getTestUuidGenerator(): UUidGenerator
-    {
+    public getTestUuidGenerator(): UUidGenerator {
         return this.uuidGenerator;
     }
 
-
-    public getTestVFS(): VFS
-    {
+    public getTestVFS(): VFS {
         return this.vfs;
     }
 
-    public getTestHashUtil(): HashUtil
-    {
+    public getTestHashUtil(): HashUtil {
         return new HashUtil(this.timeUtil);
     }
 
-    public getTestJsonUtil(): JsonUtil
-    {
+    public getTestJsonUtil(): JsonUtil {
         return this.jsonUtil;
     }
 
-    public getTestRandomUtil(): RandomUtil
-    {
+    public getTestRandomUtil(): RandomUtil {
         return this.randomUtil;
     }
 
-    public getTestConfigServer(): ConfigServer
-    {
+    public getTestConfigServer(): ConfigServer {
         return this.configServer;
     }
 
-    public getTestItemHelper(): ItemHelper
-    {
+    public getTestItemHelper(): ItemHelper {
         return this.itemHelper;
     }
 
-    public getTestDatabaseServer(): DatabaseServer
-    {
+    public getTestDatabaseServer(): DatabaseServer {
         return this.databaseServer;
     }
 
-    public getTestLocalisationService(): LocalisationService
-    {
+    public getTestLocalisationService(): LocalisationService {
         return this.localisationService;
     }
 
-    public getTestBotHelper(): BotHelper
-    {
+    public getTestBotHelper(): BotHelper {
         return this.botHelper;
     }
 
-    public getTestMathUtil(): MathUtil
-    {
+    public getTestMathUtil(): MathUtil {
         return this.mathUtil;
     }
 }

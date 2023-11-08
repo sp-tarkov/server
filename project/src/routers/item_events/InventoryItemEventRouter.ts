@@ -8,19 +8,15 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { ItemEventActions } from "@spt-aki/models/enums/ItemEventActions";
 
 @injectable()
-export class InventoryItemEventRouter extends ItemEventRouterDefinition 
-{
+export class InventoryItemEventRouter extends ItemEventRouterDefinition {
     constructor(
         @inject("InventoryCallbacks") protected inventoryCallbacks: InventoryCallbacks,
         @inject("HideoutCallbacks") protected hideoutCallbacks: HideoutCallbacks
-
-    ) 
-    {
+    ) {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
+    public override getHandledRoutes(): HandledRoute[] {
         return [
             new HandledRoute(ItemEventActions.MOVE, false),
             new HandledRoute(ItemEventActions.REMOVE, false),
@@ -39,14 +35,17 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
             new HandledRoute(ItemEventActions.DELETE_MAP_MARKER, false),
             new HandledRoute(ItemEventActions.EDIT_MAP_MARKER, false),
             new HandledRoute(ItemEventActions.OPEN_RANDOM_LOOT_CONTAINER, false),
-            new HandledRoute(ItemEventActions.HIDEOUT_QTE_EVENT, false)
+            new HandledRoute(ItemEventActions.HIDEOUT_QTE_EVENT, false),
         ];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
-    {
-        switch (url)
-        {
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string
+    ): IItemEventRouterResponse {
+        switch (url) {
             case ItemEventActions.MOVE:
                 return this.inventoryCallbacks.moveItem(pmcData, body, sessionID);
             case ItemEventActions.REMOVE:

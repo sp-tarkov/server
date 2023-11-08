@@ -1,6 +1,5 @@
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 
-export interface IRagfairAssortGenerator
-{
+export interface IRagfairAssortGenerator {
     getAssortItems(): Item[];
 }

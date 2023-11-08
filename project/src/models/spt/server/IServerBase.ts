@@ -1,5 +1,4 @@
-export interface IServerBase 
-{
-    ip: string
-    port: number
+export interface IServerBase {
+    ip: string;
+    port: number;
 }

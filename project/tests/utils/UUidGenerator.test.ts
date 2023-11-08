@@ -6,21 +6,17 @@ import { TestHelper } from "../common/TestHelper";
 
 const testHelper = new TestHelper();
 
-describe("test text", () =>
-{
+describe("test text", () => {
     let uuidGenerator: UUidGenerator;
-    beforeEach(() =>
-    {
+    beforeEach(() => {
         uuidGenerator = testHelper.getTestUuidGenerator();
     });
 
-    it("UUidGenerator type check", () =>
-    {
+    it("UUidGenerator type check", () => {
         expect(uuidGenerator).toBeInstanceOf(UUidGenerator);
     });
 
-    it("generate()", () =>
-    {
+    it("generate()", () => {
         expect(uuidGenerator.generate()).toHaveLength(36);
         expect(uuidGenerator.generate()).toContain("-");
         expect(uuidGenerator.generate()).toContain("4");

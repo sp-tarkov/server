@@ -1,4 +1,3 @@
-export interface ISelectProfileResponse
-{
-    status: string
+export interface ISelectProfileResponse {
+    status: string;
 }

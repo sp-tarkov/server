@@ -12,8 +12,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class BotDifficultyHelper
-{
+export class BotDifficultyHelper {
     protected pmcConfig: IPmcConfig;
 
     constructor(
@@ -24,21 +23,20 @@ export class BotDifficultyHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotHelper") protected botHelper: BotHelper,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
 
-    public getPmcDifficultySettings(pmcType: "bear"|"usec", difficulty: string, usecType: string, bearType: string): Difficulty
-    {
+    public getPmcDifficultySettings(
+        pmcType: "bear" | "usec",
+        difficulty: string,
+        usecType: string,
+        bearType: string
+    ): Difficulty {
         const difficultySettings = this.getDifficultySettings(pmcType, difficulty);
 
-        const friendlyType = pmcType === "bear"
-            ? bearType
-            : usecType;
-        const enemyType = pmcType === "bear"
-            ? usecType
-            : bearType;
+        const friendlyType = pmcType === "bear" ? bearType : usecType;
+        const enemyType = pmcType === "bear" ? usecType : bearType;
 
         this.botHelper.addBotToEnemyList(difficultySettings, this.pmcConfig.enemyTypes, friendlyType); // Add generic bot types to enemy list
         this.botHelper.addBotToEnemyList(difficultySettings, [enemyType, friendlyType], ""); // add same/opposite side to enemy list
@@ -54,21 +52,27 @@ export class BotDifficultyHelper
      * @param difficulty difficulty to get settings for (easy/normal etc)
      * @returns Difficulty object
      */
-    public getBotDifficultySettings(type: string, difficulty: string): Difficulty
-    {
+    public getBotDifficultySettings(type: string, difficulty: string): Difficulty {
         const bot = this.databaseServer.getTables().bots.types[type];
-        if (!bot)
-        {
+        if (!bot) {
             // get fallback
             this.logger.warning(this.localisationService.getText("bot-unable_to_get_bot_fallback_to_assault", type));
-            this.databaseServer.getTables().bots.types[type] = this.jsonUtil.clone(this.databaseServer.getTables().bots.types.assault);
+            this.databaseServer.getTables().bots.types[type] = this.jsonUtil.clone(
+                this.databaseServer.getTables().bots.types.assault
+            );
         }
 
         const difficultySettings = this.botHelper.getBotTemplate(type).difficulty[difficulty];
-        if (!difficultySettings)
-        {
-            this.logger.warning(this.localisationService.getText("bot-unable_to_get_bot_difficulty_fallback_to_assault", {botType: type, difficulty: difficulty}));
-            this.databaseServer.getTables().bots.types[type].difficulty[difficulty] = this.jsonUtil.clone(this.databaseServer.getTables().bots.types.assault.difficulty[difficulty]);
+        if (!difficultySettings) {
+            this.logger.warning(
+                this.localisationService.getText("bot-unable_to_get_bot_difficulty_fallback_to_assault", {
+                    botType: type,
+                    difficulty: difficulty,
+                })
+            );
+            this.databaseServer.getTables().bots.types[type].difficulty[difficulty] = this.jsonUtil.clone(
+                this.databaseServer.getTables().bots.types.assault.difficulty[difficulty]
+            );
         }
 
         return this.jsonUtil.clone(difficultySettings);
@@ -77,14 +81,14 @@ export class BotDifficultyHelper
     /**
      * Get difficulty settings for a PMC
      * @param type "usec" / "bear"
-     * @param difficulty what difficulty to retrieve 
+     * @param difficulty what difficulty to retrieve
      * @returns Difficulty object
      */
-    protected getDifficultySettings(type: string, difficulty: string): Difficulty
-    {
-        let difficultySetting = this.pmcConfig.difficulty.toLowerCase() === "asonline"
-            ? difficulty
-            : this.pmcConfig.difficulty.toLowerCase();
+    protected getDifficultySettings(type: string, difficulty: string): Difficulty {
+        let difficultySetting =
+            this.pmcConfig.difficulty.toLowerCase() === "asonline"
+                ? difficulty
+                : this.pmcConfig.difficulty.toLowerCase();
 
         difficultySetting = this.convertBotDifficultyDropdownToBotDifficulty(difficultySetting);
 
@@ -96,10 +100,8 @@ export class BotDifficultyHelper
      * @param dropDownDifficulty Dropdown difficulty value to convert
      * @returns bot difficulty
      */
-    public convertBotDifficultyDropdownToBotDifficulty(dropDownDifficulty: string): string
-    {
-        switch (dropDownDifficulty.toLowerCase())
-        {
+    public convertBotDifficultyDropdownToBotDifficulty(dropDownDifficulty: string): string {
+        switch (dropDownDifficulty.toLowerCase()) {
             case "medium":
                 return "normal";
             case "random":
@@ -113,8 +115,7 @@ export class BotDifficultyHelper
      * Choose a random difficulty from - easy/normal/hard/impossible
      * @returns random difficulty
      */
-    public chooseRandomDifficulty(): string
-    {
+    public chooseRandomDifficulty(): string {
         return this.randomUtil.getArrayValue(["easy", "normal", "hard", "impossible"]);
     }
 }

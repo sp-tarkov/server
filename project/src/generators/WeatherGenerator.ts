@@ -13,8 +13,7 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
-export class WeatherGenerator
-{
+export class WeatherGenerator {
     protected weatherConfig: IWeatherConfig;
 
     constructor(
@@ -24,8 +23,7 @@ export class WeatherGenerator
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
     }
 
@@ -34,8 +32,7 @@ export class WeatherGenerator
      * @param data Weather data
      * @returns IWeatherData
      */
-    public calculateGameTime(data: IWeatherData): IWeatherData
-    {
+    public calculateGameTime(data: IWeatherData): IWeatherData {
         const computedDate = new Date();
         const formattedDate = this.timeUtil.formatDate(computedDate);
 
@@ -52,8 +49,7 @@ export class WeatherGenerator
      * @param currentDate current date
      * @returns formatted time
      */
-    protected getBsgFormattedInRaidTime(currentDate: Date): string
-    {
+    protected getBsgFormattedInRaidTime(currentDate: Date): string {
         const clientAcceleratedDate = this.getInRaidTime(currentDate);
 
         return this.getBSGFormattedTime(clientAcceleratedDate);
@@ -62,16 +58,17 @@ export class WeatherGenerator
     /**
      * Get the current in-raid time
      * @param currentDate (new Date())
-     * @returns Date object of current in-raid time 
+     * @returns Date object of current in-raid time
      */
-    public getInRaidTime(currentDate: Date): Date
-    {
+    public getInRaidTime(currentDate: Date): Date {
         // Get timestamp of when client conneted to server
-        const gameStartTimeStampMS =  this.applicationContext.getLatestValue(ContextVariableType.CLIENT_START_TIMESTAMP).getValue<number>();
+        const gameStartTimeStampMS = this.applicationContext
+            .getLatestValue(ContextVariableType.CLIENT_START_TIMESTAMP)
+            .getValue<number>();
 
         // Get delta between now and when client connected to server in milliseconds
-        const deltaMSFromNow = (Date.now() - gameStartTimeStampMS);
-        const acceleratedMS = (deltaMSFromNow * (this.weatherConfig.acceleration - 1)); // For some reason nodejs moves faster than client time, reducing acceleration by 1 when client is 7 helps
+        const deltaMSFromNow = Date.now() - gameStartTimeStampMS;
+        const acceleratedMS = deltaMSFromNow * (this.weatherConfig.acceleration - 1); // For some reason nodejs moves faster than client time, reducing acceleration by 1 when client is 7 helps
         const clientAcceleratedDate = new Date(currentDate.valueOf() + acceleratedMS);
 
         return clientAcceleratedDate;
@@ -82,8 +79,7 @@ export class WeatherGenerator
      * @param date date to format into bsg style
      * @returns Time formatted in BSG format
      */
-    protected getBSGFormattedTime(date: Date): string
-    {
+    protected getBSGFormattedTime(date: Date): string {
         return this.timeUtil.formatTime(date).replace("-", ":").replace("-", ":");
     }
 
@@ -91,8 +87,7 @@ export class WeatherGenerator
      * Return randomised Weather data with help of config/weather.json
      * @returns Randomised weather data
      */
-    public generateWeather(): IWeather
-    {
+    public generateWeather(): IWeather {
         const rain = this.getWeightedRain();
 
         const result: IWeather = {
@@ -105,15 +100,13 @@ export class WeatherGenerator
             wind_gustiness: this.getRandomFloat("windGustiness"),
             rain: rain,
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            rain_intensity: (rain > 1)
-                ? this.getRandomFloat("rainIntensity")
-                : 0,
+            rain_intensity: rain > 1 ? this.getRandomFloat("rainIntensity") : 0,
             fog: this.getWeightedFog(),
             temp: this.getRandomFloat("temp"),
             pressure: this.getRandomFloat("pressure"),
             time: "",
             date: "",
-            timestamp: 0
+            timestamp: 0,
         };
 
         this.setCurrentDateTime(result);
@@ -125,8 +118,7 @@ export class WeatherGenerator
      * Set IWeather date/time/timestamp values to now
      * @param weather Object to update
      */
-    protected setCurrentDateTime(weather: IWeather): void
-    {
+    protected setCurrentDateTime(weather: IWeather): void {
         const currentDate = this.getInRaidTime(new Date());
         const normalTime = this.getBSGFormattedTime(currentDate);
         const formattedDate = this.timeUtil.formatDate(currentDate);
@@ -137,34 +129,46 @@ export class WeatherGenerator
         weather.time = datetime; // matches weather.timestamp
     }
 
-    protected getWeightedWindDirection(): WindDirection
-    {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.windDirection.values, this.weatherConfig.weather.windDirection.weights).item;
+    protected getWeightedWindDirection(): WindDirection {
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.windDirection.values,
+            this.weatherConfig.weather.windDirection.weights
+        ).item;
     }
 
-    protected getWeightedClouds(): number
-    {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.clouds.values, this.weatherConfig.weather.clouds.weights).item;
+    protected getWeightedClouds(): number {
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.clouds.values,
+            this.weatherConfig.weather.clouds.weights
+        ).item;
     }
 
-    protected getWeightedWindSpeed(): number
-    {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.windSpeed.values, this.weatherConfig.weather.windSpeed.weights).item;
+    protected getWeightedWindSpeed(): number {
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.windSpeed.values,
+            this.weatherConfig.weather.windSpeed.weights
+        ).item;
     }
 
-    protected getWeightedFog(): number
-    {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.fog.values, this.weatherConfig.weather.fog.weights).item;
+    protected getWeightedFog(): number {
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.fog.values,
+            this.weatherConfig.weather.fog.weights
+        ).item;
     }
 
-    protected getWeightedRain(): number
-    {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.rain.values, this.weatherConfig.weather.rain.weights).item;
+    protected getWeightedRain(): number {
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.rain.values,
+            this.weatherConfig.weather.rain.weights
+        ).item;
     }
 
-    protected getRandomFloat(node: string): number
-    {
-        return parseFloat(this.randomUtil.getFloat(this.weatherConfig.weather[node].min,
-            this.weatherConfig.weather[node].max).toPrecision(3));
+    protected getRandomFloat(node: string): number {
+        return parseFloat(
+            this.randomUtil
+                .getFloat(this.weatherConfig.weather[node].min, this.weatherConfig.weather[node].max)
+                .toPrecision(3)
+        );
     }
 }

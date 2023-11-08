@@ -20,8 +20,7 @@ import { PaymentService } from "@spt-aki/services/PaymentService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
-export class TradeHelper
-{
+export class TradeHelper {
     protected traderConfig: ITraderConfig;
 
     constructor(
@@ -35,8 +34,7 @@ export class TradeHelper
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
@@ -47,10 +45,15 @@ export class TradeHelper
      * @param sessionID Session id
      * @param foundInRaid Should item be found in raid
      * @param upd optional item details used when buying from flea
-     * @returns 
+     * @returns
      */
-    public buyItem(pmcData: IPmcData, buyRequestData: IProcessBuyTradeRequestData, sessionID: string, foundInRaid: boolean, upd: Upd): IItemEventRouterResponse
-    {
+    public buyItem(
+        pmcData: IPmcData,
+        buyRequestData: IProcessBuyTradeRequestData,
+        sessionID: string,
+        foundInRaid: boolean,
+        upd: Upd
+    ): IItemEventRouterResponse {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
         const newReq = {
@@ -58,60 +61,49 @@ export class TradeHelper
                 {
                     // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: buyRequestData.item_id,
-                    count: buyRequestData.count
-                }
+                    count: buyRequestData.count,
+                },
             ],
-            tid: buyRequestData.tid
+            tid: buyRequestData.tid,
         };
 
-        const callback = () =>
-        {
+        const callback = () => {
             let itemPurchased: Item;
             const isRagfair = buyRequestData.tid.toLocaleLowerCase() === "ragfair";
-            if (isRagfair)
-            {
+            if (isRagfair) {
                 const allOffers = this.ragfairServer.getOffers();
-                const offersWithItem = allOffers.find(x => x.items[0]._id === buyRequestData.item_id);
+                const offersWithItem = allOffers.find((x) => x.items[0]._id === buyRequestData.item_id);
                 itemPurchased = offersWithItem.items[0];
-            }
-            else
-            {
+            } else {
                 const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(buyRequestData.tid).items;
-                itemPurchased = traderAssorts.find(x => x._id === buyRequestData.item_id);
+                itemPurchased = traderAssorts.find((x) => x._id === buyRequestData.item_id);
             }
 
             // Ensure purchase does not exceed trader item limit
             const hasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
-            if (hasBuyRestrictions)
-            {
+            if (hasBuyRestrictions) {
                 this.checkPurchaseIsWithinTraderItemLimit(itemPurchased, buyRequestData.item_id, buyRequestData.count);
             }
 
             // Decrement trader item count
-            if (!isRagfair)
-            {
+            if (!isRagfair) {
                 itemPurchased.upd.StackObjectsCount -= buyRequestData.count;
             }
 
-            if (this.traderConfig.persistPurchaseDataInProfile && hasBuyRestrictions)
-            {
+            if (this.traderConfig.persistPurchaseDataInProfile && hasBuyRestrictions) {
                 this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, newReq);
             }
 
             /// Pay for item
             output = this.paymentService.payMoney(pmcData, buyRequestData, sessionID, output);
-            if (output.warnings.length > 0)
-            {
+            if (output.warnings.length > 0) {
                 throw new Error(`Transaction failed: ${output.warnings[0].errmsg}`);
             }
 
-            if (buyRequestData.tid === Traders.FENCE)
-            {
+            if (buyRequestData.tid === Traders.FENCE) {
                 // Bought fence offer, remove from listing
                 this.fenceService.removeFenceOffer(buyRequestData.item_id);
-            }
-            else if (hasBuyRestrictions)
-            {
+            } else if (hasBuyRestrictions) {
                 // Increment non-fence trader item buy count
                 this.incrementAssortBuyCount(itemPurchased, buyRequestData.count);
             }
@@ -130,19 +122,21 @@ export class TradeHelper
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
-    public sellItem(profileWithItemsToSell: IPmcData, profileToReceiveMoney: IPmcData, sellRequest: IProcessSellTradeRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    public sellItem(
+        profileWithItemsToSell: IPmcData,
+        profileToReceiveMoney: IPmcData,
+        sellRequest: IProcessSellTradeRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
         // Find item in inventory and remove it
-        for (const itemToBeRemoved of sellRequest.items)
-        {
+        for (const itemToBeRemoved of sellRequest.items) {
             const itemIdToFind = itemToBeRemoved.id.replace(/\s+/g, ""); // Strip out whitespace
 
             // Find item in player inventory, or show error to player if not found
-            const matchingItemInInventory = profileWithItemsToSell.Inventory.items.find(x => x._id === itemIdToFind);
-            if (!matchingItemInInventory)
-            {
+            const matchingItemInInventory = profileWithItemsToSell.Inventory.items.find((x) => x._id === itemIdToFind);
+            if (!matchingItemInInventory) {
                 const errorMessage = `Unable to sell item ${itemToBeRemoved.id}, cannot be found in player inventory`;
                 this.logger.error(errorMessage);
 
@@ -165,21 +159,19 @@ export class TradeHelper
      * @param assortBeingPurchased assort being bought
      * @param itemsPurchasedCount number of items being bought
      */
-    protected incrementAssortBuyCount(assortBeingPurchased: Item, itemsPurchasedCount: number): void
-    {
+    protected incrementAssortBuyCount(assortBeingPurchased: Item, itemsPurchasedCount: number): void {
         assortBeingPurchased.upd.BuyRestrictionCurrent += itemsPurchasedCount;
 
-        if (assortBeingPurchased.upd.BuyRestrictionCurrent > assortBeingPurchased.upd.BuyRestrictionMax)
-        {
+        if (assortBeingPurchased.upd.BuyRestrictionCurrent > assortBeingPurchased.upd.BuyRestrictionMax) {
             throw new Error("Unable to purchase item, Purchase limit reached");
         }
     }
 
-    protected checkPurchaseIsWithinTraderItemLimit(assortBeingPurchased: Item, assortId: string, count: number): void
-    {
-        if ((assortBeingPurchased.upd.BuyRestrictionCurrent + count) > assortBeingPurchased.upd?.BuyRestrictionMax)
-        {
-            throw new Error(`Unable to purchase ${count} items, this would exceed your purchase limit of ${assortBeingPurchased.upd.BuyRestrictionMax} from the trader this refresh`);
+    protected checkPurchaseIsWithinTraderItemLimit(assortBeingPurchased: Item, assortId: string, count: number): void {
+        if (assortBeingPurchased.upd.BuyRestrictionCurrent + count > assortBeingPurchased.upd?.BuyRestrictionMax) {
+            throw new Error(
+                `Unable to purchase ${count} items, this would exceed your purchase limit of ${assortBeingPurchased.upd.BuyRestrictionMax} from the trader this refresh`
+            );
         }
     }
 }

@@ -3,8 +3,7 @@ import { injectable } from "tsyringe";
 import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 
 @injectable()
-export class DatabaseServer
-{
+export class DatabaseServer {
     protected tableData: IDatabaseTables = {
         bots: undefined,
         hideout: undefined,
@@ -16,16 +15,14 @@ export class DatabaseServer
         traders: undefined,
         globals: undefined,
         server: undefined,
-        settings: undefined
+        settings: undefined,
     };
 
-    public getTables(): IDatabaseTables
-    {
+    public getTables(): IDatabaseTables {
         return this.tableData;
     }
 
-    public setTables(tableData: IDatabaseTables): void
-    {
+    public setTables(tableData: IDatabaseTables): void {
         this.tableData = tableData;
     }
 }

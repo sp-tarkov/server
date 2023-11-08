@@ -13,8 +13,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
  * Help with storing limited item purchases from traders in profile to persist them over server restarts
  */
 @injectable()
-export class TraderPurchasePersisterService
-{
+export class TraderPurchasePersisterService {
     protected traderConfig: ITraderConfig;
 
     constructor(
@@ -23,8 +22,7 @@ export class TraderPurchasePersisterService
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
@@ -34,12 +32,10 @@ export class TraderPurchasePersisterService
      * @param traderId Trader to loop up purchases for
      * @returns Dict of assort id and count purchased
      */
-    public getProfileTraderPurchases(sessionId: string, traderId: string): Record<string, TraderPurchaseData>
-    {
+    public getProfileTraderPurchases(sessionId: string, traderId: string): Record<string, TraderPurchaseData> {
         const profile = this.profileHelper.getFullProfile(sessionId);
 
-        if (!profile.traderPurchases)
-        {
+        if (!profile.traderPurchases) {
             return null;
         }
 
@@ -50,21 +46,17 @@ export class TraderPurchasePersisterService
      * Remove all trader purchase records from all profiles that exist
      * @param traderId Traders id
      */
-    public resetTraderPurchasesStoredInProfile(traderId: string): void
-    {
+    public resetTraderPurchasesStoredInProfile(traderId: string): void {
         // Reset all profiles purchase dictionaries now a trader update has occured;
         const profiles = this.profileHelper.getProfiles();
-        for (const profile of Object.values(profiles))
-        {
+        for (const profile of Object.values(profiles)) {
             // Skip if no purchases
-            if (!profile.traderPurchases)
-            {
+            if (!profile.traderPurchases) {
                 continue;
             }
 
             // Skip if no trader-speicifc purchases
-            if (!profile.traderPurchases[traderId])
-            {
+            if (!profile.traderPurchases[traderId]) {
                 continue;
             }
 
@@ -76,39 +68,39 @@ export class TraderPurchasePersisterService
      * Iterate over all server profiles and remove specific trader purchase data that has passed the trader refesh time
      * @param traderId Trader id
      */
-    public removeStalePurchasesFromProfiles(traderId: string): void
-    {
+    public removeStalePurchasesFromProfiles(traderId: string): void {
         const profiles = this.profileHelper.getProfiles();
-        for (const profile of Object.values(profiles))
-        {
+        for (const profile of Object.values(profiles)) {
             // Skip if no purchases
-            if (!profile.traderPurchases)
-            {
+            if (!profile.traderPurchases) {
                 continue;
             }
 
             // Skip if no trader-specifc purchases
-            if (!profile.traderPurchases[traderId])
-            {
+            if (!profile.traderPurchases[traderId]) {
                 continue;
             }
 
-            for (const purchaseKey in profile.traderPurchases[traderId])
-            {
-                const traderUpdateDetails = this.traderConfig.updateTime.find(x => x.traderId === traderId);
-                if (!traderUpdateDetails)
-                {
-                    this.logger.error(this.localisationService.getText("trader-unable_to_delete_stale_purchases", {profileId: profile.info.id, traderId: traderId}));
+            for (const purchaseKey in profile.traderPurchases[traderId]) {
+                const traderUpdateDetails = this.traderConfig.updateTime.find((x) => x.traderId === traderId);
+                if (!traderUpdateDetails) {
+                    this.logger.error(
+                        this.localisationService.getText("trader-unable_to_delete_stale_purchases", {
+                            profileId: profile.info.id,
+                            traderId: traderId,
+                        })
+                    );
 
                     continue;
                 }
 
                 const purchaseDetails = profile.traderPurchases[traderId][purchaseKey];
                 const resetTimeForItem = purchaseDetails.purchaseTimestamp + traderUpdateDetails.seconds;
-                if ((resetTimeForItem)  < this.timeUtil.getTimestamp())
-                {
+                if (resetTimeForItem < this.timeUtil.getTimestamp()) {
                     // Item was purchased far enough in past a trader refresh would have occured, remove purchase record from profile
-                    this.logger.debug(`Removed trader: ${traderId} purchase: ${purchaseKey} from profile: ${profile.info.id}`);
+                    this.logger.debug(
+                        `Removed trader: ${traderId} purchase: ${purchaseKey} from profile: ${profile.info.id}`
+                    );
                     delete profile.traderPurchases[traderId][purchaseKey];
                 }
             }

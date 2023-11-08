@@ -1,4 +1,3 @@
-export interface ITransferGroupRequest
-{
-    aidToChange: string
+export interface ITransferGroupRequest {
+    aidToChange: string;
 }

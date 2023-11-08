@@ -7,21 +7,17 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { HttpFileUtil } from "@spt-aki/utils/HttpFileUtil";
 
 @injectable()
-export class BundleSerializer extends Serializer
-{
-
+export class BundleSerializer extends Serializer {
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("BundleLoader") protected bundleLoader: BundleLoader,
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil
-    )
-    {
+    ) {
         super();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void
-    {
+    public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
         this.logger.info(`[BUNDLE]: ${req.url}`);
 
         const key = req.url.split("/bundle/")[1];
@@ -31,8 +27,7 @@ export class BundleSerializer extends Serializer
         this.httpFileUtil.sendFile(resp, bundle.path);
     }
 
-    public override canHandle(route: string): boolean
-    {
+    public override canHandle(route: string): boolean {
         return route === "BUNDLE";
     }
 }

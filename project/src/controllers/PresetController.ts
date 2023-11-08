@@ -5,25 +5,20 @@ import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 
 @injectable()
-export class PresetController
-{
+export class PresetController {
     constructor(
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer
-    )
-    { }
+    ) {}
 
-    public initialize(): void
-    {
+    public initialize(): void {
         const presets: IPreset[] = Object.values(this.databaseServer.getTables().globals.ItemPresets);
         const reverse: Record<string, string[]> = {};
 
-        for (const preset of presets)
-        {
+        for (const preset of presets) {
             const tpl = preset._items[0]._tpl;
 
-            if (!(tpl in reverse))
-            {
+            if (!(tpl in reverse)) {
                 reverse[tpl] = [];
             }
 

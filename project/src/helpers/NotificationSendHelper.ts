@@ -10,29 +10,23 @@ import { NotificationService } from "@spt-aki/services/NotificationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 
 @injectable()
-export class NotificationSendHelper
-{
+export class NotificationSendHelper {
     constructor(
         @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("NotificationService") protected notificationService: NotificationService
-    )
-    {}
+    ) {}
 
     /**
      * Send notification message to the appropriate channel
-     * @param sessionID 
-     * @param notificationMessage 
+     * @param sessionID
+     * @param notificationMessage
      */
-    public sendMessage(sessionID: string, notificationMessage: INotification): void
-    {
-        if (this.webSocketServer.isConnectionWebSocket(sessionID))
-        {
+    public sendMessage(sessionID: string, notificationMessage: INotification): void {
+        if (this.webSocketServer.isConnectionWebSocket(sessionID)) {
             this.webSocketServer.sendMessage(sessionID, notificationMessage);
-        }
-        else
-        {
+        } else {
             this.notificationService.add(sessionID, notificationMessage);
         }
     }
@@ -44,8 +38,12 @@ export class NotificationSendHelper
      * @param messageText Text to send player
      * @param messageType Underlying type of message being sent
      */
-    public sendMessageToPlayer(sessionId: string, senderDetails: IUserDialogInfo, messageText: string, messageType: MessageType): void
-    {
+    public sendMessageToPlayer(
+        sessionId: string,
+        senderDetails: IUserDialogInfo,
+        messageText: string,
+        messageType: MessageType
+    ): void {
         const dialog = this.getDialog(sessionId, messageType, senderDetails);
 
         dialog.new += 1;
@@ -57,7 +55,7 @@ export class NotificationSendHelper
             text: messageText,
             hasRewards: undefined,
             rewardCollected: undefined,
-            items: undefined
+            items: undefined,
         };
         dialog.messages.push(message);
 
@@ -65,7 +63,7 @@ export class NotificationSendHelper
             type: NotificationType.NEW_MESSAGE,
             eventId: message._id,
             dialogId: message.uid,
-            message: message
+            message: message,
         };
         this.sendMessage(sessionId, notification);
     }
@@ -77,17 +75,18 @@ export class NotificationSendHelper
      * @param senderDetails Who is sending the message
      * @returns Dialogue
      */
-    protected getDialog(sessionId: string, messageType: MessageType, senderDetails: IUserDialogInfo): Dialogue
-    {
+    protected getDialog(sessionId: string, messageType: MessageType, senderDetails: IUserDialogInfo): Dialogue {
         // Use trader id if sender is trader, otherwise use nickname
-        const key = (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? senderDetails._id : senderDetails.info.Nickname;
+        const key =
+            senderDetails.info.MemberCategory === MemberCategory.TRADER
+                ? senderDetails._id
+                : senderDetails.info.Nickname;
         const dialogueData = this.saveServer.getProfile(sessionId).dialogues;
         const isNewDialogue = !(key in dialogueData);
         let dialogue: Dialogue = dialogueData[key];
 
         // Existing dialog not found, make new one
-        if (isNewDialogue)
-        {
+        if (isNewDialogue) {
             dialogue = {
                 _id: key,
                 type: messageType,
@@ -95,7 +94,7 @@ export class NotificationSendHelper
                 pinned: false,
                 new: 0,
                 attachmentsNew: 0,
-                Users: (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? undefined : [senderDetails]
+                Users: senderDetails.info.MemberCategory === MemberCategory.TRADER ? undefined : [senderDetails],
             };
 
             dialogueData[key] = dialogue;

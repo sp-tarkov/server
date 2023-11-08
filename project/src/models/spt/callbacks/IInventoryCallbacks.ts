@@ -17,8 +17,7 @@ import { IInventoryToggleRequestData } from "@spt-aki/models/eft/inventory/IInve
 import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 
-export interface IInventoryCallbacks
-{
+export interface IInventoryCallbacks {
     moveItem(pmcData: IPmcData, body: IInventoryMoveRequestData, sessionID: string): IItemEventRouterResponse;
     removeItem(pmcData: IPmcData, body: IInventoryRemoveRequestData, sessionID: string): IItemEventRouterResponse;
     splitItem(pmcData: IPmcData, body: IInventorySplitRequestData, sessionID: string): IItemEventRouterResponse;
@@ -30,9 +29,25 @@ export interface IInventoryCallbacks
     tagItem(pmcData: IPmcData, body: IInventoryTagRequestData, sessionID: string): IItemEventRouterResponse;
     bindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse;
     examineItem(pmcData: IPmcData, body: IInventoryExamineRequestData, sessionID: string): IItemEventRouterResponse;
-    readEncyclopedia(pmcData: IPmcData, body: IInventoryReadEncyclopediaRequestData, sessionID: string): IItemEventRouterResponse;
+    readEncyclopedia(
+        pmcData: IPmcData,
+        body: IInventoryReadEncyclopediaRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
     sortInventory(pmcData: IPmcData, body: IInventorySortRequestData, sessionID: string): IItemEventRouterResponse;
-    createMapMarker(pmcData: IPmcData, body: IInventoryCreateMarkerRequestData, sessionID: string): IItemEventRouterResponse;
-    deleteMapMarker(pmcData: IPmcData, body: IInventoryDeleteMarkerRequestData, sessionID: string): IItemEventRouterResponse;
-    editMapMarker(pmcData: IPmcData, body: IInventoryEditMarkerRequestData, sessionID: string): IItemEventRouterResponse;
+    createMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryCreateMarkerRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
+    deleteMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryDeleteMarkerRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
+    editMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryEditMarkerRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
 }

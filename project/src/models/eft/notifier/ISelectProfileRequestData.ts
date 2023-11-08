@@ -1,4 +1,3 @@
-export interface ISelectProfileRequestData 
-{
-    uid: string
+export interface ISelectProfileRequestData {
+    uid: string;
 }

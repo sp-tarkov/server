@@ -13,8 +13,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class BotHelper
-{
+export class BotHelper {
     protected botConfig: IBotConfig;
     protected pmcConfig: IPmcConfig;
 
@@ -25,21 +24,17 @@ export class BotHelper
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
-
-
 
     /**
      * Get a template object for the specified botRole from bots.types db
      * @param role botRole to get template for
      * @returns IBotType object
      */
-    public getBotTemplate(role: string): IBotType
-    {
+    public getBotTemplate(role: string): IBotType {
         return this.databaseServer.getTables().bots.types[role.toLowerCase()];
     }
 
@@ -48,10 +43,8 @@ export class BotHelper
      * Look up value in bot.json/chanceSameSideIsHostilePercent
      * @param difficultySettings pmc difficulty settings
      */
-    public randomizePmcHostility(difficultySettings: Difficulty): void
-    {
-        if (this.randomUtil.getChance100(this.pmcConfig.chanceSameSideIsHostilePercent))
-        {
+    public randomizePmcHostility(difficultySettings: Difficulty): void {
+        if (this.randomUtil.getChance100(this.pmcConfig.chanceSameSideIsHostilePercent)) {
             difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_BEAR"] = false;
             difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_USEC"] = false;
             difficultySettings.Mind["DEFAULT_USEC_BEHAVIOUR"] = "Attack";
@@ -64,18 +57,15 @@ export class BotHelper
      * @param botRole bot role to check
      * @returns true if is pmc
      */
-    public isBotPmc(botRole: string): boolean
-    {
-        return (["usec", "bear", "pmc", "sptbear", "sptusec"].includes(botRole?.toLowerCase()));
+    public isBotPmc(botRole: string): boolean {
+        return ["usec", "bear", "pmc", "sptbear", "sptusec"].includes(botRole?.toLowerCase());
     }
 
-    public isBotBoss(botRole: string): boolean
-    {
-        return this.botConfig.bosses.some(x => x.toLowerCase() === botRole?.toLowerCase());
+    public isBotBoss(botRole: string): boolean {
+        return this.botConfig.bosses.some((x) => x.toLowerCase() === botRole?.toLowerCase());
     }
 
-    public isBotFollower(botRole: string): boolean
-    {
+    public isBotFollower(botRole: string): boolean {
         return botRole?.toLowerCase().startsWith("follower");
     }
 
@@ -84,13 +74,11 @@ export class BotHelper
      * @param difficultySettings bot settings to alter
      * @param typeToAdd bot type to add to friendly list
      */
-    public addBotToFriendlyList(difficultySettings: Difficulty, typeToAdd: string): void
-    {
+    public addBotToFriendlyList(difficultySettings: Difficulty, typeToAdd: string): void {
         const friendlyBotTypesKey = "FRIENDLY_BOT_TYPES";
 
         // Null guard
-        if (!difficultySettings.Mind[friendlyBotTypesKey])
-        {
+        if (!difficultySettings.Mind[friendlyBotTypesKey]) {
             difficultySettings.Mind[friendlyBotTypesKey] = [];
         }
 
@@ -102,27 +90,22 @@ export class BotHelper
      * @param difficultySettings bot settings to alter
      * @param typesToAdd bot type to add to enemy list
      */
-    public addBotToEnemyList(difficultySettings: Difficulty, typesToAdd: string[], typeBeingEdited: string): void
-    {
+    public addBotToEnemyList(difficultySettings: Difficulty, typesToAdd: string[], typeBeingEdited: string): void {
         const enemyBotTypesKey = "ENEMY_BOT_TYPES";
 
         // Null guard
-        if (!difficultySettings.Mind[enemyBotTypesKey])
-        {
+        if (!difficultySettings.Mind[enemyBotTypesKey]) {
             difficultySettings.Mind[enemyBotTypesKey] = [];
         }
 
         const enemyArray = <string[]>difficultySettings.Mind[enemyBotTypesKey];
-        for (const botTypeToAdd of typesToAdd)
-        {
-            if (botTypeToAdd.toLowerCase() === typeBeingEdited.toLowerCase())
-            {
+        for (const botTypeToAdd of typesToAdd) {
+            if (botTypeToAdd.toLowerCase() === typeBeingEdited.toLowerCase()) {
                 this.logger.debug(`unable to add enemy ${botTypeToAdd} to its own enemy list, skipping`);
                 continue;
             }
 
-            if (!enemyArray.includes(botTypeToAdd))
-            {
+            if (!enemyArray.includes(botTypeToAdd)) {
                 enemyArray.push(botTypeToAdd);
             }
         }
@@ -133,27 +116,22 @@ export class BotHelper
      * @param difficultySettings bot settings to alter
      * @param typesToAdd bot type to add to revenge list
      */
-    public addBotToRevengeList(difficultySettings: Difficulty, typesToAdd: string[]): void
-    {
+    public addBotToRevengeList(difficultySettings: Difficulty, typesToAdd: string[]): void {
         const revengePropKey = "REVENGE_BOT_TYPES";
 
         // Nothing to add
-        if (!typesToAdd)
-        {
+        if (!typesToAdd) {
             return;
         }
 
         // Null guard
-        if (!difficultySettings.Mind[revengePropKey])
-        {
+        if (!difficultySettings.Mind[revengePropKey]) {
             difficultySettings.Mind[revengePropKey] = [];
         }
 
         const revengeArray = <string[]>difficultySettings.Mind[revengePropKey];
-        for (const botTypeToAdd of typesToAdd)
-        {
-            if (!revengeArray.includes(botTypeToAdd))
-            {
+        for (const botTypeToAdd of typesToAdd) {
+            if (!revengeArray.includes(botTypeToAdd)) {
                 revengeArray.push(botTypeToAdd);
             }
         }
@@ -164,36 +142,35 @@ export class BotHelper
      * @param botRole the bot role to check if should be a pmc
      * @returns true if should be a pmc
      */
-    public shouldBotBePmc(botRole: string): boolean
-    {
+    public shouldBotBePmc(botRole: string): boolean {
         const botRoleLowered = botRole.toLowerCase();
 
         // Handle when map waves have these types in the bot type
-        if (this.botRoleIsPmc(botRoleLowered))
-        {
+        if (this.botRoleIsPmc(botRoleLowered)) {
             return true;
         }
 
         const botConvertMinMax = this.pmcConfig.convertIntoPmcChance[botRoleLowered];
 
         // no bot type defined in config, default to false
-        if (!botConvertMinMax)
-        {
+        if (!botConvertMinMax) {
             return false;
         }
 
         return this.rollChanceToBePmc(botRoleLowered, botConvertMinMax);
     }
 
-    public rollChanceToBePmc(role: string, botConvertMinMax: MinMax): boolean
-    {
-        return role.toLowerCase() in this.pmcConfig.convertIntoPmcChance
-            && this.randomUtil.getChance100(this.randomUtil.getInt(botConvertMinMax.min, botConvertMinMax.max));
+    public rollChanceToBePmc(role: string, botConvertMinMax: MinMax): boolean {
+        return (
+            role.toLowerCase() in this.pmcConfig.convertIntoPmcChance &&
+            this.randomUtil.getChance100(this.randomUtil.getInt(botConvertMinMax.min, botConvertMinMax.max))
+        );
     }
 
-    public botRoleIsPmc(botRole: string): boolean
-    {
-        return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(botRole.toLowerCase());
+    public botRoleIsPmc(botRole: string): boolean {
+        return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(
+            botRole.toLowerCase()
+        );
     }
 
     /**
@@ -202,26 +179,21 @@ export class BotHelper
      * @param botEquipConfig bot equipment json
      * @returns RandomisationDetails
      */
-    public getBotRandomizationDetails(botLevel: number, botEquipConfig: EquipmentFilters): RandomisationDetails
-    {
+    public getBotRandomizationDetails(botLevel: number, botEquipConfig: EquipmentFilters): RandomisationDetails {
         // No randomisation details found, skip
-        if (!botEquipConfig || Object.keys(botEquipConfig).length === 0 || !botEquipConfig.randomisation)
-        {
+        if (!botEquipConfig || Object.keys(botEquipConfig).length === 0 || !botEquipConfig.randomisation) {
             return null;
         }
-        
-        return botEquipConfig.randomisation.find(x => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);        
+
+        return botEquipConfig.randomisation.find((x) => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);
     }
 
     /**
      * Choose between sptBear and sptUsec at random based on the % defined in pmcConfig.isUsec
      * @returns pmc role
      */
-    public getRandomizedPmcRole(): string
-    {
-        return (this.randomUtil.getChance100(this.pmcConfig.isUsec))
-            ? this.pmcConfig.usecType
-            : this.pmcConfig.bearType;
+    public getRandomizedPmcRole(): string {
+        return this.randomUtil.getChance100(this.pmcConfig.isUsec) ? this.pmcConfig.usecType : this.pmcConfig.bearType;
     }
 
     /**
@@ -229,10 +201,8 @@ export class BotHelper
      * @param botRole role to get side for
      * @returns side (usec/bear)
      */
-    public getPmcSideByRole(botRole: string): string
-    {
-        switch (botRole.toLowerCase())
-        {
+    public getPmcSideByRole(botRole: string): string {
+        switch (botRole.toLowerCase()) {
             case this.pmcConfig.bearType.toLowerCase():
                 return "Bear";
             case this.pmcConfig.usecType.toLowerCase():
@@ -246,10 +216,7 @@ export class BotHelper
      * Get a randomized PMC side based on bot config value 'isUsec'
      * @returns pmc side as string
      */
-    protected getRandomizedPmcSide(): string
-    {
-        return (this.randomUtil.getChance100(this.pmcConfig.isUsec))
-            ? "Usec"
-            : "Bear";
+    protected getRandomizedPmcSide(): string {
+        return this.randomUtil.getChance100(this.pmcConfig.isUsec) ? "Usec" : "Bear";
     }
 }

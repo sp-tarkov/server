@@ -4,27 +4,21 @@ import { HandledRoute, SaveLoadRouter } from "@spt-aki/di/Router";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 @injectable()
-export class HealthSaveLoadRouter extends SaveLoadRouter 
-{
-    constructor()
-    {
+export class HealthSaveLoadRouter extends SaveLoadRouter {
+    constructor() {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
-        return [
-            new HandledRoute("aki-health", false)
-        ];
+    public override getHandledRoutes(): HandledRoute[] {
+        return [new HandledRoute("aki-health", false)];
     }
 
-    public override handleLoad(profile: IAkiProfile): IAkiProfile 
-    {
-        if (!profile.vitality) // Occurs on newly created profiles
-        {
+    public override handleLoad(profile: IAkiProfile): IAkiProfile {
+        if (!profile.vitality) {
+            // Occurs on newly created profiles
             profile.vitality = {
                 health: null,
-                effects: null
+                effects: null,
             };
         }
         profile.vitality.health = {
@@ -37,7 +31,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
             LeftArm: 0,
             RightArm: 0,
             LeftLeg: 0,
-            RightLeg: 0
+            RightLeg: 0,
         };
 
         profile.vitality.effects = {
@@ -47,7 +41,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
             LeftArm: {},
             RightArm: {},
             LeftLeg: {},
-            RightLeg: {}
+            RightLeg: {},
         };
 
         return profile;

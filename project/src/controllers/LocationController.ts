@@ -25,8 +25,7 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
-export class LocationController
-{
+export class LocationController {
     protected airdropConfig: IAirdropConfig;
     protected locationConfig: ILocationConfig;
 
@@ -42,8 +41,7 @@ export class LocationController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.airdropConfig = this.configServer.getConfig(ConfigTypes.AIRDROP);
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
@@ -57,8 +55,7 @@ export class LocationController
      * @param request Map request to generate
      * @returns ILocationBase
      */
-    public get(sessionId: string, request: IGetLocationRequestData): ILocationBase
-    {
+    public get(sessionId: string, request: IGetLocationRequestData): ILocationBase {
         this.logger.debug(`Generating data for: ${request.locationId}, variant: ${request.variantId}`);
         const name = request.locationId.toLowerCase().replace(" ", "");
         return this.generate(name);
@@ -69,8 +66,7 @@ export class LocationController
      * @param name Map name
      * @returns ILocationBase
      */
-    protected generate(name: string): ILocationBase
-    {
+    protected generate(name: string): ILocationBase {
         const db = this.databaseServer.getTables();
         const location: ILocation = db.locations[name];
         const output: ILocationBase = this.jsonUtil.clone(location.base);
@@ -78,8 +74,7 @@ export class LocationController
         output.UnixDateTime = this.timeUtil.getTimestamp();
 
         // Don't generate loot for hideout
-        if (name === "hideout")
-        {
+        if (name === "hideout") {
             return output;
         }
 
@@ -88,17 +83,22 @@ export class LocationController
         // Create containers and add loot to them
         const staticLoot = this.locationGenerator.generateStaticContainers(location.base, staticAmmoDist);
         output.Loot.push(...staticLoot);
-        
+
         // Add dyanmic loot to output loot
         const dynamicLootDist: ILooseLoot = this.jsonUtil.clone(location.looseLoot);
-        const dynamicSpawnPoints: SpawnpointTemplate[] = this.locationGenerator.generateDynamicLoot(dynamicLootDist, staticAmmoDist, name);
-        for (const spawnPoint of dynamicSpawnPoints)
-        {
+        const dynamicSpawnPoints: SpawnpointTemplate[] = this.locationGenerator.generateDynamicLoot(
+            dynamicLootDist,
+            staticAmmoDist,
+            name
+        );
+        for (const spawnPoint of dynamicSpawnPoints) {
             output.Loot.push(spawnPoint);
         }
 
         // Done generating, log results
-        this.logger.success(this.localisationService.getText("location-dynamic_items_spawned_success", dynamicSpawnPoints.length));
+        this.logger.success(
+            this.localisationService.getText("location-dynamic_items_spawned_success", dynamicSpawnPoints.length)
+        );
         this.logger.success(this.localisationService.getText("location-generated_success", name));
 
         return output;
@@ -111,15 +111,12 @@ export class LocationController
      * @returns ILocationsGenerateAllResponse
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public generateAll(sessionId: string): ILocationsGenerateAllResponse
-    {
+    public generateAll(sessionId: string): ILocationsGenerateAllResponse {
         const locationsFromDb = this.databaseServer.getTables().locations;
         const locations: ILocations = {};
-        for (const mapName in locationsFromDb)
-        {
+        for (const mapName in locationsFromDb) {
             const mapBase = locationsFromDb[mapName]?.base;
-            if (!mapBase)
-            {
+            if (!mapBase) {
                 this.logger.debug(`Map: ${mapName} has no base json file, skipping generation`);
                 continue;
             }
@@ -130,9 +127,9 @@ export class LocationController
             locations[mapBase._Id] = mapBase;
         }
 
-        return  {
+        return {
             locations: locations,
-            paths: locationsFromDb.base.paths
+            paths: locationsFromDb.base.paths,
         };
     }
 
@@ -142,23 +139,21 @@ export class LocationController
      * Generates it randomly based on config/airdrop.json values
      * @returns Array of LootItem objects
      */
-    public getAirdropLoot(): IAirdropLootResult
-    {
+    public getAirdropLoot(): IAirdropLootResult {
         const airdropType = this.chooseAirdropType();
 
         this.logger.debug(`Chose ${airdropType} for airdrop loot`);
 
         const airdropConfig = this.getAirdropLootConfigByType(airdropType);
 
-        return {dropType: airdropType, loot: this.lootGenerator.createRandomLoot(airdropConfig)};
+        return { dropType: airdropType, loot: this.lootGenerator.createRandomLoot(airdropConfig) };
     }
 
     /**
      * Randomly pick a type of airdrop loot using weighted values from config
      * @returns airdrop type value
      */
-    protected chooseAirdropType(): AirdropTypeEnum
-    {
+    protected chooseAirdropType(): AirdropTypeEnum {
         const possibleAirdropTypes = this.airdropConfig.airdropTypeWeightings;
 
         return this.weightedRandomHelper.getWeightedValue(possibleAirdropTypes);
@@ -169,12 +164,12 @@ export class LocationController
      * @param airdropType Type of airdrop to get settings for
      * @returns LootRequest
      */
-    protected getAirdropLootConfigByType(airdropType: AirdropTypeEnum): LootRequest
-    {
+    protected getAirdropLootConfigByType(airdropType: AirdropTypeEnum): LootRequest {
         let lootSettingsByType = this.airdropConfig.loot[airdropType];
-        if (!lootSettingsByType)
-        {
-            this.logger.error(this.localisationService.getText("location-unable_to_find_airdrop_drop_config_of_type", airdropType));
+        if (!lootSettingsByType) {
+            this.logger.error(
+                this.localisationService.getText("location-unable_to_find_airdrop_drop_config_of_type", airdropType)
+            );
             lootSettingsByType = this.airdropConfig.loot[AirdropTypeEnum.MIXED];
         }
 
@@ -187,7 +182,7 @@ export class LocationController
             itemLimits: lootSettingsByType.itemLimits,
             itemStackLimits: lootSettingsByType.itemStackLimits,
             armorLevelWhitelist: lootSettingsByType.armorLevelWhitelist,
-            allowBossItems: lootSettingsByType.allowBossItems
+            allowBossItems: lootSettingsByType.allowBossItems,
         };
     }
 }

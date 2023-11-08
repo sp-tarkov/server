@@ -1,4 +1,3 @@
-export interface IGetProfileRequestData
-{
+export interface IGetProfileRequestData {
     profileId: string;
 }

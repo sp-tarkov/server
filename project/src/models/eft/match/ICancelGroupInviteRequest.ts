@@ -1,4 +1,3 @@
-export interface ICancelGroupInviteRequest
-{
-    requestId: string
+export interface ICancelGroupInviteRequest {
+    requestId: string;
 }

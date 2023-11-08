@@ -1,2 +1,2 @@
 import type { DependencyContainer } from "tsyringe";
-export type { DependencyContainer } ;
+export type { DependencyContainer };

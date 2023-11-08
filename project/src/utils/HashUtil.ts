@@ -4,19 +4,14 @@ import { inject, injectable } from "tsyringe";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
-export class HashUtil
-{
-    constructor(
-        @inject("TimeUtil") protected timeUtil: TimeUtil
-    )
-    { }
+export class HashUtil {
+    constructor(@inject("TimeUtil") protected timeUtil: TimeUtil) {}
 
     /**
      * Create a 24 character id using the sha256 algorithm + current timestamp
      * @returns 24 character hash
      */
-    public generate(): string
-    {
+    public generate(): string {
         const shasum = crypto.createHash("sha256");
         const time = Math.random() * this.timeUtil.getTimestamp();
 
@@ -24,13 +19,11 @@ export class HashUtil
         return shasum.digest("hex").substring(0, 24);
     }
 
-    public generateMd5ForData(data: string): string
-    {
+    public generateMd5ForData(data: string): string {
         return this.generateHashForData("md5", data);
     }
 
-    public generateSha1ForData(data: string): string
-    {
+    public generateSha1ForData(data: string): string {
         return this.generateHashForData("sha1", data);
     }
 
@@ -40,17 +33,15 @@ export class HashUtil
      * @param data data to be hashed
      * @returns hash value
      */
-    public generateHashForData(algorithm: string, data: crypto.BinaryLike): string
-    {
+    public generateHashForData(algorithm: string, data: crypto.BinaryLike): string {
         const hashSum = crypto.createHash(algorithm);
         hashSum.update(data);
         return hashSum.digest("hex");
     }
 
-    public generateAccountId(): number
-    {
+    public generateAccountId(): number {
         const min = 1;
         const max = 1000;
-        return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
+        return max > min ? Math.floor(Math.random() * (max - min + 1) + min) : min;
     }
 }

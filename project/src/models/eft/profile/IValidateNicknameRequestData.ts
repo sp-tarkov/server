@@ -1,4 +1,3 @@
-export interface IValidateNicknameRequestData 
-{
-    nickname: string
+export interface IValidateNicknameRequestData {
+    nickname: string;
 }

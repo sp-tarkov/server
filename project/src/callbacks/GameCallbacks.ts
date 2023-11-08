@@ -20,23 +20,19 @@ import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { Watermark } from "@spt-aki/utils/Watermark";
 
 @injectable()
-class GameCallbacks implements OnLoad
-{
+class GameCallbacks implements OnLoad {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("Watermark") protected watermark: Watermark,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("GameController") protected gameController: GameController
-    )
-    {}
+    ) {}
 
-    public async onLoad(): Promise<void>
-    {
+    public async onLoad(): Promise<void> {
         this.gameController.load();
     }
 
-    public getRoute(): string
-    {
+    public getRoute(): string {
         return "aki-game";
     }
 
@@ -45,8 +41,7 @@ class GameCallbacks implements OnLoad
      * @returns INullResponseData
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public versionValidate(url: string, info: IVersionValidateRequestData, sessionID: string): INullResponseData
-    {
+    public versionValidate(url: string, info: IVersionValidateRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }
 
@@ -54,14 +49,17 @@ class GameCallbacks implements OnLoad
      * Handle client/game/start
      * @returns IGameStartResponse
      */
-    public gameStart(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGameStartResponse>
-    {
+    public gameStart(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGameStartResponse> {
         const today = new Date().toUTCString();
         const startTimeStampMS = Date.parse(today);
         this.gameController.gameStart(url, info, sessionID, startTimeStampMS);
         return this.httpResponse.getBody({
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            utc_time: startTimeStampMS / 1000
+            utc_time: startTimeStampMS / 1000,
         });
     }
 
@@ -71,11 +69,14 @@ class GameCallbacks implements OnLoad
      * @returns IGameLogoutResponseData
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public gameLogout(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGameLogoutResponseData>
-    {
+    public gameLogout(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGameLogoutResponseData> {
         this.saveServer.save();
         return this.httpResponse.getBody({
-            status: "ok"
+            status: "ok",
         });
     }
 
@@ -83,8 +84,11 @@ class GameCallbacks implements OnLoad
      * Handle client/game/config
      * @returns IGameConfigResponse
      */
-    public getGameConfig(url: string, info: IGameEmptyCrcRequestData, sessionID: string): IGetBodyResponseData<IGameConfigResponse>
-    {
+    public getGameConfig(
+        url: string,
+        info: IGameEmptyCrcRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGameConfigResponse> {
         return this.httpResponse.getBody(this.gameController.getGameConfig(sessionID));
     }
 
@@ -92,16 +96,18 @@ class GameCallbacks implements OnLoad
      * Handle client/server/list
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getServer(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IServerDetails[]>
-    {
+    public getServer(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IServerDetails[]> {
         return this.httpResponse.getBody(this.gameController.getServer(sessionID));
     }
 
     /**
      * Handle client/match/group/current
      */
-    public getCurrentGroup(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ICurrentGroupResponse> 
-    {
+    public getCurrentGroup(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<ICurrentGroupResponse> {
         return this.httpResponse.getBody(this.gameController.getCurrentGroup(sessionID));
     }
 
@@ -109,8 +115,11 @@ class GameCallbacks implements OnLoad
      * Handle client/checkVersion
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public validateGameVersion(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ICheckVersionResponse>
-    {
+    public validateGameVersion(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<ICheckVersionResponse> {
         return this.httpResponse.getBody(this.gameController.getValidGameVersion(sessionID));
     }
 
@@ -119,8 +128,11 @@ class GameCallbacks implements OnLoad
      * @returns IGameKeepAliveResponse
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public gameKeepalive(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGameKeepAliveResponse>
-    {
+    public gameKeepalive(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGameKeepAliveResponse> {
         return this.httpResponse.getBody(this.gameController.getKeepAlive(sessionID));
     }
 
@@ -129,19 +141,16 @@ class GameCallbacks implements OnLoad
      * @returns string
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getVersion(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
+    public getVersion(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.noBody({
-            Version: this.watermark.getInGameVersionLabel()
+            Version: this.watermark.getInGameVersionLabel(),
         });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public reportNickname(url: string, info: IReportNicknameRequestData, sessionID: string): INullResponseData
-    {
+    public reportNickname(url: string, info: IReportNicknameRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }
 }
 
 export { GameCallbacks };
-

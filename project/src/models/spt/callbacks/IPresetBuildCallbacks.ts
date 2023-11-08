@@ -4,11 +4,26 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { IPresetBuildActionRequestData } from "@spt-aki/models/eft/presetBuild/IPresetBuildActionRequestData";
 import { IWeaponBuild } from "@spt-aki/models/eft/profile/IAkiProfile";
 
-export interface IPresetBuildCallbacks
-{
+export interface IPresetBuildCallbacks {
     getHandbookUserlist(url: string, info: any, sessionID: string): IGetBodyResponseData<IWeaponBuild[]>;
-    saveWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse;
-    removeWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse;
-    saveEquipmentBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse;
-    removeEquipmentBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse;
+    saveWeaponBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
+    removeWeaponBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
+    saveEquipmentBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
+    removeEquipmentBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string
+    ): IItemEventRouterResponse;
 }

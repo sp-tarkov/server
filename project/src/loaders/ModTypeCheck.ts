@@ -8,33 +8,28 @@ import { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
 import { IPreAkiLoadModAsync } from "@spt-aki/models/external/IPreAkiLoadModAsync";
 
 @injectable()
-export class ModTypeCheck
-{
-
+export class ModTypeCheck {
     /**
      * Use defined safe guard to check if the mod is a IPreAkiLoadMod
      * @returns boolean
      */
-    public isPreAkiLoad(mod: any): mod is IPreAkiLoadMod
-    {
+    public isPreAkiLoad(mod: any): mod is IPreAkiLoadMod {
         return mod?.preAkiLoad;
     }
-    
+
     /**
      * Use defined safe guard to check if the mod is a IPostAkiLoadMod
      * @returns boolean
      */
-    public isPostAkiLoad(mod: any): mod is IPostAkiLoadMod
-    {
+    public isPostAkiLoad(mod: any): mod is IPostAkiLoadMod {
         return mod?.postAkiLoad;
     }
-    
+
     /**
      * Use defined safe guard to check if the mod is a IPostDBLoadMod
      * @returns boolean
      */
-    public isPostDBAkiLoad(mod: any): mod is IPostDBLoadMod
-    {
+    public isPostDBAkiLoad(mod: any): mod is IPostDBLoadMod {
         return mod?.postDBLoad;
     }
 
@@ -42,26 +37,23 @@ export class ModTypeCheck
      * Use defined safe guard to check if the mod is a IPreAkiLoadModAsync
      * @returns boolean
      */
-    public isPreAkiLoadAsync(mod: any): mod is IPreAkiLoadModAsync
-    {
+    public isPreAkiLoadAsync(mod: any): mod is IPreAkiLoadModAsync {
         return mod?.preAkiLoadAsync;
     }
-        
+
     /**
      * Use defined safe guard to check if the mod is a IPostAkiLoadModAsync
      * @returns boolean
      */
-    public isPostAkiLoadAsync(mod: any): mod is IPostAkiLoadModAsync
-    {
+    public isPostAkiLoadAsync(mod: any): mod is IPostAkiLoadModAsync {
         return mod?.postAkiLoadAsync;
     }
-        
+
     /**
      * Use defined safe guard to check if the mod is a IPostDBLoadModAsync
      * @returns boolean
      */
-    public isPostDBAkiLoadAsync(mod: any): mod is IPostDBLoadModAsync
-    {
+    public isPostDBAkiLoadAsync(mod: any): mod is IPostDBLoadModAsync {
         return mod?.postDBLoadAsync;
     }
 
@@ -69,14 +61,14 @@ export class ModTypeCheck
      * Checks for mod to be compatible with 3.X+
      * @returns boolean
      */
-    public isPostV3Compatible(mod: any): boolean
-    {
-        return this.isPreAkiLoad(mod) || 
-            this.isPostAkiLoad(mod) || 
+    public isPostV3Compatible(mod: any): boolean {
+        return (
+            this.isPreAkiLoad(mod) ||
+            this.isPostAkiLoad(mod) ||
             this.isPostDBAkiLoad(mod) ||
             this.isPreAkiLoadAsync(mod) ||
             this.isPostAkiLoadAsync(mod) ||
-            this.isPostDBAkiLoadAsync(mod);
-
+            this.isPostDBAkiLoadAsync(mod)
+        );
     }
 }

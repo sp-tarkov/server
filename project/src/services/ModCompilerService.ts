@@ -9,16 +9,14 @@ import { HashCacheService } from "@spt-aki/services/HashCacheService";
 import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
-export class ModCompilerService
-{
+export class ModCompilerService {
     protected serverDependencies: string[];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashCacheService") protected hashCacheService: HashCacheService,
         @inject("VFS") protected vfs: VFS
-    )
-    {
+    ) {
         const packageJsonPath: string = path.join(__dirname, "../../package.json");
         this.serverDependencies = Object.keys(JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies);
     }
@@ -27,56 +25,50 @@ export class ModCompilerService
      * Convert a mods TS into JS
      * @param modName Name of mod
      * @param modPath Dir path to mod
-     * @param modTypeScriptFiles 
-     * @returns 
+     * @param modTypeScriptFiles
+     * @returns
      */
-    public async compileMod(modName: string, modPath: string, modTypeScriptFiles: string[]): Promise<void>
-    {
+    public async compileMod(modName: string, modPath: string, modTypeScriptFiles: string[]): Promise<void> {
         // Concatenate TS files into one string
         let tsFileContents: string;
         let fileExists = true; // does every js file exist (been compiled before)
-        for (const file of modTypeScriptFiles)
-        {
+        for (const file of modTypeScriptFiles) {
             const fileContent = this.vfs.readFile(file);
-            tsFileContents+= fileContent;
+            tsFileContents += fileContent;
 
             // Does equivalent .js file exist
-            if (!this.vfs.exists(file.replace(".ts", ".js")))
-            {
+            if (!this.vfs.exists(file.replace(".ts", ".js"))) {
                 fileExists = false;
             }
         }
 
         const hashMatches = this.hashCacheService.modContentMatchesStoredHash(modName, tsFileContents);
 
-        if (fileExists && hashMatches)
-        {
+        if (fileExists && hashMatches) {
             // Everything exists and matches, escape early
             return;
         }
 
-        if (!hashMatches)
-        {
+        if (!hashMatches) {
             // Store / update hash in json file
             this.hashCacheService.storeModContent(modName, tsFileContents);
         }
 
-        return this.compile(modTypeScriptFiles,
-            {
-                noEmitOnError: true,
-                noImplicitAny: false,
-                target: ts.ScriptTarget.ES2022,
-                module: ts.ModuleKind.CommonJS,
-                moduleResolution: ts.ModuleResolutionKind.Node10,
-                sourceMap: true,
-                resolveJsonModule: true,
-                allowJs: true,
-                esModuleInterop: true,
-                downlevelIteration: true,
-                experimentalDecorators: true,
-                emitDecoratorMetadata: true,
-                rootDir: modPath
-            });
+        return this.compile(modTypeScriptFiles, {
+            noEmitOnError: true,
+            noImplicitAny: false,
+            target: ts.ScriptTarget.ES2022,
+            module: ts.ModuleKind.CommonJS,
+            moduleResolution: ts.ModuleResolutionKind.Node10,
+            sourceMap: true,
+            resolveJsonModule: true,
+            allowJs: true,
+            esModuleInterop: true,
+            downlevelIteration: true,
+            experimentalDecorators: true,
+            emitDecoratorMetadata: true,
+            rootDir: modPath,
+        });
     }
 
     /**
@@ -84,70 +76,63 @@ export class ModCompilerService
      * @param fileNames Paths to TS files
      * @param options Compiler options
      */
-    protected async compile(fileNames: string[], options: ts.CompilerOptions): Promise<void>
-    {
+    protected async compile(fileNames: string[], options: ts.CompilerOptions): Promise<void> {
         // C:/snapshot/project || /snapshot/project
-        const baseDir: string = __dirname.replace(/\\/g,"/").split("/").slice(0, 3).join("/");
+        const baseDir: string = __dirname.replace(/\\/g, "/").split("/").slice(0, 3).join("/");
 
-        for (const filePath of fileNames)
-        {
+        for (const filePath of fileNames) {
             const destPath = filePath.replace(".ts", ".js");
             const parsedPath = path.parse(filePath);
             const parsedDestPath = path.parse(destPath);
             const text = fs.readFileSync(filePath).toString();
             let replacedText: string;
 
-            if (globalThis.G_RELEASE_CONFIGURATION)
-            {
+            if (globalThis.G_RELEASE_CONFIGURATION) {
                 replacedText = text.replace(/(@spt-aki)/g, `${baseDir}/obj`);
-                for (const dependency of this.serverDependencies) 
-                {
+                for (const dependency of this.serverDependencies) {
                     replacedText = replacedText.replace(`"${dependency}"`, `"${baseDir}/node_modules/${dependency}"`);
                 }
-            }
-            else
-            {
-                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g,"/"));
+            } else {
+                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g, "/"));
             }
 
             const output = ts.transpileModule(replacedText, { compilerOptions: options });
 
-            if (output.sourceMapText)
-            {
-                output.outputText = output.outputText.replace("//# sourceMappingURL=module.js.map", `//# sourceMappingURL=${parsedDestPath.base}.map`);
+            if (output.sourceMapText) {
+                output.outputText = output.outputText.replace(
+                    "//# sourceMappingURL=module.js.map",
+                    `//# sourceMappingURL=${parsedDestPath.base}.map`
+                );
 
                 const sourceMap = JSON.parse(output.sourceMapText);
                 sourceMap.file = parsedDestPath.base;
-                sourceMap.sources = [ parsedPath.base ];
+                sourceMap.sources = [parsedPath.base];
 
                 fs.writeFileSync(`${destPath}.map`, JSON.stringify(sourceMap));
             }
             fs.writeFileSync(destPath, output.outputText);
         }
 
-        while (!this.areFilesReady(fileNames))
-        {
+        while (!this.areFilesReady(fileNames)) {
             await this.delay(200);
         }
     }
 
     /**
      * Do the files at the provided paths exist
-     * @param fileNames 
-     * @returns 
+     * @param fileNames
+     * @returns
      */
-    protected areFilesReady(fileNames: string[]): boolean
-    {
-        return fileNames.filter(x => !this.vfs.exists(x.replace(".ts", ".js"))).length === 0;
+    protected areFilesReady(fileNames: string[]): boolean {
+        return fileNames.filter((x) => !this.vfs.exists(x.replace(".ts", ".js"))).length === 0;
     }
 
     /**
      * Wait the provided number of milliseconds
      * @param ms Milliseconds
-     * @returns 
+     * @returns
      */
-    protected delay(ms: number): Promise<unknown>
-    {
-        return new Promise( resolve => setTimeout(resolve, ms) );
+    protected delay(ms: number): Promise<unknown> {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }

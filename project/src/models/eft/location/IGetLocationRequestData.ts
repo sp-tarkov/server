@@ -1,6 +1,5 @@
-export interface IGetLocationRequestData 
-{
-    crc: number
-    locationId: string
-    variantId: number
+export interface IGetLocationRequestData {
+    crc: number;
+    locationId: string;
+    variantId: number;
 }

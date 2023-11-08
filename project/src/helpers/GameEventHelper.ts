@@ -6,16 +6,13 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 
 @injectable()
-export class GameEventHelper
-{
+export class GameEventHelper {
     protected seasonalEventConfig: ISeasonalEventConfig;
 
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.seasonalEventConfig = this.configServer.getConfig(ConfigTypes.SEASONAL_EVENT);
     }
-
 }

@@ -27,8 +27,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class PlayerScavGenerator
-{
+export class PlayerScavGenerator {
     protected playerScavConfig: IPlayerScavConfig;
 
     constructor(
@@ -48,8 +47,7 @@ export class PlayerScavGenerator
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotGenerator") protected botGenerator: BotGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.playerScavConfig = this.configServer.getConfig(ConfigTypes.PLAYERSCAV);
     }
 
@@ -58,22 +56,18 @@ export class PlayerScavGenerator
      * @param sessionID session id to specify what profile is updated
      * @returns profile object
      */
-    public generate(sessionID: string): IPmcData
-    {
+    public generate(sessionID: string): IPmcData {
         // get karma level from profile
         const profile = this.saveServer.getProfile(sessionID);
         const pmcData = this.jsonUtil.clone(profile.characters.pmc);
         const existingScavData = this.jsonUtil.clone(profile.characters.scav);
 
         // scav profile can be empty on first profile creation
-        const scavKarmaLevel = ((Object.keys(existingScavData).length === 0)) 
-            ? 0
-            : this.getScavKarmaLevel(pmcData);
+        const scavKarmaLevel = Object.keys(existingScavData).length === 0 ? 0 : this.getScavKarmaLevel(pmcData);
 
         // use karma level to get correct karmaSettings
         const playerScavKarmaSettings = this.playerScavConfig.karmaLevel[scavKarmaLevel];
-        if (!playerScavKarmaSettings)
-        {
+        if (!playerScavKarmaSettings) {
             this.logger.error(this.localisationService.getText("scav-missing_karma_settings", scavKarmaLevel));
         }
 
@@ -83,7 +77,12 @@ export class PlayerScavGenerator
         const baseBotNode: IBotType = this.constructBotBaseTemplate(playerScavKarmaSettings.botTypeForLoot);
         this.adjustBotTemplateWithKarmaSpecificSettings(playerScavKarmaSettings, baseBotNode);
 
-        let scavData = this.botGenerator.generatePlayerScav(sessionID, playerScavKarmaSettings.botTypeForLoot.toLowerCase(), "easy", baseBotNode);
+        let scavData = this.botGenerator.generatePlayerScav(
+            sessionID,
+            playerScavKarmaSettings.botTypeForLoot.toLowerCase(),
+            "easy",
+            baseBotNode
+        );
 
         // Remove cached bot data after scav was generated
         this.botLootCacheService.clearCache();
@@ -109,21 +108,27 @@ export class PlayerScavGenerator
         scavData.Info.Level = this.getScavLevel(existingScavData);
         scavData.Info.Experience = this.getScavExperience(existingScavData);
         scavData.Quests = existingScavData.Quests ?? [];
-        scavData.ConditionCounters = existingScavData.ConditionCounters ?? {Counters: []};
-        scavData.Notes = existingScavData.Notes ?? {Notes: []};
+        scavData.ConditionCounters = existingScavData.ConditionCounters ?? { Counters: [] };
+        scavData.Notes = existingScavData.Notes ?? { Notes: [] };
         scavData.WishList = existingScavData.WishList ?? [];
 
-
         // Add an extra labs card to pscav backpack based on config chance
-        if (this.randomUtil.getChance100(playerScavKarmaSettings.labsAccessCardChancePercent))
-        {
+        if (this.randomUtil.getChance100(playerScavKarmaSettings.labsAccessCardChancePercent)) {
             const labsCard = this.itemHelper.getItem("5c94bbff86f7747ee735c08f")[1];
-            const itemsToAdd: Item[] = [{
-                _id: this.hashUtil.generate(),
-                _tpl: labsCard._id,
-                ...this.botGeneratorHelper.generateExtraPropertiesForItem(labsCard)
-            }];
-            this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(["TacticalVest", "Pockets", "Backpack"], itemsToAdd[0]._id, labsCard._id, itemsToAdd, scavData.Inventory);
+            const itemsToAdd: Item[] = [
+                {
+                    _id: this.hashUtil.generate(),
+                    _tpl: labsCard._id,
+                    ...this.botGeneratorHelper.generateExtraPropertiesForItem(labsCard),
+                },
+            ];
+            this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(
+                ["TacticalVest", "Pockets", "Backpack"],
+                itemsToAdd[0]._id,
+                labsCard._id,
+                itemsToAdd,
+                scavData.Inventory
+            );
         }
 
         // Remove secure container
@@ -144,20 +149,17 @@ export class PlayerScavGenerator
      * @param pmcData pmc profile
      * @returns karma level
      */
-    protected getScavKarmaLevel(pmcData: IPmcData): number
-    {
+    protected getScavKarmaLevel(pmcData: IPmcData): number {
         const fenceInfo = pmcData.TradersInfo[Traders.FENCE];
 
         // Can be empty during profile creation
-        if (!fenceInfo)
-        {
+        if (!fenceInfo) {
             this.logger.warning(this.localisationService.getText("scav-missing_karma_level_getting_default"));
 
             return 0;
         }
 
-        if (fenceInfo.standing > 6)
-        {
+        if (fenceInfo.standing > 6) {
             return 6;
         }
 
@@ -171,14 +173,12 @@ export class PlayerScavGenerator
      * @param botTypeForLoot bot type to use for inventory/chances
      * @returns IBotType object
      */
-    protected constructBotBaseTemplate(botTypeForLoot: string): IBotType
-    {
+    protected constructBotBaseTemplate(botTypeForLoot: string): IBotType {
         const baseScavType = "assault";
         const assaultBase = this.jsonUtil.clone(this.botHelper.getBotTemplate(baseScavType));
 
         // Loot bot is same as base bot, return base with no modification
-        if (botTypeForLoot === baseScavType)
-        {
+        if (botTypeForLoot === baseScavType) {
             return assaultBase;
         }
 
@@ -195,13 +195,10 @@ export class PlayerScavGenerator
      * @param karmaSettings Values to modify the bot template with
      * @param baseBotNode bot template to modify according to karama level settings
      */
-    protected adjustBotTemplateWithKarmaSpecificSettings(karmaSettings: KarmaLevel, baseBotNode: IBotType): void
-    {
+    protected adjustBotTemplateWithKarmaSpecificSettings(karmaSettings: KarmaLevel, baseBotNode: IBotType): void {
         // Adjust equipment chance values
-        for (const equipmentKey in karmaSettings.modifiers.equipment)
-        {
-            if (karmaSettings.modifiers.equipment[equipmentKey] === 0)
-            {
+        for (const equipmentKey in karmaSettings.modifiers.equipment) {
+            if (karmaSettings.modifiers.equipment[equipmentKey] === 0) {
                 continue;
             }
 
@@ -209,10 +206,8 @@ export class PlayerScavGenerator
         }
 
         // Adjust mod chance values
-        for (const modKey in karmaSettings.modifiers.mod)
-        {
-            if (karmaSettings.modifiers.mod[modKey] === 0)
-            {
+        for (const modKey in karmaSettings.modifiers.mod) {
+            if (karmaSettings.modifiers.mod[modKey] === 0) {
                 continue;
             }
 
@@ -220,67 +215,55 @@ export class PlayerScavGenerator
         }
 
         // Adjust item spawn quantity values
-        for (const itemLimitkey in karmaSettings.itemLimits)
-        {
+        for (const itemLimitkey in karmaSettings.itemLimits) {
             baseBotNode.generation.items[itemLimitkey] = karmaSettings.itemLimits[itemLimitkey];
         }
 
         // Blacklist equipment
-        for (const equipmentKey in karmaSettings.equipmentBlacklist)
-        {
+        for (const equipmentKey in karmaSettings.equipmentBlacklist) {
             const blacklistedItemTpls = karmaSettings.equipmentBlacklist[equipmentKey];
-            for (const itemToRemove of blacklistedItemTpls)
-            {
+            for (const itemToRemove of blacklistedItemTpls) {
                 delete baseBotNode.inventory.equipment[equipmentKey][itemToRemove];
             }
         }
     }
 
-    protected getScavSkills(scavProfile: IPmcData): Skills
-    {
-        if (scavProfile.Skills)
-        {
+    protected getScavSkills(scavProfile: IPmcData): Skills {
+        if (scavProfile.Skills) {
             return scavProfile.Skills;
         }
 
         return this.getDefaultScavSkills();
     }
 
-    protected getDefaultScavSkills(): Skills
-    {
+    protected getDefaultScavSkills(): Skills {
         return {
             Common: [],
             Mastering: [],
-            Points: 0
+            Points: 0,
         };
     }
 
-    protected getScavStats(scavProfile: IPmcData): Stats
-    {
-        if (scavProfile.Stats)
-        {
+    protected getScavStats(scavProfile: IPmcData): Stats {
+        if (scavProfile.Stats) {
             return scavProfile.Stats;
         }
 
         return this.profileHelper.getDefaultCounters();
     }
 
-    protected getScavLevel(scavProfile: IPmcData): number
-    {
+    protected getScavLevel(scavProfile: IPmcData): number {
         // Info can be null on initial account creation
-        if (!(scavProfile.Info?.Level))
-        {
+        if (!scavProfile.Info?.Level) {
             return 1;
         }
 
         return scavProfile.Info.Level;
     }
 
-    protected getScavExperience(scavProfile: IPmcData): number
-    {
+    protected getScavExperience(scavProfile: IPmcData): number {
         // Info can be null on initial account creation
-        if (!(scavProfile.Info?.Experience))
-        {
+        if (!scavProfile.Info?.Experience) {
             return 0;
         }
 
@@ -292,19 +275,16 @@ export class PlayerScavGenerator
      * take into account scav cooldown bonus
      * @param scavData scav profile
      * @param pmcData pmc profile
-     * @returns 
+     * @returns
      */
-    protected setScavCooldownTimer(scavData: IPmcData, pmcData: IPmcData): IPmcData
-    {
+    protected setScavCooldownTimer(scavData: IPmcData, pmcData: IPmcData): IPmcData {
         // Set cooldown time.
         // Make sure to apply ScavCooldownTimer bonus from Hideout if the player has it.
         let scavLockDuration = this.databaseServer.getTables().globals.config.SavagePlayCooldown;
         let modifier = 1;
 
-        for (const bonus of pmcData.Bonuses)
-        {
-            if (bonus.type === "ScavCooldownTimer")
-            {
+        for (const bonus of pmcData.Bonuses) {
+            if (bonus.type === "ScavCooldownTimer") {
                 // Value is negative, so add.
                 // Also note that for scav cooldown, multiple bonuses stack additively.
                 modifier += bonus.value / 100;
@@ -314,16 +294,15 @@ export class PlayerScavGenerator
         const fenceInfo = this.fenceService.getFenceInfo(pmcData);
         modifier *= fenceInfo.SavageCooldownModifier;
         scavLockDuration *= modifier;
-        
+
         const fullProfile = this.profileHelper.getFullProfile(pmcData?.sessionId);
-        if (fullProfile?.info?.edition?.toLowerCase?.().startsWith?.(AccountTypes.SPT_DEVELOPER))
-        {
+        if (fullProfile?.info?.edition?.toLowerCase?.().startsWith?.(AccountTypes.SPT_DEVELOPER)) {
             // Set scav cooldown timer to 10 seconds for spt developer account
             scavLockDuration = 10;
         }
 
-        scavData.Info.SavageLockTime = (Date.now() / 1000) + scavLockDuration;
-            
+        scavData.Info.SavageLockTime = Date.now() / 1000 + scavLockDuration;
+
         return scavData;
     }
 }

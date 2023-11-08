@@ -1,4 +1,3 @@
-export interface IReportNicknameRequestData
-{
-    uid: string
+export interface IReportNicknameRequestData {
+    uid: string;
 }

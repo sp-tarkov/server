@@ -1,4 +1,3 @@
-export interface IHandbookCallbacks
-{
+export interface IHandbookCallbacks {
     load(): void;
 }

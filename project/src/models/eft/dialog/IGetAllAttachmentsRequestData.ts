@@ -1,4 +1,3 @@
-export interface IGetAllAttachmentsRequestData 
-{
-    dialogId: string
+export interface IGetAllAttachmentsRequestData {
+    dialogId: string;
 }

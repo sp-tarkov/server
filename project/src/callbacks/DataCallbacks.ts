@@ -21,23 +21,20 @@ import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
  * Handle client requests
  */
 @injectable()
-export class DataCallbacks
-{
+export class DataCallbacks {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RagfairController") protected ragfairController: RagfairController,
         @inject("HideoutController") protected hideoutController: HideoutController
-    )
-    { }
+    ) {}
 
     /**
      * Handle client/settings
      * @returns ISettingsBase
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISettingsBase>
-    {
+    public getSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISettingsBase> {
         return this.httpResponse.getBody(this.databaseServer.getTables().settings);
     }
 
@@ -46,8 +43,7 @@ export class DataCallbacks
      * @returns IGlobals
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getGlobals(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGlobals>
-    {
+    public getGlobals(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGlobals> {
         this.databaseServer.getTables().globals.time = Date.now() / 1000;
         return this.httpResponse.getBody(this.databaseServer.getTables().globals);
     }
@@ -57,8 +53,7 @@ export class DataCallbacks
      * @returns string
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getTemplateItems(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
+    public getTemplateItems(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.getUnclearedBody(this.databaseServer.getTables().templates.items);
     }
 
@@ -67,8 +62,11 @@ export class DataCallbacks
      * @returns IHandbookBase
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getTemplateHandbook(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IHandbookBase>
-    {
+    public getTemplateHandbook(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IHandbookBase> {
         return this.httpResponse.getBody(this.databaseServer.getTables().templates.handbook);
     }
 
@@ -77,8 +75,11 @@ export class DataCallbacks
      * @returns Record<string, ICustomizationItem
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getTemplateSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<Record<string, ICustomizationItem>>
-    {
+    public getTemplateSuits(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<Record<string, ICustomizationItem>> {
         return this.httpResponse.getBody(this.databaseServer.getTables().templates.customization);
     }
 
@@ -87,8 +88,11 @@ export class DataCallbacks
      * @returns string[]
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getTemplateCharacter(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string[]>
-    {
+    public getTemplateCharacter(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<string[]> {
         return this.httpResponse.getBody(this.databaseServer.getTables().templates.character);
     }
 
@@ -97,26 +101,38 @@ export class DataCallbacks
      * @returns IHideoutSettingsBase
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getHideoutSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IHideoutSettingsBase>
-    {
+    public getHideoutSettings(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IHideoutSettingsBase> {
         return this.httpResponse.getBody(this.databaseServer.getTables().hideout.settings);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getHideoutAreas(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IHideoutArea[]>
-    {
+    public getHideoutAreas(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IHideoutArea[]> {
         return this.httpResponse.getBody(this.databaseServer.getTables().hideout.areas);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public gethideoutProduction(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IHideoutProduction[]>
-    {
+    public gethideoutProduction(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IHideoutProduction[]> {
         return this.httpResponse.getBody(this.databaseServer.getTables().hideout.production);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getHideoutScavcase(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IHideoutScavCase[]>
-    {
+    public getHideoutScavcase(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IHideoutScavCase[]> {
         return this.httpResponse.getBody(this.databaseServer.getTables().hideout.scavcase);
     }
 
@@ -124,8 +140,11 @@ export class DataCallbacks
      * Handle client/languages
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getLocalesLanguages(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<Record<string, string>>
-    {
+    public getLocalesLanguages(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<Record<string, string>> {
         return this.httpResponse.getBody(this.databaseServer.getTables().locales.languages);
     }
 
@@ -133,26 +152,27 @@ export class DataCallbacks
      * Handle client/menu/locale
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getLocalesMenu(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string>
-    {
-        return this.httpResponse.getBody(this.databaseServer.getTables().locales.menu[url.replace("/client/menu/locale/", "")]);
+    public getLocalesMenu(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string> {
+        return this.httpResponse.getBody(
+            this.databaseServer.getTables().locales.menu[url.replace("/client/menu/locale/", "")]
+        );
     }
 
     /**
      * Handle client/locale
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getLocalesGlobal(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
-        return this.httpResponse.getUnclearedBody(this.databaseServer.getTables().locales.global[url.replace("/client/locale/", "")]);
+    public getLocalesGlobal(url: string, info: IEmptyRequestData, sessionID: string): string {
+        return this.httpResponse.getUnclearedBody(
+            this.databaseServer.getTables().locales.global[url.replace("/client/locale/", "")]
+        );
     }
 
     /**
      * Handle client/hideout/qte/list
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getQteList(url: string, info: IEmptyRequestData, sessionID: string): string
-    {
+    public getQteList(url: string, info: IEmptyRequestData, sessionID: string): string {
         return this.httpResponse.getUnclearedBody(this.hideoutController.getQteList(sessionID));
     }
 
@@ -162,8 +182,11 @@ export class DataCallbacks
      * TODO -  fully implement this
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getItemPrices(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetItemPricesResponse>
-    {
+    public getItemPrices(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string
+    ): IGetBodyResponseData<IGetItemPricesResponse> {
         const handbookPrices = this.ragfairController.getStaticPrices();
         const response: IGetItemPricesResponse = {
             supplyNextTime: 1672236024, // todo: get trader refresh time?
@@ -174,8 +197,8 @@ export class DataCallbacks
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 "569668774bdc2da2298b4568": handbookPrices[Money.EUROS],
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                "5696686a4bdc2da3298b456a": handbookPrices[Money.DOLLARS]
-            }
+                "5696686a4bdc2da3298b456a": handbookPrices[Money.DOLLARS],
+            },
         };
         return this.httpResponse.getBody(response);
     }

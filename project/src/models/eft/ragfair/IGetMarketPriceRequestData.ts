@@ -1,4 +1,3 @@
-export interface IGetMarketPriceRequestData
-{
-    templateId: string
+export interface IGetMarketPriceRequestData {
+    templateId: string;
 }

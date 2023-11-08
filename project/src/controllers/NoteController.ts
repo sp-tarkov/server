@@ -7,26 +7,20 @@ import { INoteActionData } from "@spt-aki/models/eft/notes/INoteActionData";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 
 @injectable()
-export class NoteController
-{
-    constructor(
-        @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder
-    )
-    { }
+export class NoteController {
+    constructor(@inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder) {}
 
-    public addNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    public addNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         const newNote: Note = {
             Time: body.note.Time,
-            Text: body.note.Text
+            Text: body.note.Text,
         };
         pmcData.Notes.Notes.push(newNote);
 
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
-    public editNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    public editNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         const noteToEdit: Note = pmcData.Notes.Notes[body.index];
         noteToEdit.Time = body.note.Time;
         noteToEdit.Text = body.note.Text;
@@ -34,8 +28,7 @@ export class NoteController
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
-    public deleteNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    public deleteNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         pmcData.Notes.Notes.splice(body.index, 1);
         return this.eventOutputHolder.getOutput(sessionID);
     }

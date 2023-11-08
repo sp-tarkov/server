@@ -1,5 +1,4 @@
-export interface IGetMiniProfileRequestData 
-{
-    username: string
-    password: string
+export interface IGetMiniProfileRequestData {
+    username: string;
+    password: string;
 }

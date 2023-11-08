@@ -1,5 +1,4 @@
-export interface ILoginRequestData
-{
-    username: string,
-    password: string
+export interface ILoginRequestData {
+    username: string;
+    password: string;
 }

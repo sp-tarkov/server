@@ -18,8 +18,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 
 @injectable()
-export class LauncherController
-{
+export class LauncherController {
     protected coreConfig: ICoreConfig;
 
     constructor(
@@ -31,29 +30,26 @@ export class LauncherController
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
         @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+    ) {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
     }
 
-    public connect(): IConnectResponse
-    {
+    public connect(): IConnectResponse {
         return {
             backendUrl: this.httpServerHelper.getBackendUrl(),
             name: this.coreConfig.serverName,
             editions: Object.keys(this.databaseServer.getTables().templates.profiles),
-            profileDescriptions: this.getProfileDescriptions()
+            profileDescriptions: this.getProfileDescriptions(),
         };
     }
 
     /**
      * Get descriptive text for each of the profile edtions a player can choose
-     * @returns 
+     * @returns
      */
-    protected getProfileDescriptions(): Record<string, string>
-    {
+    protected getProfileDescriptions(): Record<string, string> {
         return {
-            "Standard": this.localisationService.getText("launcher-profile_standard"),
+            Standard: this.localisationService.getText("launcher-profile_standard"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
             "Left Behind": this.localisationService.getText("launcher-profile_leftbehind"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -65,27 +61,22 @@ export class LauncherController
             // eslint-disable-next-line @typescript-eslint/naming-convention
             "SPT Zero to hero": this.localisationService.getText("launcher-profile_sptzerotohero"),
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            "SPT Developer": this.localisationService.getText("launcher-profile_sptdeveloper")
+            "SPT Developer": this.localisationService.getText("launcher-profile_sptdeveloper"),
         };
     }
 
-    public find(sessionIdKey: string): Info
-    {
-        if (sessionIdKey in this.saveServer.getProfiles())
-        {
+    public find(sessionIdKey: string): Info {
+        if (sessionIdKey in this.saveServer.getProfiles()) {
             return this.saveServer.getProfile(sessionIdKey).info;
         }
 
         return undefined;
     }
 
-    public login(info: ILoginRequestData): string
-    {
-        for (const sessionID in this.saveServer.getProfiles())
-        {
+    public login(info: ILoginRequestData): string {
+        for (const sessionID in this.saveServer.getProfiles()) {
             const account = this.saveServer.getProfile(sessionID).info;
-            if (info.username === account.username)
-            {
+            if (info.username === account.username) {
                 return sessionID;
             }
         }
@@ -93,12 +84,9 @@ export class LauncherController
         return "";
     }
 
-    public register(info: IRegisterData): string
-    {
-        for (const sessionID in this.saveServer.getProfiles())
-        {
-            if (info.username === this.saveServer.getProfile(sessionID).info.username)
-            {
+    public register(info: IRegisterData): string {
+        for (const sessionID in this.saveServer.getProfiles()) {
+            if (info.username === this.saveServer.getProfile(sessionID).info.username) {
                 return "";
             }
         }
@@ -106,8 +94,7 @@ export class LauncherController
         return this.createAccount(info);
     }
 
-    protected createAccount(info: IRegisterData): string
-    {
+    protected createAccount(info: IRegisterData): string {
         const sessionID = this.hashUtil.generate();
         const newProfileDetails: Info = {
             id: sessionID,
@@ -115,7 +102,7 @@ export class LauncherController
             username: info.username,
             password: info.password,
             wipe: true,
-            edition: info.edition
+            edition: info.edition,
         };
         this.saveServer.createProfile(newProfileDetails);
 
@@ -124,36 +111,30 @@ export class LauncherController
         return sessionID;
     }
 
-    public changeUsername(info: IChangeRequestData): string
-    {
+    public changeUsername(info: IChangeRequestData): string {
         const sessionID = this.login(info);
 
-        if (sessionID)
-        {
+        if (sessionID) {
             this.saveServer.getProfile(sessionID).info.username = info.change;
         }
 
         return sessionID;
     }
 
-    public changePassword(info: IChangeRequestData): string
-    {
+    public changePassword(info: IChangeRequestData): string {
         const sessionID = this.login(info);
 
-        if (sessionID)
-        {
+        if (sessionID) {
             this.saveServer.getProfile(sessionID).info.password = info.change;
         }
 
         return sessionID;
     }
 
-    public wipe(info: IRegisterData): string
-    {
+    public wipe(info: IRegisterData): string {
         const sessionID = this.login(info);
 
-        if (sessionID)
-        {
+        if (sessionID) {
             const profile = this.saveServer.getProfile(sessionID);
             profile.info.edition = info.edition;
             profile.info.wipe = true;
@@ -162,8 +143,7 @@ export class LauncherController
         return sessionID;
     }
 
-    public getCompatibleTarkovVersion(): string
-    {
+    public getCompatibleTarkovVersion(): string {
         return this.coreConfig.compatibleTarkovVersion;
     }
 
@@ -171,8 +151,7 @@ export class LauncherController
      * Get the mods the server has currently loaded
      * @returns Dictionary of mod name and mod details
      */
-    public getLoadedServerMods(): Record<string, IPackageJsonData>
-    {
+    public getLoadedServerMods(): Record<string, IPackageJsonData> {
         return this.preAkiModLoader.getImportedModDetails();
     }
 
@@ -181,12 +160,10 @@ export class LauncherController
      * @param sessionId Player id
      * @returns Array of mod details
      */
-    public getServerModsProfileUsed(sessionId: string): ModDetails[]
-    {
+    public getServerModsProfileUsed(sessionId: string): ModDetails[] {
         const profile = this.profileHelper.getFullProfile(sessionId);
 
-        if (profile?.aki?.mods)
-        {
+        if (profile?.aki?.mods) {
             return this.preAkiModLoader.getProfileModsGroupedByModName(profile?.aki?.mods);
         }
 
