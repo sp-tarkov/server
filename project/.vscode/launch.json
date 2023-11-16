@@ -20,22 +20,6 @@
             ],
             "cwd": "${workspaceFolder}",
             "outputCapture": "std"
-        },
-        {
-            "name": "Run Jest UnitTests",
-            "type": "node",
-            "runtimeVersion": "18.15.0",
-            "request": "launch",
-            "program": "${workspaceFolder}/node_modules/.bin/jest",
-            "args": [
-                "--runInBand"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "disableOptimisticBPs": true,
-            "windows": {
-                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-            }
         }
     ]
 }
