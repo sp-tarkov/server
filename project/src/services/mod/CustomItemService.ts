@@ -1,7 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
 import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { CreateItemResult, LocaleDetails, NewItemDetails, NewItemFromCloneDetails } from "@spt-aki/models/spt/mod/NewItemDetails";
+import {
+    CreateItemResult,
+    LocaleDetails,
+    NewItemDetails,
+    NewItemFromCloneDetails,
+} from "@spt-aki/models/spt/mod/NewItemDetails";
 import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -17,7 +22,7 @@ export class CustomItemService
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
     {
         this.tables = this.databaseServer.getTables();
@@ -115,9 +120,7 @@ export class CustomItemService
      */
     protected getOrGenerateIdForItem(newId: string): string
     {
-        return (newId === "")
-            ? this.hashUtil.generate()
-            : newId;
+        return (newId === "") ? this.hashUtil.generate() : newId;
     }
 
     /**
@@ -152,13 +155,7 @@ export class CustomItemService
      */
     protected addToHandbookDb(newItemId: string, parentId: string, priceRoubles: number): void
     {
-        this.tables.templates.handbook.Items.push(
-            {
-                Id: newItemId,
-                ParentId: parentId,
-                Price: priceRoubles
-            }
-        );
+        this.tables.templates.handbook.Items.push({ Id: newItemId, ParentId: parentId, Price: priceRoubles });
     }
 
     /**
@@ -167,7 +164,7 @@ export class CustomItemService
      * e.g.
      * en[0]
      * fr[1]
-     * 
+     *
      * No jp provided, so english will be used as a substitute
      * @param localeDetails key is language, value are the new locale details
      * @param newItemId id of the item being created

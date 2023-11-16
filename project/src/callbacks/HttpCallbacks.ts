@@ -6,22 +6,19 @@ import { HttpServer } from "@spt-aki/servers/HttpServer";
 @injectable()
 export class HttpCallbacks implements OnLoad
 {
-    constructor(
-        @inject("HttpServer") protected httpServer: HttpServer
-    )
+    constructor(@inject("HttpServer") protected httpServer: HttpServer)
     {
     }
-    
+
     public async onLoad(): Promise<void>
     {
         this.httpServer.load();
     }
 
-    public getRoute(): string 
+    public getRoute(): string
     {
         return "aki-http";
     }
-
 
     public getImage(): string
     {

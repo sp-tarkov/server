@@ -13,7 +13,9 @@ export class TraderCallbacks implements OnLoad, OnUpdate
 {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("TraderController") protected traderController: TraderController) // TODO: delay required
+        @inject("TraderController") protected traderController: TraderController,
+    )
+    // TODO: delay required
     {
     }
     public async onLoad(): Promise<void>
@@ -26,13 +28,17 @@ export class TraderCallbacks implements OnLoad, OnUpdate
         return this.traderController.update();
     }
 
-    public getRoute(): string 
+    public getRoute(): string
     {
         return "aki-traders";
     }
 
     /** Handle client/trading/api/traderSettings */
-    public getTraderSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ITraderBase[]>
+    public getTraderSettings(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ITraderBase[]>
     {
         return this.httpResponse.getBody(this.traderController.getAllTraders(sessionID));
     }

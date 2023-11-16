@@ -17,7 +17,7 @@ export class LocaleService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.localeConfig = this.configServer.getConfig(ConfigTypes.LOCALE);
@@ -35,7 +35,9 @@ export class LocaleService
             return desiredLocale;
         }
 
-        this.logger.warning(`Unable to find desired locale file using locale ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`);
+        this.logger.warning(
+            `Unable to find desired locale file using locale ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
+        );
 
         return this.databaseServer.getTables().locales.global["en"];
     }
@@ -95,7 +97,9 @@ export class LocaleService
 
         if (!this.localeConfig.serverSupportedLocales.includes(platformLocale.language))
         {
-            this.logger.warning(`Unsupported system langauge found ${platformLocale.baseName}, falling back to english`);
+            this.logger.warning(
+                `Unsupported system langauge found ${platformLocale.baseName}, falling back to english`,
+            );
             return "en";
         }
 

@@ -17,8 +17,9 @@ export class NotifierCallbacks
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("NotifierController") protected notifierController: NotifierController)
-    { }
+        @inject("NotifierController") protected notifierController: NotifierController,
+    )
+    {}
 
     /**
      * If we don't have anything to send, it's ok to not send anything back
@@ -36,9 +37,9 @@ export class NotifierCallbacks
          * Take our array of JSON message objects and cast them to JSON strings, so that they can then
          *  be sent to client as NEWLINE separated strings... yup.
          */
-        this.notifierController.notifyAsync(tmpSessionID)
-            .then((messages: any) => messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n"))
-            .then((text) => this.httpServerHelper.sendTextJson(resp, text));
+        this.notifierController.notifyAsync(tmpSessionID).then((messages: any) =>
+            messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n")
+        ).then((text) => this.httpServerHelper.sendTextJson(resp, text));
     }
 
     /** Handle push/notifier/get */
@@ -50,7 +51,11 @@ export class NotifierCallbacks
     }
 
     /** Handle client/notifier/channel/create */
-    public createNotifierChannel(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<INotifierChannel>
+    public createNotifierChannel(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<INotifierChannel>
     {
         return this.httpResponse.getBody(this.notifierController.getChannel(sessionID));
     }
@@ -60,11 +65,13 @@ export class NotifierCallbacks
      * @returns ISelectProfileResponse
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public selectProfile(url: string, info: ISelectProfileRequestData, sessionID: string): IGetBodyResponseData<ISelectProfileResponse>
+    public selectProfile(
+        url: string,
+        info: ISelectProfileRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ISelectProfileResponse>
     {
-        return this.httpResponse.getBody({
-            status: "ok"
-        });
+        return this.httpResponse.getBody({ status: "ok" });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -47,9 +47,9 @@ export class ProfileController
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("QuestHelper") protected questHelper: QuestHelper,
-        @inject("ProfileHelper") protected profileHelper: ProfileHelper
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     )
-    { }
+    {}
 
     /**
      * Handle /launcher/profiles
@@ -76,7 +76,7 @@ export class ProfileController
         const pmc = profile.characters.pmc;
 
         // make sure character completed creation
-        if (!((pmc?.Info?.Level)))
+        if (!(pmc?.Info?.Level))
         {
             return {
                 username: profile.info.username,
@@ -87,7 +87,7 @@ export class ProfileController
                 prevexp: 0,
                 nextlvl: 0,
                 maxlvl: maxlvl,
-                akiData: this.profileHelper.getDefaultAkiDataObject()
+                akiData: this.profileHelper.getDefaultAkiDataObject(),
             };
         }
 
@@ -102,7 +102,7 @@ export class ProfileController
             prevexp: (currlvl === 0) ? 0 : this.profileHelper.getExperience(currlvl),
             nextlvl: nextlvl,
             maxlvl: maxlvl,
-            akiData: profile.aki
+            akiData: profile.aki,
         };
 
         return result;
@@ -122,7 +122,8 @@ export class ProfileController
     public createProfile(info: IProfileCreateRequestData, sessionID: string): void
     {
         const account = this.saveServer.getProfile(sessionID).info;
-        const profile: TemplateSide = this.databaseServer.getTables().templates.profiles[account.edition][info.side.toLowerCase()];
+        const profile: TemplateSide =
+            this.databaseServer.getTables().templates.profiles[account.edition][info.side.toLowerCase()];
         const pmcData = profile.character;
 
         // Delete existing profile
@@ -152,16 +153,18 @@ export class ProfileController
         }
 
         // Change item id's to be unique
-        pmcData.Inventory.items = this.itemHelper.replaceIDs(pmcData, pmcData.Inventory.items, null, pmcData.Inventory.fastPanel);
+        pmcData.Inventory.items = this.itemHelper.replaceIDs(
+            pmcData,
+            pmcData.Inventory.items,
+            null,
+            pmcData.Inventory.fastPanel,
+        );
         pmcData.Inventory.hideoutAreaStashes = {};
 
         // Create profile
         const profileDetails: IAkiProfile = {
             info: account,
-            characters: {
-                pmc: pmcData,
-                scav: {} as IPmcData
-            },
+            characters: { pmc: pmcData, scav: {} as IPmcData },
             suits: profile.suits,
             userbuilds: profile.userbuilds,
             dialogues: profile.dialogues,
@@ -169,7 +172,7 @@ export class ProfileController
             vitality: {} as Vitality,
             inraid: {} as Inraid,
             insurance: [],
-            traderPurchases: {}
+            traderPurchases: {},
         };
 
         this.profileFixerService.checkForAndFixPmcProfileIssues(profileDetails.characters.pmc);
@@ -185,7 +188,11 @@ export class ProfileController
         // Profile is flagged as wanting quests set to ready to hand in and collect rewards
         if (profile.trader.setQuestsAvailableForFinish)
         {
-            this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [QuestStatus.AvailableForStart, QuestStatus.Started, QuestStatus.AvailableForFinish]);
+            this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [
+                QuestStatus.AvailableForStart,
+                QuestStatus.Started,
+                QuestStatus.AvailableForFinish,
+            ]);
 
             // Make unused response so applyQuestReward works
             const response = this.eventOutputHolder.getOutput(sessionID);
@@ -219,7 +226,9 @@ export class ProfileController
         }
         else
         {
-            this.logger.warning(this.localisationService.getText("profile-unable_to_find_profile_by_id_cannot_delete", sessionID));
+            this.logger.warning(
+                this.localisationService.getText("profile-unable_to_find_profile_by_id_cannot_delete", sessionID),
+            );
         }
     }
 
@@ -230,16 +239,29 @@ export class ProfileController
      * @param sessionID Session id
      * @param response Event router response
      */
-    protected givePlayerStartingQuestRewards(profileDetails: IAkiProfile, sessionID: string, response: IItemEventRouterResponse): void 
+    protected givePlayerStartingQuestRewards(
+        profileDetails: IAkiProfile,
+        sessionID: string,
+        response: IItemEventRouterResponse,
+    ): void
     {
-        for (const quest of profileDetails.characters.pmc.Quests) 
+        for (const quest of profileDetails.characters.pmc.Quests)
         {
             const questFromDb = this.questHelper.getQuestFromDb(quest.qid, profileDetails.characters.pmc);
 
             // Get messageId of text to send to player as text message in game
             // Copy of code from QuestController.acceptQuest()
-            const messageId = this.questHelper.getMessageIdForQuestStart(questFromDb.startedMessageText, questFromDb.description);
-            const itemRewards = this.questHelper.applyQuestReward(profileDetails.characters.pmc, quest.qid, QuestStatus.Started, sessionID, response);
+            const messageId = this.questHelper.getMessageIdForQuestStart(
+                questFromDb.startedMessageText,
+                questFromDb.description,
+            );
+            const itemRewards = this.questHelper.applyQuestReward(
+                profileDetails.characters.pmc,
+                quest.qid,
+                QuestStatus.Started,
+                sessionID,
+                response,
+            );
 
             this.mailSendService.sendLocalisedNpcMessageToPlayer(
                 sessionID,
@@ -247,7 +269,8 @@ export class ProfileController
                 MessageType.QUEST_START,
                 messageId,
                 itemRewards,
-                this.timeUtil.getHoursAsSeconds(100));
+                this.timeUtil.getHoursAsSeconds(100),
+            );
         }
     }
 
@@ -266,7 +289,7 @@ export class ProfileController
     /**
      * Generate a player scav object
      * PMC profile MUST exist first before pscav can be generated
-     * @param sessionID 
+     * @param sessionID
      * @returns IPmcData object
      */
     public generatePlayerScav(sessionID: string): IPmcData
@@ -326,15 +349,6 @@ export class ProfileController
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getFriends(info: ISearchFriendRequestData, sessionID: string): ISearchFriendResponse[]
     {
-        return [
-            {
-                _id: this.hashUtil.generate(),
-                Info: {
-                    Level: 1,
-                    Side: "Bear",
-                    Nickname: info.nickname
-                }
-            }
-        ];
+        return [{ _id: this.hashUtil.generate(), Info: { Level: 1, Side: "Bear", Nickname: info.nickname } }];
     }
 }

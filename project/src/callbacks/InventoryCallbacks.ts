@@ -24,10 +24,8 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 @injectable()
 export class InventoryCallbacks
 {
-    constructor(
-        @inject("InventoryController") protected inventoryController: InventoryController
-    )
-    { }
+    constructor(@inject("InventoryController") protected inventoryController: InventoryController)
+    {}
 
     /** Handle Move event */
     public moveItem(pmcData: IPmcData, body: IInventoryMoveRequestData, sessionID: string): IItemEventRouterResponse
@@ -52,7 +50,11 @@ export class InventoryCallbacks
         return this.inventoryController.mergeItem(pmcData, body, sessionID);
     }
 
-    public transferItem(pmcData: IPmcData, body: IInventoryTransferRequestData, sessionID: string): IItemEventRouterResponse
+    public transferItem(
+        pmcData: IPmcData,
+        body: IInventoryTransferRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.transferItem(pmcData, body, sessionID);
     }
@@ -89,40 +91,68 @@ export class InventoryCallbacks
         return this.inventoryController.unbindItem(pmcData, body, sessionID);
     }
 
-    public examineItem(pmcData: IPmcData, body: IInventoryExamineRequestData, sessionID: string): IItemEventRouterResponse
+    public examineItem(
+        pmcData: IPmcData,
+        body: IInventoryExamineRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.examineItem(pmcData, body, sessionID);
     }
 
     /** Handle ReadEncyclopedia */
-    public readEncyclopedia(pmcData: IPmcData, body: IInventoryReadEncyclopediaRequestData, sessionID: string): IItemEventRouterResponse
+    public readEncyclopedia(
+        pmcData: IPmcData,
+        body: IInventoryReadEncyclopediaRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.readEncyclopedia(pmcData, body, sessionID);
     }
 
     /** Handle ApplyInventoryChanges */
-    public sortInventory(pmcData: IPmcData, body: IInventorySortRequestData, sessionID: string): IItemEventRouterResponse
+    public sortInventory(
+        pmcData: IPmcData,
+        body: IInventorySortRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.sortInventory(pmcData, body, sessionID);
     }
 
-    public createMapMarker(pmcData: IPmcData, body: IInventoryCreateMarkerRequestData, sessionID: string): IItemEventRouterResponse
+    public createMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryCreateMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.createMapMarker(pmcData, body, sessionID);
     }
 
-    public deleteMapMarker(pmcData: IPmcData, body: IInventoryDeleteMarkerRequestData, sessionID: string): IItemEventRouterResponse
+    public deleteMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryDeleteMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.deleteMapMarker(pmcData, body, sessionID);
     }
 
-    public editMapMarker(pmcData: IPmcData, body: IInventoryEditMarkerRequestData, sessionID: string): IItemEventRouterResponse
+    public editMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryEditMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.editMapMarker(pmcData, body, sessionID);
     }
 
     /** Handle OpenRandomLootContainer */
-    public openRandomLootContainer(pmcData: IPmcData, body: IOpenRandomLootContainerRequestData, sessionID: string): IItemEventRouterResponse
+    public openRandomLootContainer(
+        pmcData: IPmcData,
+        body: IOpenRandomLootContainerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.openRandomLootContainer(pmcData, body, sessionID);
     }

@@ -9,25 +9,30 @@ import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
 @injectable()
 export class UbglExternalMagGen implements IInventoryMagGen
 {
+    constructor(@inject("BotWeaponGeneratorHelper") protected botWeaponGeneratorHelper: BotWeaponGeneratorHelper)
+    {}
 
-    constructor(
-        @inject("BotWeaponGeneratorHelper") protected botWeaponGeneratorHelper: BotWeaponGeneratorHelper
-    )
-    { }
-
-    public getPriority(): number 
+    public getPriority(): number
     {
         return 1;
     }
 
-    public canHandleInventoryMagGen(inventoryMagGen: InventoryMagGen): boolean 
+    public canHandleInventoryMagGen(inventoryMagGen: InventoryMagGen): boolean
     {
         return inventoryMagGen.getWeaponTemplate()._parent === BaseClasses.UBGL;
     }
 
-    public process(inventoryMagGen: InventoryMagGen): void 
+    public process(inventoryMagGen: InventoryMagGen): void
     {
-        const bulletCount = this.botWeaponGeneratorHelper.getRandomizedBulletCount(inventoryMagGen.getMagCount(), inventoryMagGen.getMagazineTemplate());
-        this.botWeaponGeneratorHelper.addAmmoIntoEquipmentSlots(inventoryMagGen.getAmmoTemplate()._id, bulletCount, inventoryMagGen.getPmcInventory(), [EquipmentSlots.TACTICAL_VEST]);
+        const bulletCount = this.botWeaponGeneratorHelper.getRandomizedBulletCount(
+            inventoryMagGen.getMagCount(),
+            inventoryMagGen.getMagazineTemplate(),
+        );
+        this.botWeaponGeneratorHelper.addAmmoIntoEquipmentSlots(
+            inventoryMagGen.getAmmoTemplate()._id,
+            bulletCount,
+            inventoryMagGen.getPmcInventory(),
+            [EquipmentSlots.TACTICAL_VEST],
+        );
     }
 }

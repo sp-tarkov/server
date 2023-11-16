@@ -14,18 +14,18 @@ export class SaveCallbacks implements OnLoad, OnUpdate
 
     constructor(
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
     }
-    
+
     public async onLoad(): Promise<void>
     {
         this.saveServer.load();
     }
 
-    public getRoute(): string 
+    public getRoute(): string
     {
         return "aki-save";
     }

@@ -18,7 +18,7 @@ export class BundleCallbacks
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
         @inject("BundleLoader") protected bundleLoader: BundleLoader,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
@@ -42,7 +42,7 @@ export class BundleCallbacks
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getBundles(url: string, info: any, sessionID: string): string
     {
-        const local = (this.httpConfig.ip === "127.0.0.1" || this.httpConfig.ip === "localhost");
+        const local = this.httpConfig.ip === "127.0.0.1" || this.httpConfig.ip === "localhost";
         return this.httpResponse.noBody(this.bundleLoader.getBundles(local));
     }
 

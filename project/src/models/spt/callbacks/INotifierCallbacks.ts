@@ -13,7 +13,11 @@ export interface INotifierCallbacks
      */
     sendNotification(sessionID: string, req: any, resp: any, data: any): void;
     getNotifier(url: string, info: any, sessionID: string): IGetBodyResponseData<any[]>;
-    createNotifierChannel(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<INotifierChannel>;
+    createNotifierChannel(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<INotifierChannel>;
     selectProfile(url: string, info: ISelectProfileRequestData, sessionID: string): IGetBodyResponseData<any>;
     notify(url: string, info: any, sessionID: string): string;
 }

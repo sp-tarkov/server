@@ -19,9 +19,9 @@ export class PostAkiModLoader implements IModLoader
         @inject("VFS") protected vfs: VFS,
         @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck
+        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,
     )
-    { }
+    {}
 
     public getModPath(mod: string): string
     {
@@ -43,20 +43,27 @@ export class PostAkiModLoader implements IModLoader
         for (const modName of mods)
         {
             // // import class
-            const filepath = `${this.preAkiModLoader.getModPath(modName)}${this.preAkiModLoader.getImportedModDetails()[modName].main}`;
+            const filepath = `${this.preAkiModLoader.getModPath(modName)}${
+                this.preAkiModLoader.getImportedModDetails()[modName].main
+            }`;
             const modpath = `${process.cwd()}/${filepath}`;
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const mod = require(modpath);
 
             if (this.modTypeCheck.isPostAkiLoadAsync(mod.mod))
             {
-                try 
+                try
                 {
                     await (mod.mod as IPostAkiLoadModAsync).postAkiLoadAsync(container);
                 }
-                catch (err) 
+                catch (err)
                 {
-                    this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`));
+                    this.logger.error(
+                        this.localisationService.getText(
+                            "modloader-async_mod_error",
+                            `${err?.message ?? ""}\n${err.stack ?? ""}`,
+                        ),
+                    );
                 }
             }
 

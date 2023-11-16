@@ -3,6 +3,6 @@ import { Traders } from "@spt-aki/models/enums/Traders";
 
 export interface CustomTraderAssortData
 {
-    traderId: Traders,
-    assorts: ITraderAssort
+    traderId: Traders;
+    assorts: ITraderAssort;
 }

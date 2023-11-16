@@ -24,7 +24,7 @@ export class App
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("EncodingUtil") protected encodingUtil: EncodingUtil,
         @injectAll("OnLoad") protected onLoadComponents: OnLoad[],
-        @injectAll("OnUpdate") protected onUpdateComponents: OnUpdate[]
+        @injectAll("OnUpdate") protected onUpdateComponents: OnUpdate[],
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
@@ -90,7 +90,9 @@ export class App
 
                 if (success === void 0 && !(secondsSinceLastRun % warnTime))
                 {
-                    this.logger.debug(this.localisationService.getText("route_onupdate_no_response", updateable.getRoute()));
+                    this.logger.debug(
+                        this.localisationService.getText("route_onupdate_no_response", updateable.getRoute()),
+                    );
                 }
             }
         }
@@ -99,11 +101,11 @@ export class App
     protected logUpdateException(err: any, updateable: OnUpdate): void
     {
         this.logger.error(this.localisationService.getText("scheduled_event_failed_to_run", updateable.getRoute()));
-        if (err.message) 
+        if (err.message)
         {
             this.logger.error(err.message);
         }
-        if (err.stack) 
+        if (err.stack)
         {
             this.logger.error(err.stack);
         }

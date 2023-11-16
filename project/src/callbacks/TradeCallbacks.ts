@@ -10,28 +10,38 @@ import { ISellScavItemsToFenceRequestData } from "@spt-aki/models/eft/trade/ISel
 @injectable()
 export class TradeCallbacks
 {
-    constructor(
-        @inject("TradeController") protected tradeController: TradeController
-    )
-    { }
+    constructor(@inject("TradeController") protected tradeController: TradeController)
+    {}
 
     /**
      * Handle client/game/profile/items/moving TradingConfirm event
      */
-    public processTrade(pmcData: IPmcData, body: IProcessBaseTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public processTrade(
+        pmcData: IPmcData,
+        body: IProcessBaseTradeRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         // body can be IProcessBuyTradeRequestData or IProcessSellTradeRequestData
         return this.tradeController.confirmTrading(pmcData, body, sessionID);
     }
 
     /** Handle RagFairBuyOffer event */
-    public processRagfairTrade(pmcData: IPmcData, body: IProcessRagfairTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public processRagfairTrade(
+        pmcData: IPmcData,
+        body: IProcessRagfairTradeRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.tradeController.confirmRagfairTrading(pmcData, body, sessionID);
     }
 
     /** Handle SellAllFromSavage event */
-    public sellAllFromSavage(pmcData: IPmcData, body: ISellScavItemsToFenceRequestData, sessionID: string): IItemEventRouterResponse
+    public sellAllFromSavage(
+        pmcData: IPmcData,
+        body: ISellScavItemsToFenceRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.tradeController.sellScavItemsToFence(pmcData, body, sessionID);
     }

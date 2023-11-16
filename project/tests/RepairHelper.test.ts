@@ -18,24 +18,21 @@ let configServer: ConfigServer;
 let databaseServer: DatabaseServer;
 let helper: RepairHelper;
 
-describe("BotHelper", () => {
-
-    beforeAll(async () => {
+describe("BotHelper", () =>
+{
+    beforeAll(async () =>
+    {
         testHelper = await TestHelper.fetchTestHelper();
         logger = testHelper.getTestLogger();
         jsonUtil = testHelper.getTestJsonUtil();
         randomUtil = testHelper.getTestRandomUtil();
         configServer = testHelper.getTestConfigServer();
         databaseServer = testHelper.getTestDatabaseServer();
-    })
+    });
 
-    beforeEach(() => {
-        helper = new RepairHelper(
-            logger,
-            jsonUtil,
-            randomUtil,
-            databaseServer,
-            configServer);
+    beforeEach(() =>
+    {
+        helper = new RepairHelper(logger, jsonUtil, randomUtil, databaseServer, configServer);
     });
 
     it("RepairHelper type check", () =>
@@ -49,12 +46,7 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: slickTpl,
-            upd: {
-                Repairable: {
-                    Durability: 60,
-                    MaxDurability: 80
-                }
-            }
+            upd: { Repairable: { Durability: 60, MaxDurability: 80 } },
         };
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[slickTpl];
         const isArmor = true;
@@ -72,12 +64,7 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: slickTpl,
-            upd: {
-                Repairable: {
-                    Durability: 60,
-                    MaxDurability: 80
-                }
-            }
+            upd: { Repairable: { Durability: 60, MaxDurability: 80 } },
         };
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[slickTpl];
         const isArmor = true;
@@ -87,7 +74,9 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 5, useRepairKit, 1.2, useDegridation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(80);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(
+            itemToRepair.upd?.Repairable?.MaxDurability,
+        );
     });
 
     it("updateItemDurability() trader with slick armor, no dura degradation", () =>
@@ -96,12 +85,7 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: slickTpl,
-            upd: {
-                Repairable: {
-                    Durability: 60,
-                    MaxDurability: 80
-                }
-            }
+            upd: { Repairable: { Durability: 60, MaxDurability: 80 } },
         };
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[slickTpl];
         const isArmor = true;
@@ -111,7 +95,9 @@ describe("BotHelper", () => {
         helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, 20, useRepairKit, 1.2, useDegradation);
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBe(80);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(
+            itemToRepair.upd?.Repairable?.MaxDurability,
+        );
     });
 
     it("updateItemDurability() repairkit with g36 with max dura degradation - Full repair", () =>
@@ -123,22 +109,27 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: g36Tpl,
-            upd: {
-                Repairable: {
-                    Durability: itemCurrentDura,
-                    MaxDurability: itemCurrentMaxDura
-                }
-            }
+            upd: { Repairable: { Durability: itemCurrentDura, MaxDurability: itemCurrentMaxDura } },
         };
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[g36Tpl];
         const isArmor = false;
         const useRepairKit = true;
         const useDegradation = true;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1, useDegradation);
+        helper.updateItemDurability(
+            itemToRepair,
+            itemToRepairDetails,
+            isArmor,
+            duraDifference,
+            useRepairKit,
+            1,
+            useDegradation,
+        );
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(
+            itemToRepair.upd?.Repairable?.MaxDurability,
+        );
     });
 
     it("updateItemDurability() trader with g36 with max dura degradation - Full repair", () =>
@@ -150,22 +141,27 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: g36Tpl,
-            upd: {
-                Repairable: {
-                    Durability: itemCurrentDura,
-                    MaxDurability: itemCurrentMaxDura
-                }
-            }
+            upd: { Repairable: { Durability: itemCurrentDura, MaxDurability: itemCurrentMaxDura } },
         };
         const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[g36Tpl];
         const isArmor = false;
         const useRepairKit = false;
         const useDegradation = true;
 
-        helper.updateItemDurability(itemToRepair, itemToRepairDetails, isArmor, duraDifference, useRepairKit, 1.2, useDegradation);
+        helper.updateItemDurability(
+            itemToRepair,
+            itemToRepairDetails,
+            isArmor,
+            duraDifference,
+            useRepairKit,
+            1.2,
+            useDegradation,
+        );
 
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(100);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(
+            itemToRepair.upd?.Repairable?.MaxDurability,
+        );
     });
 
     it("updateItemDurability() faceshield broken use repairkit with max dura degradation", () =>
@@ -174,18 +170,11 @@ describe("BotHelper", () => {
         const itemToRepair: Item = {
             _id: "12345",
             _tpl: twExfilBallisticFaceShieldTpl,
-            upd: {
-                Repairable: {
-                    Durability: 30,
-                    MaxDurability: 45
-                },
-                FaceShield: {
-                    Hits: 2
-                }
-            }
+            upd: { Repairable: { Durability: 30, MaxDurability: 45 }, FaceShield: { Hits: 2 } },
         };
 
-        const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates?.items[twExfilBallisticFaceShieldTpl];
+        const itemToRepairDetails = <ITemplateItem>databaseServer.getTables().templates
+            ?.items[twExfilBallisticFaceShieldTpl];
         const isArmor = true;
         const useRepairKit = true;
         const useDegradation = true;
@@ -194,7 +183,9 @@ describe("BotHelper", () => {
 
         expect(itemToRepair.upd?.FaceShield?.Hits).toBe(0);
         expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThan(45);
-        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(itemToRepair.upd?.Repairable?.MaxDurability);
+        expect(itemToRepair.upd?.Repairable?.Durability).toBeLessThanOrEqual(
+            itemToRepair.upd?.Repairable?.MaxDurability,
+        );
     });
 
     it("isWeaponTemplate() g36 weapon", () =>

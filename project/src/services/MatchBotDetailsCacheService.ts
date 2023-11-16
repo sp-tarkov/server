@@ -12,7 +12,7 @@ export class MatchBotDetailsCacheService
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("LocalisationService") protected localisationService: LocalisationService
+        @inject("LocalisationService") protected localisationService: LocalisationService,
     )
     {}
 
@@ -48,5 +48,4 @@ export class MatchBotDetailsCacheService
 
         return botInCache;
     }
-
 }

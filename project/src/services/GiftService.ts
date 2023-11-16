@@ -25,7 +25,7 @@ export class GiftService
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.giftConfig = this.configServer.getConfig(ConfigTypes.GIFTS);
@@ -77,7 +77,8 @@ export class GiftService
                     playerId,
                     giftData.localeTextId,
                     giftData.items,
-                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
+                );
             }
             else
             {
@@ -85,10 +86,9 @@ export class GiftService
                     playerId,
                     giftData.messageText,
                     giftData.items,
-                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
+                );
             }
-
-
         }
         // Handle user messages
         else if (giftData.sender === GiftSenderType.USER)
@@ -98,7 +98,8 @@ export class GiftService
                 giftData.senderDetails,
                 giftData.messageText,
                 giftData.items,
-                this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+                this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
+            );
         }
         else if (giftData.sender === GiftSenderType.TRADER)
         {
@@ -110,7 +111,8 @@ export class GiftService
                     MessageType.MESSAGE_WITH_ITEMS,
                     giftData.localeTextId,
                     giftData.items,
-                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
+                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
+                );
             }
             else
             {
@@ -120,8 +122,9 @@ export class GiftService
                     MessageType.MESSAGE_WITH_ITEMS,
                     giftData.messageText,
                     giftData.items,
-                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours));
-            }            
+                    this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
+                );
+            }
         }
         else
         {
@@ -130,10 +133,10 @@ export class GiftService
             const details: ISendMessageDetails = {
                 recipientId: playerId,
                 sender: this.getMessageType(giftData),
-                senderDetails: { _id: this.getSenderId(giftData), info: null},
+                senderDetails: { _id: this.getSenderId(giftData), info: null },
                 messageText: giftData.messageText,
                 items: giftData.items,
-                itemsMaxStorageLifetimeSeconds: this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours)
+                itemsMaxStorageLifetimeSeconds: this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),
             };
 
             if (giftData.trader)
@@ -142,7 +145,7 @@ export class GiftService
             }
 
             this.mailSendService.sendMessageToPlayer(details);
-        }        
+        }
 
         this.profileHelper.addGiftReceivedFlagToProfile(playerId, giftId);
 
@@ -195,7 +198,7 @@ export class GiftService
      */
     public sendPraporStartingGift(sessionId: string, day: number): void
     {
-        switch (day) 
+        switch (day)
         {
             case 1:
                 if (this.profileHelper.playerHasRecievedGift(sessionId, "PraporGiftDay1"))
@@ -210,6 +213,5 @@ export class GiftService
                 }
                 break;
         }
-        
     }
 }

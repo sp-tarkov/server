@@ -12,8 +12,9 @@ export class BotCallbacks
 {
     constructor(
         @inject("BotController") protected botController: BotController,
-        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil)
-    { }
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
+    )
+    {}
 
     /**
      * Handle singleplayer/settings/bot/limit
@@ -50,7 +51,11 @@ export class BotCallbacks
      * Handle client/game/bot/generate
      * @returns IGetBodyResponseData
      */
-    public generateBots(url: string, info: IGenerateBotsRequestData, sessionID: string): IGetBodyResponseData<IBotBase[]>
+    public generateBots(
+        url: string,
+        info: IGenerateBotsRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IBotBase[]>
     {
         return this.httpResponse.getBody(this.botController.generate(sessionID, info));
     }

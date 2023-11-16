@@ -16,17 +16,17 @@ export class HashCacheService
         @inject("VFS") protected vfs: VFS,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("WinstonLogger") protected logger: ILogger
+        @inject("WinstonLogger") protected logger: ILogger,
     )
-    { 
+    {
         if (!this.vfs.exists(this.modCachePath))
         {
             this.vfs.writeFile(this.modCachePath, "{}");
         }
 
         // get mod hash file
-        if (!this.modHashes) // empty
-        {
+        if (!this.modHashes)
+        { // empty
             this.modHashes = this.jsonUtil.deserialize(this.vfs.readFile(`${this.modCachePath}`));
         }
     }
@@ -44,7 +44,7 @@ export class HashCacheService
     /**
      * Does the generated hash match the stored hash
      * @param modName name of mod
-     * @param modContent 
+     * @param modContent
      * @returns True if they match
      */
     public modContentMatchesStoredHash(modName: string, modContent: string): boolean

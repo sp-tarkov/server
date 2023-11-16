@@ -24,7 +24,7 @@ export class RagfairAssortGenerator
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -72,7 +72,7 @@ export class RagfairAssortGenerator
             BaseClasses.SORTING_TABLE,
             BaseClasses.INVENTORY,
             BaseClasses.STATIONARY_CONTAINER,
-            BaseClasses.POCKETS
+            BaseClasses.POCKETS,
         ];
 
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
@@ -84,7 +84,10 @@ export class RagfairAssortGenerator
                 continue;
             }
 
-            if (this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent && !seasonalEventActive && seasonalItemTplBlacklist.includes(item._id))
+            if (
+                this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent && !seasonalEventActive
+                && seasonalItemTplBlacklist.includes(item._id)
+            )
             {
                 continue;
             }
@@ -99,7 +102,7 @@ export class RagfairAssortGenerator
 
         return results;
     }
-    
+
     /**
      * Get presets from globals.json
      * @returns Preset object array
@@ -116,9 +119,9 @@ export class RagfairAssortGenerator
      */
     protected getDefaultPresets(): IPreset[]
     {
-        return this.getPresets().filter(x => x._encyclopedia);
+        return this.getPresets().filter((x) => x._encyclopedia);
     }
-    
+
     /**
      * Create a base assort item and return it with populated values + 999999 stack count + unlimited count = true
      * @param tplId tplid to add to item
@@ -132,10 +135,7 @@ export class RagfairAssortGenerator
             _tpl: tplId,
             parentId: "hideout",
             slotId: "hideout",
-            upd: {
-                StackObjectsCount: 99999999,
-                UnlimitedCount: true
-            }
+            upd: { StackObjectsCount: 99999999, UnlimitedCount: true },
         };
     }
 }

@@ -14,16 +14,14 @@ export class WatermarkLocale
     protected warning: string[];
     protected modding: string[];
 
-    constructor(
-        @inject("LocalisationService") protected localisationService: LocalisationService
-    )
+    constructor(@inject("LocalisationService") protected localisationService: LocalisationService)
     {
         this.description = [
             this.localisationService.getText("watermark-discord_url"),
             "",
             this.localisationService.getText("watermark-free_of_charge"),
             this.localisationService.getText("watermark-paid_scammed"),
-            this.localisationService.getText("watermark-commercial_use_prohibited")
+            this.localisationService.getText("watermark-commercial_use_prohibited"),
         ];
         this.warning = [
             "",
@@ -33,14 +31,14 @@ export class WatermarkLocale
             `${this.localisationService.getText("watermark-report_issues_to")}:`,
             this.localisationService.getText("watermark-issue_tracker_url"),
             "",
-            this.localisationService.getText("watermark-use_at_own_risk")
+            this.localisationService.getText("watermark-use_at_own_risk"),
         ];
         this.modding = [
             "",
             this.localisationService.getText("watermark-modding_disabled"),
             "",
             this.localisationService.getText("watermark-not_an_issue"),
-            this.localisationService.getText("watermark-do_not_report")
+            this.localisationService.getText("watermark-do_not_report"),
         ];
     }
 
@@ -69,7 +67,7 @@ export class Watermark
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("WatermarkLocale") protected watermarkLocale?: WatermarkLocale
+        @inject("WatermarkLocale") protected watermarkLocale?: WatermarkLocale,
     )
     {
         this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);

@@ -1,5 +1,5 @@
 export enum EquipmentSlots
-    {
+{
     HEADWEAR = "Headwear",
     EARPIECE = "Earpiece",
     FACE_COVER = "FaceCover",
@@ -13,5 +13,5 @@ export enum EquipmentSlots
     FIRST_PRIMARY_WEAPON = "FirstPrimaryWeapon",
     SECOND_PRIMARY_WEAPON = "SecondPrimaryWeapon",
     HOLSTER = "Holster",
-    SCABBARD = "Scabbard"
+    SCABBARD = "Scabbard",
 }

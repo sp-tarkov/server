@@ -21,12 +21,12 @@ class ModCallbacks implements OnLoad
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
         @inject("PostAkiModLoader") protected postAkiModLoader: PostAkiModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
     }
-    
+
     public async onLoad(): Promise<void>
     {
         if (globalThis.G_MODS_ENABLED)
@@ -41,5 +41,4 @@ class ModCallbacks implements OnLoad
     }
 }
 
-export { ModCallbacks };
-
+export {ModCallbacks};

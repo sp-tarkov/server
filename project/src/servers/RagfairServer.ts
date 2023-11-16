@@ -28,7 +28,7 @@ export class RagfairServer
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("TraderAssortHelper") protected traderAssortHelper: TraderAssortHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -79,7 +79,7 @@ export class RagfairServer
      */
     protected getUpdateableTraders(): string[]
     {
-        return Object.keys(this.ragfairConfig.traders).filter(x => this.ragfairConfig.traders[x]);
+        return Object.keys(this.ragfairConfig.traders).filter((x) => this.ragfairConfig.traders[x]);
     }
 
     public getAllCategories(): Record<string, number>
@@ -99,7 +99,7 @@ export class RagfairServer
     public hideOffer(offerId: string): void
     {
         const offers = this.ragfairOfferService.getOffers();
-        const offer = offers.find(x => x._id === offerId);
+        const offer = offers.find((x) => x._id === offerId);
 
         if (!offer)
         {

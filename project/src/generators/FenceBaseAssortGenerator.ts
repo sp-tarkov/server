@@ -27,7 +27,7 @@ export class FenceBaseAssortGenerator
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -43,7 +43,7 @@ export class FenceBaseAssortGenerator
         const baseFenceAssort = this.databaseServer.getTables().traders[Traders.FENCE].assort;
 
         const dbItems = Object.values(this.databaseServer.getTables().templates.items);
-        for (const item of dbItems.filter(x => this.isValidFenceItem(x)))
+        for (const item of dbItems.filter((x) => this.isValidFenceItem(x)))
         {
             // Skip blacklisted items
             if (this.itemFilterService.isItemBlacklisted(item._id))
@@ -65,8 +65,10 @@ export class FenceBaseAssortGenerator
             // Skip items on fence ignore list
             if (this.traderConfig.fence.blacklist.length > 0)
             {
-                if (this.traderConfig.fence.blacklist.includes(item._id) 
-                    || this.itemHelper.isOfBaseclasses(item._id, this.traderConfig.fence.blacklist))
+                if (
+                    this.traderConfig.fence.blacklist.includes(item._id)
+                    || this.itemHelper.isOfBaseclasses(item._id, this.traderConfig.fence.blacklist)
+                )
                 {
                     continue;
                 }
@@ -80,8 +82,10 @@ export class FenceBaseAssortGenerator
 
             // Create barter scheme object
             const barterSchemeToAdd: IBarterScheme = {
-                count: Math.round(this.handbookHelper.getTemplatePrice(item._id) * this.traderConfig.fence.itemPriceMult),
-                _tpl: Money.ROUBLES
+                count: Math.round(
+                    this.handbookHelper.getTemplatePrice(item._id) * this.traderConfig.fence.itemPriceMult,
+                ),
+                _tpl: Money.ROUBLES,
             };
 
             // Add barter data to base
@@ -93,10 +97,7 @@ export class FenceBaseAssortGenerator
                 _tpl: item._id,
                 parentId: "hideout",
                 slotId: "hideout",
-                upd: {
-                    StackObjectsCount: 9999999,
-                    UnlimitedCount: true
-                }
+                upd: { StackObjectsCount: 9999999, UnlimitedCount: true },
             };
 
             // Add item to base

@@ -17,9 +17,9 @@ class LauncherCallbacks
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LauncherController") protected launcherController: LauncherController,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("Watermark") protected watermark: Watermark
+        @inject("Watermark") protected watermark: Watermark,
     )
-    { }
+    {}
 
     public connect(): string
     {
@@ -100,5 +100,4 @@ class LauncherCallbacks
     }
 }
 
-export { LauncherCallbacks };
-
+export {LauncherCallbacks};

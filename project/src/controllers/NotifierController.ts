@@ -14,7 +14,7 @@ export class NotifierController
     constructor(
         @inject("NotifierHelper") protected notifierHelper: NotifierHelper,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
-        @inject("NotificationService") protected notificationService: NotificationService
+        @inject("NotificationService") protected notificationService: NotificationService,
     )
     {}
 
@@ -86,7 +86,7 @@ export class NotifierController
             channel_id: sessionID,
             url: "",
             notifierServer: this.getServer(sessionID),
-            ws: this.notifierHelper.getWebSocketServer(sessionID)
+            ws: this.notifierHelper.getWebSocketServer(sessionID),
         };
     }
 }

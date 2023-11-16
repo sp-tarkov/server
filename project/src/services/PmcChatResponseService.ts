@@ -27,7 +27,7 @@ export class PmcChatResponseService
         @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.pmcResponsesConfig = this.configServer.getConfig(ConfigTypes.PMC_CHAT_RESPONSE);
@@ -50,10 +50,14 @@ export class PmcChatResponseService
 
             const victimDetails = this.getVictimDetails(victim);
             const message = this.chooseMessage(true, pmcData);
-            this.notificationSendHelper.sendMessageToPlayer(sessionId, victimDetails, message, MessageType.USER_MESSAGE);
-        }        
+            this.notificationSendHelper.sendMessageToPlayer(
+                sessionId,
+                victimDetails,
+                message,
+                MessageType.USER_MESSAGE,
+            );
+        }
     }
-
 
     /**
      * Not fully implemented yet, needs method of acquiring killers details after raid
@@ -75,7 +79,10 @@ export class PmcChatResponseService
         }
 
         // find bot by name in cache
-        const killerDetailsInCache = this.matchBotDetailsCacheService.getBotByNameAndSide(killer.Name.trim(), killer.Side);
+        const killerDetailsInCache = this.matchBotDetailsCacheService.getBotByNameAndSide(
+            killer.Name.trim(),
+            killer.Side,
+        );
         if (!killerDetailsInCache)
         {
             return;
@@ -93,8 +100,8 @@ export class PmcChatResponseService
                 Nickname: killerDetailsInCache.Info.Nickname,
                 Side: killerDetailsInCache.Info.Side,
                 Level: killerDetailsInCache.Info.Level,
-                MemberCategory: killerDetailsInCache.Info.MemberCategory
-            }
+                MemberCategory: killerDetailsInCache.Info.MemberCategory,
+            },
         };
 
         const message = this.chooseMessage(false, pmcData);
@@ -127,14 +134,20 @@ export class PmcChatResponseService
         }
 
         // Choose random response from above list and request it from localisation service
-        let responseText = this.localisationService.getText(this.randomUtil.getArrayValue(possibleResponseLocaleKeys), {playerName: pmcData.Info.Nickname, playerLevel: pmcData.Info.Level, playerSide: pmcData.Info.Side});
+        let responseText = this.localisationService.getText(this.randomUtil.getArrayValue(possibleResponseLocaleKeys), {
+            playerName: pmcData.Info.Nickname,
+            playerLevel: pmcData.Info.Level,
+            playerSide: pmcData.Info.Side,
+        });
 
         if (this.appendSuffixToMessageEnd(isVictim))
         {
-            const suffixText = this.localisationService.getText(this.randomUtil.getArrayValue(this.getResponseSuffixLocaleKeys()));
+            const suffixText = this.localisationService.getText(
+                this.randomUtil.getArrayValue(this.getResponseSuffixLocaleKeys()),
+            );
             responseText += ` ${suffixText}`;
         }
-        
+
         if (this.stripCapitalistion(isVictim))
         {
             responseText = responseText.toLowerCase();
@@ -189,7 +202,7 @@ export class PmcChatResponseService
 
         return this.randomUtil.getChance100(chance);
     }
-    
+
     /**
      * Choose a type of response based on the weightings in pmc response config
      * @param isVictim Was responder killed by player
@@ -208,14 +221,14 @@ export class PmcChatResponseService
      * Get locale keys related to the type of response to send (victim/killer)
      * @param keyType Positive/negative
      * @param isVictim Was responder killed by player
-     * @returns 
+     * @returns
      */
     protected getResponseLocaleKeys(keyType: string, isVictim = true): string[]
     {
         const keyBase = isVictim ? "pmcresponse-victim_" : "pmcresponse-killer_";
         const keys = this.localisationService.getKeys();
 
-        return keys.filter(x => x.startsWith(`${keyBase}${keyType}`));
+        return keys.filter((x) => x.startsWith(`${keyBase}${keyType}`));
     }
 
     /**
@@ -226,7 +239,7 @@ export class PmcChatResponseService
     {
         const keys = this.localisationService.getKeys();
 
-        return keys.filter(x => x.startsWith("pmcresponse-suffix"));
+        return keys.filter((x) => x.startsWith("pmcresponse-suffix"));
     }
 
     /**
@@ -248,7 +261,25 @@ export class PmcChatResponseService
      */
     protected getVictimDetails(pmcVictim: Victim): IUserDialogInfo
     {
-        const categories = [MemberCategory.UNIQUE_ID, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.DEFAULT, MemberCategory.SHERPA, MemberCategory.DEVELOPER];
-        return {_id: pmcVictim.Name, info:{Nickname: pmcVictim.Name, Level: pmcVictim.Level, Side: pmcVictim.Side, MemberCategory: this.randomUtil.getArrayValue(categories)}};
+        const categories = [
+            MemberCategory.UNIQUE_ID,
+            MemberCategory.DEFAULT,
+            MemberCategory.DEFAULT,
+            MemberCategory.DEFAULT,
+            MemberCategory.DEFAULT,
+            MemberCategory.DEFAULT,
+            MemberCategory.DEFAULT,
+            MemberCategory.SHERPA,
+            MemberCategory.DEVELOPER,
+        ];
+        return {
+            _id: pmcVictim.Name,
+            info: {
+                Nickname: pmcVictim.Name,
+                Level: pmcVictim.Level,
+                Side: pmcVictim.Side,
+                MemberCategory: this.randomUtil.getArrayValue(categories),
+            },
+        };
     }
 }

@@ -15,7 +15,7 @@ export class DurabilityLimitsHelper
     constructor(
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("BotHelper") protected botHelper: BotHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -172,12 +172,12 @@ export class DurabilityLimitsHelper
         const maxDelta = this.getMaxWeaponDeltaFromConfig(botRole);
         const delta = this.randomUtil.getInt(minDelta, maxDelta);
         const result = maxDurability - delta;
-        const durabilityValueMinLimit = Math.round((this.getMinWeaponLimitPercentFromConfig(botRole) / 100) * maxDurability);
+        const durabilityValueMinLimit = Math.round(
+            (this.getMinWeaponLimitPercentFromConfig(botRole) / 100) * maxDurability,
+        );
 
         // Dont let weapon dura go below the percent defined in config
-        return (result >= durabilityValueMinLimit)
-            ? result
-            : durabilityValueMinLimit;
+        return (result >= durabilityValueMinLimit) ? result : durabilityValueMinLimit;
     }
 
     protected generateArmorDurability(botRole: string, maxDurability: number): number
@@ -186,12 +186,12 @@ export class DurabilityLimitsHelper
         const maxDelta = this.getMaxArmorDeltaFromConfig(botRole);
         const delta = this.randomUtil.getInt(minDelta, maxDelta);
         const result = maxDurability - delta;
-        const durabilityValueMinLimit = Math.round((this.getMinArmorLimitPercentFromConfig(botRole) / 100) * maxDurability);
+        const durabilityValueMinLimit = Math.round(
+            (this.getMinArmorLimitPercentFromConfig(botRole) / 100) * maxDurability,
+        );
 
         // Dont let armor dura go below the percent defined in config
-        return (result >= durabilityValueMinLimit)
-            ? result
-            : durabilityValueMinLimit;
+        return (result >= durabilityValueMinLimit) ? result : durabilityValueMinLimit;
     }
 
     protected getMinWeaponDeltaFromConfig(botRole: string): number
@@ -234,7 +234,7 @@ export class DurabilityLimitsHelper
         return this.botConfig.durability.default.armor.maxDelta;
     }
 
-    protected getMinArmorLimitPercentFromConfig (botRole: string): number
+    protected getMinArmorLimitPercentFromConfig(botRole: string): number
     {
         if (this.botConfig.durability[botRole])
         {
@@ -244,7 +244,7 @@ export class DurabilityLimitsHelper
         return this.botConfig.durability.default.armor.minLimitPercent;
     }
 
-    protected getMinWeaponLimitPercentFromConfig (botRole: string): number
+    protected getMinWeaponLimitPercentFromConfig(botRole: string): number
     {
         if (this.botConfig.durability[botRole])
         {

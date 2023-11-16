@@ -29,9 +29,9 @@ export class BotWeaponGeneratorHelper
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ContainerHelper") protected containerHelper: ContainerHelper
+        @inject("ContainerHelper") protected containerHelper: ContainerHelper,
     )
-    { }
+    {}
 
     /**
      * Get a randomized number of bullets for a specific magazine
@@ -61,7 +61,7 @@ export class BotWeaponGeneratorHelper
 
         /* Get the amount of bullets that would fit in the internal magazine
         * and multiply by how many magazines were supposed to be created */
-        return chamberBulletCount * randomizedMagazineCount; 
+        return chamberBulletCount * randomizedMagazineCount;
     }
 
     /**
@@ -71,8 +71,8 @@ export class BotWeaponGeneratorHelper
      */
     public getRandomizedMagazineCount(magCounts: GenerationData): number
     {
-        //const range = magCounts.max - magCounts.min;
-        //return this.randomUtil.getBiasedRandomNumber(magCounts.min, magCounts.max, Math.round(range * 0.75), 4);
+        // const range = magCounts.max - magCounts.min;
+        // return this.randomUtil.getBiasedRandomNumber(magCounts.min, magCounts.max, Math.round(range * 0.75), 4);
 
         return this.weightedRandomHelper.getWeightedValue(magCounts.weights);
     }
@@ -96,10 +96,7 @@ export class BotWeaponGeneratorHelper
      */
     public createMagazineWithAmmo(magazineTpl: string, ammoTpl: string, magTemplate: ITemplateItem): Item[]
     {
-        const magazine: Item[] = [{
-            _id: this.hashUtil.generate(),
-            _tpl: magazineTpl
-        }];
+        const magazine: Item[] = [{ _id: this.hashUtil.generate(), _tpl: magazineTpl }];
 
         this.itemHelper.fillMagazineWithCartridge(magazine, magTemplate, ammoTpl, 1);
 
@@ -113,22 +110,24 @@ export class BotWeaponGeneratorHelper
      * @param inventory bot inventory to add cartridges to
      * @param equipmentSlotsToAddTo what equipment slots should bullets be added into
      */
-    public addAmmoIntoEquipmentSlots(ammoTpl: string, cartridgeCount: number, inventory: Inventory, equipmentSlotsToAddTo: EquipmentSlots[] = [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS] ): void
+    public addAmmoIntoEquipmentSlots(
+        ammoTpl: string,
+        cartridgeCount: number,
+        inventory: Inventory,
+        equipmentSlotsToAddTo: EquipmentSlots[] = [EquipmentSlots.TACTICAL_VEST, EquipmentSlots.POCKETS],
+    ): void
     {
         const ammoItems = this.itemHelper.splitStack({
             _id: this.hashUtil.generate(),
             _tpl: ammoTpl,
-            upd: { "StackObjectsCount": cartridgeCount }
+            upd: { StackObjectsCount: cartridgeCount },
         });
 
         for (const ammoItem of ammoItems)
         {
-            const result = this.addItemWithChildrenToEquipmentSlot(
-                equipmentSlotsToAddTo,
-                ammoItem._id,
-                ammoItem._tpl,
-                [ammoItem],
-                inventory);
+            const result = this.addItemWithChildrenToEquipmentSlot(equipmentSlotsToAddTo, ammoItem._id, ammoItem._tpl, [
+                ammoItem,
+            ], inventory);
 
             if (result === ItemAddedResult.NO_SPACE)
             {
@@ -151,22 +150,32 @@ export class BotWeaponGeneratorHelper
      * TODO - move into BotGeneratorHelper, this is not the class for it
      * Adds an item with all its children into specified equipmentSlots, wherever it fits.
      * @param equipmentSlots Slot to add item+children into
-     * @param parentId 
-     * @param parentTpl 
+     * @param parentId
+     * @param parentTpl
      * @param itemWithChildren Item to add
      * @param inventory Inventory to add item+children into
      * @returns a `boolean` indicating item was added
      */
-    public addItemWithChildrenToEquipmentSlot(equipmentSlots: string[], parentId: string, parentTpl: string, itemWithChildren: Item[], inventory: Inventory): ItemAddedResult
+    public addItemWithChildrenToEquipmentSlot(
+        equipmentSlots: string[],
+        parentId: string,
+        parentTpl: string,
+        itemWithChildren: Item[],
+        inventory: Inventory,
+    ): ItemAddedResult
     {
         for (const slot of equipmentSlots)
         {
             // Get container to put item into
-            const container = inventory.items.find(i => i.slotId === slot);
+            const container = inventory.items.find((i) => i.slotId === slot);
             if (!container)
             {
                 // Desired equipment container (e.g. backpack) not found
-                this.logger.debug(`Unable to add item: ${itemWithChildren[0]._tpl} to: ${slot}, slot missing/bot generated without equipment`);
+                this.logger.debug(
+                    `Unable to add item: ${
+                        itemWithChildren[0]._tpl
+                    } to: ${slot}, slot missing/bot generated without equipment`,
+                );
                 continue;
             }
 
@@ -202,10 +211,12 @@ export class BotWeaponGeneratorHelper
                 }
 
                 // Get all base level items in backpack
-                const containerItems = inventory.items.filter(i => i.parentId === container._id && i.slotId === slotGrid._name);
+                const containerItems = inventory.items.filter((i) =>
+                    i.parentId === container._id && i.slotId === slotGrid._name
+                );
 
                 // Get a copy of base level items we can iterate over
-                const containerItemsToCheck = containerItems.filter(x => x.slotId === slotGrid._name);
+                const containerItemsToCheck = containerItems.filter((x) => x.slotId === slotGrid._name);
                 for (const item of containerItemsToCheck)
                 {
                     // Look for children on items, insert into array if found
@@ -218,14 +229,19 @@ export class BotWeaponGeneratorHelper
                 }
 
                 // Get rid of items free/used spots in current grid
-                const slotGridMap = this.inventoryHelper.getContainerMap(slotGrid._props.cellsH, slotGrid._props.cellsV, containerItems, container._id);
+                const slotGridMap = this.inventoryHelper.getContainerMap(
+                    slotGrid._props.cellsH,
+                    slotGrid._props.cellsV,
+                    containerItems,
+                    container._id,
+                );
                 // Try to fit item into grid
                 const findSlotResult = this.containerHelper.findSlotForItem(slotGridMap, itemSize[0], itemSize[1]);
 
                 // Open slot found, add item to inventory
                 if (findSlotResult.success)
                 {
-                    const parentItem = itemWithChildren.find(i => i._id === parentId);
+                    const parentItem = itemWithChildren.find((i) => i._id === parentId);
 
                     // Set items parent to container id
                     parentItem.parentId = container._id;
@@ -233,7 +249,7 @@ export class BotWeaponGeneratorHelper
                     parentItem.location = {
                         x: findSlotResult.x,
                         y: findSlotResult.y,
-                        r: findSlotResult.rotation ? 1 : 0
+                        r: findSlotResult.rotation ? 1 : 0,
                     };
 
                     inventory.items.push(...itemWithChildren);

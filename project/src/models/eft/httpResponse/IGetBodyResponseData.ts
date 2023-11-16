@@ -1,6 +1,6 @@
-export interface IGetBodyResponseData<Type> 
+export interface IGetBodyResponseData<Type>
 {
-    err: number
-    errmsg: any
-    (data: Type): Type
+    err: number;
+    errmsg: any;
+    (data: Type): Type;
 }

@@ -15,7 +15,7 @@ export class WeatherController
     constructor(
         @inject("WeatherGenerator") protected weatherGenerator: WeatherGenerator,
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
@@ -24,12 +24,7 @@ export class WeatherController
     /** Handle client/weather */
     public generate(): IWeatherData
     {
-        let result: IWeatherData = {
-            acceleration: 0,
-            time: "",
-            date: "",
-            weather: null
-        };
+        let result: IWeatherData = { acceleration: 0, time: "", date: "", weather: null };
 
         result = this.weatherGenerator.calculateGameTime(result);
         result.weather = this.weatherGenerator.generateWeather();

@@ -1,4 +1,4 @@
 export interface IRoute
 {
-    aki: any
+    aki: any;
 }

@@ -10,7 +10,8 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
 import { IScavCaseConfig } from "@spt-aki/models/spt/config/IScavCaseConfig";
 import {
-    RewardCountAndPriceDetails, ScavCaseRewardCountsAndPrices
+    RewardCountAndPriceDetails,
+    ScavCaseRewardCountsAndPrices,
 } from "@spt-aki/models/spt/hideout/ScavCaseRewardCountsAndPrices";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -20,7 +21,7 @@ import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
-/** 
+/**
  * Handle the creation of randomised scav case rewards
  */
 @injectable()
@@ -38,12 +39,12 @@ export class ScavCaseRewardGenerator
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.scavCaseConfig = this.configServer.getConfig(ConfigTypes.SCAVCASE);
     }
-    
+
     /**
      * Create an array of rewards that will be given to the player upon completing their scav case build
      * @param recipeId recipe of the scav case craft
@@ -54,7 +55,7 @@ export class ScavCaseRewardGenerator
         this.cacheDbItems();
 
         // Get scavcase details from hideout/scavcase.json
-        const scavCaseDetails = this.databaseServer.getTables().hideout.scavcase.find(r => r._id === recipeId);
+        const scavCaseDetails = this.databaseServer.getTables().hideout.scavcase.find((r) => r._id === recipeId);
         const rewardItemCounts = this.getScavCaseRewardCountsAndPrices(scavCaseDetails);
 
         // Get items that fit the price criteria as set by the scavCase config
@@ -63,9 +64,17 @@ export class ScavCaseRewardGenerator
         const superRarePricedItems = this.getFilteredItemsByPrice(this.dbItemsCache, rewardItemCounts.Superrare);
 
         // Get randomly picked items from each item collction, the count range of which is defined in hideout/scavcase.json
-        const randomlyPickedCommonRewards = this.pickRandomRewards(commonPricedItems, rewardItemCounts.Common, "common");
+        const randomlyPickedCommonRewards = this.pickRandomRewards(
+            commonPricedItems,
+            rewardItemCounts.Common,
+            "common",
+        );
         const randomlyPickedRareRewards = this.pickRandomRewards(rarePricedItems, rewardItemCounts.Rare, "rare");
-        const randomlyPickedSuperRareRewards = this.pickRandomRewards(superRarePricedItems, rewardItemCounts.Superrare, "superrare");
+        const randomlyPickedSuperRareRewards = this.pickRandomRewards(
+            superRarePricedItems,
+            rewardItemCounts.Superrare,
+            "superrare",
+        );
 
         // Add randomised stack sizes to ammo and money rewards
         const commonRewards = this.randomiseContainerItemRewards(randomlyPickedCommonRewards, "common");
@@ -95,11 +104,13 @@ export class ScavCaseRewardGenerator
                 {
                     return false;
                 }
-    
+
                 // Skip item if item id is on blacklist
-                if ((item._type !== "Item")
+                if (
+                    (item._type !== "Item")
                     || this.scavCaseConfig.rewardItemBlacklist.includes(item._id)
-                    || this.itemFilterService.isItemBlacklisted(item._id))
+                    || this.itemFilterService.isItemBlacklisted(item._id)
+                )
                 {
                     return false;
                 }
@@ -108,13 +119,13 @@ export class ScavCaseRewardGenerator
                 {
                     return false;
                 }
-    
+
                 // Skip item if parent id is blacklisted
                 if (this.itemHelper.isOfBaseclasses(item._id, this.scavCaseConfig.rewardItemParentBlacklist))
                 {
                     return false;
                 }
-    
+
                 return true;
             });
         }
@@ -139,13 +150,13 @@ export class ScavCaseRewardGenerator
                 {
                     return false;
                 }
-    
+
                 // Skip ammo that doesn't stack as high as value in config
                 if (item._props.StackMaxSize < this.scavCaseConfig.ammoRewards.minStackSize)
                 {
                     return false;
                 }
-    
+
                 return true;
             });
         }
@@ -155,27 +166,31 @@ export class ScavCaseRewardGenerator
      * Pick a number of items to be rewards, the count is defined by the values in `itemFilters` param
      * @param items item pool to pick rewards from
      * @param itemFilters how the rewards should be filtered down (by item count)
-     * @returns 
+     * @returns
      */
-    protected pickRandomRewards(items: ITemplateItem[], itemFilters: RewardCountAndPriceDetails, rarity: string): ITemplateItem[]
+    protected pickRandomRewards(
+        items: ITemplateItem[],
+        itemFilters: RewardCountAndPriceDetails,
+        rarity: string,
+    ): ITemplateItem[]
     {
         const result: ITemplateItem[] = [];
-        
+
         let rewardWasMoney = false;
         let rewardWasAmmo = false;
         const randomCount = this.randomUtil.getInt(itemFilters.minCount, itemFilters.maxCount);
         for (let i = 0; i < randomCount; i++)
         {
-            if (this.rewardShouldBeMoney() && !rewardWasMoney) // Only allow one reward to be money
-            {
+            if (this.rewardShouldBeMoney() && !rewardWasMoney)
+            { // Only allow one reward to be money
                 result.push(this.getRandomMoney());
                 if (!this.scavCaseConfig.allowMultipleMoneyRewardsPerRarity)
                 {
                     rewardWasMoney = true;
                 }
             }
-            else if (this.rewardShouldBeAmmo() && !rewardWasAmmo) // Only allow one reward to be ammo
-            {
+            else if (this.rewardShouldBeAmmo() && !rewardWasAmmo)
+            { // Only allow one reward to be ammo
                 result.push(this.getRandomAmmo(rarity));
                 if (!this.scavCaseConfig.allowMultipleAmmoRewardsPerRarity)
                 {
@@ -214,10 +229,9 @@ export class ScavCaseRewardGenerator
      */
     protected getRandomMoney(): ITemplateItem
     {
-        
         const money: ITemplateItem[] = [];
-        money.push(this.databaseServer.getTables().templates.items["5449016a4bdc2d6f028b456f"]); //rub
-        money.push(this.databaseServer.getTables().templates.items["569668774bdc2da2298b4568"]); //euro
+        money.push(this.databaseServer.getTables().templates.items["5449016a4bdc2d6f028b456f"]); // rub
+        money.push(this.databaseServer.getTables().templates.items["569668774bdc2da2298b4568"]); // euro
         money.push(this.databaseServer.getTables().templates.items["5696686a4bdc2da3298b456a"]); // dollar
 
         return this.randomUtil.getArrayValue(money);
@@ -234,8 +248,10 @@ export class ScavCaseRewardGenerator
         {
             // Is ammo handbook price between desired range
             const handbookPrice = this.ragfairPriceService.getStaticPriceForItem(ammo._id);
-            if (handbookPrice >= this.scavCaseConfig.ammoRewards.ammoRewardValueRangeRub[rarity].min 
-                && handbookPrice <= this.scavCaseConfig.ammoRewards.ammoRewardValueRangeRub[rarity].max)
+            if (
+                handbookPrice >= this.scavCaseConfig.ammoRewards.ammoRewardValueRangeRub[rarity].min
+                && handbookPrice <= this.scavCaseConfig.ammoRewards.ammoRewardValueRangeRub[rarity].max
+            )
             {
                 return true;
             }
@@ -263,11 +279,7 @@ export class ScavCaseRewardGenerator
         const result: Product[] = [];
         for (const item of rewardItems)
         {
-            const resultItem = {
-                _id: this.hashUtil.generate(),
-                _tpl: item._id,
-                upd: undefined
-            };
+            const resultItem = { _id: this.hashUtil.generate(), _tpl: item._id, upd: undefined };
 
             this.addStackCountToAmmoAndMoney(item, resultItem, rarity);
 
@@ -288,29 +300,32 @@ export class ScavCaseRewardGenerator
      * @param item money or ammo item
      * @param resultItem money or ammo item with a randomise stack size
      */
-    protected addStackCountToAmmoAndMoney(item: ITemplateItem, resultItem: { _id: string; _tpl: string; upd: Upd; }, rarity: string): void
+    protected addStackCountToAmmoAndMoney(
+        item: ITemplateItem,
+        resultItem: { _id: string; _tpl: string; upd: Upd; },
+        rarity: string,
+    ): void
     {
         if (item._parent === BaseClasses.AMMO || item._parent === BaseClasses.MONEY)
         {
-            resultItem.upd = {
-                StackObjectsCount: this.getRandomAmountRewardForScavCase(item, rarity)
-            };
+            resultItem.upd = { StackObjectsCount: this.getRandomAmountRewardForScavCase(item, rarity) };
         }
     }
-    
+
     /**
-     * 
      * @param dbItems all items from the items.json
      * @param itemFilters controls how the dbItems will be filtered and returned (handbook price)
      * @returns filtered dbItems array
      */
-    protected getFilteredItemsByPrice(dbItems: ITemplateItem[], itemFilters: RewardCountAndPriceDetails): ITemplateItem[]
+    protected getFilteredItemsByPrice(
+        dbItems: ITemplateItem[],
+        itemFilters: RewardCountAndPriceDetails,
+    ): ITemplateItem[]
     {
         return dbItems.filter((item) =>
         {
             const handbookPrice = this.ragfairPriceService.getStaticPriceForItem(item._id);
-            if (handbookPrice >= itemFilters.minPriceRub
-                && handbookPrice <= itemFilters.maxPriceRub)
+            if (handbookPrice >= itemFilters.minPriceRub && handbookPrice <= itemFilters.maxPriceRub)
             {
                 return true;
             }
@@ -330,12 +345,11 @@ export class ScavCaseRewardGenerator
         // Create reward min/max counts for each type
         for (const rewardType of rewardTypes)
         {
-            result[rewardType] =
-            {
+            result[rewardType] = {
                 minCount: scavCaseDetails.EndProducts[rewardType].min,
                 maxCount: scavCaseDetails.EndProducts[rewardType].max,
                 minPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType.toLowerCase()].min,
-                maxPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType.toLowerCase()].max
+                maxPriceRub: this.scavCaseConfig.rewardItemValueRangeRub[rewardType.toLowerCase()].max,
             };
         }
 
@@ -353,20 +367,32 @@ export class ScavCaseRewardGenerator
         let amountToGive = 1;
         if (itemToCalculate._parent === BaseClasses.AMMO)
         {
-            amountToGive = this.randomUtil.getInt(this.scavCaseConfig.ammoRewards.minStackSize, itemToCalculate._props.StackMaxSize);
+            amountToGive = this.randomUtil.getInt(
+                this.scavCaseConfig.ammoRewards.minStackSize,
+                itemToCalculate._props.StackMaxSize,
+            );
         }
         else if (itemToCalculate._parent === BaseClasses.MONEY)
         {
             switch (itemToCalculate._id)
             {
                 case Money.ROUBLES:
-                    amountToGive = this.randomUtil.getInt(this.scavCaseConfig.moneyRewards.rubCount[rarity].min, this.scavCaseConfig.moneyRewards.rubCount[rarity].max);
+                    amountToGive = this.randomUtil.getInt(
+                        this.scavCaseConfig.moneyRewards.rubCount[rarity].min,
+                        this.scavCaseConfig.moneyRewards.rubCount[rarity].max,
+                    );
                     break;
                 case Money.EUROS:
-                    amountToGive = this.randomUtil.getInt(this.scavCaseConfig.moneyRewards.eurCount[rarity].min, this.scavCaseConfig.moneyRewards.eurCount[rarity].max);
+                    amountToGive = this.randomUtil.getInt(
+                        this.scavCaseConfig.moneyRewards.eurCount[rarity].min,
+                        this.scavCaseConfig.moneyRewards.eurCount[rarity].max,
+                    );
                     break;
                 case Money.DOLLARS:
-                    amountToGive = this.randomUtil.getInt(this.scavCaseConfig.moneyRewards.usdCount[rarity].min, this.scavCaseConfig.moneyRewards.usdCount[rarity].max);
+                    amountToGive = this.randomUtil.getInt(
+                        this.scavCaseConfig.moneyRewards.usdCount[rarity].min,
+                        this.scavCaseConfig.moneyRewards.usdCount[rarity].max,
+                    );
                     break;
             }
         }

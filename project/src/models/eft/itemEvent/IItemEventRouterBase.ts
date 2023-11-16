@@ -7,93 +7,93 @@ import { EquipmentBuildType } from "@spt-aki/models/enums/EquipmentBuildType";
 
 export interface IItemEventRouterBase
 {
-    warnings: Warning[]
-    profileChanges: TProfileChanges | ""
+    warnings: Warning[];
+    profileChanges: TProfileChanges | "";
 }
 
-export type TProfileChanges = Record<string, ProfileChange>
+export type TProfileChanges = Record<string, ProfileChange>;
 
 export interface Warning
 {
-    index: number
-    errmsg: string
-    code?: string
-    data?: any
+    index: number;
+    errmsg: string;
+    code?: string;
+    data?: any;
 }
 
 export interface ProfileChange
 {
-    _id: string
-    experience: number
-    quests: IQuest[]
-    ragFairOffers: IRagfairOffer[]
-    weaponBuilds: IWeaponBuildChange[]
-    equipmentBuilds: IEquipmentBuildChange[]
-    items: ItemChanges
-    production: Record<string, Productive>
+    _id: string;
+    experience: number;
+    quests: IQuest[];
+    ragFairOffers: IRagfairOffer[];
+    weaponBuilds: IWeaponBuildChange[];
+    equipmentBuilds: IEquipmentBuildChange[];
+    items: ItemChanges;
+    production: Record<string, Productive>;
     /** Hideout area improvement id */
-    improvements: Record<string, Improvement>
-    skills: Skills
-    health: Health
-    traderRelations: Record<string, TraderData>
-    repeatableQuests?: IPmcDataRepeatableQuest[]
-    recipeUnlocked: Record<string, boolean>
-    changedHideoutStashes?: Record<string, IHideoutStashItem>
-    questsStatus: IQuestStatus[]
+    improvements: Record<string, Improvement>;
+    skills: Skills;
+    health: Health;
+    traderRelations: Record<string, TraderData>;
+    repeatableQuests?: IPmcDataRepeatableQuest[];
+    recipeUnlocked: Record<string, boolean>;
+    changedHideoutStashes?: Record<string, IHideoutStashItem>;
+    questsStatus: IQuestStatus[];
 }
 
 export interface IHideoutStashItem
 {
-    Id: string
-    Tpl: string
+    Id: string;
+    Tpl: string;
 }
 
 export interface IWeaponBuildChange
 {
-    id: string
-    name: string
-    root: string
-    items: Item[]
+    id: string;
+    name: string;
+    root: string;
+    items: Item[];
 }
 
 export interface IEquipmentBuildChange
 {
-    id: string
-    name: string
-    root: string
-    items: Item[] 
-    type: string
-    fastpanel: any[]
-    buildType: EquipmentBuildType
+    id: string;
+    name: string;
+    root: string;
+    items: Item[];
+    type: string;
+    fastpanel: any[];
+    buildType: EquipmentBuildType;
 }
 
-export interface ItemChanges 
+export interface ItemChanges
 {
-    new: Product[]
-    change: Product[]
-    del: Product[]
+    new: Product[];
+    change: Product[];
+    del: Product[];
 }
 
 export interface Improvement
 {
-    completed: boolean,
-    improveCompleteTimestamp: number
+    completed: boolean;
+    improveCompleteTimestamp: number;
 }
 
 export interface Product
 {
-    _id: string
-    _tpl?: string
-    parentId?: string
-    slotId?: string
-    location?: ItemChangeLocation
-    upd?: Upd
+    _id: string;
+    _tpl?: string;
+    parentId?: string;
+    slotId?: string;
+    location?: ItemChangeLocation;
+    upd?: Upd;
 }
 
 export interface ItemChangeLocation
 {
-    x: number,
-    y: number,
-    r: number,
-    isSearched?: boolean
+    x: number;
+    y: number;
+    r: number;
+    isSearched?: boolean;
 }

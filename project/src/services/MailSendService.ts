@@ -33,9 +33,9 @@ export class MailSendService
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
-        @inject("TraderHelper") protected traderHelper: TraderHelper
+        @inject("TraderHelper") protected traderHelper: TraderHelper,
     )
-    { }
+    {}
 
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items using direct message text, do not look up any locale
@@ -46,11 +46,25 @@ export class MailSendService
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendDirectNpcMessageToPlayer(sessionId: string, trader: Traders, messageType: MessageType, message: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendDirectNpcMessageToPlayer(
+        sessionId: string,
+        trader: Traders,
+        messageType: MessageType,
+        message: string,
+        items: Item[] = [],
+        maxStorageTimeSeconds = null,
+        systemData = null,
+        ragfair = null,
+    ): void
     {
         if (!trader)
         {
-            this.logger.error(this.localisationService.getText("mailsend-missing_trader", {messageType: messageType, sessionId: sessionId}));
+            this.logger.error(
+                this.localisationService.getText("mailsend-missing_trader", {
+                    messageType: messageType,
+                    sessionId: sessionId,
+                }),
+            );
 
             return;
         }
@@ -60,7 +74,7 @@ export class MailSendService
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
             trader: trader,
-            messageText: message
+            messageText: message,
         };
 
         // Add items to message
@@ -92,11 +106,25 @@ export class MailSendService
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendLocalisedNpcMessageToPlayer(sessionId: string, trader: Traders, messageType: MessageType, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null, systemData = null, ragfair = null): void
+    public sendLocalisedNpcMessageToPlayer(
+        sessionId: string,
+        trader: Traders,
+        messageType: MessageType,
+        messageLocaleId: string,
+        items: Item[] = [],
+        maxStorageTimeSeconds = null,
+        systemData = null,
+        ragfair = null,
+    ): void
     {
         if (!trader)
         {
-            this.logger.error(this.localisationService.getText("mailsend-missing_trader", {messageType: messageType, sessionId: sessionId}));
+            this.logger.error(
+                this.localisationService.getText("mailsend-missing_trader", {
+                    messageType: messageType,
+                    sessionId: sessionId,
+                }),
+            );
 
             return;
         }
@@ -106,7 +134,7 @@ export class MailSendService
             sender: messageType,
             dialogType: MessageType.NPC_TRADER,
             trader: trader,
-            templateId: messageLocaleId
+            templateId: messageLocaleId,
         };
 
         // Add items to message
@@ -136,12 +164,17 @@ export class MailSendService
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendSystemMessageToPlayer(sessionId: string, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendSystemMessageToPlayer(
+        sessionId: string,
+        message: string,
+        items: Item[] = [],
+        maxStorageTimeSeconds = null,
+    ): void
     {
         const details: ISendMessageDetails = {
             recipientId: sessionId,
             sender: MessageType.SYSTEM_MESSAGE,
-            messageText: message
+            messageText: message,
         };
 
         // Add items to message
@@ -161,12 +194,17 @@ export class MailSendService
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendLocalisedSystemMessageToPlayer(sessionId: string, messageLocaleId: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendLocalisedSystemMessageToPlayer(
+        sessionId: string,
+        messageLocaleId: string,
+        items: Item[] = [],
+        maxStorageTimeSeconds = null,
+    ): void
     {
         const details: ISendMessageDetails = {
             recipientId: sessionId,
             sender: MessageType.SYSTEM_MESSAGE,
-            templateId: messageLocaleId
+            templateId: messageLocaleId,
         };
 
         // Add items to message
@@ -187,13 +225,19 @@ export class MailSendService
      * @param items Optional items to send to player
      * @param maxStorageTimeSeconds Optional time to collect items before they expire
      */
-    public sendUserMessageToPlayer(sessionId: string, senderDetails: IUserDialogInfo, message: string, items: Item[] = [], maxStorageTimeSeconds = null): void
+    public sendUserMessageToPlayer(
+        sessionId: string,
+        senderDetails: IUserDialogInfo,
+        message: string,
+        items: Item[] = [],
+        maxStorageTimeSeconds = null,
+    ): void
     {
         const details: ISendMessageDetails = {
             recipientId: sessionId,
             sender: MessageType.USER_MESSAGE,
             senderDetails: senderDetails,
-            messageText: message
+            messageText: message,
         };
 
         // Add items to message
@@ -222,7 +266,7 @@ export class MailSendService
         // Craft message
         const message = this.createDialogMessage(senderDialog._id, messageDetails);
 
-        // Create items array 
+        // Create items array
         // Generate item stash if we have rewards.
         const itemsToSendToPlayer = this.processItemsBeforeAddingToMail(senderDialog.type, messageDetails);
 
@@ -240,9 +284,15 @@ export class MailSendService
 
         // TODO: clean up old code here
         // Offer Sold notifications are now separate from the main notification
-        if ([MessageType.NPC_TRADER, MessageType.FLEAMARKET_MESSAGE].includes(senderDialog.type) && messageDetails.ragfairDetails)
+        if (
+            [MessageType.NPC_TRADER, MessageType.FLEAMARKET_MESSAGE].includes(senderDialog.type)
+            && messageDetails.ragfairDetails
+        )
         {
-            const offerSoldMessage = this.notifierHelper.createRagfairOfferSoldNotification(message, messageDetails.ragfairDetails);
+            const offerSoldMessage = this.notifierHelper.createRagfairOfferSoldNotification(
+                message,
+                messageDetails.ragfairDetails,
+            );
             this.notificationSendHelper.sendMessage(messageDetails.recipientId, offerSoldMessage);
             message.type = MessageType.MESSAGE_WITH_ITEMS; // Should prevent getting the same notification popup twice
         }
@@ -276,7 +326,7 @@ export class MailSendService
             uid: playerProfile.characters.pmc._id,
             type: MessageType.USER_MESSAGE,
             rewardCollected: false,
-            text: message
+            text: message,
         });
     }
 
@@ -298,7 +348,9 @@ export class MailSendService
             hasRewards: false, // The default dialog message has no rewards, can be added later via addRewardItemsToMessage()
             rewardCollected: false, // The default dialog message has no rewards, can be added later via addRewardItemsToMessage()
             systemData: messageDetails.systemData ? messageDetails.systemData : undefined, // Used by ragfair / localised messages that need "location" or "time"
-            profileChangeEvents: (messageDetails.profileChangeEvents?.length === 0) ? messageDetails.profileChangeEvents : undefined // no one knows, its never been used in any dumps
+            profileChangeEvents: (messageDetails.profileChangeEvents?.length === 0)
+                ? messageDetails.profileChangeEvents
+                : undefined, // no one knows, its never been used in any dumps
         };
 
         // Clean up empty system data
@@ -322,7 +374,11 @@ export class MailSendService
      * @param itemsToSendToPlayer Items to add to message
      * @param maxStorageTimeSeconds total time items are stored in mail before being deleted
      */
-    protected addRewardItemsToMessage(message: Message, itemsToSendToPlayer: MessageItems, maxStorageTimeSeconds: number): void
+    protected addRewardItemsToMessage(
+        message: Message,
+        itemsToSendToPlayer: MessageItems,
+        maxStorageTimeSeconds: number,
+    ): void
     {
         if (itemsToSendToPlayer?.data?.length > 0)
         {
@@ -335,8 +391,8 @@ export class MailSendService
 
     /**
      * perform various sanitising actions on the items before they're considered ready for insertion into message
-     * @param dialogType The type of the dialog that will hold the reward items being processed 
-     * @param messageDetails 
+     * @param dialogType The type of the dialog that will hold the reward items being processed
+     * @param messageDetails
      * @returns Sanitised items
      */
     protected processItemsBeforeAddingToMail(dialogType: MessageType, messageDetails: ISendMessageDetails): MessageItems
@@ -350,7 +406,10 @@ export class MailSendService
             const parentItem = this.getBaseItemFromRewards(messageDetails.items);
             if (!parentItem)
             {
-                this.localisationService.getText("mailsend-missing_parent", {traderId: messageDetails.trader, sender: messageDetails.sender});
+                this.localisationService.getText("mailsend-missing_parent", {
+                    traderId: messageDetails.trader,
+                    sender: messageDetails.sender,
+                });
 
                 return itemsToSendToPlayer;
             }
@@ -361,11 +420,8 @@ export class MailSendService
                 parentItem.parentId = this.hashUtil.generate();
             }
 
-            itemsToSendToPlayer = {
-                stash: parentItem.parentId,
-                data: []
-            };
-            
+            itemsToSendToPlayer = { stash: parentItem.parentId, data: [] };
+
             // Ensure Ids are unique and cont collide with items in player inventory later
             messageDetails.items = this.itemHelper.replaceIDs(null, messageDetails.items);
 
@@ -376,7 +432,12 @@ export class MailSendService
                 if (!itemTemplate)
                 {
                     // Can happen when modded items are insured + mod is removed
-                    this.logger.error(this.localisationService.getText("dialog-missing_item_template", {tpl: reward._tpl, type: dialogType}));
+                    this.logger.error(
+                        this.localisationService.getText("dialog-missing_item_template", {
+                            tpl: reward._tpl,
+                            type: dialogType,
+                        }),
+                    );
 
                     continue;
                 }
@@ -427,7 +488,7 @@ export class MailSendService
         }
 
         // Find first item with slotId that indicates its a 'base' item
-        let item = items.find(x => ["hideout", "main"].includes(x.slotId));
+        let item = items.find((x) => ["hideout", "main"].includes(x.slotId));
         if (item)
         {
             return item;
@@ -435,7 +496,7 @@ export class MailSendService
 
         // Not a singlular item + no items have a hideout/main slotid
         // Look for first item without parent id
-        item = items.find(x => !x.parentId);
+        item = items.find((x) => !x.parentId);
         if (item)
         {
             return item;
@@ -467,7 +528,7 @@ export class MailSendService
                 messages: [],
                 pinned: false,
                 new: 0,
-                attachmentsNew: 0
+                attachmentsNew: 0,
             };
 
             senderDialog = dialogsInProfile[senderId];
@@ -478,7 +539,7 @@ export class MailSendService
 
     /**
      * Get the appropriate sender id by the sender enum type
-     * @param messageDetails 
+     * @param messageDetails
      * @returns gets an id of the individual sending it
      */
     protected getMessageSenderIdByType(messageDetails: ISendMessageDetails): string
@@ -510,5 +571,4 @@ export class MailSendService
 
         this.logger.warning(`Unable to handle message of type: ${messageDetails.sender}`);
     }
-
 }

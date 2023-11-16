@@ -1,4 +1,4 @@
-FROM node:16-buster as builder
+FROM node:16-buster AS builder
 
 WORKDIR /app
 
@@ -8,7 +8,6 @@ RUN yarn
 COPY tsconfig.json tsconfig.base.json ./
 COPY src ./src
 RUN yarn test:comp-linux
-
 
 ##############################################
 

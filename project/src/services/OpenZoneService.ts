@@ -22,7 +22,7 @@ export class OpenZoneService
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
@@ -54,7 +54,7 @@ export class OpenZoneService
     {
         const dbLocations = this.databaseServer.getTables().locations;
         for (const mapKey in this.locationConfig.openZones)
-        { 
+        {
             if (!dbLocations[mapKey])
             {
                 this.logger.error(this.localisationService.getText("openzone-unable_to_find_map", mapKey));

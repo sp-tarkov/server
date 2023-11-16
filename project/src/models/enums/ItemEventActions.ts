@@ -1,5 +1,5 @@
 export enum ItemEventActions
-    {
+{
     MOVE = "Move",
     REMOVE = "Remove",
     SPLIT = "Split",
@@ -23,5 +23,5 @@ export enum ItemEventActions
     REMOVE_WEAPON_BUILD = "RemoveWeaponBuild",
     REMOVE_BUILD = "RemoveBuild",
     SAVE_EQUIPMENT_BUILD = "SaveEquipmentBuild",
-    REMOVE_EQUIPMENT_BUILD = "RemoveEquipmentBuild"
+    REMOVE_EQUIPMENT_BUILD = "RemoveEquipmentBuild",
 }

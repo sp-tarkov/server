@@ -41,7 +41,7 @@ export class LocationController
         @inject("LootGenerator") protected lootGenerator: LootGenerator,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.airdropConfig = this.configServer.getConfig(ConfigTypes.AIRDROP);
@@ -88,17 +88,23 @@ export class LocationController
         // Create containers and add loot to them
         const staticLoot = this.locationGenerator.generateStaticContainers(location.base, staticAmmoDist);
         output.Loot.push(...staticLoot);
-        
+
         // Add dyanmic loot to output loot
         const dynamicLootDist: ILooseLoot = this.jsonUtil.clone(location.looseLoot);
-        const dynamicSpawnPoints: SpawnpointTemplate[] = this.locationGenerator.generateDynamicLoot(dynamicLootDist, staticAmmoDist, name);
+        const dynamicSpawnPoints: SpawnpointTemplate[] = this.locationGenerator.generateDynamicLoot(
+            dynamicLootDist,
+            staticAmmoDist,
+            name,
+        );
         for (const spawnPoint of dynamicSpawnPoints)
         {
             output.Loot.push(spawnPoint);
         }
 
         // Done generating, log results
-        this.logger.success(this.localisationService.getText("location-dynamic_items_spawned_success", dynamicSpawnPoints.length));
+        this.logger.success(
+            this.localisationService.getText("location-dynamic_items_spawned_success", dynamicSpawnPoints.length),
+        );
         this.logger.success(this.localisationService.getText("location-generated_success", name));
 
         return output;
@@ -130,10 +136,7 @@ export class LocationController
             locations[mapBase._Id] = mapBase;
         }
 
-        return  {
-            locations: locations,
-            paths: locationsFromDb.base.paths
-        };
+        return { locations: locations, paths: locationsFromDb.base.paths };
     }
 
     /**
@@ -150,7 +153,7 @@ export class LocationController
 
         const airdropConfig = this.getAirdropLootConfigByType(airdropType);
 
-        return {dropType: airdropType, loot: this.lootGenerator.createRandomLoot(airdropConfig)};
+        return { dropType: airdropType, loot: this.lootGenerator.createRandomLoot(airdropConfig) };
     }
 
     /**
@@ -174,7 +177,9 @@ export class LocationController
         let lootSettingsByType = this.airdropConfig.loot[airdropType];
         if (!lootSettingsByType)
         {
-            this.logger.error(this.localisationService.getText("location-unable_to_find_airdrop_drop_config_of_type", airdropType));
+            this.logger.error(
+                this.localisationService.getText("location-unable_to_find_airdrop_drop_config_of_type", airdropType),
+            );
             lootSettingsByType = this.airdropConfig.loot[AirdropTypeEnum.MIXED];
         }
 
@@ -187,7 +192,7 @@ export class LocationController
             itemLimits: lootSettingsByType.itemLimits,
             itemStackLimits: lootSettingsByType.itemStackLimits,
             armorLevelWhitelist: lootSettingsByType.armorLevelWhitelist,
-            allowBossItems: lootSettingsByType.allowBossItems
+            allowBossItems: lootSettingsByType.allowBossItems,
         };
     }
 }

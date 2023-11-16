@@ -13,24 +13,32 @@ export class LocationCallbacks
 {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("LocationController") protected locationController: LocationController
+        @inject("LocationController") protected locationController: LocationController,
     )
-    { }
+    {}
 
     /** Handle client/locations */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getLocationData(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ILocationsGenerateAllResponse>
+    public getLocationData(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ILocationsGenerateAllResponse>
     {
         return this.httpResponse.getBody(this.locationController.generateAll(sessionID));
     }
 
     /** Handle client/location/getLocalloot */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getLocation(url: string, info: IGetLocationRequestData, sessionID: string): IGetBodyResponseData<ILocationBase>
+    public getLocation(
+        url: string,
+        info: IGetLocationRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ILocationBase>
     {
         return this.httpResponse.getBody(this.locationController.get(sessionID, info));
     }
-    
+
     /** Handle client/location/getAirdropLoot */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getAirdropLoot(url: string, info: IEmptyRequestData, sessionID: string): string

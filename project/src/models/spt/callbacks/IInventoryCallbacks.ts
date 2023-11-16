@@ -30,9 +30,25 @@ export interface IInventoryCallbacks
     tagItem(pmcData: IPmcData, body: IInventoryTagRequestData, sessionID: string): IItemEventRouterResponse;
     bindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse;
     examineItem(pmcData: IPmcData, body: IInventoryExamineRequestData, sessionID: string): IItemEventRouterResponse;
-    readEncyclopedia(pmcData: IPmcData, body: IInventoryReadEncyclopediaRequestData, sessionID: string): IItemEventRouterResponse;
+    readEncyclopedia(
+        pmcData: IPmcData,
+        body: IInventoryReadEncyclopediaRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
     sortInventory(pmcData: IPmcData, body: IInventorySortRequestData, sessionID: string): IItemEventRouterResponse;
-    createMapMarker(pmcData: IPmcData, body: IInventoryCreateMarkerRequestData, sessionID: string): IItemEventRouterResponse;
-    deleteMapMarker(pmcData: IPmcData, body: IInventoryDeleteMarkerRequestData, sessionID: string): IItemEventRouterResponse;
-    editMapMarker(pmcData: IPmcData, body: IInventoryEditMarkerRequestData, sessionID: string): IItemEventRouterResponse;
+    createMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryCreateMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    deleteMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryDeleteMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    editMapMarker(
+        pmcData: IPmcData,
+        body: IInventoryEditMarkerRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
 }

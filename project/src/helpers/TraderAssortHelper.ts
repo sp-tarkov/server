@@ -26,11 +26,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class TraderAssortHelper
 {
     protected traderConfig: ITraderConfig;
-    protected mergedQuestAssorts: Record<string, Record<string, string>> = {
-        started: {},
-        success: {},
-        fail: {}
-    };
+    protected mergedQuestAssorts: Record<string, Record<string, string>> = { started: {}, success: {}, fail: {} };
     protected createdMergedQuestAssorts = false;
 
     constructor(
@@ -46,10 +42,11 @@ export class TraderAssortHelper
         @inject("RagfairOfferGenerator") protected ragfairOfferGenerator: RagfairOfferGenerator,
         @inject("TraderAssortService") protected traderAssortService: TraderAssortService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService: TraderPurchasePersisterService,
+        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService:
+            TraderPurchasePersisterService,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("FenceService") protected fenceService: FenceService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -81,7 +78,7 @@ export class TraderAssortHelper
 
         // Strip assorts player should not see yet
         if (!flea)
-        {            
+        {
             trader.assort = this.assortHelper.stripLockedLoyaltyAssort(pmcProfile, traderId, trader.assort);
         }
 
@@ -89,21 +86,28 @@ export class TraderAssortHelper
         trader.assort.nextResupply = trader.base.nextResupply;
 
         // Adjust displayed assort counts based on values stored in profile
-        const assortPurchasesfromTrader = this.traderPurchasePersisterService.getProfileTraderPurchases(sessionId, traderId);
+        const assortPurchasesfromTrader = this.traderPurchasePersisterService.getProfileTraderPurchases(
+            sessionId,
+            traderId,
+        );
         for (const assortId in assortPurchasesfromTrader)
         {
             // Find assort we want to update current buy count of
-            const assortToAdjust = trader.assort.items.find(x => x._id === assortId);
+            const assortToAdjust = trader.assort.items.find((x) => x._id === assortId);
             if (!assortToAdjust)
             {
-                this.logger.debug(`Cannot find trader: ${trader.base.nickname} assort: ${assortId} to adjust BuyRestrictionCurrent value, skipping`);
+                this.logger.debug(
+                    `Cannot find trader: ${trader.base.nickname} assort: ${assortId} to adjust BuyRestrictionCurrent value, skipping`,
+                );
 
                 continue;
             }
 
             if (!assortToAdjust.upd)
             {
-                this.logger.debug(`Unable to adjust assort ${assortToAdjust._id} item: ${assortToAdjust._tpl} BuyRestrictionCurrent value, assort has an undefined upd object`);
+                this.logger.debug(
+                    `Unable to adjust assort ${assortToAdjust._id} item: ${assortToAdjust._tpl} BuyRestrictionCurrent value, assort has an undefined upd object`,
+                );
 
                 continue;
             }
@@ -117,7 +121,13 @@ export class TraderAssortHelper
             this.hydrateMergedQuestAssorts();
             this.createdMergedQuestAssorts = true;
         }
-        trader.assort = this.assortHelper.stripLockedQuestAssort(pmcProfile, traderId, trader.assort, this.mergedQuestAssorts, flea);
+        trader.assort = this.assortHelper.stripLockedQuestAssort(
+            pmcProfile,
+            traderId,
+            trader.assort,
+            this.mergedQuestAssorts,
+            flea,
+        );
 
         // Multiply price if multiplier is other than 1
         if (this.traderConfig.traderPriceMultipler !== 1)
@@ -234,7 +244,7 @@ export class TraderAssortHelper
             barter_scheme: {},
             // eslint-disable-next-line @typescript-eslint/naming-convention
             loyal_level_items: {},
-            nextResupply: null
+            nextResupply: null,
         };
     }
 }

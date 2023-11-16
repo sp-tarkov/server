@@ -9,10 +9,7 @@ import { VFS } from "@spt-aki/utils/VFS";
 @injectable()
 export class ImporterUtil
 {
-    constructor(
-        @inject("VFS") protected vfs: VFS,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil
-    )
+    constructor(@inject("VFS") protected vfs: VFS, @inject("JsonUtil") protected jsonUtil: JsonUtil)
     {}
 
     /**
@@ -22,8 +19,10 @@ export class ImporterUtil
      */
     public async loadRecursiveAsync<T>(
         filepath: string,
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {}
+        onReadCallback: (fileWithPath: string, data: string) => void = () =>
+        {},
+        onObjectDeserialized: (fileWithPath: string, object: any) => void = () =>
+        {},
     ): Promise<T>
     {
         const result = {} as T;
@@ -39,7 +38,7 @@ export class ImporterUtil
             {
                 const filename = this.vfs.stripExtension(file);
                 const filePathAndName = `${filepath}${file}`;
-                await this.vfs.readFileAsync(filePathAndName).then(fileData => 
+                await this.vfs.readFileAsync(filePathAndName).then((fileData) =>
                 {
                     onReadCallback(filePathAndName, fileData);
                     const fileDeserialized = this.jsonUtil.deserializeWithCacheCheck(fileData, filePathAndName);
@@ -57,7 +56,7 @@ export class ImporterUtil
 
         // set all loadRecursive to be executed asynchronously
         const resEntries = Object.entries(result);
-        const resResolved = await Promise.all(resEntries.map(ent => ent[1]));
+        const resResolved = await Promise.all(resEntries.map((ent) => ent[1]));
         for (let resIdx = 0; resIdx < resResolved.length; resIdx++)
         {
             resEntries[resIdx][1] = resResolved[resIdx];
@@ -67,17 +66,14 @@ export class ImporterUtil
         return Object.fromEntries(resEntries) as T;
     }
 
-
     /**
      * Load files into js objects recursively (synchronous)
      * @param filepath Path to folder with files
-     * @returns 
+     * @returns
      */
-    public loadRecursive<T>(
-        filepath: string,
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {}
-    ): T
+    public loadRecursive<T>(filepath: string, onReadCallback: (fileWithPath: string, data: string) => void = () =>
+    {}, onObjectDeserialized: (fileWithPath: string, object: any) => void = () =>
+    {}): T
     {
         const result = {} as T;
 
@@ -112,8 +108,10 @@ export class ImporterUtil
     public async loadAsync<T>(
         filepath: string,
         strippablePath = "",
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {}
+        onReadCallback: (fileWithPath: string, data: string) => void = () =>
+        {},
+        onObjectDeserialized: (fileWithPath: string, object: any) => void = () =>
+        {},
     ): Promise<T>
     {
         const directoriesToRead = new Queue<string>();
@@ -125,15 +123,15 @@ export class ImporterUtil
 
         const files = this.vfs.getFiles(filepath);
         const directories = this.vfs.getDirs(filepath);
-        
-        directoriesToRead.enqueueAll(directories.map(d => `${filepath}${d}`));
-        filesToProcess.enqueueAll(files.map(f => new VisitNode(filepath, f)));
+
+        directoriesToRead.enqueueAll(directories.map((d) => `${filepath}${d}`));
+        filesToProcess.enqueueAll(files.map((f) => new VisitNode(filepath, f)));
 
         while (!directoriesToRead.isEmpty())
         {
             const directory = directoriesToRead.dequeue();
-            filesToProcess.enqueueAll(this.vfs.getFiles(directory).map(f => new VisitNode(`${directory}/`, f)));
-            directoriesToRead.enqueueAll(this.vfs.getDirs(directory).map(d => `${directory}/${d}`));
+            filesToProcess.enqueueAll(this.vfs.getFiles(directory).map((f) => new VisitNode(`${directory}/`, f)));
+            directoriesToRead.enqueueAll(this.vfs.getDirs(directory).map((d) => `${directory}/${d}`));
         }
 
         while (!filesToProcess.isEmpty())
@@ -143,26 +141,27 @@ export class ImporterUtil
             {
                 const filePathAndName = `${fileNode.filePath}${fileNode.fileName}`;
                 promises.push(
-                    this.vfs.readFileAsync(filePathAndName)
-                        .then(async fileData => {
-                            onReadCallback(filePathAndName, fileData);
-                            return this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, filePathAndName);
-                        })
-                        .then(async fileDeserialized => {
-                            onObjectDeserialized(filePathAndName, fileDeserialized);
-                            const strippedFilePath = this.vfs.stripExtension(filePathAndName).replace(filepath, "");
-                            this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
-                        })
+                    this.vfs.readFileAsync(filePathAndName).then(async (fileData) =>
+                    {
+                        onReadCallback(filePathAndName, fileData);
+                        return this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, filePathAndName);
+                    }).then(async (fileDeserialized) =>
+                    {
+                        onObjectDeserialized(filePathAndName, fileDeserialized);
+                        const strippedFilePath = this.vfs.stripExtension(filePathAndName).replace(filepath, "");
+                        this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
+                    }),
                 );
             }
         }
-        
-        await Promise.all(promises).catch(e => console.error(e));
-        
+
+        await Promise.all(promises).catch((e) => console.error(e));
+
         return result;
     }
-    
-    protected placeObject<T>(fileDeserialized: any, strippedFilePath: string, result: T, strippablePath: string):void {
+
+    protected placeObject<T>(fileDeserialized: any, strippedFilePath: string, result: T, strippablePath: string): void
+    {
         const strippedFinalPath = strippedFilePath.replace(strippablePath, "");
         let temp = result;
         const propertiesToVisit = strippedFinalPath.split("/");
@@ -177,7 +176,9 @@ export class ImporterUtil
             else
             {
                 if (!temp[property])
+                {
                     temp[property] = {};
+                }
                 temp = temp[property];
             }
         }
@@ -186,9 +187,6 @@ export class ImporterUtil
 
 class VisitNode
 {
-    constructor(
-        public filePath: string,
-        public fileName: string
-    ){}
-
+    constructor(public filePath: string, public fileName: string)
+    {}
 }

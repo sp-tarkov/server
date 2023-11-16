@@ -58,16 +58,16 @@ describe("test text", () =>
     it("getTimeMailFormat()", () =>
     {
         const currentTime = new Date();
-        const currentTimeMinutes = (currentTime.getMinutes()).toString().padStart(2,"0");
-        const currentTimeHours = (currentTime.getHours()).toString().padStart(2,"0");
+        const currentTimeMinutes = (currentTime.getMinutes()).toString().padStart(2, "0");
+        const currentTimeHours = (currentTime.getHours()).toString().padStart(2, "0");
         expect(timeUtil.getTimeMailFormat()).toBe(`${currentTimeHours}:${currentTimeMinutes}`);
     });
 
     it("getDateMailFormat()", () =>
     {
         const currentTime = new Date();
-        const currentDay = (currentTime.getDate()).toString().padStart(2,"0");
-        const currentMonth = (currentTime.getMonth() + 1).toString().padStart(2,"0");
+        const currentDay = (currentTime.getDate()).toString().padStart(2, "0");
+        const currentMonth = (currentTime.getMonth() + 1).toString().padStart(2, "0");
         const currentYear = currentTime.getFullYear();
         expect(timeUtil.getDateMailFormat()).toBe(`${currentDay}.${currentMonth}.${currentYear}`);
     });

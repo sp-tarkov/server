@@ -35,7 +35,7 @@ export class TimeUtil
 
     /**
      * Get timestamp in seconds
-     * @returns 
+     * @returns
      */
     public getTimestamp(): number
     {
@@ -43,7 +43,7 @@ export class TimeUtil
     }
 
     /**
-     * mail in eft requires time be in a specific format 
+     * mail in eft requires time be in a specific format
      * @returns current time in format: 00:00 (hh:mm)
      */
     public getTimeMailFormat(): string
@@ -55,7 +55,7 @@ export class TimeUtil
     }
 
     /**
-     * Mail in eft requires date be in a specific format 
+     * Mail in eft requires date be in a specific format
      * @returns current date in format: 00.00.0000 (dd.mm.yyyy)
      */
     public getDateMailFormat(): string

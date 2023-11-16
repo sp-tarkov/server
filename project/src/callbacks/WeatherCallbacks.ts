@@ -11,9 +11,9 @@ export class WeatherCallbacks
 {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("WeatherController") protected weatherController: WeatherController
+        @inject("WeatherController") protected weatherController: WeatherController,
     )
-    { }
+    {}
 
     /**
      * Handle client/weather

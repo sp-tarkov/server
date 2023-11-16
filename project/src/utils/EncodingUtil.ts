@@ -3,7 +3,6 @@ import { injectable } from "tsyringe";
 @injectable()
 export class EncodingUtil
 {
-    
     public encode(value: string, encode: EncodeType): string
     {
         return Buffer.from(value).toString(encode);
@@ -33,14 +32,13 @@ export class EncodingUtil
     {
         return this.encode(value, EncodeType.HEX);
     }
-
 }
 
 export enum EncodeType
-    {
+{
     BASE64 = "base64",
     HEX = "hex",
     ASCII = "ascii",
     BINARY = "binary",
-    UTF8 = "utf8"
+    UTF8 = "utf8",
 }

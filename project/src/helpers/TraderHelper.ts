@@ -42,14 +42,14 @@ export class TraderHelper
         @inject("FenceService") protected fenceService: FenceService,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
     /**
-     * Get a trader base object, update profile to reflect players current standing in profile 
+     * Get a trader base object, update profile to reflect players current standing in profile
      * when trader not found in profile
      * @param traderID Traders Id to get
      * @param sessionID Players id
@@ -62,7 +62,7 @@ export class TraderHelper
         {
             this.logger.error(`No profile with sessionId: ${sessionID}`);
         }
-        
+
         // Profile has traderInfo dict (profile beyond creation stage) but no requested trader in profile
         if (pmcData.TradersInfo && !(traderID in pmcData.TradersInfo))
         {
@@ -70,7 +70,7 @@ export class TraderHelper
             this.resetTrader(sessionID, traderID);
             this.lvlUp(traderID, pmcData);
         }
-        
+
         const trader = this.databaseServer.getTables().traders?.[traderID]?.base;
         if (!trader)
         {
@@ -109,7 +109,7 @@ export class TraderHelper
         }
 
         // Find specific assort in traders data
-        const purchasedAssort = traderAssorts.items.find(x => x._id === assortId);
+        const purchasedAssort = traderAssorts.items.find((x) => x._id === assortId);
         if (!purchasedAssort)
         {
             this.logger.debug(`No assort ${assortId} on trader: ${traderId} found`);
@@ -130,15 +130,17 @@ export class TraderHelper
     {
         const account = this.saveServer.getProfile(sessionID);
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
-        const rawProfileTemplate: ProfileTraderTemplate = this.databaseServer.getTables().templates.profiles[account.info.edition][pmcData.Info.Side.toLowerCase()].trader;
+        const rawProfileTemplate: ProfileTraderTemplate =
+            this.databaseServer.getTables().templates.profiles[account.info.edition][pmcData.Info.Side.toLowerCase()]
+                .trader;
 
         pmcData.TradersInfo[traderID] = {
             disabled: false,
             loyaltyLevel: rawProfileTemplate.initialLoyaltyLevel,
             salesSum: rawProfileTemplate.initialSalesSum,
-            standing: this.getStartingStanding(traderID, rawProfileTemplate), 
+            standing: this.getStartingStanding(traderID, rawProfileTemplate),
             nextResupply: this.databaseServer.getTables().traders[traderID].base.nextResupply,
-            unlocked: this.databaseServer.getTables().traders[traderID].base.unlockedByDefault
+            unlocked: this.databaseServer.getTables().traders[traderID].base.unlockedByDefault,
         };
 
         if (traderID === Traders.JAEGER)
@@ -197,9 +199,7 @@ export class TraderHelper
     {
         const newStanding = currentStanding + standingToAdd;
 
-        return newStanding < 0
-            ? 0
-            : newStanding;
+        return newStanding < 0 ? 0 : newStanding;
     }
 
     /**
@@ -224,10 +224,11 @@ export class TraderHelper
         {
             const loyalty = loyaltyLevels[level];
 
-            if ((loyalty.minLevel <= pmcData.Info.Level
-                && loyalty.minSalesSum <= pmcData.TradersInfo[traderID].salesSum
-                && loyalty.minStanding <= pmcData.TradersInfo[traderID].standing)
-                && targetLevel < 4)
+            if (
+                (loyalty.minLevel <= pmcData.Info.Level
+                    && loyalty.minSalesSum <= pmcData.TradersInfo[traderID].salesSum
+                    && loyalty.minStanding <= pmcData.TradersInfo[traderID].standing) && targetLevel < 4
+            )
             {
                 // level reached
                 targetLevel++;
@@ -257,15 +258,17 @@ export class TraderHelper
      */
     public getTraderUpdateSeconds(traderId: string): number
     {
-        const traderDetails = this.traderConfig.updateTime.find(x => x.traderId === traderId);
+        const traderDetails = this.traderConfig.updateTime.find((x) => x.traderId === traderId);
         if (!traderDetails)
         {
-            this.logger.warning(this.localisationService.getText("trader-missing_trader_details_using_default_refresh_time", {traderId: traderId, updateTime: this.traderConfig.updateTimeDefault}));
-            this.traderConfig.updateTime.push(  // create temporary entry to prevent logger spam
-                {
+            this.logger.warning(
+                this.localisationService.getText("trader-missing_trader_details_using_default_refresh_time", {
                     traderId: traderId,
-                    seconds: this.traderConfig.updateTimeDefault
-                }
+                    updateTime: this.traderConfig.updateTimeDefault,
+                }),
+            );
+            this.traderConfig.updateTime.push( // create temporary entry to prevent logger spam
+                { traderId: traderId, seconds: this.traderConfig.updateTimeDefault },
             );
         }
         else
@@ -298,7 +301,10 @@ export class TraderHelper
      * @param newPurchaseDetails New item assort id + count
      */
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    public addTraderPurchasesToPlayerProfile(sessionID: string, newPurchaseDetails: { items: { item_id: string; count: number; }[]; tid: string; }): void
+    public addTraderPurchasesToPlayerProfile(
+        sessionID: string,
+        newPurchaseDetails: { items: { item_id: string; count: number; }[]; tid: string; },
+    ): void
     {
         const profile = this.profileHelper.getFullProfile(sessionID);
         const traderId = newPurchaseDetails.tid;
@@ -320,10 +326,9 @@ export class TraderHelper
             const currentTime = this.timeUtil.getTimestamp();
             if (!profile.traderPurchases[traderId][purchasedItem.item_id])
             {
-                profile.traderPurchases[traderId][purchasedItem.item_id] =
-                {
+                profile.traderPurchases[traderId][purchasedItem.item_id] = {
                     count: purchasedItem.count,
-                    purchaseTimestamp: currentTime
+                    purchaseTimestamp: currentTime,
                 };
 
                 continue;
@@ -369,7 +374,7 @@ export class TraderHelper
             }
 
             // Get all item assorts that have parentid of hideout (base item and not a mod of other item)
-            for (const item of traderAssorts.items.filter(x => x.parentId === "hideout"))
+            for (const item of traderAssorts.items.filter((x) => x.parentId === "hideout"))
             {
                 // Get barter scheme (contains cost of item)
                 const barterScheme = traderAssorts.barter_scheme[item._id][0][0];
@@ -409,7 +414,6 @@ export class TraderHelper
             return this.highestTraderBuyPriceItems[tpl];
         }
 
-        
         // Find highest trader price for item
         for (const traderName in Traders)
         {
@@ -423,7 +427,9 @@ export class TraderHelper
                 const traderBuyBackPricePercent = relevantLoyaltyData.buy_price_coef;
 
                 const itemHandbookPrice = this.handbookHelper.getTemplatePrice(tpl);
-                const priceTraderBuysItemAt = Math.round(this.randomUtil.getPercentOfValue(traderBuyBackPricePercent, itemHandbookPrice));
+                const priceTraderBuysItemAt = Math.round(
+                    this.randomUtil.getPercentOfValue(traderBuyBackPricePercent, itemHandbookPrice),
+                );
 
                 // Set new item to 1 rouble as default
                 if (!this.highestTraderBuyPriceItems[tpl])
@@ -449,7 +455,7 @@ export class TraderHelper
      */
     public getTraderById(traderId: string): Traders
     {
-        const keys = Object.keys(Traders).filter(x => Traders[x] === traderId);
+        const keys = Object.keys(Traders).filter((x) => Traders[x] === traderId);
 
         if (keys.length === 0)
         {
@@ -462,16 +468,16 @@ export class TraderHelper
     }
 
     /**
-     * Validates that the provided traderEnumValue exists in the Traders enum. If the value is valid, it returns the 
-     * same enum value, effectively serving as a trader ID; otherwise, it logs an error and returns an empty string. 
+     * Validates that the provided traderEnumValue exists in the Traders enum. If the value is valid, it returns the
+     * same enum value, effectively serving as a trader ID; otherwise, it logs an error and returns an empty string.
      * This method provides a runtime check to prevent undefined behavior when using the enum as a dictionary key.
-     * 
+     *
      * For example, instead of this:
      * `const traderId = Traders[Traders.PRAPOR];`
-     * 
+     *
      * You can use safely use this:
      * `const traderId = this.traderHelper.getValidTraderIdByEnumValue(Traders.PRAPOR);`
-     * 
+     *
      * @param traderEnumValue The trader enum value to validate
      * @returns The validated trader enum value as a string, or an empty string if invalid
      */
@@ -483,7 +489,7 @@ export class TraderHelper
 
             return "";
         }
-        
+
         return Traders[traderEnumValue];
     }
 

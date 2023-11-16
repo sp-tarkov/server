@@ -2,13 +2,13 @@ import { IBaseRepairActionDataRequest } from "@spt-aki/models/eft/repair/IBaseRe
 
 export interface IRepairActionDataRequest extends IBaseRepairActionDataRequest
 {
-    Action: "Repair"
-    repairKitsInfo: RepairKitsInfo[]
-    target: string // item to repair
+    Action: "Repair";
+    repairKitsInfo: RepairKitsInfo[];
+    target: string; // item to repair
 }
 
 export interface RepairKitsInfo
 {
-    _id: string // id of repair kit to use
-    count: number // amout of units to reduce kit by
+    _id: string; // id of repair kit to use
+    count: number; // amout of units to reduce kit by
 }

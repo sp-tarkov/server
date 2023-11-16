@@ -4,5 +4,9 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 
 export interface IItemEventCallbacks
 {
-    handleEvents(url: string, info: IItemEventRouterRequest, sessionID: string): IGetBodyResponseData<IItemEventRouterResponse>;
+    handleEvents(
+        url: string,
+        info: IItemEventRouterRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<IItemEventRouterResponse>;
 }

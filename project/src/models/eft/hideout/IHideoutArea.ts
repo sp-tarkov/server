@@ -1,91 +1,91 @@
-export interface IHideoutArea 
+export interface IHideoutArea
 {
-    _id: string
-    type: number
-    enabled: boolean
-    needsFuel: boolean
-    requirements: IAreaRequirement[]
-    takeFromSlotLocked: boolean
-    craftGivesExp: boolean
-    displayLevel: boolean
-    enableAreaRequirements: boolean
-    parentArea?: string
-    stages: Record<string, Stage>
+    _id: string;
+    type: number;
+    enabled: boolean;
+    needsFuel: boolean;
+    requirements: IAreaRequirement[];
+    takeFromSlotLocked: boolean;
+    craftGivesExp: boolean;
+    displayLevel: boolean;
+    enableAreaRequirements: boolean;
+    parentArea?: string;
+    stages: Record<string, Stage>;
 }
 
 export interface IAreaRequirement
 {
-    areaType: number
-    requiredlevel: number
-    type: string
+    areaType: number;
+    requiredlevel: number;
+    type: string;
 }
 
 export interface Stage
 {
-    autoUpgrade: boolean
-    bonuses: StageBonus[]
-    constructionTime: number
+    autoUpgrade: boolean;
+    bonuses: StageBonus[];
+    constructionTime: number;
     /** Containers inventory tpl */
-    container?: string
-    description: string
-    displayInterface: boolean
-    improvements: IStageImprovement[]
-    requirements: IStageRequirement[]
-    slots: number
+    container?: string;
+    description: string;
+    displayInterface: boolean;
+    improvements: IStageImprovement[];
+    requirements: IStageRequirement[];
+    slots: number;
 }
 
 export interface IStageImprovement
 {
-    id: string
-    bonuses: IStageImprovementBonus[]
-    improvementTime: number
-    requirements: IStageImprovementRequirement[]
+    id: string;
+    bonuses: IStageImprovementBonus[];
+    improvementTime: number;
+    requirements: IStageImprovementRequirement[];
 }
 
 export interface IStageImprovementBonus
 {
-    passive: boolean,
-    production: boolean,
-    type: string
-    value: number,
-    visible: boolean
+    passive: boolean;
+    production: boolean;
+    type: string;
+    value: number;
+    visible: boolean;
 }
 
 export interface IStageImprovementRequirement
 {
-    count: number
-    isEncoded: boolean
-    isFunctional: boolean
-    templateId: string
-    type: string
+    count: number;
+    isEncoded: boolean;
+    isFunctional: boolean;
+    templateId: string;
+    type: string;
 }
 
-export interface IStageRequirement 
+export interface IStageRequirement
 {
-    areaType?: number
-    requiredLevel?: number
-    type: string
-    templateId?: string
-    count?: number
-    isEncoded: false
-    isFunctional?: boolean
-    traderId?: string
-    loyaltyLevel?: number
-    skillName?: string
-    skillLevel?: number
+    areaType?: number;
+    requiredLevel?: number;
+    type: string;
+    templateId?: string;
+    count?: number;
+    isEncoded: false;
+    isFunctional?: boolean;
+    traderId?: string;
+    loyaltyLevel?: number;
+    skillName?: string;
+    skillLevel?: number;
 }
 
-export interface StageBonus 
+export interface StageBonus
 {
-    value: number
-    passive: boolean
-    production: boolean
-    visible: boolean
-    skillType?: string
-    type: string
-    filter?: string[]
-    icon?: string
+    value: number;
+    passive: boolean;
+    production: boolean;
+    visible: boolean;
+    skillType?: string;
+    type: string;
+    filter?: string[];
+    icon?: string;
     /** CHANGES PER DUMP */
-    id?: string
-    templateId?: string
+    id?: string;
+    templateId?: string;
 }

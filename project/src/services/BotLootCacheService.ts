@@ -24,7 +24,7 @@ export class BotLootCacheService
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PMCLootGenerator") protected pmcLootGenerator: PMCLootGenerator,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService
+        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
     )
     {
         this.clearCache();
@@ -46,7 +46,12 @@ export class BotLootCacheService
      * @param botJsonTemplate Base json db file for the bot having its loot generated
      * @returns ITemplateItem array
      */
-    public getLootFromCache(botRole: string, isPmc: boolean, lootType: LootCacheType, botJsonTemplate: IBotType): ITemplateItem[]
+    public getLootFromCache(
+        botRole: string,
+        isPmc: boolean,
+        lootType: LootCacheType,
+        botJsonTemplate: IBotType,
+    ): ITemplateItem[]
     {
         if (!this.botRoleExistsInCache(botRole))
         {
@@ -75,7 +80,13 @@ export class BotLootCacheService
             case LootCacheType.STIM_ITEMS:
                 return this.lootCache[botRole].stimItems;
             default:
-                this.logger.error(this.localisationService.getText("bot-loot_type_not_found", {lootType: lootType, botRole: botRole, isPmc: isPmc}));
+                this.logger.error(
+                    this.localisationService.getText("bot-loot_type_not_found", {
+                        lootType: lootType,
+                        botRole: botRole,
+                        isPmc: isPmc,
+                    }),
+                );
                 break;
         }
     }
@@ -138,7 +149,7 @@ export class BotLootCacheService
                     itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(backpackLootTemplates, itemsToAdd);
             }
-            
+
             // Add items to combined pool if any exist
             if (Object.keys(itemsToAdd).length > 0)
             {
@@ -155,60 +166,61 @@ export class BotLootCacheService
 
         // use whitelist if array has values, otherwise process above sorted pools
         const specialLootItems = (botJsonTemplate.generation.items.specialItems.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.specialItems.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : specialLootTemplates.filter(template =>
-                !(this.isBulletOrGrenade(template._props)
-                || this.isMagazine(template._props)));
+            ? botJsonTemplate.generation.items.specialItems.whitelist.map((x) => this.itemHelper.getItem(x)[1])
+            : specialLootTemplates.filter((template) =>
+                !(this.isBulletOrGrenade(template._props) || this.isMagazine(template._props))
+            );
 
         const healingItems = (botJsonTemplate.generation.items.healing.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.healing.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
+            ? botJsonTemplate.generation.items.healing.whitelist.map((x) => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter((template) =>
                 this.isMedicalItem(template._props)
                 && template._parent !== BaseClasses.STIMULATOR
-                && template._parent !== BaseClasses.DRUGS);
+                && template._parent !== BaseClasses.DRUGS
+            );
 
         const drugItems = (botJsonTemplate.generation.items.drugs.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.drugs.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isMedicalItem(template._props)
-                && template._parent === BaseClasses.DRUGS);
+            ? botJsonTemplate.generation.items.drugs.whitelist.map((x) => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter((template) =>
+                this.isMedicalItem(template._props) && template._parent === BaseClasses.DRUGS
+            );
 
         const stimItems = (botJsonTemplate.generation.items.stims.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.stims.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isMedicalItem(template._props)
-                && template._parent === BaseClasses.STIMULATOR);
+            ? botJsonTemplate.generation.items.stims.whitelist.map((x) => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter((template) =>
+                this.isMedicalItem(template._props) && template._parent === BaseClasses.STIMULATOR
+            );
 
         const grenadeItems = (botJsonTemplate.generation.items.grenades.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.grenades.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isGrenade(template._props));
+            ? botJsonTemplate.generation.items.grenades.whitelist.map((x) => this.itemHelper.getItem(x)[1])
+            : combinedPoolTemplates.filter((template) => this.isGrenade(template._props));
 
         // Get loot items (excluding magazines, bullets, grenades and healing items)
-        const backpackLootItems = backpackLootTemplates.filter(template =>
+        const backpackLootItems = backpackLootTemplates.filter((template) =>
             // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
-            !this.isBulletOrGrenade(template._props)
-            && !this.isMagazine(template._props)
-            //&& !this.isMedicalItem(template._props) // Disabled for now as followSanitar has a lot of med items as loot
-            && !this.isGrenade(template._props));
+            !this.isBulletOrGrenade(template._props) && !this.isMagazine(template._props) // && !this.isMedicalItem(template._props) // Disabled for now as followSanitar has a lot of med items as loot
+            && !this.isGrenade(template._props)
+        );
 
         // Get pocket loot
-        const pocketLootItems = pocketLootTemplates.filter(template =>
+        const pocketLootItems = pocketLootTemplates.filter((template) =>
             // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
             !this.isBulletOrGrenade(template._props)
             && !this.isMagazine(template._props)
             && !this.isMedicalItem(template._props)
             && !this.isGrenade(template._props)
             && ("Height" in template._props)
-            && ("Width" in template._props));
+            && ("Width" in template._props)
+        );
 
         // Get vest loot items
-        const vestLootItems = vestLootTemplates.filter(template =>
+        const vestLootItems = vestLootTemplates.filter((template) =>
             // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
             !this.isBulletOrGrenade(template._props)
             && !this.isMagazine(template._props)
             && !this.isMedicalItem(template._props)
-            && !this.isGrenade(template._props));
+            && !this.isGrenade(template._props)
+        );
 
         this.lootCache[botRole].healingItems = healingItems;
         this.lootCache[botRole].drugItems = drugItems;
@@ -227,7 +239,12 @@ export class BotLootCacheService
      */
     protected sortPoolByRagfairPrice(poolToSort: ITemplateItem[]): void
     {
-        poolToSort.sort((a, b) => this.compareByValue(this.ragfairPriceService.getFleaPriceForItem(a._id), this.ragfairPriceService.getFleaPriceForItem(b._id)));
+        poolToSort.sort((a, b) =>
+            this.compareByValue(
+                this.ragfairPriceService.getFleaPriceForItem(a._id),
+                this.ragfairPriceService.getFleaPriceForItem(b._id),
+            )
+        );
     }
 
     /**
@@ -246,15 +263,15 @@ export class BotLootCacheService
         const mergedItemPools = [...combinedItemPool, ...itemsToAdd];
 
         // Save only unique array values
-        const uniqueResults = [... new Set([].concat(...mergedItemPools))];
+        const uniqueResults = [...new Set([].concat(...mergedItemPools))];
         combinedItemPool.splice(0, combinedItemPool.length);
         combinedItemPool.push(...uniqueResults);
     }
 
     /**
      * Ammo/grenades have this property
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
     protected isBulletOrGrenade(props: Props): boolean
     {
@@ -263,8 +280,8 @@ export class BotLootCacheService
 
     /**
      * Internal and external magazine have this property
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
     protected isMagazine(props: Props): boolean
     {
@@ -273,8 +290,8 @@ export class BotLootCacheService
 
     /**
      * Medical use items (e.g. morphine/lip balm/grizzly)
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
     protected isMedicalItem(props: Props): boolean
     {
@@ -283,8 +300,8 @@ export class BotLootCacheService
 
     /**
      * Grenades have this property (e.g. smoke/frag/flash grenades)
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
     protected isGrenade(props: Props): boolean
     {
@@ -317,7 +334,7 @@ export class BotLootCacheService
             grenadeItems: [],
             drugItems: [],
             healingItems: [],
-            stimItems: []
+            stimItems: [],
         };
     }
 
@@ -326,9 +343,9 @@ export class BotLootCacheService
      * -1 when a < b
      * 0 when a === b
      * 1 when a > b
-     * @param itemAPrice 
-     * @param itemBPrice 
-     * @returns 
+     * @param itemAPrice
+     * @param itemBPrice
+     * @returns
      */
     protected compareByValue(itemAPrice: number, itemBPrice: number): number
     {
@@ -355,5 +372,4 @@ export class BotLootCacheService
 
         return 0;
     }
-    
 }

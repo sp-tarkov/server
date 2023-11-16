@@ -1,6 +1,5 @@
-
-export enum QuestTypeEnum 
-    {
+export enum QuestTypeEnum
+{
     PICKUP = "PickUp",
     ELIMINATION = "Elimination",
     DISCOVER = "Discover",
@@ -13,5 +12,5 @@ export enum QuestTypeEnum
     MERCHANT = "Merchant",
     SKILL = "Skill",
     MULTI = "Multi",
-    WEAPON_ASSEMBLY = "WeaponAssembly"
+    WEAPON_ASSEMBLY = "WeaponAssembly",
 }

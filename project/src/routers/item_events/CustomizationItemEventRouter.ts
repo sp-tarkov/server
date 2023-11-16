@@ -6,24 +6,26 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 
 @injectable()
-export class CustomizationItemEventRouter extends ItemEventRouterDefinition 
+export class CustomizationItemEventRouter extends ItemEventRouterDefinition
 {
     constructor(
-        @inject("CustomizationCallbacks") protected customizationCallbacks: CustomizationCallbacks // TODO: delay required
-    ) 
+        @inject("CustomizationCallbacks") protected customizationCallbacks: CustomizationCallbacks, // TODO: delay required
+    )
     {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
+    public override getHandledRoutes(): HandledRoute[]
     {
-        return [
-            new HandledRoute("CustomizationWear", false),
-            new HandledRoute("CustomizationBuy", false)
-        ];
+        return [new HandledRoute("CustomizationWear", false), new HandledRoute("CustomizationBuy", false)];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         switch (url)
         {

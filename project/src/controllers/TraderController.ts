@@ -23,12 +23,13 @@ export class TraderController
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("TraderAssortService") protected traderAssortService: TraderAssortService,
-        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService: TraderPurchasePersisterService,
+        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService:
+            TraderPurchasePersisterService,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
     )
-    { }
+    {}
 
     /**
      * Runs when onLoad event is fired
@@ -93,7 +94,7 @@ export class TraderController
             }
 
             const trader = this.databaseServer.getTables().traders[traderId];
-            
+
             // trader needs to be refreshed
             if (this.traderAssortHelper.traderAssortsHaveExpired(traderId))
             {
@@ -132,7 +133,7 @@ export class TraderController
             }
         }
 
-        return traders.sort((a, b) => this.sortByTraderId(a,b));
+        return traders.sort((a, b) => this.sortByTraderId(a, b));
     }
 
     /**

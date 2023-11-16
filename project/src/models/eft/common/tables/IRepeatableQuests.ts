@@ -1,364 +1,360 @@
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 
-export interface IReward 
+export interface IReward
 {
-    index: number
-    type: string
-    value: number
-    target?: string
-    items?: Item[]
+    index: number;
+    type: string;
+    value: number;
+    target?: string;
+    items?: Item[];
 }
 
-export interface IRepeatableQuestDatabase 
+export interface IRepeatableQuestDatabase
 {
-    templates: ITemplates
-    rewards: IRewardOptions
-    data: IOptions
-    samples: ISampleQuests[]
-}
-  
-export interface ITemplates 
-{
-    Elimination: IRepeatableQuest
-    Completion: IRepeatableQuest
-    Exploration: IRepeatableQuest
+    templates: ITemplates;
+    rewards: IRewardOptions;
+    data: IOptions;
+    samples: ISampleQuests[];
 }
 
-export interface IPmcDataRepeatableQuest 
+export interface ITemplates
 {
-    id?: string
-    name: string
-    activeQuests: IRepeatableQuest[]
-    inactiveQuests: IRepeatableQuest[]
-    endTime: number
-    changeRequirement: TChangeRequirementRecord // what it costs to reset <QuestId, ChangeRequirement> redundant to change requirements within the IRepeatableQuest
+    Elimination: IRepeatableQuest;
+    Completion: IRepeatableQuest;
+    Exploration: IRepeatableQuest;
 }
 
-export type TChangeRequirementRecord = Record<string, IChangeRequirement>
+export interface IPmcDataRepeatableQuest
+{
+    id?: string;
+    name: string;
+    activeQuests: IRepeatableQuest[];
+    inactiveQuests: IRepeatableQuest[];
+    endTime: number;
+    changeRequirement: TChangeRequirementRecord; // what it costs to reset <QuestId, ChangeRequirement> redundant to change requirements within the IRepeatableQuest
+}
+
+export type TChangeRequirementRecord = Record<string, IChangeRequirement>;
 
 export interface IChangeRequirement
 {
-    changeCost: IChangeCost[]
-    changeStandingCost: number 
-}
-  
-export interface IChangeCost
-{
-    templateId: string // what item it will take to reset daily
-    count: number // amount of item needed to reset
+    changeCost: IChangeCost[];
+    changeStandingCost: number;
 }
 
-export interface IRepeatableQuest 
+export interface IChangeCost
 {
-    _id: string
-    traderId: string
-    location: string
-    image: string
-    type: string
-    isKey: boolean
-    restartable: boolean
-    instantComplete: boolean
-    secretQuest: boolean
-    canShowNotificationsInGame: boolean
-    rewards: IRewards
-    conditions: IConditions
-    side: string
-    questStatus: any
-    name: string
-    note: string
-    description: string
-    successMessageText: string
-    failMessageText: string
-    startedMessageText: string
-    changeQuestMessageText: string
-    acceptPlayerMessage: string
-    declinePlayerMessage: string
-    completePlayerMessage: string
-    templateId: string
-    changeCost: IChangeCost[]
-    changeStandingCost: number
+    templateId: string; // what item it will take to reset daily
+    count: number; // amount of item needed to reset
+}
+
+export interface IRepeatableQuest
+{
+    _id: string;
+    traderId: string;
+    location: string;
+    image: string;
+    type: string;
+    isKey: boolean;
+    restartable: boolean;
+    instantComplete: boolean;
+    secretQuest: boolean;
+    canShowNotificationsInGame: boolean;
+    rewards: IRewards;
+    conditions: IConditions;
+    side: string;
+    questStatus: any;
+    name: string;
+    note: string;
+    description: string;
+    successMessageText: string;
+    failMessageText: string;
+    startedMessageText: string;
+    changeQuestMessageText: string;
+    acceptPlayerMessage: string;
+    declinePlayerMessage: string;
+    completePlayerMessage: string;
+    templateId: string;
+    changeCost: IChangeCost[];
+    changeStandingCost: number;
     sptRepatableGroupName?: string;
 }
 
-export interface IRewards 
+export interface IRewards
 {
-    Started: IReward[]
-    Success: IReward[]
-    Fail: IReward[]
+    Started: IReward[];
+    Success: IReward[];
+    Fail: IReward[];
 }
 
-export interface IConditions 
+export interface IConditions
 {
-    AvailableForStart: any[]
-    AvailableForFinish: IAvailableFor[]
-    Fail: any[]
+    AvailableForStart: any[];
+    AvailableForFinish: IAvailableFor[];
+    Fail: any[];
 }
 
-export interface IAvailableFor 
+export interface IAvailableFor
 {
-    _props: IAvailableForProps
-    _parent: string
-    dynamicLocale: boolean
+    _props: IAvailableForProps;
+    _parent: string;
+    dynamicLocale: boolean;
 }
 
-export interface IAvailableForProps 
+export interface IAvailableForProps
 {
-    id: string
-    parentId: string
-    dynamicLocale: boolean
-    index: number
-    visibilityConditions: IVisibilityCondition[]
-    value: number
+    id: string;
+    parentId: string;
+    dynamicLocale: boolean;
+    index: number;
+    visibilityConditions: IVisibilityCondition[];
+    value: number;
 }
 
-export interface IVisibilityCondition 
+export interface IVisibilityCondition
 {
-    id: string
-    oneSessionOnly: boolean
-    value: number
-    index: number
-    dynamicLocale: boolean
+    id: string;
+    oneSessionOnly: boolean;
+    value: number;
+    index: number;
+    dynamicLocale: boolean;
 }
 
-export interface IAvailableForPropsCounter extends IAvailableForProps 
+export interface IAvailableForPropsCounter extends IAvailableForProps
 {
-    type: string
-    oneSessionOnly: boolean
-    doNotResetIfCounterCompleted: boolean
-    counter?: ICounter
+    type: string;
+    oneSessionOnly: boolean;
+    doNotResetIfCounterCompleted: boolean;
+    counter?: ICounter;
 }
 
-export interface ICounter 
+export interface ICounter
 {
-    id: string,
-    conditions: ICondition[]
+    id: string;
+    conditions: ICondition[];
 }
 
-export interface ICondition 
+export interface ICondition
 {
-    _props: IConditionProps,
-    _parent: string
+    _props: IConditionProps;
+    _parent: string;
 }
 
-export interface IConditionProps 
+export interface IConditionProps
 {
-    id: string,
-    dynamicLocale: boolean,
+    id: string;
+    dynamicLocale: boolean;
 }
-
 
 // Elimination
-export interface IElimination extends IRepeatableQuest 
+export interface IElimination extends IRepeatableQuest
 {
-    conditions: IEliminationConditions
+    conditions: IEliminationConditions;
 }
 
-export interface IEliminationConditions extends IConditions 
+export interface IEliminationConditions extends IConditions
 {
-    AvailableForFinish: IEliminationAvailableFor[]
+    AvailableForFinish: IEliminationAvailableFor[];
 }
 
-export interface IEliminationAvailableFor extends IAvailableFor 
+export interface IEliminationAvailableFor extends IAvailableFor
 {
-    _props: IEliminationAvailableForProps
+    _props: IEliminationAvailableForProps;
 }
 
-
-export interface IEliminationAvailableForProps extends IAvailableForPropsCounter 
+export interface IEliminationAvailableForProps extends IAvailableForPropsCounter
 {
-    counter: IEliminationCounter
+    counter: IEliminationCounter;
 }
 
-export interface IEliminationCounter extends ICounter 
+export interface IEliminationCounter extends ICounter
 {
-    conditions: IEliminationCondition[]
+    conditions: IEliminationCondition[];
 }
 
-export interface IEliminationCondition extends ICondition 
+export interface IEliminationCondition extends ICondition
 {
-    _props: ILocationConditionProps | IKillConditionProps
+    _props: ILocationConditionProps | IKillConditionProps;
 }
-  
+
 // Exploration
-export interface IExploration extends IRepeatableQuest 
+export interface IExploration extends IRepeatableQuest
 {
-    conditions: IExplorationConditions
+    conditions: IExplorationConditions;
 }
 
-export interface IExplorationConditions extends IConditions 
+export interface IExplorationConditions extends IConditions
 {
-    AvailableForFinish: IExplorationAvailableFor[]
+    AvailableForFinish: IExplorationAvailableFor[];
 }
 
-export interface IExplorationAvailableFor extends IAvailableFor 
+export interface IExplorationAvailableFor extends IAvailableFor
 {
-    _props: IExplorationAvailableForProps
+    _props: IExplorationAvailableForProps;
 }
 
-export interface IExplorationAvailableForProps extends IAvailableForPropsCounter 
+export interface IExplorationAvailableForProps extends IAvailableForPropsCounter
 {
-    counter: IExplorationCounter
+    counter: IExplorationCounter;
 }
 
-export interface IExplorationCounter extends ICounter 
+export interface IExplorationCounter extends ICounter
 {
-    conditions: IExplorationCondition[]
+    conditions: IExplorationCondition[];
 }
 
-export interface IExplorationCondition extends ICondition 
+export interface IExplorationCondition extends ICondition
 {
-    _props: ILocationConditionProps | IExitStatusConditionProps | IExitNameConditionProps
+    _props: ILocationConditionProps | IExitStatusConditionProps | IExitNameConditionProps;
 }
 
 // Pickup
-export interface IPickup extends IRepeatableQuest 
+export interface IPickup extends IRepeatableQuest
 {
-    conditions: IPickupConditions
+    conditions: IPickupConditions;
 }
 
-export interface IPickupConditions extends IConditions 
+export interface IPickupConditions extends IConditions
 {
-    AvailableForFinish: IPickupAvailableFor[]
+    AvailableForFinish: IPickupAvailableFor[];
 }
 
-export interface IPickupAvailableFor extends IAvailableFor 
+export interface IPickupAvailableFor extends IAvailableFor
 {
-    _props: IPickupAvailableForProps
+    _props: IPickupAvailableForProps;
 }
 
-export interface IPickupAvailableForProps extends IAvailableForPropsCounter 
+export interface IPickupAvailableForProps extends IAvailableForPropsCounter
 {
-    target: string[]
-    counter?: IPickupCounter
+    target: string[];
+    counter?: IPickupCounter;
 }
 
-export interface IPickupCounter extends ICounter 
+export interface IPickupCounter extends ICounter
 {
-    conditions: IPickupCondition[]
+    conditions: IPickupCondition[];
 }
 
-export interface IPickupCondition extends ICondition 
+export interface IPickupCondition extends ICondition
 {
-    _props: IEquipmentConditionProps | ILocationConditionProps | IExitStatusConditionProps
+    _props: IEquipmentConditionProps | ILocationConditionProps | IExitStatusConditionProps;
 }
 
 // Completion
-export interface ICompletion extends IRepeatableQuest 
+export interface ICompletion extends IRepeatableQuest
 {
-    conditions: ICompletionConditions
+    conditions: ICompletionConditions;
 }
 
-export interface ICompletionConditions extends IConditions 
+export interface ICompletionConditions extends IConditions
 {
-    AvailableForFinish: ICompletionAvailableFor[]
+    AvailableForFinish: ICompletionAvailableFor[];
 }
 
-export interface ICompletionAvailableFor extends IAvailableFor 
+export interface ICompletionAvailableFor extends IAvailableFor
 {
-    _props: ICompletionAvailableForProps
+    _props: ICompletionAvailableForProps;
 }
-export interface ICompletionAvailableForProps extends IAvailableForProps 
+export interface ICompletionAvailableForProps extends IAvailableForProps
 {
-    target: string[]
-    minDurability: number
-    maxDurability: number
-    dogtagLevel: number
-    onlyFoundInRaid: boolean
+    target: string[];
+    minDurability: number;
+    maxDurability: number;
+    dogtagLevel: number;
+    onlyFoundInRaid: boolean;
 }
- 
 
 // Quest Conditions
 
-export interface ILocationConditionProps extends IConditionProps 
+export interface ILocationConditionProps extends IConditionProps
 {
-    target: string[],
-    weapon?: string[]
-    weaponCategories?: string[]
+    target: string[];
+    weapon?: string[];
+    weaponCategories?: string[];
 }
 
 export interface IEquipmentConditionProps extends IConditionProps
 {
-    equipmentInclusive: [string[]] 
-    IncludeNotEquippedItems: boolean
+    equipmentInclusive: [string[]];
+    IncludeNotEquippedItems: boolean;
 }
 
-export interface IKillConditionProps extends IConditionProps 
+export interface IKillConditionProps extends IConditionProps
 {
-    target: string
-    value: number
-    savageRole?: string[]
-    bodyPart?: string[]
-    distance?: IDistanceCheck
-    weapon?: string[]
-    weaponCategories? : string[]
+    target: string;
+    value: number;
+    savageRole?: string[];
+    bodyPart?: string[];
+    distance?: IDistanceCheck;
+    weapon?: string[];
+    weaponCategories?: string[];
 }
 
-export interface IDistanceCheck 
+export interface IDistanceCheck
 {
-    compareMethod: string
-    value: number
-}
- 
-export interface IExitStatusConditionProps extends IConditionProps 
-{
-    status: string[],
+    compareMethod: string;
+    value: number;
 }
 
-export interface IExitNameConditionProps extends IConditionProps 
+export interface IExitStatusConditionProps extends IConditionProps
 {
-    exitName: string,
+    status: string[];
 }
 
+export interface IExitNameConditionProps extends IConditionProps
+{
+    exitName: string;
+}
 
 // Config Options
-  
-export interface IRewardOptions 
+
+export interface IRewardOptions
 {
-    itemsBlacklist: string[]
+    itemsBlacklist: string[];
 }
-  
-export interface IOptions 
+
+export interface IOptions
 {
-    Completion: ICompletionFilter
+    Completion: ICompletionFilter;
 }
-  
-export interface ICompletionFilter 
+
+export interface ICompletionFilter
 {
-    itemsBlacklist: ItemsBlacklist[]
-    itemsWhitelist: ItemsWhitelist[]
+    itemsBlacklist: ItemsBlacklist[];
+    itemsWhitelist: ItemsWhitelist[];
 }
-  
-export interface ItemsBlacklist 
+
+export interface ItemsBlacklist
 {
-    minPlayerLevel: number
-    itemIds: string[]
+    minPlayerLevel: number;
+    itemIds: string[];
 }
-  
-export interface ItemsWhitelist 
+
+export interface ItemsWhitelist
 {
-    minPlayerLevel: number
-    itemIds: string[]
+    minPlayerLevel: number;
+    itemIds: string[];
 }
-  
-export interface ISampleQuests 
+
+export interface ISampleQuests
 {
-    _id: string
-    traderId: string
-    location: string
-    image: string
-    type: string
-    isKey: boolean
-    restartable: boolean
-    instantComplete: boolean
-    secretQuest: boolean
-    canShowNotificationsInGame: boolean
-    rewards: IRewards
-    conditions: IConditions
-    name: string
-    note: string
-    description: string
-    successMessageText: string
-    failMessageText: string
-    startedMessageText: string
-    templateId: string
+    _id: string;
+    traderId: string;
+    location: string;
+    image: string;
+    type: string;
+    isKey: boolean;
+    restartable: boolean;
+    instantComplete: boolean;
+    secretQuest: boolean;
+    canShowNotificationsInGame: boolean;
+    rewards: IRewards;
+    conditions: IConditions;
+    name: string;
+    note: string;
+    description: string;
+    successMessageText: string;
+    failMessageText: string;
+    startedMessageText: string;
+    templateId: string;
 }

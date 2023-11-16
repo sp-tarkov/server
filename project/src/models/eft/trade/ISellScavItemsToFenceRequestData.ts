@@ -2,7 +2,7 @@ import { OwnerInfo } from "@spt-aki/models/eft/common/request/IBaseInteractionRe
 
 export interface ISellScavItemsToFenceRequestData
 {
-    Action: "SellAllFromSavage",
-    fromOwner: OwnerInfo
-    toOwner: OwnerInfo
+    Action: "SellAllFromSavage";
+    fromOwner: OwnerInfo;
+    toOwner: OwnerInfo;
 }

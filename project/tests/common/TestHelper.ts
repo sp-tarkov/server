@@ -22,7 +22,7 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { MockHelper } from "./MockHelper";
 import WinstonLogger from "./__mocks__/WinstonLogger";
 
-export class TestHelper 
+export class TestHelper
 {
     logger: ILogger;
     asyncQueue: AsyncQueue;
@@ -45,7 +45,7 @@ export class TestHelper
     itemBaseClassService: ItemBaseClassService;
     botHelper: BotHelper;
 
-    public static async fetchTestHelper() 
+    public static async fetchTestHelper()
     {
         const initTestHelper = new TestHelper();
         const mockHelper = new MockHelper();
@@ -59,15 +59,14 @@ export class TestHelper
             mockHelper.getMockImageRouter().object,
             initTestHelper.encodingUtil,
             initTestHelper.hashUtil,
-            initTestHelper.importerUtil
+            initTestHelper.importerUtil,
         );
         await dbImporter.onLoad();
         return initTestHelper;
     }
 
-    constructor() 
+    constructor()
     {
-
         this.logger = new WinstonLogger();
         this.asyncQueue = new AsyncQueue();
         this.uuidGenerator = new UUidGenerator();
@@ -88,9 +87,32 @@ export class TestHelper
         this.importerUtil = new ImporterUtil(this.vfs, this.jsonUtil);
 
         this.handbookHelper = new HandbookHelper(this.databaseServer);
-        this.itemBaseClassService = new ItemBaseClassService(this.logger, this.localisationService, this.databaseServer);
-        this.itemHelper = new ItemHelper(this.logger, this.hashUtil, this.jsonUtil, this.randomUtil, this.objectId, this.mathUtil, this.databaseServer, this.handbookHelper, this.itemBaseClassService, this.localisationService, this.localeService);
-        this.botHelper = new BotHelper(this.logger, this.jsonUtil, this.databaseServer, this.randomUtil, this.localisationService, this.configServer);
+        this.itemBaseClassService = new ItemBaseClassService(
+            this.logger,
+            this.localisationService,
+            this.databaseServer,
+        );
+        this.itemHelper = new ItemHelper(
+            this.logger,
+            this.hashUtil,
+            this.jsonUtil,
+            this.randomUtil,
+            this.objectId,
+            this.mathUtil,
+            this.databaseServer,
+            this.handbookHelper,
+            this.itemBaseClassService,
+            this.localisationService,
+            this.localeService,
+        );
+        this.botHelper = new BotHelper(
+            this.logger,
+            this.jsonUtil,
+            this.databaseServer,
+            this.randomUtil,
+            this.localisationService,
+            this.configServer,
+        );
     }
 
     public getTestLogger(): ILogger
@@ -102,7 +124,6 @@ export class TestHelper
     {
         return this.uuidGenerator;
     }
-
 
     public getTestVFS(): VFS
     {

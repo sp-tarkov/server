@@ -1,4 +1,4 @@
-export interface IFriendRequestData 
+export interface IFriendRequestData
 {
-    to: string
+    to: string;
 }

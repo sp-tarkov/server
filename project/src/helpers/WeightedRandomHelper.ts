@@ -77,10 +77,7 @@ export class WeightedRandomHelper
         {
             if (cumulativeWeights[itemIndex] >= randomNumber)
             {
-                return {
-                    item: items[itemIndex],
-                    index: itemIndex
-                };
+                return { item: items[itemIndex], index: itemIndex };
             }
         }
     }

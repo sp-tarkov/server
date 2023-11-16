@@ -43,7 +43,7 @@ export class PreAkiModLoader implements IModLoader
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("ModLoadOrder") protected modLoadOrder: ModLoadOrder,
-        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck
+        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,
     )
     {
         this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
@@ -96,10 +96,10 @@ export class PreAkiModLoader implements IModLoader
         for (const modName in modsGroupedByName)
         {
             const modDatas = modsGroupedByName[modName];
-            const modVersions = modDatas.map(x => x.version);
+            const modVersions = modDatas.map((x) => x.version);
             const highestVersion = semver.maxSatisfying(modVersions, "*");
 
-            const chosenVersion = modDatas.find(x => x.name === modName && x.version === highestVersion);
+            const chosenVersion = modDatas.find((x) => x.name === modName && x.version === highestVersion);
             if (!chosenVersion)
             {
                 continue;
@@ -130,28 +130,28 @@ export class PreAkiModLoader implements IModLoader
          * array of mod folder names
          */
         const mods: string[] = this.vfs.getDirs(this.basepath);
-        
+
         this.logger.info(this.localisationService.getText("modloader-loading_mods", mods.length));
 
         // Mod order
-        if (!this.vfs.exists(this.modOrderPath)) 
+        if (!this.vfs.exists(this.modOrderPath))
         {
             this.logger.info(this.localisationService.getText("modloader-mod_order_missing"));
 
             // Write file with empty order array to disk
-            this.vfs.writeFile(this.modOrderPath, this.jsonUtil.serializeAdvanced({order: []}, null, 4));
+            this.vfs.writeFile(this.modOrderPath, this.jsonUtil.serializeAdvanced({ order: [] }, null, 4));
         }
-        else 
+        else
         {
             const modOrder = this.vfs.readFile(this.modOrderPath, { encoding: "utf8" });
-            try 
+            try
             {
-                this.jsonUtil.deserialize<any>(modOrder).order.forEach((mod: string, index: number) => 
+                this.jsonUtil.deserialize<any>(modOrder).order.forEach((mod: string, index: number) =>
                 {
                     this.order[mod] = index;
                 });
             }
-            catch (error) 
+            catch (error)
             {
                 this.logger.error(this.localisationService.getText("modloader-mod_order_error"));
             }
@@ -175,7 +175,10 @@ export class PreAkiModLoader implements IModLoader
             }
 
             // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
-            if (modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)) 
+            if (
+                modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0
+                && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)
+            )
             {
                 this.autoInstallDependencies(`${this.basepath}${modFolderName}`, modToValidate);
             }
@@ -210,7 +213,11 @@ export class PreAkiModLoader implements IModLoader
         validMods.sort((prev, next) => this.sortMods(prev, next, missingFromOrderJSON));
 
         // log the missing mods from order.json
-        Object.keys(missingFromOrderJSON).forEach((missingMod) => (this.logger.debug(this.localisationService.getText("modloader-mod_order_missing_from_json", missingMod))));
+        Object.keys(missingFromOrderJSON).forEach((
+            missingMod,
+        ) => (this.logger.debug(
+            this.localisationService.getText("modloader-mod_order_missing_from_json", missingMod),
+        )));
 
         // add mods
         for (const mod of validMods)
@@ -233,15 +240,15 @@ export class PreAkiModLoader implements IModLoader
     {
         const previndex = this.order[prev];
         const nextindex = this.order[next];
-        
+
         // mod is not on the list, move the mod to last
-        if (previndex === undefined) 
+        if (previndex === undefined)
         {
             missingFromOrderJSON[prev] = true;
 
             return 1;
         }
-        else if (nextindex === undefined) 
+        else if (nextindex === undefined)
         {
             missingFromOrderJSON[next] = true;
 
@@ -280,7 +287,7 @@ export class PreAkiModLoader implements IModLoader
 
     /**
      * Returns an array of valid mods.
-     * 
+     *
      * @param mods mods to validate
      * @returns array of mod folder names
      */
@@ -388,14 +395,19 @@ export class PreAkiModLoader implements IModLoader
             // Perform async load of mod
             if (this.modTypeCheck.isPreAkiLoadAsync(requiredMod.mod))
             {
-                try 
+                try
                 {
                     await (requiredMod.mod as IPreAkiLoadModAsync).preAkiLoadAsync(container);
                     globalThis[mod] = requiredMod;
                 }
-                catch (err) 
+                catch (err)
                 {
-                    this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`));
+                    this.logger.error(
+                        this.localisationService.getText(
+                            "modloader-async_mod_error",
+                            `${err?.message ?? ""}\n${err.stack ?? ""}`,
+                        ),
+                    );
                 }
 
                 continue;
@@ -454,7 +466,7 @@ export class PreAkiModLoader implements IModLoader
             else
             {
                 // rename the mod entry point to .ts if it's set to .js because G_MODS_TRANSPILE_TS is set to false
-                pkg.main = (pkg.main).replace(".js", ".ts");
+                pkg.main = pkg.main.replace(".js", ".ts");
             }
         }
 
@@ -462,15 +474,21 @@ export class PreAkiModLoader implements IModLoader
         pkg.scripts = {};
 
         // Add mod to imported list
-        this.imported[mod] = {...pkg, dependencies: pkg.modDependencies};
-        this.logger.info(this.localisationService.getText("modloader-loaded_mod", {name: pkg.name, version: pkg.version, author: pkg.author}));
+        this.imported[mod] = { ...pkg, dependencies: pkg.modDependencies };
+        this.logger.info(
+            this.localisationService.getText("modloader-loaded_mod", {
+                name: pkg.name,
+                version: pkg.version,
+                author: pkg.author,
+            }),
+        );
     }
 
     /**
      * Checks if a given mod should be loaded or skipped.
-     * 
+     *
      * @param pkg mod package.json data
-     * @returns 
+     * @returns
      */
     protected shouldSkipMod(pkg: IPackageJsonData): boolean
     {
@@ -506,12 +524,17 @@ export class PreAkiModLoader implements IModLoader
         // If this feature flag is set to false, we warn the user he has a mod that requires extra dependencies and might not work, point them in the right direction on how to enable this feature.
         if (!this.akiConfig.features.autoInstallModDependencies)
         {
-            this.logger.warning(this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
-                name: pkg.name,
-                author: pkg.author,
-                configPath: path.join(globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/configs" : "assets/configs", "core.json"),
-                configOption: "autoInstallModDependencies"
-            }));
+            this.logger.warning(
+                this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
+                    name: pkg.name,
+                    author: pkg.author,
+                    configPath: path.join(
+                        globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/configs" : "assets/configs",
+                        "core.json",
+                    ),
+                    configOption: "autoInstallModDependencies",
+                }),
+            );
 
             this.skippedMods.add(`${pkg.author}-${pkg.name}`);
             return;
@@ -521,9 +544,18 @@ export class PreAkiModLoader implements IModLoader
         this.vfs.rename(`${modPath}/package.json`, `${modPath}/package.json.bak`);
         this.vfs.writeFile(`${modPath}/package.json`, "{}");
 
-        this.logger.info(this.localisationService.getText("modloader-installing_external_dependencies", {name: pkg.name, author: pkg.author}));
+        this.logger.info(
+            this.localisationService.getText("modloader-installing_external_dependencies", {
+                name: pkg.name,
+                author: pkg.author,
+            }),
+        );
 
-        const pnpmPath = path.join(process.cwd(), (globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe"), (os.platform() === "win32" ? "pnpm.exe" : "pnpm"));
+        const pnpmPath = path.join(
+            process.cwd(),
+            globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
+            os.platform() === "win32" ? "pnpm.exe" : "pnpm",
+        );
         let command = `${pnpmPath} install `;
         command += dependenciesToInstall.map(([depName, depVersion]) => `${depName}@${depVersion}`).join(" ");
         execSync(command, { cwd: modPath });
@@ -542,18 +574,30 @@ export class PreAkiModLoader implements IModLoader
 
         const modName = `${pkg.author}-${pkg.name}`;
 
-        for (const [modDependency, requiredVersion ] of Object.entries(pkg.modDependencies))
+        for (const [modDependency, requiredVersion] of Object.entries(pkg.modDependencies))
         {
             // Raise dependency version incompatible if the dependency is not found in the mod list
             if (!loadedMods.has(modDependency))
             {
-                this.logger.error(this.localisationService.getText("modloader-missing_dependency", {mod: modName, modDependency: modDependency}));
+                this.logger.error(
+                    this.localisationService.getText("modloader-missing_dependency", {
+                        mod: modName,
+                        modDependency: modDependency,
+                    }),
+                );
                 return false;
             }
 
             if (!semver.satisfies(loadedMods.get(modDependency).version, requiredVersion))
             {
-                this.logger.error(this.localisationService.getText("modloader-outdated_dependency", {mod: modName, modDependency: modDependency, currentVersion: loadedMods.get(modDependency).version, requiredVersion: requiredVersion}));
+                this.logger.error(
+                    this.localisationService.getText("modloader-outdated_dependency", {
+                        mod: modName,
+                        modDependency: modDependency,
+                        currentVersion: loadedMods.get(modDependency).version,
+                        requiredVersion: requiredVersion,
+                    }),
+                );
                 return false;
             }
         }
@@ -574,7 +618,13 @@ export class PreAkiModLoader implements IModLoader
             // Raise dependency version incompatible if any incompatible mod is found
             if (loadedMods.has(incompatibleModName))
             {
-                this.logger.error(this.localisationService.getText("modloader-incompatible_mod_found", {author: mod.author, modName: mod.name, incompatibleModName: incompatibleModName}));
+                this.logger.error(
+                    this.localisationService.getText("modloader-incompatible_mod_found", {
+                        author: mod.author,
+                        modName: mod.name,
+                        incompatibleModName: incompatibleModName,
+                    }),
+                );
                 return false;
             }
         }
@@ -596,7 +646,7 @@ export class PreAkiModLoader implements IModLoader
         const modIsCalledSrc = modName.toLowerCase() === "src";
         const modIsCalledDb = modName.toLowerCase() === "db";
         const hasBepinExFolderStructure = this.vfs.exists(`${modPath}/plugins`);
-        const containsDll = this.vfs.getFiles(`${modPath}`).find(x => x.includes(".dll"));
+        const containsDll = this.vfs.getFiles(`${modPath}`).find((x) => x.includes(".dll"));
 
         if (modIsCalledSrc || modIsCalledDb || modIsCalledUser)
         {
@@ -626,7 +676,12 @@ export class PreAkiModLoader implements IModLoader
         {
             if (!(check in config))
             {
-                this.logger.error(this.localisationService.getText("modloader-missing_package_json_property", {modName: modName, prop: check}));
+                this.logger.error(
+                    this.localisationService.getText("modloader-missing_package_json_property", {
+                        modName: modName,
+                        prop: check,
+                    }),
+                );
                 issue = true;
             }
         }
@@ -639,23 +694,23 @@ export class PreAkiModLoader implements IModLoader
 
         if ("main" in config)
         {
-            if (config.main.split(".").pop() !== "js") // expects js file as entry
-            {
+            if (config.main.split(".").pop() !== "js")
+            { // expects js file as entry
                 this.logger.error(this.localisationService.getText("modloader-main_property_not_js", modName));
                 issue = true;
             }
 
-
             if (!this.vfs.exists(`${modPath}/${config.main}`))
             {
-
                 // If TS file exists with same name, dont perform check as we'll generate JS from TS file
                 const tsFileName = config.main.replace(".js", ".ts");
                 const tsFileExists = this.vfs.exists(`${modPath}/${tsFileName}`);
 
                 if (!tsFileExists)
                 {
-                    this.logger.error(this.localisationService.getText("modloader-main_property_points_to_nothing", modName));
+                    this.logger.error(
+                        this.localisationService.getText("modloader-main_property_points_to_nothing", modName),
+                    );
                     issue = true;
                 }
             }
@@ -663,7 +718,9 @@ export class PreAkiModLoader implements IModLoader
 
         if (config.incompatibilities && !Array.isArray(config.incompatibilities))
         {
-            this.logger.error(this.localisationService.getText("modloader-incompatibilities_not_string_array", modName));
+            this.logger.error(
+                this.localisationService.getText("modloader-incompatibilities_not_string_array", modName),
+            );
             issue = true;
         }
 

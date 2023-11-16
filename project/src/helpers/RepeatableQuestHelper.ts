@@ -15,7 +15,7 @@ export class RepeatableQuestHelper
     constructor(
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
@@ -27,9 +27,14 @@ export class RepeatableQuestHelper
      * @param repeatableConfig Main repeatable config
      * @returns IEliminationConfig
      */
-    public getEliminationConfigByPmcLevel(pmcLevel: number, repeatableConfig: IRepeatableQuestConfig): IEliminationConfig
+    public getEliminationConfigByPmcLevel(
+        pmcLevel: number,
+        repeatableConfig: IRepeatableQuestConfig,
+    ): IEliminationConfig
     {
-        return repeatableConfig.questConfig.Elimination.find(x => pmcLevel >= x.levelRange.min && pmcLevel <= x.levelRange.max);
+        return repeatableConfig.questConfig.Elimination.find((x) =>
+            pmcLevel >= x.levelRange.min && pmcLevel <= x.levelRange.max
+        );
     }
 
     public probabilityObjectArray<K, V>(configArrayInput: ProbabilityObject<K, V>[]): ProbabilityObjectArray<K, V>
@@ -38,7 +43,9 @@ export class RepeatableQuestHelper
         const probabilityArray = new ProbabilityObjectArray<K, V>(this.mathUtil, this.jsonUtil);
         for (const configObject of configArray)
         {
-            probabilityArray.push(new ProbabilityObject(configObject.key, configObject.relativeProbability, configObject.data));
+            probabilityArray.push(
+                new ProbabilityObject(configObject.key, configObject.relativeProbability, configObject.data),
+            );
         }
         return probabilityArray;
     }

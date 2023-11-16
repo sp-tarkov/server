@@ -8,11 +8,11 @@ export class HttpRouter
 {
     constructor(
         @injectAll("StaticRoutes") protected staticRouters: StaticRouter[],
-        @injectAll("DynamicRoutes") protected dynamicRoutes: DynamicRouter[]
+        @injectAll("DynamicRoutes") protected dynamicRoutes: DynamicRouter[],
     )
-    { }
+    {}
 
-    protected groupBy<T>(list: T[], keyGetter: (t:T) => string): Map<string, T[]>
+    protected groupBy<T>(list: T[], keyGetter: (t: T) => string): Map<string, T[]>
     {
         const map: Map<string, T[]> = new Map();
         list.forEach((item) =>
@@ -56,7 +56,14 @@ export class HttpRouter
         return wrapper.output;
     }
 
-    protected handleRoute(url: string, info: any, sessionID: string, wrapper: ResponseWrapper, routers: Router[], dynamic: boolean): boolean
+    protected handleRoute(
+        url: string,
+        info: any,
+        sessionID: string,
+        wrapper: ResponseWrapper,
+        routers: Router[],
+        dynamic: boolean,
+    ): boolean
     {
         let matched = false;
         for (const route of routers)
@@ -80,8 +87,6 @@ export class HttpRouter
 
 class ResponseWrapper
 {
-    constructor(
-        public output: string
-    )
+    constructor(public output: string)
     {}
 }

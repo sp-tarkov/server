@@ -8,9 +8,9 @@ export class HandbookController
 {
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("HandbookHelper") protected handbookHelper: HandbookHelper
+        @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
     )
-    { }
+    {}
 
     public load(): void
     {

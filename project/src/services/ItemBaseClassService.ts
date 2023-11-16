@@ -18,7 +18,7 @@ export class ItemBaseClassService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
     {}
 
@@ -39,7 +39,7 @@ export class ItemBaseClassService
             return;
         }
 
-        const filteredDbItems = Object.values(allDbItems).filter(x => x._type === "Item");
+        const filteredDbItems = Object.values(allDbItems).filter((x) => x._type === "Item");
         for (const item of filteredDbItems)
         {
             const itemIdToUpdate = item._id;
@@ -111,7 +111,7 @@ export class ItemBaseClassService
             }
         }
 
-        return this.itemBaseClassesCache[itemTpl].some(x => baseClasses.includes(x));
+        return this.itemBaseClassesCache[itemTpl].some((x) => baseClasses.includes(x));
     }
 
     /**

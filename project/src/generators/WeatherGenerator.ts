@@ -23,7 +23,7 @@ export class WeatherGenerator
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
@@ -62,16 +62,17 @@ export class WeatherGenerator
     /**
      * Get the current in-raid time
      * @param currentDate (new Date())
-     * @returns Date object of current in-raid time 
+     * @returns Date object of current in-raid time
      */
     public getInRaidTime(currentDate: Date): Date
     {
         // Get timestamp of when client conneted to server
-        const gameStartTimeStampMS =  this.applicationContext.getLatestValue(ContextVariableType.CLIENT_START_TIMESTAMP).getValue<number>();
+        const gameStartTimeStampMS = this.applicationContext.getLatestValue(ContextVariableType.CLIENT_START_TIMESTAMP)
+            .getValue<number>();
 
         // Get delta between now and when client connected to server in milliseconds
-        const deltaMSFromNow = (Date.now() - gameStartTimeStampMS);
-        const acceleratedMS = (deltaMSFromNow * (this.weatherConfig.acceleration - 1)); // For some reason nodejs moves faster than client time, reducing acceleration by 1 when client is 7 helps
+        const deltaMSFromNow = Date.now() - gameStartTimeStampMS;
+        const acceleratedMS = deltaMSFromNow * (this.weatherConfig.acceleration - 1); // For some reason nodejs moves faster than client time, reducing acceleration by 1 when client is 7 helps
         const clientAcceleratedDate = new Date(currentDate.valueOf() + acceleratedMS);
 
         return clientAcceleratedDate;
@@ -105,15 +106,13 @@ export class WeatherGenerator
             wind_gustiness: this.getRandomFloat("windGustiness"),
             rain: rain,
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            rain_intensity: (rain > 1)
-                ? this.getRandomFloat("rainIntensity")
-                : 0,
+            rain_intensity: (rain > 1) ? this.getRandomFloat("rainIntensity") : 0,
             fog: this.getWeightedFog(),
             temp: this.getRandomFloat("temp"),
             pressure: this.getRandomFloat("pressure"),
             time: "",
             date: "",
-            timestamp: 0
+            timestamp: 0,
         };
 
         this.setCurrentDateTime(result);
@@ -139,32 +138,49 @@ export class WeatherGenerator
 
     protected getWeightedWindDirection(): WindDirection
     {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.windDirection.values, this.weatherConfig.weather.windDirection.weights).item;
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.windDirection.values,
+            this.weatherConfig.weather.windDirection.weights,
+        ).item;
     }
 
     protected getWeightedClouds(): number
     {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.clouds.values, this.weatherConfig.weather.clouds.weights).item;
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.clouds.values,
+            this.weatherConfig.weather.clouds.weights,
+        ).item;
     }
 
     protected getWeightedWindSpeed(): number
     {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.windSpeed.values, this.weatherConfig.weather.windSpeed.weights).item;
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.windSpeed.values,
+            this.weatherConfig.weather.windSpeed.weights,
+        ).item;
     }
 
     protected getWeightedFog(): number
     {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.fog.values, this.weatherConfig.weather.fog.weights).item;
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.fog.values,
+            this.weatherConfig.weather.fog.weights,
+        ).item;
     }
 
     protected getWeightedRain(): number
     {
-        return this.weightedRandomHelper.weightedRandom(this.weatherConfig.weather.rain.values, this.weatherConfig.weather.rain.weights).item;
+        return this.weightedRandomHelper.weightedRandom(
+            this.weatherConfig.weather.rain.values,
+            this.weatherConfig.weather.rain.weights,
+        ).item;
     }
 
     protected getRandomFloat(node: string): number
     {
-        return parseFloat(this.randomUtil.getFloat(this.weatherConfig.weather[node].min,
-            this.weatherConfig.weather[node].max).toPrecision(3));
+        return parseFloat(
+            this.randomUtil.getFloat(this.weatherConfig.weather[node].min, this.weatherConfig.weather[node].max)
+                .toPrecision(3),
+        );
     }
 }

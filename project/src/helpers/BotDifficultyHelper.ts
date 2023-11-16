@@ -23,22 +23,23 @@ export class BotDifficultyHelper
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotHelper") protected botHelper: BotHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
 
-    public getPmcDifficultySettings(pmcType: "bear"|"usec", difficulty: string, usecType: string, bearType: string): Difficulty
+    public getPmcDifficultySettings(
+        pmcType: "bear" | "usec",
+        difficulty: string,
+        usecType: string,
+        bearType: string,
+    ): Difficulty
     {
         const difficultySettings = this.getDifficultySettings(pmcType, difficulty);
 
-        const friendlyType = pmcType === "bear"
-            ? bearType
-            : usecType;
-        const enemyType = pmcType === "bear"
-            ? usecType
-            : bearType;
+        const friendlyType = pmcType === "bear" ? bearType : usecType;
+        const enemyType = pmcType === "bear" ? usecType : bearType;
 
         this.botHelper.addBotToEnemyList(difficultySettings, this.pmcConfig.enemyTypes, friendlyType); // Add generic bot types to enemy list
         this.botHelper.addBotToEnemyList(difficultySettings, [enemyType, friendlyType], ""); // add same/opposite side to enemy list
@@ -61,14 +62,23 @@ export class BotDifficultyHelper
         {
             // get fallback
             this.logger.warning(this.localisationService.getText("bot-unable_to_get_bot_fallback_to_assault", type));
-            this.databaseServer.getTables().bots.types[type] = this.jsonUtil.clone(this.databaseServer.getTables().bots.types.assault);
+            this.databaseServer.getTables().bots.types[type] = this.jsonUtil.clone(
+                this.databaseServer.getTables().bots.types.assault,
+            );
         }
 
         const difficultySettings = this.botHelper.getBotTemplate(type).difficulty[difficulty];
         if (!difficultySettings)
         {
-            this.logger.warning(this.localisationService.getText("bot-unable_to_get_bot_difficulty_fallback_to_assault", {botType: type, difficulty: difficulty}));
-            this.databaseServer.getTables().bots.types[type].difficulty[difficulty] = this.jsonUtil.clone(this.databaseServer.getTables().bots.types.assault.difficulty[difficulty]);
+            this.logger.warning(
+                this.localisationService.getText("bot-unable_to_get_bot_difficulty_fallback_to_assault", {
+                    botType: type,
+                    difficulty: difficulty,
+                }),
+            );
+            this.databaseServer.getTables().bots.types[type].difficulty[difficulty] = this.jsonUtil.clone(
+                this.databaseServer.getTables().bots.types.assault.difficulty[difficulty],
+            );
         }
 
         return this.jsonUtil.clone(difficultySettings);
@@ -77,7 +87,7 @@ export class BotDifficultyHelper
     /**
      * Get difficulty settings for a PMC
      * @param type "usec" / "bear"
-     * @param difficulty what difficulty to retrieve 
+     * @param difficulty what difficulty to retrieve
      * @returns Difficulty object
      */
     protected getDifficultySettings(type: string, difficulty: string): Difficulty

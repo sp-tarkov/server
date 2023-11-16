@@ -9,7 +9,7 @@ export abstract class NewItemDetailsBase
     handbookPriceRoubles: number;
 
     /** Handbook ParentId for the new item */
-    handbookParentId : string;
+    handbookParentId: string;
 
     /**
      * A dictionary for locale settings, key = langauge (e.g. en,cn,es-mx,jp,fr)
@@ -29,7 +29,7 @@ export class NewItemFromCloneDetails extends NewItemDetailsBase
     /** ParentId for the new item (item type) */
     parentId: string;
 
-    /** 
+    /**
      * the id the new item should have, leave blank to have one generated for you
      * This is often known as the TplId, or TemplateId
      */

@@ -1,4 +1,4 @@
 export interface IRemovePlayerFromGroupRequest
 {
-    aidToKick: string
+    aidToKick: string;
 }

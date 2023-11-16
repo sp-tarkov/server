@@ -1,5 +1,5 @@
 export enum WeatherType
-    {
+{
     CLEAR_DAY = 0,
     CLEAR_WIND = 1,
     CLEAR_NIGHT = 2,
@@ -16,5 +16,5 @@ export enum WeatherType
     CLOUD_WIND_RAIN = 13,
     FULL_CLOUD = 14,
     THUNDER_CLOUD = 15,
-    NONE  = 16
+    NONE = 16,
 }

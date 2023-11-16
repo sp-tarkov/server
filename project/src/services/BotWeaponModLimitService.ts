@@ -32,7 +32,7 @@ export class BotWeaponModLimitService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("ItemHelper") protected itemHelper: ItemHelper
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -46,12 +46,22 @@ export class BotWeaponModLimitService
     public getWeaponModLimits(botRole: string): BotModLimits
     {
         return {
-            scope: {count: 0},
+            scope: { count: 0 },
             scopeMax: this.botConfig.equipment[botRole]?.weaponModLimits?.scopeLimit,
-            scopeBaseTypes: [BaseClasses.OPTIC_SCOPE, BaseClasses.ASSAULT_SCOPE, BaseClasses.COLLIMATOR, BaseClasses.COMPACT_COLLIMATOR, BaseClasses.SPECIAL_SCOPE],
-            flashlightLaser: {count: 0},
+            scopeBaseTypes: [
+                BaseClasses.OPTIC_SCOPE,
+                BaseClasses.ASSAULT_SCOPE,
+                BaseClasses.COLLIMATOR,
+                BaseClasses.COMPACT_COLLIMATOR,
+                BaseClasses.SPECIAL_SCOPE,
+            ],
+            flashlightLaser: { count: 0 },
             flashlightLaserMax: this.botConfig.equipment[botRole]?.weaponModLimits?.lightLaserLimit,
-            flashlgihtLaserBaseTypes: [BaseClasses.TACTICAL_COMBO, BaseClasses.FLASHLIGHT, BaseClasses.PORTABLE_RANGE_FINDER]
+            flashlgihtLaserBaseTypes: [
+                BaseClasses.TACTICAL_COMBO,
+                BaseClasses.FLASHLIGHT,
+                BaseClasses.PORTABLE_RANGE_FINDER,
+            ],
         };
     }
 
@@ -67,14 +77,28 @@ export class BotWeaponModLimitService
      * @param modsParent The parent of the mod to be checked
      * @returns true if over item limit
      */
-    public weaponModHasReachedLimit(botRole: string, modTemplate: ITemplateItem, modLimits: BotModLimits, modsParent: ITemplateItem, weapon: Item[]): boolean
+    public weaponModHasReachedLimit(
+        botRole: string,
+        modTemplate: ITemplateItem,
+        modLimits: BotModLimits,
+        modsParent: ITemplateItem,
+        weapon: Item[],
+    ): boolean
     {
         // If mod or mods parent is the NcSTAR MPR45 Backup mount, allow it as it looks cool
         const ncSTARTpl = "5649a2464bdc2d91118b45a8";
         if (modsParent._id === ncSTARTpl || modTemplate._id === ncSTARTpl)
         {
             // If weapon already has a longer ranged scope on it, allow ncstar to be spawned
-            if (weapon.some(x => this.itemHelper.isOfBaseclasses(x._tpl, [BaseClasses.ASSAULT_SCOPE, BaseClasses.OPTIC_SCOPE, BaseClasses.SPECIAL_SCOPE])))
+            if (
+                weapon.some((x) =>
+                    this.itemHelper.isOfBaseclasses(x._tpl, [
+                        BaseClasses.ASSAULT_SCOPE,
+                        BaseClasses.OPTIC_SCOPE,
+                        BaseClasses.SPECIAL_SCOPE,
+                    ])
+                )
+            )
             {
                 return false;
             }
@@ -96,10 +120,12 @@ export class BotWeaponModLimitService
         }
 
         // Mod is a mount that can hold only scopes and limit is reached (dont want to add empty mounts if limit is reached)
-        if (this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT)
-            && modTemplate._props.Slots.some(x => x._name === "mod_scope")
+        if (
+            this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT)
+            && modTemplate._props.Slots.some((x) => x._name === "mod_scope")
             && modTemplate._props.Slots.length === 1
-            && modLimits.scope.count >= modLimits.scopeMax)
+            && modLimits.scope.count >= modLimits.scopeMax
+        )
         {
             return true;
         }
@@ -108,14 +134,21 @@ export class BotWeaponModLimitService
         const modIsLightOrLaser = this.itemHelper.isOfBaseclasses(modTemplate._id, modLimits.flashlgihtLaserBaseTypes);
         if (modIsLightOrLaser)
         {
-            return this.weaponModLimitReached(modTemplate._id, modLimits.flashlightLaser, modLimits.flashlightLaserMax, botRole);
+            return this.weaponModLimitReached(
+                modTemplate._id,
+                modLimits.flashlightLaser,
+                modLimits.flashlightLaserMax,
+                botRole,
+            );
         }
 
         // Mod is a mount that can hold only flashlights ad limit is reached (dont want to add empty mounts if limit is reached)
-        if (this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT)
-            && modTemplate._props.Slots.some(x => x._name === "mod_flashlight")
+        if (
+            this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT)
+            && modTemplate._props.Slots.some((x) => x._name === "mod_flashlight")
             && modTemplate._props.Slots.length === 1
-            && modLimits.scope.count >= modLimits.scopeMax)
+            && modLimits.scope.count >= modLimits.scopeMax
+        )
         {
             return true;
         }
@@ -132,7 +165,12 @@ export class BotWeaponModLimitService
      * @returns true if limit reached
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected weaponModLimitReached(modTpl: string, currentCount: { count: number; }, maxLimit: number, botRole: string): boolean
+    protected weaponModLimitReached(
+        modTpl: string,
+        currentCount: { count: number; },
+        maxLimit: number,
+        botRole: string,
+    ): boolean
     {
         // No value or 0
         if (!maxLimit)
@@ -143,7 +181,7 @@ export class BotWeaponModLimitService
         // Has mod limit for bot type been reached
         if (currentCount.count >= maxLimit)
         {
-            //this.logger.debug(`[${botRole}] scope limit reached! tried to add ${modTpl} but scope count is ${currentCount.count}`);
+            // this.logger.debug(`[${botRole}] scope limit reached! tried to add ${modTpl} but scope count is ${currentCount.count}`);
             return true;
         }
 

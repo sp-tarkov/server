@@ -2,13 +2,13 @@ import { IBaseRepairActionDataRequest } from "@spt-aki/models/eft/repair/IBaseRe
 
 export interface ITraderRepairActionDataRequest extends IBaseRepairActionDataRequest
 {
-    Action: "TraderRepair"
-    tid: string
-    repairItems: RepairItem[]
+    Action: "TraderRepair";
+    tid: string;
+    repairItems: RepairItem[];
 }
-    
+
 export interface RepairItem
 {
-    _id: string
-    count: number
+    _id: string;
+    count: number;
 }

@@ -18,9 +18,10 @@ let configServer: ConfigServer;
 let localisationService: LocalisationService;
 let databaseServer: DatabaseServer;
 
-
-describe("BotHelper", () => {
-    beforeAll(async () => {
+describe("BotHelper", () =>
+{
+    beforeAll(async () =>
+    {
         testHelper = await TestHelper.fetchTestHelper();
         logger = testHelper.getTestLogger();
         jsonUtil = testHelper.getTestJsonUtil();
@@ -28,10 +29,11 @@ describe("BotHelper", () => {
         configServer = testHelper.getTestConfigServer();
         localisationService = testHelper.getTestLocalisationService();
         databaseServer = testHelper.getTestDatabaseServer();
-    })
+    });
 
     let helper: BotHelper;
-    beforeEach(() => {
+    beforeEach(() =>
+    {
         helper = new BotHelper(logger, jsonUtil, databaseServer, randomUtil, localisationService, configServer);
     });
 

@@ -1,4 +1,4 @@
 export enum AccountTypes
-    {
-    SPT_DEVELOPER = "spt developer"
+{
+    SPT_DEVELOPER = "spt developer",
 }

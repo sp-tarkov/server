@@ -18,9 +18,9 @@ export class CustomizationCallbacks
     constructor(
         @inject("CustomizationController") protected customizationController: CustomizationController,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
     )
-    { }
+    {}
 
     /**
      * Handle client/trading/customization/storage
@@ -30,7 +30,7 @@ export class CustomizationCallbacks
     {
         const result: IGetSuitsResponse = {
             _id: `pmc${sessionID}`,
-            suites: this.saveServer.getProfile(sessionID).suits
+            suites: this.saveServer.getProfile(sessionID).suits,
         };
         return this.httpResponse.getBody(result);
     }

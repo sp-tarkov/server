@@ -1,5 +1,5 @@
 export interface IRemoveBuildRequestData
 {
-    Action: "RemoveBuild"
-    id: string
+    Action: "RemoveBuild";
+    id: string;
 }

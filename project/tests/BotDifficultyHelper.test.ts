@@ -23,8 +23,10 @@ let localisationService: LocalisationService;
 let databaseServer: DatabaseServer;
 let botHelper: BotHelper;
 
-describe("BotHelper", () => {
-    beforeAll(async () => {
+describe("BotHelper", () =>
+{
+    beforeAll(async () =>
+    {
         testHelper = await TestHelper.fetchTestHelper();
         logger = testHelper.getTestLogger();
         jsonUtil = testHelper.getTestJsonUtil();
@@ -33,12 +35,20 @@ describe("BotHelper", () => {
         localisationService = testHelper.getTestLocalisationService();
         databaseServer = testHelper.getTestDatabaseServer();
         botHelper = testHelper.getTestBotHelper();
-    })
+    });
 
     let botDifficultyHelper: BotDifficultyHelper;
     beforeEach(() =>
     {
-        botDifficultyHelper = new BotDifficultyHelper(logger, jsonUtil, databaseServer, randomUtil, localisationService, botHelper, configServer);
+        botDifficultyHelper = new BotDifficultyHelper(
+            logger,
+            jsonUtil,
+            databaseServer,
+            randomUtil,
+            localisationService,
+            botHelper,
+            configServer,
+        );
     });
 
     it("BotDifficultyHelper type check", () =>
@@ -63,20 +73,20 @@ describe("BotHelper", () => {
 
     it("getPmcDifficultySettings() difficulty set to 'medium' in config", () =>
     {
-
         const configServerMock = mockHelper.getMockConfigServer();
-        const mockBotConfig = {
-            kind: "aki-bot",
-            pmc: {
-                difficulty: "medium",
-                enemyTypes: ["assault"]
-            }
-        };
-        configServerMock.setup(x => x.getConfig(ConfigTypes.BOT)).returns(() => mockBotConfig);
+        const mockBotConfig = { kind: "aki-bot", pmc: { difficulty: "medium", enemyTypes: ["assault"] } };
+        configServerMock.setup((x) => x.getConfig(ConfigTypes.BOT)).returns(() => mockBotConfig);
 
-        const testOnlyHelper = new BotDifficultyHelper(logger, jsonUtil, databaseServer, randomUtil, localisationService, botHelper, configServerMock.object);
+        const testOnlyHelper = new BotDifficultyHelper(
+            logger,
+            jsonUtil,
+            databaseServer,
+            randomUtil,
+            localisationService,
+            botHelper,
+            configServerMock.object,
+        );
 
         expect(testOnlyHelper.getPmcDifficultySettings("usec", "medium", "sptUsec", "sptBear")).not.toBeFalsy();
     });
-
 });

@@ -8,10 +8,8 @@ import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 @injectable()
 export class WishlistController
 {
-    constructor(
-        @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder
-    )
-    { }
+    constructor(@inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder)
+    {}
 
     /** Handle AddToWishList */
     public addToWishList(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse

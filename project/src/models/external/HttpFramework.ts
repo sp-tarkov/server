@@ -13,7 +13,7 @@ export type HandleFn = (_: string, req: IncomingMessage, resp: ServerResponse) =
  */
 export const Listen = (basePath: string) =>
 {
-    return <T extends { new(...args: any[]): any }>(Base: T): T =>
+    return <T extends { new(...args: any[]): any; }>(Base: T): T =>
     {
         // Used for the base class to be able to use DI
         injectable()(Base);
@@ -29,16 +29,25 @@ export const Listen = (basePath: string) =>
 
                 // Retrieve all handlers
                 const handlersArray = Base.prototype["handlers"];
-                if (!handlersArray) return;
+                if (!handlersArray)
+                {
+                    return;
+                }
 
                 // Add each flagged handler to the Record
                 handlersArray.forEach(({ handlerName, path, httpMethod }) =>
                 {
-                    if (!this.handlers[httpMethod]) this.handlers[httpMethod] = {};
+                    if (!this.handlers[httpMethod])
+                    {
+                        this.handlers[httpMethod] = {};
+                    }
 
                     if (this[handlerName] !== undefined && typeof this[handlerName] === "function")
                     {
-                        if (!path || path === "") this.handlers[httpMethod][`/${basePath}`] = this[handlerName];
+                        if (!path || path === "")
+                        {
+                            this.handlers[httpMethod][`/${basePath}`] = this[handlerName];
+                        }
                         this.handlers[httpMethod][`/${basePath}/${path}`] = this[handlerName];
                     }
                 });
@@ -53,14 +62,17 @@ export const Listen = (basePath: string) =>
             {
                 const routesHandles = this.handlers[req.method];
 
-                return Object.keys(this.handlers).some(meth => meth === req.method) &&
-                Object.keys(routesHandles).some(route => (new RegExp(route)).test(req.url));
+                return Object.keys(this.handlers).some((meth) => meth === req.method)
+                    && Object.keys(routesHandles).some((route) => (new RegExp(route)).test(req.url));
             };
 
             // The actual handle method dispatches the request to the registered handlers
             handle = (sessionID: string, req: IncomingMessage, resp: ServerResponse): void =>
             {
-                if (Object.keys(this.handlers).length === 0) return;
+                if (Object.keys(this.handlers).length === 0)
+                {
+                    return;
+                }
 
                 // Get all routes for the HTTP method and sort them so that
                 // The more precise is selected (eg. "/test/A" is selected over "/test")
@@ -70,8 +82,11 @@ export const Listen = (basePath: string) =>
                 routes.sort((routeA, routeB) => routeB.length - routeA.length);
 
                 // Filter to select valid routes but only use the first element since it's the most precise
-                const validRoutes = routes.filter(handlerKey => (new RegExp(handlerKey)).test(route));
-                if (validRoutes.length > 0) routesHandles[validRoutes[0]](sessionID, req, resp);
+                const validRoutes = routes.filter((handlerKey) => (new RegExp(handlerKey)).test(route));
+                if (validRoutes.length > 0)
+                {
+                    routesHandles[validRoutes[0]](sessionID, req, resp);
+                }
             };
         };
     };
@@ -90,14 +105,13 @@ const createHttpDecorator = (httpMethod: HttpMethods) =>
         return (target: any, propertyKey: string) =>
         {
             // If the handlers array has not been initialized yet
-            if (!target["handlers"]) target["handlers"] = [];
+            if (!target["handlers"])
+            {
+                target["handlers"] = [];
+            }
 
             // Flag the method as a HTTP handler
-            target["handlers"].push({
-                handlerName: propertyKey,
-                path,
-                httpMethod
-            });
+            target["handlers"].push({ handlerName: propertyKey, path, httpMethod });
         };
     };
 };

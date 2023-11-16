@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-export class Serializer 
+export class Serializer
 {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void

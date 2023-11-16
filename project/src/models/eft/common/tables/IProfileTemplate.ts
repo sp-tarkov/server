@@ -3,43 +3,43 @@ import { Dialogue, IUserBuilds } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 export interface IProfileTemplates
 {
-    Standard: IProfileSides
+    Standard: IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "Left Behind": IProfileSides
+    "Left Behind": IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "Prepare To Escape": IProfileSides
+    "Prepare To Escape": IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "Edge Of Darkness": IProfileSides,
+    "Edge Of Darkness": IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "SPT Developer": IProfileSides,
+    "SPT Developer": IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "SPT Easy start": IProfileSides,
+    "SPT Easy start": IProfileSides;
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    "SPT Zero to hero": IProfileSides
+    "SPT Zero to hero": IProfileSides;
 }
 
 export interface IProfileSides
 {
-    descriptionLocaleKey: string
-    usec: TemplateSide
-    bear: TemplateSide
+    descriptionLocaleKey: string;
+    usec: TemplateSide;
+    bear: TemplateSide;
 }
 
 export interface TemplateSide
 {
-    character: IPmcData
-    suits: string[]
-    dialogues: Record<string, Dialogue>
-    userbuilds: IUserBuilds
-    trader: ProfileTraderTemplate
+    character: IPmcData;
+    suits: string[];
+    dialogues: Record<string, Dialogue>;
+    userbuilds: IUserBuilds;
+    trader: ProfileTraderTemplate;
 }
 
 export interface ProfileTraderTemplate
 {
-    initialLoyaltyLevel: number
-    setQuestsAvailableForStart?: boolean
-    setQuestsAvailableForFinish?: boolean
-    initialStanding: number
-    initialSalesSum: number
-    jaegerUnlocked: boolean
+    initialLoyaltyLevel: number;
+    setQuestsAvailableForStart?: boolean;
+    setQuestsAvailableForFinish?: boolean;
+    initialStanding: number;
+    initialSalesSum: number;
+    jaegerUnlocked: boolean;
 }

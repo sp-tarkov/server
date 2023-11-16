@@ -6,8 +6,7 @@ import { OnLoad } from "@spt-aki/di/OnLoad";
 @injectable()
 export class PresetCallbacks implements OnLoad
 {
-    constructor(
-        @inject("PresetController") protected presetController: PresetController)
+    constructor(@inject("PresetController") protected presetController: PresetController)
     {
     }
 
@@ -16,7 +15,7 @@ export class PresetCallbacks implements OnLoad
         this.presetController.initialize();
     }
 
-    public getRoute(): string 
+    public getRoute(): string
     {
         return "aki-presets";
     }

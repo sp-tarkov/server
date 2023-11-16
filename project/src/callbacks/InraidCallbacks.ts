@@ -14,14 +14,14 @@ export class InraidCallbacks
 {
     constructor(
         @inject("InraidController") protected inraidController: InraidController,
-        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
     )
-    { }
+    {}
 
     /**
      * Handle client/location/getLocalloot
      * Store active map in profile + applicationContext
-     * @param url 
+     * @param url
      * @param info register player request
      * @param sessionID Session id
      * @returns Null http response
@@ -34,7 +34,7 @@ export class InraidCallbacks
 
     /**
      * Handle raid/profile/save
-     * @param url 
+     * @param url
      * @param info Save progress request
      * @param sessionID Session id
      * @returns Null http response
@@ -47,7 +47,7 @@ export class InraidCallbacks
 
     /**
      * Handle singleplayer/settings/raid/endstate
-     * @returns 
+     * @returns
      */
     public getRaidEndState(): string
     {
@@ -66,7 +66,7 @@ export class InraidCallbacks
 
     /**
      * Handle singleplayer/settings/weapon/durability
-     * @returns 
+     * @returns
      */
     public getWeaponDurability(): string
     {

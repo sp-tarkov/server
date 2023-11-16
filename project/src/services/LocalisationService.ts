@@ -21,18 +21,21 @@ export class LocalisationService
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("LocaleService") protected localeService: LocaleService
+        @inject("LocaleService") protected localeService: LocaleService,
     )
     {
-        const localeFileDirectory = path.join(process.cwd(), globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/database/locales/server" : "./assets/database/locales/server");
-        this.i18n = new I18n(
-            {
-                locales: this.localeService.getServerSupportedLocales(),
-                defaultLocale: "en",
-                directory: localeFileDirectory,
-                retryInDefaultLocale: true
-            }
+        const localeFileDirectory = path.join(
+            process.cwd(),
+            globalThis.G_RELEASE_CONFIGURATION
+                ? "Aki_Data/Server/database/locales/server"
+                : "./assets/database/locales/server",
         );
+        this.i18n = new I18n({
+            locales: this.localeService.getServerSupportedLocales(),
+            defaultLocale: "en",
+            directory: localeFileDirectory,
+            retryInDefaultLocale: true,
+        });
 
         this.i18n.setLocale(this.localeService.getDesiredServerLocale());
     }
@@ -64,7 +67,9 @@ export class LocalisationService
      */
     public getRandomTextThatMatchesPartialKey(partialKey: string): string
     {
-        const filteredKeys = Object.keys(this.databaseServer.getTables().locales.server["en"]).filter(x => x.startsWith(partialKey));
+        const filteredKeys = Object.keys(this.databaseServer.getTables().locales.server["en"]).filter((x) =>
+            x.startsWith(partialKey)
+        );
         const chosenKey = this.randomUtil.getArrayValue(filteredKeys);
 
         return this.getText(chosenKey);

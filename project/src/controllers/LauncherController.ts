@@ -32,7 +32,7 @@ export class LauncherController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
@@ -44,7 +44,7 @@ export class LauncherController
             backendUrl: this.httpServerHelper.getBackendUrl(),
             name: this.coreConfig.serverName,
             editions: Object.keys(this.databaseServer.getTables().templates.profiles),
-            profileDescriptions: this.getProfileDescriptions()
+            profileDescriptions: this.getProfileDescriptions(),
         };
     }
 
@@ -117,7 +117,7 @@ export class LauncherController
             username: info.username,
             password: info.password,
             wipe: true,
-            edition: info.edition
+            edition: info.edition,
         };
         this.saveServer.createProfile(newProfileDetails);
 

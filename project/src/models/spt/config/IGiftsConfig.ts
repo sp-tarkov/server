@@ -7,26 +7,26 @@ import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface IGiftsConfig extends IBaseConfig
 {
-    kind: "aki-gifts"
-    gifts: Record<string, Gift>
+    kind: "aki-gifts";
+    gifts: Record<string, Gift>;
 }
 
 export interface Gift
 {
     /** Items to send to player */
-    items: Item[]
+    items: Item[];
     /** Who is sending the gift to player */
-    sender: GiftSenderType
+    sender: GiftSenderType;
     /** Optinal - supply a users id to send from, not necessary when sending from SYSTEM or TRADER */
-    senderId?: string
-    senderDetails: IUserDialogInfo,
+    senderId?: string;
+    senderDetails: IUserDialogInfo;
     /** Optional - supply a trader type to send from, not necessary when sending from SYSTEM or USER */
-    trader?: Traders
-    messageText: string
+    trader?: Traders;
+    messageText: string;
     /** Optional - if sending text from the client locale file */
-    localeTextId?: string
+    localeTextId?: string;
     /** Optional - Used by Seasonal events to send on specific day */
-    timestampToSend?: number
-    associatedEvent: SeasonalEventType
-    collectionTimeHours: number
+    timestampToSend?: number;
+    associatedEvent: SeasonalEventType;
+    collectionTimeHours: number;
 }

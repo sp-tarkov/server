@@ -25,16 +25,16 @@ describe("test text", () =>
 
     it("getInt()", () =>
     {
-        expect(randomUtil.getInt(1,1)).toBe(1);
-        expect(randomUtil.getInt(100,100)).toBe(100);
-        expect([256,257,258,259,260,261]).toContain(randomUtil.getInt(256,261));
+        expect(randomUtil.getInt(1, 1)).toBe(1);
+        expect(randomUtil.getInt(100, 100)).toBe(100);
+        expect([256, 257, 258, 259, 260, 261]).toContain(randomUtil.getInt(256, 261));
     });
 
     it("getIntEx()", () =>
     {
         expect(randomUtil.getIntEx(1)).toBe(1);
-        expect([1,2,3]).toContain(randomUtil.getIntEx(5));
-        expect([1,2,3,4,5,6,7,8]).toContain(randomUtil.getIntEx(10));
+        expect([1, 2, 3]).toContain(randomUtil.getIntEx(5));
+        expect([1, 2, 3, 4, 5, 6, 7, 8]).toContain(randomUtil.getIntEx(10));
     });
 
     it("getFloat()", () =>

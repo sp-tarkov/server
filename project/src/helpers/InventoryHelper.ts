@@ -32,11 +32,11 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 export interface OwnerInventoryItems
 {
     /** Inventory items from source */
-    from: Item[]
+    from: Item[];
     /** Inventory items at destination */
-    to: Item[]
-    sameInventory: boolean,
-    isMail: boolean
+    to: Item[];
+    sameInventory: boolean;
+    isMail: boolean;
 }
 
 @injectable()
@@ -58,7 +58,7 @@ export class InventoryHelper
         @inject("ContainerHelper") protected containerHelper: ContainerHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);
@@ -76,7 +76,16 @@ export class InventoryHelper
      * @param useSortingTable Allow items to go into sorting table when stash has no space
      * @returns IItemEventRouterResponse
      */
-    public addItem(pmcData: IPmcData, request: IAddItemRequestData, output: IItemEventRouterResponse, sessionID: string, callback: () => void, foundInRaid = false, addUpd = null, useSortingTable = false): IItemEventRouterResponse
+    public addItem(
+        pmcData: IPmcData,
+        request: IAddItemRequestData,
+        output: IItemEventRouterResponse,
+        sessionID: string,
+        callback: () => void,
+        foundInRaid = false,
+        addUpd = null,
+        useSortingTable = false,
+    ): IItemEventRouterResponse
     {
         const itemLib: Item[] = []; // TODO: what is the purpose of this property
         const itemsToAdd: IAddItemTempObject[] = [];
@@ -85,7 +94,9 @@ export class InventoryHelper
         {
             if (requestItem.item_id in this.databaseServer.getTables().globals.ItemPresets)
             {
-                const presetItems = this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[requestItem.item_id]._items);
+                const presetItems = this.jsonUtil.clone(
+                    this.databaseServer.getTables().globals.ItemPresets[requestItem.item_id]._items,
+                );
                 itemLib.push(...presetItems);
                 requestItem.isPreset = true;
                 requestItem.item_id = presetItems[0]._id;
@@ -97,7 +108,7 @@ export class InventoryHelper
             else if (request.tid === Traders.FENCE)
             {
                 const fenceItems = this.fenceService.getRawFenceAssorts().items;
-                const itemIndex = fenceItems.findIndex(i => i._id === requestItem.item_id);
+                const itemIndex = fenceItems.findIndex((i) => i._id === requestItem.item_id);
                 if (itemIndex === -1)
                 {
                     this.logger.debug(`Tried to buy item ${requestItem.item_id} from fence that no longer exists`);
@@ -105,7 +116,10 @@ export class InventoryHelper
                     return this.httpResponse.appendErrorToOutput(output, message);
                 }
 
-                const purchasedItemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(fenceItems, requestItem.item_id);
+                const purchasedItemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(
+                    fenceItems,
+                    requestItem.item_id,
+                );
                 addUpd = purchasedItemWithChildren[0].upd; // Must persist the fence upd properties (e.g. durability/currentHp)
                 itemLib.push(...purchasedItemWithChildren);
             }
@@ -118,7 +132,9 @@ export class InventoryHelper
                 // Only grab the relevant trader items and add unique values
                 const traderItems = this.traderAssortHelper.getAssort(sessionID, request.tid).items;
                 const relevantItems = this.itemHelper.findAndReturnChildrenAsItems(traderItems, requestItem.item_id);
-                const toAdd = relevantItems.filter(traderItem => !itemLib.some(item => traderItem._id === item._id)); // what's this
+                const toAdd = relevantItems.filter((traderItem) =>
+                    !itemLib.some((item) => traderItem._id === item._id)
+                ); // what's this
                 itemLib.push(...toAdd);
             }
 
@@ -133,7 +149,15 @@ export class InventoryHelper
 
         for (const itemToAdd of itemsToAdd)
         {
-            const errorOutput = this.placeItemInInventory(itemToAdd, stashFS2D, sortingTableFS2D, itemLib, pmcData.Inventory, useSortingTable, output);
+            const errorOutput = this.placeItemInInventory(
+                itemToAdd,
+                stashFS2D,
+                sortingTableFS2D,
+                itemLib,
+                pmcData.Inventory,
+                useSortingTable,
+                output,
+            );
             if (errorOutput)
             {
                 return errorOutput;
@@ -151,9 +175,7 @@ export class InventoryHelper
         catch (err)
         {
             // Callback failed
-            const message = typeof err === "string"
-                ? err
-                : this.localisationService.getText("http-unknown_error");
+            const message = typeof err === "string" ? err : this.localisationService.getText("http-unknown_error");
 
             return this.httpResponse.appendErrorToOutput(output, message);
         }
@@ -200,7 +222,7 @@ export class InventoryHelper
             {
                 upd.SpawnedInSession = true;
             }
-            
+
             // Remove invalid properties prior to adding to inventory
             if (upd.UnlimitedCount !== undefined)
             {
@@ -223,7 +245,7 @@ export class InventoryHelper
                 parentId: itemToAdd.containerId,
                 slotId: "hideout",
                 location: { x: itemToAdd.location.x, y: itemToAdd.location.y, r: itemToAdd.location.rotation ? 1 : 0 },
-                upd: this.jsonUtil.clone(upd)
+                upd: this.jsonUtil.clone(upd),
             });
 
             pmcData.Inventory.items.push({
@@ -232,7 +254,7 @@ export class InventoryHelper
                 parentId: itemToAdd.containerId,
                 slotId: "hideout",
                 location: { x: itemToAdd.location.x, y: itemToAdd.location.y, r: itemToAdd.location.rotation ? 1 : 0 },
-                upd: this.jsonUtil.clone(upd) // Clone upd to prevent multi-purchases of same item referencing same upd object in memory
+                upd: this.jsonUtil.clone(upd), // Clone upd to prevent multi-purchases of same item referencing same upd object in memory
             });
 
             if (this.itemHelper.isOfBaseclass(itemToAdd.itemRef._tpl, BaseClasses.AMMO_BOX))
@@ -275,11 +297,8 @@ export class InventoryHelper
                             _tpl: itemLib[tmpKey]._tpl,
                             parentId: toDo[0][1],
                             slotId: slotID,
-                            location: {
-                                x: itemToAdd.location.x,
-                                y: itemToAdd.location.y,
-                                r: "Horizontal" },
-                            upd: this.jsonUtil.clone(upd)
+                            location: { x: itemToAdd.location.x, y: itemToAdd.location.y, r: "Horizontal" },
+                            upd: this.jsonUtil.clone(upd),
                         });
 
                         pmcData.Inventory.items.push({
@@ -287,11 +306,8 @@ export class InventoryHelper
                             _tpl: itemLib[tmpKey]._tpl,
                             parentId: toDo[0][1],
                             slotId: itemLib[tmpKey].slotId,
-                            location: {
-                                x: itemToAdd.location.x,
-                                y: itemToAdd.location.y,
-                                r: "Horizontal" },
-                            upd: this.jsonUtil.clone(upd)
+                            location: { x: itemToAdd.location.x, y: itemToAdd.location.y, r: "Horizontal" },
+                            upd: this.jsonUtil.clone(upd),
                         });
                     }
                     else
@@ -310,7 +326,7 @@ export class InventoryHelper
                             parentId: toDo[0][1],
                             slotId: slotID,
                             ...itemLocation,
-                            upd: this.jsonUtil.clone(upd)
+                            upd: this.jsonUtil.clone(upd),
                         });
 
                         pmcData.Inventory.items.push({
@@ -319,7 +335,7 @@ export class InventoryHelper
                             parentId: toDo[0][1],
                             slotId: itemLib[tmpKey].slotId,
                             ...itemLocation,
-                            upd: this.jsonUtil.clone(upd)
+                            upd: this.jsonUtil.clone(upd),
                         });
                         this.logger.debug(`Added ${itemLib[tmpKey]._tpl} with id: ${idForItemToAdd} to inventory`);
                     }
@@ -340,13 +356,21 @@ export class InventoryHelper
      * @param itemToAdd Item to add to inventory
      * @param stashFS2D Two dimentional stash map
      * @param sortingTableFS2D Two dimentional sorting table stash map
-     * @param itemLib 
+     * @param itemLib
      * @param pmcData Player profile
      * @param useSortingTable Should sorting table be used for overflow items when no inventory space for item
      * @param output Client output object
      * @returns Client error output if placing item failed
      */
-    protected placeItemInInventory(itemToAdd: IAddItemTempObject, stashFS2D: number[][], sortingTableFS2D: number[][], itemLib: Item[], playerInventory: Inventory, useSortingTable: boolean, output: IItemEventRouterResponse): IItemEventRouterResponse
+    protected placeItemInInventory(
+        itemToAdd: IAddItemTempObject,
+        stashFS2D: number[][],
+        sortingTableFS2D: number[][],
+        itemLib: Item[],
+        playerInventory: Inventory,
+        useSortingTable: boolean,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
         const itemSize = this.getItemSize(itemToAdd.itemRef._tpl, itemToAdd.itemRef._id, itemLib);
 
@@ -360,16 +384,24 @@ export class InventoryHelper
 
             try
             {
-                stashFS2D = this.containerHelper.fillContainerMapWithItem(stashFS2D, findSlotResult.x, findSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
+                stashFS2D = this.containerHelper.fillContainerMapWithItem(
+                    stashFS2D,
+                    findSlotResult.x,
+                    findSlotResult.y,
+                    itemSizeX,
+                    itemSizeY,
+                    false,
+                ); // TODO: rotation not passed in, bad?
             }
             catch (err)
             {
-                const errorText = typeof err === "string"
-                    ? ` -> ${err}`
-                    : "";
+                const errorText = typeof err === "string" ? ` -> ${err}` : "";
                 this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
 
-                return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+                return this.httpResponse.appendErrorToOutput(
+                    output,
+                    this.localisationService.getText("inventory-no_stash_space"),
+                );
             }
             // Store details for object, incuding container item will be placed in
             itemToAdd.containerId = playerInventory.stash;
@@ -377,7 +409,7 @@ export class InventoryHelper
                 x: findSlotResult.x,
                 y: findSlotResult.y,
                 r: findSlotResult.rotation ? 1 : 0,
-                rotation: findSlotResult.rotation
+                rotation: findSlotResult.rotation,
             };
 
             // Success! exit
@@ -387,19 +419,33 @@ export class InventoryHelper
         // Space not found in main stash, use sorting table
         if (useSortingTable)
         {
-            const findSortingSlotResult = this.containerHelper.findSlotForItem(sortingTableFS2D, itemSize[0], itemSize[1]);
+            const findSortingSlotResult = this.containerHelper.findSlotForItem(
+                sortingTableFS2D,
+                itemSize[0],
+                itemSize[1],
+            );
             const itemSizeX = findSortingSlotResult.rotation ? itemSize[1] : itemSize[0];
             const itemSizeY = findSortingSlotResult.rotation ? itemSize[0] : itemSize[1];
             try
             {
-                sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(sortingTableFS2D, findSortingSlotResult.x, findSortingSlotResult.y, itemSizeX, itemSizeY, false); // TODO: rotation not passed in, bad?
+                sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(
+                    sortingTableFS2D,
+                    findSortingSlotResult.x,
+                    findSortingSlotResult.y,
+                    itemSizeX,
+                    itemSizeY,
+                    false,
+                ); // TODO: rotation not passed in, bad?
             }
             catch (err)
             {
                 const errorText = typeof err === "string" ? ` -> ${err}` : "";
                 this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
 
-                return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+                return this.httpResponse.appendErrorToOutput(
+                    output,
+                    this.localisationService.getText("inventory-no_stash_space"),
+                );
             }
 
             // Store details for object, incuding container item will be placed in
@@ -408,12 +454,15 @@ export class InventoryHelper
                 x: findSortingSlotResult.x,
                 y: findSortingSlotResult.y,
                 r: findSortingSlotResult.rotation ? 1 : 0,
-                rotation: findSortingSlotResult.rotation
+                rotation: findSortingSlotResult.rotation,
             };
         }
         else
         {
-            return this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            return this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+            );
         }
     }
 
@@ -427,7 +476,14 @@ export class InventoryHelper
      * @param output object to send to client
      * @param foundInRaid should ammo be FiR
      */
-    protected hydrateAmmoBoxWithAmmo(pmcData: IPmcData, itemToAdd: IAddItemTempObject, parentId: string, sessionID: string, output: IItemEventRouterResponse, foundInRaid: boolean): void
+    protected hydrateAmmoBoxWithAmmo(
+        pmcData: IPmcData,
+        itemToAdd: IAddItemTempObject,
+        parentId: string,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+        foundInRaid: boolean,
+    ): void
     {
         const itemInfo = this.itemHelper.getItem(itemToAdd.itemRef._tpl)[1];
         const stackSlots = itemInfo._props.StackSlots;
@@ -450,7 +506,7 @@ export class InventoryHelper
                     parentId: parentId,
                     slotId: "cartridges",
                     location: location,
-                    upd: { StackObjectsCount: ammoStackSize }
+                    upd: { StackObjectsCount: ammoStackSize },
                 };
 
                 if (foundInRaid)
@@ -472,7 +528,6 @@ export class InventoryHelper
     }
 
     /**
-     * 
      * @param assortItems Items to add to inventory
      * @param requestItem Details of purchased item to add to inventory
      * @param result Array split stacks are added to
@@ -488,14 +543,17 @@ export class InventoryHelper
                 const itemToAdd: IAddItemTempObject = {
                     itemRef: item,
                     count: requestItem.count,
-                    isPreset: requestItem.isPreset };
+                    isPreset: requestItem.isPreset,
+                };
 
                 // Split stacks if the size is higher than allowed by items StackMaxSize property
                 let maxStackCount = 1;
                 if (requestItem.count > itemDetails._props.StackMaxSize)
                 {
                     let remainingCountOfItemToAdd = requestItem.count;
-                    const calc = requestItem.count - (Math.floor(requestItem.count / itemDetails._props.StackMaxSize) * itemDetails._props.StackMaxSize);
+                    const calc = requestItem.count
+                        - (Math.floor(requestItem.count / itemDetails._props.StackMaxSize)
+                            * itemDetails._props.StackMaxSize);
 
                     maxStackCount = (calc > 0)
                         ? maxStackCount + Math.floor(remainingCountOfItemToAdd / itemDetails._props.StackMaxSize)
@@ -542,7 +600,12 @@ export class InventoryHelper
      * @param output Existing IItemEventRouterResponse object to append data to, creates new one by default if not supplied
      * @returns IItemEventRouterResponse
      */
-    public removeItem(profile: IPmcData, itemId: string, sessionID: string, output: IItemEventRouterResponse = undefined): IItemEventRouterResponse
+    public removeItem(
+        profile: IPmcData,
+        itemId: string,
+        sessionID: string,
+        output: IItemEventRouterResponse = undefined,
+    ): IItemEventRouterResponse
     {
         if (!itemId)
         {
@@ -566,7 +629,7 @@ export class InventoryHelper
         {
             // We expect that each inventory item and each insured item has unique "_id", respective "itemId".
             // Therefore we want to use a NON-Greedy function and escape the iteration as soon as we find requested item.
-            const inventoryIndex = inventoryItems.findIndex(item => item._id === childId);
+            const inventoryIndex = inventoryItems.findIndex((item) => item._id === childId);
             if (inventoryIndex > -1)
             {
                 inventoryItems.splice(inventoryIndex, 1);
@@ -574,10 +637,12 @@ export class InventoryHelper
 
             if (inventoryIndex === -1)
             {
-                this.logger.warning(`Unable to remove item with Id: ${childId} as it was not found in inventory ${profile._id}`);
+                this.logger.warning(
+                    `Unable to remove item with Id: ${childId} as it was not found in inventory ${profile._id}`,
+                );
             }
 
-            const insuredIndex = insuredItems.findIndex(item => item.itemId === childId);
+            const insuredIndex = insuredItems.findIndex((item) => item.itemId === childId);
             if (insuredIndex > -1)
             {
                 insuredItems.splice(insuredIndex, 1);
@@ -587,7 +652,11 @@ export class InventoryHelper
         return output;
     }
 
-    public removeItemAndChildrenFromMailRewards(sessionId: string, removeRequest: IInventoryRemoveRequestData, output: IItemEventRouterResponse): IItemEventRouterResponse
+    public removeItemAndChildrenFromMailRewards(
+        sessionId: string,
+        removeRequest: IInventoryRemoveRequestData,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
 
@@ -595,18 +664,23 @@ export class InventoryHelper
         const dialogs = Object.values(fullProfile.dialogues);
         for (const dialog of dialogs)
         {
-            const messageWithReward = dialog.messages.find(x => x._id === removeRequest.fromOwner.id);
+            const messageWithReward = dialog.messages.find((x) => x._id === removeRequest.fromOwner.id);
             if (messageWithReward)
             {
                 // Find item + any possible children and remove them from mails items array
-                const itemWithChildern = this.itemHelper.findAndReturnChildrenAsItems(messageWithReward.items.data, removeRequest.item);
+                const itemWithChildern = this.itemHelper.findAndReturnChildrenAsItems(
+                    messageWithReward.items.data,
+                    removeRequest.item,
+                );
                 for (const itemToDelete of itemWithChildern)
                 {
                     // Get index of item to remove from reward array + remove it
                     const indexOfItemToRemove = messageWithReward.items.data.indexOf(itemToDelete);
                     if (indexOfItemToRemove === -1)
                     {
-                        this.logger.error(`Unable to remove item: ${removeRequest.item} from mail: ${removeRequest.fromOwner.id} as item could not be found, restart client immediately to prevent data corruption`);
+                        this.logger.error(
+                            `Unable to remove item: ${removeRequest.item} from mail: ${removeRequest.fromOwner.id} as item could not be found, restart client immediately to prevent data corruption`,
+                        );
                         continue;
                     }
                     messageWithReward.items.data.splice(indexOfItemToRemove, 1);
@@ -622,10 +696,18 @@ export class InventoryHelper
         return output;
     }
 
-    public removeItemByCount(pmcData: IPmcData, itemId: string, count: number, sessionID: string, output: IItemEventRouterResponse = undefined): IItemEventRouterResponse
+    public removeItemByCount(
+        pmcData: IPmcData,
+        itemId: string,
+        count: number,
+        sessionID: string,
+        output: IItemEventRouterResponse = undefined,
+    ): IItemEventRouterResponse
     {
         if (!itemId)
+        {
             return output;
+        }
 
         const itemsToReduce = this.itemHelper.findAndReturnChildrenAsItems(pmcData.Inventory.items, itemId);
         let remainingCount = count;
@@ -644,11 +726,15 @@ export class InventoryHelper
                 itemToReduce.upd.StackObjectsCount -= remainingCount;
                 remainingCount = 0;
                 if (output)
+                {
                     output.profileChanges[sessionID].items.change.push(itemToReduce);
+                }
             }
 
             if (remainingCount === 0)
+            {
                 break;
+            }
         }
 
         return output;
@@ -666,7 +752,11 @@ export class InventoryHelper
 
     // note from 2027: there IS a thing i didn't explore and that is Merges With Children
     // -> Prepares item Width and height returns [sizeX, sizeY]
-    protected getSizeByInventoryItemHash(itemTpl: string, itemID: string, inventoryItemHash: InventoryHelper.InventoryItemHash): number[]
+    protected getSizeByInventoryItemHash(
+        itemTpl: string,
+        itemID: string,
+        inventoryItemHash: InventoryHelper.InventoryItemHash,
+    ): number[]
     {
         const toDo = [itemID];
         const result = this.itemHelper.getItem(itemTpl);
@@ -681,7 +771,10 @@ export class InventoryHelper
         // Item found but no _props property
         if (tmpItem && !tmpItem._props)
         {
-            this.localisationService.getText("inventory-item_missing_props_property", {itemTpl: itemTpl, itemName: tmpItem?._name});
+            this.localisationService.getText("inventory-item_missing_props_property", {
+                itemTpl: itemTpl,
+                itemName: tmpItem?._name,
+            });
         }
 
         // No item object or getItem() returned false
@@ -711,11 +804,11 @@ export class InventoryHelper
         const skipThisItems: string[] = [
             BaseClasses.BACKPACK,
             BaseClasses.SEARCHABLE_ITEM,
-            BaseClasses.SIMPLE_CONTAINER
+            BaseClasses.SIMPLE_CONTAINER,
         ];
         const rootFolded = rootItem.upd?.Foldable && rootItem.upd.Foldable.Folded === true;
 
-        //The item itself is collapsible
+        // The item itself is collapsible
         if (foldableWeapon && (foldedSlot === undefined || foldedSlot === "") && rootFolded)
         {
             outX -= tmpItem._props.SizeReduceRight;
@@ -729,7 +822,7 @@ export class InventoryHelper
                 {
                     for (const item of inventoryItemHash.byParentId[toDo[0]])
                     {
-                        //Filtering child items outside of mod slots, such as those inside containers, without counting their ExtraSize attribute
+                        // Filtering child items outside of mod slots, such as those inside containers, without counting their ExtraSize attribute
                         if (item.slotId.indexOf("mod_") < 0)
                         {
                             continue;
@@ -741,7 +834,12 @@ export class InventoryHelper
                         const itemResult = this.itemHelper.getItem(item._tpl);
                         if (!itemResult[0])
                         {
-                            this.logger.error(this.localisationService.getText("inventory-get_item_size_item_not_found_by_tpl", item._tpl));
+                            this.logger.error(
+                                this.localisationService.getText(
+                                    "inventory-get_item_size_item_not_found_by_tpl",
+                                    item._tpl,
+                                ),
+                            );
                         }
 
                         const itm = itemResult[1];
@@ -781,16 +879,13 @@ export class InventoryHelper
 
         return [
             outX + sizeLeft + sizeRight + forcedLeft + forcedRight,
-            outY + sizeUp + sizeDown + forcedUp + forcedDown
+            outY + sizeUp + sizeDown + forcedUp + forcedDown,
         ];
     }
 
     protected getInventoryItemHash(inventoryItem: Item[]): InventoryHelper.InventoryItemHash
     {
-        const inventoryItemHash: InventoryHelper.InventoryItemHash = {
-            "byItemId": {},
-            "byParentId": {}
-        };
+        const inventoryItemHash: InventoryHelper.InventoryItemHash = { byItemId: {}, byParentId: {} };
 
         for (let i = 0; i < inventoryItem.length; i++)
         {
@@ -833,8 +928,16 @@ export class InventoryHelper
             const tmpSize = this.getSizeByInventoryItemHash(item._tpl, item._id, inventoryItemHash);
             const iW = tmpSize[0]; // x
             const iH = tmpSize[1]; // y
-            const fH = (((item.location as Location).r === 1 || (item.location as Location).r  === "Vertical" || (item.location as Location).rotation === "Vertical") ? iW : iH);
-            const fW = (((item.location as Location).r === 1 || (item.location as Location).r === "Vertical" || (item.location as Location).rotation === "Vertical") ? iH : iW);
+            const fH =
+                ((item.location as Location).r === 1 || (item.location as Location).r === "Vertical"
+                        || (item.location as Location).rotation === "Vertical")
+                    ? iW
+                    : iH;
+            const fW =
+                ((item.location as Location).r === 1 || (item.location as Location).r === "Vertical"
+                        || (item.location as Location).rotation === "Vertical")
+                    ? iH
+                    : iW;
             const fillTo = (item.location as Location).x + fW;
 
             for (let y = 0; y < fH; y++)
@@ -845,7 +948,12 @@ export class InventoryHelper
                 }
                 catch (e)
                 {
-                    this.logger.error(this.localisationService.getText("inventory-unable_to_fill_container", {id: item._id, error: e}));
+                    this.logger.error(
+                        this.localisationService.getText("inventory-unable_to_fill_container", {
+                            id: item._id,
+                            error: e,
+                        }),
+                    );
                 }
             }
         }
@@ -861,7 +969,10 @@ export class InventoryHelper
      * @param sessionId Session id / playerid
      * @returns OwnerInventoryItems with inventory of player/scav to adjust
      */
-    public getOwnerInventoryItems(request: IInventoryMoveRequestData | IInventorySplitRequestData | IInventoryMergeRequestData, sessionId: string): OwnerInventoryItems
+    public getOwnerInventoryItems(
+        request: IInventoryMoveRequestData | IInventorySplitRequestData | IInventoryMergeRequestData,
+        sessionId: string,
+    ): OwnerInventoryItems
     {
         let isSameInventory = false;
         const pmcItems = this.profileHelper.getPmcProfile(sessionId).Inventory.items;
@@ -879,9 +990,7 @@ export class InventoryHelper
             else if (request.fromOwner.type.toLocaleLowerCase() === "mail")
             {
                 // Split requests dont use 'use' but 'splitItem' property
-                const item = "splitItem" in request
-                    ? request.splitItem
-                    : request.item;
+                const item = "splitItem" in request ? request.splitItem : request.item;
                 fromInventoryItems = this.dialogueHelper.getMessageItemContents(request.fromOwner.id, sessionId, item);
                 fromType = "mail";
             }
@@ -909,7 +1018,7 @@ export class InventoryHelper
             from: fromInventoryItems,
             to: toInventoryItems,
             sameInventory: isSameInventory,
-            isMail: fromType === "mail"
+            isMail: fromType === "mail",
         };
     }
 
@@ -922,7 +1031,12 @@ export class InventoryHelper
     protected getStashSlotMap(pmcData: IPmcData, sessionID: string): number[][]
     {
         const playerStashSize = this.getPlayerStashSize(sessionID);
-        return this.getContainerMap(playerStashSize[0], playerStashSize[1], pmcData.Inventory.items, pmcData.Inventory.stash);
+        return this.getContainerMap(
+            playerStashSize[0],
+            playerStashSize[1],
+            pmcData.Inventory.items,
+            pmcData.Inventory.stash,
+        );
     }
 
     protected getSortingTableSlotMap(pmcData: IPmcData): number[][]
@@ -937,7 +1051,7 @@ export class InventoryHelper
      */
     protected getPlayerStashSize(sessionID: string): Record<number, number>
     {
-        //this sets automatically a stash size from items.json (its not added anywhere yet cause we still use base stash)
+        // this sets automatically a stash size from items.json (its not added anywhere yet cause we still use base stash)
         const stashTPL = this.getStashType(sessionID);
         if (!stashTPL)
         {
@@ -966,7 +1080,7 @@ export class InventoryHelper
     protected getStashType(sessionID: string): string
     {
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
-        const stashObj = pmcData.Inventory.items.find(item => item._id === pmcData.Inventory.stash);
+        const stashObj = pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.stash);
         if (!stashObj)
         {
             this.logger.error(this.localisationService.getText("inventory-unable_to_find_stash"));
@@ -988,7 +1102,7 @@ export class InventoryHelper
         const idsToMove = this.itemHelper.findAndReturnChildrenByItems(fromItems, body.item);
         for (const itemId of idsToMove)
         {
-            const itemToMove = fromItems.find(x => x._id === itemId);
+            const itemToMove = fromItems.find((x) => x._id === itemId);
             if (!itemToMove)
             {
                 this.logger.error(`Unable to find item to move: ${itemId}`);
@@ -1023,32 +1137,43 @@ export class InventoryHelper
     /**
      * Internal helper function to move item within the same profile_f.
      * @param pmcData profile to edit
-     * @param inventoryItems 
-     * @param moveRequest 
+     * @param inventoryItems
+     * @param moveRequest
      * @returns True if move was successful
      */
-    public moveItemInternal(pmcData: IPmcData, inventoryItems: Item[], moveRequest: IInventoryMoveRequestData): {success: boolean, errorMessage?: string}
+    public moveItemInternal(
+        pmcData: IPmcData,
+        inventoryItems: Item[],
+        moveRequest: IInventoryMoveRequestData,
+    ): { success: boolean; errorMessage?: string; }
     {
         this.handleCartridges(inventoryItems, moveRequest);
 
         // Find item we want to 'move'
-        const matchingInventoryItem = inventoryItems.find(x => x._id === moveRequest.item);
+        const matchingInventoryItem = inventoryItems.find((x) => x._id === moveRequest.item);
         if (!matchingInventoryItem)
         {
             const errorMesage = `Unable to move item: ${moveRequest.item}, cannot find in inventory`;
             this.logger.error(errorMesage);
 
-            return {success: false, errorMessage: errorMesage};
+            return { success: false, errorMessage: errorMesage };
         }
 
-        this.logger.debug(`${moveRequest.Action} item: ${moveRequest.item} from slotid: ${matchingInventoryItem.slotId} to container: ${moveRequest.to.container}`);
+        this.logger.debug(
+            `${moveRequest.Action} item: ${moveRequest.item} from slotid: ${matchingInventoryItem.slotId} to container: ${moveRequest.to.container}`,
+        );
 
         // don't move shells from camora to cartridges (happens when loading shells into mts-255 revolver shotgun)
         if (matchingInventoryItem.slotId.includes("camora_") && moveRequest.to.container === "cartridges")
         {
-            this.logger.warning(this.localisationService.getText("inventory-invalid_move_to_container", {slotId: matchingInventoryItem.slotId, container: moveRequest.to.container}));
+            this.logger.warning(
+                this.localisationService.getText("inventory-invalid_move_to_container", {
+                    slotId: matchingInventoryItem.slotId,
+                    container: moveRequest.to.container,
+                }),
+            );
 
-            return {success: true};
+            return { success: true };
         }
 
         // Edit items details to match its new location
@@ -1060,7 +1185,6 @@ export class InventoryHelper
         if ("location" in moveRequest.to)
         {
             matchingInventoryItem.location = moveRequest.to.location;
-            
         }
         else
         {
@@ -1070,7 +1194,7 @@ export class InventoryHelper
             }
         }
 
-        return {success: true};
+        return { success: true };
     }
 
     /**
@@ -1086,8 +1210,8 @@ export class InventoryHelper
             if (pmcData.Inventory.fastPanel[itemKey] === itemBeingMoved._id)
             {
                 // Get moved items parent
-                const itemParent = pmcData.Inventory.items.find(x => x._id === itemBeingMoved.parentId);
-                
+                const itemParent = pmcData.Inventory.items.find((x) => x._id === itemBeingMoved.parentId);
+
                 // Empty out id if item is moved to a container other than pocket/rig
                 if (itemParent && !(itemParent.slotId?.startsWith("Pockets") || itemParent.slotId === "TacticalVest"))
                 {
@@ -1100,8 +1224,8 @@ export class InventoryHelper
     }
 
     /**
-    * Internal helper function to handle cartridges in inventory if any of them exist.
-    */
+     * Internal helper function to handle cartridges in inventory if any of them exist.
+     */
     protected handleCartridges(items: Item[], body: IInventoryMoveRequestData): void
     {
         // -> Move item to different place - counts with equipping filling magazine etc
@@ -1141,7 +1265,7 @@ namespace InventoryHelper
 {
     export interface InventoryItemHash
     {
-        byItemId: Record<string, Item>
-        byParentId: Record<string, Item[]>
+        byItemId: Record<string, Item>;
+        byParentId: Record<string, Item[]>;
     }
 }

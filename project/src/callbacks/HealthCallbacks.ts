@@ -18,12 +18,13 @@ export class HealthCallbacks
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("HealthController") protected healthController: HealthController)
-    { }
+        @inject("HealthController") protected healthController: HealthController,
+    )
+    {}
 
     /**
      * Custom aki server request found in modules/HealthSynchronizer.cs
-     * @param url 
+     * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id
      * @returns empty response, no data sent back to client
@@ -36,17 +37,15 @@ export class HealthCallbacks
 
     /**
      * Custom aki server request found in modules/QTEPatch.cs
-     * @param url 
+     * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id
      * @returns empty response, no data sent back to client
      */
     public handleWorkoutEffects(url: string, info: IWorkoutData, sessionID: string): IGetBodyResponseData<string>
     {
-        this.healthController.applyWorkoutChanges(
-            this.profileHelper.getPmcProfile(sessionID), info, sessionID
-        );
-        
+        this.healthController.applyWorkoutChanges(this.profileHelper.getPmcProfile(sessionID), info, sessionID);
+
         return this.httpResponse.emptyResponse();
     }
 
@@ -72,7 +71,11 @@ export class HealthCallbacks
      * Handle RestoreHealth
      * @returns IItemEventRouterResponse
      */
-    public healthTreatment(pmcData: IPmcData, info: IHealthTreatmentRequestData, sessionID: string): IItemEventRouterResponse
+    public healthTreatment(
+        pmcData: IPmcData,
+        info: IHealthTreatmentRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.healthController.healthTreatment(pmcData, info, sessionID);
     }

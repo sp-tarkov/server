@@ -1,5 +1,5 @@
-export enum ContextVariableType 
-    {
+export enum ContextVariableType
+{
     /** Logged in users session id */
     SESSION_ID,
     /** Currently acive raid information */
@@ -7,5 +7,5 @@ export enum ContextVariableType
     /** Timestamp when client first connected */
     CLIENT_START_TIMESTAMP,
     /** When player is loading into map and loot is requested */
-    REGISTER_PLAYER_REQUEST
+    REGISTER_PLAYER_REQUEST,
 }

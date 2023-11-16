@@ -16,14 +16,14 @@ export class NotificationSendHelper
         @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("NotificationService") protected notificationService: NotificationService
+        @inject("NotificationService") protected notificationService: NotificationService,
     )
     {}
 
     /**
      * Send notification message to the appropriate channel
-     * @param sessionID 
-     * @param notificationMessage 
+     * @param sessionID
+     * @param notificationMessage
      */
     public sendMessage(sessionID: string, notificationMessage: INotification): void
     {
@@ -44,7 +44,12 @@ export class NotificationSendHelper
      * @param messageText Text to send player
      * @param messageType Underlying type of message being sent
      */
-    public sendMessageToPlayer(sessionId: string, senderDetails: IUserDialogInfo, messageText: string, messageType: MessageType): void
+    public sendMessageToPlayer(
+        sessionId: string,
+        senderDetails: IUserDialogInfo,
+        messageText: string,
+        messageType: MessageType,
+    ): void
     {
         const dialog = this.getDialog(sessionId, messageType, senderDetails);
 
@@ -57,7 +62,7 @@ export class NotificationSendHelper
             text: messageText,
             hasRewards: undefined,
             rewardCollected: undefined,
-            items: undefined
+            items: undefined,
         };
         dialog.messages.push(message);
 
@@ -65,7 +70,7 @@ export class NotificationSendHelper
             type: NotificationType.NEW_MESSAGE,
             eventId: message._id,
             dialogId: message.uid,
-            message: message
+            message: message,
         };
         this.sendMessage(sessionId, notification);
     }
@@ -80,7 +85,9 @@ export class NotificationSendHelper
     protected getDialog(sessionId: string, messageType: MessageType, senderDetails: IUserDialogInfo): Dialogue
     {
         // Use trader id if sender is trader, otherwise use nickname
-        const key = (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? senderDetails._id : senderDetails.info.Nickname;
+        const key = (senderDetails.info.MemberCategory === MemberCategory.TRADER)
+            ? senderDetails._id
+            : senderDetails.info.Nickname;
         const dialogueData = this.saveServer.getProfile(sessionId).dialogues;
         const isNewDialogue = !(key in dialogueData);
         let dialogue: Dialogue = dialogueData[key];
@@ -95,7 +102,7 @@ export class NotificationSendHelper
                 pinned: false,
                 new: 0,
                 attachmentsNew: 0,
-                Users: (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? undefined : [senderDetails]
+                Users: (senderDetails.info.MemberCategory === MemberCategory.TRADER) ? undefined : [senderDetails],
             };
 
             dialogueData[key] = dialogue;

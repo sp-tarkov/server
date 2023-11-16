@@ -1,5 +1,4 @@
-
-export interface Ixyz 
+export interface Ixyz
 {
     x: number;
     y: number;

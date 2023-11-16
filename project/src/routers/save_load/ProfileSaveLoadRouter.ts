@@ -5,28 +5,23 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 @injectable()
-export class ProfileSaveLoadRouter extends SaveLoadRouter 
+export class ProfileSaveLoadRouter extends SaveLoadRouter
 {
-    constructor() 
+    constructor()
     {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
+    public override getHandledRoutes(): HandledRoute[]
     {
-        return [
-            new HandledRoute("aki-profile", false)
-        ];
+        return [new HandledRoute("aki-profile", false)];
     }
 
-    public override handleLoad(profile: IAkiProfile): IAkiProfile 
+    public override handleLoad(profile: IAkiProfile): IAkiProfile
     {
         if (profile.characters === null)
         {
-            profile.characters = {
-                pmc: {} as IPmcData,
-                scav: {} as IPmcData
-            };
+            profile.characters = { pmc: {} as IPmcData, scav: {} as IPmcData };
         }
         return profile;
     }

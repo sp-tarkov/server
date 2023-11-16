@@ -24,14 +24,12 @@ export class BotHelper
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
-
-
 
     /**
      * Get a template object for the specified botRole from bots.types db
@@ -71,7 +69,7 @@ export class BotHelper
 
     public isBotBoss(botRole: string): boolean
     {
-        return this.botConfig.bosses.some(x => x.toLowerCase() === botRole?.toLowerCase());
+        return this.botConfig.bosses.some((x) => x.toLowerCase() === botRole?.toLowerCase());
     }
 
     public isBotFollower(botRole: string): boolean
@@ -193,7 +191,9 @@ export class BotHelper
 
     public botRoleIsPmc(botRole: string): boolean
     {
-        return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(botRole.toLowerCase());
+        return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(
+            botRole.toLowerCase(),
+        );
     }
 
     /**
@@ -209,8 +209,8 @@ export class BotHelper
         {
             return null;
         }
-        
-        return botEquipConfig.randomisation.find(x => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);        
+
+        return botEquipConfig.randomisation.find((x) => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);
     }
 
     /**
@@ -248,8 +248,6 @@ export class BotHelper
      */
     protected getRandomizedPmcSide(): string
     {
-        return (this.randomUtil.getChance100(this.pmcConfig.isUsec))
-            ? "Usec"
-            : "Bear";
+        return (this.randomUtil.getChance100(this.pmcConfig.isUsec)) ? "Usec" : "Bear";
     }
 }

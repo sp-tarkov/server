@@ -28,7 +28,7 @@ export class BotEquipmentModPoolService
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -48,12 +48,17 @@ export class BotEquipmentModPoolService
         }
 
         // Get weapon or gear pool
-        const pool = (poolType === "weapon" ? this.weaponModPool : this.gearModPool);
+        const pool = poolType === "weapon" ? this.weaponModPool : this.gearModPool;
         for (const item of items)
         {
             if (!item._props)
             {
-                this.logger.error(this.localisationService.getText("bot-item_missing_props_property", {itemTpl: item._id, name: item._name}));
+                this.logger.error(
+                    this.localisationService.getText("bot-item_missing_props_property", {
+                        itemTpl: item._id,
+                        name: item._name,
+                    }),
+                );
 
                 continue;
             }
@@ -85,9 +90,9 @@ export class BotEquipmentModPoolService
                     {
                         pool[item._id][slot._name] = [];
                     }
-    
+
                     // only add item to pool if it doesnt already exist
-                    if (!pool[item._id][slot._name].some(x => x === itemToAdd))
+                    if (!pool[item._id][slot._name].some((x) => x === itemToAdd))
                     {
                         pool[item._id][slot._name].push(itemToAdd);
 
@@ -99,7 +104,7 @@ export class BotEquipmentModPoolService
                             // Recursive call
                             this.generatePool([subItemDetails], poolType);
                         }
-                    }   
+                    }
                 }
             }
         }
@@ -181,7 +186,9 @@ export class BotEquipmentModPoolService
      */
     protected generateWeaponPool(): void
     {
-        const weapons = Object.values(this.databaseServer.getTables().templates.items).filter(x => x._type === "Item" && this.itemHelper.isOfBaseclass(x._id, BaseClasses.WEAPON));
+        const weapons = Object.values(this.databaseServer.getTables().templates.items).filter((x) =>
+            x._type === "Item" && this.itemHelper.isOfBaseclass(x._id, BaseClasses.WEAPON)
+        );
         this.generatePool(weapons, "weapon");
 
         // Flag pool as being complete
@@ -193,7 +200,9 @@ export class BotEquipmentModPoolService
      */
     protected generateGearPool(): void
     {
-        const gear = Object.values(this.databaseServer.getTables().templates.items).filter(x => x._type === "Item" && this.itemHelper.isOfBaseclass(x._id, BaseClasses.ARMOREDEQUIPMENT));
+        const gear = Object.values(this.databaseServer.getTables().templates.items).filter((x) =>
+            x._type === "Item" && this.itemHelper.isOfBaseclass(x._id, BaseClasses.ARMOREDEQUIPMENT)
+        );
         this.generatePool(gear, "gear");
 
         // Flag pool as being complete

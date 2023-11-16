@@ -1,28 +1,28 @@
 import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { ILooseLoot } from "@spt-aki/models/eft/common/ILooseLoot";
 
-export interface ILocation 
+export interface ILocation
 {
-    base: ILocationBase
+    base: ILocationBase;
     looseLoot: ILooseLoot;
-    statics: IStaticContainer
+    statics: IStaticContainer;
 }
 
 export interface IStaticContainer
 {
-    containersGroups: Record<string, IContainerMinMax>
-    containers: Record< string, IContainerData>
+    containersGroups: Record<string, IContainerMinMax>;
+    containers: Record<string, IContainerData>;
 }
 
 export interface IContainerMinMax
 {
-    minContainers: number
-    maxContainers: number
-    current?: number
-    chosenCount?: number
+    minContainers: number;
+    maxContainers: number;
+    current?: number;
+    chosenCount?: number;
 }
 
 export interface IContainerData
 {
-    groupId: string
+    groupId: string;
 }

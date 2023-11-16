@@ -23,9 +23,9 @@ export class PresetBuildController
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
-        @inject("SaveServer") protected saveServer: SaveServer
+        @inject("SaveServer") protected saveServer: SaveServer,
     )
-    { }
+    {}
 
     /** Handle client/handbook/builds/my/list */
     public getUserBuilds(sessionID: string): IUserBuilds
@@ -33,23 +33,26 @@ export class PresetBuildController
         const profile = this.saveServer.getProfile(sessionID);
         if (!profile.userbuilds)
         {
-            profile.userbuilds = {
-                equipmentBuilds: [],
-                weaponBuilds: []
-            };
+            profile.userbuilds = { equipmentBuilds: [], weaponBuilds: [] };
         }
 
         // Ensure the secure container in the default presets match what the player has equipped
-        const defaultEquipmentPresets = this.jsonUtil.clone(this.databaseServer.getTables().templates.defaultEquipmentPresets);
-        const playerSecureContainer = profile.characters.pmc.Inventory.items?.find(x => x.slotId === "SecuredContainer");
-        const firstDefaultItemsSecureContainer = defaultEquipmentPresets[0]?.items?.find(x => x.slotId === "SecuredContainer");
+        const defaultEquipmentPresets = this.jsonUtil.clone(
+            this.databaseServer.getTables().templates.defaultEquipmentPresets,
+        );
+        const playerSecureContainer = profile.characters.pmc.Inventory.items?.find((x) =>
+            x.slotId === "SecuredContainer"
+        );
+        const firstDefaultItemsSecureContainer = defaultEquipmentPresets[0]?.items?.find((x) =>
+            x.slotId === "SecuredContainer"
+        );
         if (playerSecureContainer && playerSecureContainer?._tpl !== firstDefaultItemsSecureContainer?._tpl)
         {
             // Default equipment presets' secure container tpl doesnt match players secure container tpl
             for (const defaultPreset of defaultEquipmentPresets)
             {
                 // Find presets secure container
-                const secureContainer = defaultPreset.items.find(x => x.slotId === "SecuredContainer");
+                const secureContainer = defaultPreset.items.find((x) => x.slotId === "SecuredContainer");
                 if (secureContainer)
                 {
                     secureContainer._tpl = playerSecureContainer._tpl;
@@ -65,7 +68,11 @@ export class PresetBuildController
     }
 
     /** Handle SaveWeaponBuild event */
-    public saveWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionId: string): IItemEventRouterResponse
+    public saveWeaponBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionId: string,
+    ): IItemEventRouterResponse
     {
         // TODO - could be merged into saveBuild, maybe
         const output = this.eventOutputHolder.getOutput(sessionId);
@@ -82,15 +89,19 @@ export class PresetBuildController
             name: body.name,
             root: body.root,
             items: body.items,
-            type: "weapon"
+            type: "weapon",
         };
 
         const savedWeaponBuilds = this.saveServer.getProfile(sessionId).userbuilds.weaponBuilds;
-        const existingBuild = savedWeaponBuilds.find(x => x.id === body.id);
+        const existingBuild = savedWeaponBuilds.find((x) => x.id === body.id);
         if (existingBuild)
         {
             // exists, replace
-            this.saveServer.getProfile(sessionId).userbuilds.weaponBuilds.splice(savedWeaponBuilds.indexOf(existingBuild), 1, newBuild);
+            this.saveServer.getProfile(sessionId).userbuilds.weaponBuilds.splice(
+                savedWeaponBuilds.indexOf(existingBuild),
+                1,
+                newBuild,
+            );
         }
         else
         {
@@ -105,12 +116,21 @@ export class PresetBuildController
     }
 
     /** Handle SaveEquipmentBuild event */
-    public saveEquipmentBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
+    public saveEquipmentBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.saveBuild(pmcData, body, sessionID, "equipmentBuilds");
     }
 
-    protected saveBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string, buildType: string): IItemEventRouterResponse
+    protected saveBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string,
+        buildType: string,
+    ): IItemEventRouterResponse
     {
         const output = this.eventOutputHolder.getOutput(sessionID);
         const existingSavedBuilds: any[] = this.saveServer.getProfile(sessionID).userbuilds[buildType];
@@ -125,14 +145,18 @@ export class PresetBuildController
             buildType: "Custom",
             root: body.root,
             fastPanel: [],
-            items: body.items
+            items: body.items,
         };
 
-        const existingBuild = existingSavedBuilds.find(x => x.name === body.name);
+        const existingBuild = existingSavedBuilds.find((x) => x.name === body.name);
         if (existingBuild)
         {
             // Already exists, replace
-            this.saveServer.getProfile(sessionID).userbuilds[buildType].splice(existingSavedBuilds.indexOf(existingBuild), 1, newBuild);
+            this.saveServer.getProfile(sessionID).userbuilds[buildType].splice(
+                existingSavedBuilds.indexOf(existingBuild),
+                1,
+                newBuild,
+            );
         }
         else
         {
@@ -152,26 +176,34 @@ export class PresetBuildController
     }
 
     /** Handle RemoveWeaponBuild event*/
-    public removeWeaponBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
+    public removeWeaponBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         // todo - does this get called?
         return this.removePlayerBuild(pmcData, body.id, sessionID);
     }
 
     /** Handle RemoveEquipmentBuild event*/
-    public removeEquipmentBuild(pmcData: IPmcData, body: IPresetBuildActionRequestData, sessionID: string): IItemEventRouterResponse
+    public removeEquipmentBuild(
+        pmcData: IPmcData,
+        body: IPresetBuildActionRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         // todo - does this get called?
         return this.removePlayerBuild(pmcData, body.id, sessionID);
     }
-    
+
     protected removePlayerBuild(pmcData: IPmcData, id: string, sessionID: string): IItemEventRouterResponse
     {
         const weaponBuilds = this.saveServer.getProfile(sessionID).userbuilds.weaponBuilds;
         const equipmentBuilds = this.saveServer.getProfile(sessionID).userbuilds.equipmentBuilds;
 
         // Check for id in weapon array first
-        const matchingWeaponBuild = weaponBuilds.find(x => x.id === id);
+        const matchingWeaponBuild = weaponBuilds.find((x) => x.id === id);
         if (matchingWeaponBuild)
         {
             weaponBuilds.splice(weaponBuilds.indexOf(matchingWeaponBuild), 1);
@@ -180,7 +212,7 @@ export class PresetBuildController
         }
 
         // Id not found in weapons, try equipment
-        const matchingEquipmentBuild = equipmentBuilds.find(x => x.id === id);
+        const matchingEquipmentBuild = equipmentBuilds.find((x) => x.id === id);
         if (matchingEquipmentBuild)
         {
             equipmentBuilds.splice(equipmentBuilds.indexOf(matchingEquipmentBuild), 1);
@@ -191,7 +223,6 @@ export class PresetBuildController
         {
             this.logger.error(`Unable to delete preset, cannot find ${id} in weapon or equipment presets`);
         }
-        
 
         return this.eventOutputHolder.getOutput(sessionID);
     }

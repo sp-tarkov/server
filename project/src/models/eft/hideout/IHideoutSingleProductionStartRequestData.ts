@@ -1,13 +1,13 @@
-export interface IHideoutSingleProductionStartRequestData 
+export interface IHideoutSingleProductionStartRequestData
 {
-    Action: "HideoutSingleProductionStart"
-    recipeId: string
-    items: Item[]
-    timestamp: number
+    Action: "HideoutSingleProductionStart";
+    recipeId: string;
+    items: Item[];
+    timestamp: number;
 }
 
-export interface Item 
+export interface Item
 {
-    id: string
-    count: number
+    id: string;
+    count: number;
 }

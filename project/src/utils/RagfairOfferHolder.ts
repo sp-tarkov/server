@@ -51,7 +51,7 @@ export class RagfairOfferHolder
 
     public addOffers(offers: Array<IRagfairOffer>): void
     {
-        offers.forEach(o => this.addOffer(o));
+        offers.forEach((o) => this.addOffer(o));
     }
 
     public addOffer(offer: IRagfairOffer): void
@@ -76,9 +76,9 @@ export class RagfairOfferHolder
 
     public removeOffers(offers: Array<IRagfairOffer>): void
     {
-        offers.forEach(o => this.removeOffer(o));
+        offers.forEach((o) => this.removeOffer(o));
     }
-    
+
     public removeOfferByTrader(traderId: string): void
     {
         if (this.offersByTrader.has(traderId))
@@ -93,7 +93,7 @@ export class RagfairOfferHolder
      */
     public getStaleOffers(time: number): Array<IRagfairOffer>
     {
-        return this.getOffers().filter(o => this.isStale(o, time));
+        return this.getOffers().filter((o) => this.isStale(o, time));
     }
 
     protected addOfferByTemplates(template: string, offer: IRagfairOffer): void

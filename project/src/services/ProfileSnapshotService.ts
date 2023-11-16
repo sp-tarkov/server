@@ -8,11 +8,9 @@ export class ProfileSnapshotService
 {
     protected storedProfileSnapshots: Record<string, IAkiProfile> = {};
 
-    constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil
-    )
+    constructor(@inject("JsonUtil") protected jsonUtil: JsonUtil)
     {}
-    
+
     /**
      * Store a profile into an in-memory object
      * @param sessionID session id - acts as the key

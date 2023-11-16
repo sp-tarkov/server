@@ -46,7 +46,7 @@ class TradeController
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -54,34 +54,56 @@ class TradeController
     }
 
     /** Handle TradingConfirm event */
-    public confirmTrading(pmcData: IPmcData, request: IProcessBaseTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public confirmTrading(
+        pmcData: IPmcData,
+        request: IProcessBaseTradeRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.confirmTradingInternal(pmcData, request, sessionID, this.traderConfig.purchasesAreFoundInRaid);
     }
 
     /** Handle RagFairBuyOffer event */
-    public confirmRagfairTrading(pmcData: IPmcData, body: IProcessRagfairTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public confirmRagfairTrading(
+        pmcData: IPmcData,
+        body: IProcessRagfairTradeRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
         for (const offer of body.offers)
         {
             const fleaOffer = this.ragfairServer.getOffer(offer.id);
-            if (!fleaOffer) 
+            if (!fleaOffer)
             {
-                return this.httpResponse.appendErrorToOutput(output, `Offer with ID ${offer.id} not found`, BackendErrorCodes.OFFERNOTFOUND);
+                return this.httpResponse.appendErrorToOutput(
+                    output,
+                    `Offer with ID ${offer.id} not found`,
+                    BackendErrorCodes.OFFERNOTFOUND,
+                );
             }
 
             if (offer.count === 0)
             {
-                const errorMessage = this.localisationService.getText("ragfair-unable_to_purchase_0_count_item", this.itemHelper.getItem(fleaOffer.items[0]._tpl)[1]._name);
+                const errorMessage = this.localisationService.getText(
+                    "ragfair-unable_to_purchase_0_count_item",
+                    this.itemHelper.getItem(fleaOffer.items[0]._tpl)[1]._name,
+                );
                 return this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.OFFEROUTOFSTOCK);
             }
 
             // Skip buying items when player doesn't have necessary loyalty
-            if (fleaOffer.user.memberType === MemberCategory.TRADER && fleaOffer.loyaltyLevel > pmcData.TradersInfo[fleaOffer.user.id].loyaltyLevel)
+            if (
+                fleaOffer.user.memberType === MemberCategory.TRADER
+                && fleaOffer.loyaltyLevel > pmcData.TradersInfo[fleaOffer.user.id].loyaltyLevel
+            )
             {
-                this.logger.debug(`Unable to buy item: ${fleaOffer.items[0]._tpl} from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`);
+                this.logger.debug(
+                    `Unable to buy item: ${
+                        fleaOffer.items[0]._tpl
+                    } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`,
+                );
                 continue;
             }
 
@@ -97,11 +119,17 @@ class TradeController
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 scheme_id: 0,
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                scheme_items: offer.items
+                scheme_items: offer.items,
             };
 
             // confirmTrading() must occur prior to removing the offer stack, otherwise item inside offer doesn't exist for confirmTrading() to use
-            output = this.confirmTradingInternal(pmcData, buyData, sessionID, this.ragfairConfig.dynamic.purchasesAreFoundInRaid, fleaOffer.items[0].upd);
+            output = this.confirmTradingInternal(
+                pmcData,
+                buyData,
+                sessionID,
+                this.ragfairConfig.dynamic.purchasesAreFoundInRaid,
+                fleaOffer.items[0].upd,
+            );
             if (fleaOffer.user.memberType !== MemberCategory.TRADER)
             {
                 // remove player item offer stack
@@ -113,12 +141,19 @@ class TradeController
     }
 
     /** Handle SellAllFromSavage event */
-    public sellScavItemsToFence(pmcData: IPmcData, body: ISellScavItemsToFenceRequestData, sessionId: string): IItemEventRouterResponse
+    public sellScavItemsToFence(
+        pmcData: IPmcData,
+        body: ISellScavItemsToFenceRequestData,
+        sessionId: string,
+    ): IItemEventRouterResponse
     {
         const scavProfile = this.profileHelper.getFullProfile(sessionId)?.characters?.scav;
         if (!scavProfile)
         {
-            return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionId), `Profile ${body.fromOwner.id} has no scav account`);
+            return this.httpResponse.appendErrorToOutput(
+                this.eventOutputHolder.getOutput(sessionId),
+                `Profile ${body.fromOwner.id} has no scav account`,
+            );
         }
 
         return this.sellInventoryToTrader(sessionId, scavProfile, pmcData, Traders.FENCE);
@@ -128,12 +163,17 @@ class TradeController
      * Sell all sellable items to a trader from inventory
      * WILL DELETE ITEMS FROM INVENTORY + CHILDREN OF ITEMS SOLD
      * @param sessionId Session id
-     * @param profileWithItemsToSell Profile with items to be sold to trader 
+     * @param profileWithItemsToSell Profile with items to be sold to trader
      * @param profileThatGetsMoney Profile that gets the money after selling items
      * @param trader Trader to sell items to
      * @returns IItemEventRouterResponse
      */
-    protected sellInventoryToTrader(sessionId: string, profileWithItemsToSell: IPmcData, profileThatGetsMoney: IPmcData, trader: Traders): IItemEventRouterResponse
+    protected sellInventoryToTrader(
+        sessionId: string,
+        profileWithItemsToSell: IPmcData,
+        profileThatGetsMoney: IPmcData,
+        trader: Traders,
+    ): IItemEventRouterResponse
     {
         const handbookPrices = this.ragfairPriceService.getAllStaticPrices();
         // TODO, apply trader sell bonuses?
@@ -145,20 +185,31 @@ class TradeController
             type: "sell_to_trader",
             tid: trader,
             price: 0,
-            items: []
+            items: [],
         };
 
         // Get all base items that scav has (primaryweapon/backpack/pockets etc)
         // Add items that trader will buy (only sell items that have the container as parent) to request object
-        const containerAndEquipmentItems = profileWithItemsToSell.Inventory.items.filter(x => x.parentId === profileWithItemsToSell.Inventory.equipment);
+        const containerAndEquipmentItems = profileWithItemsToSell.Inventory.items.filter((x) =>
+            x.parentId === profileWithItemsToSell.Inventory.equipment
+        );
         for (const itemToSell of containerAndEquipmentItems)
         {
             // Increment sell price in request
-            sellRequest.price += this.getPriceOfItemAndChildren(itemToSell._id, profileWithItemsToSell.Inventory.items, handbookPrices, traderDetails);
+            sellRequest.price += this.getPriceOfItemAndChildren(
+                itemToSell._id,
+                profileWithItemsToSell.Inventory.items,
+                handbookPrices,
+                traderDetails,
+            );
 
             // Add item details to request
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            sellRequest.items.push({id: itemToSell._id, count: itemToSell?.upd?.StackObjectsCount ?? 1, scheme_id: 0});
+            sellRequest.items.push({
+                id: itemToSell._id,
+                count: itemToSell?.upd?.StackObjectsCount ?? 1,
+                scheme_id: 0,
+            });
         }
         this.logger.debug(`Selling scav items to fence for ${sellRequest.price} roubles`);
         return this.tradeHelper.sellItem(profileWithItemsToSell, profileThatGetsMoney, sellRequest, sessionId);
@@ -172,7 +223,12 @@ class TradeController
      * @param traderDetails Trader being sold to to perform buy category check against
      * @returns Rouble price
      */
-    protected getPriceOfItemAndChildren(parentItemId: string, items: Item[], handbookPrices: Record<string, number>, traderDetails: ITraderBase): number
+    protected getPriceOfItemAndChildren(
+        parentItemId: string,
+        items: Item[],
+        handbookPrices: Record<string, number>,
+        traderDetails: ITraderBase,
+    ): number
     {
         const itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(items, parentItemId);
 
@@ -180,7 +236,10 @@ class TradeController
         for (const itemToSell of itemWithChildren)
         {
             const itemDetails = this.itemHelper.getItem(itemToSell._tpl);
-            if (!(itemDetails[0] && this.itemHelper.isOfBaseclasses(itemDetails[1]._id, traderDetails.items_buy.category)))
+            if (
+                !(itemDetails[0]
+                    && this.itemHelper.isOfBaseclasses(itemDetails[1]._id, traderDetails.items_buy.category))
+            )
             {
                 // Skip if tpl isnt item OR item doesn't fulfill match traders buy categories
                 continue;
@@ -193,7 +252,13 @@ class TradeController
         return totalPrice;
     }
 
-    protected confirmTradingInternal(pmcData: IPmcData, body: IProcessBaseTradeRequestData, sessionID: string, foundInRaid = false, upd: Upd = null): IItemEventRouterResponse
+    protected confirmTradingInternal(
+        pmcData: IPmcData,
+        body: IProcessBaseTradeRequestData,
+        sessionID: string,
+        foundInRaid = false,
+        upd: Upd = null,
+    ): IItemEventRouterResponse
     {
         // buying
         if (body.type === "buy_from_trader")
@@ -213,5 +278,4 @@ class TradeController
     }
 }
 
-export { TradeController };
-
+export {TradeController};

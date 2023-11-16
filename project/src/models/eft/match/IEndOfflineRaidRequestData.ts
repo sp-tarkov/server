@@ -1,7 +1,7 @@
-export interface IEndOfflineRaidRequestData 
+export interface IEndOfflineRaidRequestData
 {
-    crc: number
-    exitStatus: string
-    exitName: string
-    raidSeconds: number
+    crc: number;
+    exitStatus: string;
+    exitName: string;
+    raidSeconds: number;
 }

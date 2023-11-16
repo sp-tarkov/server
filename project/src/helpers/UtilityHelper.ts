@@ -5,6 +5,6 @@ export class UtilityHelper
 {
     public arrayIntersect<T>(a: T[], b: T[]): T[]
     {
-        return a.filter(x => b.includes(x));
+        return a.filter((x) => b.includes(x));
     }
 }

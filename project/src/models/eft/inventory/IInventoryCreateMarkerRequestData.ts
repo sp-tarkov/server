@@ -1,16 +1,16 @@
 import { IInventoryBaseActionRequestData } from "@spt-aki/models/eft/inventory/IInventoryBaseActionRequestData";
 
-export interface IInventoryCreateMarkerRequestData extends IInventoryBaseActionRequestData 
+export interface IInventoryCreateMarkerRequestData extends IInventoryBaseActionRequestData
 {
-    Action: "CreateMapMarker"
-    item: string
-    mapMarker: MapMarker
+    Action: "CreateMapMarker";
+    item: string;
+    mapMarker: MapMarker;
 }
 
-export interface MapMarker 
+export interface MapMarker
 {
-    Type: string
-    X: number
-    Y: number
-    Note: string
+    Type: string;
+    X: number;
+    Y: number;
+    Note: string;
 }

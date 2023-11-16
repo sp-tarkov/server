@@ -48,7 +48,7 @@ export class RagfairServerHelper
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -57,7 +57,7 @@ export class RagfairServerHelper
 
     /**
      * Is item valid / on blacklist / quest item
-     * @param itemDetails 
+     * @param itemDetails
      * @returns boolean
      */
     public isItemValidRagfairItem(itemDetails: [boolean, ITemplateItem]): boolean
@@ -95,7 +95,10 @@ export class RagfairServerHelper
         }
 
         // Don't include damaged ammo packs
-        if (this.ragfairConfig.dynamic.blacklist.damagedAmmoPacks && itemDetails[1]._parent === BaseClasses.AMMO_BOX && itemDetails[1]._name.includes("_damaged"))
+        if (
+            this.ragfairConfig.dynamic.blacklist.damagedAmmoPacks && itemDetails[1]._parent === BaseClasses.AMMO_BOX
+            && itemDetails[1]._name.includes("_damaged")
+        )
         {
             return false;
         }
@@ -120,7 +123,7 @@ export class RagfairServerHelper
 
     /**
      * is supplied id a trader
-     * @param traderId 
+     * @param traderId
      * @returns True if id was a trader
      */
     public isTrader(traderId: string): boolean
@@ -155,7 +158,7 @@ export class RagfairServerHelper
             MessageType.MESSAGE_WITH_ITEMS,
             RagfairServerHelper.goodsReturnedTemplate,
             returnedItems,
-            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime)
+            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
         );
     }
 
@@ -171,7 +174,10 @@ export class RagfairServerHelper
         }
 
         // Item Types to return one of
-        if (isWeaponPreset || this.itemHelper.isOfBaseclasses(itemDetails[1]._id, this.ragfairConfig.dynamic.showAsSingleStack))
+        if (
+            isWeaponPreset
+            || this.itemHelper.isOfBaseclasses(itemDetails[1]._id, this.ragfairConfig.dynamic.showAsSingleStack)
+        )
         {
             return 1;
         }
@@ -185,7 +191,9 @@ export class RagfairServerHelper
             return Math.round(this.randomUtil.getInt(config.nonStackableCount.min, config.nonStackableCount.max));
         }
 
-        const stackPercent = Math.round(this.randomUtil.getInt(config.stackablePercent.min, config.stackablePercent.max));
+        const stackPercent = Math.round(
+            this.randomUtil.getInt(config.stackablePercent.min, config.stackablePercent.max),
+        );
 
         return Math.round((maxStackCount / 100) * stackPercent);
     }
@@ -263,7 +271,9 @@ export class RagfairServerHelper
         {
             if (this.databaseServer.getTables().globals.ItemPresets[itemId]._items[0]._tpl === item._tpl)
             {
-                const presetItems = this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[itemId]._items);
+                const presetItems = this.jsonUtil.clone(
+                    this.databaseServer.getTables().globals.ItemPresets[itemId]._items,
+                );
                 presets.push(this.reparentPresets(item, presetItems));
             }
         }
@@ -274,7 +284,7 @@ export class RagfairServerHelper
     /**
      * Generate new unique ids for the children while preserving hierarchy
      * @param item base item
-     * @param preset 
+     * @param preset
      * @returns Item array with new IDs
      */
     public reparentPresets(item: Item, preset: Item[]): Item[]
@@ -296,11 +306,11 @@ export class RagfairServerHelper
                 idMappings[mod.parentId] = this.hashUtil.generate();
             }
 
-            mod._id =  idMappings[mod._id];
+            mod._id = idMappings[mod._id];
 
             if (mod.parentId !== undefined)
             {
-                mod.parentId =  idMappings[mod.parentId];
+                mod.parentId = idMappings[mod.parentId];
             }
         }
 

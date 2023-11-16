@@ -9,9 +9,9 @@ export class PresetController
 {
     constructor(
         @inject("PresetHelper") protected presetHelper: PresetHelper,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
-    { }
+    {}
 
     public initialize(): void
     {

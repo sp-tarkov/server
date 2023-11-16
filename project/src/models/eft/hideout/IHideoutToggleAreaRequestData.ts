@@ -1,7 +1,7 @@
-export interface IHideoutToggleAreaRequestData 
+export interface IHideoutToggleAreaRequestData
 {
-    Action: "HideoutToggleArea"
-    areaType: number
-    enabled: boolean
-    timestamp: number
+    Action: "HideoutToggleArea";
+    areaType: number;
+    enabled: boolean;
+    timestamp: number;
 }

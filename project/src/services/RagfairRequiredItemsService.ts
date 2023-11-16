@@ -12,9 +12,9 @@ export class RagfairRequiredItemsService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
-        @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService
+        @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
     )
-    { }
+    {}
 
     public getRequiredItemsById(searchId: string): any
     {
@@ -50,5 +50,4 @@ export class RagfairRequiredItemsService
 
         this.requiredItemsCache = requiredItems;
     }
-
 }

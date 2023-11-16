@@ -1,5 +1,5 @@
 export enum ConfigTypes
-    {
+{
     AIRDROP = "aki-airdrop",
     BOT = "aki-bot",
     PMC = "aki-pmc",
@@ -25,5 +25,5 @@ export enum ConfigTypes
     WEATHER = "aki-weather",
     SEASONAL_EVENT = "aki-seasonalevents",
     LOST_ON_DEATH = "aki-lostondeath",
-    GIFTS = "aki-gifts"
+    GIFTS = "aki-gifts",
 }

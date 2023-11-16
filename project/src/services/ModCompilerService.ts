@@ -16,7 +16,7 @@ export class ModCompilerService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashCacheService") protected hashCacheService: HashCacheService,
-        @inject("VFS") protected vfs: VFS
+        @inject("VFS") protected vfs: VFS,
     )
     {
         const packageJsonPath: string = path.join(__dirname, "../../package.json");
@@ -27,8 +27,8 @@ export class ModCompilerService
      * Convert a mods TS into JS
      * @param modName Name of mod
      * @param modPath Dir path to mod
-     * @param modTypeScriptFiles 
-     * @returns 
+     * @param modTypeScriptFiles
+     * @returns
      */
     public async compileMod(modName: string, modPath: string, modTypeScriptFiles: string[]): Promise<void>
     {
@@ -38,7 +38,7 @@ export class ModCompilerService
         for (const file of modTypeScriptFiles)
         {
             const fileContent = this.vfs.readFile(file);
-            tsFileContents+= fileContent;
+            tsFileContents += fileContent;
 
             // Does equivalent .js file exist
             if (!this.vfs.exists(file.replace(".ts", ".js")))
@@ -61,22 +61,21 @@ export class ModCompilerService
             this.hashCacheService.storeModContent(modName, tsFileContents);
         }
 
-        return this.compile(modTypeScriptFiles,
-            {
-                noEmitOnError: true,
-                noImplicitAny: false,
-                target: ts.ScriptTarget.ES2022,
-                module: ts.ModuleKind.CommonJS,
-                moduleResolution: ts.ModuleResolutionKind.Node10,
-                sourceMap: true,
-                resolveJsonModule: true,
-                allowJs: true,
-                esModuleInterop: true,
-                downlevelIteration: true,
-                experimentalDecorators: true,
-                emitDecoratorMetadata: true,
-                rootDir: modPath
-            });
+        return this.compile(modTypeScriptFiles, {
+            noEmitOnError: true,
+            noImplicitAny: false,
+            target: ts.ScriptTarget.ES2022,
+            module: ts.ModuleKind.CommonJS,
+            moduleResolution: ts.ModuleResolutionKind.Node10,
+            sourceMap: true,
+            resolveJsonModule: true,
+            allowJs: true,
+            esModuleInterop: true,
+            downlevelIteration: true,
+            experimentalDecorators: true,
+            emitDecoratorMetadata: true,
+            rootDir: modPath,
+        });
     }
 
     /**
@@ -87,7 +86,7 @@ export class ModCompilerService
     protected async compile(fileNames: string[], options: ts.CompilerOptions): Promise<void>
     {
         // C:/snapshot/project || /snapshot/project
-        const baseDir: string = __dirname.replace(/\\/g,"/").split("/").slice(0, 3).join("/");
+        const baseDir: string = __dirname.replace(/\\/g, "/").split("/").slice(0, 3).join("/");
 
         for (const filePath of fileNames)
         {
@@ -100,25 +99,28 @@ export class ModCompilerService
             if (globalThis.G_RELEASE_CONFIGURATION)
             {
                 replacedText = text.replace(/(@spt-aki)/g, `${baseDir}/obj`);
-                for (const dependency of this.serverDependencies) 
+                for (const dependency of this.serverDependencies)
                 {
                     replacedText = replacedText.replace(`"${dependency}"`, `"${baseDir}/node_modules/${dependency}"`);
                 }
             }
             else
             {
-                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g,"/"));
+                replacedText = text.replace(/(@spt-aki)/g, path.join(__dirname, "..").replace(/\\/g, "/"));
             }
 
             const output = ts.transpileModule(replacedText, { compilerOptions: options });
 
             if (output.sourceMapText)
             {
-                output.outputText = output.outputText.replace("//# sourceMappingURL=module.js.map", `//# sourceMappingURL=${parsedDestPath.base}.map`);
+                output.outputText = output.outputText.replace(
+                    "//# sourceMappingURL=module.js.map",
+                    `//# sourceMappingURL=${parsedDestPath.base}.map`,
+                );
 
                 const sourceMap = JSON.parse(output.sourceMapText);
                 sourceMap.file = parsedDestPath.base;
-                sourceMap.sources = [ parsedPath.base ];
+                sourceMap.sources = [parsedPath.base];
 
                 fs.writeFileSync(`${destPath}.map`, JSON.stringify(sourceMap));
             }
@@ -133,21 +135,21 @@ export class ModCompilerService
 
     /**
      * Do the files at the provided paths exist
-     * @param fileNames 
-     * @returns 
+     * @param fileNames
+     * @returns
      */
     protected areFilesReady(fileNames: string[]): boolean
     {
-        return fileNames.filter(x => !this.vfs.exists(x.replace(".ts", ".js"))).length === 0;
+        return fileNames.filter((x) => !this.vfs.exists(x.replace(".ts", ".js"))).length === 0;
     }
 
     /**
      * Wait the provided number of milliseconds
      * @param ms Milliseconds
-     * @returns 
+     * @returns
      */
     protected delay(ms: number): Promise<unknown>
     {
-        return new Promise( resolve => setTimeout(resolve, ms) );
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }

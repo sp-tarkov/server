@@ -4,5 +4,13 @@ import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 
 export interface IRagfairOfferGenerator
 {
-    createOffer(userID: string, time: number, items: Item[], barterScheme: IBarterScheme[], loyalLevel: number, price: number, sellInOnePiece: boolean): IRagfairOffer;
+    createOffer(
+        userID: string,
+        time: number,
+        items: Item[],
+        barterScheme: IBarterScheme[],
+        loyalLevel: number,
+        price: number,
+        sellInOnePiece: boolean,
+    ): IRagfairOffer;
 }

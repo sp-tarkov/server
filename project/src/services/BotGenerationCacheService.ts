@@ -11,23 +11,23 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 export class BotGenerationCacheService
 {
     protected storedBots: Map<string, IBotBase[]> = new Map();
-    
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("BotHelper") protected botHelper: BotHelper
+        @inject("BotHelper") protected botHelper: BotHelper,
     )
-    { }
-    
+    {}
+
     /**
      * Store array of bots in cache, shuffle results before storage
      * @param botsToStore Bots we want to store in the cache
      */
     public storeBots(key: string, botsToStore: IBotBase[]): void
-    {   
-        botsToStore.forEach(e => 
+    {
+        botsToStore.forEach((e) =>
         {
             if (this.storedBots.has(key))
             {
@@ -63,7 +63,7 @@ export class BotGenerationCacheService
 
         return undefined;
     }
-    
+
     /**
      * Remove all cached bot profiles from memory
      */
@@ -71,7 +71,7 @@ export class BotGenerationCacheService
     {
         this.storedBots = new Map();
     }
-    
+
     /**
      * Does cache have a bot with requested key
      * @returns false if empty

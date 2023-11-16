@@ -34,7 +34,7 @@ export class TradeHelper
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -47,21 +47,25 @@ export class TradeHelper
      * @param sessionID Session id
      * @param foundInRaid Should item be found in raid
      * @param upd optional item details used when buying from flea
-     * @returns 
+     * @returns
      */
-    public buyItem(pmcData: IPmcData, buyRequestData: IProcessBuyTradeRequestData, sessionID: string, foundInRaid: boolean, upd: Upd): IItemEventRouterResponse
+    public buyItem(
+        pmcData: IPmcData,
+        buyRequestData: IProcessBuyTradeRequestData,
+        sessionID: string,
+        foundInRaid: boolean,
+        upd: Upd,
+    ): IItemEventRouterResponse
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
         const newReq = {
-            items: [
-                {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    item_id: buyRequestData.item_id,
-                    count: buyRequestData.count
-                }
-            ],
-            tid: buyRequestData.tid
+            items: [{
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                item_id: buyRequestData.item_id,
+                count: buyRequestData.count,
+            }],
+            tid: buyRequestData.tid,
         };
 
         const callback = () =>
@@ -71,13 +75,13 @@ export class TradeHelper
             if (isRagfair)
             {
                 const allOffers = this.ragfairServer.getOffers();
-                const offersWithItem = allOffers.find(x => x.items[0]._id === buyRequestData.item_id);
+                const offersWithItem = allOffers.find((x) => x.items[0]._id === buyRequestData.item_id);
                 itemPurchased = offersWithItem.items[0];
             }
             else
             {
                 const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(buyRequestData.tid).items;
-                itemPurchased = traderAssorts.find(x => x._id === buyRequestData.item_id);
+                itemPurchased = traderAssorts.find((x) => x._id === buyRequestData.item_id);
             }
 
             // Ensure purchase does not exceed trader item limit
@@ -130,7 +134,12 @@ export class TradeHelper
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
-    public sellItem(profileWithItemsToSell: IPmcData, profileToReceiveMoney: IPmcData, sellRequest: IProcessSellTradeRequestData, sessionID: string): IItemEventRouterResponse
+    public sellItem(
+        profileWithItemsToSell: IPmcData,
+        profileToReceiveMoney: IPmcData,
+        sellRequest: IProcessSellTradeRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         let output = this.eventOutputHolder.getOutput(sessionID);
 
@@ -140,7 +149,7 @@ export class TradeHelper
             const itemIdToFind = itemToBeRemoved.id.replace(/\s+/g, ""); // Strip out whitespace
 
             // Find item in player inventory, or show error to player if not found
-            const matchingItemInInventory = profileWithItemsToSell.Inventory.items.find(x => x._id === itemIdToFind);
+            const matchingItemInInventory = profileWithItemsToSell.Inventory.items.find((x) => x._id === itemIdToFind);
             if (!matchingItemInInventory)
             {
                 const errorMessage = `Unable to sell item ${itemToBeRemoved.id}, cannot be found in player inventory`;
@@ -179,7 +188,9 @@ export class TradeHelper
     {
         if ((assortBeingPurchased.upd.BuyRestrictionCurrent + count) > assortBeingPurchased.upd?.BuyRestrictionMax)
         {
-            throw new Error(`Unable to purchase ${count} items, this would exceed your purchase limit of ${assortBeingPurchased.upd.BuyRestrictionMax} from the trader this refresh`);
+            throw new Error(
+                `Unable to purchase ${count} items, this would exceed your purchase limit of ${assortBeingPurchased.upd.BuyRestrictionMax} from the trader this refresh`,
+            );
         }
     }
 }

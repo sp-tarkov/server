@@ -1,6 +1,6 @@
 import { ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
 
-export class TraderAssortService 
+export class TraderAssortService
 {
     protected pristineTraderAssorts: Record<string, ITraderAssort> = {};
 

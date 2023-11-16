@@ -1,4 +1,3 @@
-
 import { inject, injectable } from "tsyringe";
 
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
@@ -31,9 +30,9 @@ export class BundleLoader
     constructor(
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("VFS") protected vfs: VFS,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
     )
-    { }
+    {}
 
     /**
      * Handle singleplayer/bundles
@@ -65,7 +64,8 @@ export class BundleLoader
 
     public addBundles(modpath: string): void
     {
-        const manifest = this.jsonUtil.deserialize<BundleManifest>(this.vfs.readFile(`${modpath}bundles.json`)).manifest;
+        const manifest =
+            this.jsonUtil.deserialize<BundleManifest>(this.vfs.readFile(`${modpath}bundles.json`)).manifest;
 
         for (const bundle of manifest)
         {
@@ -75,7 +75,7 @@ export class BundleLoader
         }
     }
 
-    public addBundle(key: string, b: BundleInfo): void 
+    public addBundle(key: string, b: BundleInfo): void
     {
         this.bundles[key] = b;
     }
@@ -83,11 +83,11 @@ export class BundleLoader
 
 export interface BundleManifest
 {
-    manifest: Array<BundleManifestEntry>
+    manifest: Array<BundleManifestEntry>;
 }
 
 export interface BundleManifestEntry
 {
-    key: string
-    path: string
+    key: string;
+    path: string;
 }

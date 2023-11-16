@@ -23,9 +23,9 @@ export class SaveServer
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("WinstonLogger") protected logger: ILogger
+        @inject("WinstonLogger") protected logger: ILogger,
     )
-    { }
+    {}
 
     /**
      * Add callback to occur prior to saving profile changes
@@ -142,10 +142,7 @@ export class SaveServer
             throw new Error(`profile already exists for sessionId: ${profileInfo.id}`);
         }
 
-        this.profiles[profileInfo.id] = {
-            info: profileInfo,
-            characters: { pmc: {}, scav: {}}
-        };
+        this.profiles[profileInfo.id] = { info: profileInfo, characters: { pmc: {}, scav: {} } };
     }
 
     /**
@@ -180,14 +177,14 @@ export class SaveServer
     }
 
     /**
-     * Save changes from in-memory profile to user/profiles json 
+     * Save changes from in-memory profile to user/profiles json
      * Execute onBeforeSaveCallbacks callbacks prior to being saved to json
      * @param sessionID profile id (user/profiles/id.json)
      */
     public saveProfile(sessionID: string): void
     {
         const filePath = `${this.profileFilepath}${sessionID}.json`;
-        
+
         // run callbacks
         for (const callback in this.onBeforeSaveCallbacks)
         {
@@ -205,7 +202,7 @@ export class SaveServer
 
         const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], true);
         const fmd5 = this.hashUtil.generateMd5ForData(jsonProfile);
-        if (typeof(this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
+        if (typeof (this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
         {
             this.saveMd5[sessionID] = String(fmd5);
             // save profile to disk

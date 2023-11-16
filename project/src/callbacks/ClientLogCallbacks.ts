@@ -10,9 +10,9 @@ export class ClientLogCallbacks
 {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("ClientLogController") protected clientLogController: ClientLogController
-    ) 
-    { }
+        @inject("ClientLogController") protected clientLogController: ClientLogController,
+    )
+    {}
 
     /**
      * Handle /singleplayer/log

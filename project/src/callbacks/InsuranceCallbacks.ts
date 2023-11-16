@@ -22,7 +22,7 @@ export class InsuranceCallbacks implements OnUpdate
         @inject("InsuranceController") protected insuranceController: InsuranceController,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);
@@ -32,7 +32,11 @@ export class InsuranceCallbacks implements OnUpdate
      * Handle client/insurance/items/list/cost
      * @returns IGetInsuranceCostResponseData
      */
-    public getInsuranceCost(url: string, info: IGetInsuranceCostRequestData, sessionID: string): IGetBodyResponseData<IGetInsuranceCostResponseData>
+    public getInsuranceCost(
+        url: string,
+        info: IGetInsuranceCostRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetInsuranceCostResponseData>
     {
         return this.httpResponse.getBody(this.insuranceController.cost(info, sessionID));
     }

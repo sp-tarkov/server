@@ -1,5 +1,5 @@
 export enum SkillTypes
-    {
+{
     BOT_RELOAD = "BotReload",
     BOT_SOUND = "BotSound",
     HIDEOUT_MANAGEMENT = "HideoutManagement",
@@ -53,5 +53,5 @@ export enum SkillTypes
     USEC_DEEP_WEAPON_MOD = "UsecDeepweaponmodding_Settings",
     USEC_LONG_RANGE_OPTICS = "UsecLongrangeoptics_Settings",
     USEC_NEGOTIATIONS = "UsecNegotiations",
-    USEC_TACTICS = "UsecTactics"
+    USEC_TACTICS = "UsecTactics",
 }

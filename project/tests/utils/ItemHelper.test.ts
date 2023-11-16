@@ -10,11 +10,11 @@ let testHelper: TestHelper;
 
 describe("test text", () =>
 {
-    beforeAll(async () => 
+    beforeAll(async () =>
     {
         testHelper = await TestHelper.fetchTestHelper();
     });
-    
+
     let itemHelper: ItemHelper;
     beforeEach(() =>
     {
@@ -68,104 +68,63 @@ describe("test text", () =>
 
     it("fixItemStackCount() item with no upd object", () =>
     {
-        const itemWithNoUpd: Item = {
-            _id: "test",
-            _tpl: "123456789"
-        };
+        const itemWithNoUpd: Item = { _id: "test", _tpl: "123456789" };
         const result = itemHelper.fixItemStackCount(itemWithNoUpd);
         expect(result.upd?.StackObjectsCount).toBe(1);
     });
 
     it("fixItemStackCount() item with upd object no StackObjectsCount property", () =>
     {
-        const itemWithUpdNoStack: Item = {
-            _id: "test",
-            _tpl: "123456789",
-            upd: {}
-        };
+        const itemWithUpdNoStack: Item = { _id: "test", _tpl: "123456789", upd: {} };
         const result = itemHelper.fixItemStackCount(itemWithUpdNoStack);
         expect(result.upd?.StackObjectsCount).toBe(1);
     });
 
     it("fixItemStackCount() item with upd object and custom stack count", () =>
     {
-        const itemWithUpdAndStack: Item = {
-            _id: "test",
-            _tpl: "123456789",
-            upd: { StackObjectsCount: 2 }
-        };
+        const itemWithUpdAndStack: Item = { _id: "test", _tpl: "123456789", upd: { StackObjectsCount: 2 } };
         const result = itemHelper.fixItemStackCount(itemWithUpdAndStack);
         expect(result.upd?.StackObjectsCount).toBe(2);
     });
 
     it("getItemStackSize() stack size of 4", () =>
     {
-        const itemWithStackSizeOf4: Item = {
-            _id: "",
-            _tpl: "",
-            upd: { StackObjectsCount: 4}
-        };
+        const itemWithStackSizeOf4: Item = { _id: "", _tpl: "", upd: { StackObjectsCount: 4 } };
         const result = itemHelper.getItemStackSize(itemWithStackSizeOf4);
         expect(result).toBe(4);
     });
 
     it("getItemStackSize() upd object no stack property", () =>
     {
-        const itemWithUpdNoStack: Item = {
-            _id: "",
-            _tpl: "",
-            upd: {}
-        };
+        const itemWithUpdNoStack: Item = { _id: "", _tpl: "", upd: {} };
         const result = itemHelper.getItemStackSize(itemWithUpdNoStack);
         expect(result).toBe(1);
     });
 
     it("getItemStackSize() no upd object", () =>
     {
-        const itemWithNoUpdObject: Item = {
-            _id: "",
-            _tpl: ""
-        };
+        const itemWithNoUpdObject: Item = { _id: "", _tpl: "" };
         const result = itemHelper.getItemStackSize(itemWithNoUpdObject);
         expect(result).toBe(1);
     });
 
     it("getItemQualityModifier() no upd object", () =>
     {
-        const itemWithNoUpdObject: Item = {
-            _id: "",
-            _tpl: ""
-        };
+        const itemWithNoUpdObject: Item = { _id: "", _tpl: "" };
         const result = itemHelper.getItemQualityModifier(itemWithNoUpdObject);
         expect(result).toBe(1);
     });
 
     it("getItemQualityModifier() grizzly medkit with full hp", () =>
     {
-        const medkitItem: Item = {
-            _id: "",
-            _tpl: "590c657e86f77412b013051d",
-            upd: {
-                MedKit: { 
-                    HpResource: 1800
-                }
-            }
-        };
+        const medkitItem: Item = { _id: "", _tpl: "590c657e86f77412b013051d", upd: { MedKit: { HpResource: 1800 } } };
         const result = itemHelper.getItemQualityModifier(medkitItem);
         expect(result).toBe(1);
     });
 
     it("getItemQualityModifier() grizzly medkit with 0 hp", () =>
     {
-        const medkitItem: Item = {
-            _id: "",
-            _tpl: "590c657e86f77412b013051d",
-            upd: {
-                MedKit: { 
-                    HpResource: 0
-                }
-            }
-        };
+        const medkitItem: Item = { _id: "", _tpl: "590c657e86f77412b013051d", upd: { MedKit: { HpResource: 0 } } };
         const result = itemHelper.getItemQualityModifier(medkitItem);
         expect(result).toBe(0.01);
     });
@@ -175,12 +134,7 @@ describe("test text", () =>
         const medkitItem: Item = {
             _id: "",
             _tpl: "5e4abb5086f77406975c9342",
-            upd: {
-                Repairable: { 
-                    Durability: 80,
-                    MaxDurability: 80
-                }
-            }
+            upd: { Repairable: { Durability: 80, MaxDurability: 80 } },
         };
         const result = itemHelper.getItemQualityModifier(medkitItem);
         expect(result).toBe(1);
@@ -191,12 +145,7 @@ describe("test text", () =>
         const medkitItem: Item = {
             _id: "",
             _tpl: "5e4abb5086f77406975c9342",
-            upd: {
-                Repairable: { 
-                    Durability: 0,
-                    MaxDurability: 80
-                }
-            }
+            upd: { Repairable: { Durability: 0, MaxDurability: 80 } },
         };
         const result = itemHelper.getItemQualityModifier(medkitItem);
         expect(result).toBe(0.01);
@@ -207,12 +156,7 @@ describe("test text", () =>
         const mdrItem: Item = {
             _id: "",
             _tpl: "5c488a752e221602b412af63",
-            upd: {
-                Repairable: { 
-                    Durability: 100,
-                    MaxDurability: 100
-                }
-            }
+            upd: { Repairable: { Durability: 100, MaxDurability: 100 } },
         };
 
         const result = itemHelper.getItemQualityModifier(mdrItem);
@@ -221,14 +165,7 @@ describe("test text", () =>
 
     it("hasBuyRestrictions() item with restrictions, not reached", () =>
     {
-        const item: Item = {
-            _id: "",
-            _tpl: "",
-            upd: {
-                BuyRestrictionCurrent: 0,
-                BuyRestrictionMax: 5
-            }
-        };
+        const item: Item = { _id: "", _tpl: "", upd: { BuyRestrictionCurrent: 0, BuyRestrictionMax: 5 } };
 
         const result = itemHelper.hasBuyRestrictions(item);
         expect(result).toBe(true);
@@ -236,11 +173,7 @@ describe("test text", () =>
 
     it("hasBuyRestrictions() item no restrictions defined", () =>
     {
-        const item: Item = {
-            _id: "",
-            _tpl: "",
-            upd: { }
-        };
+        const item: Item = { _id: "", _tpl: "", upd: {} };
 
         const result = itemHelper.hasBuyRestrictions(item);
         expect(result).toBe(false);

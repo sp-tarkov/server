@@ -2,5 +2,5 @@ import { ILoginRequestData } from "@spt-aki/models/eft/launcher/ILoginRequestDat
 
 export interface IRegisterData extends ILoginRequestData
 {
-    edition: string
+    edition: string;
 }

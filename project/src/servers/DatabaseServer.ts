@@ -16,7 +16,7 @@ export class DatabaseServer
         traders: undefined,
         globals: undefined,
         server: undefined,
-        settings: undefined
+        settings: undefined,
     };
 
     public getTables(): IDatabaseTables

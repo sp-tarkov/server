@@ -7,34 +7,39 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { INoteActionData } from "@spt-aki/models/eft/notes/INoteActionData";
 
 @injectable()
-export class NoteItemEventRouter extends ItemEventRouterDefinition 
+export class NoteItemEventRouter extends ItemEventRouterDefinition
 {
     constructor(
-        @inject("NoteCallbacks") protected noteCallbacks: NoteCallbacks // TODO: delay required
-    ) 
+        @inject("NoteCallbacks") protected noteCallbacks: NoteCallbacks, // TODO: delay required
+    )
     {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
+    public override getHandledRoutes(): HandledRoute[]
     {
         return [
             new HandledRoute("AddNote", false),
             new HandledRoute("EditNote", false),
-            new HandledRoute("DeleteNote", false)
+            new HandledRoute("DeleteNote", false),
         ];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse 
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: INoteActionData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         switch (url)
         {
             case "AddNote":
                 return this.noteCallbacks.addNote(pmcData, body, sessionID);
             case "EditNote":
-                return this.noteCallbacks.editNote(pmcData, body, sessionID);  
+                return this.noteCallbacks.editNote(pmcData, body, sessionID);
             case "DeleteNote":
-                return this.noteCallbacks.deleteNote(pmcData, body, sessionID);            
+                return this.noteCallbacks.deleteNote(pmcData, body, sessionID);
         }
     }
 }

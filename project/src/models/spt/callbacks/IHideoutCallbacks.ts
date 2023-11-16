@@ -13,13 +13,41 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 export interface IHideoutCallbacks
 {
     upgrade(pmcData: IPmcData, body: IHideoutUpgradeRequestData, sessionID: string): IItemEventRouterResponse;
-    upgradeComplete(pmcData: IPmcData, body: IHideoutUpgradeCompleteRequestData, sessionID: string): IItemEventRouterResponse;
-    putItemsInAreaSlots(pmcData: IPmcData, body: IHideoutPutItemInRequestData, sessionID: string): IItemEventRouterResponse;
-    takeItemsFromAreaSlots(pmcData: IPmcData, body: IHideoutTakeItemOutRequestData, sessionID: string): IItemEventRouterResponse;
+    upgradeComplete(
+        pmcData: IPmcData,
+        body: IHideoutUpgradeCompleteRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    putItemsInAreaSlots(
+        pmcData: IPmcData,
+        body: IHideoutPutItemInRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    takeItemsFromAreaSlots(
+        pmcData: IPmcData,
+        body: IHideoutTakeItemOutRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
     toggleArea(pmcData: IPmcData, body: IHideoutToggleAreaRequestData, sessionID: string): IItemEventRouterResponse;
-    singleProductionStart(pmcData: IPmcData, body: IHideoutSingleProductionStartRequestData, sessionID: string): IItemEventRouterResponse;
-    scavCaseProductionStart(pmcData: IPmcData, body: IHideoutScavCaseStartRequestData, sessionID: string): IItemEventRouterResponse;
-    continuousProductionStart(pmcData: IPmcData, body: IHideoutContinuousProductionStartRequestData, sessionID: string): IItemEventRouterResponse;
-    takeProduction(pmcData: IPmcData, body: IHideoutTakeProductionRequestData, sessionID: string): IItemEventRouterResponse;
+    singleProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutSingleProductionStartRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    scavCaseProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutScavCaseStartRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    continuousProductionStart(
+        pmcData: IPmcData,
+        body: IHideoutContinuousProductionStartRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
+    takeProduction(
+        pmcData: IPmcData,
+        body: IHideoutTakeProductionRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse;
     update(timeSinceLastRun: number): boolean;
 }

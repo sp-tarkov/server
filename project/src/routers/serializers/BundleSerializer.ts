@@ -9,11 +9,10 @@ import { HttpFileUtil } from "@spt-aki/utils/HttpFileUtil";
 @injectable()
 export class BundleSerializer extends Serializer
 {
-
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("BundleLoader") protected bundleLoader: BundleLoader,
-        @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil
+        @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
     )
     {
         super();

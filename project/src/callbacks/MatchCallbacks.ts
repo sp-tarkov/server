@@ -31,9 +31,9 @@ export class MatchCallbacks
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("MatchController") protected matchController: MatchController,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
-    { }
+    {}
 
     /** Handle client/match/updatePing */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -77,7 +77,11 @@ export class MatchCallbacks
 
     /** Handle client/match/group/invite/accept */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public acceptGroupInvite(url: string, info: IAcceptGroupInviteRequest, sessionID: string): IGetBodyResponseData<IAcceptGroupInviteResponse[]>
+    public acceptGroupInvite(
+        url: string,
+        info: IAcceptGroupInviteRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<IAcceptGroupInviteResponse[]>
     {
         const result = [];
         result.push({});
@@ -87,7 +91,11 @@ export class MatchCallbacks
 
     /** Handle client/match/group/invite/cancel */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public cancelGroupInvite(url: string, info: ICancelGroupInviteRequest, sessionID: string): IGetBodyResponseData<boolean>
+    public cancelGroupInvite(
+        url: string,
+        info: ICancelGroupInviteRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<boolean>
     {
         return this.httpResponse.getBody(true);
     }
@@ -129,7 +137,11 @@ export class MatchCallbacks
     }
 
     /** Handle match/group/start_game */
-    public joinMatch(url: string, info: IJoinMatchRequestData, sessionID: string): IGetBodyResponseData<IJoinMatchResult>
+    public joinMatch(
+        url: string,
+        info: IJoinMatchRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IJoinMatchResult>
     {
         return this.httpResponse.getBody(this.matchController.joinMatch(info, sessionID));
     }
@@ -144,7 +156,7 @@ export class MatchCallbacks
     /**
      * @deprecated - not called on raid start/end or game start/exit
      * Handle client/match/group/status
-     * @returns 
+     * @returns
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getGroupStatus(url: string, info: IGetGroupStatusRequestData, sessionID: string): IGetBodyResponseData<any>
@@ -188,7 +200,11 @@ export class MatchCallbacks
     }
 
     /** Handle client/raid/configuration */
-    public getRaidConfiguration(url: string, info: IGetRaidConfigurationRequestData, sessionID: string): INullResponseData
+    public getRaidConfiguration(
+        url: string,
+        info: IGetRaidConfigurationRequestData,
+        sessionID: string,
+    ): INullResponseData
     {
         this.matchController.startOfflineRaid(info, sessionID);
         return this.httpResponse.nullResponse();

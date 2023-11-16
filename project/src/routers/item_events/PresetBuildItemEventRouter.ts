@@ -7,27 +7,30 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { ItemEventActions } from "@spt-aki/models/enums/ItemEventActions";
 
 @injectable()
-export class PresetBuildItemEventRouter extends ItemEventRouterDefinition 
+export class PresetBuildItemEventRouter extends ItemEventRouterDefinition
 {
-    constructor(
-        @inject("PresetBuildCallbacks") protected presetBuildCallbacks: PresetBuildCallbacks
-    ) 
+    constructor(@inject("PresetBuildCallbacks") protected presetBuildCallbacks: PresetBuildCallbacks)
     {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
+    public override getHandledRoutes(): HandledRoute[]
     {
         return [
             new HandledRoute(ItemEventActions.SAVE_WEAPON_BUILD, false),
             new HandledRoute(ItemEventActions.REMOVE_WEAPON_BUILD, false),
             new HandledRoute(ItemEventActions.SAVE_EQUIPMENT_BUILD, false),
             new HandledRoute(ItemEventActions.REMOVE_EQUIPMENT_BUILD, false),
-            new HandledRoute(ItemEventActions.REMOVE_BUILD, false)
+            new HandledRoute(ItemEventActions.REMOVE_BUILD, false),
         ];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
+    public override handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         switch (url)
         {

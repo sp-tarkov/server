@@ -8,17 +8,16 @@ import { Watermark } from "@spt-aki/utils/Watermark";
 
 export class Program
 {
-
     private errorHandler: ErrorHandler;
-    constructor() 
+    constructor()
     {
         // set window properties
         process.stdout.setEncoding("utf8");
         process.title = "SPT-AKI Server";
         this.errorHandler = new ErrorHandler();
     }
-    
-    public start(): void 
+
+    public start(): void
     {
         try
         {
@@ -27,13 +26,11 @@ export class Program
             childContainer.resolve<Watermark>("Watermark");
             const preAkiModLoader = childContainer.resolve<PreAkiModLoader>("PreAkiModLoader");
             Container.registerListTypes(childContainer);
-            preAkiModLoader.load(childContainer)
-                .then(() => 
-                {
-                    Container.registerPostLoadTypes(container, childContainer);
-                    childContainer.resolve<App>("App").load();
-                }).catch(rej => this.errorHandler.handleCriticalError(rej));
-            
+            preAkiModLoader.load(childContainer).then(() =>
+            {
+                Container.registerPostLoadTypes(container, childContainer);
+                childContainer.resolve<App>("App").load();
+            }).catch((rej) => this.errorHandler.handleCriticalError(rej));
         }
         catch (e)
         {

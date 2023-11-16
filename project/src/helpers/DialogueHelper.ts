@@ -4,7 +4,13 @@ import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { NotificationSendHelper } from "@spt-aki/helpers/NotificationSendHelper";
 import { NotifierHelper } from "@spt-aki/helpers/NotifierHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { Dialogue, Message, MessageContent, MessageItems, MessagePreview } from "@spt-aki/models/eft/profile/IAkiProfile";
+import {
+    Dialogue,
+    Message,
+    MessageContent,
+    MessageItems,
+    MessagePreview,
+} from "@spt-aki/models/eft/profile/IAkiProfile";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -24,19 +30,16 @@ export class DialogueHelper
         @inject("NotifierHelper") protected notifierHelper: NotifierHelper,
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ItemHelper") protected itemHelper: ItemHelper
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
     )
-    { }
+    {}
 
     /**
      * @deprecated Use MailSendService.sendMessage() or helpers
      */
     public createMessageContext(templateId: string, messageType: MessageType, maxStoreTime = null): MessageContent
     {
-        const result: MessageContent = {
-            templateId: templateId,
-            type: messageType
-        };
+        const result: MessageContent = { templateId: templateId, type: messageType };
 
         if (maxStoreTime)
         {
@@ -49,7 +52,13 @@ export class DialogueHelper
     /**
      * @deprecated Use MailSendService.sendMessage() or helpers
      */
-    public addDialogueMessage(dialogueID: string, messageContent: MessageContent, sessionID: string, rewards: Item[] = [], messageType = MessageType.NPC_TRADER): void
+    public addDialogueMessage(
+        dialogueID: string,
+        messageContent: MessageContent,
+        sessionID: string,
+        rewards: Item[] = [],
+        messageType = MessageType.NPC_TRADER,
+    ): void
     {
         const dialogueData = this.saveServer.getProfile(sessionID).dialogues;
         const isNewDialogue = !(dialogueID in dialogueData);
@@ -57,14 +66,7 @@ export class DialogueHelper
 
         if (isNewDialogue)
         {
-            dialogue = {
-                _id: dialogueID,
-                type: messageType,
-                messages: [],
-                pinned: false,
-                new: 0,
-                attachmentsNew: 0
-            };
+            dialogue = { _id: dialogueID, type: messageType, messages: [], pinned: false, new: 0, attachmentsNew: 0 };
 
             dialogueData[dialogueID] = dialogue;
         }
@@ -77,10 +79,7 @@ export class DialogueHelper
         if (rewards.length > 0)
         {
             const stashId = this.hashUtil.generate();
-            items = {
-                stash: stashId,
-                data: []
-            };
+            items = { stash: stashId, data: [] };
 
             rewards = this.itemHelper.replaceIDs(null, rewards);
             for (const reward of rewards)
@@ -95,7 +94,12 @@ export class DialogueHelper
                 if (!itemTemplate)
                 {
                     // Can happen when modded items are insured + mod is removed
-                    this.logger.error(this.localisationService.getText("dialog-missing_item_template", {tpl: reward._tpl, type: MessageType[messageContent.type]}));
+                    this.logger.error(
+                        this.localisationService.getText("dialog-missing_item_template", {
+                            tpl: reward._tpl,
+                            type: MessageType[messageContent.type],
+                        }),
+                    );
 
                     continue;
                 }
@@ -132,7 +136,9 @@ export class DialogueHelper
             items: items,
             maxStorageTime: messageContent.maxStorageTime,
             systemData: messageContent.systemData ? messageContent.systemData : undefined,
-            profileChangeEvents: (messageContent.profileChangeEvents?.length === 0) ? messageContent.profileChangeEvents : undefined
+            profileChangeEvents: (messageContent.profileChangeEvents?.length === 0)
+                ? messageContent.profileChangeEvents
+                : undefined,
         };
 
         if (!message.templateId)
@@ -145,7 +151,10 @@ export class DialogueHelper
         // Offer Sold notifications are now separate from the main notification
         if (messageContent.type === MessageType.FLEAMARKET_MESSAGE && messageContent.ragfair)
         {
-            const offerSoldMessage = this.notifierHelper.createRagfairOfferSoldNotification(message, messageContent.ragfair);
+            const offerSoldMessage = this.notifierHelper.createRagfairOfferSoldNotification(
+                message,
+                messageContent.ragfair,
+            );
             this.notificationSendHelper.sendMessage(sessionID, offerSoldMessage);
             message.type = MessageType.MESSAGE_WITH_ITEMS; // Should prevent getting the same notification popup twice
         }
@@ -156,7 +165,7 @@ export class DialogueHelper
 
     /**
      * Get the preview contents of the last message in a dialogue.
-     * @param dialogue 
+     * @param dialogue
      * @returns MessagePreview
      */
     public getMessagePreview(dialogue: Dialogue): MessagePreview
@@ -167,7 +176,7 @@ export class DialogueHelper
             dt: message?.dt,
             type: message?.type,
             templateId: message?.templateId,
-            uid: dialogue._id
+            uid: dialogue._id,
         };
 
         if (message?.text)
@@ -185,17 +194,17 @@ export class DialogueHelper
 
     /**
      * Get the item contents for a particular message.
-     * @param messageID 
-     * @param sessionID 
+     * @param messageID
+     * @param sessionID
      * @param itemId Item being moved to inventory
-     * @returns 
+     * @returns
      */
     public getMessageItemContents(messageID: string, sessionID: string, itemId: string): Item[]
     {
         const dialogueData = this.saveServer.getProfile(sessionID).dialogues;
         for (const dialogueId in dialogueData)
         {
-            const message = dialogueData[dialogueId].messages.find(x => x._id === messageID);
+            const message = dialogueData[dialogueId].messages.find((x) => x._id === messageID);
             if (!message)
             {
                 continue;
@@ -211,7 +220,7 @@ export class DialogueHelper
 
                 // Check reward count when item being moved isn't in reward list
                 // if count is 0, it means after this move the reward array will be empty and all rewards collected
-                const rewardItemCount = message.items.data.filter(x => x._id !== itemId );
+                const rewardItemCount = message.items.data.filter((x) => x._id !== itemId);
                 if (rewardItemCount.length === 0)
                 {
                     message.rewardCollected = true;

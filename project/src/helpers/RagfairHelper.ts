@@ -31,17 +31,17 @@ export class RagfairHelper
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("RagfairLinkedItemService") protected ragfairLinkedItemService: RagfairLinkedItemService,
         @inject("UtilityHelper") protected utilityHelper: UtilityHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
     }
 
     /**
-    * Gets currency TAG from TPL
-    * @param {string} currency
-    * @returns string
-    */
+     * Gets currency TAG from TPL
+     * @param {string} currency
+     * @returns string
+     */
     public getCurrencyTag(currency: string): string
     {
         switch (currency)
@@ -74,9 +74,7 @@ export class RagfairHelper
         if (info.linkedSearchId)
         {
             const data = this.ragfairLinkedItemService.getLinkedItems(info.linkedSearchId);
-            result = !data
-                ? []
-                : [...data];
+            result = !data ? [] : [...data];
         }
 
         // Case: category
@@ -186,7 +184,7 @@ export class RagfairHelper
         for (let item of items)
         {
             item = this.itemHelper.fixItemStackCount(item);
-            const isChild = items.find(it => it._id === item.parentId);
+            const isChild = items.find((it) => it._id === item.parentId);
 
             if (!isChild)
             {

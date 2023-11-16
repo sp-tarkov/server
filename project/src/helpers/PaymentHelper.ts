@@ -10,9 +10,7 @@ export class PaymentHelper
 {
     protected inventoryConfig: IInventoryConfig;
 
-    constructor(
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
+    constructor(@inject("ConfigServer") protected configServer: ConfigServer)
     {
         this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);
     }
@@ -24,14 +22,16 @@ export class PaymentHelper
      */
     public isMoneyTpl(tpl: string): boolean
     {
-        return [Money.DOLLARS, Money.EUROS, Money.ROUBLES, ...this.inventoryConfig.customMoneyTpls].some(element => element === tpl);
+        return [Money.DOLLARS, Money.EUROS, Money.ROUBLES, ...this.inventoryConfig.customMoneyTpls].some((element) =>
+            element === tpl
+        );
     }
 
     /**
-    * Gets currency TPL from TAG
-    * @param {string} currency
-    * @returns string
-    */
+     * Gets currency TPL from TAG
+     * @param {string} currency
+     * @returns string
+     */
     public getCurrency(currency: string): string
     {
         switch (currency)

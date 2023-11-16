@@ -8,16 +8,14 @@ export class RagfairCategoriesService
 {
     protected categories: Record<string, number> = {};
 
-    constructor(
-        @inject("WinstonLogger") protected logger: ILogger
-    )
-    { }
+    constructor(@inject("WinstonLogger") protected logger: ILogger)
+    {}
 
     /**
      * Get all flea categories and their count of offers
      * @returns item categories and count
      */
-    public getAllCategories(): Record<string, number> 
+    public getAllCategories(): Record<string, number>
     {
         return this.categories;
     }
@@ -26,7 +24,7 @@ export class RagfairCategoriesService
      * With the supplied items, get custom categories
      * @returns a custom list of categories
      */
-    public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number> 
+    public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number>
     {
         return this.processOffersIntoCategories(offers);
     }
@@ -36,7 +34,7 @@ export class RagfairCategoriesService
      * @param offers ragfair offers
      * @returns categories and count
      */
-    protected processOffersIntoCategories(offers: IRagfairOffer[]): Record<string, number> 
+    protected processOffersIntoCategories(offers: IRagfairOffer[]): Record<string, number>
     {
         const result = {};
         for (const offer of offers)
@@ -53,14 +51,12 @@ export class RagfairCategoriesService
      * @param categories Categories to update
      * @param increment (Optional) Should item be incremented or decremented
      */
-    protected addOrIncrementCategory(offer: IRagfairOffer, categories: Record<string, number>, increment = true ): void
+    protected addOrIncrementCategory(offer: IRagfairOffer, categories: Record<string, number>, increment = true): void
     {
         const itemId = offer.items[0]._tpl;
         if (increment)
         {
-            categories[itemId] = categories[itemId]
-                ? categories[itemId] + 1
-                : 1;
+            categories[itemId] = categories[itemId] ? categories[itemId] + 1 : 1;
         }
         else
         {
@@ -80,7 +76,7 @@ export class RagfairCategoriesService
 
     /**
      * Increase category count by 1
-     * @param offer 
+     * @param offer
      */
     public incrementCategory(offer: IRagfairOffer): void
     {
@@ -90,7 +86,7 @@ export class RagfairCategoriesService
 
     /**
      * Reduce category count by 1
-     * @param offer 
+     * @param offer
      */
     public decrementCategory(offer: IRagfairOffer): void
     {

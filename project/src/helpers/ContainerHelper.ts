@@ -43,7 +43,7 @@ export class ContainerHelper
                 /**
                  * Try to rotate if there is enough room for the item
                  * Only occupies one grid of items, no rotation required
-                 * */
+                 */
                 if (!foundSlot && itemWidth * itemHeight > 1)
                 {
                     foundSlot = this.locateSlot(container2D, containerX, containerY, x, y, itemHeight, itemWidth);
@@ -77,7 +77,15 @@ export class ContainerHelper
      * @param itemH Items height
      * @returns True - slot found
      */
-    protected locateSlot(container2D: number[][], containerX: number, containerY: number, x: number, y: number, itemW: number, itemH: number): boolean
+    protected locateSlot(
+        container2D: number[][],
+        containerX: number,
+        containerY: number,
+        x: number,
+        y: number,
+        itemW: number,
+        itemH: number,
+    ): boolean
     {
         let foundSlot = true;
 
@@ -124,7 +132,14 @@ export class ContainerHelper
      * @param rotate is item rotated
      * @returns Location to place item
      */
-    public fillContainerMapWithItem(container2D: number[][], x: number, y: number, itemW: number, itemH: number, rotate: boolean): number[][]
+    public fillContainerMapWithItem(
+        container2D: number[][],
+        x: number,
+        y: number,
+        itemW: number,
+        itemH: number,
+        rotate: boolean,
+    ): number[][]
     {
         const itemWidth = rotate ? itemH : itemW;
         const itemHeight = rotate ? itemW : itemH;

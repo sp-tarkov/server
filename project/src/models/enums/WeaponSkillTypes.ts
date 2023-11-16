@@ -1,5 +1,5 @@
 export enum WeaponSkillTypes
-    {
+{
     PISTOL = "Pistol",
     REVOLVER = "Revolver",
     SMG = "SMG",
@@ -11,5 +11,5 @@ export enum WeaponSkillTypes
     DMR = "DMR",
     LAUNCHER = "Launcher",
     ATTACHED_LAUNCHER = "AttachedLauncher",
-    MELEE = "Melee"
+    MELEE = "Melee",
 }

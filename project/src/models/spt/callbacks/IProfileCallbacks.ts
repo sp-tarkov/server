@@ -19,5 +19,9 @@ export interface IProfileCallbacks
     validateNickname(url: string, info: IValidateNicknameRequestData, sessionID: string): IGetBodyResponseData<any>;
     getReservedNickname(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string>;
     getProfileStatus(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<any>;
-    searchFriend(url: string, info: ISearchFriendRequestData, sessionID: string): IGetBodyResponseData<ISearchFriendResponse>;
+    searchFriend(
+        url: string,
+        info: ISearchFriendRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ISearchFriendResponse>;
 }

@@ -3,60 +3,60 @@ import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 
 export interface IRepairConfig extends IBaseConfig
 {
-    kind: "aki-repair"
-    priceMultiplier: number
-    applyRandomizeDurabilityLoss: boolean
-    weaponSkillRepairGain: number
-    armorKitSkillPointGainPerRepairPointMultiplier: number
+    kind: "aki-repair";
+    priceMultiplier: number;
+    applyRandomizeDurabilityLoss: boolean;
+    weaponSkillRepairGain: number;
+    armorKitSkillPointGainPerRepairPointMultiplier: number;
     /** INT gain multiplier per repaired item type */
-    repairKitIntellectGainMultiplier: IIntellectGainValues
-    //** How much INT can be given to player per repair action */
+    repairKitIntellectGainMultiplier: IIntellectGainValues;
+    // ** How much INT can be given to player per repair action */
     maxIntellectGainPerRepair: IMaxIntellectGainValues;
     weaponTreatment: IWeaponTreatmentRepairValues;
-    repairKit: RepairKit
+    repairKit: RepairKit;
 }
 
 export interface IIntellectGainValues
 {
-    weapon: number
-    armor: number
+    weapon: number;
+    armor: number;
 }
 
 export interface IMaxIntellectGainValues
 {
-    kit: number
-    trader: number
+    kit: number;
+    trader: number;
 }
 
 export interface IWeaponTreatmentRepairValues
 {
     /** The chance to gain more weapon maintenance skill */
-    critSuccessChance: number
-    critSuccessAmount: number
+    critSuccessChance: number;
+    critSuccessAmount: number;
     /** The chance to gain less weapon maintenance skill  */
-    critFailureChance: number
-    critFailureAmount: number
+    critFailureChance: number;
+    critFailureAmount: number;
     /** The multiplier used for calculating weapon maintenance XP */
-    pointGainMultiplier: number
+    pointGainMultiplier: number;
 }
 
 export interface RepairKit
 {
-    armor: BonusSettings
-    weapon: BonusSettings
+    armor: BonusSettings;
+    weapon: BonusSettings;
 }
 
 export interface BonusSettings
 {
-    rarityWeight: Record<string, number>
-    bonusTypeWeight: Record<string, number>
-    common: Record<string, BonusValues>
-    rare: Record<string, BonusValues>
+    rarityWeight: Record<string, number>;
+    bonusTypeWeight: Record<string, number>;
+    common: Record<string, BonusValues>;
+    rare: Record<string, BonusValues>;
 }
 
 export interface BonusValues
 {
-    valuesMinMax: MinMax
+    valuesMinMax: MinMax;
     /** What dura is buff active between (min max of current max) */
-    activeDurabilityPercentMinMax: MinMax
+    activeDurabilityPercentMinMax: MinMax;
 }

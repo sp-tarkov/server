@@ -46,7 +46,7 @@ export class InsuranceService
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("MailSendService") protected mailSendService: MailSendService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);
@@ -103,13 +103,17 @@ export class InsuranceService
             const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
 
             // Construct "i will go look for your stuff" message
-            const messageContent = this.dialogueHelper.createMessageContext(this.randomUtil.getArrayValue(dialogueTemplates.insuranceStart), MessageType.NPC_TRADER, traderBase.insurance.max_storage_time);
+            const messageContent = this.dialogueHelper.createMessageContext(
+                this.randomUtil.getArrayValue(dialogueTemplates.insuranceStart),
+                MessageType.NPC_TRADER,
+                traderBase.insurance.max_storage_time,
+            );
             messageContent.text = ""; // Live insurance returns have an empty string for the text property
             messageContent.profileChangeEvents = [];
             messageContent.systemData = {
                 date: this.timeUtil.getDateMailFormat(),
                 time: this.timeUtil.getTimeMailFormat(),
-                location: mapId
+                location: mapId,
             };
 
             // MUST occur after systemData is hydrated
@@ -128,7 +132,7 @@ export class InsuranceService
                 scheduledTime: insuranceReturnTimestamp,
                 traderId: traderId,
                 messageContent: messageContent,
-                items: this.getInsurance(sessionID)[traderId]
+                items: this.getInsurance(sessionID)[traderId],
             });
         }
 
@@ -154,7 +158,8 @@ export class InsuranceService
             randomResponseId,
             [],
             null,
-            {location: locationName});
+            { location: locationName },
+        );
     }
 
     /**
@@ -168,7 +173,7 @@ export class InsuranceService
         for (const insuredItem of this.getInsurance(sessionId)[traderId])
         {
             // Find insured items parent
-            const insuredItemsParent = insuredItems.find(x => x._id === insuredItem.parentId);
+            const insuredItemsParent = insuredItems.find((x) => x._id === insuredItem.parentId);
             if (!insuredItemsParent)
             {
                 // Remove location + set slotId of insured items parent
@@ -190,14 +195,15 @@ export class InsuranceService
         // If override inconfig is non-zero, use that instead of trader values
         if (this.insuranceConfig.returnTimeOverrideSeconds > 0)
         {
-            this.logger.debug(`Insurance override used: returning in ${this.insuranceConfig.returnTimeOverrideSeconds} seconds`);
+            this.logger.debug(
+                `Insurance override used: returning in ${this.insuranceConfig.returnTimeOverrideSeconds} seconds`,
+            );
             return this.timeUtil.getTimestamp() + this.insuranceConfig.returnTimeOverrideSeconds;
         }
 
-        const insuranceReturnTimeBonus = pmcData.Bonuses.find(b => b.type === "InsuranceReturnTime");
-        const insuranceReturnTimeBonusPercent = 1.0 - (insuranceReturnTimeBonus
-            ? Math.abs(insuranceReturnTimeBonus.value)
-            : 0) / 100;
+        const insuranceReturnTimeBonus = pmcData.Bonuses.find((b) => b.type === "InsuranceReturnTime");
+        const insuranceReturnTimeBonusPercent = 1.0
+            - (insuranceReturnTimeBonus ? Math.abs(insuranceReturnTimeBonus.value) : 0) / 100;
 
         const traderMinReturnAsSeconds = trader.insurance.min_return_hour * TimeUtil.oneHourAsSeconds;
         const traderMaxReturnAsSeconds = trader.insurance.max_return_hour * TimeUtil.oneHourAsSeconds;
@@ -215,7 +221,13 @@ export class InsuranceService
      * @param sessionID Session id
      * @param playerDied did the player die in raid
      */
-    public storeLostGear(pmcData: IPmcData, offraidData: ISaveProgressRequestData, preRaidGear: Item[], sessionID: string, playerDied: boolean): void
+    public storeLostGear(
+        pmcData: IPmcData,
+        offraidData: ISaveProgressRequestData,
+        preRaidGear: Item[],
+        sessionID: string,
+        playerDied: boolean,
+    ): void
     {
         const preRaidGearHash = this.createItemHashTable(preRaidGear);
         const offRaidGearHash = this.createItemHashTable(offraidData.profile.Inventory.items);
@@ -242,9 +254,13 @@ export class InsuranceService
             {
                 equipmentToSendToPlayer.push({
                     pmcData: pmcData,
-                    itemToReturnToPlayer: this.getInsuredItemDetails(pmcData, preRaidItem, offraidData.insurance?.find(x => x.id === insuredItem.itemId)),
+                    itemToReturnToPlayer: this.getInsuredItemDetails(
+                        pmcData,
+                        preRaidItem,
+                        offraidData.insurance?.find((x) => x.id === insuredItem.itemId),
+                    ),
                     traderId: insuredItem.tid,
-                    sessionID: sessionID
+                    sessionID: sessionID,
                 });
             }
         }
@@ -264,7 +280,11 @@ export class InsuranceService
      * @param insuredItemFromClient Item data when player left raid (durability values)
      * @returns Item object
      */
-    protected getInsuredItemDetails(pmcData: IPmcData, preRaidItem: Item, insuredItemFromClient: IInsuredItemsData): Item
+    protected getInsuredItemDetails(
+        pmcData: IPmcData,
+        preRaidItem: Item,
+        insuredItemFromClient: IInsuredItemsData,
+    ): Item
     {
         // Get baseline item to return, clone pre raid item
         const itemToReturn: Item = this.jsonUtil.clone(preRaidItem);
@@ -298,7 +318,7 @@ export class InsuranceService
             {
                 itemToReturn.upd.Repairable = {
                     Durability: insuredItemFromClient.durability,
-                    MaxDurability: insuredItemFromClient.maxDurability
+                    MaxDurability: insuredItemFromClient.maxDurability,
                 };
             }
             else
@@ -306,7 +326,6 @@ export class InsuranceService
                 itemToReturn.upd.Repairable.Durability = insuredItemFromClient.durability;
                 itemToReturn.upd.Repairable.MaxDurability = insuredItemFromClient.maxDurability;
             }
-
         }
 
         // Client item has FaceShield values, Ensure values persist into server data
@@ -315,15 +334,12 @@ export class InsuranceService
             // Item didnt have faceshield object pre-raid, add it
             if (!itemToReturn.upd.FaceShield)
             {
-                itemToReturn.upd.FaceShield = {
-                    Hits: insuredItemFromClient.hits
-                };
+                itemToReturn.upd.FaceShield = { Hits: insuredItemFromClient.hits };
             }
             else
             {
                 itemToReturn.upd.FaceShield.Hits = insuredItemFromClient.hits;
             }
-
         }
 
         return itemToReturn;
@@ -336,21 +352,16 @@ export class InsuranceService
      */
     protected updateSlotIdValue(playerBaseInventoryEquipmentId: string, itemToReturn: Item): void
     {
-        const pocketSlots = [
-            "pocket1",
-            "pocket2",
-            "pocket3",
-            "pocket4"
-        ];
+        const pocketSlots = ["pocket1", "pocket2", "pocket3", "pocket4"];
 
         // Some pockets can lose items with player death, some don't
-        if (!("slotId" in itemToReturn) || pocketSlots.includes(itemToReturn.slotId)) 
+        if (!("slotId" in itemToReturn) || pocketSlots.includes(itemToReturn.slotId))
         {
             itemToReturn.slotId = "hideout";
         }
 
         // Mark root-level items for later processing
-        if (itemToReturn.parentId === playerBaseInventoryEquipmentId) 
+        if (itemToReturn.parentId === playerBaseInventoryEquipmentId)
         {
             itemToReturn.slotId = "hideout";
         }
@@ -379,7 +390,9 @@ export class InsuranceService
      * @param itemToReturnToPlayer item to store
      * @param traderId Id of trader item was insured with
      */
-    protected addGearToSend(gear: { sessionID: string; pmcData: IPmcData; itemToReturnToPlayer: Item; traderId: string}): void
+    protected addGearToSend(
+        gear: { sessionID: string; pmcData: IPmcData; itemToReturnToPlayer: Item; traderId: string; },
+    ): void
     {
         const sessionId = gear.sessionID;
         const pmcData = gear.pmcData;
@@ -436,7 +449,6 @@ export class InsuranceService
      */
     public addInsuranceItemToArray(sessionId: string, traderId: string, itemToAdd: Item): void
     {
-		
         this.insured[sessionId][traderId].push(itemToAdd);
     }
 
@@ -453,7 +465,9 @@ export class InsuranceService
         if (!insuranceMultiplier)
         {
             insuranceMultiplier = 0.3;
-            this.logger.warning(this.localisationService.getText("insurance-missing_insurance_price_multiplier", traderId));
+            this.logger.warning(
+                this.localisationService.getText("insurance-missing_insurance_price_multiplier", traderId),
+            );
         }
 
         // Multiply item handbook price by multiplier in config to get the new insurance price
@@ -462,7 +476,7 @@ export class InsuranceService
 
         if (coef > 0)
         {
-            pricePremium *= (1 - this.traderHelper.getLoyaltyLevel(traderId, pmcData).insurance_price_coef / 100);
+            pricePremium *= 1 - this.traderHelper.getLoyaltyLevel(traderId, pmcData).insurance_price_coef / 100;
         }
 
         return Math.round(pricePremium);

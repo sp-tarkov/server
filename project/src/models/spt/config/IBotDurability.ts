@@ -1,58 +1,58 @@
-export interface IBotDurability 
+export interface IBotDurability
 {
-    default: DefaultDurability
-    pmc: PmcDurability
-    boss: BotDurability
-    follower: BotDurability
-    assault: BotDurability
-    cursedassault: BotDurability
-    marksman: BotDurability
-    pmcbot: BotDurability
-    exusec: BotDurability
-    gifter: BotDurability
-    sectantpriest: BotDurability
-    sectantwarrior: BotDurability
+    default: DefaultDurability;
+    pmc: PmcDurability;
+    boss: BotDurability;
+    follower: BotDurability;
+    assault: BotDurability;
+    cursedassault: BotDurability;
+    marksman: BotDurability;
+    pmcbot: BotDurability;
+    exusec: BotDurability;
+    gifter: BotDurability;
+    sectantpriest: BotDurability;
+    sectantwarrior: BotDurability;
 }
 
 /** Durability values to be used when a more specific bot type cant be found */
-export interface DefaultDurability 
+export interface DefaultDurability
 {
-    armor: ArmorDurability
-    weapon: WeaponDurability
+    armor: ArmorDurability;
+    weapon: WeaponDurability;
 }
 
-export interface PmcDurability 
+export interface PmcDurability
 {
-    armor: PmcDurabilityArmor
-    weapon: WeaponDurability
+    armor: PmcDurabilityArmor;
+    weapon: WeaponDurability;
 }
 
-export interface PmcDurabilityArmor 
+export interface PmcDurabilityArmor
 {
-    lowestMaxPercent: number
-    highestMaxPercent: number
-    maxDelta: number
-    minDelta: number
+    lowestMaxPercent: number;
+    highestMaxPercent: number;
+    maxDelta: number;
+    minDelta: number;
 }
 
-export interface BotDurability 
+export interface BotDurability
 {
-    armor: ArmorDurability
-    weapon: WeaponDurability
+    armor: ArmorDurability;
+    weapon: WeaponDurability;
 }
 
-export interface ArmorDurability 
+export interface ArmorDurability
 {
-    maxDelta: number
-    minDelta: number
-    minLimitPercent: number
+    maxDelta: number;
+    minDelta: number;
+    minLimitPercent: number;
 }
 
-export interface WeaponDurability 
+export interface WeaponDurability
 {
-    lowestMax: number
-    highestMax: number
-    maxDelta: number
-    minDelta: number
-    minLimitPercent: number
+    lowestMax: number;
+    highestMax: number;
+    maxDelta: number;
+    minDelta: number;
+    minLimitPercent: number;
 }

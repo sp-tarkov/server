@@ -10,11 +10,10 @@ import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 
 /**
- * Handle the generation of dynamic PMC loot in pockets and backpacks 
+ * Handle the generation of dynamic PMC loot in pockets and backpacks
  * and the removal of blacklisted items
  */
 @injectable()
-
 export class PMCLootGenerator
 {
     protected pocketLootPool: string[] = [];
@@ -27,7 +26,7 @@ export class PMCLootGenerator
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
-        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService
+        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
     )
     {
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
@@ -47,7 +46,7 @@ export class PMCLootGenerator
             const allowedItemTypes = this.pmcConfig.pocketLoot.whitelist;
             const pmcItemBlacklist = this.pmcConfig.pocketLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
+
             // Blacklist seasonal items if not inside seasonal event
             // Blacklist seasonal items if not inside seasonal event
             if (!this.seasonalEventService.seasonalEventEnabled())
@@ -56,14 +55,16 @@ export class PMCLootGenerator
                 itemBlacklist.push(...this.seasonalEventService.getAllSeasonalEventItems());
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id)
-                                                            && item._props.Width === 1
-                                                            && item._props.Height === 1);
+            const itemsToAdd = Object.values(items).filter((item) =>
+                allowedItemTypes.includes(item._parent)
+                && this.itemHelper.isValidItem(item._id)
+                && !pmcItemBlacklist.includes(item._id)
+                && !itemBlacklist.includes(item._id)
+                && item._props.Width === 1
+                && item._props.Height === 1
+            );
 
-            this.pocketLootPool = itemsToAdd.map(x => x._id);
+            this.pocketLootPool = itemsToAdd.map((x) => x._id);
         }
 
         return this.pocketLootPool;
@@ -83,7 +84,7 @@ export class PMCLootGenerator
             const allowedItemTypes = this.pmcConfig.vestLoot.whitelist;
             const pmcItemBlacklist = this.pmcConfig.vestLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
+
             // Blacklist seasonal items if not inside seasonal event
             // Blacklist seasonal items if not inside seasonal event
             if (!this.seasonalEventService.seasonalEventEnabled())
@@ -92,13 +93,15 @@ export class PMCLootGenerator
                 itemBlacklist.push(...this.seasonalEventService.getAllSeasonalEventItems());
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id)
-                                                            && this.itemFitsInto2By2Slot(item));
+            const itemsToAdd = Object.values(items).filter((item) =>
+                allowedItemTypes.includes(item._parent)
+                && this.itemHelper.isValidItem(item._id)
+                && !pmcItemBlacklist.includes(item._id)
+                && !itemBlacklist.includes(item._id)
+                && this.itemFitsInto2By2Slot(item)
+            );
 
-            this.vestLootPool = itemsToAdd.map(x => x._id);
+            this.vestLootPool = itemsToAdd.map((x) => x._id);
         }
 
         return this.vestLootPool;
@@ -129,7 +132,7 @@ export class PMCLootGenerator
             const allowedItemTypes = this.pmcConfig.backpackLoot.whitelist;
             const pmcItemBlacklist = this.pmcConfig.backpackLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
+
             // blacklist event items if not inside seasonal event
             if (!this.seasonalEventService.seasonalEventEnabled())
             {
@@ -137,12 +140,14 @@ export class PMCLootGenerator
                 itemBlacklist.push(...this.seasonalEventService.getAllSeasonalEventItems());
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id));
+            const itemsToAdd = Object.values(items).filter((item) =>
+                allowedItemTypes.includes(item._parent)
+                && this.itemHelper.isValidItem(item._id)
+                && !pmcItemBlacklist.includes(item._id)
+                && !itemBlacklist.includes(item._id)
+            );
 
-            this.backpackLootPool = itemsToAdd.map(x => x._id);
+            this.backpackLootPool = itemsToAdd.map((x) => x._id);
         }
 
         return this.backpackLootPool;

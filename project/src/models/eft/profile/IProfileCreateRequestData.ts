@@ -1,7 +1,7 @@
-export interface IProfileCreateRequestData 
+export interface IProfileCreateRequestData
 {
-    side: string
-    nickname: string
-    headId: string
-    voiceId: string
+    side: string;
+    nickname: string;
+    headId: string;
+    voiceId: string;
 }

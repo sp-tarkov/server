@@ -10,27 +10,24 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 @injectable()
 export class HttpResponseUtil
 {
-
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("LocalisationService") protected localisationService: LocalisationService
+        @inject("LocalisationService") protected localisationService: LocalisationService,
     )
-    { }
+    {}
 
     protected clearString(s: string): any
     {
-        return s.replace(/[\b]/g, "")
-            .replace(/[\f]/g, "")
-            .replace(/[\n]/g, "")
-            .replace(/[\r]/g, "")
-            .replace(/[\t]/g, "")
-            .replace(/[\\]/g, "");
+        return s.replace(/[\b]/g, "").replace(/[\f]/g, "").replace(/[\n]/g, "").replace(/[\r]/g, "").replace(
+            /[\t]/g,
+            "",
+        ).replace(/[\\]/g, "");
     }
 
     /**
      * Return passed in data as JSON string
-     * @param data 
-     * @returns 
+     * @param data
+     * @returns
      */
     public noBody(data: any): any
     {
@@ -44,11 +41,7 @@ export class HttpResponseUtil
 
     public getUnclearedBody(data: any, err = 0, errmsg = null): string
     {
-        return this.jsonUtil.serialize({
-            err: err,
-            errmsg: errmsg,
-            data: data
-        });
+        return this.jsonUtil.serialize({ err: err, errmsg: errmsg, data: data });
     }
 
     public emptyResponse(): IGetBodyResponseData<string>
@@ -66,13 +59,13 @@ export class HttpResponseUtil
         return this.getBody([]);
     }
 
-    public appendErrorToOutput(output: IItemEventRouterResponse, message = this.localisationService.getText("http-unknown_error"), errorCode = BackendErrorCodes.NONE): IItemEventRouterResponse
+    public appendErrorToOutput(
+        output: IItemEventRouterResponse,
+        message = this.localisationService.getText("http-unknown_error"),
+        errorCode = BackendErrorCodes.NONE,
+    ): IItemEventRouterResponse
     {
-        output.warnings = [{
-            index: 0,
-            errmsg: message,
-            code: errorCode.toString()
-        }];
+        output.warnings = [{ index: 0, errmsg: message, code: errorCode.toString() }];
 
         return output;
     }

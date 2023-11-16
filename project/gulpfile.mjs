@@ -22,7 +22,7 @@ const pkgConfig = "pkgconfig.json";
 const entries = {
     release: path.join("obj", "ide", "ReleaseEntry.js"),
     debug: path.join("obj", "ide", "DebugEntry.js"),
-    bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js")
+    bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js"),
 };
 const licenseFile = "../LICENSE.md";
 
@@ -37,7 +37,12 @@ const fetchPackageImage = async () =>
     try
     {
         const output = "./.pkg-cache/v3.5";
-        const fetchedPkg = await pkgfetch.need({ arch: process.arch, nodeRange: nodeVersion, platform: process.platform, output });
+        const fetchedPkg = await pkgfetch.need({
+            arch: process.arch,
+            nodeRange: nodeVersion,
+            platform: process.platform,
+            output,
+        });
         console.log(`fetched node binary at ${fetchedPkg}`);
         const builtPkg = fetchedPkg.replace("node", "built");
         await fs.copyFile(fetchedPkg, builtPkg);
@@ -66,22 +71,19 @@ const updateBuildProperties = async () =>
         res.entries,
         1,
         1033,
-        iconFile.icons.map(item => item.data)
+        iconFile.icons.map((item) => item.data),
     );
 
     const vi = ResEdit.Resource.VersionInfo.fromEntries(res.entries)[0];
 
-    vi.setStringValues(
-        {lang: 1033, codepage: 1200},
-        {
-            ProductName: manifest.author,
-            FileDescription: manifest.description,
-            CompanyName: manifest.name,
-            LegalCopyright:  manifest.license
-        }
-    );
-    vi.removeStringValue({lang: 1033, codepage: 1200}, "OriginalFilename");
-    vi.removeStringValue({lang: 1033, codepage: 1200}, "InternalName");
+    vi.setStringValues({ lang: 1033, codepage: 1200 }, {
+        ProductName: manifest.author,
+        FileDescription: manifest.description,
+        CompanyName: manifest.name,
+        LegalCopyright: manifest.license,
+    });
+    vi.removeStringValue({ lang: 1033, codepage: 1200 }, "OriginalFilename");
+    vi.removeStringValue({ lang: 1033, codepage: 1200 }, "InternalName");
     vi.setFileVersion(...manifest.version.split(".").map(Number));
     vi.setProductVersion(...manifest.version.split(".").map(Number));
     vi.outputToResourceEntries(res.entries);
@@ -92,12 +94,16 @@ const updateBuildProperties = async () =>
 /**
  * Copy various asset files to the destination directory
  */
-const copyAssets = () => gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(gulp.dest(dataDir));
+const copyAssets = () =>
+    gulp.src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"]).pipe(
+        gulp.dest(dataDir),
+    );
 
 /**
  * Copy executables from node_modules
  */
-const copyExecutables = () => gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
+const copyExecutables = () =>
+    gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
 
 /**
  * Rename and copy the license file
@@ -159,9 +165,9 @@ const cleanCompiled = async () => await fs.rm("./obj", { recursive: true, force:
 
 /**
  * Recursively builds an array of paths for json files.
- * 
- * @param {fs.PathLike} dir 
- * @param {string[]} files 
+ *
+ * @param {fs.PathLike} dir
+ * @param {string[]} files
  * @returns {Promise<string[]>}
  */
 const getJSONFiles = async (dir, files = []) =>
@@ -206,8 +212,8 @@ const validateJSONs = async () =>
 
 /**
  * Hash helper function
- * 
- * @param {crypto.BinaryLike} data 
+ *
+ * @param {crypto.BinaryLike} data
  * @returns {string}
  */
 const generateHashForData = (data) =>
@@ -219,8 +225,8 @@ const generateHashForData = (data) =>
 
 /**
  * Loader to recursively find all json files in a folder
- * 
- * @param {fs.PathLike} filepath 
+ *
+ * @param {fs.PathLike} filepath
  * @returns {}
  */
 const loadRecursiveAsync = async (filepath) =>
@@ -244,7 +250,7 @@ const loadRecursiveAsync = async (filepath) =>
 
     // set all loadRecursive to be executed asynchronously
     const resEntries = Object.entries(result);
-    const resResolved = await Promise.all(resEntries.map(ent => ent[1]));
+    const resResolved = await Promise.all(resEntries.map((ent) => ent[1]));
     for (let resIdx = 0; resIdx < resResolved.length; resIdx++)
     {
         resEntries[resIdx][1] = resResolved[resIdx];
@@ -259,7 +265,16 @@ const build = (packagingType) =>
 {
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
-    const tasks = [cleanBuild, validateJSONs, compile, fetchPackageImage, anonPackaging, addAssets, updateBuildProperties, cleanCompiled];
+    const tasks = [
+        cleanBuild,
+        validateJSONs,
+        compile,
+        fetchPackageImage,
+        anonPackaging,
+        addAssets,
+        updateBuildProperties,
+        cleanCompiled,
+    ];
     return gulp.series(tasks);
 };
 
@@ -269,7 +284,18 @@ const packaging = async (entry) =>
     const target = `${nodeVersion}-${process.platform}-${process.arch}`;
     try
     {
-        await pkg.exec([entry, "--compress", "GZip", "--target", target, "--output", serverExe, "--config", pkgConfig, "--public"]);
+        await pkg.exec([
+            entry,
+            "--compress",
+            "GZip",
+            "--target",
+            target,
+            "--output",
+            serverExe,
+            "--config",
+            pkgConfig,
+            "--public",
+        ]);
     }
     catch (error)
     {
@@ -282,7 +308,10 @@ gulp.task("build:release", build("release"));
 gulp.task("build:bleeding", build("bleeding"));
 
 gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: buildDir }));
-gulp.task("run:debug", async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }));
+gulp.task(
+    "run:debug",
+    async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }),
+);
 gulp.task("run:profiler", async () =>
 {
     await cleanCompiled();

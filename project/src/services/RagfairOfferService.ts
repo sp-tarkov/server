@@ -38,7 +38,7 @@ export class RagfairOfferService
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -113,12 +113,14 @@ export class RagfairOfferService
      * Remove an offer from ragfair by offer id
      * @param offerId Offer id to remove
      */
-    public removeOfferById(offerId: string): void 
+    public removeOfferById(offerId: string): void
     {
         const offer = this.ragfairOfferHandler.getOfferById(offerId);
         if (!offer)
         {
-            this.logger.warning(this.localisationService.getText("ragfair-unable_to_remove_offer_doesnt_exist", offerId));
+            this.logger.warning(
+                this.localisationService.getText("ragfair-unable_to_remove_offer_doesnt_exist", offerId),
+            );
 
             return;
         }
@@ -171,13 +173,13 @@ export class RagfairOfferService
             for (const sessionID in this.saveServer.getProfiles())
             {
                 const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
-                
+
                 if (pmcData.RagfairInfo === undefined || pmcData.RagfairInfo.offers === undefined)
                 {
                     // Profile is wiped
                     continue;
                 }
-                
+
                 this.ragfairOfferHandler.addOffers(pmcData.RagfairInfo.offers);
             }
             this.playerOffersLoaded = true;
@@ -187,9 +189,7 @@ export class RagfairOfferService
     public expireStaleOffers(): void
     {
         const time = this.timeUtil.getTimestamp();
-        this.ragfairOfferHandler
-            .getStaleOffers(time)
-            .forEach(o => this.processStaleOffer(o));
+        this.ragfairOfferHandler.getStaleOffers(time).forEach((o) => this.processStaleOffer(o));
     }
 
     /**
@@ -234,12 +234,15 @@ export class RagfairOfferService
         const pmcID = String(offer.user.id);
         const profile = this.profileHelper.getProfileByPmcId(pmcID);
         const sessionID = profile.sessionId;
-        const offerIndex = profile.RagfairInfo.offers.findIndex(o => o._id === offer._id);
+        const offerIndex = profile.RagfairInfo.offers.findIndex((o) => o._id === offer._id);
 
         if (offerIndex === -1)
         {
             this.logger.warning(this.localisationService.getText("ragfair-unable_to_find_offer_to_remove", offer._id));
-            return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionID), this.localisationService.getText("ragfair-offer_not_found_in_profile_short"));
+            return this.httpResponse.appendErrorToOutput(
+                this.eventOutputHolder.getOutput(sessionID),
+                this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
+            );
         }
 
         profile.RagfairInfo.rating -= this.ragfairConfig.sell.reputation.loss;

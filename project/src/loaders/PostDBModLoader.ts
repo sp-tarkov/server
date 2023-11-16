@@ -15,10 +15,10 @@ export class PostDBModLoader implements OnLoad
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck
+        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,
     )
-    { }
-    
+    {}
+
     public async onLoad(): Promise<void>
     {
         if (globalThis.G_MODS_ENABLED)
@@ -26,12 +26,11 @@ export class PostDBModLoader implements OnLoad
             await this.executeMods(this.preAkiModLoader.getContainer());
         }
     }
-    
+
     public getRoute(): string
     {
         return "aki-mods";
     }
-
 
     public getModPath(mod: string): string
     {
@@ -44,20 +43,27 @@ export class PostDBModLoader implements OnLoad
         for (const modName of mods)
         {
             // // import class
-            const filepath = `${this.preAkiModLoader.getModPath(modName)}${this.preAkiModLoader.getImportedModDetails()[modName].main}`;
+            const filepath = `${this.preAkiModLoader.getModPath(modName)}${
+                this.preAkiModLoader.getImportedModDetails()[modName].main
+            }`;
             const modpath = `${process.cwd()}/${filepath}`;
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const mod = require(modpath);
 
             if (this.modTypeCheck.isPostDBAkiLoadAsync(mod.mod))
             {
-                try 
+                try
                 {
                     await (mod.mod as IPostDBLoadModAsync).postDBLoadAsync(container);
                 }
-                catch (err) 
+                catch (err)
                 {
-                    this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`));
+                    this.logger.error(
+                        this.localisationService.getText(
+                            "modloader-async_mod_error",
+                            `${err?.message ?? ""}\n${err.stack ?? ""}`,
+                        ),
+                    );
                 }
             }
 

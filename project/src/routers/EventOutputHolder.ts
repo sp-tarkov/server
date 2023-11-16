@@ -12,20 +12,17 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class EventOutputHolder
 {
     /** What has client been informed of this game session */
-    protected clientActiveSessionStorage: Record<string, {clientInformed: boolean}> = {};
+    protected clientActiveSessionStorage: Record<string, { clientInformed: boolean; }> = {};
 
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("TimeUtil") protected timeUtil: TimeUtil
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
     )
     {}
 
     // TODO REMEMBER TO CHANGE OUTPUT
-    protected output: IItemEventRouterResponse = {
-        warnings: [],
-        profileChanges: {}
-    };
+    protected output: IItemEventRouterResponse = { warnings: [], profileChanges: {} };
 
     public getOutput(sessionID: string): IItemEventRouterResponse
     {
@@ -54,23 +51,15 @@ export class EventOutputHolder
             ragFairOffers: [],
             weaponBuilds: [],
             equipmentBuilds: [],
-            items: {
-                new: [],
-                change: [],
-                del: []
-            },
+            items: { new: [], change: [], del: [] },
             production: {},
             improvements: {},
-            skills: {
-                Common: [],
-                Mastering: [],
-                Points: 0
-            },
+            skills: { Common: [], Mastering: [], Points: 0 },
             health: this.jsonUtil.clone(pmcData.Health),
             traderRelations: {},
-            //changedHideoutStashes: {},
+            // changedHideoutStashes: {},
             recipeUnlocked: {},
-            questsStatus: []
+            questsStatus: [],
         };
     }
 
@@ -89,7 +78,9 @@ export class EventOutputHolder
         profileChanges.skills.Mastering = this.jsonUtil.clone(pmcData.Skills.Mastering);
 
         // Clone productions to ensure we preseve the profile jsons data
-        profileChanges.production = this.getProductionsFromProfileAndFlagComplete(this.jsonUtil.clone(pmcData.Hideout.Production));
+        profileChanges.production = this.getProductionsFromProfileAndFlagComplete(
+            this.jsonUtil.clone(pmcData.Hideout.Production),
+        );
         profileChanges.improvements = this.jsonUtil.clone(this.getImprovementsFromProfileAndFlagComplete(pmcData));
         profileChanges.traderRelations = this.constructTraderRelations(pmcData.TradersInfo);
 
@@ -114,13 +105,13 @@ export class EventOutputHolder
                 disabled: baseData.disabled,
                 loyalty: baseData.loyaltyLevel,
                 standing: baseData.standing,
-                unlocked: baseData.unlocked
+                unlocked: baseData.unlocked,
             };
         }
 
         return result;
     }
-    
+
     /**
      * Return all hideout Improvements from player profile, adjust completed Improvements' completed property to be true
      * @param pmcData Player profile
@@ -152,7 +143,9 @@ export class EventOutputHolder
      * @param pmcData Player profile
      * @returns dictionary of hideout productions
      */
-    protected getProductionsFromProfileAndFlagComplete(productions: Record<string, Productive>): Record<string, Productive>
+    protected getProductionsFromProfileAndFlagComplete(
+        productions: Record<string, Productive>,
+    ): Record<string, Productive>
     {
         for (const productionKey in productions)
         {

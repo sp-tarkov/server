@@ -28,9 +28,9 @@ export class PaymentService
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("PaymentHelper") protected paymentHelper: PaymentHelper
+        @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
     )
-    { }
+    {}
 
     /**
      * Take money and insert items into return to server request
@@ -39,18 +39,23 @@ export class PaymentService
      * @param {string} sessionID
      * @returns IItemEventRouterResponse
      */
-    public payMoney(pmcData: IPmcData, request: IProcessBuyTradeRequestData, sessionID: string, output: IItemEventRouterResponse):  IItemEventRouterResponse
+    public payMoney(
+        pmcData: IPmcData,
+        request: IProcessBuyTradeRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
         const trader = this.traderHelper.getTrader(request.tid, sessionID);
 
         // Track the amounts of each type of currency involved in the trade.
-        const currencyAmounts: { [key: string]: number } = {};
+        const currencyAmounts: { [key: string]: number; } = {};
 
         // Delete barter items and track currencies
         for (const index in request.scheme_items)
         {
             // Find the corresponding item in the player's inventory.
-            const item = pmcData.Inventory.items.find(i => i._id === request.scheme_items[index].id);
+            const item = pmcData.Inventory.items.find((i) => i._id === request.scheme_items[index].id);
             if (item !== undefined)
             {
                 if (!this.paymentHelper.isMoneyTpl(item._tpl))
@@ -95,7 +100,10 @@ export class PaymentService
                 }
 
                 // Convert the amount to the trader's currency and update the sales sum.
-                const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(this.handbookHelper.inRUB(currencyAmount, currencyTpl), this.paymentHelper.getCurrency(trader.currency));
+                const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(
+                    this.handbookHelper.inRUB(currencyAmount, currencyTpl),
+                    this.paymentHelper.getCurrency(trader.currency),
+                );
                 pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
             }
         }
@@ -106,7 +114,10 @@ export class PaymentService
             this.logger.debug(this.localisationService.getText("payment-zero_price_no_payment"));
 
             // Convert the handbook price to the trader's currency and update the sales sum.
-            const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(this.getTraderItemHandbookPriceRouble(request.item_id, request.tid), this.paymentHelper.getCurrency(trader.currency));
+            const costOfPurchaseInCurrency = this.handbookHelper.fromRUB(
+                this.getTraderItemHandbookPriceRouble(request.item_id, request.tid),
+                this.paymentHelper.getCurrency(trader.currency),
+            );
             pmcData.TradersInfo[request.tid].salesSum += costOfPurchaseInCurrency;
         }
 
@@ -133,8 +144,10 @@ export class PaymentService
         const assortItemPriceRouble = this.handbookHelper.getTemplatePrice(purchasedAssortItem._tpl);
         if (!assortItemPriceRouble)
         {
-            this.logger.debug(`No item price found for ${purchasedAssortItem._tpl} on trader: ${traderId} in assort: ${traderAssortId}`);
-            
+            this.logger.debug(
+                `No item price found for ${purchasedAssortItem._tpl} on trader: ${traderId} in assort: ${traderAssortId}`,
+            );
+
             return 1;
         }
 
@@ -150,7 +163,13 @@ export class PaymentService
      * @param {string} sessionID
      * @returns IItemEventRouterResponse
      */
-    public getMoney(pmcData: IPmcData, amount: number, body: IProcessSellTradeRequestData, output: IItemEventRouterResponse, sessionID: string): IItemEventRouterResponse
+    public getMoney(
+        pmcData: IPmcData,
+        amount: number,
+        body: IProcessSellTradeRequestData,
+        output: IItemEventRouterResponse,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         const trader = this.traderHelper.getTrader(body.tid, sessionID);
         const currency = this.paymentHelper.getCurrency(trader.currency);
@@ -174,7 +193,6 @@ export class PaymentService
 
             if (item.upd.StackObjectsCount < maxStackSize)
             {
-
                 if (item.upd.StackObjectsCount + calcAmount > maxStackSize)
                 {
                     // calculate difference
@@ -202,9 +220,9 @@ export class PaymentService
                 items: [{
                     // eslint-disable-next-line @typescript-eslint/naming-convention
                     item_id: currency,
-                    count: calcAmount
+                    count: calcAmount,
                 }],
-                tid: body.tid
+                tid: body.tid,
             };
 
             output = this.inventoryHelper.addItem(pmcData, request, output, sessionID, null, false, null, true);
@@ -220,22 +238,22 @@ export class PaymentService
     }
 
     /**
-   * Recursively checks if the given item is
-   * inside the stash, that is it has the stash as
-   * ancestor with slotId=hideout
-   */
+     * Recursively checks if the given item is
+     * inside the stash, that is it has the stash as
+     * ancestor with slotId=hideout
+     */
     protected isItemInStash(pmcData: IPmcData, item: Item): boolean
     {
         let container = item;
-     
+
         while ("parentId" in container)
         {
             if (container.parentId === pmcData.Inventory.stash && container.slotId === "hideout")
             {
                 return true;
             }
-     
-            container = pmcData.Inventory.items.find(i => i._id === container.parentId);
+
+            container = pmcData.Inventory.items.find((i) => i._id === container.parentId);
             if (!container)
             {
                 break;
@@ -253,16 +271,38 @@ export class PaymentService
      * @param output output object to send to client
      * @returns IItemEventRouterResponse
      */
-    public addPaymentToOutput(pmcData: IPmcData, currencyTpl: string, amountToPay: number, sessionID: string, output: IItemEventRouterResponse): IItemEventRouterResponse
+    public addPaymentToOutput(
+        pmcData: IPmcData,
+        currencyTpl: string,
+        amountToPay: number,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        const moneyItemsInInventory = this.getSortedMoneyItemsInInventory(pmcData, currencyTpl, pmcData.Inventory.stash);
-        const amountAvailable = moneyItemsInInventory.reduce((accumulator, item) => accumulator + item.upd.StackObjectsCount, 0);
+        const moneyItemsInInventory = this.getSortedMoneyItemsInInventory(
+            pmcData,
+            currencyTpl,
+            pmcData.Inventory.stash,
+        );
+        const amountAvailable = moneyItemsInInventory.reduce(
+            (accumulator, item) => accumulator + item.upd.StackObjectsCount,
+            0,
+        );
 
         // If no money in inventory or amount is not enough we return false
         if (moneyItemsInInventory.length <= 0 || amountAvailable < amountToPay)
         {
-            this.logger.error(this.localisationService.getText("payment-not_enough_money_to_complete_transation", {amountToPay: amountToPay, amountAvailable: amountAvailable}));
-            output = this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("payment-not_enough_money_to_complete_transation_short"), BackendErrorCodes.UNKNOWN_TRADING_ERROR);
+            this.logger.error(
+                this.localisationService.getText("payment-not_enough_money_to_complete_transation", {
+                    amountToPay: amountToPay,
+                    amountAvailable: amountAvailable,
+                }),
+            );
+            output = this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("payment-not_enough_money_to_complete_transation_short"),
+                BackendErrorCodes.UNKNOWN_TRADING_ERROR,
+            );
 
             return output;
         }
@@ -294,8 +334,8 @@ export class PaymentService
 
     /**
      * Get all money stacks in inventory and prioritse items in stash
-     * @param pmcData 
-     * @param currencyTpl 
+     * @param pmcData
+     * @param currencyTpl
      * @param playerStashId Players stash id
      * @returns Sorting money items
      */
@@ -365,7 +405,7 @@ export class PaymentService
      */
     protected isInStash(itemId: string, inventoryItems: Item[], playerStashId: string): boolean
     {
-        const itemParent = inventoryItems.find(x => x._id === itemId);
+        const itemParent = inventoryItems.find((x) => x._id === itemId);
 
         if (itemParent)
         {

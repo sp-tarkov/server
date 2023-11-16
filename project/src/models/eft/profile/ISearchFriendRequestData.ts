@@ -1,4 +1,4 @@
 export interface ISearchFriendRequestData
 {
-    nickname: string
+    nickname: string;
 }
