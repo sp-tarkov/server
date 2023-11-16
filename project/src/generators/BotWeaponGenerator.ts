@@ -1,4 +1,4 @@
-import { inject, injectable, injectAll } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
 import { BotEquipmentModGenerator } from "@spt-aki/generators/BotEquipmentModGenerator";
 import { IInventoryMagGen } from "@spt-aki/generators/weapongen/IInventoryMagGen";

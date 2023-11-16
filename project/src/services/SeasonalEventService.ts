@@ -371,10 +371,10 @@ export class SeasonalEventService
      */
     protected addLootItemsToGifterDropItemsList(): void
     {
-        const gifterBot = this.databaseServer.getTables().bots.types["gifter"];
+        const gifterBot = this.databaseServer.getTables().bots.types.gifter;
         for (const difficulty in gifterBot.difficulty)
         {
-            gifterBot.difficulty[difficulty].Patrol["ITEMS_TO_DROP"] = gifterBot.inventory.items.Backpack.join(", ");
+            gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = gifterBot.inventory.items.Backpack.join(", ");
         }
     }
 
@@ -424,7 +424,7 @@ export class SeasonalEventService
 
     protected addPumpkinsToScavBackpacks(): void
     {
-        const assaultBackpack = this.databaseServer.getTables().bots.types["assault"].inventory.items.Backpack;
+        const assaultBackpack = this.databaseServer.getTables().bots.types.assault.inventory.items.Backpack;
         assaultBackpack.push("634959225289190e5e773b3b");
         assaultBackpack.push("634959225289190e5e773b3b");
         assaultBackpack.push("634959225289190e5e773b3b");

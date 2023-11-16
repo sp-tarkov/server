@@ -304,7 +304,7 @@ export class RepeatableQuestController
         }
 
         // Add "any" to pickup quest pool
-        questPool.pool.Pickup.locations["any"] = ["any"];
+        questPool.pool.Pickup.locations.any = ["any"];
 
         const eliminationConfig = this.repeatableQuestHelper.getEliminationConfigByPmcLevel(pmcLevel, repeatableConfig);
         const targetsConfig = this.repeatableQuestHelper.probabilityObjectArray(eliminationConfig.targets);

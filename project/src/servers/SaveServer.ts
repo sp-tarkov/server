@@ -1,4 +1,4 @@
-import { inject, injectable, injectAll } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
 import { SaveLoadRouter } from "@spt-aki/di/Router";
 import { IAkiProfile, Info } from "@spt-aki/models/eft/profile/IAkiProfile";

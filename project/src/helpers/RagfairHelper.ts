@@ -217,8 +217,6 @@ export class RagfairHelper
 
             case Money.DOLLARS:
                 return "$";
-
-            case Money.ROUBLES:
             default:
                 return "₽";
         }

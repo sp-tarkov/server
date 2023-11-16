@@ -148,8 +148,8 @@ export class InsuranceService
     {
         const dialogueTemplates = this.databaseServer.getTables().traders[Traders.PRAPOR].dialogue; // todo: get trader id instead of hard coded prapor
         const randomResponseId = locationName?.toLowerCase() === "laboratory"
-            ? this.randomUtil.getArrayValue(dialogueTemplates["insuranceFailedLabs"])
-            : this.randomUtil.getArrayValue(dialogueTemplates["insuranceFailed"]);
+            ? this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailedLabs)
+            : this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailed);
 
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionId,

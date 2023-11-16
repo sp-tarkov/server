@@ -39,7 +39,7 @@ export class LocaleService
             `Unable to find desired locale file using locale ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
         );
 
-        return this.databaseServer.getTables().locales.global["en"];
+        return this.databaseServer.getTables().locales.global.en;
     }
 
     /**

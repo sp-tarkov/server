@@ -133,8 +133,8 @@ export class LocationGenerator
 
         // randomisation is turned off globally or just turned off for this map
         if (
-            !this.locationConfig.containerRandomisationSettings.enabled
-            || !this.locationConfig.containerRandomisationSettings.maps[locationId]
+            !(this.locationConfig.containerRandomisationSettings.enabled
+                && this.locationConfig.containerRandomisationSettings.maps[locationId])
         )
         {
             this.logger.debug(

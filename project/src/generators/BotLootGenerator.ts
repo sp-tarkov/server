@@ -466,7 +466,7 @@ export class BotLootGenerator
         {
             this.logger.warning(this.localisationService.getText("bot-unable_to_find_loot_n_value_for_bot", botRole));
 
-            return this.botConfig.lootNValue["scav"];
+            return this.botConfig.lootNValue.scav;
         }
 
         return result;
@@ -606,7 +606,7 @@ export class BotLootGenerator
     {
         if (isPmc)
         {
-            return this.botConfig.itemSpawnLimits["pmc"];
+            return this.botConfig.itemSpawnLimits.pmc;
         }
 
         if (this.botConfig.itemSpawnLimits[botRole.toLowerCase()])
@@ -618,7 +618,7 @@ export class BotLootGenerator
             this.localisationService.getText("bot-unable_to_find_spawn_limits_fallback_to_defaults", botRole),
         );
 
-        return this.botConfig.itemSpawnLimits["default"];
+        return this.botConfig.itemSpawnLimits.default;
     }
 
     /**

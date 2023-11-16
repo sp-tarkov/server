@@ -6,11 +6,6 @@ import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 @injectable()
 export class InsuranceSaveLoadRouter extends SaveLoadRouter
 {
-    constructor()
-    {
-        super();
-    }
-
     public override getHandledRoutes(): HandledRoute[]
     {
         return [new HandledRoute("aki-insurance", false)];

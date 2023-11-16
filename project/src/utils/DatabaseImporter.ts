@@ -206,8 +206,8 @@ export class DatabaseImporter implements OnLoad
 
 enum VaildationResult
 {
-    SUCCESS,
-    FAILED,
-    NOT_FOUND,
-    UNDEFINED,
+    SUCCESS = 0,
+    FAILED = 1,
+    NOT_FOUND = 2,
+    UNDEFINED = 3,
 }

@@ -318,7 +318,7 @@ export class RagfairOfferHelper
     public increaseProfileRagfairRating(profile: IAkiProfile, amountToIncrementBy: number): void
     {
         profile.characters.pmc.RagfairInfo.isRatingGrowing = true;
-        if (isNaN(amountToIncrementBy))
+        if (Number.isNaN(amountToIncrementBy))
         {
             this.logger.warning(`Unable to increment ragfair rating, value was not a number: ${amountToIncrementBy}`);
 
@@ -636,7 +636,7 @@ export class RagfairOfferHelper
             return false;
         }
 
-        if (isNaN(offer.requirementsCost))
+        if (Number.isNaN(offer.requirementsCost))
         {
             // don't include offers with null or NaN in it
             return false;

@@ -8,11 +8,11 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import {
     Common,
+    Health as PmcHealth,
     IBaseJsonSkills,
     IBaseSkill,
     IBotBase,
     Info,
-    Health as PmcHealth,
     Skills as botSkills,
 } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Appearance, Health, IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
@@ -267,8 +267,8 @@ export class BotGenerator
             }
 
             const pmcNames = [
-                ...this.databaseServer.getTables().bots.types["usec"].firstName,
-                ...this.databaseServer.getTables().bots.types["bear"].firstName,
+                ...this.databaseServer.getTables().bots.types.usec.firstName,
+                ...this.databaseServer.getTables().bots.types.bear.firstName,
             ];
 
             return `${name} (${this.randomUtil.getArrayValue(pmcNames)})`;

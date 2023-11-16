@@ -1,4 +1,4 @@
-import { inject, injectable, injectAll } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
 import { ItemEventRouterDefinition } from "@spt-aki/di/Router";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";

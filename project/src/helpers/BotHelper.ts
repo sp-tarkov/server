@@ -50,10 +50,10 @@ export class BotHelper
     {
         if (this.randomUtil.getChance100(this.pmcConfig.chanceSameSideIsHostilePercent))
         {
-            difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_BEAR"] = false;
-            difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_USEC"] = false;
-            difficultySettings.Mind["DEFAULT_USEC_BEHAVIOUR"] = "Attack";
-            difficultySettings.Mind["DEFAULT_BEAR_BEHAVIOUR"] = "Attack";
+            difficultySettings.Mind.CAN_RECEIVE_PLAYER_REQUESTS_BEAR = false;
+            difficultySettings.Mind.CAN_RECEIVE_PLAYER_REQUESTS_USEC = false;
+            difficultySettings.Mind.DEFAULT_USEC_BEHAVIOUR = "Attack";
+            difficultySettings.Mind.DEFAULT_BEAR_BEHAVIOUR = "Attack";
         }
     }
 

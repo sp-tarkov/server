@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import gulp from "gulp";
-import { exec } from "gulp-execa";
-import rename from "gulp-rename";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import gulp from "gulp";
+import { exec } from "gulp-execa";
+import rename from "gulp-rename";
 import pkg from "pkg";
 import pkgfetch from "pkg-fetch";
 import * as ResEdit from "resedit";

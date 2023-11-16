@@ -1,6 +1,6 @@
-import * as TypeMoq from "typemoq";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
+import * as TypeMoq from "typemoq";
 
 import { ImageRouter } from "@spt-aki/routers/ImageRouter";
 import { ItemEventRouter } from "@spt-aki/routers/ItemEventRouter";

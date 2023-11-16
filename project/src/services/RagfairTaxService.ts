@@ -70,15 +70,15 @@ export class RagfairTaxService
 
         if (requirementsPrice >= itemWorth)
         {
-            requirementPriceMult = Math.pow(requirementPriceMult, 1.08);
+            requirementPriceMult = requirementPriceMult ** 1.08;
         }
         else
         {
-            itemPriceMult = Math.pow(itemPriceMult, 1.08);
+            itemPriceMult = itemPriceMult ** 1.08;
         }
 
-        itemPriceMult = Math.pow(4, itemPriceMult);
-        requirementPriceMult = Math.pow(4, requirementPriceMult);
+        itemPriceMult = 4 ** itemPriceMult;
+        requirementPriceMult = 4 ** requirementPriceMult;
 
         const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === "RagfairCommission");
         const taxDiscountPercent = hideoutFleaTaxDiscountBonus ? Math.abs(hideoutFleaTaxDiscountBonus.value) : 0;
@@ -170,7 +170,7 @@ export class RagfairTaxService
 
         if ("Repairable" in item.upd && <number>itemTemplate._props.armorClass > 0)
         {
-            const num2 = 0.01 * Math.pow(0.0, item.upd.Repairable.MaxDurability);
+            const num2 = 0.01 * 0.0 ** item.upd.Repairable.MaxDurability;
             worth = worth * ((item.upd.Repairable.MaxDurability / itemTemplate._props.Durability) - num2)
                 - Math.floor(
                     itemTemplate._props.RepairCost

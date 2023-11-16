@@ -1,7 +1,7 @@
-import { writeFileSync } from "atomically";
 import fs from "node:fs";
 import path, { resolve } from "node:path";
 import { promisify } from "node:util";
+import { writeFileSync } from "atomically";
 import lockfile from "proper-lockfile";
 import "reflect-metadata";
 import { inject, injectable } from "tsyringe";

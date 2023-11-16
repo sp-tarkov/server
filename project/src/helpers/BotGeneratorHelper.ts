@@ -46,7 +46,7 @@ export class BotGeneratorHelper
      * @param botRole Used by weapons to randomize the durability values. Null for non-equipped items
      * @returns Item Upd object with extra properties
      */
-    public generateExtraPropertiesForItem(itemTemplate: ITemplateItem, botRole: string = null): { upd?: Upd; }
+    public generateExtraPropertiesForItem(itemTemplate: ITemplateItem, botRole = null): { upd?: Upd; }
     {
         // Get raid settings, if no raid, default to day
         const raidSettings = this.applicationContext.getLatestValue(ContextVariableType.RAID_CONFIGURATION)?.getValue<

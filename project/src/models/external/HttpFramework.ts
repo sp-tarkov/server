@@ -28,7 +28,7 @@ export const Listen = (basePath: string) =>
                 this.handlers = {};
 
                 // Retrieve all handlers
-                const handlersArray = Base.prototype["handlers"];
+                const handlersArray = Base.prototype.handlers;
                 if (!handlersArray)
                 {
                     return;
@@ -53,7 +53,7 @@ export const Listen = (basePath: string) =>
                 });
 
                 // Cleanup the handlers list
-                Base.prototype["handlers"] = [];
+                Base.prototype.handlers = [];
             }
 
             // The canHandle method is used to check if the Listener handles a request
@@ -105,13 +105,13 @@ const createHttpDecorator = (httpMethod: HttpMethods) =>
         return (target: any, propertyKey: string) =>
         {
             // If the handlers array has not been initialized yet
-            if (!target["handlers"])
+            if (!target.handlers)
             {
-                target["handlers"] = [];
+                target.handlers = [];
             }
 
             // Flag the method as a HTTP handler
-            target["handlers"].push({ handlerName: propertyKey, path, httpMethod });
+            target.handlers.push({ handlerName: propertyKey, path, httpMethod });
         };
     };
 };

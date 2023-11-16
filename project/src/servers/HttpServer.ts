@@ -74,7 +74,7 @@ export class HttpServer
     protected handleRequest(req: IncomingMessage, resp: ServerResponse): void
     {
         // Pull sessionId out of cookies and store inside app context
-        const sessionId = this.getCookies(req)["PHPSESSID"];
+        const sessionId = this.getCookies(req).PHPSESSID;
         this.applicationContext.addValue(ContextVariableType.SESSION_ID, sessionId);
 
         // http.json logRequests boolean option to allow the user/server to choose to not log requests

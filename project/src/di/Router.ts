@@ -78,10 +78,6 @@ export class DynamicRouter extends Router
 // So instead I added the definition
 export class ItemEventRouterDefinition extends Router
 {
-    constructor()
-    {
-        super();
-    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse
     {
@@ -91,10 +87,6 @@ export class ItemEventRouterDefinition extends Router
 
 export class SaveLoadRouter extends Router
 {
-    constructor()
-    {
-        super();
-    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleLoad(profile: IAkiProfile): IAkiProfile
     {

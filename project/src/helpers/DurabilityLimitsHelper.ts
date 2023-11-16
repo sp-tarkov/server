@@ -139,8 +139,8 @@ export class DurabilityLimitsHelper
 
     protected generateMaxPmcArmorDurability(itemMaxDurability: number): number
     {
-        const lowestMaxPercent = this.botConfig.durability["pmc"].armor.lowestMaxPercent;
-        const highestMaxPercent = this.botConfig.durability["pmc"].armor.highestMaxPercent;
+        const lowestMaxPercent = this.botConfig.durability.pmc.armor.lowestMaxPercent;
+        const highestMaxPercent = this.botConfig.durability.pmc.armor.highestMaxPercent;
         const multiplier = this.randomUtil.getInt(lowestMaxPercent, highestMaxPercent);
 
         return itemMaxDurability * (multiplier / 100);

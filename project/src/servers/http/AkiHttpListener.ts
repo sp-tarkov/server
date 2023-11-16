@@ -64,10 +64,10 @@ export class AkiHttpListener implements IHttpListener
                     // determine if the payload is compressed. All PUT requests are, and POST requests without
                     // debug = 1 are as well. This should be fixed.
                     // let compressed = req.headers["content-encoding"] === "deflate";
-                    const compressed = req.method === "PUT" || req.headers["debug"] !== "1";
+                    const compressed = req.method === "PUT" || req.headers.debug !== "1";
 
                     const value = compressed ? zlib.inflateSync(buffer) : buffer;
-                    if (req.headers["debug"] === "1")
+                    if (req.headers.debug === "1")
                     {
                         this.logger.debug(value.toString(), true);
                     }
@@ -107,7 +107,7 @@ export class AkiHttpListener implements IHttpListener
         let handled = false;
 
         // Check if this is a debug request, if so just send the raw response without transformation
-        if (req.headers["debug"] === "1")
+        if (req.headers.debug === "1")
         {
             this.sendJson(resp, output, sessionID);
         }

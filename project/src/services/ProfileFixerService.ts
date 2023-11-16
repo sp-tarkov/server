@@ -7,6 +7,7 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Bonus, HideoutSlot, IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IHideoutImprovement } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { StageBonus } from "@spt-aki/models/eft/hideout/IHideoutArea";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
@@ -417,7 +418,7 @@ export class ProfileFixerService
                     const existsInQuests = pmcProfile.Quests.some((q) => q.qid === backendCounter.qid);
 
                     // if BackendCounter's quest is neither in activeQuests nor Quests it's stale
-                    if (!existsInActiveRepeatableQuests && !existsInQuests)
+                    if (!(existsInActiveRepeatableQuests || existsInQuests))
                     {
                         counterKeysToRemove.push(key);
                     }
@@ -462,9 +463,9 @@ export class ProfileFixerService
 
     protected addMissingBonusesProperty(pmcProfile: IPmcData): void
     {
-        if (typeof pmcProfile["Bonuses"] === "undefined")
+        if (typeof pmcProfile.Bonuses === "undefined")
         {
-            pmcProfile["Bonuses"] = [];
+            pmcProfile.Bonuses = [];
             this.logger.debug("Missing Bonuses property added to profile");
         }
     }
@@ -1005,7 +1006,7 @@ export class ProfileFixerService
      */
     public addMissingHideoutAreasToProfile(fullProfile: IAkiProfile): void
     {
-        const pmcProfile = fullProfile.characters["pmc"];
+        const pmcProfile = fullProfile.characters.pmc;
         // No profile, probably new account being created
         if (!pmcProfile?.Hideout)
         {
@@ -1058,7 +1059,7 @@ export class ProfileFixerService
     public fixIncorrectAidValue(fullProfile: IAkiProfile): void
     {
         // Not a number, regenerate
-        if (isNaN(fullProfile.characters.pmc.aid))
+        if (Number.isNaN(fullProfile.characters.pmc.aid))
         {
             fullProfile.characters.pmc.sessionId = <string><unknown>fullProfile.characters.pmc.aid;
             fullProfile.characters.pmc.aid = this.hashUtil.generateAccountId();
@@ -1144,11 +1145,11 @@ export class ProfileFixerService
      */
     protected migrateImprovements(pmcProfile: IPmcData): void
     {
-        if (pmcProfile.Hideout["Improvements"])
+        if ("Improvements" in pmcProfile.Hideout)
         {
-            // Correct name is `Improvement`
-            pmcProfile.Hideout.Improvement = this.jsonUtil.clone(pmcProfile.Hideout["Improvements"]);
-            delete pmcProfile.Hideout["Improvements"];
+            const improvements = pmcProfile.Hideout.Improvements as Record<string, IHideoutImprovement>;
+            pmcProfile.Hideout.Improvement = this.jsonUtil.clone(improvements);
+            delete pmcProfile.Hideout.Improvements;
             this.logger.success("Successfully migrated hideout Improvements data to new location, deleted old data");
         }
     }

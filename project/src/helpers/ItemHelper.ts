@@ -846,7 +846,7 @@ class ItemHelper
      */
     public isAttachmentAttached(item: Item): boolean
     {
-        return item.slotId !== "hideout" && item.slotId !== "main" && isNaN(Number(item.slotId));
+        return item.slotId !== "hideout" && item.slotId !== "main" && Number.isNaN(Number(item.slotId));
     }
 
     /**

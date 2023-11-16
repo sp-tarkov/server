@@ -410,7 +410,7 @@ export class QuestController
             );
 
             // For some reason non-en locales dont have repeatable quest ids, fall back to en and grab it if possible
-            const enLocale = this.databaseServer.getTables().locales.global["en"];
+            const enLocale = this.databaseServer.getTables().locales.global.en;
             questStartedMessageText = enLocale[repeatableQuestProfile.startedMessageText];
 
             if (!questStartedMessageText)

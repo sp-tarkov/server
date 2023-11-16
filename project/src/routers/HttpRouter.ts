@@ -1,5 +1,5 @@
 import { IncomingMessage } from "node:http";
-import { injectable, injectAll } from "tsyringe";
+import { injectAll, injectable } from "tsyringe";
 
 import { DynamicRouter, Router, StaticRouter } from "@spt-aki/di/Router";
 
