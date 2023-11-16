@@ -2,90 +2,61 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint"
+      "@typescript-eslint"
   ],
   "env": {
-    "node": true
+      "node": true
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/eslint-recommended"
   ],
   "rules": {
-    "semi": [1, "always"],
-    "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-unused-vars": 1,
-    "@typescript-eslint/no-empty-interface": 0,
-    "@typescript-eslint/no-namespace": 0,
-    "@typescript-eslint/comma-dangle": 1,
-    "@typescript-eslint/func-call-spacing": 2,
-    "@typescript-eslint/quotes": 1,
-    "@typescript-eslint/brace-style": [
-      "error",
-      "allman"
-    ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": [
-          "camelCase"
-        ],
-        "leadingUnderscore": "allow"
-      },
-      {
-        "selector": "typeLike",
-        "format": [
-          "PascalCase"
-        ]
-      },
-      {
-        "selector": "objectLiteralProperty",
-        "format": [
-          "PascalCase",
-          "camelCase"
-        ],
-        "leadingUnderscore": "allow"
-      },
-      {
-        "selector": "typeProperty",
-        "format": [
-          "PascalCase",
-          "camelCase"
-        ],
-        "leadingUnderscore": "allow"
-      },
-      {
-        "selector": "enumMember",
-        "format": [
-          "UPPER_CASE"
-        ]
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-explicit-any": "off", // We use a bunch of these.
+      "@typescript-eslint/no-unused-vars": "off", // Typescript compiler already checks--Will grey out variable.
+      "@typescript-eslint/no-var-requires": "error",
+      "@typescript-eslint/explicit-module-boundary-types": ["error", { "allowArgumentsExplicitlyTypedAsAny": true }],
+      "@typescript-eslint/naming-convention": ["error", {
+          "selector": "default",
+          "format": ["camelCase"],
+          "leadingUnderscore": "allow"
+      }, {
+          "selector": "typeLike",
+          "format": ["PascalCase"]
+      }, {
+          "selector": "objectLiteralProperty",
+          "format": ["PascalCase", "camelCase", "snake_case"],
+          "leadingUnderscore": "allow"
+      }, {
+          "selector": "typeProperty",
+          "format": ["PascalCase", "camelCase"],
+          "leadingUnderscore": "allow"
+      }, {
+          "selector": "enumMember",
+          "format": ["UPPER_CASE"]
+      }, {
+          "selector": "property",
+          "modifiers": ["readonly", "static"],
+          "format": ["UPPER_CASE"]
+      }]
+  },
+  "overrides": [{
+      "files": [
+          "src/loaders/**/*.ts"
+      ],
+      "rules": {
+          "@typescript-eslint/no-var-requires": "off"
       }
-    ],
-    "@typescript-eslint/indent": [
-      "error",
-      4
-    ],
-    "@typescript-eslint/no-unused-expressions": [
-      "error",
-      {
-        "allowShortCircuit": false,
-        "allowTernary": false
+  }, {
+      "files": [
+          "**/vitest.config.ts"
+      ],
+      "rules": {
+          "@typescript-eslint/naming-convention": ["error", {
+              "selector": "objectLiteralProperty",
+              "format": null
+          }]
       }
-    ],
-    "@typescript-eslint/keyword-spacing": [
-      "error",
-      {
-        "before": true,
-        "after": true
-      }
-    ],
-    "@typescript-eslint/explicit-module-boundary-types": [
-      "warn",
-      {
-        "allowArgumentsExplicitlyTypedAsAny": true
-      }
-    ]
-  }
+  }]
 }

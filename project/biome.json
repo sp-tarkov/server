@@ -1,5 +1,13 @@
 {
     "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "javascript": {
+        "parser": {
+            "unsafeParameterDecoratorsEnabled": true
+        }
+    },
+    "organizeImports": {
+        "enabled": true
+    },
     "linter": {
         "enabled": true,
         "rules": {
@@ -18,7 +26,7 @@
                 "noExplicitAny": "off",
                 "noDoubleEquals": "warn",
                 "noShadowRestrictedNames": "warn",
-                "noEmptyInterface":"off"
+                "noEmptyInterface": "off"
             },
             "performance": {
                 "noDelete": "off"
@@ -27,16 +35,34 @@
                 "noUnnecessaryContinue": "warn"
             },
             "complexity": {
+                "noStaticOnlyClass": "off",
                 "useSimplifiedLogicExpression": "warn",
                 "useOptionalChain": "warn"
             }
-        },
+        }
+    },
+    "formatter": {
+        "enabled": false
+    },
+    "files": {
         "ignore": [
             "**/*.js",
             "**/*.json",
-            "**/*.mjs",
+            "**/*.d.ts",
             "**/Dockerfile.*",
-            "**/node_modules/**/*"
+            "**/.git/**/*",
+            "**/.vscode/**/*",
+            "**/node_modules/**/*",
+            "**/build/**/*",
+            "**/obj/**/*",
+            "**/dist/**/*",
+            "**/user/**/*",
+            "**/logs/**/*",
+            "**/assets/**/*",
+            "**/Aki_Data/**/*",
+            "**/types/**/*",
+            "**/tests/__cache__/**/*",
+            "**/tests/__coverage__/**/*"
         ]
-    } 
+    }
 }

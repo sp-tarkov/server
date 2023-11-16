@@ -5,18 +5,19 @@
         }
     ],
     "extensions": {
-        "recommendations": ["dbaeumer.vscode-eslint"],
+        "recommendations": [
+            "EditorConfig.EditorConfig",
+            "dprint.dprint",
+            "dbaeumer.vscode-eslint",
+            "biomejs.biome"
+        ]
     },
     "settings": {
         "window.title": "SPT-AKI Server",
-        "[typescript]": {
-            "editor.formatOnSave": true,
-            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-        },
-        "eslint.validate": ["typescript"],
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll.eslint": true
-        }
-    },
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "dprint.dprint",
+        "editor.codeActionsOnSave": [
+            "source.organizeImports.biome"
+        ]
+    }
 }
