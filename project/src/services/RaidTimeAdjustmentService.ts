@@ -205,9 +205,22 @@ export class RaidTimeAdjustmentService
                     MaxTime: null,
                     Chance: null
                 }
+
+                // Test method for determining trainArrivalDelaySeconds:
+                // 1) Set MinTime, MaxTime, and Count for the train extract all to 120
+                // 2) Load into Reserve or Lighthouse as a PMC (both have the same result)
+                // 3) Board the train when it arrives
+                // 4) Check the raid time on the Raid Ended Screen (it should always be the same)
+                //
+                // trainArrivalDelaySeconds = [raid time on raid-ended screen] - MaxTime - Count - ExfiltrationTime
+                // Example: Raid Time = 5:33 = 333 seconds
+                //          trainArrivalDelaySeconds = 333 - 120 - 120 - 5 = 88
+                //
+                // I added 2 seconds just to be safe...
+                const trainArrivalDelaySeconds = 90;
     
                 // If raid is after last moment train can leave, assume train has already left, disable extract
-                const latestPossibleDepartureMinutes = (exit.MaxTime + exit.Count) / 60;
+                const latestPossibleDepartureMinutes = (exit.MaxTime + exit.Count + exit.ExfiltrationTime + trainArrivalDelaySeconds) / 60;
                 if (newRaidTimeMinutes < latestPossibleDepartureMinutes)
                 {
                     exitChange.Chance = 0;
