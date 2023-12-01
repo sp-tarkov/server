@@ -464,7 +464,7 @@ export interface IQuestStatus
     startTime: number;
     status: QuestStatus;
     statusTimers?: Record<string, number>;
-    /** SPT specific property */
+    /** Property does not exist in live profile data, but is used by ProfileChanges.questsStatus when sent to client*/
     completedConditions?: string[];
     availableAfter?: number;
 }
@@ -475,16 +475,6 @@ export interface TraderInfo
     salesSum: number;
     standing: number;
     nextResupply: number;
-    unlocked: boolean;
-    disabled: boolean;
-}
-
-/** This object is sent to the client as part of traderRelations */
-export interface TraderData
-{
-    salesSum: number;
-    standing: number;
-    loyalty: number;
     unlocked: boolean;
     disabled: boolean;
 }

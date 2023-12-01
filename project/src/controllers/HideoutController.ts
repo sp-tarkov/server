@@ -329,7 +329,7 @@ export class HideoutController
     }
 
     /**
-     * @param output Objet to send to client
+     * @param output Object to send to client
      * @param sessionID Session/player id
      * @param areaType Hideout area that had stash added
      * @param hideoutDbData Hideout area that caused addition of stash
@@ -943,35 +943,38 @@ export class HideoutController
         // Create rewards for scav case
         const scavCaseRewards = this.scavCaseRewardGenerator.generate(request.recipeId);
 
+        // Add scav case rewards to player profile
         pmcData.Hideout.Production[prodId].Products = scavCaseRewards;
 
         // Remove the old production from output object before its sent to client
         delete output.profileChanges[sessionID].production[request.recipeId];
 
+        // Get array of item created + count of them after completing hideout craft
         const itemsToAdd = pmcData.Hideout.Production[prodId].Products.map(
             (x: { _tpl: string; upd?: { StackObjectsCount?: number; }; }) =>
             {
-                let id = x._tpl;
-                if (this.presetHelper.hasPreset(id))
-                {
-                    id = this.presetHelper.getDefaultPreset(id)._id;
-                }
+                const itemTpl = this.presetHelper.hasPreset(x._tpl)
+                    ? this.presetHelper.getDefaultPreset(x._tpl)._id
+                    : x._tpl;
+
+                // Count of items crafted
                 const numOfItems = !x.upd?.StackObjectsCount ? 1 : x.upd.StackObjectsCount;
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                return { item_id: id, count: numOfItems };
+                return { item_id: itemTpl, count: numOfItems };
             },
         );
 
         const newReq = { items: itemsToAdd, tid: "ragfair" };
-
         const callback = () =>
         {
-            // Flag as complete - will be cleaned up later by update() process
+            // Flag as complete - will be cleaned up later by hideoutController.update()
             pmcData.Hideout.Production[prodId].sptIsComplete = true;
 
+            // Crafting complete, flag as such
             pmcData.Hideout.Production[prodId].inProgress = false;
         };
 
+        // Add crafted item to player inventory
         return this.inventoryHelper.addItem(pmcData, newReq, output, sessionID, callback, true);
     }
 
@@ -1137,13 +1140,14 @@ export class HideoutController
         // Add all improvemets to output object
         const improvements = hideoutDbData.stages[profileHideoutArea.level].improvements;
         const timestamp = this.timeUtil.getTimestamp();
+
+        if (!output.profileChanges[sessionId].improvements)
+        {
+            output.profileChanges[sessionId].improvements = {};
+        }
+
         for (const improvement of improvements)
         {
-            if (!output.profileChanges[sessionId].improvements)
-            {
-                output.profileChanges[sessionId].improvements = {};
-            }
-
             const improvementDetails = {
                 completed: false,
                 improveCompleteTimestamp: timestamp + improvement.improvementTime,

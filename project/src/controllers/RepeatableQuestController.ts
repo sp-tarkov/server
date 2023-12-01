@@ -457,7 +457,11 @@ export class RepeatableQuestController
         droppedQuestTrader.standing -= changeRequirement.changeStandingCost;
 
         // Update client output with new repeatable
-        output.profileChanges[sessionID].repeatableQuests = [repeatableToChange];
+        if (!output.profileChanges[sessionID].repeatableQuests)
+        {
+            output.profileChanges[sessionID].repeatableQuests = [];
+        }
+        output.profileChanges[sessionID].repeatableQuests.push(repeatableToChange);
 
         return output;
     }

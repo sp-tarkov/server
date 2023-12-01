@@ -345,13 +345,14 @@ export class QuestHelper
         acceptedQuest: IAcceptQuestRequestData,
     ): IQuestStatus
     {
+        const currentTimestamp = this.timeUtil.getTimestamp();
         const existingQuest = pmcData.Quests.find((q) => q.qid === acceptedQuest.qid);
         if (existingQuest)
         {
             // Quest exists, update its status
-            existingQuest.startTime = this.timeUtil.getTimestamp();
+            existingQuest.startTime = currentTimestamp;
             existingQuest.status = newState;
-            existingQuest.statusTimers[newState] = this.timeUtil.getTimestamp();
+            existingQuest.statusTimers[newState] = currentTimestamp;
             existingQuest.completedConditions = [];
 
             if (existingQuest.availableAfter)
@@ -365,7 +366,7 @@ export class QuestHelper
         // Quest doesn't exists, add it
         const newQuest: IQuestStatus = {
             qid: acceptedQuest.qid,
-            startTime: this.timeUtil.getTimestamp(),
+            startTime: currentTimestamp,
             status: newState,
             statusTimers: {},
         };
@@ -378,11 +379,11 @@ export class QuestHelper
             // Quest should be put into 'pending' state
             newQuest.startTime = 0;
             newQuest.status = QuestStatus.AvailableAfter; // 9
-            newQuest.availableAfter = this.timeUtil.getTimestamp() + waitTime._props.availableAfter;
+            newQuest.availableAfter = currentTimestamp + waitTime._props.availableAfter;
         }
         else
         {
-            newQuest.statusTimers[newState.toString()] = this.timeUtil.getTimestamp();
+            newQuest.statusTimers[newState.toString()] = currentTimestamp;
             newQuest.completedConditions = [];
         }
 
@@ -744,15 +745,24 @@ export class QuestHelper
         const questToUpdate = pmcData.Quests.find((quest) => quest.qid === questId);
         if (questToUpdate)
         {
-            questToUpdate.status = newQuestState;
-            questToUpdate.statusTimers[newQuestState] = this.timeUtil.getTimestamp();
+            const currentTimestamp = this.timeUtil.getTimestamp();
 
-            // Delete all status timers after the new status
+            questToUpdate.status = newQuestState;
+
+            // Only set start time when quest is being started
+            if (newQuestState === QuestStatus.Started)
+            {
+                questToUpdate.startTime = currentTimestamp;
+            }
+
+            questToUpdate.statusTimers[newQuestState] = currentTimestamp;
+
+            // Delete all status timers after applying new status
             for (const statusKey in questToUpdate.statusTimers)
             {
                 if (Number.parseInt(statusKey) > newQuestState)
                 {
-                    delete questToUpdate.statusTimers[statusKey]
+                    delete questToUpdate.statusTimers[statusKey];
                 }
             }
 
