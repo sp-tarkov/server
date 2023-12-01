@@ -206,7 +206,15 @@ export class RaidTimeAdjustmentService
                     Chance: null
                 }
 
-                // Test method for determining trainArrivalDelaySeconds:
+                // At what minute we simulate the player joining the raid
+                const simulatedRaidEntryTimeMinutes = mapBase.EscapeTimeLimit - newRaidTimeMinutes;
+    
+                // How many seconds have elapsed in the raid when the player joins
+                const reductionSeconds = simulatedRaidEntryTimeMinutes * 60;
+
+                // Delay between the train extract activating and it becoming available to board
+                // 
+                // Test method for determining this value:
                 // 1) Set MinTime, MaxTime, and Count for the train extract all to 120
                 // 2) Load into Reserve or Lighthouse as a PMC (both have the same result)
                 // 3) Board the train when it arrives
@@ -217,29 +225,28 @@ export class RaidTimeAdjustmentService
                 //          trainArrivalDelaySeconds = 333 - 120 - 120 - 5 = 88
                 //
                 // I added 2 seconds just to be safe...
+                //
                 const trainArrivalDelaySeconds = 90;
     
+                // Determine the earliest possible time in the raid when the train would leave
+                const earliestPossibleDepartureMinutes = (exit.MinTime + exit.Count + exit.ExfiltrationTime + trainArrivalDelaySeconds) / 60;
+                
                 // If raid is after last moment train can leave, assume train has already left, disable extract
-                const latestPossibleDepartureMinutes = (exit.MaxTime + exit.Count + exit.ExfiltrationTime + trainArrivalDelaySeconds) / 60;
-                if (newRaidTimeMinutes < latestPossibleDepartureMinutes)
+                const mostPossibleTimeRemainingAfterDeparture = mapBase.EscapeTimeLimit - earliestPossibleDepartureMinutes;
+                if (newRaidTimeMinutes < mostPossibleTimeRemainingAfterDeparture)
                 {
                     exitChange.Chance = 0;
     
-                    this.logger.debug(`Train Exit: ${exit.Name} disabled as new raid time ${newRaidTimeMinutes} minutes is below ${latestPossibleDepartureMinutes} minutes`);
-    
+                    this.logger.debug(`Train Exit: ${exit.Name} disabled as new raid time ${newRaidTimeMinutes} minutes is below ${mostPossibleTimeRemainingAfterDeparture} minutes`);
+
                     result.push(exitChange);
     
                     continue;
                 }
-    
-                // What minute we simulate the player joining a raid at
-                const simulatedRaidEntryTimeMinutes = mapBase.EscapeTimeLimit - newRaidTimeMinutes;
-    
-                // How many seconds to reduce extract arrival times by, negative values seem to make extract turn red in game
-                const reductionSeconds = simulatedRaidEntryTimeMinutes * 60;
-    
-                exitChange.MinTime = exit.MinTime - reductionSeconds;
-                exitChange.MaxTime = exit.MaxTime - reductionSeconds;
+                
+                // Reduce extract arrival times. Negative values seem to make extract turn red in game.
+                exitChange.MinTime = Math.max(exit.MinTime - reductionSeconds, 0);
+                exitChange.MaxTime = Math.max(exit.MaxTime - reductionSeconds, 0);
     
                 this.logger.debug(`Train appears between: ${exitChange.MinTime} and ${exitChange.MaxTime} seconds raid time`);
                 
