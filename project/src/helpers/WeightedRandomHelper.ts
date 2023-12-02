@@ -22,6 +22,7 @@ export class WeightedRandomHelper
     {
         const itemKeys = Object.keys(itemArray);
         const weights = Object.values(itemArray);
+
         const chosenItem = this.weightedRandom(itemKeys, weights);
 
         return chosenItem.item;
@@ -41,16 +42,21 @@ export class WeightedRandomHelper
      * @param {number[]} weights
      * @returns {{item: any, index: number}}
      */
-    public weightedRandom(items: string | any[], weights: string | any[]): { item: any; index: number; }
+    public weightedRandom(items: any[], weights: any[]): { item: any; index: number; }
     {
+        if (!items || items.length === 0)
+        {
+            throw new Error("Items must not be empty");
+        }
+
+        if (!weights || weights.length === 0)
+        {
+            throw new Error("Item weights must not be empty");
+        }
+
         if (items.length !== weights.length)
         {
             throw new Error("Items and weight inputs must be of the same length");
-        }
-
-        if (!items.length)
-        {
-            throw new Error("Items must not be empty");
         }
 
         // Preparing the cumulative weights array.

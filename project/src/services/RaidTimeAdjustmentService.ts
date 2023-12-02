@@ -171,11 +171,11 @@ export class RaidTimeAdjustmentService
      */
     protected getMapSettings(location: string): IScavRaidTimeLocationSettings
     {
-        const mapSettings = this.locationConfig.scavRaidTimeSettings[location.toLowerCase()];
+        const mapSettings = this.locationConfig.scavRaidTimeSettings.maps[location.toLowerCase()];
         if (!mapSettings)
         {
             this.logger.warning(`Unable to find scav raid time settings for map: ${location}, using defaults`);
-            return this.locationConfig.scavRaidTimeSettings.default;
+            return this.locationConfig.scavRaidTimeSettings.maps.default;
         }
 
         return mapSettings;
@@ -226,7 +226,7 @@ export class RaidTimeAdjustmentService
                 //
                 // I added 2 seconds just to be safe...
                 //
-                const trainArrivalDelaySeconds = 90;
+                const trainArrivalDelaySeconds = this.locationConfig.scavRaidTimeSettings.settings.trainArrivalDelaySeconds;
     
                 // Determine the earliest possible time in the raid when the train would leave
                 const earliestPossibleDepartureMinutes = (exit.MinTime + exit.Count + exit.ExfiltrationTime + trainArrivalDelaySeconds) / 60;

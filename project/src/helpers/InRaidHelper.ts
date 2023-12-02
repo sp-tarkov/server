@@ -218,7 +218,7 @@ export class InRaidHelper
     public updatePmcProfileDataPostRaid(pmcData: IPmcData, saveProgressRequest: ISaveProgressRequestData, sessionId: string): void
     {
         // Process failed quests then copy everything
-        this.processFailedQuests(sessionId, pmcData, pmcData.Quests, saveProgressRequest.profile.Quests);
+        this.processFailedQuests(sessionId, pmcData, pmcData.Quests, saveProgressRequest.profile);
         pmcData.Quests = saveProgressRequest.profile.Quests;
 
         // No need to do this for scav, old scav is deleted and new one generated
@@ -254,13 +254,13 @@ export class InRaidHelper
      * @param sessionId Player id
      * @param pmcData Player profile
      * @param preRaidQuests Quests prior to starting raid
-     * @param postRaidQuests Quest after raid
+     * @param postRaidProfile Profile sent by client
      */
     protected processFailedQuests(
         sessionId: string,
         pmcData: IPmcData,
         preRaidQuests: IQuestStatus[],
-        postRaidQuests: IQuestStatus[],
+        postRaidProfile: IPostRaidPmcData,
     ): void
     {
         if (!preRaidQuests)
@@ -270,24 +270,81 @@ export class InRaidHelper
         }
 
         // Loop over all quests from post-raid profile
-        for (const postRaidQuest of postRaidQuests)
+        for (const postRaidQuest of postRaidProfile.Quests)
         {
-            // Find matching pre-raid quest
+            // Find matching pre-raid quest + not already failed
             const preRaidQuest = preRaidQuests?.find((x) => x.qid === postRaidQuest.qid);
-            if (preRaidQuest)
+            if (!preRaidQuest)
             {
-                // Post-raid quest is failed but wasn't pre-raid
-                // postRaidQuest.status has a weird value, need to do some nasty casting to compare it
-                if (<string><unknown>postRaidQuest.status === "Fail" && preRaidQuest.status !== QuestStatus.Fail)
+                continue;
+            }
+
+            // Already failed before raid, skip
+            if (preRaidQuest.status === QuestStatus.Fail)
+            {
+                continue;
+            }
+            
+            if (preRaidQuest.status === QuestStatus.Success)
+            {
+                continue;
+            }
+
+            // Quest failed inside raid, need to handle
+            // postRaidQuest.status has a weird value, need to do some nasty casting to compare it
+            const postRaidQuestStatus = <string><unknown>postRaidQuest.status;
+            if (postRaidQuestStatus === "Fail")
+            {
+                // Send failed message
+                const failBody: IFailQuestRequestData = {
+                    Action: "QuestComplete",
+                    qid: postRaidQuest.qid,
+                    removeExcessItems: true,
+                };
+                this.questHelper.failQuest(pmcData, failBody, sessionId);
+            }
+            // Restartable quests need special actions
+            else if (postRaidQuestStatus === "FailRestartable")
+            {
+                // Does failed quest have requirement to collect items from raid
+                const questDbData = this.questHelper.getQuestFromDb(postRaidQuest.qid, pmcData);
+                // AvailableForFinish
+                const matchingAffFindConditions = questDbData.conditions.AvailableForFinish.filter(x => x._parent === "FindItem");
+                const itemsToCollect: string[] = [];
+                if (matchingAffFindConditions)
                 {
-                    // Send failed message
-                    const failBody: IFailQuestRequestData = {
-                        Action: "QuestComplete",
-                        qid: postRaidQuest.qid,
-                        removeExcessItems: true,
-                    };
-                    this.questHelper.failQuest(pmcData, failBody, sessionId);
+                    // Find all items the failed quest wanted
+                    for (const condition of matchingAffFindConditions)
+                    {
+                        itemsToCollect.push(...condition._props.target);
+                    }
                 }
+
+                // Remove quest items from profile as quest has failed and may still be alive
+                // Required as restarting the quest from main menu does not remove value from CarriedQuestItems array
+                postRaidProfile.Stats.Eft.CarriedQuestItems = postRaidProfile.Stats.Eft.CarriedQuestItems.filter(x => !itemsToCollect.includes(x))
+
+                // Remove quest item from profile now quest is failed
+                // updateProfileBaseStats() has already passed by ref EFT.Stats, all changes applied to postRaid profile also apply to server profile
+                for (const itemTpl of itemsToCollect)
+                {
+                    // Look for sessioncounter and remove it
+                    const counterIndex = postRaidProfile.Stats.Eft.SessionCounters.Items.findIndex(x => x.Key.includes(itemTpl) && x.Key.includes("LootItem"));
+                    if (counterIndex > -1)
+                    {
+                        postRaidProfile.Stats.Eft.SessionCounters.Items.splice(counterIndex, 1);
+                    }
+
+                    // Look for quest item and remove it
+                    const inventoryItemIndex = postRaidProfile.Inventory.items.findIndex(x => x._tpl === itemTpl);
+                    if (inventoryItemIndex > -1)
+                    {
+                        postRaidProfile.Inventory.items.splice(inventoryItemIndex, 1);
+                    }
+                }
+
+                // Clear out any completed conditions
+                postRaidQuest.completedConditions = [];
             }
         }
     }

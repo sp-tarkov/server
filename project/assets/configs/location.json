@@ -841,190 +841,195 @@
     "allowDuplicateItemsInStaticContainers": true,
     "looseLootBlacklist": {},
     "scavRaidTimeSettings": {
-        "bigmap": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
-            "reductionPercentWeights": {
-                "20": 1,
-                "25": 2,
-                "30": 4,
-                "35": 4,
-                "40": 4,
-                "45": 4,
-                "50": 4,
-                "60": 2,
-                "70": 2,
-                "80": 1
-            },
-            "adjustWaves": true
+        "settings": {
+            "trainArrivalDelaySeconds": 90
         },
-        "factory4_day": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 80,
-            "reductionPercentWeights": {
-                "5": 2,
-                "20": 3,
-                "25": 3,
-                "30": 5,
-                "40": 5,
-                "50": 5,
-                "60": 2,
-                "70": 2,
-                "80": 2,
-                "85": 1
+        "maps": {
+            "bigmap": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
+                "reductionPercentWeights": {
+                    "20": 1,
+                    "25": 2,
+                    "30": 4,
+                    "35": 4,
+                    "40": 4,
+                    "45": 4,
+                    "50": 4,
+                    "60": 2,
+                    "70": 2,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "factory4_night": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
-            "reductionPercentWeights": {
-                "20": 4,
-                "30": 3,
-                "40": 3,
-                "60": 2,
-                "70": 2,
-                "80": 1
+            "factory4_day": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 80,
+                "reductionPercentWeights": {
+                    "5": 2,
+                    "20": 3,
+                    "25": 3,
+                    "30": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 2,
+                    "70": 2,
+                    "80": 2,
+                    "85": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "interchange": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
-            "reductionPercentWeights": {
-                "20": 5,
-                "25": 5,
-                "30": 5,
-                "35": 5,
-                "40": 5,
-                "50": 5,
-                "60": 2,
-                "80": 1
+            "factory4_night": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
+                "reductionPercentWeights": {
+                    "20": 4,
+                    "30": 3,
+                    "40": 3,
+                    "60": 2,
+                    "70": 2,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "rezervbase": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
+            "interchange": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
+                "reductionPercentWeights": {
+                    "20": 5,
+                    "25": 5,
+                    "30": 5,
+                    "35": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 2,
+                    "80": 1
+                },
+                "adjustWaves": true
+            },
+            "rezervbase": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
 
-            "reductionPercentWeights": {
-                "20": 3,
-                "30": 3,
-                "40": 4,
-                "50": 4,
-                "60": 2,
-                "70": 1,
-                "80": 1
+                "reductionPercentWeights": {
+                    "20": 3,
+                    "30": 3,
+                    "40": 4,
+                    "50": 4,
+                    "60": 2,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "laboratory": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
-            "reductionPercentWeights": {
-                "20": 3,
-                "30": 5,
-                "40": 5,
-                "50": 5,
-                "60": 2,
-                "80": 1
+            "laboratory": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
+                "reductionPercentWeights": {
+                    "20": 3,
+                    "30": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 2,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "lighthouse": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 60,
-            "reductionPercentWeights": {
-                "20": 2,
-                "25": 2,
-                "30": 4,
-                "40": 4,
-                "50": 4,
-                "60": 2,
-                "80": 1
+            "lighthouse": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 60,
+                "reductionPercentWeights": {
+                    "20": 2,
+                    "25": 2,
+                    "30": 4,
+                    "40": 4,
+                    "50": 4,
+                    "60": 2,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "shoreline": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 60,
-            "reductionPercentWeights": {
-                "20": 2,
-                "25": 3,
-                "30": 5,
-                "35": 5,
-                "40": 5,
-                "50": 5,
-                "60": 2,
-                "70": 1,
-                "80": 1
+            "shoreline": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 60,
+                "reductionPercentWeights": {
+                    "20": 2,
+                    "25": 3,
+                    "30": 5,
+                    "35": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 2,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "tarkovstreets": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 70,
-            "reductionPercentWeights": {
-                "20": 2,
-                "30": 4,
-                "40": 4,
-                "50": 4,
-                "60": 4,
-                "70": 1,
-                "80": 1
+            "tarkovstreets": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 70,
+                "reductionPercentWeights": {
+                    "20": 2,
+                    "30": 4,
+                    "40": 4,
+                    "50": 4,
+                    "60": 4,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "woods": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 40,
-            "reducedChancePercent": 60,
-            "reductionPercentWeights": {
-                "20": 3,
-                "30": 5,
-                "40": 5,
-                "50": 5,
-                "60": 1,
-                "70": 1,
-                "80": 1
+            "woods": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 60,
+                "reductionPercentWeights": {
+                    "20": 3,
+                    "30": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 1,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
             },
-            "adjustWaves": true
-        },
-        "default": {
-            "reduceLootByPercent": true,
-            "minDynamicLootPercent": 50,
-            "minStaticLootPercent": 50,
-            "reducedChancePercent": 50,
-            "reductionPercentWeights": {
-                "10": 1,
-                "20": 2,
-                "30": 5,
-                "40": 5,
-                "50": 5,
-                "60": 2,
-                "70": 1,
-                "80": 1
-            },
-            "adjustWaves": true
+            "default": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 50,
+                "reducedChancePercent": 50,
+                "reductionPercentWeights": {
+                    "10": 1,
+                    "20": 2,
+                    "30": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 2,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
+            }
         }
     }
 }

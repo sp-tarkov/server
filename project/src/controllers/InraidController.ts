@@ -107,17 +107,17 @@ export class InraidController
      */
     protected savePmcProgress(sessionID: string, postRaidRequest: ISaveProgressRequestData): void
     {
-        const serveProfile = this.saveServer.getProfile(sessionID);
-        const locationName = serveProfile.inraid.location.toLowerCase();
+        const serverProfile = this.saveServer.getProfile(sessionID);
+        const locationName = serverProfile.inraid.location.toLowerCase();
 
         const map: ILocationBase = this.databaseServer.getTables().locations[locationName].base;
         const mapHasInsuranceEnabled = map.Insurance;
 
-        let serverPmcProfile = serveProfile.characters.pmc;
+        let serverPmcProfile = serverProfile.characters.pmc;
         const isDead = this.isPlayerDead(postRaidRequest.exit);
         const preRaidGear = this.inRaidHelper.getPlayerGear(serverPmcProfile.Inventory.items);
 
-        serveProfile.inraid.character = "pmc";
+        serverProfile.inraid.character = "pmc";
 
         this.inRaidHelper.updateProfileBaseStats(serverPmcProfile, postRaidRequest, sessionID);
         this.inRaidHelper.updatePmcProfileDataPostRaid(serverPmcProfile, postRaidRequest, sessionID);
@@ -219,7 +219,7 @@ export class InraidController
                     activeQuestIdsInProfile,
                     allQuests,
                 );
-                if (questAndFindItemConditionId)
+                if (Object.keys(questAndFindItemConditionId)?.length > 0)
                 {
                     this.profileHelper.removeCompletedQuestConditionFromProfile(pmcData, questAndFindItemConditionId);
                 }

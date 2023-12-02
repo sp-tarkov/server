@@ -951,7 +951,7 @@ export class QuestHelper
             const questInDb = allQuests.find((x) => x._id === questId);
             if (!questInDb)
             {
-                this.logger.warning(
+                this.logger.debug(
                     `Unable to find quest: ${questId} in db, cannot get 'FindItem' condition, skipping`,
                 );
                 continue;
