@@ -216,7 +216,7 @@ export class BotWeaponGeneratorHelper
 
             // Iterate over each grid in the container and look for a big enough space for the item to be placed in
             let currentGridCount = 1;
-            const slotGridCount = containerTemplate[1]._props.Grids.length;
+            const totalSlotGridCount = containerTemplate[1]._props.Grids.length;
             for (const slotGrid of containerTemplate[1]._props.Grids)
             {
                 // Grid is empty, skip
@@ -280,7 +280,7 @@ export class BotWeaponGeneratorHelper
                 }
 
                 // If we've checked all grids in container and reached this point, there's no space for item
-                if (slotGridCount >= currentGridCount)
+                if (currentGridCount >= totalSlotGridCount)
                 {
                     return ItemAddedResult.NO_SPACE;
                 }
