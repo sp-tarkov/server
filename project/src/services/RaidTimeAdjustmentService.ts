@@ -226,7 +226,7 @@ export class RaidTimeAdjustmentService
                 //
                 // I added 2 seconds just to be safe...
                 //
-                const trainArrivalDelaySeconds = this.locationConfig.scavRaidTimeSettings.settings.trainArrivalDelaySeconds;
+                const trainArrivalDelaySeconds = this.locationConfig.scavRaidTimeSettings.settings.trainArrivalDelayObservedSeconds;
     
                 // Determine the earliest possible time in the raid when the train would leave
                 const earliestPossibleDepartureMinutes = (exit.MinTime + exit.Count + exit.ExfiltrationTime + trainArrivalDelaySeconds) / 60;

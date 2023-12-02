@@ -115,7 +115,7 @@ export interface IScavRaidTimeSettings
 
 export interface IScavRaidTimeConfigSettings
 {
-    trainArrivalDelaySeconds: number
+    trainArrivalDelayObservedSeconds: number
 }
 
 export interface IScavRaidTimeLocationSettings

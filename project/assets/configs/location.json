@@ -842,7 +842,7 @@
     "looseLootBlacklist": {},
     "scavRaidTimeSettings": {
         "settings": {
-            "trainArrivalDelaySeconds": 90
+            "trainArrivalDelayObservedSeconds": 90
         },
         "maps": {
             "bigmap": {
