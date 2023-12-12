@@ -1,4 +1,4 @@
-FROM node:14 as builder
+FROM node:18-alpine as builder
 
 WORKDIR /app
 
@@ -8,6 +8,6 @@ RUN npm i
 COPY . .
 RUN npm run gen:docs
 
-FROM nginx:latest
+FROM nginx:stable-alpine3.17
 
 COPY --from=builder /app/docs /usr/share/nginx/html
