@@ -11,6 +11,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 
 @injectable()
 export class WebSocketServer
@@ -22,6 +23,7 @@ export class WebSocketServer
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
@@ -92,11 +94,13 @@ export class WebSocketServer
         // Strip request and break it into sections
         const splitUrl = req.url.substring(0, req.url.indexOf("?")).split("/");
         const sessionID = splitUrl.pop();
+        const playerProfile = this.profileHelper.getFullProfile(sessionID);
+        const playerInfoText = `${playerProfile.info.username} (${sessionID})`;
 
-        this.logger.info(this.localisationService.getText("websocket-player_connected", sessionID));
+        this.logger.info(this.localisationService.getText("websocket-player_connected", playerInfoText));
 
         const logger = this.logger;
-        const msgToLog = this.localisationService.getText("websocket-received_message", sessionID);
+        const msgToLog = this.localisationService.getText("websocket-received_message", playerInfoText);
         ws.on("message", function message(msg)
         {
             logger.info(`${msgToLog} ${msg}`);
