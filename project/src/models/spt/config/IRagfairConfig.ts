@@ -32,8 +32,6 @@ export interface Sell
 export interface Chance
 {
     base: number;
-    overpriced: number;
-    underpriced: number;
 }
 
 export interface Time extends MinMax
