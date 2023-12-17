@@ -29,7 +29,14 @@ export interface Sell
 
 export interface Chance
 {
+    /** Base chance percent to sell an item */
     base: number;
+    /** Value to multiply the sell chance by */
+    sellMultiplier: number;
+    /** Max possible sell chance % for a player listed offer */
+    maxSellChancePercent: number;
+    /** Min possible sell chance % for a player listed offer */
+    minSellChancePercent: number;
 }
 
 export interface Time extends MinMax

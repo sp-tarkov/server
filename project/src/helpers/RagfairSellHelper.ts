@@ -38,28 +38,29 @@ export class RagfairSellHelper
         qualityMultiplier: number,
     ): number
     {
-        const baseSellChancePercent = this.ragfairConfig.sell.chance.base * qualityMultiplier;
+        const sellConfig = this.ragfairConfig.sell.chance;
+
+        // Base sell chance modified by items quality
+        const baseSellChancePercent = sellConfig.base * qualityMultiplier;
+        
         // Modfier gets applied twice to either penalize or incentivize over/under pricing (Probably a cleaner way to do this)
-        const modifier = averageOfferPriceRub / playerListedPriceRub;
-        let sellChance = Math.round((baseSellChancePercent * modifier) * modifier);
-        // Never a 100% chance to sell, and eventually it's basically never gonna sell
-        if (sellChance >= 100) sellChance = 99; else if (sellChance <= 5) sellChance = 1;
+        const sellModifier = (averageOfferPriceRub / playerListedPriceRub) * sellConfig.sellMultiplier;
+        let sellChance = Math.round((baseSellChancePercent * sellModifier) * sellModifier);
+        
+        // Adjust sell chance if below config value
+        if (sellChance < sellConfig.minSellChancePercent)
+        {
+            sellChance = sellConfig.minSellChancePercent;
+        }
+
+        // Adjust sell chance if above config value
+        if (sellChance > sellConfig.maxSellChancePercent)
+        {
+            sellChance = sellConfig.maxSellChancePercent;
+        }
+
         return sellChance;
     }
-
-    /**
-     * Get percent chance to sell an item when price is below items average listing price
-     * @param playerListedPriceRub Price player listed item for in roubles
-     * @param averageOfferPriceRub Price of average offer in roubles
-     * @returns percent value
-    protected getSellMultiplierWhenPlayerPriceIsBelowAverageListingPrice(
-        averageOfferPriceRub: number,
-        playerListedPriceRub: number,
-    ): number
-    {
-        return (playerListedPriceRub < averageOfferPriceRub) ? this.ragfairConfig.sell.chance.underpriced : 1;
-    }
-     */
 
     /**
      * Get array of item count and sell time (empty array = no sell)
