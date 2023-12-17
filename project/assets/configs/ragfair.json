@@ -1,12 +1,9 @@
 {
     "runIntervalSeconds": 45,
     "sell": {
-        "simulatedSellHours": 12,
         "fees": true,
         "chance": {
-            "base": 50,
-            "overpriced": 1.7,
-            "underpriced": 2
+            "base": 50
         },
         "time": {
             "base": 1.5,
