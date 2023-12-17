@@ -5,6 +5,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -17,6 +18,7 @@ export class RagfairSellHelper
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -50,7 +52,6 @@ export class RagfairSellHelper
      * @param playerListedPriceRub Price player listed item for in roubles
      * @param averageOfferPriceRub Price of average offer in roubles
      * @returns percent value
-     */
     protected getSellMultiplierWhenPlayerPriceIsBelowAverageListingPrice(
         averageOfferPriceRub: number,
         playerListedPriceRub: number,
@@ -58,6 +59,7 @@ export class RagfairSellHelper
     {
         return (playerListedPriceRub < averageOfferPriceRub) ? this.ragfairConfig.sell.chance.underpriced : 1;
     }
+     */
 
     /**
      * Get array of item count and sell time (empty array = no sell)
@@ -70,7 +72,7 @@ export class RagfairSellHelper
         const startTime = this.timeUtil.getTimestamp();
 
         // Get a time in future to stop simulating sell chances at
-        const endTime = startTime + this.timeUtil.getHoursAsSeconds(this.ragfairConfig.sell.simulatedSellHours);
+        const endTime = startTime + this.timeUtil.getHoursAsSeconds(this.databaseServer.getTables().globals.config.RagFair.offerDurationTimeInHour);
 
         let sellTime = startTime;
         let remainingCount = itemSellCount;

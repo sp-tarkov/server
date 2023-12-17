@@ -23,8 +23,6 @@ export interface Sell
     time: Time;
     /** Player offer reputation gain/loss settings */
     reputation: Reputation;
-    /** How many hours are simulated to figure out if player offer was sold */
-    simulatedSellHours: number;
     /**Seconds from clicking remove to remove offer from market */
     expireSeconds: number;
 }
