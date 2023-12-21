@@ -11,6 +11,7 @@
         "fixProfileBreakingInventoryItemIssues": false
     },
     "features": {
-        "autoInstallModDependencies": false
+        "autoInstallModDependencies": false,
+        "compressProfile": false
     }
 }

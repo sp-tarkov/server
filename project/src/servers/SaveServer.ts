@@ -7,6 +7,9 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
+import { ConfigServer } from "./ConfigServer";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 
 @injectable()
 export class SaveServer
@@ -24,6 +27,7 @@ export class SaveServer
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("ConfigServer") protected configServer: ConfigServer
     )
     {}
 
@@ -166,7 +170,9 @@ export class SaveServer
         if (this.vfs.exists(filePath))
         {
             // File found, store in profiles[]
+            const start = performance.now();
             this.profiles[sessionID] = this.jsonUtil.deserialize(this.vfs.readFile(filePath), filename);
+            this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to load.`);
         }
 
         // Run callbacks
@@ -200,7 +206,8 @@ export class SaveServer
             }
         }
 
-        const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], true);
+        const start = performance.now();
+        const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], !this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.compressProfile);
         const fmd5 = this.hashUtil.generateMd5ForData(jsonProfile);
         if (typeof (this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
         {
@@ -209,6 +216,7 @@ export class SaveServer
             this.vfs.writeFile(filePath, jsonProfile);
             this.logger.debug(this.localisationService.getText("profile_saved", sessionID), true);
         }
+        this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to save.`);
     }
 
     /**
