@@ -246,6 +246,10 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { Watermark, WatermarkLocale } from "@spt-aki/utils/Watermark";
 import { WinstonMainLogger } from "@spt-aki/utils/logging/WinstonMainLogger";
 import { WinstonRequestLogger } from "@spt-aki/utils/logging/WinstonRequestLogger";
+import {SptDialogueChatBot} from "@spt-aki/helpers/Dialogue/SptDialogueChatBot";
+import {CommandoDialogueChatBot} from "@spt-aki/helpers/Dialogue/CommandoDialogueChatBot";
+import {GiveSptCommand} from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveSptCommand";
+import {SptCommandoCommands} from "@spt-aki/helpers/Dialogue/Commando/SptCommandoCommands";
 
 /**
  * Handle the registration of classes to be used by the Dependency Injection code
@@ -357,6 +361,16 @@ export class Container
         depContainer.registerType("SaveLoadRouter", "InraidSaveLoadRouter");
         depContainer.registerType("SaveLoadRouter", "InsuranceSaveLoadRouter");
         depContainer.registerType("SaveLoadRouter", "ProfileSaveLoadRouter");
+
+        // Chat Bots
+        depContainer.registerType("DialogueChatBot", "SptDialogueChatBot");
+        depContainer.registerType("DialogueChatBot", "CommandoDialogueChatBot");
+
+        // Commando Commands
+        depContainer.registerType("CommandoCommand", "SptCommandoCommands");
+
+        // SptCommando Commands
+        depContainer.registerType("SptCommand", "GiveSptCommand");
     }
 
     private static registerUtils(depContainer: DependencyContainer): void
@@ -566,6 +580,15 @@ export class Container
         });
         depContainer.register<BotDifficultyHelper>("BotDifficultyHelper", { useClass: BotDifficultyHelper });
         depContainer.register<RepeatableQuestHelper>("RepeatableQuestHelper", { useClass: RepeatableQuestHelper });
+
+        // ChatBots
+        depContainer.register<SptDialogueChatBot>("SptDialogueChatBot", SptDialogueChatBot);
+        depContainer.register<CommandoDialogueChatBot>("CommandoDialogueChatBot", CommandoDialogueChatBot);
+        // SptCommando
+        depContainer.register<SptCommandoCommands>("SptCommandoCommands", SptCommandoCommands);
+        // SptCommands
+        depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand);
+
     }
 
     private static registerLoaders(depContainer: DependencyContainer): void
