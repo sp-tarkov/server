@@ -1,5 +1,6 @@
-import {inject, injectable, injectAll} from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
+import { IDialogueChatBot } from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
 import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
 import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
 import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
@@ -12,7 +13,6 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import {IDialogueChatBot} from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
 
 @injectable()
 export class DialogueController
@@ -28,7 +28,8 @@ export class DialogueController
         @injectAll("DialogueChatBot") protected dialogueChatBots: IDialogueChatBot[]
     )
     {
-        for (const dialogueChatBot of dialogueChatBots) {
+        for (const dialogueChatBot of dialogueChatBots)
+        {
             if (this.registeredDialogueChatBots.has(dialogueChatBot.getChatBot()._id))
             {
                 this.logger.error(`Could not register ${dialogueChatBot.getChatBot()._id} as it is already in use. Skipping.`);
@@ -126,7 +127,7 @@ export class DialogueController
             }
 
             dialog.Users.push({
-                _id: profile.characters.pmc._id,
+                _id: profile.characters.pmc.sessionId,
                 info: {
                     Level: profile.characters.pmc.Info.Level,
                     Nickname: profile.characters.pmc.Info.Nickname,

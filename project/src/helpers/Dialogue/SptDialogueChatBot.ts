@@ -1,21 +1,21 @@
-import {inject, injectable} from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
-import {IDialogueChatBot} from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
-import {ICoreConfig} from "@spt-aki/models/spt/config/ICoreConfig";
-import {ConfigServer} from "@spt-aki/servers/ConfigServer";
-import {ConfigTypes} from "@spt-aki/models/enums/ConfigTypes";
-import {IUserDialogInfo} from "@spt-aki/models/eft/profile/IAkiProfile";
-import {MemberCategory} from "@spt-aki/models/enums/MemberCategory";
-import {ISendMessageRequest} from "@spt-aki/models/eft/dialog/ISendMessageRequest";
-import {GiftSentResult} from "@spt-aki/models/enums/GiftSentResult";
-import {ProfileHelper} from "@spt-aki/helpers/ProfileHelper";
-import {RandomUtil} from "@spt-aki/utils/RandomUtil";
-import {MailSendService} from "@spt-aki/services/MailSendService";
-import {GiftService} from "@spt-aki/services/GiftService";
-
+import { IDialogueChatBot } from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
+import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
+import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
+import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { GiftService } from "@spt-aki/services/GiftService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
-export class SptDialogueChatBot implements IDialogueChatBot {
+export class SptDialogueChatBot implements IDialogueChatBot
+{
     protected coreConfig: ICoreConfig;
     public constructor(
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -23,11 +23,13 @@ export class SptDialogueChatBot implements IDialogueChatBot {
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("GiftService") protected giftService: GiftService,
         @inject("ConfigServer") protected configServer: ConfigServer
-    ) {
+    )
+    {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
     }
 
-    public getChatBot(): IUserDialogInfo {
+    public getChatBot(): IUserDialogInfo
+    {
         return {
             _id: "sptFriend",
             info: {
@@ -44,7 +46,8 @@ export class SptDialogueChatBot implements IDialogueChatBot {
      * @param sessionId Session Id
      * @param request send message request
      */
-    public handleMessage(sessionId: string, request: ISendMessageRequest): string {
+    public handleMessage(sessionId: string, request: ISendMessageRequest): string
+    {
         const sender = this.profileHelper.getPmcProfile(sessionId);
 
         const sptFriendUser = this.getChatBot();
@@ -60,7 +63,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
                     "Hey! you got the right code!",
                     "A secret code, how exciting!",
                     "You found a gift code!",
-                ]),
+                ])
             );
 
             return;
@@ -71,7 +74,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"]),
+                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"])
             );
 
             return;
@@ -87,7 +90,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
                     "I love you too buddy :3!",
                     "uwu",
                     `love you too ${sender?.Info?.Nickname}`,
-                ]),
+                ])
             );
         }
 
@@ -96,7 +99,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"]),
+                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"])
             );
         }
 
@@ -116,7 +119,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
                     "Heyyyyy",
                     "Hey there",
                     `Hello ${sender?.Info?.Nickname}`,
-                ]),
+                ])
             );
         }
 
@@ -130,7 +133,7 @@ export class SptDialogueChatBot implements IDialogueChatBot {
                     "Cool guy, he made EFT!",
                     "Legend",
                     "Remember when he said webel-webel-webel-webel, classic nikita moment",
-                ]),
+                ])
             );
         }
 
@@ -139,11 +142,10 @@ export class SptDialogueChatBot implements IDialogueChatBot {
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"]),
+                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"])
             );
         }
 
         return request.dialogId;
     }
-
 }
