@@ -1,10 +1,14 @@
 import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -14,6 +18,8 @@ export class GiveSptCommand implements ISptCommand
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("MailSendService") protected mailSendService: MailSendService,
     )
     {
@@ -81,12 +87,42 @@ export class GiveSptCommand implements ISptCommand
             return request.dialogId;
         }
 
-        this.mailSendService.sendSystemMessageToPlayer(sessionId, "Give command!", [{
-            _id: this.hashUtil.generate(),
-            _tpl: checkedItem[1]._id,
-            upd: { StackObjectsCount: +quantity },
-        }]);
+        const itemsToSend: Item[] = [];
+        if (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.WEAPON))
+        {
+            const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
+            if (!preset)
+            {
+                this.mailSendService.sendUserMessageToPlayer(
+                    sessionId,
+                    commandHandler,
+                    "Invalid weapon template ID requested. There are no default presets for this weapon.",
+                );
+                return request.dialogId;
+            }
+            itemsToSend.push(...this.jsonUtil.clone(preset._items));
+        }
+        else if (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.AMMO_BOX))
+        {
+            for (let i = 0; i < +quantity; i++)
+            {
+                const ammoBoxArray: Item[] = [];
+                ammoBoxArray.push({ _id: this.hashUtil.generate(), _tpl: checkedItem[1]._id });
+                this.itemHelper.addCartridgesToAmmoBox(ammoBoxArray, checkedItem[1]);
+                itemsToSend.push(...ammoBoxArray);
+            }
+        }
+        else
+        {
+            const item: Item = {
+                _id: this.hashUtil.generate(),
+                _tpl: checkedItem[1]._id,
+                upd: { StackObjectsCount: +quantity },
+            };
+            itemsToSend.push(...this.itemHelper.splitStack(item));
+        }
 
+        this.mailSendService.sendSystemMessageToPlayer(sessionId, "Give command!", itemsToSend);
         return request.dialogId;
     }
 }

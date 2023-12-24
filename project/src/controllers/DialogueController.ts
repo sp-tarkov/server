@@ -25,14 +25,16 @@ export class DialogueController
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("MailSendService") protected mailSendService: MailSendService,
-        @injectAll("DialogueChatBot") protected dialogueChatBots: IDialogueChatBot[]
+        @injectAll("DialogueChatBot") protected dialogueChatBots: IDialogueChatBot[],
     )
     {
         for (const dialogueChatBot of dialogueChatBots)
         {
             if (this.registeredDialogueChatBots.has(dialogueChatBot.getChatBot()._id))
             {
-                this.logger.error(`Could not register ${dialogueChatBot.getChatBot()._id} as it is already in use. Skipping.`);
+                this.logger.error(
+                    `Could not register ${dialogueChatBot.getChatBot()._id} as it is already in use. Skipping.`,
+                );
                 continue;
             }
             this.registeredDialogueChatBots.set(dialogueChatBot.getChatBot()._id, dialogueChatBot);
@@ -58,9 +60,9 @@ export class DialogueController
     {
         // Force a fake friend called SPT into friend list
         return {
-            Friends: Array.from(this.registeredDialogueChatBots.values()).map(v => v.getChatBot()),
+            Friends: Array.from(this.registeredDialogueChatBots.values()).map((v) => v.getChatBot()),
             Ignore: [],
-            InIgnoreList: []
+            InIgnoreList: [],
         };
     }
 
@@ -118,7 +120,8 @@ export class DialogueController
 
         // User to user messages are special in that they need the player to exist in them, add if they don't
         if (
-            messageType === MessageType.USER_MESSAGE && !dialog.Users?.find((x) => x._id === profile.characters.pmc._id)
+            messageType === MessageType.USER_MESSAGE
+            && !dialog.Users?.find((x) => x._id === profile.characters.pmc.sessionId)
         )
         {
             if (!dialog.Users)
@@ -194,7 +197,11 @@ export class DialogueController
             {
                 profile.dialogues[request.dialogId].Users = [];
                 if (this.registeredDialogueChatBots.has(request.dialogId))
-                    profile.dialogues[request.dialogId].Users.push(this.registeredDialogueChatBots.get(request.dialogId).getChatBot());
+                {
+                    profile.dialogues[request.dialogId].Users.push(
+                        this.registeredDialogueChatBots.get(request.dialogId).getChatBot(),
+                    );
+                }
             }
         }
 
@@ -355,12 +362,12 @@ export class DialogueController
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendMessage(sessionId: string, request: ISendMessageRequest): string
     {
+        this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);
+
         if (this.registeredDialogueChatBots.has(request.dialogId))
         {
             return this.registeredDialogueChatBots.get(request.dialogId).handleMessage(sessionId, request);
         }
-
-        this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);
 
         return request.dialogId;
     }

@@ -36,14 +36,16 @@ export class HttpResponseUtil
 
     /**
      * Game client needs server responses in a particular format
-     * @param data 
-     * @param err 
-     * @param errmsg 
-     * @returns 
+     * @param data
+     * @param err
+     * @param errmsg
+     * @returns
      */
-    public getBody<T>(data: T, err = 0, errmsg = null): IGetBodyResponseData<T>
+    public getBody<T>(data: T, err = 0, errmsg = null, sanitize = true): IGetBodyResponseData<T>
     {
-        return this.clearString(this.getUnclearedBody(data, err, errmsg));
+        return sanitize
+            ? this.clearString(this.getUnclearedBody(data, err, errmsg))
+            : (this.getUnclearedBody(data, err, errmsg) as any);
     }
 
     public getUnclearedBody(data: any, err = 0, errmsg = null): string

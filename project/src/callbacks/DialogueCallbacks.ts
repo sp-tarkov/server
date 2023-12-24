@@ -90,7 +90,7 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<DialogueInfo[]>
     {
-        return this.httpResponse.getBody(this.dialogueController.generateDialogueList(sessionID));
+        return this.httpResponse.getBody(this.dialogueController.generateDialogueList(sessionID), 0, null, false);
     }
 
     /** Handle client/mail/dialog/view */
@@ -100,7 +100,7 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<IGetMailDialogViewResponseData>
     {
-        return this.httpResponse.getBody(this.dialogueController.generateDialogueView(info, sessionID));
+        return this.httpResponse.getBody(this.dialogueController.generateDialogueView(info, sessionID), 0, null, false);
     }
 
     /** Handle client/mail/dialog/info */
