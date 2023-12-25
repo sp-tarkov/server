@@ -35,7 +35,7 @@ export class GiveSptCommand implements ISptCommand
         return "Usage: spt give tplId quantity";
     }
 
-    public handle(commandHandler: IUserDialogInfo, sessionId: string, request: ISendMessageRequest): string
+    public performAction(commandHandler: IUserDialogInfo, sessionId: string, request: ISendMessageRequest): string
     {
         const giveCommand = request.text.split(" ");
         if (giveCommand[1] !== "give")

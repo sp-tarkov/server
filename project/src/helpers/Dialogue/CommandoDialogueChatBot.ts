@@ -1,6 +1,5 @@
 import { inject, injectAll, injectable } from "tsyringe";
 
-import { ICommandoAction } from "@spt-aki/helpers/Dialogue/Commando/ICommandoAction";
 import { ICommandoCommand } from "@spt-aki/helpers/Dialogue/Commando/ICommandoCommand";
 import { IDialogueChatBot } from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
@@ -12,42 +11,30 @@ import { MailSendService } from "@spt-aki/services/MailSendService";
 @injectable()
 export class CommandoDialogueChatBot implements IDialogueChatBot
 {
-
-    // A map that contains the command prefix. That contains a map that contains the prefix commands with their respective actions.
-    protected registeredCommands: Map<string, Map<string, ICommandoAction>> = new Map<string, Map<string, ICommandoAction>>();
     public constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("MailSendService") protected mailSendService: MailSendService,
-        @injectAll("CommandoCommand") protected commandoCommands: ICommandoCommand[]
+        @injectAll("CommandoCommand") protected commandoCommands: ICommandoCommand[],
     )
     {
-        for (const commandoCommand of commandoCommands)
-        {
-            if (this.registeredCommands.has(commandoCommand.getCommandPrefix()) || commandoCommand.getCommandPrefix().toLowerCase() === "help")
-            {
-                this.logger.error(`Could not registered command prefix ${commandoCommand.getCommandPrefix()} as it already has been registered. Skipping.`);
-                continue;
-            }
+    }
 
-            const commandMap = new Map<string, ICommandoAction>();
-            this.registeredCommands.set(commandoCommand.getCommandPrefix(), commandMap);
-            for (const command of commandoCommand.getCommands())
-            {
-                commandMap.set(command, commandoCommand.getCommandAction(command))
-            }
+    public registerCommandoCommand(commandoCommand: ICommandoCommand): void
+    {
+        if (this.commandoCommands.some((cc) => cc.getCommandPrefix() === commandoCommand.getCommandPrefix()))
+        {
+            throw new Error(
+                `The commando command ${commandoCommand.getCommandPrefix()} being registered already exists!`,
+            );
         }
+        this.commandoCommands.push(commandoCommand);
     }
 
     public getChatBot(): IUserDialogInfo
     {
         return {
             _id: "sptCommando",
-            info: {
-                Level: 1,
-                MemberCategory: MemberCategory.DEVELOPER,
-                Nickname: "Commando",
-                Side: "Usec",
-            },
+            info: { Level: 1, MemberCategory: MemberCategory.DEVELOPER, Nickname: "Commando", Side: "Usec" },
         };
     }
 
@@ -61,28 +48,27 @@ export class CommandoDialogueChatBot implements IDialogueChatBot
 
         const splitCommand = request.text.split(" ");
 
-        if (this.registeredCommands.has(splitCommand[0]) && this.registeredCommands.get(splitCommand[0]).has(splitCommand[1]))
-            return this.registeredCommands.get(splitCommand[0]).get(splitCommand[1]).handle(this.getChatBot(), sessionId, request);
+        const commandos = this.commandoCommands.filter((c) => c.getCommandPrefix() === splitCommand[0]);
+        if (commandos[0]?.getCommands().has(splitCommand[1]))
+        {
+            return commandos[0].handle(splitCommand[1], this.getChatBot(), sessionId, request);
+        }
 
         if (splitCommand[0].toLowerCase() === "help")
         {
-            const helpMessage = this.commandoCommands.filter(c => this.registeredCommands.has(c.getCommandPrefix()))
-                .filter(c => Array.from(c.getCommands()).some(com => this.registeredCommands.get(c.getCommandPrefix()).has(com)))
-                .map(c => `Help for ${c.getCommandPrefix()}:\n${Array.from(c.getCommands()).map(command => c.getCommandHelp(command)).join("\n")}`)
-                .join("\n");
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                this.getChatBot(),
-                helpMessage
-            );
+            const helpMessage = this.commandoCommands.map((c) =>
+                `Help for ${c.getCommandPrefix()}:\n${
+                    Array.from(c.getCommands()).map((command) => c.getCommandHelp(command)).join("\n")
+                }`
+            ).join("\n");
+            this.mailSendService.sendUserMessageToPlayer(sessionId, this.getChatBot(), helpMessage);
             return request.dialogId;
         }
 
         this.mailSendService.sendUserMessageToPlayer(
             sessionId,
             this.getChatBot(),
-            `Im sorry soldier, I dont recognize the command you are trying to use! Type "help" to see available commands.`
+            `Im sorry soldier, I dont recognize the command you are trying to use! Type "help" to see available commands.`,
         );
     }
-
 }

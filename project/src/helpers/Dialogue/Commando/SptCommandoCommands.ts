@@ -1,4 +1,3 @@
-import { ICommandoAction } from "@spt-aki/helpers/Dialogue/Commando/ICommandoAction";
 import { ICommandoCommand } from "@spt-aki/helpers/Dialogue/Commando/ICommandoCommand";
 import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
@@ -8,15 +7,22 @@ import { injectAll, injectable } from "tsyringe";
 @injectable()
 export class SptCommandoCommands implements ICommandoCommand
 {
-    constructor(
-        @injectAll("SptCommand") protected sptCommands: ISptCommand[]
-    )
+    constructor(@injectAll("SptCommand") protected sptCommands: ISptCommand[])
     {
+    }
+
+    public registerSptCommandoCommand(command: ISptCommand): void
+    {
+        if (this.sptCommands.some((c) => c.getCommand() === command.getCommand()))
+        {
+            throw new Error(`The command ${command.getCommand()} being registered for SPT Commands already exists!`);
+        }
+        this.sptCommands.push(command);
     }
 
     public getCommandHelp(command: string): string
     {
-        return this.sptCommands.find(c => c.getCommand() === command)?.getCommandHelp();
+        return this.sptCommands.find((c) => c.getCommand() === command)?.getCommandHelp();
     }
 
     public getCommandPrefix(): string
@@ -26,13 +32,20 @@ export class SptCommandoCommands implements ICommandoCommand
 
     public getCommands(): Set<string>
     {
-        return new Set(this.sptCommands.map(c => c.getCommand()));
+        return new Set(this.sptCommands.map((c) => c.getCommand()));
     }
 
-    public getCommandAction(command: string): ICommandoAction
+    public handle(
+        command: string,
+        commandHandler: IUserDialogInfo,
+        sessionId: string,
+        request: ISendMessageRequest,
+    ): string
     {
-        return this.sptCommands.find(c => c.getCommand() === command);
+        return this.sptCommands.find((c) => c.getCommand() === command).performAction(
+            commandHandler,
+            sessionId,
+            request,
+        );
     }
-
-
 }

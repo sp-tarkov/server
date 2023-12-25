@@ -86,6 +86,10 @@ import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
 import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
 import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
+import { SptCommandoCommands } from "@spt-aki/helpers/Dialogue/Commando/SptCommandoCommands";
+import { GiveSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveSptCommand";
+import { CommandoDialogueChatBot } from "@spt-aki/helpers/Dialogue/CommandoDialogueChatBot";
+import { SptDialogueChatBot } from "@spt-aki/helpers/Dialogue/SptDialogueChatBot";
 import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
 import { DurabilityLimitsHelper } from "@spt-aki/helpers/DurabilityLimitsHelper";
 import { GameEventHelper } from "@spt-aki/helpers/GameEventHelper";
@@ -246,10 +250,6 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { Watermark, WatermarkLocale } from "@spt-aki/utils/Watermark";
 import { WinstonMainLogger } from "@spt-aki/utils/logging/WinstonMainLogger";
 import { WinstonRequestLogger } from "@spt-aki/utils/logging/WinstonRequestLogger";
-import {SptDialogueChatBot} from "@spt-aki/helpers/Dialogue/SptDialogueChatBot";
-import {CommandoDialogueChatBot} from "@spt-aki/helpers/Dialogue/CommandoDialogueChatBot";
-import {GiveSptCommand} from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveSptCommand";
-import {SptCommandoCommands} from "@spt-aki/helpers/Dialogue/Commando/SptCommandoCommands";
 
 /**
  * Handle the registration of classes to be used by the Dependency Injection code
@@ -583,12 +583,15 @@ export class Container
 
         // ChatBots
         depContainer.register<SptDialogueChatBot>("SptDialogueChatBot", SptDialogueChatBot);
-        depContainer.register<CommandoDialogueChatBot>("CommandoDialogueChatBot", CommandoDialogueChatBot);
+        depContainer.register<CommandoDialogueChatBot>("CommandoDialogueChatBot", CommandoDialogueChatBot, {
+            lifecycle: Lifecycle.Singleton,
+        });
         // SptCommando
-        depContainer.register<SptCommandoCommands>("SptCommandoCommands", SptCommandoCommands);
+        depContainer.register<SptCommandoCommands>("SptCommandoCommands", SptCommandoCommands, {
+            lifecycle: Lifecycle.Singleton,
+        });
         // SptCommands
         depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand);
-
     }
 
     private static registerLoaders(depContainer: DependencyContainer): void
@@ -753,7 +756,9 @@ export class Container
         depContainer.register<CustomizationController>("CustomizationController", {
             useClass: CustomizationController,
         });
-        depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController });
+        depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController }, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<GameController>("GameController", { useClass: GameController });
         depContainer.register<HandbookController>("HandbookController", { useClass: HandbookController });
         depContainer.register<HealthController>("HealthController", { useClass: HealthController });
