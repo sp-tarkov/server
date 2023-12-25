@@ -32,4 +32,17 @@ export interface IServerFeatures
     /* Controls whether or not the server attempts to download mod dependencies not included in the server's executable */
     autoInstallModDependencies: boolean;
     compressProfile: boolean;
+    chatbotFeatures: IChatbotFeatures;
+}
+
+export interface IChatbotFeatures
+{
+    sptFriendEnabled: boolean;
+    commandoEnabled: boolean;
+    commandoFeatures: ICommandoFeatures;
+}
+
+export interface ICommandoFeatures
+{
+    giveCommandEnabled: boolean;
 }

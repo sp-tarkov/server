@@ -8,8 +8,11 @@ import { IGetMailDialogViewRequestData } from "@spt-aki/models/eft/dialog/IGetMa
 import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -23,9 +26,24 @@ export class DialogueController
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("ConfigServer") protected configServer: ConfigServer,
         @injectAll("DialogueChatBot") protected dialogueChatBots: IDialogueChatBot[],
     )
     {
+        const coreConfigs = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+        // if give command is disabled or commando commands are disabled
+        if (!coreConfigs.features?.chatbotFeatures?.commandoEnabled)
+        {
+            const sptCommando = this.dialogueChatBots.find((c) =>
+                c.getChatBot()._id.toLocaleLowerCase() === "sptcommando"
+            );
+            this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptCommando), 1);
+        }
+        if (!coreConfigs.features?.chatbotFeatures?.sptFriendEnabled)
+        {
+            const sptFriend = this.dialogueChatBots.find((c) => c.getChatBot()._id.toLocaleLowerCase() === "sptFriend");
+            this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptFriend), 1);
+        }
     }
 
     public registerChatBot(chatBot: IDialogueChatBot): void

@@ -12,6 +12,13 @@
     },
     "features": {
         "autoInstallModDependencies": false,
-        "compressProfile": false
+        "compressProfile": false,
+        "chatbotFeatures": {
+            "sptFriendEnabled": true,
+            "commandoEnabled": true,
+            "commandoFeatures": {
+                "giveCommandEnabled": false
+            }
+        }
     }
 }

@@ -2,13 +2,29 @@ import { ICommandoCommand } from "@spt-aki/helpers/Dialogue/Commando/ICommandoCo
 import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { injectAll, injectable } from "tsyringe";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { inject, injectAll, injectable } from "tsyringe";
 
 @injectable()
 export class SptCommandoCommands implements ICommandoCommand
 {
-    constructor(@injectAll("SptCommand") protected sptCommands: ISptCommand[])
+    constructor(
+        @inject("ConfigServer") protected configServer: ConfigServer,
+        @injectAll("SptCommand") protected sptCommands: ISptCommand[],
+    )
     {
+        const coreConfigs = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+        // if give command is disabled or commando commands are disabled
+        if (
+            !(coreConfigs.features?.chatbotFeatures?.commandoFeatures?.giveCommandEnabled
+                && coreConfigs.features?.chatbotFeatures?.commandoEnabled)
+        )
+        {
+            const giveCommand = this.sptCommands.find((c) => c.getCommand().toLocaleLowerCase() === "give");
+            this.sptCommands.splice(this.sptCommands.indexOf(giveCommand), 1);
+        }
     }
 
     public registerSptCommandoCommand(command: ISptCommand): void
