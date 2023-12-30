@@ -13,3 +13,5 @@
 	"bot-invalid_item_compatibility_check": "Die Artikelkompatibilität mit ausgerüsteten Gegenstand konnte nicht überprüft werden. Der gewünschte Gegenstand: {{itemTpl}} im Slot: {{slot}} ist kein gültiger Gegenstand",
 	"bot-item_spawn_limit_reached_skipping_item": "{{botRole}} Der Gegenstand {{itemName}} konnte nach {{attempts}} Versuchen nicht erzeugen werden, das erzeugungs Limit wird ignoriert",
 	"bot-loot_type_not_found": "Beute-Cache fürs plündern fehlgeschlagen: {{lootType}} auf Bot: {{botRole}}, war ein PMC: {{isPmc}}",
+
+	I am not done still translating
