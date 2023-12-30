@@ -1,7 +1,11 @@
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
 
-export interface ICommandoCommand
+/**
+ * @deprecated Use IChatCommand instead
+ */
+export type ICommandoCommand = IChatCommand;
+export interface IChatCommand
 {
     getCommandPrefix(): string;
     getCommandHelp(command: string): string;

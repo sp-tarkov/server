@@ -591,7 +591,7 @@ export class Container
             lifecycle: Lifecycle.Singleton,
         });
         // SptCommands
-        depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand);
+        depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand, { lifecycle: Lifecycle.Singleton });
     }
 
     private static registerLoaders(depContainer: DependencyContainer): void
