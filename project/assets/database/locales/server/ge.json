@@ -1,1 +1,15 @@
-{}
+{
+	"assort-missing_loyalty_level_object": "stripQuestAssort(): Sortiment für Händler {{traderId}} enthält keine loyal_level_items Daten, daher wird das Entfernen von Questsortimenten übersprungen",
+	"assort-missing_questassort": "stripQuestAssort(): SSortierung für Händler: %s enthält kein Questassort json, daher wird das Entfernen von Questsortimenten übersprungen",
+	"assort-missing_quest_assort_unlock": "Die/Der entsprechende {{traderName}}-Questsortiment-Freischaltung für die Quest: {{questName}} konnte nicht gefunden werden. Für den Abschluss dieser Quest erhältst du keine Belohnung für den Kauf eines Händlergegenstands",
+	"baseclass-item_not_found": "Artikel %s wurde im Artikelbasis-Cache nicht gefunden, Cache wird neu generiert",
+	"baseclass-item_not_found_failed": "Element %s wurde nach der Neugenerierung immer noch nicht im Basiscache gefunden",
+	"baseclass-missing_db_no_cache": "Die Datenbank war leer, es konnte kein Artikelbasis-Cache generiert werden",
+	"bleeding_edge_build": "Auf dem neuesten Stand",
+	"bot-bot-cache_has_zero_bots_of_requested_type": "WARNUNG – Der Bot-Cache verfügt nicht über einen vorgenerierten Bot vom Typ %s. Er muss generiert werden. Konfigurieren Sie den Server, um weitere zu erstellen",
+	"bot-compatibility_check_missing_props": "Der Gegenstand konnte nicht validiert werden: {{id}} {{name}} im Steckplatz: {{slot}} kann ausgerüstet werden, es fehlt ein _props Wert",
+	"bot-generation_failed": "Bot-Generierung fehlgeschlagen. Weitere Details finden Sie im Serverprotokoll",
+	"bot-incompatible_ammo_for_weapon_falling_back_to_default": "Für {{weaponId}} – {{weaponName}} wurde inkompatible Munition {{chosenAmmo}} gefunden, es wird Standardwert zurückgefallen: {{defaultAmmo}}",
+	"bot-invalid_item_compatibility_check": "Die Artikelkompatibilität mit ausgerüsteten Gegenstand konnte nicht überprüft werden. Der gewünschte Gegenstand: {{itemTpl}} im Slot: {{slot}} ist kein gültiger Gegenstand",
+	"bot-item_spawn_limit_reached_skipping_item": "{{botRole}} Der Gegenstand {{itemName}} konnte nach {{attempts}} Versuchen nicht erzeugen werden, das erzeugungs Limit wird ignoriert",
+	"bot-loot_type_not_found": "Beute-Cache fürs plündern fehlgeschlagen: {{lootType}} auf Bot: {{botRole}}, war ein PMC: {{isPmc}}",
