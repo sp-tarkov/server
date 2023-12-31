@@ -160,19 +160,6 @@ export class ProfileCallbacks
     }
 
     /**
-     * Handle client/profile/view
-     * Called when viewing another players profile
-     */
-    public getOtherProfile(
-        url: string,
-        info: IEmptyRequestData,
-        sessionID: string,
-    ): any
-    {
-        throw new Error("Not implemented");
-    }
-
-    /**
      * Handle client/profile/settings
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

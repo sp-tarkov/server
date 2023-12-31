@@ -36,12 +36,6 @@
         "crazyAssaultEvent": 15,
         "bossBoar": 5,
         "bossBoarSniper": 5,
-		"followerBoarClose1": 10,
-		"followerBoarClose2": 10,
-		"bossKolontay": 5,
-		"followerKolontayAssault": 10,
-		"followerKolontaySecurity": 10,
-		"shooterBTR": 10,
         "sptUsec": 30,
         "sptBear": 30
     },
@@ -594,44 +588,7 @@
                 "lightLaserLimit": 1
             }
         },
-        "followerboarclose1": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
-		"followerboarclose2": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
         "bossboarsniper": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
-        "bosskolontay": {
             "nvgIsActiveChanceDayPercent": 20,
             "nvgIsActiveChanceNightPercent": 85,
             "faceShieldIsActiveChancePercent": 80,

@@ -211,14 +211,4 @@ export class MatchCallbacks
         this.matchController.startOfflineRaid(info, sessionID);
         return this.httpResponse.nullResponse();
     }
-
-    /** Handle client/raid/configuration-by-profile */
-    public getConfigurationByProfile(
-        url: string,
-        info: IGetRaidConfigurationRequestData,
-        sessionID: string,
-    ): INullResponseData
-    {
-        return this.httpResponse.nullResponse();
-    }
 }

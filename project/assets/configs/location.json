@@ -15,7 +15,6 @@
         "suburbs": 1,
         "tarkovstreets": 3.6,
         "terminal": 1,
-		"sandbox": 3,
         "town": 0
     },
     "staticLootMultiplier": {
@@ -34,7 +33,6 @@
         "suburbs": 1,
         "tarkovstreets": 1,
         "terminal": 1,
-		"sandbox": 1,
         "town": 1
     },
     "customWaves": {
@@ -1001,22 +999,6 @@
                 "adjustWaves": true
             },
             "woods": {
-                "reduceLootByPercent": true,
-                "minDynamicLootPercent": 50,
-                "minStaticLootPercent": 40,
-                "reducedChancePercent": 95,
-                "reductionPercentWeights": {
-                    "20": 3,
-                    "30": 5,
-                    "40": 5,
-                    "50": 5,
-                    "60": 1,
-                    "70": 1,
-                    "80": 1
-                },
-                "adjustWaves": true
-            },
-            "sandbox": {
                 "reduceLootByPercent": true,
                 "minDynamicLootPercent": 50,
                 "minStaticLootPercent": 40,
