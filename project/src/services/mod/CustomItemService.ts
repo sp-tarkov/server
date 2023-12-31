@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import {
     CreateItemResult,
     LocaleDetails,
@@ -71,6 +73,11 @@ export class CustomItemService
         this.addToLocaleDbs(newItemDetails.locales, newItemId);
 
         this.addToFleaPriceDb(newItemId, newItemDetails.fleaPriceRoubles);
+
+        if (this.itemHelper.isOfBaseclass(itemClone._id, BaseClasses.WEAPON))
+        {
+            this.addToWeaponShelf(newItemId);
+        }
 
         result.success = true;
         result.itemId = newItemId;
@@ -198,6 +205,26 @@ export class CustomItemService
     protected addToFleaPriceDb(newItemId: string, fleaPriceRoubles: number): void
     {
         this.tables.templates.prices[newItemId] = fleaPriceRoubles;
+    }
+
+    /**
+     * Add a weapon to the hideout weapon shelf whitelist
+     * @param newItemId Weapon id to add
+     */
+    protected addToWeaponShelf(newItemId: string): void
+    {
+        this.databaseServer.getTables().templates.items;
+
+        // Ids for wall stashes in db
+        const wallStashIds = ["6401c7b213d9b818bf0e7dd7", "64381b582bb1c5dedd0fc925", "64381b6e44b37a080d0245b9"];
+        for (const wallId of wallStashIds)
+        {
+            const wall = this.itemHelper.getItem(wallId);
+            if (wall[0])
+            {
+                wall[1]._props.Grids[0]._props.filters[0].Filter.push(newItemId);
+            }
+        }
     }
 
     /**
