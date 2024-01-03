@@ -21,7 +21,7 @@ git config --local user.email "USERNAME@SOMETHING.com"
 
 ## Observations
 
-- The server was tested to work with **NodeJS 18.15.0**, if you are using a different version and experiencing difficulties change it before looking for support
+- The server was tested to work with **NodeJS 20.10.0**, if you are using a different version and experiencing difficulties change it before looking for support
 - If you are updating a branch you've had for some time, run `npm ci` before running any tasks. This will run the clean and install target from npm.
 - You can debug your mods using the server, just copy your mod files into the `user/mods` folder and put breakpoints on the **JS** files. **DO NOT** contact the dev team for support on this.
 
