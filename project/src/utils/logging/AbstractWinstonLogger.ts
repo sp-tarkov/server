@@ -69,6 +69,7 @@ export abstract class AbstractWinstonLogger implements ILogger
                     filename: this.filePath,
                     datePattern: "YYYY-MM-DD",
                     zippedArchive: true,
+                    frequency: this.getLogFrequency(),
                     maxSize: this.getLogMaxSize(),
                     maxFiles: this.getLogMaxFiles(),
                     format: format.combine(
@@ -106,6 +107,11 @@ export abstract class AbstractWinstonLogger implements ILogger
     protected abstract getFilePath(): string;
 
     protected abstract getFileName(): string;
+
+    protected getLogFrequency(): string
+    {
+        return "3h";
+    }
 
     protected getLogMaxSize(): string
     {
