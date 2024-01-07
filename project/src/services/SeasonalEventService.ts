@@ -31,7 +31,7 @@ export class SeasonalEventService
     protected christmasEventActive: boolean = undefined;
 
     /** All events active at this point in time */
-    protected currentlyActiveEvents: SeasonalEventType[] = undefined;
+    protected currentlyActiveEvents: SeasonalEventType[] = [];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
