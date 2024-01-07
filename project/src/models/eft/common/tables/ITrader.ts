@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
 
 export interface ITrader
 {
@@ -8,6 +9,7 @@ export interface ITrader
     dialogue?: Record<string, string[]>;
     questassort: Record<string, Record<string, string>>;
     suits?: ISuit[];
+    services?: ITraderServiceModel[];
 }
 
 export interface ITraderBase

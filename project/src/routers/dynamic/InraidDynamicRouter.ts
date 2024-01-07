@@ -16,6 +16,13 @@ export class InraidDynamicRouter extends DynamicRouter
                     return this.inraidCallbacks.registerPlayer(url, info, sessionID);
                 },
             ),
+            new RouteAction(
+                "/singleplayer/traderServices/getTraderServices/",
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.inraidCallbacks.getTraderServices(url, info, sessionID);
+                },
+            ),
         ]);
     }
 

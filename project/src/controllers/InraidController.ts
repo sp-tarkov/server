@@ -29,6 +29,8 @@ import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCa
 import { PmcChatResponseService } from "@spt-aki/services/PmcChatResponseService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
+import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
 
 /**
  * Logic for handling In Raid callbacks
@@ -53,6 +55,7 @@ export class InraidController
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("HealthHelper") protected healthHelper: HealthHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
+        @inject("TraderServicesService") protected traderServicesService: TraderServicesService,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
         @inject("InRaidHelper") protected inRaidHelper: InRaidHelper,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
@@ -497,5 +500,14 @@ export class InraidController
     public getAirdropConfig(): IAirdropConfig
     {
         return this.airdropConfig;
+    }
+
+    /**
+     * Handle singleplayer/traderServices/getTraderServices
+     * @returns Trader services data
+     */
+    public getTraderServices(sessionId: string, traderId: string): ITraderServiceModel[]
+    {
+        return this.traderServicesService.getTraderServices(traderId);
     }
 }

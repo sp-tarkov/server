@@ -5,6 +5,7 @@ import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullRespons
 import { IRegisterPlayerRequestData } from "@spt-aki/models/eft/inRaid/IRegisterPlayerRequestData";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
 
 /**
  * Handle client requests
@@ -79,5 +80,15 @@ export class InraidCallbacks
     public getAirdropConfig(): string
     {
         return this.httpResponse.noBody(this.inraidController.getAirdropConfig());
+    }
+
+    /**
+     * Handle singleplayer/traderServices/getTraderServices
+     */
+    public getTraderServices(url: string, info: IEmptyRequestData, sessionId: string): string
+    {
+        const lastSlashPos = url.lastIndexOf('/');
+        const traderId = url.substring(lastSlashPos + 1);
+        return this.httpResponse.noBody(this.inraidController.getTraderServices(sessionId, traderId));
     }
 }
