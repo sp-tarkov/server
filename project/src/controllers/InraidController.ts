@@ -532,7 +532,7 @@ export class InraidController
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionId,
             this.traderHelper.getTraderById(traderId),
-            15 as MessageType,
+            MessageType.BTR_ITEMS_DELIVERY,
             messageId,
             items,
             messageStoreTime,
