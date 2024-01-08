@@ -44,6 +44,7 @@ export interface FenceConfig
     blacklistSeasonalItems: boolean;
     blacklist: string[];
     coopExtractGift: CoopExtractReward;
+    btrDeliveryExpireHours: number;
 }
 
 export interface CoopExtractReward extends LootRequest

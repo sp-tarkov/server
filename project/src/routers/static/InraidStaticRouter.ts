@@ -41,6 +41,13 @@ export class InraidStaticRouter extends StaticRouter
                     return this.inraidCallbacks.getAirdropConfig();
                 },
             ),
+            new RouteAction(
+                "/singleplayer/traderServices/itemDelivery",
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.inraidCallbacks.itemDelivery(url, info, sessionID);
+                }
+            ),
         ]);
     }
 }

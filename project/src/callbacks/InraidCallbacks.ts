@@ -6,6 +6,7 @@ import { IRegisterPlayerRequestData } from "@spt-aki/models/eft/inRaid/IRegister
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IItemDeliveryRequestData } from "@spt-aki/models/eft/inRaid/IItemDeliveryRequestData";
 
 /**
  * Handle client requests
@@ -90,5 +91,14 @@ export class InraidCallbacks
         const lastSlashPos = url.lastIndexOf('/');
         const traderId = url.substring(lastSlashPos + 1);
         return this.httpResponse.noBody(this.inraidController.getTraderServices(sessionId, traderId));
+    }
+
+    /**
+     * Handle singleplayer/traderServices/itemDelivery
+     */
+    public itemDelivery(url: string, request: IItemDeliveryRequestData, sessionId: string): INullResponseData
+    {
+        this.inraidController.itemDelivery(sessionId, request.traderId, request.items);
+        return this.httpResponse.nullResponse();
     }
 }

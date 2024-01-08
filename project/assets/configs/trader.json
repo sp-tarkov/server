@@ -241,7 +241,8 @@
                 }
             },
             "allowBossItems": false
-		}
+		},
+        "btrDeliveryExpireHours": 240
     }
 
 }
