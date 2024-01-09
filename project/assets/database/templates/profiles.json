@@ -409,6 +409,15 @@
                             "constructing": false,
                             "lastRecipe": "",
                             "level": 0,
+                            "passiveBonusesEnabled": true,
+                            "slots": [],
+                            "type": 16
+                        }, {
+                            "active": true,
+                            "completeTime": 0,
+                            "constructing": false,
+                            "lastRecipe": "",
+                            "level": 0,
                             "passiveBonusesEnabled": false,
                             "slots": [],
                             "type": 17
@@ -4697,6 +4706,15 @@
                             "passiveBonusesEnabled": true,
                             "slots": [],
                             "type": 15
+                        }, {
+                            "active": true,
+                            "completeTime": 0,
+                            "constructing": false,
+                            "lastRecipe": "",
+                            "level": 0,
+                            "passiveBonusesEnabled": true,
+                            "slots": [],
+                            "type": 16
                         }, {
                             "active": true,
                             "completeTime": 0,
