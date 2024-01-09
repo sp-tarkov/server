@@ -515,15 +515,18 @@ export class ProfileFixerService
         {
             const counterKeysToRemove: string[] = [];
             const activeQuests = this.getActiveRepeatableQuests(pmcProfile.RepeatableQuests);
+            const achievements = this.databaseServer.getTables().templates.achievements;
+            
             for (const [key, backendCounter] of Object.entries(pmcProfile.TaskConditionCounters))
             {
                 if (pmcProfile.RepeatableQuests && activeQuests.length > 0)
                 {
                     const existsInActiveRepeatableQuests = activeQuests.some((x) => x._id === backendCounter.sourceId);
                     const existsInQuests = pmcProfile.Quests.some((q) => q.qid === backendCounter.sourceId);
+                    const isAchievementTracker = achievements.some((a) => a.id === backendCounter.sourceId);
 
-                    // if BackendCounter's quest is neither in activeQuests nor Quests it's stale
-                    if (!(existsInActiveRepeatableQuests || existsInQuests))
+                    // if BackendCounter is neither in activeQuests, quests or achievements - it's stale and should be cleaned up
+                    if (!(existsInActiveRepeatableQuests || existsInQuests || isAchievementTracker))
                     {
                         counterKeysToRemove.push(key);
                     }
