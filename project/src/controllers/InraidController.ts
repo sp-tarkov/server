@@ -523,18 +523,21 @@ export class InraidController
     /**
      * Handle singleplayer/traderServices/itemDelivery
      */
-    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void
+    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void 
     {
+        // Filter out insured items from the items array
+        const uninsuredItems: Item[] = items.filter(item => !this.insuranceService.getInsuranceItems(sessionId, traderId).includes(item));
+    
         const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
         const messageId = this.randomUtil.getArrayValue(dialogueTemplates.itemsDelivered);
         const messageStoreTime = this.timeUtil.getHoursAsSeconds(this.traderConfig.fence.btrDeliveryExpireHours);
-        
+    
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionId,
             this.traderHelper.getTraderById(traderId),
             MessageType.BTR_ITEMS_DELIVERY,
             messageId,
-            items,
+            uninsuredItems,
             messageStoreTime,
         );
     }
