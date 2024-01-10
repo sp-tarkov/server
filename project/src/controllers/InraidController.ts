@@ -523,16 +523,19 @@ export class InraidController
     /**
      * Handle singleplayer/traderServices/itemDelivery
      */
-    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void {
+    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void 
+    {
         const insuredItems: Item[] = items.filter(item =>
             this.insuranceService.getInsuranceItems(sessionId, Traders[traderId]).includes(item)
         );
     
         // Remove insured items from the insurance list
-        insuredItems.forEach(insuredItem => {
+        insuredItems.forEach(insuredItem => 
+            {
             const insuranceList = this.insuranceService.getInsuranceItems(sessionId, Traders[traderId]);
             const index = insuranceList.indexOf(insuredItem);
-            if (index !== -1) {
+            if (index !== -1) 
+            {
                 insuranceList.splice(index, 1);
             }
         });
