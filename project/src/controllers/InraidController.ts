@@ -523,10 +523,19 @@ export class InraidController
     /**
      * Handle singleplayer/traderServices/itemDelivery
      */
-    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void 
-    {
-        // Filter out insured items from the items array
-        const uninsuredItems: Item[] = items.filter(item => !this.insuranceService.getInsuranceItems(sessionId, traderId).includes(item));
+    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void {
+        const Items: Item[] = items.filter(item =>
+            this.insuranceService.getInsuranceItems(sessionId, Traders[traderId]).includes(item)
+        );
+    
+        // Remove insured items from the insurance list
+        Items.forEach(insuredItem => {
+            const insuranceList = this.insuranceService.getInsuranceItems(sessionId, Traders[traderId]);
+            const index = insuranceList.indexOf(insuredItem);
+            if (index !== -1) {
+                insuranceList.splice(index, 1);
+            }
+        });
     
         const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
         const messageId = this.randomUtil.getArrayValue(dialogueTemplates.itemsDelivered);
@@ -537,7 +546,7 @@ export class InraidController
             this.traderHelper.getTraderById(traderId),
             MessageType.BTR_ITEMS_DELIVERY,
             messageId,
-            uninsuredItems,
+            items,
             messageStoreTime,
         );
     }
