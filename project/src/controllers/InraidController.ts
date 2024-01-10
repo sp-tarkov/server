@@ -546,7 +546,7 @@ export class InraidController
             this.traderHelper.getTraderById(traderId),
             MessageType.BTR_ITEMS_DELIVERY,
             messageId,
-            items,
+            Items,
             messageStoreTime,
         );
     }
