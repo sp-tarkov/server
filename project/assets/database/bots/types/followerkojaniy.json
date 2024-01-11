@@ -50,9 +50,9 @@
     "equipmentMods": {
       "back_plate": 61,
       "front_plate": 100,
-      "left_side_plate": 30,
+      "left_side_plate": 38,
       "mod_nvg": 100,
-      "right_side_plate": 30
+      "right_side_plate": 38
     },
     "weaponMods": {
       "mod_charge": 0,
@@ -2508,7 +2508,13 @@
         "5f745ee30acaeb0d490d8c5b",
         "5e2aedd986f7746d404f3aa4",
         "5d0378d486f77420421a5ff4",
-        "5e2af37686f774755a234b65"
+        "5e2af37686f774755a234b65",
+        "5d1b3f2d86f774253763b735",
+        "57347ca924597744596b4e71",
+        "5df8a72c86f77412640e2e83",
+        "5ed515f6915ec335206e4152",
+        "62a09cb7a04c0c5c6e0a84f8",
+        "5ed5160a87bb8443d10680b5"
       ],
       "Pockets": [
         "5c503ad32e2216398b5aada2",
@@ -2690,8 +2696,7 @@
           "587e08ee245977446b4410cf"
         ],
         "mod_reciever": [
-          "634f06262e5def262d0b30ca",
-          "634f05ca517ccc8a960fc748"
+          "634f06262e5def262d0b30ca"
         ],
         "mod_stock": [
           "5d0236dad7ad1a0940739d29"
@@ -3070,9 +3075,6 @@
       "634eff66517ccc8a960fc735": {
         "mod_mount_000": [
           "634f05a21f9f536910079b56"
-        ],
-        "mod_muzzle": [
-          "5cf67cadd7f00c065a5abab7"
         ]
       },
       "634f036a517ccc8a960fc746": {
@@ -3083,6 +3085,9 @@
       "634f05a21f9f536910079b56": {
         "mod_gas_block": [
           "634f036a517ccc8a960fc746"
+        ],
+        "mod_sight_rear": [
+          "574db213245977459a2f3f5d"
         ]
       },
       "6410758c857473525b08bb77": {

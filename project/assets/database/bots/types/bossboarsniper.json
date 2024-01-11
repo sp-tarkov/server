@@ -2334,7 +2334,8 @@
         "5aaa5e60e5b5b000140293d6",
         "5e023d34e8a400319a28ed44",
         "5cadf6ddae9215051e1c23b2",
-        "5df8f535bb49d91fb446d6b0"
+        "5df8f535bb49d91fb446d6b0",
+        "5cadf6eeae921500134b2799"
       ],
       "SecuredContainer": [
         "5656d7c34bdc2d9d198b4587",
@@ -2622,6 +2623,11 @@
           "5a32aa8bc4a2826c6e06d737"
         ]
       },
+      "5aa66a9be5b5b0214e506e89": {
+        "mod_scope": [
+          "5aa66be6e5b5b0214e506e97"
+        ]
+      },
       "5aa66c72e5b5b00016327c93": {
         "mod_scope_000": [
           "56ea70acd2720b844b8b4594"
@@ -2655,8 +2661,31 @@
           "5abcbb20d8ce87001773e258"
         ],
         "mod_stock": [
-          "5addbf175acfc408fb13965b",
-          "5aaf8e43e5b5b00015693246"
+          "5aaf8e43e5b5b00015693246",
+          "5addbf175acfc408fb13965b"
+        ]
+      },
+      "5ab8e79e86f7742d8b372e78": {
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Collar": [
+          "657326bc5d3a3129fb05f36b"
+        ],
+        "Front_plate": [
+          "656f611f94b480b8a500c0db"
+        ],
+        "Soft_armor_back": [
+          "657326978c1cc6dcd9098b56"
+        ],
+        "Soft_armor_front": [
+          "65732688d9d89ff7ac0d9c4c"
+        ],
+        "Soft_armor_left": [
+          "657326a28c1cc6dcd9098b5a"
+        ],
+        "soft_armor_right": [
+          "657326b08c1cc6dcd9098b5e"
         ]
       },
       "5abccb7dd8ce87001773e277": {
@@ -2911,6 +2940,35 @@
         ],
         "soft_armor_right": [
           "6571bab0f41985531a038091"
+        ]
+      },
+      "5c0e625a86f7742d77340f62": {
+        "Back_plate": [
+          "656fafe3498d1b7e3e071da4"
+        ],
+        "Collar": [
+          "657643a220cc24d17102b14c"
+        ],
+        "Front_plate": [
+          "656f63c027aed95beb08f62c"
+        ],
+        "Left_side_plate": [
+          "64afd81707e2cf40e903a316"
+        ],
+        "Right_side_plate": [
+          "64afd81707e2cf40e903a316"
+        ],
+        "Soft_armor_back": [
+          "657642b0e6d5dd75f40688a5"
+        ],
+        "Soft_armor_front": [
+          "65764275d8537eb26a0355e9"
+        ],
+        "Soft_armor_left": [
+          "6576434820cc24d17102b148"
+        ],
+        "soft_armor_right": [
+          "657643732bc38ef78e076477"
         ]
       },
       "5c0faeddd174af02a962601f": {

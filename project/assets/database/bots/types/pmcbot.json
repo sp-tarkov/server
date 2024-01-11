@@ -2887,7 +2887,17 @@
         "6269545d0e57f218e4548ca2",
         "5ef61964ec7f42238c31e0c1",
         "5f3e7801153b8571434a924c",
-        "5d0a3e8cd7ad1a6f6a3d35bd"
+        "5d0a3e8cd7ad1a6f6a3d35bd",
+        "5df916dfbb49d91fb446d6b9",
+        "648ae3e356c6310a830fc291",
+        "577d128124597739d65d0e56",
+        "655dccfdbdcc6b5df71382b6",
+        "58d2664f86f7747fec5834f6",
+        "5a34f7f1c4a2826c6e06d75d",
+        "5a787f25c5856700186c4ab9",
+        "615d8faecabb9b7ad90f4d5d",
+        "5dfa3cd1b33c0951220c079b",
+        "5c9a1c422e221600106f69f0"
       ],
       "Pockets": [
         "5f3e77b26cda304dcc634057",
@@ -3110,6 +3120,9 @@
         ],
         "Helmet_top": [
           "657bae18b7e9ca9a02045c0a"
+        ],
+        "mod_equipment": [
+          "5b46238386f7741a693bcf9c"
         ]
       },
       "5648a7494bdc2d9d488b4583": {
@@ -3938,6 +3951,35 @@
           "654a8b80f414fcea4004d797"
         ]
       },
+      "5c0e57ba86f7747fa141986d": {
+        "Back_plate": [
+          "657b22485f444d6dff0c6c2f"
+        ],
+        "Collar": [
+          "657080ca12755ae0d907ad5e"
+        ],
+        "Front_plate": [
+          "656f603f94b480b8a500c0d6"
+        ],
+        "Groin": [
+          "65708122f65e2491bf009755"
+        ],
+        "Groin_back": [
+          "65708165696fe382cf073255"
+        ],
+        "Soft_armor_back": [
+          "6570800612755ae0d907acf8"
+        ],
+        "Soft_armor_front": [
+          "65707fc348c7a887f2010432"
+        ],
+        "Soft_armor_left": [
+          "65708070f65e2491bf00972c"
+        ],
+        "soft_armor_right": [
+          "657080a212755ae0d907ad04"
+        ]
+      },
       "5c0e655586f774045612eeb2": {
         "Back_plate": [
           "656fad8c498d1b7e3e071da0"
@@ -4123,6 +4165,14 @@
         ],
         "mod_muzzle": [
           "5cc9b815d7f00c000e2579d6"
+        ]
+      },
+      "5df8a2ca86f7740bfe6df777": {
+        "Soft_armor_back": [
+          "656fd89bf5a9631d4e042575"
+        ],
+        "Soft_armor_front": [
+          "656fd7c32668ef0402028fb9"
         ]
       },
       "5df8ce05b11454561e39243b": {

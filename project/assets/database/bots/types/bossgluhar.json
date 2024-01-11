@@ -2754,7 +2754,19 @@
         "5e42c71586f7747f245e1343",
         "5c1d0dc586f7744baf2e7b79",
         "64ccc1d4a0f13c24561edf27",
-        "5c1d0efb86f7744baf2e7b7b"
+        "5c1d0efb86f7744baf2e7b7b",
+        "6582dbe43a2e5248357dbe9a",
+        "64ccc2111779ad6ba200a139",
+        "658199972dc4e60f6d556a2f",
+        "5c1d0f4986f7744bb01837fa",
+        "62987da96188c076bc0d8c51",
+        "5a0ea79b86f7741d4a35298e",
+        "6582dc4b6ba9e979af6b79f4",
+        "5a144bdb86f7741d374bbde0",
+        "5ad7242b86f7740a6a3abd43",
+        "64ccc206793ca11c8f450a38",
+        "6582dc5740562727a654ebb1",
+        "5d80c8f586f77440373c4ed0"
       ],
       "SecuredContainer": [
         "58dd3ad986f77403051cba8f",
@@ -3167,21 +3179,6 @@
         ],
         "Helmet_top": [
           "657bbad7a1c61ee0c3036323"
-        ],
-        "mod_equipment_000": [
-          "5f60c076f2bcbb675b00dac2"
-        ],
-        "mod_equipment_002": [
-          "5f60b85bbdb8e27dee3dc985"
-        ],
-        "mod_mount": [
-          "5a398b75c4a282000a51a266",
-          "5a398ab9c4a282000c5a9842"
-        ],
-        "mod_nvg": [
-          "5f60bf4558eff926626a60f2",
-          "5c0558060db834001b735271",
-          "5a16b8a9fcdbcb00165aa6ca"
         ]
       },
       "60228924961b8d75ee233c32": {
@@ -3260,18 +3257,6 @@
         ],
         "Helmet_top": [
           "657bbcc9a1c61ee0c3036327"
-        ],
-        "mod_equipment_000": [
-          "5a16b672fcdbcb001912fa83",
-          "5a16b7e1fcdbcb00165aa6c9"
-        ],
-        "mod_mount": [
-          "5a398b75c4a282000a51a266",
-          "5a398ab9c4a282000c5a9842"
-        ],
-        "mod_nvg": [
-          "5c0558060db834001b735271",
-          "5a16b8a9fcdbcb00165aa6ca"
         ]
       },
       "61bcc89aef0f505f0c6cd0fc": {

@@ -2767,18 +2767,11 @@
         "602286df23506e50807090c6",
         "5cadf6ddae9215051e1c23b2",
         "633a98eab8b0506e48497c1a",
-        "560d5e524bdc2d25448b4571"
+        "560d5e524bdc2d25448b4571",
+        "5cbdc23eae9215001136a407"
       ]
     },
     "mods": {
-		"5e4ac41886f77406a511c9a8": {
-        "front_plate": ["65573fa5655447403702a816", "64afc71497cf3a403c01ff38", "64afdcb83efdfea28601d041", "655746010177119f4a097ff7", "656f9d5900d62bcd2e02407c", "656fa8d700d62bcd2e024084", "656fa99800d62bcd2e024088", "656fae5f7c2d57afe200c0d7", "656faf0ca0dce000a2020f77", "656fa0fb498d1b7e3e071d9c", "656fafe3498d1b7e3e071da4", "656fa76500d62bcd2e024080", "656fa25e94b480b8a500c0e0", "656fad8c498d1b7e3e071da0", "656fa61e94b480b8a500c0e8", "656fb21fa0dce000a2020f7c", "656fac30c6baea13cd07e10c", "656fb0bd7c2d57afe200c0dc", "656f9fa0498d1b7e3e071d98", "656fa53d94b480b8a500c0e4"],
-        "back_plate": ["65573fa5655447403702a816", "64afc71497cf3a403c01ff38", "64afdcb83efdfea28601d041", "655746010177119f4a097ff7", "656f9d5900d62bcd2e02407c", "656fa8d700d62bcd2e024084", "656fa99800d62bcd2e024088", "656fae5f7c2d57afe200c0d7", "656faf0ca0dce000a2020f77", "656fa0fb498d1b7e3e071d9c", "656fafe3498d1b7e3e071da4", "656fa76500d62bcd2e024080", "656fa25e94b480b8a500c0e0", "656fad8c498d1b7e3e071da0", "656fa61e94b480b8a500c0e8", "656fb21fa0dce000a2020f7c", "656fac30c6baea13cd07e10c", "656fb0bd7c2d57afe200c0dc", "656f9fa0498d1b7e3e071d98", "656fa53d94b480b8a500c0e4"],
-        "soft_armor_front": ["6575ef599c7cad336508e453"],
-        "soft_armor_back": ["6575ef6bf6a13a7b7100b093"],
-        "soft_armor_left": ["6575ef78da698a4e980677eb"],
-        "soft_armor_right": ["6575ef7f9c7cad336508e457"]
-    },
       "5448bd6b4bdc2dfc2f8b4569": {
         "mod_magazine": [
           "5448c12b4bdc2d02308b456f"
@@ -4589,26 +4582,7 @@
       },
       "5c0e625a86f7742d77340f62": {
         "Back_plate": [
-          "656f9d5900d62bcd2e02407c",
-          "656fa99800d62bcd2e024088",
-          "656fa8d700d62bcd2e024084",
-          "656fae5f7c2d57afe200c0d7",
-          "656faf0ca0dce000a2020f77",
-          "656fa0fb498d1b7e3e071d9c",
-          "656fa76500d62bcd2e024080",
-          "656fafe3498d1b7e3e071da4",
-          "656fa25e94b480b8a500c0e0",
-          "656fad8c498d1b7e3e071da0",
-          "656fac30c6baea13cd07e10c",
-          "656fa61e94b480b8a500c0e8",
-          "656fb21fa0dce000a2020f7c",
-          "656f9fa0498d1b7e3e071d98",
-          "656fb0bd7c2d57afe200c0dc",
-          "656fa53d94b480b8a500c0e4",
-          "655746010177119f4a097ff7",
-          "64afdcb83efdfea28601d041",
-          "65573fa5655447403702a816",
-          "64afc71497cf3a403c01ff38"
+          "656fafe3498d1b7e3e071da4"
         ],
         "Collar": [
           "657643a220cc24d17102b14c"
@@ -4935,6 +4909,32 @@
           "5cc9b815d7f00c000e2579d6"
         ]
       },
+      "5e4ac41886f77406a511c9a8": {
+        "back_plate": [
+          "656fae5f7c2d57afe200c0d7"
+        ],
+        "front_plate": [
+          "656fae5f7c2d57afe200c0d7"
+        ],
+        "left_side_plate": [
+          "6557458f83942d705f0c4962"
+        ],
+        "right_side_plate": [
+          "6557458f83942d705f0c4962"
+        ],
+        "soft_armor_back": [
+          "6575ef6bf6a13a7b7100b093"
+        ],
+        "soft_armor_front": [
+          "6575ef599c7cad336508e453"
+        ],
+        "soft_armor_left": [
+          "6575ef78da698a4e980677eb"
+        ],
+        "soft_armor_right": [
+          "6575ef7f9c7cad336508e457"
+        ]
+      },
       "5e4bfc1586f774264f7582d3": {
         "Helmet_back": [
           "657f9cb587e11c61f70bfaca"
@@ -4943,7 +4943,8 @@
           "657f9c78ada5fadd1f07a58d"
         ],
         "mod_mount": [
-          "5a398b75c4a282000a51a266"
+          "5a398b75c4a282000a51a266",
+          "5a398ab9c4a282000c5a9842"
         ]
       },
       "5e848cc2988a8701445df1e8": {
@@ -5013,11 +5014,6 @@
         ],
         "Helmet_top": [
           "657f9a55c6679fefb3051e19"
-        ],
-        "mod_nvg": [
-          "5ea18c84ecf1982c7712d9a2",
-          "5c0558060db834001b735271",
-          "5a16b8a9fcdbcb00165aa6ca"
         ]
       },
       "5f5f41476bdad616ad46d631": {
