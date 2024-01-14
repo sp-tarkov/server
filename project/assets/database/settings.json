@@ -35,14 +35,24 @@
         "Mark502and504AsNonImportant": true,
         "DefaultRetriesCount": 1,
         "CriticalRetriesCount": 1,
-        "AFKTimeoutSeconds": 604800,
-        "RequestsMadeThroughLobby": ["/client/mail/msg/send"],
+        "AFKTimeoutSeconds": 1800,
+        "RequestsMadeThroughLobby": [
+            "/client/mail/msg/send"
+        ],
         "LobbyKeepAliveInterval": 1,
-        "RequestConfirmationTimeouts": [0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 18.8],
+        "RequestConfirmationTimeouts": [
+            0.2,
+            0.4,
+            0.8,
+            1.6,
+            3.2,
+            6.4,
+            18.8
+        ],
         "ShouldEstablishLobbyConnection": false,
-		"NetworkStateView": {
-                "LossThreshold": 10,
-                "RttThreshold": 100
-            }
+        "NetworkStateView": {
+            "LossThreshold": 10,
+            "RttThreshold": 100
+        }
     }
 }
