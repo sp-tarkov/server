@@ -1,10 +1,37 @@
 [
   {
-    "_id": "6271093e621b0a76055cd61e",
-    "ProductionTime": 16800,
+    "_id": "62710a69adfbd4354d79c58e",
+    "ProductionTime": 8100,
     "Requirements": [
       {
-        "templateId": "5d1b376e86f774252519444e",
+        "templateId": "5449016a4bdc2d6f028b456f",
+        "count": 95000,
+        "isFunctional": false,
+        "isEncoded": false,
+        "type": "Item"
+      }
+    ],
+    "EndProducts": {
+      "Rare": {
+        "min": "1",
+        "max": "3"
+      },
+      "Common": {
+        "min": "0",
+        "max": "0"
+      },
+      "Superrare": {
+        "min": "1",
+        "max": "2"
+      }
+    }
+  },
+  {
+    "_id": "62710a0e436dcc0b9c55f4ec",
+    "ProductionTime": 19200,
+    "Requirements": [
+      {
+        "templateId": "5c12613b86f7743bbe2c3f76",
         "count": 1,
         "isFunctional": false,
         "isEncoded": false,
@@ -17,12 +44,12 @@
         "max": "0"
       },
       "Rare": {
-        "min": "1",
-        "max": "1"
+        "min": "2",
+        "max": "4"
       },
       "Superrare": {
-        "min": "3",
-        "max": "5"
+        "min": "2",
+        "max": "3"
       }
     }
   },
@@ -81,11 +108,11 @@
     }
   },
   {
-    "_id": "62710a0e436dcc0b9c55f4ec",
-    "ProductionTime": 19200,
+    "_id": "6271093e621b0a76055cd61e",
+    "ProductionTime": 16800,
     "Requirements": [
       {
-        "templateId": "5c12613b86f7743bbe2c3f76",
+        "templateId": "5d1b376e86f774252519444e",
         "count": 1,
         "isFunctional": false,
         "isEncoded": false,
@@ -98,39 +125,12 @@
         "max": "0"
       },
       "Rare": {
-        "min": "2",
-        "max": "4"
+        "min": "1",
+        "max": "1"
       },
       "Superrare": {
-        "min": "2",
-        "max": "3"
-      }
-    }
-  },
-  {
-    "_id": "62710a69adfbd4354d79c58e",
-    "ProductionTime": 8100,
-    "Requirements": [
-      {
-        "templateId": "5449016a4bdc2d6f028b456f",
-        "count": 95000,
-        "isFunctional": false,
-        "isEncoded": false,
-        "type": "Item"
-      }
-    ],
-    "EndProducts": {
-      "Rare": {
-        "min": "1",
-        "max": "3"
-      },
-      "Common": {
-        "min": "0",
-        "max": "0"
-      },
-      "Superrare": {
-        "min": "1",
-        "max": "2"
+        "min": "3",
+        "max": "5"
       }
     }
   }
