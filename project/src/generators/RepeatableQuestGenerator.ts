@@ -1112,7 +1112,7 @@ export class RepeatableQuestGenerator
         {
             const rootItem = preset.find(x => x._tpl === tpl);
             rewardItem.target = rootItem._id; // Target property and root items id must match
-            rewardItem.items = this.ragfairServerHelper.reparentPresets(rootItem, preset);
+            rewardItem.items = this.itemHelper.reparentItemAndChildren(rootItem, preset);
         }
         else
         {

@@ -1,1 +1,28 @@
-{"menu":{"EXIT":"EXIT","Escape from Tarkov":"ESCAPE FROM TARKOV","DOWN: ":"DOWN: ","NEXT":"NEXT","Servers are currently at full capacity":"Servers are currently at full capacity","AUTHORIZATION":"AUTHORIZATION","REMEMBER ACCOUNT":"REMEMBER ACCOUNT","Profile data loading...":"Profile data loading...","RIGHT: ":"RIGHT: ","{0} Beta version":"{0} Beta version","LEFT: ":"LEFT: ","UP: ":"UP: ","213 - Error connecting to auth server":"Authorization is unavailable now, please try again later.","230 - MAX LOGIN COUNT":"You have reached the maximum attempts. Try again later","Place in queue:":"Place in queue:","206 - Wrong email or password":"Wrong email or password","240 - Servers temporarily unavailable. Please, try later.":"Server maintenance","BATTLEYE_UnknownRestartReason":"Anticheat is running incorrectly. Game restart required","BATTLEYE_ANTICHEAT_ClientNotResponding":"Anticheat connection failed","SABER_ANTICHEAT_AnticheatConnectionFailed":"Anticheat connection failed","BATTLEYE_ServiceNeedsToBeUpdated":"Anticheat is outdated. Game restart required","BATTLEYE_ANTICHEAT_DisallowedProgram":"Disallowed program running","BATTLEYE_ANTICHEAT_CorruptedMemory":"Corrupted memory. The integrity of the protection failed to validate. Reinstall anticheat","BATTLEYE_ANTICHEAT_FailedToLoadAnticheat":"Anticheat loading failed.","BATTLEYE_ANTICHEAT_WinAPIFailure":"A critical Windows API call failed","BATTLEYE_ServiceNotRunningProperly":"Anticheat is running incorrectly. Game restart required","BATTLEYE_ANTICHEAT_GlobalBan":"The player has been banned by BE","BATTLEYE_ANTICHEAT_QueryTimeout":"Anticheat connection failed. Please restart the game","BATTLEYE_ANTICHEAT_CorruptedData":"The integrity of the game failed to validate. Reinstall anticheat","BATTLEYE_ANTICHEAT_GameRestartRequired":"Game restart required","BATTLEYE_ANTICHEAT_BadServiceVersion":"Bad service version","UI/leave_game_confirmation_caption":"Exit","When you leave the raid you don’t get anything and also receive Left the Action exit status.":"When you leave the raid you don’t get anything and also receive Left the Action exit status.","UI/leave_game_confirmation_text":"Are you sure you want to leave?","ASSEMBLE":"ASSEMBLE","Production completed: {0}":"Production completed: {0}"}}
+{
+    "menu": {
+        "206 - Wrong email or password": "이메일 또는 비밀번호가 잘못되었습니다.",
+        "213 - Error connecting to auth server": "인증서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+        "240 - Servers temporarily unavailable. Please, try later.": "서버 점검중",
+        "ASSEMBLE": "조립",
+        "AUTHORIZATION": "인증",
+        "BATTLEYE_ANTICHEAT_BadServiceVersion": "올바르지 않은 버전",
+        "BATTLEYE_ANTICHEAT_ClientNotResponding": "안티치트 연결에 실패하였습니다.",
+        "BATTLEYE_ANTICHEAT_CorruptedData": "게임의 무결성 검사에 실패하였습니다. 안티치트를 다시 설치해 주십시오.",
+        "BATTLEYE_ANTICHEAT_CorruptedMemory": "메모리 손상 발견. 보호 기능의 무결성을 검증하지 못했습니다. 안티치트를 재설치 해주십시오.",
+        "BATTLEYE_ANTICHEAT_DisallowedProgram": "비인가 프로그램이 실행 중입니다.",
+        "BATTLEYE_ANTICHEAT_FailedToLoadAnticheat": "안티치트 로딩 실패",
+        "BATTLEYE_ANTICHEAT_GameRestartRequired": "게임을 재시작 해주십시오.",
+        "BATTLEYE_ANTICHEAT_GlobalBan": "해당 플레이어는 배틀아이에 의해 차단되었습니다.",
+        "BATTLEYE_ANTICHEAT_QueryTimeout": "안티치트 연결에 실패하였습니다. 게임을 재시작 해주십시오.",
+        "BATTLEYE_ANTICHEAT_WinAPIFailure": "중요한 윈도우 API 호출 실패",
+        "BATTLEYE_ServiceNeedsToBeUpdated": "구버전의 안티치트를 사용 중 입니다. 게임을 재시작 해주십시오.",
+        "BATTLEYE_ServiceNotRunningProperly": "안티치트가 올바르게 작동하지 않습니다. 게임을 재시작 해주십시오.",
+        "BATTLEYE_UnknownRestartReason": "안티치트가 올바르게 작동하지 않습니다. 게임을 재시작 해주십시오.",
+        "EXIT": "게임 종료",
+        "NEXT": "다음",
+        "Place in queue:": "현재 대기열:",
+        "Profile data loading...": "프로필 데이터를 불러오는 중입니다...",
+        "SABER_ANTICHEAT_AnticheatConnectionFailed": "안티치트 연결에 실패하였습니다.",
+        "Servers are currently at full capacity": "현재 서버가 가득 찬 상태입니다."
+    }
+}

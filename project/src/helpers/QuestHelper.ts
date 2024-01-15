@@ -323,7 +323,7 @@ export class QuestHelper
                 items.push(this.jsonUtil.clone(mod));
             }
 
-            rewardItems = rewardItems.concat(this.ragfairServerHelper.reparentPresets(target, items));
+            rewardItems = rewardItems.concat(this.itemHelper.reparentItemAndChildren(target, items));
         }
 
         return rewardItems;

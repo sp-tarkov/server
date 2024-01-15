@@ -75,15 +75,15 @@ export class InventoryHelper
      * @param output Client response object
      * @returns IItemEventRouterResponse
      */
-    public addItemToInventory(sessionId: string, request: IAddItemDirectRequest, pmcData: IPmcData, output: IItemEventRouterResponse): IItemEventRouterResponse
+    public addItemToStash(sessionId: string, request: IAddItemDirectRequest, pmcData: IPmcData, output: IItemEventRouterResponse): IItemEventRouterResponse
     {
         const itemWithModsToAddClone = this.jsonUtil.clone(request.itemWithModsToAdd);
 
-        // get stash layouts ready for use
+        // Get stash layouts ready for use
         const stashFS2D = this.getStashSlotMap(pmcData, sessionId);
         const sortingTableFS2D = this.getSortingTableSlotMap(pmcData);
 
-        // Find an empty slot in stash for item being added - adds 'location' property to root item
+        // Find empty slot in stash for item being added - adds 'location' + parentid + slotId properties to root item
         const errorOutput = this.placeItemInInventory(
             stashFS2D,
             sortingTableFS2D,
@@ -99,25 +99,7 @@ export class InventoryHelper
         }
 
         // Apply/remove FiR to item + mods
-        for (const item of itemWithModsToAddClone)
-        {
-            if (!item.upd)
-            {
-                item.upd = {};
-            }
-
-            if (request.foundInRaid)
-            {
-                item.upd.SpawnedInSession = request.foundInRaid;
-            }
-            else
-            {
-                if (delete item.upd.SpawnedInSession)
-                {
-                    delete item.upd.SpawnedInSession;
-                }
-            }
-        }
+        this.setFindInRaidStatusForItem(itemWithModsToAddClone, request.foundInRaid);
 
         // Remove trader properties from root item
         this.removeTraderRagfairRelatedUpdProperties(itemWithModsToAddClone[0].upd);
@@ -140,17 +122,47 @@ export class InventoryHelper
             return this.httpResponse.appendErrorToOutput(output, message);
         }
 
-        // Add item + mods to output + profile inventory
+        // Add item + mods to output and profile inventory
         output.profileChanges[sessionId].items.new.push(...itemWithModsToAddClone);
         pmcData.Inventory.items.push(...itemWithModsToAddClone);
 
-        this.logger.debug(`Added item ${itemWithModsToAddClone[0]._tpl} with ${itemWithModsToAddClone.length - 1} mods to inventory`);
+        this.logger.debug(`Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount} item: ${itemWithModsToAddClone[0]._tpl} with: ${itemWithModsToAddClone.length - 1} mods to inventory`);
 
         return output;
     }
 
     /**
-     * @deprecated - use addItemDirect()
+     * Set FiR status for an item + its children
+     * @param itemWithChildren An item
+     * @param foundInRaid Item was found in raid
+     */
+    private setFindInRaidStatusForItem(itemWithChildren: Item[], foundInRaid: boolean)
+    {
+        for (const item of itemWithChildren)
+        {
+            // Ensure item has upd object
+            if (!item.upd)
+            {
+                item.upd = {};
+            }
+
+            if (foundInRaid)
+            {
+                item.upd.SpawnedInSession = foundInRaid;
+            }
+
+            else
+            {
+                if (delete item.upd.SpawnedInSession)
+                {
+                    delete item.upd.SpawnedInSession;
+                }
+            }
+        }
+    }
+
+    /**
+     * @deprecated - use addItemToStash()
      * 
      * BUG: Passing the same item multiple times with a count of 1 will cause multiples of that item to be added (e.g. x3 separate objects of tar cola with count of 1 = 9 tarcolas being added to inventory)
      * @param pmcData Profile to add items to
@@ -495,7 +507,11 @@ export class InventoryHelper
         useSortingTable: boolean,
         output: IItemEventRouterResponse): IItemEventRouterResponse
     {
-        const itemSize = this.getItemSize(itemWithChildren[0]._tpl, itemWithChildren[0]._id, itemWithChildren);
+        // Get x/y size of item
+        const rootItem = itemWithChildren[0];
+        const itemSize = this.getItemSize(rootItem._tpl, rootItem._id, itemWithChildren);
+
+        // Look for a place to slot item into
         const findSlotResult = this.containerHelper.findSlotForItem(stashFS2D, itemSize[0], itemSize[1]);
 
         if (findSlotResult.success)
@@ -518,7 +534,9 @@ export class InventoryHelper
             }
             catch (err)
             {
-                const errorText = typeof err === "string" ? ` -> ${err}` : "";
+                const errorText = (typeof err === "string")
+                    ? ` -> ${err}`
+                    : "";
                 this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
 
                 return this.httpResponse.appendErrorToOutput(
@@ -527,8 +545,9 @@ export class InventoryHelper
                 );
             }
             // Store details for object, incuding container item will be placed in
-            itemWithChildren[0].parentId = playerInventory.stash;
-            itemWithChildren[0].location = {
+            rootItem.parentId = playerInventory.stash;
+            rootItem.slotId = "hideout";
+            rootItem.location = {
                 x: findSlotResult.x,
                 y: findSlotResult.y,
                 r: findSlotResult.rotation ? 1 : 0,
@@ -774,7 +793,8 @@ export class InventoryHelper
     protected splitStackIntoSmallerStacks(assortItems: Item[], requestItem: AddItem, result: IAddItemTempObject[]): void
     {
         for (const item of assortItems)
-        {// Iterated item matches root item
+        {
+            // Iterated item matches root item
             if (item._id === requestItem.item_id)
             {
                 // Get item details from db
