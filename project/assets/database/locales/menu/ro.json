@@ -1,0 +1,28 @@
+{
+    "menu": {
+        "206 - Wrong email or password": "Wrong email or password",
+        "213 - Error connecting to auth server": "Authorization is unavailable now, please try again later.",
+        "240 - Servers temporarily unavailable. Please, try later.": "Server maintenance",
+        "ASSEMBLE": "ASSEMBLE",
+        "AUTHORIZATION": "AUTHORIZATION",
+        "BATTLEYE_ANTICHEAT_BadServiceVersion": "Bad service version",
+        "BATTLEYE_ANTICHEAT_ClientNotResponding": "Anticheat connection failed",
+        "BATTLEYE_ANTICHEAT_CorruptedData": "The integrity of the game failed to validate. Reinstall anticheat",
+        "BATTLEYE_ANTICHEAT_CorruptedMemory": "Corrupted memory. The integrity of the protection failed to validate. Reinstall anticheat",
+        "BATTLEYE_ANTICHEAT_DisallowedProgram": "Disallowed program running",
+        "BATTLEYE_ANTICHEAT_FailedToLoadAnticheat": "Anticheat loading failed.",
+        "BATTLEYE_ANTICHEAT_GameRestartRequired": "Game restart required",
+        "BATTLEYE_ANTICHEAT_GlobalBan": "The player has been banned by BE",
+        "BATTLEYE_ANTICHEAT_QueryTimeout": "Anticheat connection failed. Please restart the game",
+        "BATTLEYE_ANTICHEAT_WinAPIFailure": "A critical Windows API call failed",
+        "BATTLEYE_ServiceNeedsToBeUpdated": "Anticheat is outdated. Game restart required",
+        "BATTLEYE_ServiceNotRunningProperly": "Anticheat is running incorrectly. Game restart required",
+        "BATTLEYE_UnknownRestartReason": "Anticheat is running incorrectly. Game restart required",
+        "EXIT": "EXIT",
+        "NEXT": "NEXT",
+        "Place in queue:": "Place in queue:",
+        "Profile data loading...": "Loading profile data...",
+        "SABER_ANTICHEAT_AnticheatConnectionFailed": "Anticheat connection failed",
+        "Servers are currently at full capacity": "Servers are currently at full capacity"
+    }
+}

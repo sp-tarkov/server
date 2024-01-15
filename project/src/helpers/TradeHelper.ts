@@ -11,12 +11,14 @@ import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessB
 import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Traders } from "@spt-aki/models/enums/Traders";
+import { IInventoryConfig } from "@spt-aki/models/spt/config/IInventoryConfig";
 import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { RagfairServer } from "@spt-aki/servers/RagfairServer";
 import { FenceService } from "@spt-aki/services/FenceService";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PaymentService } from "@spt-aki/services/PaymentService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
@@ -25,6 +27,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 export class TradeHelper
 {
     protected traderConfig: ITraderConfig;
+    protected inventoryConfig: IInventoryConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -34,6 +37,7 @@ export class TradeHelper
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("FenceService") protected fenceService: FenceService,
+        @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
@@ -41,6 +45,7 @@ export class TradeHelper
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
+        this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);
     }
 
     /**
@@ -74,20 +79,9 @@ export class TradeHelper
         const callback = () =>
         {
             // Update assort/flea item values
-            let itemPurchased: Item;
-            const isRagfair = buyRequestData.tid.toLocaleLowerCase() === "ragfair";
-            if (isRagfair)
-            {
-                const allOffers = this.ragfairServer.getOffers();
-                // We store ragfair offerid in buyRequestData.item_id
-                const offerWithItem = allOffers.find((x) => x._id === buyRequestData.item_id);
-                itemPurchased = offerWithItem.items[0];
-            }
-            else
-            {
-                const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(buyRequestData.tid).items;
-                itemPurchased = traderAssorts.find((x) => x._id === buyRequestData.item_id);
-            }
+            const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(buyRequestData.tid).items;
+            const itemPurchased = traderAssorts.find((x) => x._id === buyRequestData.item_id);
+
 
             // Ensure purchase does not exceed trader item limit
             const hasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
@@ -97,10 +91,7 @@ export class TradeHelper
             }
 
             // Decrement trader item count
-            if (!isRagfair)
-            {
-                itemPurchased.upd.StackObjectsCount -= buyRequestData.count;
-            }
+            itemPurchased.upd.StackObjectsCount -= buyRequestData.count;
 
             if (this.traderConfig.persistPurchaseDataInProfile && hasBuyRestrictions)
             {
@@ -114,37 +105,128 @@ export class TradeHelper
                 throw new Error(`Transaction failed: ${output.warnings[0].errmsg}`);
             }
 
-            if (buyRequestData.tid === Traders.FENCE)
-            {
-                // Bought fence offer, remove from listing
-                this.fenceService.removeFenceOffer(buyRequestData.item_id);
-            }
-            else if (hasBuyRestrictions)
+            if (hasBuyRestrictions)
             {
                 // Increment non-fence trader item buy count
                 this.incrementAssortBuyCount(itemPurchased, buyRequestData.count);
             }
         };
 
-        if (buyRequestData.tid.toLocaleLowerCase() === "ragfair")
+        // Handle normal traders old way...for now
+        if (buyRequestData.tid.toLocaleLowerCase() !== "ragfair" && buyRequestData.tid.toLocaleLowerCase() !== Traders.FENCE)
         {
-            const allOffers = this.ragfairServer.getOffers();
-            const offerWithItem = allOffers.find((x) => x._id === buyRequestData.item_id);
-
-            const request: IAddItemDirectRequest = {
-                itemWithModsToAdd: offerWithItem.items,
-                foundInRaid: true,
-                callback: callback,
-                useSortingTable: true
-            }
-
-            return this.inventoryHelper.addItemToInventory(sessionID, request, pmcData, output);
+            return this.inventoryHelper.addItem(pmcData, newReq, output, sessionID, callback, foundInRaid, upd);
         }
 
-        // TODO - handle traders
-        // TODO - handle fence
+        let offerItems: Item[] = [];
+        let buyCallback;
+        if (buyRequestData.tid.toLocaleLowerCase() === "ragfair")
+        {
+            buyCallback = () =>
+            {
+                const allOffers = this.ragfairServer.getOffers();
 
-        return this.inventoryHelper.addItem(pmcData, newReq, output, sessionID, callback, foundInRaid, upd);
+                // We store ragfair offerid in buyRequestData.item_id
+                const offerWithItem = allOffers.find((x) => x._id === buyRequestData.item_id);
+                const itemPurchased = offerWithItem.items[0];
+    
+                // Ensure purchase does not exceed trader item limit
+                const hasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
+                if (hasBuyRestrictions)
+                {
+                    this.checkPurchaseIsWithinTraderItemLimit(itemPurchased, buyRequestData.item_id, buyRequestData.count);
+                }
+    
+                // Decrement trader item count
+    
+                if (this.traderConfig.persistPurchaseDataInProfile && hasBuyRestrictions)
+                {
+                    this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, newReq);
+                }
+    
+                /// Pay for item
+                output = this.paymentService.payMoney(pmcData, buyRequestData, sessionID, output);
+                if (output.warnings.length > 0)
+                {
+                    throw new Error(`Transaction failed: ${output.warnings[0].errmsg}`);
+                }
+
+                if (hasBuyRestrictions)
+                {
+                    // Increment non-fence trader item buy count
+                    this.incrementAssortBuyCount(itemPurchased, buyRequestData.count);
+                }
+            };
+
+            // Get raw offer from ragfair, clone to prevent altering offer itself
+            const allOffers = this.ragfairServer.getOffers();
+            const offerWithItemCloned = this.jsonUtil.clone(allOffers.find((x) => x._id === buyRequestData.item_id));
+            offerItems = offerWithItemCloned.items;
+        }
+        else if (buyRequestData.tid === Traders.FENCE)
+        {
+            buyCallback = () =>
+            {
+                // Update assort/flea item values
+                const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(buyRequestData.tid).items;
+                const itemPurchased = traderAssorts.find((x) => x._id === buyRequestData.item_id);
+    
+                // Decrement trader item count
+                itemPurchased.upd.StackObjectsCount -= buyRequestData.count;
+    
+                /// Pay for item
+                output = this.paymentService.payMoney(pmcData, buyRequestData, sessionID, output);
+                if (output.warnings.length > 0)
+                {
+                    throw new Error(`Transaction failed: ${output.warnings[0].errmsg}`);
+                }
+    
+                this.fenceService.removeFenceOffer(buyRequestData.item_id);
+            };
+
+            const fenceItems = this.fenceService.getRawFenceAssorts().items;
+            const rootItemIndex = fenceItems.findIndex((item) => item._id === buyRequestData.item_id);
+            if (rootItemIndex === -1)
+            {
+                this.logger.debug(`Tried to buy item ${buyRequestData.item_id} from fence that no longer exists`);
+                const message = this.localisationService.getText("ragfair-offer_no_longer_exists");
+                return this.httpResponse.appendErrorToOutput(output, message);
+            }
+
+            offerItems = this.itemHelper.findAndReturnChildrenAsItems(fenceItems, buyRequestData.item_id);
+        }
+
+        // Get item details from db
+        const itemDbDetails = this.itemHelper.getItem(offerItems[0]._tpl)[1];
+        const itemMaxStackSize = itemDbDetails._props.StackMaxSize;
+        const itemsToSendTotalCount = buyRequestData.count;
+        let itemsToSendRemaining = itemsToSendTotalCount;
+        while (itemsToSendRemaining > 0)
+        {
+            // Handle edge case when remaining items to send < max stack size
+            const itemCountToSend = Math.min(itemMaxStackSize, itemsToSendRemaining);
+            offerItems[0].upd.StackObjectsCount = itemCountToSend;
+
+            // Prevent any collisions
+            this.itemHelper.remapRootItemId(offerItems);
+
+            // Construct request
+            const request: IAddItemDirectRequest = {
+                itemWithModsToAdd: this.itemHelper.reparentItemAndChildren(offerItems[0], offerItems),
+                foundInRaid: this.inventoryConfig.newItemsMarkedFound,
+                callback: buyCallback,
+                useSortingTable: true
+            };
+
+            // Add item + children to stash
+            this.inventoryHelper.addItemToStash(sessionID, request, pmcData, output);
+
+            // Remove amount of items added to player stash
+            itemsToSendRemaining -= itemCountToSend;
+        }  
+
+        // TODO - handle traders
+        return output;
     }
 
     /**

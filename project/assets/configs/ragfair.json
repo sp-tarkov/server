@@ -134,6 +134,12 @@
                 "min": 0.05,
                 "max": 1
             },
+            "644120aa86ffbe10ee032b6f": {
+                "_name": "ARMOR_PLATE",
+                "conditionChance": 0.45,
+                "min": 0.2,
+                "max": 1
+            },
             "543be6674bdc2df1348b4569": {
                 "_name": "FOOD_DRINK",
                 "conditionChance": 0.05,
@@ -145,6 +151,18 @@
                 "conditionChance": 0.12,
                 "min": 0.7,
                 "max": 0.99
+            },
+            "5a341c4686f77469e155819e": {
+                "_name": "FACECOVER",
+                "conditionChance": 0.32,
+                "min": 0.6,
+                "max": 1
+            },
+            "5448e5724bdc2ddf718b4568": {
+                "_name": "VISORS",
+                "conditionChance": 0.32,
+                "min": 0.7,
+                "max": 1
             }
         },
         "stackablePercent": {

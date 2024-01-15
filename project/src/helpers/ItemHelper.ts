@@ -1331,6 +1331,79 @@ export class ItemHelper
     {
         return ["front_plate", "back_plate", "side_plate", "left_side_plate", "right_side_plate"];
     }
+
+    /**
+     * Generate new unique ids for child items while preserving hierarchy
+     * @param rootItem Base/primary item
+     * @param itemWithChildren Primary item + children of primary item
+     * @returns Item array with updated IDs
+     */
+    public reparentItemAndChildren(rootItem: Item, itemWithChildren: Item[]): Item[]
+    {
+        const oldRootId = itemWithChildren[0]._id;
+        const idMappings = {};
+
+        idMappings[oldRootId] = rootItem._id;
+
+        for (const mod of itemWithChildren)
+        {
+            if (idMappings[mod._id] === undefined)
+            {
+                idMappings[mod._id] = this.hashUtil.generate();
+            }
+
+            // Has parentId + no remapping exists for its parent
+            if (mod.parentId !== undefined && idMappings[mod.parentId] === undefined)
+            {
+                // Make remapping for items parentId
+                idMappings[mod.parentId] = this.hashUtil.generate();
+            }
+
+            mod._id = idMappings[mod._id];
+
+            if (mod.parentId !== undefined)
+            {
+                mod.parentId = idMappings[mod.parentId];
+            }
+        }
+
+        // Force item's details into first location of presetItems
+        if (itemWithChildren[0]._tpl !== rootItem._tpl)
+        {
+            this.logger.warning(`Reassigning root item from ${itemWithChildren[0]._tpl} to ${rootItem._tpl}`);
+        }
+
+        itemWithChildren[0] = rootItem;
+
+        return itemWithChildren;
+    }
+
+    /**
+     * Update a root items _id property value to be unique
+     * @param itemWithChildren Item to update root items _id property
+     * @param newId Optional: new id to use
+     */
+    public remapRootItemId(itemWithChildren: Item[], newId = this.hashUtil.generate()): void
+    {
+        const rootItemExistingId = itemWithChildren[0]._id;
+
+        for (const item of itemWithChildren)
+        {
+            // Root, update id
+            if (item._id === rootItemExistingId)
+            {
+                item._id = newId;
+
+                continue;
+            }
+
+            // Child with parent of root, update
+            if (item.parentId === rootItemExistingId)
+            {
+                item.parentId = newId;
+            }
+        }
+    }
 }
 
 namespace ItemHelper

@@ -203,10 +203,8 @@ export class RagfairOfferGenerator
         {
             return currencyCount;
         }
-        else
-        {
-            return this.handbookHelper.inRUB(currencyCount, currencyType);
-        }
+
+        return this.handbookHelper.inRUB(currencyCount, currencyType);
     }
 
     /**
@@ -352,13 +350,11 @@ export class RagfairOfferGenerator
         }
 
         // Get item + sub-items if preset, otherwise just get item
-        const items: Item[] = isPreset
+        const itemWithChildren: Item[] = isPreset
             ? this.ragfairServerHelper.getPresetItems(assortItem)
             : [
                 ...[assortItem],
-                ...this.itemHelper.findAndReturnChildrenByAssort(
-                    assortItem._id,
-                    this.ragfairAssortGenerator.getAssortItems(),
+                ...this.itemHelper.findAndReturnChildrenByAssort(assortItem._id, this.ragfairAssortGenerator.getAssortItems(),
                 ),
             ];
 
@@ -372,7 +368,18 @@ export class RagfairOfferGenerator
         const assortSingleOfferProcesses = [];
         for (let index = 0; index < offerCount; index++)
         {
-            assortSingleOfferProcesses.push(this.createSingleOfferForItem(items, isPreset, itemDetails));
+            delete itemWithChildren[0].parentId;
+            delete itemWithChildren[0].slotId;
+
+            if (!isPreset)
+            {
+                // presets get unique id generated during getPresetItems() earlier
+                itemWithChildren[0]._id = this.hashUtil.generate();
+            }
+
+            delete itemWithChildren[0].parentId;
+
+            assortSingleOfferProcesses.push(this.createSingleOfferForItem(itemWithChildren, isPreset, itemDetails));
         }
 
         await Promise.all(assortSingleOfferProcesses);
@@ -585,8 +592,9 @@ export class RagfairOfferGenerator
             itemConditionValues.max,
         );
 
-        // Randomise armor
-        if (this.itemHelper.armorItemCanHoldMods(rootItem._tpl))
+        // Randomise armor + plates + armor related things
+        if (this.itemHelper.armorItemCanHoldMods(rootItem._tpl)
+            || this.itemHelper.isOfBaseclasses(rootItem._tpl, [BaseClasses.ARMOR_PLATE, BaseClasses.ARMORED_EQUIPMENT]))
         {
             // Chance to not adjust armor
             if (!this.randomUtil.getChance100(this.ragfairConfig.dynamic.condition[BaseClasses.ARMORED_EQUIPMENT].conditionChance * 100))

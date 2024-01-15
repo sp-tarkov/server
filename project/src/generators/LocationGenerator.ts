@@ -975,7 +975,7 @@ export class LocationGenerator
             {
                 try
                 {
-                    children = this.ragfairServerHelper.reparentPresets(defaultPreset._items[0], defaultPreset._items);
+                    children = this.itemHelper.reparentItemAndChildren(defaultPreset._items[0], defaultPreset._items);
                 }
                 catch (error)
                 {
@@ -1014,7 +1014,7 @@ export class LocationGenerator
             {
                 if (children?.length > 0)
                 {
-                    items = this.ragfairServerHelper.reparentPresets(rootItem, children);
+                    items = this.itemHelper.reparentItemAndChildren(rootItem, children);
                 }
             }
             catch (error)
