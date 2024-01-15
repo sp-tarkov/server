@@ -151,9 +151,16 @@ export class DataCallbacks
      */
     public getLocalesMenu(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string>
     {
-        return this.httpResponse.getBody(
-            this.databaseServer.getTables().locales.menu[url.replace("/client/menu/locale/", "")],
-        );
+        const localeId = url.replace("/client/menu/locale/", "");
+        const tables = this.databaseServer.getTables();
+        let result = tables.locales.menu[localeId];
+
+        if (result === undefined)
+        {
+            result = tables.locales.menu["en"];
+        }
+
+        return this.httpResponse.getBody(result);
     }
 
     /**
@@ -161,9 +168,16 @@ export class DataCallbacks
      */
     public getLocalesGlobal(url: string, info: IEmptyRequestData, sessionID: string): string
     {
-        return this.httpResponse.getUnclearedBody(
-            this.databaseServer.getTables().locales.global[url.replace("/client/locale/", "")],
-        );
+        const localeId = url.replace("/client/locale/", "");
+        const tables = this.databaseServer.getTables();
+        let result = tables.locales.global[localeId];
+
+        if (result === undefined)
+        {
+            result = tables.locales.global[localeId];
+        }
+
+        return this.httpResponse.getUnclearedBody(result);
     }
 
     /**
