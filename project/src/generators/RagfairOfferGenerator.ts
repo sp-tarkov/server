@@ -119,6 +119,17 @@ export class RagfairOfferGenerator
             offerRequirements.push(requirement);
         }
 
+        const itemsClone = this.jsonUtil.clone(items);
+
+        // Add cartridges to offers for ammo boxes
+        for (const item of itemsClone)
+        {
+            if (this.itemHelper.isOfBaseclass(item._tpl, BaseClasses.AMMO_BOX))
+            {
+                itemsClone.push(...this.getAmmoBoxContents(item._tpl, item._id));
+            }
+        }
+
         const itemCount = items.filter((x) => x.slotId === "hideout").length;
         const roublePrice = Math.round(this.convertOfferRequirementsIntoRoubles(offerRequirements));
 
@@ -136,7 +147,7 @@ export class RagfairOfferGenerator
                 avatar: this.getAvatarUrl(isTrader, userID),
             },
             root: items[0]._id,
-            items: this.jsonUtil.clone(items),
+            items: itemsClone,
             requirements: offerRequirements,
             requirementsCost: roublePrice,
             itemsCost: Math.round(this.handbookHelper.getTemplatePrice(items[0]._tpl)), // Handbook price
@@ -874,5 +885,50 @@ export class RagfairOfferGenerator
             * multipler;
 
         return [{ count: price, _tpl: currency }];
+    }
+
+    /**
+     * Returns an array of stacked ammunition items to add to an ammo box offer
+     * @param parentTpl TPL identifier of the ammunition box
+     * @param parentId Item identifier of the ammunition box
+     * @returns Item[]
+     */
+    protected getAmmoBoxContents(
+        parentTpl: string,
+        parentId: string,
+    ): Item[]
+    {
+        const itemInfo = this.itemHelper.getItem(parentTpl)[1];
+        const stackSlots = itemInfo._props.StackSlots;
+        const cartridgeItems: Item[] = [];
+
+        if (stackSlots !== undefined)
+        {
+            // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
+            let maxCount = stackSlots[0]._max_count;
+            const ammoTpl = stackSlots[0]._props.filters[0].Filter[0];
+            const ammoStackMaxSize = this.itemHelper.getItem(ammoTpl)[1]._props.StackMaxSize;
+            let location = 0;
+
+            // Place stacks in ammo box no larger than StackMaxSize, prevents player when opening item getting stack of ammo > StackMaxSize
+            while (maxCount > 0)
+            {
+                const ammoStackSize = maxCount <= ammoStackMaxSize ? maxCount : ammoStackMaxSize;
+                const ammoItem: Item = {
+                    _id: this.hashUtil.generate(),
+                    _tpl: ammoTpl,
+                    parentId: parentId,
+                    slotId: "cartridges",
+                    location: location,
+                    upd: { StackObjectsCount: ammoStackSize },
+                };
+
+                cartridgeItems.push(ammoItem);
+
+                location++;
+                maxCount -= ammoStackMaxSize;
+            }
+        }
+        return cartridgeItems;
     }
 }
