@@ -69915,13 +69915,6 @@
           "traderId": "11",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6ce671031ac76fe773c7b",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -70152,13 +70145,6 @@
           "traderId": "5a7c2eca46aef81a7ca2145d",
           "type": "AssortmentUnlock",
           "unknown": true
-        },
-        {
-          "id": "63a6cea72b25f7513905ca1c",
-          "index": 3,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -70386,13 +70372,6 @@
           "traderId": "11",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6ceadb7f4570d3a293167",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         },
         {
           "id": "658065c5baa3942bf871691f",
@@ -70649,13 +70628,6 @@
           "type": "Item",
           "unknown": true,
           "value": "1"
-        },
-        {
-          "id": "63a6cebab7f4570d3a293168",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.03"
         },
         {
           "findInRaid": true,
@@ -70918,13 +70890,6 @@
           "traderId": "11",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6ceb308f1f30563550380",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.03"
         }
       ]
     },
@@ -71173,13 +71138,6 @@
           "traderId": "10",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6cebf08f1f30563550381",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -71406,13 +71364,6 @@
           "traderId": "5a7c2eca46aef81a7ca2145d",
           "type": "AssortmentUnlock",
           "unknown": true
-        },
-        {
-          "id": "63a6cec40530a47cb93185ba",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -71647,13 +71598,6 @@
           "traderId": "10",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6ceca4610fa47416d90e8",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -71785,13 +71729,6 @@
           "traderId": "10",
           "type": "ProductionScheme",
           "unknown": true
-        },
-        {
-          "id": "63a6cecf2964a7488f5250af",
-          "index": 3,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -72029,13 +71966,6 @@
           "traderId": "5a7c2eca46aef81a7ca2145d",
           "type": "AssortmentUnlock",
           "unknown": true
-        },
-        {
-          "id": "63a6ced40aa9fb29da61c532",
-          "index": 2,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.01"
         }
       ]
     },
@@ -80280,21 +80210,7 @@
     "rewards": {
       "Fail": [],
       "Started": [],
-      "Success": [
-        {
-          "id": "64f1d95abf4c727e9c7bdb9d",
-          "index": 0,
-          "type": "Experience",
-          "value": 100000
-        },
-        {
-          "id": "64f8ceeca9c59f365c4eaee8",
-          "index": 1,
-          "target": "638f541a29ffd1183d187f57",
-          "type": "TraderStanding",
-          "value": "0.05"
-        }
-      ]
+      "Success": []
     },
     "secretQuest": false,
     "side": "Pmc",
