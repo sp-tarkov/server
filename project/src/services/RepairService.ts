@@ -442,7 +442,7 @@ export class RepairService
 
         if (this.shouldBuffItem(repairDetails, pmcData))
         {
-            if (this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [BaseClasses.ARMOR, BaseClasses.VEST]))
+            if (this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [BaseClasses.ARMOR, BaseClasses.VEST, BaseClasses.HEADWEAR])) //added Headwear class for helmet enhancments
             {
                 const armorConfig = this.repairConfig.repairKit.armor;
                 this.addBuff(armorConfig, repairDetails.repairedItem);
@@ -542,6 +542,28 @@ export class RepairService
     protected getItemSkillType(itemTemplate: ITemplateItem): SkillTypes
     {
         if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.ARMOR))
+        {
+            if (itemTemplate._props.ArmorType === "Light")
+            {
+                return SkillTypes.LIGHT_VESTS;
+            }
+            else if (itemTemplate._props.ArmorType === "Heavy")
+            {
+                return SkillTypes.HEAVY_VESTS;
+            }
+        }
+        if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.VEST)) // For armored rigs to be allowed enhancments
+        {
+            if (itemTemplate._props.ArmorType === "Light")
+            {
+                return SkillTypes.LIGHT_VESTS;
+            }
+            else if (itemTemplate._props.ArmorType === "Heavy")
+            {
+                return SkillTypes.HEAVY_VESTS;
+            }
+        }
+        if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.HEADWEAR)) // For helmets to be allowed enhancments
         {
             if (itemTemplate._props.ArmorType === "Light")
             {
