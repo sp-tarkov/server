@@ -80,7 +80,6 @@ export class TradeHelper
                 const offerWithItem = allOffers.find((x) => x._id === buyRequestData.item_id);
                 const itemPurchased = offerWithItem.items[0];
     
-                
                 // Ensure purchase does not exceed trader item limit
                 const assortHasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
                 if (assortHasBuyRestrictions)
