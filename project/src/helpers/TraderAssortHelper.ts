@@ -86,6 +86,13 @@ export class TraderAssortHelper
         // Append nextResupply value to assorts so client knows when refresh is occuring
         trader.assort.nextResupply = trader.base.nextResupply;
 
+        // Resetting the restriction count to zero ensures accurate buy restrictions, preventing potential issues when purchases were made with a different account in a prior session.
+        trader.assort.items.forEach(item => {
+            if (item.upd?.BuyRestrictionCurrent !== undefined) {
+                item.upd.BuyRestrictionCurrent = 0;
+            }
+        });
+
         // Adjust displayed assort counts based on values stored in profile
         const assortPurchasesfromTrader = this.traderPurchasePersisterService.getProfileTraderPurchases(
             sessionId,

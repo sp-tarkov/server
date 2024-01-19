@@ -302,6 +302,18 @@ export class TraderHelper
     }
 
     /**
+     * Retrieves the purchase count of a specific item made by the player from a given trader within a restock period.
+     * @param sessionID Session id
+     * @param traderId Trader to look up
+     * @param assortId Id of assort to find
+     * @returns The count of purchases made by the player for the specified item, within the trader's restock period.
+     */
+    public getTraderPurchasesFromPlayerForItem (sessionID: string, traderId: string, assortId: string) {
+        const profile = this.profileHelper.getFullProfile(sessionID);
+        return profile.traderPurchases?.[traderId]?.[assortId]?.count ?? 0;
+    }
+
+    /**
      * Store the purchase of an assort from a trader in the player profile
      * @param sessionID Session id
      * @param newPurchaseDetails New item assort id + count

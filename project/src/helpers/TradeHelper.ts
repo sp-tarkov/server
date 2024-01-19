@@ -80,10 +80,13 @@ export class TradeHelper
                 const offerWithItem = allOffers.find((x) => x._id === buyRequestData.item_id);
                 const itemPurchased = offerWithItem.items[0];
     
+                
                 // Ensure purchase does not exceed trader item limit
                 const assortHasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
                 if (assortHasBuyRestrictions)
                 {
+                    // Retrieve the latest player-specific purchase count and update the current item's purchase restriction. 
+                    itemPurchased.upd.BuyRestrictionCurrent = this.traderHelper.getTraderPurchasesFromPlayerForItem(sessionID, buyRequestData.tid, buyRequestData.item_id);
                     this.checkPurchaseIsWithinTraderItemLimit(itemPurchased, buyRequestData.item_id, buyCount);
                 }
     
@@ -153,6 +156,8 @@ export class TradeHelper
                 const assortHasBuyRestrictions = this.itemHelper.hasBuyRestrictions(itemPurchased);
                 if (assortHasBuyRestrictions)
                 {
+                    // Retrieve the latest player-specific purchase count and update the current item's purchase restriction. 
+                    itemPurchased.upd.BuyRestrictionCurrent = this.traderHelper.getTraderPurchasesFromPlayerForItem(sessionID, buyRequestData.tid, buyRequestData.item_id);
                     this.checkPurchaseIsWithinTraderItemLimit(itemPurchased, buyRequestData.item_id, buyCount);
                 }
 
