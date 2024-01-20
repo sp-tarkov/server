@@ -75,53 +75,13 @@ export class WeatherGenerator
         const deltaMSFromNow = currentDateMS - gameStartTimeStampMS;
         const acceleratedMS = deltaMSFromNow * (this.weatherConfig.acceleration);
 
-        // Match client side time calculations which start from connection time not current time
+        // Match client side time calculations which start from the current date + connection time, not current time
         const locationTime = new Date(gameStartTimeStampMS);
         locationTime.setFullYear(currentDate.getFullYear());
         locationTime.setMonth(currentDate.getMonth());
         locationTime.setDate(currentDate.getDate());
 
         const clientAcceleratedDate = new Date(locationTime.getTime() + acceleratedMS);
-
-        this.logger.info("Server Time Sync Values:");
-
-        const connectionTime = new Date(gameStartTimeStampMS);
-
-        let connectionDiff = deltaMSFromNow;
-        const connectionTimeH = Math.floor(connectionDiff / (1000 * 60 * 60));
-        connectionDiff -= connectionTimeH * (1000 * 60 * 60);
-        const connectionTimeM = Math.floor(connectionDiff / (1000 * 60));
-        connectionDiff -= connectionTimeM * (1000 * 60);
-        const connectionTimeS = Math.floor(connectionDiff / (1000));
-        connectionDiff -= connectionTimeS * (1000);
-
-        let acceleratedDiff = acceleratedMS;
-        const acceleratedTimeH = Math.floor(acceleratedDiff / (1000 * 60 * 60));
-        acceleratedDiff -= acceleratedTimeH * (1000 * 60 * 60);
-        const acceleratedTimeM = Math.floor(acceleratedDiff / (1000 * 60));
-        acceleratedDiff -= acceleratedTimeM * (1000 * 60);
-        const acceleratedTimeS = Math.floor(acceleratedDiff / (1000));
-        acceleratedDiff -= acceleratedTimeS * (1000);
-
-        this.logger.info(
-            "Now: " + currentDate.toDateString() + " "
-                + currentDate.toLocaleTimeString("en-US", { hour12: false })
-                + ", Connection Time: " + connectionTime.toDateString() + " "
-                + connectionTime.toLocaleTimeString("en-US", { hour12: false })
-                + ", Delta: " + connectionTimeH
-                + ":" + connectionTimeM + ":" + connectionTimeS.toString(),
-        );
-        this.logger.info(
-            "Today/Location Time: " + locationTime.toDateString() + " "
-                + locationTime.toLocaleTimeString("en-US", { hour12: false }) + ", Accelerated Delta: "
-                + acceleratedTimeH.toString() + ":"
-                + acceleratedTimeM.toString() + ":" + acceleratedTimeS.toString(),
-        );
-        this.logger.info(
-            "Accelerated Time:" + clientAcceleratedDate.toDateString() + " "
-                + clientAcceleratedDate.toLocaleTimeString("en-US", { hour12: false }) + ", "
-                + "Acceleration: " + this.weatherConfig.acceleration.toString(),
-        );
 
         return clientAcceleratedDate;
     }
