@@ -4,5 +4,8 @@
 	},
 	{
 		"serviceType": "PlayerTaxi"
+	},
+	{
+		"serviceType": "BtrBotCover"
 	}
 ]

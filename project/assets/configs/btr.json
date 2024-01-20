@@ -1,1 +1,9 @@
-{}
+{
+    "moveSpeed": 15,
+    "coverFireTime": 90,
+    "pointWaitTime": {
+        "min": 60,
+        "max": 90
+    },
+    "taxiWaitTime": 15
+}
