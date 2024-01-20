@@ -71,8 +71,7 @@ export class WeatherGenerator
             .getValue<number>();
 
         // Get delta between now and when client connected to server in milliseconds
-        const currentDateMS = currentDate.getTime();
-        const deltaMSFromNow = currentDateMS - gameStartTimeStampMS;
+        const deltaMSFromNow = currentDate.getTime() - gameStartTimeStampMS;
         const acceleratedMS = deltaMSFromNow * (this.weatherConfig.acceleration);
 
         // Match client side time calculations which start from the current date + connection time, not current time
