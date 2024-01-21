@@ -38,7 +38,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class MatchController
 {
     protected matchConfig: IMatchConfig;
-    protected inraidConfig: IInRaidConfig;
+    protected inRaidConfig: IInRaidConfig;
     protected traderConfig: ITraderConfig;
     protected pmcConfig: IPmcConfig;
 
@@ -61,7 +61,7 @@ export class MatchController
     )
     {
         this.matchConfig = this.configServer.getConfig(ConfigTypes.MATCH);
-        this.inraidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
+        this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
@@ -213,7 +213,7 @@ export class MatchController
             return false;
         }
 
-        return (this.inraidConfig.coopExtracts.includes(extractName.trim()));
+        return (this.inRaidConfig.coopExtracts.includes(extractName.trim()));
     }
 
     protected sendCoopTakenFenceMessage(sessionId: string): void
@@ -269,7 +269,7 @@ export class MatchController
         // Get new fence standing value
         const newFenceStanding = this.getFenceStandingAfterExtract(
             pmcData,
-            this.inraidConfig.coopExtractBaseStandingGain,
+            this.inRaidConfig.coopExtractBaseStandingGain,
             pmcData.CoopExtractCounts[extractName],
         );
         const fenceId: string = Traders.FENCE;
@@ -298,7 +298,7 @@ export class MatchController
             return true;
         }
 
-        return this.inraidConfig.carExtracts.includes(extractName.trim());
+        return this.inRaidConfig.carExtracts.includes(extractName.trim());
     }
 
     /**
@@ -322,7 +322,7 @@ export class MatchController
         // Simplified for now, no real reason to do the whole (unconfirmed) extra 0.01 standing per day regeneration mechanic
         const newFenceStanding = this.getFenceStandingAfterExtract(
             pmcData,
-            this.inraidConfig.carExtractBaseStandingGain,
+            this.inRaidConfig.carExtractBaseStandingGain,
             pmcData.CarExtractCounts[extractName],
         );
         const fenceId: string = Traders.FENCE;

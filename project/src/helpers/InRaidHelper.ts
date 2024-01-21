@@ -22,6 +22,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { ProfileHelper } from "./ProfileHelper";
 
 @injectable()
@@ -44,6 +45,7 @@ export class InRaidHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RandomUtil") protected randomUtil: RandomUtil
     )
     {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
@@ -124,7 +126,15 @@ export class InRaidHelper
         }
 
         // PMCs - get by bear/usec
-        return botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
+        let pmcStandingForKill = botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
+        const pmcKillProbabilityForScavGain = this.inRaidConfig.pmcKillProbabilityForScavGain;
+
+        if(this.randomUtil.rollForChanceProbability(pmcKillProbabilityForScavGain)) 
+        {
+            pmcStandingForKill += this.inRaidConfig.scavExtractGain
+        }
+
+        return pmcStandingForKill;
     }
 
     /**

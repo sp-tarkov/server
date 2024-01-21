@@ -46,7 +46,7 @@ export class InraidController
 {
     protected airdropConfig: IAirdropConfig;
     protected btrConfig: IBTRConfig;
-    protected inraidConfig: IInRaidConfig;
+    protected inRaidConfig: IInRaidConfig;
     protected traderConfig: ITraderConfig;
 
     constructor(
@@ -74,7 +74,7 @@ export class InraidController
     {
         this.airdropConfig = this.configServer.getConfig(ConfigTypes.AIRDROP);
         this.btrConfig = this.configServer.getConfig(ConfigTypes.BTR);
-        this.inraidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
+        this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
@@ -100,7 +100,7 @@ export class InraidController
     {
         this.logger.debug(`Raid outcome: ${offraidData.exit}`);
 
-        if (!this.inraidConfig.save.loot)
+        if (!this.inRaidConfig.save.loot)
         {
             return;
         }
@@ -486,7 +486,7 @@ export class InraidController
         // Successful extract with scav adds 0.01 standing
         if (offraidData.exit === PlayerRaidEndState.SURVIVED)
         {
-            fenceStanding += this.inraidConfig.scavExtractGain;
+            fenceStanding += this.inRaidConfig.scavExtractGain;
         }
 
         // Make standing changes to pmc profile
@@ -502,7 +502,7 @@ export class InraidController
      */
     public getInraidConfig(): IInRaidConfig
     {
-        return this.inraidConfig;
+        return this.inRaidConfig;
     }
 
     /**

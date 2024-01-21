@@ -472,4 +472,21 @@ export class RandomUtil
 
         return array;
     }
+
+    /**
+     * Rolls for a probability based on chance
+     * @param number Probability Chance as float (0-1)
+     * @returns If roll succeed or not
+     * @example
+     * rollForChanceProbability(0.25); // returns true 25% probability
+     */
+    public rollForChanceProbability(probabilityChance: number): boolean
+    {
+        const maxRoll = 9999;
+
+        // Roll a number between 0 and 1
+        const rolledChance = this.getInt(0, maxRoll) / 10000;
+        
+        return rolledChance <= probabilityChance;
+    }
 }

@@ -35,5 +35,6 @@
     "carExtractBaseStandingGain": 0.4,
     "coopExtractBaseStandingGain": 0.25,
     "scavExtractGain": 0.01,
+    "pmcKillProbabilityForScavGain": 0.2,
     "keepFiRSecureContainerOnDeath": false
 }
