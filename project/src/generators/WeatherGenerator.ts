@@ -17,6 +17,10 @@ export class WeatherGenerator
 {
     protected weatherConfig: IWeatherConfig;
 
+    // Note: If this value gets save/load support, raid time could be tracked across server restarts
+    // Currently it will set the In Raid time to your current real time on server launch
+    private serverStartTimestampMS = Date.now();
+
     constructor(
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("WinstonLogger") protected logger: ILogger,
@@ -67,23 +71,9 @@ export class WeatherGenerator
      */
     public getInRaidTime(currentDate: Date): Date
     {
-        // Get timestamp of when client conneted to server
-        const gameStartTimeStampMS = this.applicationContext.getLatestValue(ContextVariableType.CLIENT_START_TIMESTAMP)
-            .getValue<number>();
-
-        // Get delta between now and when client connected to server in milliseconds
-        const deltaMSFromNow = currentDate.getTime() - gameStartTimeStampMS;
-        const acceleratedMS = deltaMSFromNow * (this.weatherConfig.acceleration);
-
-        // Match client side time calculations which start from the current date + connection time, not current time
-        const locationTime = new Date(gameStartTimeStampMS);
-        locationTime.setFullYear(currentDate.getFullYear());
-        locationTime.setMonth(currentDate.getMonth());
-        locationTime.setDate(currentDate.getDate());
-
-        const clientAcceleratedDate = new Date(locationTime.getTime() + acceleratedMS);
-
-        return clientAcceleratedDate;
+        const timeSinceServerStartMS = currentDate.getTime() - this.serverStartTimestampMS;
+        const acceleratedMS = timeSinceServerStartMS * (this.weatherConfig.acceleration);
+        return new Date(this.serverStartTimestampMS + acceleratedMS);
     }
 
     /**
