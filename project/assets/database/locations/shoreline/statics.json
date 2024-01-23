@@ -1,991 +1,1452 @@
 {
-  "containersGroups": {
-    "ToolBox_N13_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N10_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N10_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N48_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N29_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N21_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N25_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_mid_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N30_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N45_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadCase_N2_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N3_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N14_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N6_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N5_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N19_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N5_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N53_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N17_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadCase_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N12_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N26_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N11_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N40_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N15_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N23_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N41_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N12_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N18_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N51_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N12_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N37_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N30_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N20_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N18_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N23_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N34_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_varios_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N11_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_BUG_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N8_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N22_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N8_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N33_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N7_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N11_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N39_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N9_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N34_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N8_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N6_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N27_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N31_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N57_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N12_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N20_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N10_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N33_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N15_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_varios_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N9_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_wood_N2_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N18_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N28_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N4_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N14_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N5_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N58_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N54_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N27_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N4_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N9_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N7_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N22_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N16_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N23_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N22_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N52_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N17_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N10_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N24_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N20_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N9_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N4_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N8_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N13_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N42_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N13_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N21_5_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N9_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N26_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N10_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N14_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N17_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_mid_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_Grenade_N6_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N22_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N6_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N16_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N50_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N20_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N43_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N5_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_wood_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N19_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N23_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N13_5_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N17_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N19_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadCase_N4_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N28_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N4_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N11_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N1_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N13_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N21_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N3_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N47_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N29_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N15_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N21_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N24_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N16_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N31_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N6_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N15_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N14_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N38_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N56_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N16_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N7_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N14_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N32_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N55_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N49_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N18_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N8_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N15_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N4_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N11_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N12_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N44_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N32_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N5_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Scontainer_ammo_wood_N3_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_varios_N3_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N59_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N16_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N2_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N36_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N7_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N4_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N25_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N35_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "bag_sport_lux_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "BagSport_N46_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "WeaponBox_N17_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N5_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadCase_N1_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "ToolBox_N6_2_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N19_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "MadBag_N2_3_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    },
-    "Plastic_suitcase_N7_4_shoreline": {
-      "minContainers": 0,
-      "maxContainers": 2
-    }
-  },
   "containers": {
-    "shoreline_DesignStuff_00155": {
+    "01160": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00079": {
+    "01162": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00235": {
+    "Lighthouse_SwampVillage_00070": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00236": {
+    "Lighthouse_SwampVillage_00082": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00234": {
+    "Lighthouse_WaterStation_00099": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00233": {
+    "Lootable_00000": {
+      "groupId": "jackets_extention"
+    },
+    "Lootable_00009": {
+      "groupId": "jackets_extention"
+    },
+    "container_Lighthouse_Loot_00019": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00117": {
+    "container_shoreline_DesignStuff_00000": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00044": {
+    "container_shoreline_DesignStuff_00001": {
+      "groupId": "jackets_extention"
+    },
+    "container_shoreline_DesignStuff_00002": {
+      "groupId": "jackets_extention"
+    },
+    "container_shoreline_DesignStuff_00003": {
+      "groupId": "jackets_extention"
+    },
+    "container_shoreline_DesignStuff_00004": {
+      "groupId": "bag_sport_mid_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00005": {
+      "groupId": "bag_sport_mid_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00006": {
+      "groupId": "bag_sport_mid_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00007": {
+      "groupId": "bag_sport_mid_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00008": {
+      "groupId": "bag_sport_varios_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00009": {
+      "groupId": "bag_sport_varios_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00010": {
+      "groupId": "bag_sport_varios_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00011": {
+      "groupId": "bag_sport_varios_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00012": {
+      "groupId": "bag_sport_varios_N3_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00013": {
+      "groupId": "bag_sport_varios_N3_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00014": {
+      "groupId": "bag_sport_varios_N3_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00015": {
+      "groupId": "Plastic_suitcase_N1_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00016": {
+      "groupId": "Plastic_suitcase_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00017": {
+      "groupId": "vill_boxes"
+    },
+    "container_shoreline_DesignStuff_00018": {
+      "groupId": "Plastic_suitcase_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00019": {
+      "groupId": "Plastic_suitcase_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00020": {
+      "groupId": "Plastic_suitcase_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00021": {
+      "groupId": "Plastic_suitcase_N5_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00022": {
+      "groupId": "Plastic_suitcase_N5_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00023": {
+      "groupId": "Plastic_suitcase_N5_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00024": {
+      "groupId": "Plastic_suitcase_N6_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00025": {
+      "groupId": "Plastic_suitcase_N6_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00026": {
+      "groupId": "Plastic_suitcase_N6_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00027": {
+      "groupId": "Plastic_suitcase_N7_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00028": {
+      "groupId": "Plastic_suitcase_N7_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00029": {
+      "groupId": "Plastic_suitcase_N7_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00030": {
+      "groupId": "Plastic_suitcase_N8_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00031": {
+      "groupId": "Plastic_suitcase_N8_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00032": {
+      "groupId": "Plastic_suitcase_N9_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00033": {
+      "groupId": "Plastic_suitcase_N10_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00034": {
+      "groupId": "Plastic_suitcase_N11_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00035": {
+      "groupId": "Plastic_suitcase_N12_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00036": {
+      "groupId": "Plastic_suitcase_N13_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00037": {
+      "groupId": "Plastic_suitcase_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00038": {
+      "groupId": "Plastic_suitcase_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00039": {
+      "groupId": "Plastic_suitcase_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00040": {
+      "groupId": "Plastic_suitcase_N15_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00041": {
+      "groupId": "Plastic_suitcase_N16_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00042": {
+      "groupId": "Plastic_suitcase_N16_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00043": {
+      "groupId": "Plastic_suitcase_N17_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00044": {
+      "groupId": "Plastic_suitcase_N17_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00045": {
+      "groupId": "Plastic_suitcase_N18_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00046": {
+      "groupId": "Plastic_suitcase_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00047": {
+      "groupId": "Plastic_suitcase_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00048": {
+      "groupId": "Plastic_suitcase_N20_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00049": {
+      "groupId": "Plastic_suitcase_N20_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00050": {
+      "groupId": "Plastic_suitcase_N21_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00051": {
+      "groupId": "Plastic_suitcase_N21_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00052": {
+      "groupId": "Plastic_suitcase_N22_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00053": {
+      "groupId": "Plastic_suitcase_N23_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00054": {
+      "groupId": "Scontainer_ammo_Grenade_N1_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00055": {
+      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00056": {
+      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00057": {
+      "groupId": "Scontainer_ammo_Grenade_N3_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00058": {
+      "groupId": "Scontainer_ammo_Grenade_N3_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00059": {
+      "groupId": "Scontainer_ammo_Grenade_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00060": {
+      "groupId": "Scontainer_ammo_Grenade_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00061": {
+      "groupId": "Scontainer_ammo_Grenade_N5_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00062": {
+      "groupId": "Scontainer_ammo_Grenade_N6_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00063": {
+      "groupId": "Scontainer_ammo_wood_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00064": {
+      "groupId": "Scontainer_ammo_wood_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00065": {
+      "groupId": "Scontainer_ammo_wood_N2_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00066": {
+      "groupId": "Scontainer_ammo_wood_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00067": {
+      "groupId": "BagSport_N1_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00068": {
+      "groupId": "BagSport_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00069": {
+      "groupId": "BagSport_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00070": {
+      "groupId": "BagSport_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00071": {
+      "groupId": "BagSport_N4_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00072": {
+      "groupId": "BagSport_N5_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00073": {
+      "groupId": "BagSport_N6_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00074": {
+      "groupId": "BagSport_N7_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00075": {
+      "groupId": "BagSport_N8_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00076": {
+      "groupId": "BagSport_N9_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00077": {
+      "groupId": "BagSport_N9_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00078": {
+      "groupId": "BagSport_N9_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00079": {
+      "groupId": "BagSport_N10_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00080": {
+      "groupId": "BagSport_N10_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00081": {
+      "groupId": "BagSport_N10_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00082": {
+      "groupId": "BagSport_N11_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00083": {
+      "groupId": "BagSport_N11_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00084": {
+      "groupId": "BagSport_N12_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00085": {
+      "groupId": "BagSport_N12_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00086": {
+      "groupId": "BagSport_N13_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00087": {
+      "groupId": "BagSport_N13_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00088": {
+      "groupId": "BagSport_N13_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00089": {
+      "groupId": "BagSport_N13_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00090": {
+      "groupId": "BagSport_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00091": {
+      "groupId": "BagSport_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00092": {
+      "groupId": "BagSport_N14_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00093": {
+      "groupId": "BagSport_N15_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00094": {
+      "groupId": "BagSport_N15_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00095": {
+      "groupId": "BagSport_N15_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00096": {
+      "groupId": "BagSport_N16_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00097": {
+      "groupId": "BagSport_N16_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00098": {
+      "groupId": "BagSport_N16_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00099": {
+      "groupId": "BagSport_N17_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00100": {
+      "groupId": "BagSport_N18_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00101": {
+      "groupId": "BagSport_N18_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00102": {
+      "groupId": "BagSport_N18_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00103": {
+      "groupId": "BagSport_N19_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00104": {
+      "groupId": "BagSport_N19_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00105": {
+      "groupId": "BagSport_N19_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00106": {
+      "groupId": "BagSport_N20_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00107": {
+      "groupId": "BagSport_N20_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00108": {
+      "groupId": "BagSport_N20_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00109": {
+      "groupId": "BagSport_N21_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00110": {
+      "groupId": "BagSport_N21_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00111": {
+      "groupId": "BagSport_N21_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00112": {
+      "groupId": "BagSport_N21_5_shoreline"
+    },
+    "container_shoreline_DesignStuff_00113": {
+      "groupId": "BagSport_N22_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00114": {
+      "groupId": "BagSport_N22_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00115": {
+      "groupId": "BagSport_N23_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00116": {
+      "groupId": "BagSport_N23_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00117": {
+      "groupId": "BagSport_N23_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00118": {
+      "groupId": "BagSport_N24_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00119": {
+      "groupId": "BagSport_N24_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00120": {
+      "groupId": "BagSport_N25_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00121": {
+      "groupId": "BagSport_N25_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00122": {
+      "groupId": "BagSport_N26_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00123": {
+      "groupId": "BagSport_N26_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00124": {
+      "groupId": "BagSport_N27_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00125": {
+      "groupId": "BagSport_N27_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00126": {
+      "groupId": "BagSport_N28_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00127": {
+      "groupId": "BagSport_N29_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00128": {
+      "groupId": "BagSport_N30_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00129": {
+      "groupId": "BagSport_N31_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00130": {
+      "groupId": "BagSport_N31_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00131": {
+      "groupId": "BagSport_N32_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00132": {
+      "groupId": "BagSport_N32_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00133": {
+      "groupId": "BagSport_N33_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00134": {
+      "groupId": "BagSport_N33_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00135": {
+      "groupId": "BagSport_N33_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00136": {
+      "groupId": "BagSport_N34_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00137": {
+      "groupId": "BagSport_N34_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00138": {
+      "groupId": "BagSport_N34_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00139": {
+      "groupId": "BagSport_N35_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00140": {
+      "groupId": "BagSport_N35_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00141": {
+      "groupId": "BagSport_N36_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00142": {
+      "groupId": "BagSport_N37_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00143": {
+      "groupId": "BagSport_N38_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00144": {
+      "groupId": "BagSport_N38_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00145": {
+      "groupId": "BagSport_N39_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00146": {
+      "groupId": "BagSport_N39_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00147": {
+      "groupId": "BagSport_N40_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00148": {
+      "groupId": "BagSport_N40_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00149": {
+      "groupId": "BagSport_N40_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00150": {
+      "groupId": "BagSport_N41_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00151": {
+      "groupId": "BagSport_N41_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00152": {
+      "groupId": "BagSport_N42_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00153": {
+      "groupId": "BagSport_N42_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00154": {
+      "groupId": "BagSport_N43_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00155": {
+      "groupId": "BagSport_N43_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00156": {
+      "groupId": "BagSport_N44_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00157": {
+      "groupId": "BagSport_N45_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00158": {
+      "groupId": "BagSport_N45_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00159": {
+      "groupId": "BagSport_N46_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00160": {
+      "groupId": "BagSport_N46_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00161": {
+      "groupId": "BagSport_N46_4_shoreline"
+    },
+    "container_shoreline_DesignStuff_00162": {
+      "groupId": "BagSport_N47_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00163": {
+      "groupId": "BagSport_N47_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00164": {
+      "groupId": "BagSport_N48_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00165": {
+      "groupId": "BagSport_N48_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00166": {
+      "groupId": "BagSport_N49_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00167": {
+      "groupId": "BagSport_N49_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00168": {
+      "groupId": "BagSport_N50_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00169": {
+      "groupId": "BagSport_N51_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00170": {
+      "groupId": "BagSport_N52_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00171": {
+      "groupId": "BagSport_N53_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00172": {
+      "groupId": "BagSport_N54_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00173": {
+      "groupId": "BagSport_N55_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00174": {
+      "groupId": "BagSport_N55_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00175": {
+      "groupId": "BagSport_N56_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00176": {
+      "groupId": "BagSport_N56_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00177": {
+      "groupId": "BagSport_N57_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00178": {
+      "groupId": "BagSport_N57_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00179": {
+      "groupId": "BagSport_N58_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00180": {
+      "groupId": "BagSport_N59_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00181": {
+      "groupId": "BagSport_N59_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00182": {
+      "groupId": "MadBag_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00183": {
+      "groupId": "MadBag_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00184": {
+      "groupId": "MadBag_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00185": {
+      "groupId": "MadBag_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00186": {
+      "groupId": "MadBag_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00187": {
+      "groupId": "MadBag_N4_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00188": {
+      "groupId": "MadBag_N5_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00189": {
+      "groupId": "MadBag_N6_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00190": {
+      "groupId": "MadBag_N7_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00191": {
+      "groupId": "MadBag_N8_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00192": {
+      "groupId": "MadBag_N9_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00193": {
+      "groupId": "MadBag_N9_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00194": {
+      "groupId": "MadBag_N10_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00195": {
+      "groupId": "MadBag_N11_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00196": {
+      "groupId": "MadBag_N11_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00197": {
+      "groupId": "MadBag_N12_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00198": {
+      "groupId": "MadBag_N13_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00199": {
+      "groupId": "MadBag_N14_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00200": {
+      "groupId": "MadBag_N15_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00201": {
+      "groupId": "MadBag_N15_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00202": {
+      "groupId": "MadBag_N16_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00203": {
+      "groupId": "MadBag_N16_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00204": {
+      "groupId": "MadBag_N17_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00205": {
+      "groupId": "MadBag_N18_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00206": {
+      "groupId": "MadBag_N18_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00207": {
+      "groupId": "MadBag_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00208": {
+      "groupId": "MadBag_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00209": {
+      "groupId": "MadBag_N20_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00210": {
+      "groupId": "MadBag_N21_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00211": {
+      "groupId": "MadBag_N22_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00212": {
+      "groupId": "MadBag_N23_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00213": {
+      "groupId": "MadCase_N1_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00214": {
+      "groupId": "MadCase_N2_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00215": {
+      "groupId": "MadCase_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00216": {
+      "groupId": "MadCase_N4_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00217": {
+      "groupId": "ToolBox_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00218": {
+      "groupId": "ToolBox_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00219": {
+      "groupId": "ToolBox_N2_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00220": {
+      "groupId": "ToolBox_N3_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00221": {
+      "groupId": "ToolBox_N4_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00222": {
+      "groupId": "ToolBox_N5_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00223": {
+      "groupId": "ToolBox_N6_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00224": {
+      "groupId": "ToolBox_N7_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00225": {
+      "groupId": "ToolBox_N8_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00226": {
+      "groupId": "ToolBox_N9_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00227": {
+      "groupId": "ToolBox_N10_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00228": {
+      "groupId": "ToolBox_N11_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00229": {
+      "groupId": "ToolBox_N12_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00230": {
+      "groupId": "ToolBox_N13_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00231": {
+      "groupId": "ToolBox_N14_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00232": {
+      "groupId": "ToolBox_N15_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00233": {
+      "groupId": "ToolBox_N16_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00234": {
+      "groupId": "ToolBox_N17_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00235": {
+      "groupId": "WeaponBox_N1_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00236": {
+      "groupId": "WeaponBox_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00237": {
+      "groupId": "WeaponBox_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00238": {
+      "groupId": "WeaponBox_N3_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00239": {
+      "groupId": "WeaponBox_N3_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00240": {
+      "groupId": "WeaponBox_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00241": {
+      "groupId": "WeaponBox_N4_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00242": {
+      "groupId": "WeaponBox_N5_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00243": {
+      "groupId": "WeaponBox_N6_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00244": {
+      "groupId": "WeaponBox_N7_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00245": {
+      "groupId": "WeaponBox_N8_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00246": {
+      "groupId": "WeaponBox_N9_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00247": {
+      "groupId": "WeaponBox_N10_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00248": {
+      "groupId": "WeaponBox_N11_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00249": {
+      "groupId": "WeaponBox_N12_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00250": {
+      "groupId": "WeaponBox_N13_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00251": {
+      "groupId": "WeaponBox_N14_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00252": {
+      "groupId": "WeaponBox_N14_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00253": {
+      "groupId": "WeaponBox_N15_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00254": {
+      "groupId": "WeaponBox_N15_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00255": {
+      "groupId": "WeaponBox_N16_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00256": {
+      "groupId": "WeaponBox_N17_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00257": {
+      "groupId": "WeaponBox_N17_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00258": {
+      "groupId": "WeaponBox_N18_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00259": {
+      "groupId": "WeaponBox_N18_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00260": {
+      "groupId": "WeaponBox_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00261": {
+      "groupId": "WeaponBox_N19_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00262": {
+      "groupId": "WeaponBox_N20_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00263": {
+      "groupId": "WeaponBox_N20_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00264": {
+      "groupId": "WeaponBox_N21_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00265": {
+      "groupId": "WeaponBox_N21_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00266": {
       "groupId": "WeaponBox_N22_2_shoreline"
     },
     "container_shoreline_DesignStuff_00267": {
       "groupId": "WeaponBox_N23_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00252": {
-      "groupId": "WeaponBox_N14_3_shoreline"
-    },
-    "shoreline_DesignStuff_00064": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00135": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00164": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00163": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00165": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00166": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00069": {
-      "groupId": "WeaponBox_N13_2_shoreline"
-    },
-    "shoreline_DesignStuff_00045": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00087": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00084": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00172": {
-      "groupId": "WeaponBox_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00237": {
+    "container_shoreline_DesignStuff_00268": {
       "groupId": "WeaponBox_N23_3_shoreline"
     },
-    "shoreline_DesignStuff_00309": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00001": {
-      "groupId": "bag_BUG_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00238": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00239": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00241": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00240": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00266": {
-      "groupId": "bag_BUG_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00083": {
+    "container_shoreline_DesignStuff_00269": {
       "groupId": "WeaponBox_N24_2_shoreline"
     },
-    "container_shoreline_DesignStuff_00003": {
+    "container_shoreline_DesignStuff_00270": {
+      "groupId": "WeaponBox_N25_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00271": {
+      "groupId": "WeaponBox_N26_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00272": {
+      "groupId": "WeaponBox_N27_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00273": {
+      "groupId": "WeaponBox_N28_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00274": {
+      "groupId": "WeaponBox_N29_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00275": {
+      "groupId": "WeaponBox_N30_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00276": {
+      "groupId": "WeaponBox_N31_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00277": {
+      "groupId": "WeaponBox_N32_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00278": {
+      "groupId": "WeaponBox_N33_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00279": {
+      "groupId": "WeaponBox_N34_2_shoreline"
+    },
+    "container_shoreline_DesignStuff_00280": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00281": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00282": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00283": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00284": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00285": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00286": {
+      "groupId": ""
+    },
+    "container_shoreline_DesignStuff_00287": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00288": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00289": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00290": {
+      "groupId": "Plastic_suitcase_64_open_P_forest"
+    },
+    "container_shoreline_DesignStuff_00291": {
+      "groupId": "plastic_suitc_forest"
+    },
+    "container_shoreline_DesignStuff_00292": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00293": {
+      "groupId": "plastic_suitc_forest"
+    },
+    "container_shoreline_DesignStuff_00294": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00295": {
+      "groupId": "plastic_suitc_forest"
+    },
+    "container_shoreline_DesignStuff_00296": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00297": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00308": {
+      "groupId": "ToolBox_lootable_forest"
+    },
+    "container_shoreline_DesignStuff_00626": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00627": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00628": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00629": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00630": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00631": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00632": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00633": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00634": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00635": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00636": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00637": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00638": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00639": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00640": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00641": {
+      "groupId": "bag_BUG_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00642": {
+      "groupId": "bag_BUG_N1_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00643": {
       "groupId": "bag_sport_lux_N1_2_shoreline"
     },
-    "shoreline_DesignStuff_00126": {
+    "container_shoreline_DesignStuff_00644": {
+      "groupId": "Plastic_suitcase_N2_3_shoreline"
+    },
+    "container_shoreline_DesignStuff_00646": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00647": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00648": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00649": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00650": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00651": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00652": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00653": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "container_shoreline_DesignStuff_00654": {
+      "groupId": "civilian_plastic1"
+    },
+    "container_shoreline_DesignStuff_00655": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00656": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00657": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00658": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00659": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00660": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00661": {
+      "groupId": "ToolBox_N18_4"
+    },
+    "container_shoreline_DesignStuff_00662": {
+      "groupId": "ToolBox_N18_4"
+    },
+    "container_shoreline_DesignStuff_00663": {
+      "groupId": "Plastic_suitcase_N27_4"
+    },
+    "container_shoreline_DesignStuff_00664": {
+      "groupId": "Plastic_suitcase_N27_4"
+    },
+    "container_shoreline_DesignStuff_00665": {
+      "groupId": "Scontainer_ammo_Grenade_N7_4"
+    },
+    "container_shoreline_DesignStuff_00666": {
+      "groupId": "Scontainer_ammo_Grenade_N7_4"
+    },
+    "container_shoreline_DesignStuff_00667": {
+      "groupId": "Scontainer_ammo_wood_N4_4"
+    },
+    "container_shoreline_DesignStuff_00668": {
+      "groupId": "Scontainer_ammo_wood_N4_4"
+    },
+    "container_shoreline_DesignStuff_00669": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00670": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00671": {
+      "groupId": "civilian_plastic1"
+    },
+    "container_shoreline_DesignStuff_00672": {
+      "groupId": "civilian_plastic1"
+    },
+    "container_shoreline_DesignStuff_00673": {
+      "groupId": "civilian_plastic1"
+    },
+    "container_shoreline_DesignStuff_00674": {
+      "groupId": "vill_boxes"
+    },
+    "container_shoreline_DesignStuff_00675": {
+      "groupId": "vill_boxes"
+    },
+    "container_shoreline_DesignStuff_00676": {
+      "groupId": "vill_boxes"
+    },
+    "container_shoreline_DesignStuff_00677": {
+      "groupId": "Plastic_suitcase_N27_4"
+    },
+    "container_shoreline_DesignStuff_00678": {
+      "groupId": "Plastic_suitcase_N27_4"
+    },
+    "container_shoreline_DesignStuff_00679": {
+      "groupId": "ToolBox_N18_4"
+    },
+    "container_shoreline_DesignStuff_00680": {
+      "groupId": "Plastic_suitcase_N26_9"
+    },
+    "container_shoreline_DesignStuff_00681": {
+      "groupId": "ToolBox_N18_4"
+    },
+    "container_shoreline_DesignStuff_00682": {
+      "groupId": "Scontainer_ammo_Grenade_N7_4"
+    },
+    "container_shoreline_DesignStuff_00683": {
+      "groupId": "Scontainer_ammo_Grenade_N7_4"
+    },
+    "container_shoreline_DesignStuff_00684": {
+      "groupId": "Scontainer_ammo_wood_N4_4"
+    },
+    "container_shoreline_DesignStuff_00685": {
+      "groupId": "Scontainer_ammo_wood_N4_4"
+    },
+    "shoreline_DesignStuff_00000": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00001": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00002": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00003": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00004": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00005": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00006": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00007": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00008": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00009": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00010": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00011": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00012": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00013": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00014": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00015": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00016": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00017": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00018": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00019": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00020": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00021": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00022": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00023": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00024": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00025": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00026": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00027": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00028": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00029": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00030": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00031": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00032": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00033": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00034": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00035": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00036": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00037": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00038": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00039": {
+      "groupId": "Jaeger_Stash_rnd_s"
+    },
+    "shoreline_DesignStuff_00040": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00127": {
-      "groupId": ""
+    "shoreline_DesignStuff_00041": {
+      "groupId": "WeaponBox_N5_2_shoreline"
     },
-    "shoreline_DesignStuff_00129": {
-      "groupId": ""
+    "shoreline_DesignStuff_00042": {
+      "groupId": "WeaponBox_N6_2_shoreline"
     },
-    "shoreline_DesignStuff_00128": {
-      "groupId": ""
+    "shoreline_DesignStuff_00043": {
+      "groupId": "WeaponBox_N1_2_shoreline"
     },
-    "shoreline_DesignStuff_00136": {
-      "groupId": ""
+    "shoreline_DesignStuff_00044": {
+      "groupId": "WeaponBox_N22_2_shoreline"
     },
-    "shoreline_DesignStuff_00090": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00182": {
-      "groupId": "WeaponBox_N18_3_shoreline"
-    },
-    "shoreline_DesignStuff_00089": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00082": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00169": {
+    "shoreline_DesignStuff_00045": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00048": {
       "groupId": "Scontainer_ammo_wood_N1_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00241": {
-      "groupId": "WeaponBox_N4_3_shoreline"
-    },
-    "shoreline_DesignStuff_00298": {
+    "shoreline_DesignStuff_00049": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00299": {
+    "shoreline_DesignStuff_00050": {
+      "groupId": "MadBag_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00051": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00297": {
+    "shoreline_DesignStuff_00052": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00296": {
-      "groupId": ""
+    "shoreline_DesignStuff_00053": {
+      "groupId": "WeaponBox_N27_2_shoreline"
     },
-    "shoreline_DesignStuff_00137": {
-      "groupId": ""
+    "shoreline_DesignStuff_00054": {
+      "groupId": "WeaponBox_N31_2_shoreline"
     },
-    "shoreline_DesignStuff_00043": {
-      "groupId": "WeaponBox_N1_2_shoreline"
+    "shoreline_DesignStuff_00055": {
+      "groupId": "WeaponBox_N32_2_shoreline"
     },
-    "container_shoreline_DesignStuff_00064": {
-      "groupId": "Scontainer_ammo_wood_N1_3_shoreline"
+    "shoreline_DesignStuff_00056": {
+      "groupId": "MadBag_N4_2_shoreline"
     },
-    "shoreline_DesignStuff_00067": {
-      "groupId": "WeaponBox_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00255": {
-      "groupId": "WeaponBox_N16_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00266": {
-      "groupId": "WeaponBox_N22_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00002": {
-      "groupId": "bag_BUG_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00232": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00095": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00222": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00257": {
-      "groupId": "WeaponBox_N17_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00004": {
-      "groupId": "bag_sport_mid_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00244": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00245": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00247": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00246": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00097": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00254": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00239": {
-      "groupId": "WeaponBox_N3_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00014": {
-      "groupId": "bag_sport_varios_N3_4_shoreline"
-    },
-    "shoreline_DesignStuff_00277": {
-      "groupId": "bag_sport_varios_N3_4_shoreline"
-    },
-    "shoreline_DesignStuff_00258": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00257": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00255": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00256": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00261": {
-      "groupId": "WeaponBox_N19_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00013": {
-      "groupId": "bag_sport_varios_N3_4_shoreline"
-    },
-    "shoreline_DesignStuff_00153": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00178": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00098": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00094": {
+    "shoreline_DesignStuff_00057": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00058": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00204": {
-      "groupId": "WeaponBox_N4_3_shoreline"
-    },
     "shoreline_DesignStuff_00059": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00145": {
-      "groupId": "WeaponBox_N17_3_shoreline"
+    "shoreline_DesignStuff_00060": {
+      "groupId": ""
     },
-    "container_shoreline_DesignStuff_00007": {
-      "groupId": "bag_sport_mid_N2_3_shoreline"
+    "shoreline_DesignStuff_00061": {
+      "groupId": ""
     },
-    "container_shoreline_DesignStuff_00012": {
-      "groupId": "bag_sport_varios_N3_4_shoreline"
+    "shoreline_DesignStuff_00062": {
+      "groupId": "ToolBox_N7_2_shoreline"
     },
-    "container_shoreline_DesignStuff_00242": {
-      "groupId": "WeaponBox_N5_2_shoreline"
+    "shoreline_DesignStuff_00063": {
+      "groupId": ""
     },
-    "shoreline_DesignStuff_00313": {
+    "shoreline_DesignStuff_00064": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00065": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00066": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00067": {
+      "groupId": "WeaponBox_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00068": {
+      "groupId": "Scontainer_ammo_wood_N2_2_shoreline"
+    },
+    "shoreline_DesignStuff_00069": {
+      "groupId": "WeaponBox_N13_2_shoreline"
+    },
+    "shoreline_DesignStuff_00070": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00071": {
+      "groupId": "WeaponBox_N34_2_shoreline"
+    },
+    "shoreline_DesignStuff_00072": {
+      "groupId": "WeaponBox_N28_2_shoreline"
+    },
+    "shoreline_DesignStuff_00073": {
+      "groupId": "WeaponBox_N33_2_shoreline"
+    },
+    "shoreline_DesignStuff_00074": {
+      "groupId": "Scontainer_ammo_wood_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00075": {
+      "groupId": "WeaponBox_N30_2_shoreline"
+    },
+    "shoreline_DesignStuff_00076": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00077": {
+      "groupId": "WeaponBox_N26_2_shoreline"
+    },
+    "shoreline_DesignStuff_00078": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00079": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00080": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00081": {
       "groupId": ""
     },
-    "container_shoreline_DesignStuff_00254": {
-      "groupId": "WeaponBox_N15_3_shoreline"
+    "shoreline_DesignStuff_00082": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00083": {
+      "groupId": "WeaponBox_N24_2_shoreline"
+    },
+    "shoreline_DesignStuff_00084": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00085": {
+      "groupId": "WeaponBox_N29_2_shoreline"
+    },
+    "shoreline_DesignStuff_00086": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00087": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00088": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00089": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00090": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00091": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00092": {
+      "groupId": "ToolBox_N8_2_shoreline"
+    },
+    "shoreline_DesignStuff_00093": {
+      "groupId": "ToolBox_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00094": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00095": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00096": {
+      "groupId": "WeaponBox_N12_2_shoreline"
+    },
+    "shoreline_DesignStuff_00097": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00098": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00099": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00100": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00101": {
+      "groupId": "ToolBox_N6_2_shoreline"
+    },
+    "shoreline_DesignStuff_00102": {
+      "groupId": ""
     },
     "shoreline_DesignStuff_00103": {
       "groupId": ""
     },
-    "container_shoreline_DesignStuff_00250": {
-      "groupId": "WeaponBox_N13_2_shoreline"
+    "shoreline_DesignStuff_00104": {
+      "groupId": "ToolBox_N1_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00249": {
-      "groupId": "WeaponBox_N12_2_shoreline"
-    },
-    "shoreline_DesignStuff_00304": {
-      "groupId": "bag_sport_varios_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00122": {
+    "shoreline_DesignStuff_00105": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00121": {
+    "shoreline_DesignStuff_00106": {
+      "groupId": "MadBag_N1_3_shoreline"
+    },
+    "shoreline_DesignStuff_00107": {
+      "groupId": "ToolBox_N9_2_shoreline"
+    },
+    "shoreline_DesignStuff_00108": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00109": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00110": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00111": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00112": {
+      "groupId": "WeaponBox_N25_2_shoreline"
+    },
+    "shoreline_DesignStuff_00113": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00114": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00115": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00116": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00117": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00118": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00119": {
@@ -994,142 +1455,40 @@
     "shoreline_DesignStuff_00120": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00099": {
+    "shoreline_DesignStuff_00121": {
       "groupId": ""
     },
-    "container_shoreline_DesignStuff_00248": {
-      "groupId": "WeaponBox_N11_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00244": {
-      "groupId": "WeaponBox_N7_2_shoreline"
-    },
-    "shoreline_DesignStuff_00278": {
-      "groupId": "bag_sport_mid_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00041": {
-      "groupId": "WeaponBox_N5_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00235": {
-      "groupId": "WeaponBox_N1_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00260": {
-      "groupId": "WeaponBox_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00300": {
-      "groupId": "bag_sport_mid_N1_3_shoreline"
+    "shoreline_DesignStuff_00122": {
+      "groupId": ""
     },
     "shoreline_DesignStuff_00123": {
       "groupId": "WeaponBox_N3_3_shoreline"
     },
-    "shoreline_DesignStuff_00108": {
+    "shoreline_DesignStuff_00124": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00042": {
-      "groupId": "WeaponBox_N6_2_shoreline"
-    },
-    "shoreline_DesignStuff_00152": {
+    "shoreline_DesignStuff_00125": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00061": {
+    "shoreline_DesignStuff_00126": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00186": {
+    "shoreline_DesignStuff_00127": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00187": {
+    "shoreline_DesignStuff_00128": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00189": {
+    "shoreline_DesignStuff_00129": {
       "groupId": ""
-    },
-    "shoreline_DesignStuff_00188": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00228": {
-      "groupId": "WeaponBox_N11_2_shoreline"
-    },
-    "shoreline_DesignStuff_00110": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00111": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00141": {
-      "groupId": "WeaponBox_N9_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00253": {
-      "groupId": "WeaponBox_N15_3_shoreline"
-    },
-    "shoreline_DesignStuff_00251": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00009": {
-      "groupId": "bag_sport_varios_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00191": {
-      "groupId": "WeaponBox_N10_2_shoreline"
     },
     "shoreline_DesignStuff_00130": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00202": {
-      "groupId": "WeaponBox_N7_2_shoreline"
-    },
-    "shoreline_DesignStuff_00086": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00068": {
-      "groupId": "Scontainer_ammo_wood_N2_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00240": {
-      "groupId": "WeaponBox_N4_3_shoreline"
-    },
-    "shoreline_DesignStuff_00248": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00193": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00194": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00196": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00195": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00251": {
-      "groupId": "WeaponBox_N14_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00063": {
-      "groupId": "Scontainer_ammo_wood_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00091": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00116": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00140": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00258": {
-      "groupId": "WeaponBox_N18_3_shoreline"
-    },
-    "shoreline_DesignStuff_00162": {
-      "groupId": "WeaponBox_N14_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00245": {
-      "groupId": "WeaponBox_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00070": {
+    "shoreline_DesignStuff_00131": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00132": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00131": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00133": {
@@ -1138,862 +1497,13 @@
     "shoreline_DesignStuff_00134": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00143": {
-      "groupId": "WeaponBox_N20_3_shoreline"
-    },
-    "shoreline_DesignStuff_00052": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00294": {
-      "groupId": "bag_sport_lux_N1_2_shoreline"
-    },
-    "shoreline_DesignStuff_00088": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00214": {
-      "groupId": "WeaponBox_N21_3_shoreline"
-    },
-    "shoreline_DesignStuff_00118": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00246": {
-      "groupId": "WeaponBox_N9_2_shoreline"
-    },
-    "shoreline_DesignStuff_00315": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00264": {
-      "groupId": "WeaponBox_N21_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00268": {
-      "groupId": "WeaponBox_N23_3_shoreline"
-    },
-    "shoreline_DesignStuff_00275": {
-      "groupId": "bag_sport_varios_N1_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00010": {
-      "groupId": "bag_sport_varios_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00238": {
-      "groupId": "WeaponBox_N3_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00005": {
-      "groupId": "bag_sport_mid_N1_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00247": {
-      "groupId": "WeaponBox_N10_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00262": {
-      "groupId": "WeaponBox_N20_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00243": {
-      "groupId": "WeaponBox_N6_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00006": {
-      "groupId": "bag_sport_mid_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00074": {
-      "groupId": "Scontainer_ammo_wood_N3_2_shoreline"
-    },
-    "shoreline_DesignStuff_00114": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00197": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00096": {
-      "groupId": "WeaponBox_N12_2_shoreline"
-    },
-    "shoreline_DesignStuff_00113": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00203": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00269": {
-      "groupId": "WeaponBox_N24_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00008": {
-      "groupId": "bag_sport_varios_N1_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00065": {
-      "groupId": "Scontainer_ammo_wood_N2_2_shoreline"
-    },
-    "shoreline_DesignStuff_00105": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00125": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00259": {
-      "groupId": "WeaponBox_N18_3_shoreline"
-    },
-    "shoreline_DesignStuff_00115": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00183": {
-      "groupId": "WeaponBox_N16_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00011": {
-      "groupId": "bag_sport_varios_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00160": {
-      "groupId": "WeaponBox_N15_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00236": {
-      "groupId": "WeaponBox_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00227": {
-      "groupId": "WeaponBox_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00242": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00256": {
-      "groupId": "WeaponBox_N17_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00237": {
-      "groupId": "WeaponBox_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00263": {
-      "groupId": "WeaponBox_N20_3_shoreline"
-    },
-    "shoreline_DesignStuff_00065": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00265": {
-      "groupId": "WeaponBox_N21_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00066": {
-      "groupId": "Scontainer_ammo_wood_N3_2_shoreline"
-    },
-    "shoreline_DesignStuff_00057": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00217": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00260": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00310": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00149": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00231": {
-      "groupId": "MadBag_N11_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00209": {
-      "groupId": "MadBag_N20_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00205": {
-      "groupId": "MadBag_N18_3_shoreline"
-    },
-    "shoreline_DesignStuff_00144": {
-      "groupId": "MadBag_N5_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00199": {
-      "groupId": "MadBag_N14_2_shoreline"
-    },
-    "shoreline_DesignStuff_00056": {
-      "groupId": "MadBag_N4_2_shoreline"
-    },
-    "shoreline_DesignStuff_00267": {
-      "groupId": "MadBag_N13_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00198": {
-      "groupId": "MadBag_N13_2_shoreline"
-    },
-    "shoreline_DesignStuff_00289": {
-      "groupId": "MadBag_N22_2_shoreline"
-    },
-    "shoreline_DesignStuff_00148": {
-      "groupId": "MadBag_N8_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00182": {
-      "groupId": "MadBag_N1_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00189": {
-      "groupId": "MadBag_N6_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00212": {
-      "groupId": "MadBag_N23_2_shoreline"
-    },
-    "shoreline_DesignStuff_00262": {
-      "groupId": "MadBag_N7_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00207": {
-      "groupId": "MadBag_N19_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00206": {
-      "groupId": "MadBag_N18_3_shoreline"
-    },
-    "shoreline_DesignStuff_00142": {
-      "groupId": "MadBag_N9_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00194": {
-      "groupId": "MadBag_N10_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00184": {
-      "groupId": "MadBag_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00184": {
-      "groupId": "MadBag_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00273": {
-      "groupId": "MadBag_N21_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00192": {
-      "groupId": "MadBag_N9_3_shoreline"
-    },
-    "shoreline_DesignStuff_00280": {
-      "groupId": "MadBag_N23_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00188": {
-      "groupId": "MadBag_N5_2_shoreline"
-    },
-    "shoreline_DesignStuff_00272": {
-      "groupId": "MadBag_N20_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00210": {
-      "groupId": "MadBag_N21_2_shoreline"
-    },
-    "shoreline_DesignStuff_00157": {
-      "groupId": "MadBag_N17_2_shoreline"
-    },
-    "shoreline_DesignStuff_00159": {
-      "groupId": "MadBag_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00187": {
-      "groupId": "MadBag_N4_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00197": {
-      "groupId": "MadBag_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00196": {
-      "groupId": "MadBag_N11_3_shoreline"
-    },
-    "shoreline_DesignStuff_00050": {
-      "groupId": "MadBag_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00193": {
-      "groupId": "MadBag_N9_3_shoreline"
-    },
-    "shoreline_DesignStuff_00177": {
-      "groupId": "MadBag_N15_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00208": {
-      "groupId": "MadBag_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00263": {
-      "groupId": "MadBag_N6_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00203": {
-      "groupId": "MadBag_N16_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00190": {
-      "groupId": "MadBag_N7_2_shoreline"
-    },
-    "shoreline_DesignStuff_00158": {
-      "groupId": "MadBag_N18_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00204": {
-      "groupId": "MadBag_N17_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00183": {
-      "groupId": "MadBag_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00106": {
-      "groupId": "MadBag_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00303": {
-      "groupId": "MadBag_N14_2_shoreline"
-    },
-    "shoreline_DesignStuff_00151": {
-      "groupId": "MadBag_N16_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00195": {
-      "groupId": "MadBag_N11_3_shoreline"
-    },
-    "shoreline_DesignStuff_00216": {
-      "groupId": "MadBag_N10_2_shoreline"
-    },
-    "shoreline_DesignStuff_00212": {
-      "groupId": "MadBag_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00185": {
-      "groupId": "MadBag_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00191": {
-      "groupId": "MadBag_N8_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00200": {
-      "groupId": "MadBag_N15_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00211": {
-      "groupId": "MadBag_N22_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00186": {
-      "groupId": "MadBag_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00202": {
-      "groupId": "MadBag_N16_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00201": {
-      "groupId": "MadBag_N15_3_shoreline"
-    },
-    "shoreline_DesignStuff_00314": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00222": {
-      "groupId": "ToolBox_N5_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00221": {
-      "groupId": "ToolBox_N4_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00219": {
-      "groupId": "ToolBox_N2_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00220": {
-      "groupId": "ToolBox_N3_2_shoreline"
-    },
-    "shoreline_DesignStuff_00274": {
-      "groupId": "ToolBox_N13_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00232": {
-      "groupId": "ToolBox_N15_2_shoreline"
-    },
-    "shoreline_DesignStuff_00174": {
-      "groupId": "ToolBox_N5_2_shoreline"
-    },
-    "shoreline_DesignStuff_00093": {
-      "groupId": "ToolBox_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00227": {
-      "groupId": "ToolBox_N10_2_shoreline"
-    },
-    "shoreline_DesignStuff_00292": {
-      "groupId": "ToolBox_N14_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00230": {
-      "groupId": "ToolBox_N13_2_shoreline"
-    },
-    "shoreline_DesignStuff_00104": {
-      "groupId": "ToolBox_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00281": {
-      "groupId": "ToolBox_N15_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00234": {
-      "groupId": "ToolBox_N17_2_shoreline"
-    },
-    "shoreline_DesignStuff_00287": {
-      "groupId": "ToolBox_N17_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00231": {
-      "groupId": "ToolBox_N14_2_shoreline"
-    },
-    "shoreline_DesignStuff_00295": {
-      "groupId": "ToolBox_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00229": {
-      "groupId": "ToolBox_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00218": {
-      "groupId": "ToolBox_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00092": {
-      "groupId": "ToolBox_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00101": {
-      "groupId": "ToolBox_N6_2_shoreline"
-    },
-    "shoreline_DesignStuff_00308": {
-      "groupId": "ToolBox_N10_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00225": {
-      "groupId": "ToolBox_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00171": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00217": {
-      "groupId": "ToolBox_N1_3_shoreline"
-    },
-    "shoreline_DesignStuff_00107": {
-      "groupId": "ToolBox_N9_2_shoreline"
-    },
-    "shoreline_DesignStuff_00271": {
-      "groupId": "ToolBox_N11_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00233": {
-      "groupId": "ToolBox_N16_2_shoreline"
-    },
-    "shoreline_DesignStuff_00253": {
-      "groupId": "ToolBox_N2_2_shoreline"
-    },
-    "shoreline_DesignStuff_00175": {
-      "groupId": "ToolBox_N16_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00226": {
-      "groupId": "ToolBox_N9_2_shoreline"
-    },
-    "shoreline_DesignStuff_00062": {
-      "groupId": "ToolBox_N7_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00228": {
-      "groupId": "ToolBox_N11_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00224": {
-      "groupId": "ToolBox_N7_2_shoreline"
-    },
-    "shoreline_DesignStuff_00198": {
-      "groupId": "ToolBox_N4_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00223": {
-      "groupId": "ToolBox_N6_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00019": {
-      "groupId": "Plastic_suitcase_N4_3_shoreline"
-    },
-    "shoreline_DesignStuff_00318": {
-      "groupId": "Plastic_suitcase_N1_2_shoreline"
-    },
-    "shoreline_DesignStuff_00185": {
-      "groupId": "Plastic_suitcase_N7_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00029": {
-      "groupId": "Plastic_suitcase_N7_4_shoreline"
-    },
-    "shoreline_DesignStuff_00224": {
-      "groupId": "Plastic_suitcase_N4_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00024": {
-      "groupId": "Plastic_suitcase_N6_4_shoreline"
-    },
-    "shoreline_DesignStuff_00211": {
-      "groupId": "Plastic_suitcase_N6_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00016": {
-      "groupId": "Plastic_suitcase_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00220": {
-      "groupId": "Plastic_suitcase_N5_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00015": {
-      "groupId": "Plastic_suitcase_N1_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00028": {
-      "groupId": "Plastic_suitcase_N7_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00025": {
-      "groupId": "Plastic_suitcase_N6_4_shoreline"
-    },
-    "shoreline_DesignStuff_00180": {
-      "groupId": "Plastic_suitcase_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00022": {
-      "groupId": "Plastic_suitcase_N5_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00020": {
-      "groupId": "Plastic_suitcase_N4_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00027": {
-      "groupId": "Plastic_suitcase_N7_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00021": {
-      "groupId": "Plastic_suitcase_N5_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00023": {
-      "groupId": "Plastic_suitcase_N5_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00017": {
-      "groupId": "Plastic_suitcase_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00225": {
-      "groupId": "Plastic_suitcase_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00018": {
-      "groupId": "Plastic_suitcase_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00026": {
-      "groupId": "Plastic_suitcase_N6_4_shoreline"
-    },
-    "shoreline_DesignStuff_00150": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00288": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00286": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00201": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00046": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00282": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00270": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00040": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00147": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00291": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00284": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00154": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00316": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00252": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00051": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00213": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00205": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00168": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00190": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00265": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00261": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00218": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00060": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00167": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00209": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00179": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00221": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00215": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00249": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00161": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00259": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00170": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00208": {
-      "groupId": ""
-    },
-    "shoreline_sanatorium_indoor_optimized_00001": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00124": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00173": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00219": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00210": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00250": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00176": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00312": {
-      "groupId": ""
-    },
-    "shoreline_sanatorium_indoor_optimized_00000": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00305": {
-      "groupId": "Plastic_suitcase_N13_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00039": {
-      "groupId": "Plastic_suitcase_N14_4_shoreline"
-    },
-    "shoreline_DesignStuff_00146": {
-      "groupId": "Plastic_suitcase_N14_4_shoreline"
-    },
-    "shoreline_DesignStuff_00317": {
-      "groupId": "Plastic_suitcase_N16_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00041": {
-      "groupId": "Plastic_suitcase_N16_3_shoreline"
-    },
-    "shoreline_DesignStuff_00200": {
-      "groupId": "Plastic_suitcase_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00192": {
-      "groupId": "Plastic_suitcase_N10_2_shoreline"
-    },
-    "shoreline_DesignStuff_00307": {
-      "groupId": "Plastic_suitcase_N21_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00043": {
-      "groupId": "Plastic_suitcase_N17_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00048": {
-      "groupId": "Plastic_suitcase_N20_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00040": {
-      "groupId": "Plastic_suitcase_N15_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00047": {
-      "groupId": "Plastic_suitcase_N19_3_shoreline"
-    },
-    "shoreline_DesignStuff_00223": {
-      "groupId": "Plastic_suitcase_N11_2_shoreline"
-    },
-    "shoreline_DesignStuff_00199": {
-      "groupId": "Plastic_suitcase_N18_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00035": {
-      "groupId": "Plastic_suitcase_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00031": {
-      "groupId": "Plastic_suitcase_N8_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00044": {
-      "groupId": "Plastic_suitcase_N17_2_shoreline"
-    },
-    "shoreline_DesignStuff_00206": {
-      "groupId": "Plastic_suitcase_N17_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00050": {
-      "groupId": "Plastic_suitcase_N21_3_shoreline"
-    },
-    "shoreline_DesignStuff_00264": {
-      "groupId": "Plastic_suitcase_N20_3_shoreline"
-    },
-    "shoreline_DesignStuff_00276": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00032": {
-      "groupId": "Plastic_suitcase_N9_2_shoreline"
-    },
-    "shoreline_DesignStuff_00279": {
-      "groupId": "Plastic_suitcase_N22_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00045": {
-      "groupId": "Plastic_suitcase_N18_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00053": {
-      "groupId": "Plastic_suitcase_N23_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00038": {
-      "groupId": "Plastic_suitcase_N14_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00030": {
-      "groupId": "Plastic_suitcase_N8_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00036": {
-      "groupId": "Plastic_suitcase_N13_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00046": {
-      "groupId": "Plastic_suitcase_N19_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00033": {
-      "groupId": "Plastic_suitcase_N10_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00051": {
-      "groupId": "Plastic_suitcase_N21_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00034": {
-      "groupId": "Plastic_suitcase_N11_2_shoreline"
-    },
-    "shoreline_DesignStuff_00311": {
-      "groupId": "Plastic_suitcase_N8_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00037": {
-      "groupId": "Plastic_suitcase_N14_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00052": {
-      "groupId": "Plastic_suitcase_N22_2_shoreline"
-    },
-    "shoreline_DesignStuff_00293": {
-      "groupId": "Plastic_suitcase_N12_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00049": {
-      "groupId": "Plastic_suitcase_N20_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00042": {
-      "groupId": "Plastic_suitcase_N16_3_shoreline"
-    },
-    "shoreline_DesignStuff_00230": {
-      "groupId": "Plastic_suitcase_N15_2_shoreline"
-    },
-    "shoreline_DesignStuff_00283": {
-      "groupId": "Plastic_suitcase_N23_2_shoreline"
-    },
-    "shoreline_DesignStuff_00229": {
-      "groupId": "Plastic_suitcase_N9_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00277": {
-      "groupId": "WeaponBox_N32_2_shoreline"
-    },
-    "shoreline_DesignStuff_00080": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00275": {
-      "groupId": "WeaponBox_N30_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00273": {
-      "groupId": "WeaponBox_N28_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00272": {
-      "groupId": "WeaponBox_N27_2_shoreline"
-    },
-    "shoreline_DesignStuff_00071": {
-      "groupId": "WeaponBox_N34_2_shoreline"
-    },
-    "shoreline_DesignStuff_00075": {
-      "groupId": "WeaponBox_N30_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00271": {
-      "groupId": "WeaponBox_N26_2_shoreline"
-    },
-    "shoreline_DesignStuff_00073": {
-      "groupId": "WeaponBox_N33_2_shoreline"
-    },
-    "shoreline_DesignStuff_00102": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00278": {
-      "groupId": "WeaponBox_N33_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00274": {
-      "groupId": "WeaponBox_N29_2_shoreline"
-    },
-    "shoreline_DesignStuff_00109": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00053": {
-      "groupId": "WeaponBox_N27_2_shoreline"
-    },
-    "shoreline_DesignStuff_00112": {
-      "groupId": "WeaponBox_N25_2_shoreline"
-    },
-    "shoreline_DesignStuff_00055": {
-      "groupId": "WeaponBox_N32_2_shoreline"
-    },
-    "shoreline_DesignStuff_00085": {
-      "groupId": "WeaponBox_N29_2_shoreline"
-    },
-    "shoreline_DesignStuff_00076": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00072": {
-      "groupId": "WeaponBox_N28_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00276": {
-      "groupId": "WeaponBox_N31_2_shoreline"
-    },
-    "shoreline_DesignStuff_00063": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00100": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00077": {
-      "groupId": "WeaponBox_N26_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00279": {
-      "groupId": "WeaponBox_N34_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00270": {
-      "groupId": "WeaponBox_N25_2_shoreline"
-    },
-    "shoreline_DesignStuff_00054": {
-      "groupId": "WeaponBox_N31_2_shoreline"
-    },
-    "shoreline_DesignStuff_00226": {
-      "groupId": ""
-    },
-    "shoreline_pirs02_00000": {
-      "groupId": ""
-    },
-    "container_shoreline_DesignStuff_00215": {
-      "groupId": "MadCase_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00213": {
-      "groupId": "MadCase_N1_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00214": {
-      "groupId": "MadCase_N2_2_shoreline"
-    },
-    "shoreline_DesignStuff_00290": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00285": {
-      "groupId": "MadCase_N4_2_shoreline"
-    },
-    "shoreline_DesignStuff_00268": {
-      "groupId": "MadCase_N2_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00216": {
-      "groupId": "MadCase_N4_2_shoreline"
-    },
-    "shoreline_DesignStuff_00301": {
-      "groupId": "MadCase_N3_2_shoreline"
-    },
-    "shoreline_DesignStuff_00306": {
-      "groupId": "MadCase_N1_2_shoreline"
-    },
-    "shoreline_DesignStuff_00181": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00156": {
-      "groupId": ""
-    },
-    "shoreline_DesignStuff_00047": {
+    "shoreline_DesignStuff_00135": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00243": {
+    "shoreline_DesignStuff_00136": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00066": {
+    "shoreline_DesignStuff_00137": {
       "groupId": ""
     },
     "shoreline_DesignStuff_00138": {
@@ -2002,716 +1512,1515 @@
     "shoreline_DesignStuff_00139": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00049": {
+    "shoreline_DesignStuff_00140": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00269": {
+    "shoreline_DesignStuff_00141": {
+      "groupId": "WeaponBox_N9_2_shoreline"
+    },
+    "shoreline_DesignStuff_00142": {
+      "groupId": "MadBag_N9_3_shoreline"
+    },
+    "shoreline_DesignStuff_00143": {
+      "groupId": "WeaponBox_N20_3_shoreline"
+    },
+    "shoreline_DesignStuff_00144": {
+      "groupId": "MadBag_N5_2_shoreline"
+    },
+    "shoreline_DesignStuff_00145": {
+      "groupId": "WeaponBox_N17_3_shoreline"
+    },
+    "shoreline_DesignStuff_00146": {
+      "groupId": "Plastic_suitcase_N14_4_shoreline"
+    },
+    "shoreline_DesignStuff_00147": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00302": {
+    "shoreline_DesignStuff_00148": {
+      "groupId": "MadBag_N8_2_shoreline"
+    },
+    "shoreline_DesignStuff_00149": {
       "groupId": ""
+    },
+    "shoreline_DesignStuff_00150": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00151": {
+      "groupId": "MadBag_N16_3_shoreline"
+    },
+    "shoreline_DesignStuff_00152": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00153": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00154": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00155": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00156": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00157": {
+      "groupId": "MadBag_N17_2_shoreline"
+    },
+    "shoreline_DesignStuff_00158": {
+      "groupId": "MadBag_N18_3_shoreline"
+    },
+    "shoreline_DesignStuff_00159": {
+      "groupId": "MadBag_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00160": {
+      "groupId": "WeaponBox_N15_3_shoreline"
+    },
+    "shoreline_DesignStuff_00161": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00162": {
+      "groupId": "WeaponBox_N14_3_shoreline"
+    },
+    "shoreline_DesignStuff_00163": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00164": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00165": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00166": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00167": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00168": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00169": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00170": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00171": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00172": {
+      "groupId": "WeaponBox_N19_3_shoreline"
+    },
+    "shoreline_DesignStuff_00173": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00174": {
+      "groupId": "ToolBox_N5_2_shoreline"
+    },
+    "shoreline_DesignStuff_00175": {
+      "groupId": "ToolBox_N16_2_shoreline"
+    },
+    "shoreline_DesignStuff_00176": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00177": {
+      "groupId": "MadBag_N15_3_shoreline"
+    },
+    "shoreline_DesignStuff_00178": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00179": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00180": {
+      "groupId": "Plastic_suitcase_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00181": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00182": {
+      "groupId": "WeaponBox_N18_3_shoreline"
+    },
+    "shoreline_DesignStuff_00183": {
+      "groupId": "WeaponBox_N16_2_shoreline"
+    },
+    "shoreline_DesignStuff_00184": {
+      "groupId": "MadBag_N19_3_shoreline"
+    },
+    "shoreline_DesignStuff_00185": {
+      "groupId": "Plastic_suitcase_N7_4_shoreline"
+    },
+    "shoreline_DesignStuff_00186": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00187": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00188": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00189": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00190": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00191": {
+      "groupId": "WeaponBox_N10_2_shoreline"
+    },
+    "shoreline_DesignStuff_00192": {
+      "groupId": "Plastic_suitcase_N10_2_shoreline"
+    },
+    "shoreline_DesignStuff_00193": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00194": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00195": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00196": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00197": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00198": {
+      "groupId": "ToolBox_N4_2_shoreline"
+    },
+    "shoreline_DesignStuff_00199": {
+      "groupId": "Plastic_suitcase_N18_2_shoreline"
+    },
+    "shoreline_DesignStuff_00200": {
+      "groupId": "Plastic_suitcase_N19_3_shoreline"
+    },
+    "shoreline_DesignStuff_00201": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00202": {
+      "groupId": "WeaponBox_N7_2_shoreline"
+    },
+    "shoreline_DesignStuff_00203": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00204": {
+      "groupId": "WeaponBox_N4_3_shoreline"
+    },
+    "shoreline_DesignStuff_00205": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00206": {
+      "groupId": "Plastic_suitcase_N17_2_shoreline"
     },
     "shoreline_DesignStuff_00207": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00078": {
+    "shoreline_DesignStuff_00208": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00018": {
+    "shoreline_DesignStuff_00209": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00024": {
+    "shoreline_DesignStuff_00210": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00022": {
+    "shoreline_DesignStuff_00211": {
+      "groupId": "Plastic_suitcase_N6_4_shoreline"
+    },
+    "shoreline_DesignStuff_00212": {
+      "groupId": "MadBag_N12_2_shoreline"
+    },
+    "shoreline_DesignStuff_00213": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00026": {
+    "shoreline_DesignStuff_00214": {
+      "groupId": "WeaponBox_N21_3_shoreline"
+    },
+    "shoreline_DesignStuff_00215": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00019": {
+    "shoreline_DesignStuff_00216": {
+      "groupId": "MadBag_N10_2_shoreline"
+    },
+    "shoreline_DesignStuff_00217": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00000": {
+    "shoreline_DesignStuff_00218": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00017": {
+    "shoreline_DesignStuff_00219": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00027": {
+    "shoreline_DesignStuff_00220": {
+      "groupId": "Plastic_suitcase_N5_4_shoreline"
+    },
+    "shoreline_DesignStuff_00221": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00013": {
+    "shoreline_DesignStuff_00222": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00005": {
+    "shoreline_DesignStuff_00223": {
+      "groupId": "Plastic_suitcase_N11_2_shoreline"
+    },
+    "shoreline_DesignStuff_00224": {
+      "groupId": "Plastic_suitcase_N4_3_shoreline"
+    },
+    "shoreline_DesignStuff_00225": {
+      "groupId": "Plastic_suitcase_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00226": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00007": {
+    "shoreline_DesignStuff_00227": {
+      "groupId": "WeaponBox_N8_2_shoreline"
+    },
+    "shoreline_DesignStuff_00228": {
+      "groupId": "WeaponBox_N11_2_shoreline"
+    },
+    "shoreline_DesignStuff_00229": {
+      "groupId": "Plastic_suitcase_N9_2_shoreline"
+    },
+    "shoreline_DesignStuff_00230": {
+      "groupId": "Plastic_suitcase_N15_2_shoreline"
+    },
+    "shoreline_DesignStuff_00231": {
+      "groupId": "MadBag_N11_3_shoreline"
+    },
+    "shoreline_DesignStuff_00232": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00038": {
+    "shoreline_DesignStuff_00233": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00020": {
+    "shoreline_DesignStuff_00234": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00006": {
+    "shoreline_DesignStuff_00235": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00021": {
+    "shoreline_DesignStuff_00236": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00003": {
+    "shoreline_DesignStuff_00237": {
+      "groupId": "WeaponBox_N23_3_shoreline"
+    },
+    "shoreline_DesignStuff_00238": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00004": {
+    "shoreline_DesignStuff_00239": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00029": {
+    "shoreline_DesignStuff_00240": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00014": {
+    "shoreline_DesignStuff_00241": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00035": {
+    "shoreline_DesignStuff_00242": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00002": {
+    "shoreline_DesignStuff_00243": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00023": {
+    "shoreline_DesignStuff_00244": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00036": {
+    "shoreline_DesignStuff_00245": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00345": {
-      "groupId": "BagSport_N9_4_shoreline"
-    },
-    "shoreline_DesignStuff_00356": {
-      "groupId": "BagSport_N10_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00181": {
-      "groupId": "BagSport_N59_3_shoreline"
-    },
-    "shoreline_DesignStuff_00375": {
-      "groupId": "BagSport_N59_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00131": {
-      "groupId": "BagSport_N32_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00090": {
-      "groupId": "BagSport_N14_4_shoreline"
-    },
-    "shoreline_DesignStuff_00352": {
-      "groupId": "BagSport_N22_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00138": {
-      "groupId": "BagSport_N34_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00176": {
-      "groupId": "BagSport_N56_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00136": {
-      "groupId": "BagSport_N34_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00135": {
-      "groupId": "BagSport_N33_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00080": {
-      "groupId": "BagSport_N10_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00122": {
-      "groupId": "BagSport_N26_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00120": {
-      "groupId": "BagSport_N25_3_shoreline"
-    },
-    "shoreline_DesignStuff_00358": {
-      "groupId": "BagSport_N11_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00168": {
-      "groupId": "BagSport_N50_2_shoreline"
-    },
-    "shoreline_DesignStuff_00373": {
-      "groupId": "BagSport_N5_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00108": {
-      "groupId": "BagSport_N20_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00072": {
-      "groupId": "BagSport_N5_2_shoreline"
-    },
-    "shoreline_DesignStuff_00338": {
-      "groupId": "BagSport_N3_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00174": {
-      "groupId": "BagSport_N55_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00118": {
-      "groupId": "BagSport_N24_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00073": {
-      "groupId": "BagSport_N6_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00127": {
-      "groupId": "BagSport_N29_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00171": {
-      "groupId": "BagSport_N53_2_shoreline"
-    },
-    "shoreline_DesignStuff_00322": {
-      "groupId": "BagSport_N20_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00089": {
-      "groupId": "BagSport_N13_5_shoreline"
-    },
-    "shoreline_DesignStuff_00354": {
-      "groupId": "BagSport_N7_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00096": {
-      "groupId": "BagSport_N16_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00079": {
-      "groupId": "BagSport_N10_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00101": {
-      "groupId": "BagSport_N18_4_shoreline"
-    },
-    "shoreline_DesignStuff_00333": {
-      "groupId": "BagSport_N36_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00129": {
-      "groupId": "BagSport_N31_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00095": {
-      "groupId": "BagSport_N15_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00103": {
-      "groupId": "BagSport_N19_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00097": {
-      "groupId": "BagSport_N16_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00088": {
-      "groupId": "BagSport_N13_5_shoreline"
-    },
-    "shoreline_DesignStuff_00347": {
-      "groupId": "BagSport_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00324": {
+    "shoreline_DesignStuff_00246": {
       "groupId": ""
     },
-    "container_shoreline_DesignStuff_00144": {
-      "groupId": "BagSport_N38_3_shoreline"
-    },
-    "shoreline_DesignStuff_00361": {
-      "groupId": "BagSport_N23_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00146": {
-      "groupId": "BagSport_N39_3_shoreline"
-    },
-    "shoreline_DesignStuff_00370": {
-      "groupId": "BagSport_N30_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00084": {
-      "groupId": "BagSport_N12_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00145": {
-      "groupId": "BagSport_N39_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00112": {
-      "groupId": "BagSport_N21_5_shoreline"
-    },
-    "container_shoreline_DesignStuff_00139": {
-      "groupId": "BagSport_N35_3_shoreline"
-    },
-    "shoreline_DesignStuff_00366": {
-      "groupId": "BagSport_N25_3_shoreline"
-    },
-    "shoreline_DesignStuff_00364": {
-      "groupId": "BagSport_N52_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00106": {
-      "groupId": "BagSport_N20_4_shoreline"
-    },
-    "shoreline_DesignStuff_00327": {
-      "groupId": "BagSport_N39_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00125": {
-      "groupId": "BagSport_N27_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00110": {
-      "groupId": "BagSport_N21_5_shoreline"
-    },
-    "shoreline_DesignStuff_00353": {
-      "groupId": "BagSport_N41_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00098": {
-      "groupId": "BagSport_N16_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00102": {
-      "groupId": "BagSport_N18_4_shoreline"
-    },
-    "shoreline_DesignStuff_00320": {
-      "groupId": "BagSport_N38_3_shoreline"
-    },
-    "shoreline_DesignStuff_00369": {
-      "groupId": "BagSport_N33_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00082": {
-      "groupId": "BagSport_N11_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00163": {
-      "groupId": "BagSport_N47_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00166": {
-      "groupId": "BagSport_N49_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00093": {
-      "groupId": "BagSport_N15_4_shoreline"
-    },
-    "shoreline_DesignStuff_00377": {
-      "groupId": "BagSport_N37_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00132": {
-      "groupId": "BagSport_N32_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00092": {
-      "groupId": "BagSport_N14_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00154": {
-      "groupId": "BagSport_N43_3_shoreline"
-    },
-    "shoreline_DesignStuff_00359": {
-      "groupId": "BagSport_N42_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00175": {
-      "groupId": "BagSport_N56_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00091": {
-      "groupId": "BagSport_N14_4_shoreline"
-    },
-    "shoreline_DesignStuff_00374": {
-      "groupId": "BagSport_N58_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00085": {
-      "groupId": "BagSport_N12_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00150": {
-      "groupId": "BagSport_N41_3_shoreline"
-    },
-    "shoreline_DesignStuff_00368": {
-      "groupId": "BagSport_N44_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00147": {
-      "groupId": "BagSport_N40_4_shoreline"
-    },
-    "shoreline_DesignStuff_00372": {
-      "groupId": "BagSport_N15_4_shoreline"
-    },
-    "shoreline_DesignStuff_00326": {
-      "groupId": "BagSport_N47_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00121": {
-      "groupId": "BagSport_N25_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00113": {
-      "groupId": "BagSport_N22_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00111": {
-      "groupId": "BagSport_N21_5_shoreline"
-    },
-    "container_shoreline_DesignStuff_00153": {
-      "groupId": "BagSport_N42_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00130": {
-      "groupId": "BagSport_N31_3_shoreline"
-    },
-    "shoreline_DesignStuff_00331": {
-      "groupId": "BagSport_N31_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00177": {
-      "groupId": "BagSport_N57_3_shoreline"
-    },
-    "shoreline_DesignStuff_00325": {
-      "groupId": "BagSport_N1_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00149": {
-      "groupId": "BagSport_N40_4_shoreline"
-    },
-    "shoreline_DesignStuff_00340": {
-      "groupId": "BagSport_N27_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00161": {
-      "groupId": "BagSport_N46_4_shoreline"
-    },
-    "shoreline_DesignStuff_00357": {
-      "groupId": "BagSport_N29_2_shoreline"
-    },
-    "shoreline_DesignStuff_00379": {
-      "groupId": "BagSport_N28_2_shoreline"
-    },
-    "shoreline_DesignStuff_00346": {
-      "groupId": "BagSport_N18_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00170": {
-      "groupId": "BagSport_N52_2_shoreline"
-    },
-    "shoreline_DesignStuff_00367": {
-      "groupId": "BagSport_N24_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00142": {
-      "groupId": "BagSport_N37_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00123": {
-      "groupId": "BagSport_N26_3_shoreline"
-    },
-    "shoreline_DesignStuff_00343": {
-      "groupId": "BagSport_N32_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00081": {
-      "groupId": "BagSport_N10_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00068": {
-      "groupId": "BagSport_N2_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00152": {
-      "groupId": "BagSport_N42_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00167": {
-      "groupId": "BagSport_N49_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00124": {
-      "groupId": "BagSport_N27_3_shoreline"
-    },
-    "shoreline_DesignStuff_00365": {
-      "groupId": "BagSport_N53_2_shoreline"
-    },
-    "shoreline_DesignStuff_00321": {
-      "groupId": "BagSport_N54_2_shoreline"
-    },
-    "shoreline_DesignStuff_00378": {
-      "groupId": "BagSport_N51_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00069": {
-      "groupId": "BagSport_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00344": {
-      "groupId": "BagSport_N48_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00115": {
-      "groupId": "BagSport_N23_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00076": {
-      "groupId": "BagSport_N9_4_shoreline"
-    },
-    "shoreline_DesignStuff_00339": {
-      "groupId": "BagSport_N50_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00074": {
-      "groupId": "BagSport_N7_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00157": {
-      "groupId": "BagSport_N45_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00165": {
-      "groupId": "BagSport_N48_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00116": {
-      "groupId": "BagSport_N23_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00119": {
-      "groupId": "BagSport_N24_3_shoreline"
-    },
-    "shoreline_DesignStuff_00330": {
-      "groupId": "BagSport_N13_5_shoreline"
-    },
-    "container_shoreline_DesignStuff_00156": {
-      "groupId": "BagSport_N44_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00173": {
-      "groupId": "BagSport_N55_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00071": {
-      "groupId": "BagSport_N4_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00078": {
-      "groupId": "BagSport_N9_4_shoreline"
-    },
-    "shoreline_DesignStuff_00355": {
-      "groupId": "BagSport_N43_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00075": {
-      "groupId": "BagSport_N8_2_shoreline"
-    },
-    "shoreline_DesignStuff_00351": {
-      "groupId": "BagSport_N2_3_shoreline"
-    },
-    "shoreline_DesignStuff_00328": {
-      "groupId": "BagSport_N57_3_shoreline"
-    },
-    "shoreline_DesignStuff_00371": {
-      "groupId": "BagSport_N14_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00067": {
-      "groupId": "BagSport_N1_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00155": {
-      "groupId": "BagSport_N43_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00140": {
-      "groupId": "BagSport_N35_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00137": {
-      "groupId": "BagSport_N34_4_shoreline"
-    },
-    "shoreline_DesignStuff_00349": {
-      "groupId": "BagSport_N56_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00070": {
-      "groupId": "BagSport_N3_2_shoreline"
-    },
-    "shoreline_DesignStuff_00348": {
-      "groupId": "BagSport_N40_4_shoreline"
-    },
-    "shoreline_DesignStuff_00337": {
-      "groupId": "BagSport_N6_2_shoreline"
-    },
-    "shoreline_DesignStuff_00341": {
-      "groupId": "BagSport_N21_5_shoreline"
-    },
-    "shoreline_DesignStuff_00350": {
-      "groupId": "BagSport_N4_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00126": {
-      "groupId": "BagSport_N28_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00104": {
-      "groupId": "BagSport_N19_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00107": {
-      "groupId": "BagSport_N20_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00160": {
-      "groupId": "BagSport_N46_4_shoreline"
-    },
-    "shoreline_DesignStuff_00363": {
-      "groupId": "BagSport_N55_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00114": {
-      "groupId": "BagSport_N22_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00109": {
-      "groupId": "BagSport_N21_5_shoreline"
-    },
-    "container_shoreline_DesignStuff_00178": {
-      "groupId": "BagSport_N57_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00151": {
-      "groupId": "BagSport_N41_3_shoreline"
-    },
-    "shoreline_DesignStuff_00335": {
-      "groupId": "BagSport_N35_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00143": {
-      "groupId": "BagSport_N38_3_shoreline"
-    },
-    "shoreline_DesignStuff_00360": {
+    "shoreline_DesignStuff_00247": {
       "groupId": ""
+    },
+    "shoreline_DesignStuff_00248": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00249": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00250": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00251": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00252": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00253": {
+      "groupId": "ToolBox_N2_2_shoreline"
+    },
+    "shoreline_DesignStuff_00254": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00255": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00256": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00257": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00258": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00259": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00260": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00261": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00262": {
+      "groupId": "MadBag_N7_2_shoreline"
+    },
+    "shoreline_DesignStuff_00263": {
+      "groupId": "MadBag_N6_2_shoreline"
+    },
+    "shoreline_DesignStuff_00264": {
+      "groupId": "Plastic_suitcase_N20_3_shoreline"
+    },
+    "shoreline_DesignStuff_00265": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00266": {
+      "groupId": "bag_BUG_N1_3_shoreline"
+    },
+    "shoreline_DesignStuff_00267": {
+      "groupId": "MadBag_N13_2_shoreline"
+    },
+    "shoreline_DesignStuff_00268": {
+      "groupId": "MadCase_N2_2_shoreline"
+    },
+    "shoreline_DesignStuff_00269": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00270": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00271": {
+      "groupId": "ToolBox_N11_2_shoreline"
+    },
+    "shoreline_DesignStuff_00272": {
+      "groupId": "MadBag_N20_2_shoreline"
+    },
+    "shoreline_DesignStuff_00273": {
+      "groupId": "MadBag_N21_2_shoreline"
+    },
+    "shoreline_DesignStuff_00274": {
+      "groupId": "ToolBox_N13_2_shoreline"
+    },
+    "shoreline_DesignStuff_00275": {
+      "groupId": "bag_sport_varios_N1_3_shoreline"
+    },
+    "shoreline_DesignStuff_00276": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00277": {
+      "groupId": "bag_sport_varios_N3_4_shoreline"
+    },
+    "shoreline_DesignStuff_00278": {
+      "groupId": "bag_sport_mid_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00279": {
+      "groupId": "Plastic_suitcase_N22_2_shoreline"
+    },
+    "shoreline_DesignStuff_00280": {
+      "groupId": "MadBag_N23_2_shoreline"
+    },
+    "shoreline_DesignStuff_00281": {
+      "groupId": "ToolBox_N15_2_shoreline"
+    },
+    "shoreline_DesignStuff_00282": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00283": {
+      "groupId": "Plastic_suitcase_N23_2_shoreline"
+    },
+    "shoreline_DesignStuff_00284": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00285": {
+      "groupId": "MadCase_N4_2_shoreline"
+    },
+    "shoreline_DesignStuff_00286": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00287": {
+      "groupId": "ToolBox_N17_2_shoreline"
+    },
+    "shoreline_DesignStuff_00288": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00289": {
+      "groupId": "MadBag_N22_2_shoreline"
+    },
+    "shoreline_DesignStuff_00290": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00291": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00292": {
+      "groupId": "ToolBox_N14_2_shoreline"
+    },
+    "shoreline_DesignStuff_00293": {
+      "groupId": "Plastic_suitcase_N12_2_shoreline"
+    },
+    "shoreline_DesignStuff_00294": {
+      "groupId": "bag_sport_lux_N1_2_shoreline"
+    },
+    "shoreline_DesignStuff_00295": {
+      "groupId": "ToolBox_N12_2_shoreline"
+    },
+    "shoreline_DesignStuff_00296": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00297": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00298": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00299": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00300": {
+      "groupId": "bag_sport_mid_N1_3_shoreline"
+    },
+    "shoreline_DesignStuff_00301": {
+      "groupId": "MadCase_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00302": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00303": {
+      "groupId": "MadBag_N14_2_shoreline"
+    },
+    "shoreline_DesignStuff_00304": {
+      "groupId": "bag_sport_varios_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00305": {
+      "groupId": "Plastic_suitcase_N13_2_shoreline"
+    },
+    "shoreline_DesignStuff_00306": {
+      "groupId": "MadCase_N1_2_shoreline"
+    },
+    "shoreline_DesignStuff_00307": {
+      "groupId": "Plastic_suitcase_N21_3_shoreline"
+    },
+    "shoreline_DesignStuff_00308": {
+      "groupId": "ToolBox_N10_2_shoreline"
+    },
+    "shoreline_DesignStuff_00309": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00310": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00311": {
+      "groupId": "Plastic_suitcase_N8_3_shoreline"
+    },
+    "shoreline_DesignStuff_00312": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00313": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00314": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00315": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00316": {
+      "groupId": ""
+    },
+    "shoreline_DesignStuff_00317": {
+      "groupId": "Plastic_suitcase_N16_3_shoreline"
+    },
+    "shoreline_DesignStuff_00318": {
+      "groupId": "Plastic_suitcase_N1_2_shoreline"
     },
     "shoreline_DesignStuff_00319": {
       "groupId": "BagSport_N19_4_shoreline"
     },
-    "container_shoreline_DesignStuff_00180": {
-      "groupId": "BagSport_N59_3_shoreline"
+    "shoreline_DesignStuff_00320": {
+      "groupId": "BagSport_N38_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00133": {
-      "groupId": "BagSport_N33_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00083": {
-      "groupId": "BagSport_N11_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00169": {
-      "groupId": "BagSport_N51_2_shoreline"
-    },
-    "shoreline_DesignStuff_00336": {
-      "groupId": "BagSport_N46_4_shoreline"
-    },
-    "shoreline_DesignStuff_00334": {
-      "groupId": "BagSport_N49_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00162": {
-      "groupId": "BagSport_N47_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00148": {
-      "groupId": "BagSport_N40_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00179": {
-      "groupId": "BagSport_N58_2_shoreline"
-    },
-    "shoreline_DesignStuff_00376": {
-      "groupId": "BagSport_N12_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00117": {
-      "groupId": "BagSport_N23_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00164": {
-      "groupId": "BagSport_N48_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00141": {
-      "groupId": "BagSport_N36_2_shoreline"
-    },
-    "container_shoreline_DesignStuff_00134": {
-      "groupId": "BagSport_N33_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00077": {
-      "groupId": "BagSport_N9_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00158": {
-      "groupId": "BagSport_N45_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00099": {
-      "groupId": "BagSport_N17_2_shoreline"
-    },
-    "shoreline_DesignStuff_00362": {
-      "groupId": "BagSport_N17_2_shoreline"
-    },
-    "shoreline_DesignStuff_00342": {
-      "groupId": "BagSport_N16_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00128": {
-      "groupId": "BagSport_N30_2_shoreline"
-    },
-    "shoreline_DesignStuff_00332": {
-      "groupId": "BagSport_N45_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00087": {
-      "groupId": "BagSport_N13_5_shoreline"
-    },
-    "container_shoreline_DesignStuff_00094": {
-      "groupId": "BagSport_N15_4_shoreline"
-    },
-    "shoreline_DesignStuff_00329": {
-      "groupId": "BagSport_N34_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00100": {
-      "groupId": "BagSport_N18_4_shoreline"
-    },
-    "container_shoreline_DesignStuff_00172": {
+    "shoreline_DesignStuff_00321": {
       "groupId": "BagSport_N54_2_shoreline"
     },
-    "container_shoreline_DesignStuff_00159": {
-      "groupId": "BagSport_N46_4_shoreline"
+    "shoreline_DesignStuff_00322": {
+      "groupId": "BagSport_N20_4_shoreline"
     },
     "shoreline_DesignStuff_00323": {
       "groupId": "BagSport_N26_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00105": {
-      "groupId": "BagSport_N19_4_shoreline"
+    "shoreline_DesignStuff_00324": {
+      "groupId": ""
     },
-    "container_shoreline_DesignStuff_00086": {
+    "shoreline_DesignStuff_00325": {
+      "groupId": "BagSport_N1_2_shoreline"
+    },
+    "shoreline_DesignStuff_00326": {
+      "groupId": "BagSport_N47_3_shoreline"
+    },
+    "shoreline_DesignStuff_00327": {
+      "groupId": "BagSport_N39_3_shoreline"
+    },
+    "shoreline_DesignStuff_00328": {
+      "groupId": "BagSport_N57_3_shoreline"
+    },
+    "shoreline_DesignStuff_00329": {
+      "groupId": "BagSport_N34_4_shoreline"
+    },
+    "shoreline_DesignStuff_00330": {
       "groupId": "BagSport_N13_5_shoreline"
     },
-    "shoreline_DesignStuff_00015": {
+    "shoreline_DesignStuff_00331": {
+      "groupId": "BagSport_N31_3_shoreline"
+    },
+    "shoreline_DesignStuff_00332": {
+      "groupId": "BagSport_N45_3_shoreline"
+    },
+    "shoreline_DesignStuff_00333": {
+      "groupId": "BagSport_N36_2_shoreline"
+    },
+    "shoreline_DesignStuff_00334": {
+      "groupId": "BagSport_N49_3_shoreline"
+    },
+    "shoreline_DesignStuff_00335": {
+      "groupId": "BagSport_N35_3_shoreline"
+    },
+    "shoreline_DesignStuff_00336": {
+      "groupId": "BagSport_N46_4_shoreline"
+    },
+    "shoreline_DesignStuff_00337": {
+      "groupId": "BagSport_N6_2_shoreline"
+    },
+    "shoreline_DesignStuff_00338": {
+      "groupId": "BagSport_N3_2_shoreline"
+    },
+    "shoreline_DesignStuff_00339": {
+      "groupId": "BagSport_N50_2_shoreline"
+    },
+    "shoreline_DesignStuff_00340": {
+      "groupId": "BagSport_N27_3_shoreline"
+    },
+    "shoreline_DesignStuff_00341": {
+      "groupId": "BagSport_N21_5_shoreline"
+    },
+    "shoreline_DesignStuff_00342": {
+      "groupId": "BagSport_N16_4_shoreline"
+    },
+    "shoreline_DesignStuff_00343": {
+      "groupId": "BagSport_N32_3_shoreline"
+    },
+    "shoreline_DesignStuff_00344": {
+      "groupId": "BagSport_N48_3_shoreline"
+    },
+    "shoreline_DesignStuff_00345": {
+      "groupId": "BagSport_N9_4_shoreline"
+    },
+    "shoreline_DesignStuff_00346": {
+      "groupId": "BagSport_N18_4_shoreline"
+    },
+    "shoreline_DesignStuff_00347": {
+      "groupId": "BagSport_N8_2_shoreline"
+    },
+    "shoreline_DesignStuff_00348": {
+      "groupId": "BagSport_N40_4_shoreline"
+    },
+    "shoreline_DesignStuff_00349": {
+      "groupId": "BagSport_N56_3_shoreline"
+    },
+    "shoreline_DesignStuff_00350": {
+      "groupId": "BagSport_N4_2_shoreline"
+    },
+    "shoreline_DesignStuff_00351": {
+      "groupId": "BagSport_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00352": {
+      "groupId": "BagSport_N22_3_shoreline"
+    },
+    "shoreline_DesignStuff_00353": {
+      "groupId": "BagSport_N41_3_shoreline"
+    },
+    "shoreline_DesignStuff_00354": {
+      "groupId": "BagSport_N7_2_shoreline"
+    },
+    "shoreline_DesignStuff_00355": {
+      "groupId": "BagSport_N43_3_shoreline"
+    },
+    "shoreline_DesignStuff_00356": {
+      "groupId": "BagSport_N10_4_shoreline"
+    },
+    "shoreline_DesignStuff_00357": {
+      "groupId": "BagSport_N29_2_shoreline"
+    },
+    "shoreline_DesignStuff_00358": {
+      "groupId": "BagSport_N11_3_shoreline"
+    },
+    "shoreline_DesignStuff_00359": {
+      "groupId": "BagSport_N42_3_shoreline"
+    },
+    "shoreline_DesignStuff_00360": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00001": {
-      "groupId": ""
+    "shoreline_DesignStuff_00361": {
+      "groupId": "BagSport_N23_4_shoreline"
     },
-    "shoreline_DesignStuff_00008": {
-      "groupId": ""
+    "shoreline_DesignStuff_00362": {
+      "groupId": "BagSport_N17_2_shoreline"
     },
-    "shoreline_DesignStuff_00010": {
-      "groupId": ""
+    "shoreline_DesignStuff_00363": {
+      "groupId": "BagSport_N55_3_shoreline"
     },
-    "shoreline_DesignStuff_00009": {
-      "groupId": ""
+    "shoreline_DesignStuff_00364": {
+      "groupId": "BagSport_N52_2_shoreline"
     },
-    "shoreline_DesignStuff_00025": {
-      "groupId": ""
+    "shoreline_DesignStuff_00365": {
+      "groupId": "BagSport_N53_2_shoreline"
     },
-    "shoreline_DesignStuff_00033": {
-      "groupId": ""
+    "shoreline_DesignStuff_00366": {
+      "groupId": "BagSport_N25_3_shoreline"
     },
-    "shoreline_DesignStuff_00037": {
-      "groupId": ""
+    "shoreline_DesignStuff_00367": {
+      "groupId": "BagSport_N24_3_shoreline"
     },
-    "shoreline_DesignStuff_00032": {
-      "groupId": ""
+    "shoreline_DesignStuff_00368": {
+      "groupId": "BagSport_N44_2_shoreline"
     },
-    "shoreline_DesignStuff_00016": {
-      "groupId": ""
+    "shoreline_DesignStuff_00369": {
+      "groupId": "BagSport_N33_4_shoreline"
     },
-    "shoreline_DesignStuff_00012": {
-      "groupId": ""
+    "shoreline_DesignStuff_00370": {
+      "groupId": "BagSport_N30_2_shoreline"
     },
-    "shoreline_DesignStuff_00031": {
-      "groupId": ""
+    "shoreline_DesignStuff_00371": {
+      "groupId": "BagSport_N14_4_shoreline"
     },
-    "shoreline_DesignStuff_00034": {
-      "groupId": ""
+    "shoreline_DesignStuff_00372": {
+      "groupId": "BagSport_N15_4_shoreline"
     },
-    "shoreline_DesignStuff_00028": {
-      "groupId": ""
+    "shoreline_DesignStuff_00373": {
+      "groupId": "BagSport_N5_2_shoreline"
     },
-    "shoreline_DesignStuff_00011": {
-      "groupId": ""
+    "shoreline_DesignStuff_00374": {
+      "groupId": "BagSport_N58_2_shoreline"
     },
-    "shoreline_DesignStuff_00030": {
-      "groupId": ""
+    "shoreline_DesignStuff_00375": {
+      "groupId": "BagSport_N59_3_shoreline"
     },
-    "shoreline_DesignStuff_00039": {
-      "groupId": ""
+    "shoreline_DesignStuff_00376": {
+      "groupId": "BagSport_N12_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00060": {
+    "shoreline_DesignStuff_00377": {
+      "groupId": "BagSport_N37_2_shoreline"
+    },
+    "shoreline_DesignStuff_00378": {
+      "groupId": "BagSport_N51_2_shoreline"
+    },
+    "shoreline_DesignStuff_00379": {
+      "groupId": "BagSport_N28_2_shoreline"
+    },
+    "shoreline_DesignStuff_00380": {
+      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    },
+    "shoreline_DesignStuff_00381": {
+      "groupId": "Scontainer_ammo_Grenade_N5_2_shoreline"
+    },
+    "shoreline_DesignStuff_00382": {
       "groupId": "Scontainer_ammo_Grenade_N4_3_shoreline"
     },
     "shoreline_DesignStuff_00383": {
       "groupId": ""
     },
-    "shoreline_DesignStuff_00386": {
-      "groupId": "Scontainer_ammo_Grenade_N3_3_shoreline"
-    },
-    "container_shoreline_DesignStuff_00058": {
-      "groupId": "Scontainer_ammo_Grenade_N3_3_shoreline"
-    },
-    "shoreline_DesignStuff_00382": {
-      "groupId": "Scontainer_ammo_Grenade_N4_3_shoreline"
+    "shoreline_DesignStuff_00384": {
+      "groupId": "Scontainer_ammo_Grenade_N6_2_shoreline"
     },
     "shoreline_DesignStuff_00385": {
       "groupId": "Scontainer_ammo_Grenade_N1_2_shoreline"
     },
-    "container_shoreline_DesignStuff_00057": {
+    "shoreline_DesignStuff_00386": {
       "groupId": "Scontainer_ammo_Grenade_N3_3_shoreline"
     },
-    "container_shoreline_DesignStuff_00061": {
-      "groupId": "Scontainer_ammo_Grenade_N5_2_shoreline"
+    "shoreline_pirs02_00000": {
+      "groupId": ""
     },
-    "container_shoreline_DesignStuff_00054": {
-      "groupId": "Scontainer_ammo_Grenade_N1_2_shoreline"
+    "shoreline_sanatorium_indoor_optimized_00000": {
+      "groupId": ""
     },
-    "shoreline_DesignStuff_00381": {
-      "groupId": "Scontainer_ammo_Grenade_N5_2_shoreline"
+    "shoreline_sanatorium_indoor_optimized_00001": {
+      "groupId": ""
     },
-    "container_shoreline_DesignStuff_00056": {
-      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    "woods_combined_00075": {
+      "groupId": ""
     },
-    "shoreline_DesignStuff_00380": {
-      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    "woods_combined_00079": {
+      "groupId": ""
+    }
+  },
+  "containersGroups": {
+    "BagSport_N10_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
     },
-    "container_shoreline_DesignStuff_00059": {
-      "groupId": "Scontainer_ammo_Grenade_N4_3_shoreline"
+    "BagSport_N11_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
     },
-    "container_shoreline_DesignStuff_00055": {
-      "groupId": "Scontainer_ammo_Grenade_N2_3_shoreline"
+    "BagSport_N12_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
     },
-    "shoreline_DesignStuff_00384": {
-      "groupId": "Scontainer_ammo_Grenade_N6_2_shoreline"
+    "BagSport_N13_5_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
     },
-    "container_shoreline_DesignStuff_00062": {
-      "groupId": "Scontainer_ammo_Grenade_N6_2_shoreline"
+    "BagSport_N14_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N15_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N16_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N17_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N18_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N19_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N20_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N21_5_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N22_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N23_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N24_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N25_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N26_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N27_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N28_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N29_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N30_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N31_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N32_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N33_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N34_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N35_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N36_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N37_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N38_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N39_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N40_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N41_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N42_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N43_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N44_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N45_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N46_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N47_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N48_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N49_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N4_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N50_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N51_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N52_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N53_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N54_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N55_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N56_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N57_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N58_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N59_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N5_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N6_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N7_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N8_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "BagSport_N9_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Jaeger_Stash_rnd_s": {
+      "maxContainers": 33,
+      "minContainers": 27
+    },
+    "MadBag_N10_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N11_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N12_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N13_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N14_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N15_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N16_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N17_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N18_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N19_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N20_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N21_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N22_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N23_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N4_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N5_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N6_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N7_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N8_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadBag_N9_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadCase_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadCase_N2_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadCase_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "MadCase_N4_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_64_open_P_forest": {
+      "maxContainers": 4,
+      "minContainers": 3
+    },
+    "Plastic_suitcase_N10_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N11_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N12_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N13_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N14_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N15_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N16_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N17_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N18_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N19_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N20_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N21_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N22_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N23_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N26_9": {
+      "maxContainers": 5,
+      "minContainers": 4
+    },
+    "Plastic_suitcase_N27_4": {
+      "maxContainers": 2,
+      "minContainers": 1
+    },
+    "Plastic_suitcase_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N4_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N5_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N6_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N7_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N8_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Plastic_suitcase_N9_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N3_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N4_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N5_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N6_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_Grenade_N7_4": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_wood_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_wood_N2_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_wood_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "Scontainer_ammo_wood_N4_4": {
+      "maxContainers": 2,
+      "minContainers": 1
+    },
+    "ToolBox_N10_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N11_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N12_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N13_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N14_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N15_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N16_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N17_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N18_4": {
+      "maxContainers": 2,
+      "minContainers": 1
+    },
+    "ToolBox_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N2_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N3_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N4_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N5_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N6_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N7_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N8_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_N9_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "ToolBox_lootable_forest": {
+      "maxContainers": 5,
+      "minContainers": 3
+    },
+    "WeaponBox_N10_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N11_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N12_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N13_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N14_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N15_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N16_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N17_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N18_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N19_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N20_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N21_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N22_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N23_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N24_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N25_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N26_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N27_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N28_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N29_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N30_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N31_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N32_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N33_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N34_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N3_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N4_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N5_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N6_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N7_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N8_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "WeaponBox_N9_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_BUG_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_lux_N1_2_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_mid_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_mid_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_varios_N1_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_varios_N2_3_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "bag_sport_varios_N3_4_shoreline": {
+      "maxContainers": 2,
+      "minContainers": 0
+    },
+    "civilian_plastic1": {
+      "maxContainers": 3,
+      "minContainers": 1
+    },
+    "jackets_extention": {
+      "maxContainers": 3,
+      "minContainers": 2
+    },
+    "plastic_suitc_forest": {
+      "maxContainers": 3,
+      "minContainers": 1
+    },
+    "vill_boxes": {
+      "maxContainers": 3,
+      "minContainers": 1
     }
   }
 }

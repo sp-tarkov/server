@@ -3,7 +3,7 @@
         "descriptionLocaleKey": "launcher-profile-edgeofdarkness",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -409,6 +409,15 @@
                             "constructing": false,
                             "lastRecipe": "",
                             "level": 0,
+                            "passiveBonusesEnabled": true,
+                            "slots": [],
+                            "type": 16
+                        }, {
+                            "active": true,
+                            "completeTime": 0,
+                            "constructing": false,
+                            "lastRecipe": "",
+                            "level": 0,
                             "passiveBonusesEnabled": false,
                             "slots": [],
                             "type": 17
@@ -777,6 +786,26 @@
                                 }
                             }
                         }, {
+							"_id": "658c3f38bb2016e5630bdbe5",
+							"_tpl": "65703d866584602f7d057a8a",
+							"parentId": "af4d8b34228a85208fb85895",
+							"slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "af4d8b34228a85208fb85895",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "af4d8b34228a85208fb85895",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "af4d8b34228a85208fb85895",
+							"slotId": "soft_armor_right"
+						}, {
                             "_id": "01e9d751f10e4e9aebdd94d5",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe49444ae6628187a2e77b8",
@@ -866,6 +895,26 @@
                                 }
                             }
                         }, {
+							"_id": "658c3f38bb2016e5630bdbe5",
+							"_tpl": "65703d866584602f7d057a8a",
+							"parentId": "fb08ac9e01a36533563a4389",
+							"slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "fb08ac9e01a36533563a4389",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "fb08ac9e01a36533563a4389",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "fb08ac9e01a36533563a4389",
+							"slotId": "soft_armor_right"
+						}, {
                             "_id": "686cfcc458f923cb2e76b8d7",
                             "_tpl": "5710c24ad2720bc3458b45a3",
                             "location": {
@@ -1013,6 +1062,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "7a3a6fdbd690c6e3767a096d",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "7a3a6fdbd690c6e3767a096d",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "7a3a6fdbd690c6e3767a096d",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "7a3a6fdbd690c6e3767a096d",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "a498d5c84a16a8700486b51e",
                             "_tpl": "5b40e5e25acfc4001a599bea",
@@ -2113,6 +2182,46 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdca8",
+                            "_tpl": "656f603f94b480b8a500c0d6",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "front_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdca9",
+                            "_tpl": "656efd66034e8e01c407f35c",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "back_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcaa",
+                            "_tpl": "654a8b0b0337d53f9102c2ae",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcab",
+                            "_tpl": "654a8976f414fcea4004d78b",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcac",
+                            "_tpl": "654a8b3df414fcea4004d78f",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcad",
+                            "_tpl": "654a8b80f414fcea4004d797",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "soft_armor_right"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcae",
+                            "_tpl": "654a8ae00337d53f9102c2aa",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "Collar"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcaf",
+                            "_tpl": "654a8bc5f414fcea4004d79b",
+                            "parentId": "c8a0ba51f519cfde0fe997e8",
+                            "slotId": "Groin"
+                        }, {
                             "_id": "cd688bf5123e7f7b524bf826",
                             "_tpl": "560d5e524bdc2d25448b4571",
                             "location": {
@@ -2307,6 +2416,21 @@
                                     "MaxDurability": 25
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc64",
+                            "_tpl": "657baaf0b7e9ca9a02045c02",
+                            "parentId": "e4c6958acc50164d2387b53a",
+                            "slotId": "Helmet_top"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc65",
+                            "_tpl": "657bab6ec6f689d3a205b85f",
+                            "parentId": "e4c6958acc50164d2387b53a",
+                            "slotId": "Helmet_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc66",
+                            "_tpl": "657babc6f58ba5a6250107a2",
+                            "parentId": "e4c6958acc50164d2387b53a",
+                            "slotId": "Helmet_ears"
                         }, {
                             "_id": "599a234277a564d9dd5bdd1c",
                             "_tpl": "5ab8f39486f7745cd93a1cca",
@@ -2514,6 +2638,36 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdcb1",
+                            "_tpl": "656fa0fb498d1b7e3e071d9c",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "Front_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcb2",
+                            "_tpl": "656fa0fb498d1b7e3e071d9c",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "Back_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcb3",
+                            "_tpl": "65730c0e292ecadbfa09ad49",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcb4",
+                            "_tpl": "65730c2213a2f660f60bea96",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcb5",
+                            "_tpl": "65730c2b292ecadbfa09ad50",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcb6",
+                            "_tpl": "65730c35292ecadbfa09ad54",
+                            "parentId": "380b954613fc6559dee3e19e",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "b410bdab51c195ffe3c83d1b",
                             "_tpl": "5b432d215acfc4771e1c6624",
                             "location": {
@@ -2530,6 +2684,16 @@
                                     "MaxDurability": 30
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc75",
+                            "_tpl": "657bb92fa1c61ee0c303631f",
+                            "parentId": "b410bdab51c195ffe3c83d1b",
+                            "slotId": "Helmet_top"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc76",
+                            "_tpl": "657bb99db30eca976305117f",
+                            "parentId": "b410bdab51c195ffe3c83d1b",
+                            "slotId": "Helmet_back"
                         }, {
                             "_id": "172f0b166eec3c78e6c3ea84",
                             "_tpl": "5e8488fa988a8701445df1e4",
@@ -3593,7 +3757,7 @@
                             }
                         }, {
                             "_id": "b2edecbf14e5350dfd6e6e5e",
-                            "_tpl": "5beed0f50db834001c062b12",
+                            "_tpl": "6499849fc93611967b034949",
                             "location": {
                                 "isSearched": true,
                                 "r": 1,
@@ -3614,97 +3778,104 @@
                                     "MaxDurability": 100
                                 }
                             }
-                        }, {
-                            "_id": "64ffc5ccbc2251b698f0fea2",
-                            "_tpl": "5beec8ea0db834001a6f9dbf",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_pistol_grip"
-                        }, {
-                            "_id": "59a37d06c461cf976c402b80",
-                            "_tpl": "5beec91a0db834001961942d",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_reciever"
-                        }, {
-                            "_id": "cedefb638120dc6d42fb662b",
-                            "_tpl": "5beec9450db83400970084fd",
-                            "parentId": "59a37d06c461cf976c402b80",
-                            "slotId": "mod_sight_rear",
-                            "upd": {
-                                "Sight": {
-                                    "ScopesCurrentCalibPointIndexes": [
-                                        0
-                                    ],
-                                    "ScopesSelectedModes": [
-                                        0
-                                    ],
-                                    "SelectedScope": 0
-                                }
-                            }
-                        }, {
-                            "_id": "15fc85f890517a4ef55164ea",
-                            "_tpl": "5bf3f59f0db834001a6fa060",
-                            "parentId": "cedefb638120dc6d42fb662b",
-                            "slotId": "mod_sight_rear",
-                            "upd": {
-                                "Sight": {
-                                    "ScopesCurrentCalibPointIndexes": [
-                                        0
-                                    ],
-                                    "ScopesSelectedModes": [
-                                        0
-                                    ],
-                                    "SelectedScope": 0
-                                }
-                            }
-                        }, {
-                            "_id": "169361f6c47d5b6a2a5b119a",
-                            "_tpl": "55d480c04bdc2d1d4e8b456a",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_magazine"
-                        }, {
-                            "_id": "4062e1a8d731f8aae2570107",
-                            "_tpl": "56dff3afd2720bba668b4567",
-                            "parentId": "169361f6c47d5b6a2a5b119a",
-                            "slotId": "cartridges",
-                            "upd": {
-                                "StackObjectsCount": 30
-                            }
-                        }, {
-                            "_id": "d068c0da32fec4264ddefef9",
-                            "_tpl": "5beec8b20db834001961942a",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_stock_001"
-                        }, {
-                            "_id": "48d82e5be78ae8d5937339a2",
-                            "_tpl": "5beec8c20db834001d2c465c",
-                            "parentId": "d068c0da32fec4264ddefef9",
-                            "slotId": "mod_stock"
-                        }, {
-                            "_id": "c441884a6e358fd88e34aa25",
-                            "_tpl": "5beec3e30db8340019619424",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_handguard"
-                        }, {
-                            "_id": "185af9bc73a14483a29c9535",
-                            "_tpl": "5beecbb80db834001d2c465e",
-                            "parentId": "c441884a6e358fd88e34aa25",
-                            "slotId": "mod_mount_000"
-                        }, {
-                            "_id": "61e9f910940ae4f314cf7866",
-                            "_tpl": "5beecbb80db834001d2c465e",
-                            "parentId": "c441884a6e358fd88e34aa25",
-                            "slotId": "mod_mount_001"
-                        }, {
-                            "_id": "e871768761a4bfc081a9841e",
-                            "_tpl": "5beec1bd0db834001e6006f3",
-                            "parentId": "b2edecbf14e5350dfd6e6e5e",
-                            "slotId": "mod_barrel"
-                        }, {
-                            "_id": "e4bde4372417487034344d72",
-                            "_tpl": "5beec3420db834001b095429",
-                            "parentId": "e871768761a4bfc081a9841e",
-                            "slotId": "mod_muzzle"
-                        }, {
+					},{
+						"_id": "1424076063149bbbc18be043",
+						"_tpl": "649ec107961514b22506b10c",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_gas_block",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "4d80308cb8a6857a9d83bbc6",
+						"_tpl": "5beec8ea0db834001a6f9dbf",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_pistol_grip",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "a025f2dbc9f08b942a4c6e9b",
+						"_tpl": "649ec127c93611967b034957",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_handguard",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "4604eba2de0c758ccba0a192",
+						"_tpl": "649ec2af961514b22506b10f",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_muzzle",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "d29933d494ea298f19db3aeb",
+						"_tpl": "649ec2f3961514b22506b111",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_reciever",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "9808b23de6d06cbcf1dfb99e",
+						"_tpl": "649ec30cb013f04a700e60fb",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_magazine",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "c63e9186930f29c20f9d0fe4",
+						"_tpl": "649ec87d8007560a9001ab36",
+						"parentId": "b2edecbf14e5350dfd6e6e5e",
+						"slotId": "mod_stock_001",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "81c613b056072a70d6c26e1f",
+						"_tpl": "5beecbb80db834001d2c465e",
+						"parentId": "a025f2dbc9f08b942a4c6e9b",
+						"slotId": "mod_mount_001",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "20c4a8f521c8aed8176d3870",
+						"_tpl": "649ec2da59cbb3c813042dca",
+						"parentId": "d29933d494ea298f19db3aeb",
+						"slotId": "mod_sight_rear",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "5c730026306a7c56490e5f3e",
+						"_tpl": "5beec8c20db834001d2c465c",
+						"parentId": "c63e9186930f29c20f9d0fe4",
+						"slotId": "mod_stock",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "bcb76cd884032f340f0f7a01",
+						"_tpl": "649ec2cec93611967b03495e",
+						"parentId": "20c4a8f521c8aed8176d3870",
+						"slotId": "mod_sight_rear",
+						"upd": {
+							"StackObjectsCount": 1
+						}
+					}, {
+						"_id": "0bc701a7ea93ee76e18ebb0e",
+						"_tpl": "56dff3afd2720bba668b4567",
+						"parentId": "9808b23de6d06cbcf1dfb99e",
+						"slotId": "cartridges",
+						"location": 0,
+						"upd": {
+							"StackObjectsCount": 30
+						}
+					}, {
                             "_id": "5fe49444ae6628187a2e78ba",
                             "_tpl": "5963866b86f7747bfa1c4462"
                         }, {
@@ -4053,6 +4224,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -4110,7 +4306,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -4516,6 +4712,15 @@
                             "constructing": false,
                             "lastRecipe": "",
                             "level": 0,
+                            "passiveBonusesEnabled": true,
+                            "slots": [],
+                            "type": 16
+                        }, {
+                            "active": true,
+                            "completeTime": 0,
+                            "constructing": false,
+                            "lastRecipe": "",
+                            "level": 0,
                             "passiveBonusesEnabled": false,
                             "slots": [],
                             "type": 17
@@ -4906,6 +5111,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe49a0e2694b0755a504766",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe49a0e2694b0755a504766",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe49a0e2694b0755a504766",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe49a0e2694b0755a504766",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe49a0e2694b0755a50476a",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
@@ -5352,6 +5577,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe49a0e2694b0755a50478b",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe49a0e2694b0755a50478b",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe49a0e2694b0755a50478b",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe49a0e2694b0755a50478b",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe49a0e2694b0755a50478c",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
                             "location": {
@@ -5452,6 +5697,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe49a0e2694b0755a504793",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe49a0e2694b0755a504793",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe49a0e2694b0755a504793",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe49a0e2694b0755a504793",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe49a0e2694b0755a504794",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
@@ -6300,6 +6565,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3d4dab989d7f4805edbb",
+                            "_tpl": "656fad8c498d1b7e3e071da0",
+                            "parentId": "5fe49a0e2694b0755a5047d9",
+                            "slotId": "Front_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbc",
+                            "_tpl": "656fad8c498d1b7e3e071da0",
+                            "parentId": "5fe49a0e2694b0755a5047d9",
+                            "slotId": "Back_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbd",
+                            "_tpl": "6570e025615f54368b04fcb0",
+                            "parentId": "5fe49a0e2694b0755a5047d9",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbe",
+                            "_tpl": "6570e0610b57c03ec90b96ef",
+                            "parentId": "5fe49a0e2694b0755a5047d9",
+                            "slotId": "Soft_armor_back"
+                        }, {
                             "_id": "5fe49a0e2694b0755a5047da",
                             "_tpl": "5c165d832e2216398b5a7e36",
                             "location": {
@@ -6453,6 +6738,21 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3d4dab989d7f4805edc9",
+                            "_tpl": "654a90aff4f81a421b0a7c86",
+                            "parentId": "5fe49a0e2694b0755a5047e3",
+                            "slotId": "helmet_top"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edca",
+                            "_tpl": "654a91068e1ce698150fd1e2",
+                            "parentId": "5fe49a0e2694b0755a5047e3",
+                            "slotId": "helmet_back"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edcb",
+                            "_tpl": "654a9189bcc67a392b056c79",
+                            "parentId": "5fe49a0e2694b0755a5047e3",
+                            "slotId": "helmet_ears"
+                        }, {
                             "_id": "5fe49a0e2694b0755a5047e4",
                             "_tpl": "5aa7d03ae5b5b00016327db5",
                             "location": {
@@ -6469,6 +6769,21 @@
                                     "MaxDurability": 25
                                 }
                             }
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edcd",
+                            "_tpl": "654a90aff4f81a421b0a7c86",
+                            "parentId": "5fe49a0e2694b0755a5047e4",
+                            "slotId": "helmet_top"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edce",
+                            "_tpl": "654a91068e1ce698150fd1e2",
+                            "parentId": "5fe49a0e2694b0755a5047e4",
+                            "slotId": "helmet_back"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edcf",
+                            "_tpl": "654a9189bcc67a392b056c79",
+                            "parentId": "5fe49a0e2694b0755a5047e4",
+                            "slotId": "helmet_ears"
                         }, {
                             "_id": "5fe49a0e2694b0755a5047e5",
                             "_tpl": "544fb37f4bdc2dee738b4567",
@@ -6690,6 +7005,31 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3d4dab989d7f4805ede0",
+                            "_tpl": "656f9fa0498d1b7e3e071d98",
+                            "parentId": "5fe49a0e2694b0755a5047f4",
+                            "slotId": "Front_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805ede1",
+                            "_tpl": "656f9fa0498d1b7e3e071d98",
+                            "parentId": "5fe49a0e2694b0755a5047f4",
+                            "slotId": "Back_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805ede2",
+                            "_tpl": "6570e83223c1f638ef0b0ede",
+                            "parentId": "5fe49a0e2694b0755a5047f4",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805ede3",
+                            "_tpl": "6570e87c23c1f638ef0b0ee2",
+                            "parentId": "5fe49a0e2694b0755a5047f4",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805ede4",
+                            "_tpl": "6570e90b3a5689d85f08db97",
+                            "parentId": "5fe49a0e2694b0755a5047f4",
+                            "slotId": "Groin"
+                        }, {
                             "_id": "5fe49a0e2694b0755a5047f5",
                             "_tpl": "5d5d85c586f774279a21cbdb",
                             "location": {
@@ -6793,6 +7133,16 @@
                                     "MaxDurability": 27
                                 }
                             }
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edec",
+                            "_tpl": "657f8b94f92cd718b70154ff",
+                            "parentId": "5fe49a0e2694b0755a5047fb",
+                            "slotId": "Helmet_top"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805eded",
+                            "_tpl": "657f8b43f92cd718b70154fb",
+                            "parentId": "5fe49a0e2694b0755a5047fb",
+                            "slotId": "Helmet_back"
                         }, {
                             "_id": "5fe49a0e2694b0755a5047fd",
                             "_tpl": "55d4887d4bdc2d962f8b4570",
@@ -8304,6 +8654,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -8364,7 +8739,7 @@
         "descriptionLocaleKey": "launcher-profile_leftbehind",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -9052,6 +9427,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9285a72d07b6630292d",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9285a72d07b6630292d",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9285a72d07b6630292d",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9285a72d07b6630292d",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4a9285a72d07b66302931",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe4a9285a72d07b66302933",
@@ -9140,6 +9535,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9285a72d07b66302935",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9285a72d07b66302935",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9285a72d07b66302935",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9285a72d07b66302935",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4a9285a72d07b66302936",
                             "_tpl": "5710c24ad2720bc3458b45a3",
@@ -9323,6 +9738,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9285a72d07b66302943",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9285a72d07b66302943",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9285a72d07b66302943",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9285a72d07b66302943",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4a9285a72d07b66302944",
                             "_tpl": "5b40e5e25acfc4001a599bea",
@@ -11402,6 +11837,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -11457,7 +11917,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -12179,6 +12639,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9fcf5aec236ec383636",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9fcf5aec236ec383636",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9fcf5aec236ec383636",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9fcf5aec236ec383636",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4a9fcf5aec236ec38363a",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe4a9fcf5aec236ec38363c",
@@ -12636,6 +13116,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9fcf5aec236ec38365b",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9fcf5aec236ec38365b",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9fcf5aec236ec38365b",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9fcf5aec236ec38365b",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4a9fcf5aec236ec38365c",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
                             "location": {
@@ -12779,6 +13279,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a9fcf5aec236ec383665",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a9fcf5aec236ec383665",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a9fcf5aec236ec383665",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a9fcf5aec236ec383665",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4a9fcf5aec236ec383666",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
@@ -14597,6 +15117,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -14655,7 +15200,7 @@
         "descriptionLocaleKey": "launcher-profile_preparetoescape",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -15368,6 +15913,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a66e40ca750fd72b5880",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a66e40ca750fd72b5880",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a66e40ca750fd72b5880",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a66e40ca750fd72b5880",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4a66e40ca750fd72b5884",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe4a66e40ca750fd72b5886",
@@ -15456,6 +16021,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a66e40ca750fd72b5888",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a66e40ca750fd72b5888",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a66e40ca750fd72b5888",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a66e40ca750fd72b5888",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4a66e40ca750fd72b5889",
                             "_tpl": "5710c24ad2720bc3458b45a3",
@@ -15623,6 +16208,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4a66e40ca750fd72b5895",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4a66e40ca750fd72b5895",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4a66e40ca750fd72b5895",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4a66e40ca750fd72b5895",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4a66e40ca750fd72b5896",
                             "_tpl": "5b40e5e25acfc4001a599bea",
@@ -16808,6 +17413,46 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdca8",
+                            "_tpl": "656f603f94b480b8a500c0d6",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "front_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdca9",
+                            "_tpl": "656efd66034e8e01c407f35c",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "back_plate"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcaa",
+                            "_tpl": "654a8b0b0337d53f9102c2ae",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcab",
+                            "_tpl": "654a8976f414fcea4004d78b",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcac",
+                            "_tpl": "654a8b3df414fcea4004d78f",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcad",
+                            "_tpl": "654a8b80f414fcea4004d797",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "soft_armor_right"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcae",
+                            "_tpl": "654a8ae00337d53f9102c2aa",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "Collar"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdcaf",
+                            "_tpl": "654a8bc5f414fcea4004d79b",
+                            "parentId": "5fe4a66e40ca750fd72b58f4",
+                            "slotId": "Groin"
+                        }, {
                             "_id": "5fe4a66e40ca750fd72b58f5",
                             "_tpl": "5d1b36a186f7742523398433",
                             "location": {
@@ -16878,6 +17523,21 @@
                                     "MaxDurability": 25
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc64",
+                            "_tpl": "657baaf0b7e9ca9a02045c02",
+                            "parentId": "5fe4a66e40ca750fd72b58fd",
+                            "slotId": "Helmet_top"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc65",
+                            "_tpl": "657bab6ec6f689d3a205b85f",
+                            "parentId": "5fe4a66e40ca750fd72b58fd",
+                            "slotId": "Helmet_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdc66",
+                            "_tpl": "657babc6f58ba5a6250107a2",
+                            "parentId": "5fe4a66e40ca750fd72b58fd",
+                            "slotId": "Helmet_ears"
                         }, {
                             "_id": "5fe4a66e40ca750fd72b5901",
                             "_tpl": "559ba5b34bdc2d1f1a8b4582",
@@ -18096,6 +18756,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -18151,7 +18836,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -18910,6 +19595,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4ab2240ca750fd72bbd34",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4ab2240ca750fd72bbd34",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4ab2240ca750fd72bbd34",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4ab2240ca750fd72bbd34",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4ab2240ca750fd72bbd38",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe4ab2240ca750fd72bbd3a",
@@ -19351,6 +20056,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4ab2240ca750fd72bbd58",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4ab2240ca750fd72bbd58",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4ab2240ca750fd72bbd58",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4ab2240ca750fd72bbd58",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4ab2240ca750fd72bbd59",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
                             "location": {
@@ -19494,6 +20219,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4ab2240ca750fd72bbd63",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4ab2240ca750fd72bbd63",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4ab2240ca750fd72bbd63",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4ab2240ca750fd72bbd63",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe4ab2240ca750fd72bbd64",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
@@ -20337,6 +21082,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3d4dab989d7f4805edbb",
+                            "_tpl": "656fad8c498d1b7e3e071da0",
+                            "parentId": "5fe4ab2240ca750fd72bbda9",
+                            "slotId": "Front_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbc",
+                            "_tpl": "656fad8c498d1b7e3e071da0",
+                            "parentId": "5fe4ab2240ca750fd72bbda9",
+                            "slotId": "Back_plate"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbd",
+                            "_tpl": "6570e025615f54368b04fcb0",
+                            "parentId": "5fe4ab2240ca750fd72bbda9",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edbe",
+                            "_tpl": "6570e0610b57c03ec90b96ef",
+                            "parentId": "5fe4ab2240ca750fd72bbda9",
+                            "slotId": "Soft_armor_back"
+                        }, {
                             "_id": "5fe4ab2240ca750fd72bbdaa",
                             "_tpl": "57347da92459774491567cf5",
                             "location": {
@@ -20441,6 +21206,21 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3d4dab989d7f4805edc9",
+                            "_tpl": "654a90aff4f81a421b0a7c86",
+                            "parentId": "5fe4ab2240ca750fd72bbdb2",
+                            "slotId": "helmet_top"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edca",
+                            "_tpl": "654a91068e1ce698150fd1e2",
+                            "parentId": "5fe4ab2240ca750fd72bbdb2",
+                            "slotId": "helmet_back"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edcb",
+                            "_tpl": "654a9189bcc67a392b056c79",
+                            "parentId": "5fe4ab2240ca750fd72bbdb2",
+                            "slotId": "helmet_ears"
+                        }, {
                             "_id": "5fe4ab2240ca750fd72bbdb3",
                             "_tpl": "5aa7d03ae5b5b00016327db5",
                             "location": {
@@ -20457,6 +21237,21 @@
                                     "MaxDurability": 25
                                 }
                             }
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edc9",
+                            "_tpl": "654a90aff4f81a421b0a7c86",
+                            "parentId": "5fe4ab2240ca750fd72bbdb3",
+                            "slotId": "helmet_top"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edca",
+                            "_tpl": "654a91068e1ce698150fd1e2",
+                            "parentId": "5fe4ab2240ca750fd72bbdb3",
+                            "slotId": "helmet_back"
+                        }, {
+                            "_id": "658c3d4dab989d7f4805edcb",
+                            "_tpl": "654a9189bcc67a392b056c79",
+                            "parentId": "5fe4ab2240ca750fd72bbdb3",
+                            "slotId": "helmet_ears"
                         }, {
                             "_id": "5fe4ab2240ca750fd72bbdb4",
                             "_tpl": "544fb37f4bdc2dee738b4567",
@@ -21797,6 +22592,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -21855,7 +22675,7 @@
         "descriptionLocaleKey": "launcher-profile_sptdeveloper",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -24368,7 +25188,7 @@
                     "BannedState": false,
                     "BannedUntil": 0,
                     "Bans": [],
-                    "Experience": 17206066,
+                    "Experience": 19926895,
                     "GameVersion": "edge_of_darkness",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
@@ -24805,6 +25625,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 4000
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -24862,7 +25707,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -27374,7 +28219,7 @@
                     "BannedState": false,
                     "BannedUntil": 0,
                     "Bans": [],
-                    "Experience": 17206066,
+                    "Experience": 19926895,
                     "GameVersion": "edge_of_darkness",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
@@ -27779,6 +28624,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 4000
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -27838,7 +28708,7 @@
         "descriptionLocaleKey": "launcher-profile_spteasystart",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -31098,6 +31968,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -31154,7 +32049,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -34414,6 +35309,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -34473,7 +35393,7 @@
         "descriptionLocaleKey": "launcher-profile_sptzerotohero",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -35293,6 +36213,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -35348,7 +36293,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -36179,6 +37124,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -36237,7 +37207,7 @@
         "descriptionLocaleKey": "launcher-profile_standard",
         "bear": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -36900,6 +37870,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe4977574f15b4ad31b662b",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe4977574f15b4ad31b662b",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe4977574f15b4ad31b662b",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe4977574f15b4ad31b662b",
+                            "slotId": "soft_armor_right"
+                        }, {
                             "_id": "5fe4977574f15b4ad31b662f",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe4977574f15b4ad31b6631",
@@ -36988,7 +37978,27 @@
                                     "MaxDurability": 50
                                 }
                             }
-                        }, {
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe5",
+							"_tpl": "65703d866584602f7d057a8a",
+							"parentId": "5fe4977574f15b4ad31b6633",
+							"slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "5fe4977574f15b4ad31b6633",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "5fe4977574f15b4ad31b6633",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "5fe4977574f15b4ad31b6633",
+							"slotId": "soft_armor_right"
+						}, {
                             "_id": "5fe4977574f15b4ad31b6634",
                             "_tpl": "5710c24ad2720bc3458b45a3",
                             "location": {
@@ -37161,6 +38171,26 @@
                                 }
                             }
                         }, {
+							"_id": "658c3f38bb2016e5630bdbe5",
+							"_tpl": "65703d866584602f7d057a8a",
+							"parentId": "5fe4977574f15b4ad31b6641",
+							"slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "5fe4977574f15b4ad31b6641",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "5fe4977574f15b4ad31b6641",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "5fe4977574f15b4ad31b6641",
+							"slotId": "soft_armor_right"
+						}, {							
                             "_id": "5fe4977574f15b4ad31b6642",
                             "_tpl": "5b40e5e25acfc4001a599bea",
                             "location": {
@@ -38714,6 +39744,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],
@@ -38771,7 +39826,7 @@
         },
         "usec": {
             "character": {
-                "BackendCounters": {},
+                "TaskConditionCounters": {},
                 "Bonuses": [{
                         "id": "64f5b9e5fa34f11b380756c0",
                         "templateId": "566abbc34bdc2d92178b4576",
@@ -39468,6 +40523,26 @@
                                 }
                             }
                         }, {
+							"_id": "658c3f38bb2016e5630bdbe5",
+							"_tpl": "65703d866584602f7d057a8a",
+							"parentId": "5fe49cdfa19cac3fa9054079",
+							"slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "5fe49cdfa19cac3fa9054079",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "5fe49cdfa19cac3fa9054079",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "5fe49cdfa19cac3fa9054079",
+							"slotId": "soft_armor_right"
+						}, {
                             "_id": "5fe49cdfa19cac3fa905407d",
                             "_tpl": "627a4e6b255f7527fb05a0f6",
                             "parentId": "5fe49cdfa19cac3fa905407f",
@@ -39909,6 +40984,26 @@
                                 }
                             }
                         }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe49cdfa19cac3fa905409d",
+                            "slotId": "Soft_armor_front"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe6",
+							"_tpl": "65703fa06584602f7d057a8e",
+							"parentId": "5fe49cdfa19cac3fa905409d",
+							"slotId": "Soft_armor_back"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe7",
+							"_tpl": "65703fe46a912c8b5c03468b",
+							"parentId": "5fe49cdfa19cac3fa905409d",
+							"slotId": "Soft_armor_left"
+						}, {
+							"_id": "658c3f38bb2016e5630bdbe8",
+							"_tpl": "657040374e67e8ec7a0d261c",
+							"parentId": "5fe49cdfa19cac3fa905409d",
+							"slotId": "soft_armor_right"
+						}, {
                             "_id": "5fe49cdfa19cac3fa905409e",
                             "_tpl": "5448fee04bdc2dbc018b4567",
                             "location": {
@@ -40014,6 +41109,26 @@
                                     "MaxDurability": 50
                                 }
                             }
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe5",
+                            "_tpl": "65703d866584602f7d057a8a",
+                            "parentId": "5fe49cdfa19cac3fa90540a5",
+                            "slotId": "Soft_armor_front"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe6",
+                            "_tpl": "65703fa06584602f7d057a8e",
+                            "parentId": "5fe49cdfa19cac3fa90540a5",
+                            "slotId": "Soft_armor_back"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe7",
+                            "_tpl": "65703fe46a912c8b5c03468b",
+                            "parentId": "5fe49cdfa19cac3fa90540a5",
+                            "slotId": "Soft_armor_left"
+                        }, {
+                            "_id": "658c3f38bb2016e5630bdbe8",
+                            "_tpl": "657040374e67e8ec7a0d261c",
+                            "parentId": "5fe49cdfa19cac3fa90540a5",
+                            "slotId": "soft_armor_right"
                         }, {
                             "_id": "5fe49cdfa19cac3fa90540a6",
                             "_tpl": "5e831507ea0a7c419c2f9bd9",
@@ -41443,6 +42558,31 @@
                             "LastAccess": 0,
                             "PointsEarnedDuringSession": 0,
                             "Progress": 0
+                        }, {
+                            "Id": "BearAssaultoperations",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAuthority",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearAksystems",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearHeavycaliber",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
+                        }, {
+                            "Id": "BearRawpower",
+                            "Progress": 0,
+                            "PointsEarnedDuringSession": 0,
+                            "LastAccess": 0
                         }
                     ],
                     "Mastering": [],

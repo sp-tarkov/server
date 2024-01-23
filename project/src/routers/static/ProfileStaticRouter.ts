@@ -66,6 +66,14 @@ export class ProfileStaticRouter extends StaticRouter
                 },
             ),
             new RouteAction(
+                "/client/profile/view",
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.profileCallbacks.getOtherProfile(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
                 "/client/profile/settings",
                 (url: string, info: any, sessionID: string, output: string): any =>
                 {

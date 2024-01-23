@@ -42,7 +42,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 20,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -94,7 +94,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -112,7 +112,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -127,7 +127,7 @@
       "BossPlayer": false,
       "BossZone": "ZoneMiniHouse,ZoneClearVill,ZoneRoad,ZoneBrokenVill,ZoneScavBase2",
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1
     }
   ],
@@ -171,8 +171,8 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.9,
-  "IconX": 252,
-  "IconY": 463,
+  "IconX": 460,
+  "IconY": 660,
   "Id": "Woods",
   "Insurance": true,
   "IsSecret": false,
@@ -8728,8 +8728,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "House,Old Station",
-      "EventAvailable": true,
+      "EntryPoints": "Old Station",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -8743,8 +8743,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "House,Old Station",
-      "EventAvailable": true,
+      "EntryPoints": "House",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -8818,8 +8818,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "House,Old Station",
-      "EventAvailable": true,
+      "EntryPoints": "House",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",

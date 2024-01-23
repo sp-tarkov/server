@@ -587,7 +587,7 @@ export class InsuranceController
      */
     public insure(pmcData: IPmcData, body: IInsureRequestData, sessionID: string): IItemEventRouterResponse
     {
-        let output = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
         const itemsToInsureCount = body.items.length;
         const itemsToPay = [];
         const inventoryItemsHash = {};
@@ -617,7 +617,7 @@ export class InsuranceController
         };
 
         // pay for the item insurance
-        output = this.paymentService.payMoney(pmcData, options, sessionID, output);
+        this.paymentService.payMoney(pmcData, options, sessionID, output);
         if (output.warnings.length > 0)
         {
             return output;
@@ -644,7 +644,7 @@ export class InsuranceController
      */
     public cost(request: IGetInsuranceCostRequestData, sessionID: string): IGetInsuranceCostResponseData
     {
-        const output: IGetInsuranceCostResponseData = {};
+        const response: IGetInsuranceCostResponseData = {};
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
         const inventoryItemsHash: Record<string, Item> = {};
 
@@ -671,10 +671,10 @@ export class InsuranceController
                 );
             }
 
-            output[trader] = items;
+            response[trader] = items;
         }
 
-        return output;
+        return response;
     }
 }
 

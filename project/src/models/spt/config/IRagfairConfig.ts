@@ -23,17 +23,20 @@ export interface Sell
     time: Time;
     /** Player offer reputation gain/loss settings */
     reputation: Reputation;
-    /** How many hours are simulated to figure out if player offer was sold */
-    simulatedSellHours: number;
     /**Seconds from clicking remove to remove offer from market */
     expireSeconds: number;
 }
 
 export interface Chance
 {
+    /** Base chance percent to sell an item */
     base: number;
-    overpriced: number;
-    underpriced: number;
+    /** Value to multiply the sell chance by */
+    sellMultiplier: number;
+    /** Max possible sell chance % for a player listed offer */
+    maxSellChancePercent: number;
+    /** Min possible sell chance % for a player listed offer */
+    minSellChancePercent: number;
 }
 
 export interface Time extends MinMax
@@ -160,7 +163,10 @@ export interface Blacklist
 
 export interface IUnreasonableModPrices
 {
+    /** Enable a system that adjusts very high ragfair prices to be below a max multiple of items the handbook values */
     enabled: boolean;
+    /** Multipler to start adjusting item values from, e.g. a value of 10 means any value over 10x the handbook price gets adjusted  */
     handbookPriceOverMultiplier: number;
+    /** The new multiplier for items found using above property, e.g. a value of 4 means set items price to 4x handbook price */
     newPriceHandbookMultiplier: number;
 }

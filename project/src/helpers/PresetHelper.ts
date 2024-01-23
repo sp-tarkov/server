@@ -52,6 +52,11 @@ export class PresetHelper
         return this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[id]);
     }
 
+    public getAllPresets(): IPreset[]
+    {
+        return this.jsonUtil.clone(Object.values(this.databaseServer.getTables().globals.ItemPresets));
+    }
+
     public getPresets(templateId: string): IPreset[]
     {
         if (!this.hasPreset(templateId))
@@ -71,8 +76,8 @@ export class PresetHelper
     }
 
     /**
-     * Get the default preset for passed in weapon id
-     * @param templateId Weapon id to get preset for
+     * Get the default preset for passed in item id
+     * @param templateId Item id to get preset for
      * @returns Null if no default preset, otherwise IPreset
      */
     public getDefaultPreset(templateId: string): IPreset

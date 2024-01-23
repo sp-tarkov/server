@@ -12,9 +12,9 @@ import {
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { BotGenerationDetails } from "@spt-aki/models/spt/bots/BotGenerationDetails";
 import {
-    AdjustmentDetails,
     EquipmentFilterDetails,
     EquipmentFilters,
+    IAdjustmentDetails,
     IBotConfig,
     WeightingAdjustmentDetails,
 } from "@spt-aki/models/spt/config/IBotConfig";
@@ -89,7 +89,8 @@ export class BotEquipmentFilterService
         if (randomisationDetails)
         {
             this.adjustChances(randomisationDetails?.equipment, baseBotNode.chances.equipment);
-            this.adjustChances(randomisationDetails?.mods, baseBotNode.chances.mods);
+            this.adjustChances(randomisationDetails?.weaponMods, baseBotNode.chances.weaponMods);
+            this.adjustChances(randomisationDetails?.equipmentMods, baseBotNode.chances.equipmentMods);
             this.adjustGenerationChances(randomisationDetails?.generation, baseBotNode.generation);
         }
     }
@@ -393,7 +394,7 @@ export class BotEquipmentFilterService
      * @param botItemPool Bot item dictionary to adjust
      */
     protected adjustWeighting(
-        weightingAdjustments: AdjustmentDetails,
+        weightingAdjustments: IAdjustmentDetails,
         botItemPool: Record<string, any>,
         showEditWarnings = true,
     ): void
@@ -431,7 +432,7 @@ export class BotEquipmentFilterService
                     {
                         if (showEditWarnings)
                         {
-                            this.logger.warning(
+                            this.logger.debug(
                                 `Tried to edit a non-existent item for slot: ${poolAdjustmentKey} ${itemToEditKey}`,
                             );
                         }

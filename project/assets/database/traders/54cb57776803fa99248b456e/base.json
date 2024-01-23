@@ -35,7 +35,8 @@
   "items_buy_prohibited": {
     "category": [],
     "id_list": [
-      "62e910aaf957f2915e0a5e36"
+      "62e910aaf957f2915e0a5e36",
+      "64d0b40fbe2eed70e254e2d4"
     ]
   },
   "location": "",
@@ -107,6 +108,7 @@
     "5b5f6fa186f77409407a7eb7",
     "5b47574386f77428ca22b343"
   ],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Хабибуллина",
   "unlockedByDefault": true
 }

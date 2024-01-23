@@ -134,7 +134,10 @@ export class GiftService
             const details: ISendMessageDetails = {
                 recipientId: playerId,
                 sender: this.getMessageType(giftData),
-                senderDetails: { _id: this.getSenderId(giftData), info: null },
+                senderDetails: {
+                    _id: this.getSenderId(giftData),
+                    aid: 1234567, // TODO - pass proper aid value
+                    Info: null },
                 messageText: giftData.messageText,
                 items: giftData.items,
                 itemsMaxStorageLifetimeSeconds: this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),

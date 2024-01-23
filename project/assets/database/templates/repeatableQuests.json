@@ -19,39 +19,51 @@
             "conditions": {
                 "AvailableForStart": [],
                 "AvailableForFinish": [{
-                        "_props": {
-                            "id": "618c1de4d4cd91439f3de4ae",
-                            "parentId": "",
-                            "dynamicLocale": true,
-                            "index": 0,
-                            "visibilityConditions": [],
-                            "value": 1,
-                            "type": "Elimination",
-                            "oneSessionOnly": false,
-                            "doNotResetIfCounterCompleted": false,
-                            "counter": {
-                                "id": "618c1de4d4cd91439f3de4ac",
-                                "conditions": [{
-                                        "_props": {
-                                            "target": "Savage",
-                                            "value": 1,
-                                            "savageRole": [
-                                                "bossBully"
-                                            ],
-                                            "id": "618c1de4d4cd91439f3de4ad",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "Kills"
-                                    }
-                                ]
-                            }
-                        },
-                        "_parent": "CounterCreator",
-                        "dynamicLocale": true
-                    }
-                ],
+						"id": "618c1de4d4cd91439f3de4ae",
+						"index": 0,
+						"dynamicLocale": true,
+						"visibilityConditions": [],
+						"globalQuestCounterId": "",
+						"parentId": "",
+						"value": 1,
+						"type": "Elimination",
+						"oneSessionOnly": false,
+						"doNotResetIfCounterCompleted": false,
+						"counter": {
+							"id": "618c1de4d4cd91439f3de4ac",
+							"conditions": [{
+									"id": "618c1de4d4cd91439f3de4ad",
+									"dynamicLocale": true,
+									"target": "Savage",
+									"compareMethod": ">=",
+									"value": 1,
+									"weapon": [],
+									"distance": {
+										"value": 0,
+										"compareMethod": ">="
+									},
+									"weaponModsInclusive": [],
+									"weaponModsExclusive": [],
+									"enemyEquipmentInclusive": [],
+									"enemyEquipmentExclusive": [],
+									"weaponCaliber": [],
+									"savageRole": [],
+									"bodyPart": [],
+									"daytime": {
+										"from": 0,
+										"to": 0
+									},
+									"enemyHealthEffects": [],
+									"resetOnSessionEnd": false,
+									"conditionType": "Kills"
+								}
+							]
+						},
+					"conditionType": "CounterCreator"
+				}],
                 "Fail": []
             },
+			"side": "Pmc",
             "name": "{templateId} name {traderId}",
             "note": "{templateId} note {traderId}",
             "description": "{templateId} description {traderId} 0",
@@ -91,6 +103,7 @@
                 "AvailableForFinish": [],
                 "Fail": []
             },
+			"side": "Pmc",
             "name": "{templateId} name {traderId}",
             "note": "{templateId} note {traderId}",
             "description": "{templateId} description {traderId} 0",
@@ -110,7 +123,7 @@
             "changeStandingCost": 0
         },
         "Exploration": {
-            "_id": null,
+            "_id": "65947c6afb90e7fcb40f8d684",
             "traderId": "54cb50c76803fa8b248b4571",
             "location": null,
             "image": "/files/quest/icon/616d993bc8c5ad2ab30ff6ba.jpg",
@@ -128,44 +141,40 @@
             "conditions": {
                 "AvailableForStart": [],
                 "AvailableForFinish": [{
-                        "_props": {
-                            "id": "618c1de4d4cd91439f3de4a5",
-                            "parentId": "",
-                            "dynamicLocale": true,
-                            "index": 0,
-                            "visibilityConditions": [],
-                            "value": 1,
-                            "type": "Completion",
-                            "oneSessionOnly": false,
-                            "doNotResetIfCounterCompleted": false,
-                            "counter": {
-                                "id": "618c1de4d4cd91439f3de4a4",
-                                "conditions": [{
-                                        "_props": {
-                                            "status": [
-                                                "Survived"
-                                            ],
-                                            "id": "618c1de4d4cd91439f3de4a3",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "ExitStatus"
-                                    }, {
-                                        "_props": {
-                                            "target": [],
-                                            "id": "618c1de4d4cd91439f3de4a2",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "Location"
-                                    }
-                                ]
-                            }
-                        },
-                        "_parent": "CounterCreator",
-                        "dynamicLocale": true
+						"id": "618c1de4d4cd91439f3de4a5",
+						"index": 0,
+						"dynamicLocale": true,
+						"visibilityConditions": [],
+						"globalQuestCounterId": "",
+						"parentId": "",
+						"value": 1,
+						"type": "Completion",
+						"oneSessionOnly": false,
+						"completeInSeconds": 0,
+						"doNotResetIfCounterCompleted": false,
+						"counter": {
+							"id": "618c1de4d4cd91439f3de4a4",
+							"conditions": [{
+									"status": [
+										"Survived"
+									],
+									"id": "618c1de4d4cd91439f3de4a3",
+									"dynamicLocale": true,
+									"conditionType": "ExitStatus"
+								}, {
+									"target": [],
+									"id": "618c1de4d4cd91439f3de4a2",
+									"dynamicLocale": true,
+									"conditionType": "Location"
+								}
+							]
+						},
+                        "conditionType": "CounterCreator"
                     }
                 ],
                 "Fail": []
             },
+			"side": "Pmc",
             "name": "{templateId} name {traderId}",
             "note": "{templateId} note {traderId}",
             "description": "{templateId} description {traderId} 0",
@@ -203,73 +212,60 @@
             "conditions": {
                 "AvailableForStart": [],
                 "AvailableForFinish": [{
-                        "_props": {
-                            "id": "64cfb3818db9f48b3f0b0a6f",
-                            "parentId": "",
-                            "dynamicLocale": false,
-                            "index": 0,
-                            "visibilityConditions": [],
-                            "globalQuestCounterId": null,
-                            "target": ["5b47574386f77428ca22b336"],
-                            "value": 7,
-                            "minDurability": 0,
-                            "maxDurability": 100,
-                            "dogtagLevel": 0,
-                            "onlyFoundInRaid": false,
-                            "isEncoded": false,
-                            "countInRaid": true
-                        },
-                        "_parent": "FindItem",
-                        "dynamicLocale": false
+						"id": "64cfb3818db9f48b3f0b0a6f",
+						"parentId": "",
+						"dynamicLocale": false,
+						"index": 0,
+						"visibilityConditions": [],
+						"globalQuestCounterId": null,
+						"target": ["5b47574386f77428ca22b336"],
+						"value": 7,
+						"minDurability": 0,
+						"maxDurability": 100,
+						"dogtagLevel": 0,
+						"onlyFoundInRaid": false,
+						"isEncoded": false,
+						"countInRaid": true,
+                        "conditionType": "FindItem"
                     }, {
-                        "_props": {
-                            "id": "64cfb3818db9f48b3f0b0a74",
-                            "parentId": "",
-                            "dynamicLocale": true,
-                            "index": 0,
-                            "visibilityConditions": [],
-                            "globalQuestCounterId": null,
-                            "value": 1,
-                            "type": "PickUp",
-                            "completeInSeconds": 0,
-                            "oneSessionOnly": true,
-                            "doNotResetIfCounterCompleted": false,
-                            "counter": {
-                                "id": "64cfb3818db9f48b3f0b0a73",
-                                "conditions": [{
-                                        "_props": {
-                                            "target": ["any"],
-                                            "id": "64cfb3818db9f48b3f0b0a70",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "Location"
-                                    }, {
-                                        "_props": {
-                                            "status": ["Survived"],
-                                            "id": "64cfb3818db9f48b3f0b0a71",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "ExitStatus"
-                                    }, {
-                                        "_props": {
-                                            "equipmentInclusive": [["5b47574386f77428ca22b336"]],
-                                            "IncludeNotEquippedItems": true,
-                                            "id": "64cfb3818db9f48b3f0b0a72",
-                                            "dynamicLocale": true
-                                        },
-                                        "_parent": "Equipment"
-                                    }
-                                ]
-                            }
-                        },
-                        "_parent": "CounterCreator",
-                        "dynamicLocale": true
+						"id": "64cfb3818db9f48b3f0b0a74",
+						"parentId": "",
+						"dynamicLocale": true,
+						"index": 0,
+						"visibilityConditions": [],
+						"globalQuestCounterId": null,
+						"value": 1,
+						"type": "PickUp",
+						"completeInSeconds": 0,
+						"oneSessionOnly": true,
+						"doNotResetIfCounterCompleted": false,
+						"counter": {
+							"id": "64cfb3818db9f48b3f0b0a73",
+							"conditions": [{
+									"target": ["any"],
+									"id": "64cfb3818db9f48b3f0b0a70",
+									"dynamicLocale": true,
+									"conditionType": "Location"
+								}, {
+									"status": ["Survived"],
+									"id": "64cfb3818db9f48b3f0b0a71",
+									"dynamicLocale": true,
+									"conditionType": "ExitStatus"
+								}, {
+									"equipmentInclusive": [["5b47574386f77428ca22b336"]],
+									"IncludeNotEquippedItems": true,
+									"id": "64cfb3818db9f48b3f0b0a72",
+									"dynamicLocale": true,
+									"conditionType": "Equipment"
+								}
+							]
+						},
+                        "conditionType": "CounterCreator"
                     }
                 ],
                 "Fail": []
             },
             "side": "Scav",
-            "questStatus": {},
             "name": "{templateId} name {traderId}",
             "note": "{templateId} note {traderId}",
             "description": "{templateId} description {traderId} 0",
@@ -300,7 +296,8 @@
                     "minPlayerLevel": 1,
                     "itemIds": [
                         "5485a8684bdc2da71d8b4567",
-                        "543be5e94bdc2df1348b4568"
+                        "543be5e94bdc2df1348b4568",
+						"543be5cb4bdc2deb348b4568"
                     ]
                 }
             ],

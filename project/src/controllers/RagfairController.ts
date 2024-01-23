@@ -21,6 +21,7 @@ import { IExtendOfferRequestData } from "@spt-aki/models/eft/ragfair/IExtendOffe
 import { IGetItemPriceResult } from "@spt-aki/models/eft/ragfair/IGetItemPriceResult";
 import { IGetMarketPriceRequestData } from "@spt-aki/models/eft/ragfair/IGetMarketPriceRequestData";
 import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
+import { IGetRagfairOfferByIdRequest } from "@spt-aki/models/eft/ragfair/IGetRagfairOfferByIdRequest";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
@@ -148,6 +149,20 @@ export class RagfairController
     }
 
     /**
+     *  Handle client/ragfair/offer/findbyid
+     * @param sessionId Player id
+     * @param request Request data
+     * @returns IRagfairOffer
+     */
+    public getOfferById(sessionId: string, request: IGetRagfairOfferByIdRequest): IRagfairOffer
+    {
+        const offers = this.ragfairOfferService.getOffers();
+        const offerToReturn = offers.find(x => x.intId === request.id);
+
+        return offerToReturn;
+    }
+
+    /**
      * Get offers for the client based on type of search being performed
      * @param searchRequest Client search request data
      * @param itemsToAdd comes from ragfairHelper.filterCategories()
@@ -181,7 +196,7 @@ export class RagfairController
     protected getSpecificCategories(pmcProfile: IPmcData, searchRequest: ISearchRequestData, offers: IRagfairOffer[]): Record<string, number>
     {
         // Linked/required search categories
-        const playerHasFleaUnlocked = pmcProfile.Info.Level > this.databaseServer.getTables().globals.config.RagFair.minUserLevel;
+        const playerHasFleaUnlocked = pmcProfile.Info.Level >= this.databaseServer.getTables().globals.config.RagFair.minUserLevel;
         let offerPool = [];
         if (this.isLinkedSearch(searchRequest) || this.isRequiredSearch(searchRequest))
         {
@@ -307,6 +322,9 @@ export class RagfairController
         return info.neededSearchId !== "";
     }
 
+    /**
+     * Check all profiles and sell player offers / send player money for listing if it sold
+     */
     public update(): void
     {
         for (const sessionID in this.saveServer.getProfiles())
@@ -693,7 +711,7 @@ export class RagfairController
 
     public extendOffer(info: IExtendOfferRequestData, sessionID: string): IItemEventRouterResponse
     {
-        let output = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
         const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
         const offers = pmcData.RagfairInfo.offers;
         const index = offers.findIndex((offer) => offer._id === info.offerId);
@@ -725,7 +743,7 @@ export class RagfairController
             );
 
             const request = this.createBuyTradeRequestObject("RUB", tax);
-            output = this.paymentService.payMoney(pmcData, request, sessionID, output);
+            this.paymentService.payMoney(pmcData, request, sessionID, output);
             if (output.warnings.length > 0)
             {
                 return this.httpResponse.appendErrorToOutput(

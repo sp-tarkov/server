@@ -27,7 +27,9 @@
     "category": [
       null
     ],
-    "id_list": []
+    "id_list": [
+      "64d0b40fbe2eed70e254e2d4"
+    ]
   },
   "location": "Смотритель",
   "loyaltyLevels": [
@@ -55,6 +57,7 @@
     "quality": 0
   },
   "sell_category": [],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Смотритель",
   "unlockedByDefault": true
 }

@@ -47,6 +47,31 @@ export class TraderPurchasePersisterService
     }
 
     /**
+     * Get a purchase made from a trader for requested profile before the last trader reset
+     * @param sessionId Session id
+     * @param traderId Trader to loop up purchases for
+     * @param assortId Id of assort to get data for
+     * @returns TraderPurchaseData
+     */
+    public getProfileTraderPurchase(sessionId: string, traderId: string, assortId: string): TraderPurchaseData
+    {
+        const profile = this.profileHelper.getFullProfile(sessionId);
+
+        if (!profile.traderPurchases)
+        {
+            return null;
+        }
+
+        const traderPurchases = profile.traderPurchases[traderId];
+        if (!traderPurchases)
+        {
+            return null;
+        }
+
+        return traderPurchases[assortId];
+    }
+
+    /**
      * Remove all trader purchase records from all profiles that exist
      * @param traderId Traders id
      */

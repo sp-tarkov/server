@@ -6,7 +6,8 @@
         "shoreline": 20,
         "interchange": 20,
         "reserve": 20,
-        "tarkovStreets": 20
+        "tarkovStreets": 20,
+		"sandbox": 20
     },
     "airdropTypeWeightings": {
         "mixed": 2,
@@ -29,17 +30,21 @@
     },
     "loot": {
         "mixed": {
-            "presetCount": {
+            "weaponPresetCount": {
                 "min": 3,
                 "max": 5
             },
+			"armorPresetCount": {
+                "min": 1,
+                "max": 5
+            },
             "itemCount": {
-                "min": 12,
-                "max": 25
+                "min": 15,
+                "max": 35
             },
             "weaponCrateCount": {
-                "min": 0,
-                "max": 2
+                "min": 1,
+                "max": 4
             },
             "itemBlacklist": [
                 "5e997f0b86f7741ac73993e2",
@@ -154,13 +159,17 @@
             "allowBossItems": false
         },
         "weaponArmor": {
-            "presetCount": {
+            "weaponPresetCount": {
                 "min": 6,
                 "max": 8
             },
+			"armorPresetCount": {
+                "min": 3,
+                "max": 6
+            },
             "itemCount": {
-                "min": 10,
-                "max": 20
+                "min": 11,
+                "max": 22
             },
             "weaponCrateCount": {
                 "min": 0,
@@ -250,9 +259,13 @@
             "allowBossItems": false
         },
         "foodMedical": {
-            "presetCount": {
-                "min": 3,
-                "max": 5
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+			"armorPresetCount": {
+                "min": 0,
+                "max": 0
             },
             "itemCount": {
                 "min": 17,
@@ -330,16 +343,21 @@
                     "max": 500
                 }
             },
+			"armorLevelWhitelist": [0],
             "allowBossItems": false
         },
         "barter": {
-            "presetCount": {
-                "min": 3,
-                "max": 5
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+			"armorPresetCount": {
+                "min": 0,
+                "max": 0
             },
             "itemCount": {
-                "min": 16,
-                "max": 25
+                "min": 20,
+                "max": 35
             },
             "weaponCrateCount": {
                 "min": 0,
@@ -415,6 +433,7 @@
                     "max": 500
                 }
             },
+			"armorLevelWhitelist": [0],
             "allowBossItems": false
         }
     }

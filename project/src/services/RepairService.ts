@@ -68,7 +68,7 @@ export class RepairService
 
         const priceCoef = this.traderHelper.getLoyaltyLevel(traderId, pmcData).repair_price_coef;
         const traderRepairDetails = this.traderHelper.getTrader(traderId, sessionID).repair;
-        const repairQualityMultiplier = traderRepairDetails.quality;
+        const repairQualityMultiplier = Number(traderRepairDetails.quality);
         const repairRate = (priceCoef <= 0) ? 1 : (priceCoef / 100 + 1);
 
         const itemToRepairDetails = this.databaseServer.getTables().templates.items[itemToRepair._tpl];
@@ -121,7 +121,10 @@ export class RepairService
     ): void
     {
         const options: IProcessBuyTradeRequestData = {
-            scheme_items: [{ id: repairedItemId, count: Math.round(repairCost) }],
+            scheme_items: [{
+                id: "5449016a4bdc2d6f028b456f", // Rouble tpl
+                count: Math.round(repairCost)
+            }],
             tid: traderId,
             Action: "SptRepair",
             type: "",
@@ -436,7 +439,7 @@ export class RepairService
 
         if (this.shouldBuffItem(repairDetails, pmcData))
         {
-            if (this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [BaseClasses.ARMOR, BaseClasses.VEST]))
+            if (this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [BaseClasses.ARMOR, BaseClasses.VEST, BaseClasses.HEADWEAR]))
             {
                 const armorConfig = this.repairConfig.repairKit.armor;
                 this.addBuff(armorConfig, repairDetails.repairedItem);
@@ -535,7 +538,7 @@ export class RepairService
      */
     protected getItemSkillType(itemTemplate: ITemplateItem): SkillTypes
     {
-        if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.ARMOR))
+        if (this.itemHelper.isOfBaseclasses(itemTemplate._id, [BaseClasses.ARMOR, BaseClasses.VEST, BaseClasses.HEADWEAR]))
         {
             if (itemTemplate._props.ArmorType === "Light")
             {

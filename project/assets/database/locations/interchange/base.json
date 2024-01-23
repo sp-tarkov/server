@@ -54,7 +54,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -97,8 +97,8 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.64,
-  "IconX": 506,
-  "IconY": 503,
+  "IconX": 660,
+  "IconY": 360,
   "Id": "Interchange",
   "Insurance": true,
   "IsSecret": false,
@@ -194,7 +194,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -182.890015,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 133.530029
       },
       "Rotation": 111.17,
@@ -218,7 +218,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "01af651e-2974-468b-8626-9697d3f488cd",
       "Infiltration": "",
@@ -285,7 +285,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -337.663879,
-        "y": 21.470005,
+        "y": 21.4921951,
         "z": 261.535522
       },
       "Rotation": 109.723984,
@@ -315,7 +315,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -252.88,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 57.73999
       },
       "Rotation": 86.82,
@@ -345,7 +345,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 110.48999,
-        "y": 20.0400047,
+        "y": 20.0621948,
         "z": -353.1999
       },
       "Rotation": 0,
@@ -401,7 +401,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "06e2c670-c4bf-4adb-8228-916bb8804679",
       "Infiltration": "",
@@ -462,7 +462,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "07aa3c3a-8edb-4fe3-8c05-891f8c8d68b0",
       "Infiltration": "",
@@ -498,7 +498,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -203.93,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -77.8299561
       },
       "Rotation": 144.44,
@@ -528,7 +528,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 367.557251,
-        "y": 16.7800026,
+        "y": 16.8021927,
         "z": -188.870728
       },
       "Rotation": 229.3703,
@@ -553,7 +553,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "0bfbe3ee-1d22-40c5-bbda-b4232ebefd94",
       "Infiltration": "",
@@ -583,7 +583,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 40,
       "Id": "0d31289d-ac77-4654-b222-fdb8137c130d",
       "Infiltration": "",
@@ -619,7 +619,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 234.22998,
-        "y": 19.7900047,
+        "y": 19.8121948,
         "z": -288.459961
       },
       "Rotation": 324.91,
@@ -649,7 +649,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 109.5,
-        "y": 19.829998,
+        "y": 19.8521881,
         "z": -356.49
       },
       "Rotation": 0,
@@ -679,7 +679,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 298.75,
-        "y": 21.6399956,
+        "y": 21.6621857,
         "z": -423.1501
       },
       "Rotation": 0,
@@ -709,7 +709,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -182.660034,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 135.73999
       },
       "Rotation": 111.17,
@@ -739,7 +739,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 149.890015,
-        "y": 20.0099983,
+        "y": 20.0321884,
         "z": -412.2599
       },
       "Rotation": 0,
@@ -763,7 +763,7 @@
           "Radius": 110
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 5,
       "DelayToCanSpawnSec": 40,
       "Id": "13e66fd5-878d-4b13-81ff-4dd18ac4fade",
       "Infiltration": "",
@@ -799,7 +799,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 149.489868,
-        "y": 19.4600029,
+        "y": 19.482193,
         "z": -408.87
       },
       "Rotation": 0,
@@ -823,7 +823,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 12,
       "DelayToCanSpawnSec": 40,
       "Id": "1486b420-915d-49f3-8dac-cc81298a642e",
       "Infiltration": "",
@@ -853,7 +853,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 10,
       "DelayToCanSpawnSec": 40,
       "Id": "15089928-14c7-4d40-b8a5-f4a3f0a5a5af",
       "Infiltration": "",
@@ -889,7 +889,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -198.599976,
-        "y": 25.09,
+        "y": 25.11219,
         "z": 273.88
       },
       "Rotation": 155.28,
@@ -919,7 +919,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 108.050049,
-        "y": 20.1199989,
+        "y": 20.142189,
         "z": -355.359863
       },
       "Rotation": 0,
@@ -974,7 +974,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 40,
       "Id": "171f3674-8741-4ad0-b466-7053f19a5063",
       "Infiltration": "",
@@ -1041,7 +1041,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -78.71997,
-        "y": 22.6399956,
+        "y": 22.6621857,
         "z": 288.949951
       },
       "Rotation": 155.28,
@@ -1065,7 +1065,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 10,
       "DelayToCanSpawnSec": 40,
       "Id": "19ed2800-5bad-4eb1-9145-c527df2fbbd7",
       "Infiltration": "",
@@ -1095,7 +1095,7 @@
           "Radius": 75
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 18,
       "DelayToCanSpawnSec": 40,
       "Id": "1a535c95-c1d4-4cfa-9d30-f79b089dec28",
       "Infiltration": "",
@@ -1193,7 +1193,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 278.444336,
-        "y": 21.3900032,
+        "y": 21.4121933,
         "z": 333.002441
       },
       "Rotation": 230.976517,
@@ -1223,7 +1223,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -185.81,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 134.5
       },
       "Rotation": 111.17,
@@ -1253,7 +1253,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 279.86,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -7.77001953
       },
       "Rotation": 267.59,
@@ -1314,7 +1314,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 314.9325,
-        "y": 17.0200043,
+        "y": 17.0421944,
         "z": -137.220581
       },
       "Rotation": 267.59,
@@ -1338,7 +1338,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 12,
       "DelayToCanSpawnSec": 40,
       "Id": "28ca152a-220d-443e-9580-13e15c6be163",
       "Infiltration": "",
@@ -1374,7 +1374,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 384.958618,
-        "y": 15.1000061,
+        "y": 15.1221962,
         "z": -294.961853
       },
       "Rotation": 283.05,
@@ -1435,7 +1435,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 277.290161,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -8.310059
       },
       "Rotation": 267.59,
@@ -1459,7 +1459,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 2,
       "DelayToCanSpawnSec": 40,
       "Id": "2cd458ae-a30a-4a55-bd8c-759b48f04b1d",
       "Infiltration": "",
@@ -1495,7 +1495,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 298.319946,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -420.55
       },
       "Rotation": 0,
@@ -1519,7 +1519,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "2eea7e67-e411-4221-8ddb-c4116949e046",
       "Infiltration": "",
@@ -1555,7 +1555,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 151.319946,
-        "y": 19.98,
+        "y": 20.00219,
         "z": -411.57
       },
       "Rotation": 0,
@@ -1585,7 +1585,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -338.044434,
-        "y": 21.3600044,
+        "y": 21.3821945,
         "z": 263.9226
       },
       "Rotation": 109.723984,
@@ -1615,7 +1615,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -196.63,
-        "y": 24.91,
+        "y": 24.93219,
         "z": 273.410034
       },
       "Rotation": 155.28,
@@ -1645,7 +1645,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -203.099976,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -76.3399658
       },
       "Rotation": 144.44,
@@ -1700,7 +1700,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 40,
       "Id": "3405400b-54eb-4435-b18c-169ef507b071",
       "Infiltration": "",
@@ -1736,7 +1736,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -205.960022,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -77.73999
       },
       "Rotation": 144.44,
@@ -1766,7 +1766,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 148.449951,
-        "y": 19.6000023,
+        "y": 19.6221924,
         "z": -411.14
       },
       "Rotation": 0,
@@ -1796,7 +1796,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 59.1099854,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 269.97998
       },
       "Rotation": 193.03,
@@ -1826,7 +1826,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -218.200012,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 5.43005371
       },
       "Rotation": 86.82,
@@ -1856,7 +1856,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 109.089966,
-        "y": 20.0600014,
+        "y": 20.0821915,
         "z": -353.089966
       },
       "Rotation": 0,
@@ -1886,7 +1886,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -320.802,
-        "y": 23.371006,
+        "y": 23.3931961,
         "z": 143.0426
       },
       "Rotation": 100.069992,
@@ -1916,7 +1916,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 60.78003,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 270.070068
       },
       "Rotation": 187.52,
@@ -1946,7 +1946,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 4.959961,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 253.920044
       },
       "Rotation": 155.28,
@@ -1971,7 +1971,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 14,
       "DelayToCanSpawnSec": 40,
       "Id": "3943055c-492a-4625-8740-0aa20135e336",
       "Infiltration": "",
@@ -2001,7 +2001,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 40,
       "Id": "39dab627-f43d-4d3f-a0e9-d4ecf5201cc1",
       "Infiltration": "",
@@ -2068,7 +2068,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -216.31,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 4.09997559
       },
       "Rotation": 86.82,
@@ -2098,7 +2098,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -134.849976,
-        "y": 27.2100029,
+        "y": 27.232193,
         "z": 199.640015
       },
       "Rotation": 220.78,
@@ -2128,7 +2128,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -335.7013,
-        "y": 21.6000023,
+        "y": 21.6221924,
         "z": 259.357666
       },
       "Rotation": 109.723984,
@@ -2158,7 +2158,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 295.88,
-        "y": 21.5400047,
+        "y": 21.5621948,
         "z": -422.719971
       },
       "Rotation": 0,
@@ -2188,7 +2188,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -167.012939,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -389.1739
       },
       "Rotation": 0,
@@ -2218,7 +2218,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 386.018433,
-        "y": 14.8200035,
+        "y": 14.8421936,
         "z": -292.26178
       },
       "Rotation": 283.05,
@@ -2273,7 +2273,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "412315ab-0fb2-4e6f-93ff-a6d66ead6c54",
       "Infiltration": "",
@@ -2309,7 +2309,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 382.622681,
-        "y": 15.2700043,
+        "y": 15.2921944,
         "z": -294.718567
       },
       "Rotation": 283.05,
@@ -2339,7 +2339,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -166.582886,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -391.773743
       },
       "Rotation": 0,
@@ -2369,7 +2369,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 386.378662,
-        "y": 14.8000031,
+        "y": 14.8221931,
         "z": -293.801758
       },
       "Rotation": 283.05,
@@ -2393,7 +2393,7 @@
           "Radius": 75
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 40,
       "Id": "459d5f99-0d44-4659-b2d1-793f140c47c7",
       "Infiltration": "",
@@ -2423,7 +2423,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 40,
       "Id": "4af33c9a-8450-4333-ad21-935fab511c67",
       "Infiltration": "",
@@ -2459,7 +2459,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 383.39856,
-        "y": 15.1800041,
+        "y": 15.2021942,
         "z": -292.0918
       },
       "Rotation": 283.05,
@@ -2489,7 +2489,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 61.6300049,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 268.570068
       },
       "Rotation": 179.6,
@@ -2519,7 +2519,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 279.569946,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -10.6500244
       },
       "Rotation": 267.59,
@@ -2549,7 +2549,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -14.6182861,
-        "y": 22.3200035,
+        "y": 22.3421936,
         "z": -402.505
       },
       "Rotation": 0,
@@ -2573,7 +2573,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "4eb1bea9-3029-4850-9fed-3bbe565a46d5",
       "Infiltration": "",
@@ -2609,7 +2609,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -76.9100342,
-        "y": 22.3599968,
+        "y": 22.3821869,
         "z": 289.920044
       },
       "Rotation": 155.28,
@@ -2664,7 +2664,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 10,
       "DelayToCanSpawnSec": 40,
       "Id": "51dbf971-7b9c-45af-a64f-8d61cb3b9861",
       "Infiltration": "",
@@ -2694,7 +2694,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "561e5fc1-562f-4d4e-bc90-8ff6241fdc6e",
       "Infiltration": "",
@@ -2761,7 +2761,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -318.5019,
-        "y": 22.4190025,
+        "y": 22.4411926,
         "z": 145.785645
       },
       "Rotation": 100.069992,
@@ -2791,7 +2791,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -145.799988,
-        "y": 27.2100029,
+        "y": 27.232193,
         "z": 199.63
       },
       "Rotation": 155.28,
@@ -2821,7 +2821,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -75.48999,
-        "y": 22.8100014,
+        "y": 22.8321915,
         "z": 287.199951
       },
       "Rotation": 155.28,
@@ -2845,7 +2845,7 @@
           "Radius": 75
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 18,
       "DelayToCanSpawnSec": 40,
       "Id": "5a91ec2f-66a1-4a42-a191-5a3f52179cfd",
       "Infiltration": "",
@@ -2881,7 +2881,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 232.390015,
-        "y": 19.7400017,
+        "y": 19.7621918,
         "z": -286.579956
       },
       "Rotation": 324.91,
@@ -2905,7 +2905,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 12,
       "DelayToCanSpawnSec": 40,
       "Id": "5beb2a94-8d4d-4371-97fe-ecb70d01b347",
       "Infiltration": "",
@@ -2941,7 +2941,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 296.920044,
-        "y": 21.420002,
+        "y": 21.4421921,
         "z": -420.450134
       },
       "Rotation": 0,
@@ -3027,7 +3027,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 21,
       "DelayToCanSpawnSec": 40,
       "Id": "60228c52-30e2-48f7-bba2-efe31cdbc75d",
       "Infiltration": "",
@@ -3094,7 +3094,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 58.75,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 267.87
       },
       "Rotation": 197.23,
@@ -3186,7 +3186,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 274.660034,
-        "y": 21.3900032,
+        "y": 21.4121933,
         "z": 339.227783
       },
       "Rotation": 230.976517,
@@ -3216,7 +3216,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -207.839966,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -77.9000244
       },
       "Rotation": 144.44,
@@ -3246,7 +3246,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 297.329956,
-        "y": 21.7800026,
+        "y": 21.8021927,
         "z": -423.8399
       },
       "Rotation": 0,
@@ -3276,7 +3276,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 94.06995,
-        "y": 21.6199989,
+        "y": 21.642189,
         "z": -412.130127
       },
       "Rotation": 0,
@@ -3337,7 +3337,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -199.859985,
-        "y": 25.2900047,
+        "y": 25.3121948,
         "z": 275.160034
       },
       "Rotation": 155.28,
@@ -3392,7 +3392,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "6d097fb4-9f12-4f52-860d-78accb243200",
       "Infiltration": "",
@@ -3422,7 +3422,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 9,
       "DelayToCanSpawnSec": 40,
       "Id": "6f6a65db-4fef-423a-9024-c502bb96f3a2",
       "Infiltration": "",
@@ -3458,7 +3458,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -323.919067,
-        "y": 23.609005,
+        "y": 23.6311951,
         "z": 143.8363
       },
       "Rotation": 100.069992,
@@ -3488,7 +3488,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 167.431519,
-        "y": 22.9300041,
+        "y": 22.9521942,
         "z": 385.536743
       },
       "Rotation": 181.724625,
@@ -3512,7 +3512,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "7145b607-3717-4435-903a-8a7f2c65476a",
       "Infiltration": "",
@@ -3548,7 +3548,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -143.950012,
-        "y": 27.2100029,
+        "y": 27.232193,
         "z": 200.47998
       },
       "Rotation": 155.28,
@@ -3578,7 +3578,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 58.3699951,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 265.699951
       },
       "Rotation": 194.38,
@@ -3608,7 +3608,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -318.9419,
-        "y": 22.6200066,
+        "y": 22.6421967,
         "z": 147.435669
       },
       "Rotation": 100.069992,
@@ -3669,7 +3669,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 231.180054,
-        "y": 19.6099968,
+        "y": 19.6321869,
         "z": -287.300049
       },
       "Rotation": 324.91,
@@ -3699,7 +3699,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -135.559937,
-        "y": 27.2100029,
+        "y": 27.232193,
         "z": 201.48999
       },
       "Rotation": 209.87,
@@ -3723,7 +3723,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "75e0757a-56fe-40d1-96e2-e33e8de02ba9",
       "Infiltration": "",
@@ -3759,7 +3759,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -250.640015,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 59.5699463
       },
       "Rotation": 86.82,
@@ -3789,7 +3789,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 315.663452,
-        "y": 17.2900047,
+        "y": 17.3121948,
         "z": -133.942383
       },
       "Rotation": 267.59,
@@ -3844,7 +3844,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 40,
       "Id": "77e0af12-ea10-4c10-8624-09a2a85c83db",
       "Infiltration": "",
@@ -3911,7 +3911,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -321.54187,
-        "y": 23.0400124,
+        "y": 23.0622025,
         "z": 146.165649
       },
       "Rotation": 100.069992,
@@ -3972,7 +3972,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 276.372681,
-        "y": 21.3900032,
+        "y": 21.4121933,
         "z": 336.606934
       },
       "Rotation": 230.976517,
@@ -4002,7 +4002,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 314.44397,
-        "y": 17.0500031,
+        "y": 17.0721931,
         "z": -134.933716
       },
       "Rotation": 267.59,
@@ -4032,7 +4032,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 284.004517,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 87.36438
       },
       "Rotation": 272.052246,
@@ -4093,7 +4093,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 94.46997,
-        "y": 21.6899986,
+        "y": 21.7121887,
         "z": -415.530029
       },
       "Rotation": 0,
@@ -4123,7 +4123,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 233.459961,
-        "y": 19.84,
+        "y": 19.86219,
         "z": -289.839966
       },
       "Rotation": 324.91,
@@ -4153,7 +4153,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 93.02002,
-        "y": 21.5400047,
+        "y": 21.5621948,
         "z": -414.4099
       },
       "Rotation": 0,
@@ -4183,7 +4183,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 314.7743,
-        "y": 16.8600044,
+        "y": 16.8821945,
         "z": -138.622559
       },
       "Rotation": 267.59,
@@ -4213,7 +4213,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -16.03833,
-        "y": 22.41,
+        "y": 22.43219,
         "z": -403.194946
       },
       "Rotation": 0,
@@ -4268,7 +4268,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 40,
       "Id": "821384d4-579e-4439-a410-4049ad88f296",
       "Infiltration": "",
@@ -4298,7 +4298,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 40,
       "Id": "83af2113-328b-45fa-92d9-ab4195d62de3",
       "Infiltration": "",
@@ -4328,7 +4328,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "847fd32f-8974-4747-96b7-d4d2fc161499",
       "Infiltration": "",
@@ -4358,7 +4358,7 @@
           "Radius": 110
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 5,
       "DelayToCanSpawnSec": 40,
       "Id": "84a861b6-d62e-4a7d-b9d5-f171d5db4340",
       "Infiltration": "",
@@ -4394,7 +4394,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 280.123657,
-        "y": 21.3900032,
+        "y": 21.4121933,
         "z": 340.578735
       },
       "Rotation": 230.976517,
@@ -4424,7 +4424,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 283.2218,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 83.1942139
       },
       "Rotation": 272.052246,
@@ -4454,7 +4454,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 366.9574,
-        "y": 16.7100029,
+        "y": 16.732193,
         "z": -187.410767
       },
       "Rotation": 229.3703,
@@ -4509,7 +4509,7 @@
           "Radius": 75
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "89bd027f-8b38-4ee1-a51f-3011225ce2f4",
       "Infiltration": "",
@@ -4545,7 +4545,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -147.52002,
-        "y": 27.2100029,
+        "y": 27.232193,
         "z": 199.310059
       },
       "Rotation": 155.28,
@@ -4668,7 +4668,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -249.830017,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 58.0699463
       },
       "Rotation": 86.82,
@@ -4729,7 +4729,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -16.4483643,
-        "y": 22.1080055,
+        "y": 22.1301956,
         "z": -399.804932
       },
       "Rotation": 0,
@@ -4753,7 +4753,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 40,
       "Id": "95b2cbf1-b8b2-4e50-9e52-ed9d258d6e43",
       "Infiltration": "",
@@ -4789,7 +4789,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 231.63,
-        "y": 19.7599983,
+        "y": 19.7821884,
         "z": -289.76
       },
       "Rotation": 324.91,
@@ -4819,7 +4819,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -186.43,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 132.540039
       },
       "Rotation": 111.17,
@@ -4849,7 +4849,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 2.43994141,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 255.329956
       },
       "Rotation": 155.28,
@@ -4904,7 +4904,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 40,
       "Id": "9eefdaf2-6699-4e28-9467-d44f59ce1cd3",
       "Infiltration": "",
@@ -4940,7 +4940,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -250.98999,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 56.4100342
       },
       "Rotation": 86.82,
@@ -4970,7 +4970,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -217.960022,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 3.39001465
       },
       "Rotation": 86.82,
@@ -5031,7 +5031,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -74.3900146,
-        "y": 22.670002,
+        "y": 22.6921921,
         "z": 288.51
       },
       "Rotation": 155.28,
@@ -5061,7 +5061,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 163.81958,
-        "y": 22.4900017,
+        "y": 22.5121918,
         "z": 383.415649
       },
       "Rotation": 181.724625,
@@ -5091,7 +5091,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 0.6300049,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 254.359985
       },
       "Rotation": 155.28,
@@ -5121,7 +5121,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 170.368286,
-        "y": 22.8200035,
+        "y": 22.8421936,
         "z": 384.482666
       },
       "Rotation": 181.724625,
@@ -5145,7 +5145,7 @@
           "Radius": 100
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "b023ceac-a042-42a4-bb99-73cdc37b39fb",
       "Infiltration": "",
@@ -5181,7 +5181,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 273.885864,
-        "y": 21.3900032,
+        "y": 21.4121933,
         "z": 342.196167
       },
       "Rotation": 230.976517,
@@ -5267,7 +5267,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 40,
       "Id": "b523fac3-877b-4cd2-824d-8fce82be95a7",
       "Infiltration": "",
@@ -5303,7 +5303,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -198.049988,
-        "y": 25.1800041,
+        "y": 25.2021942,
         "z": 276.13
       },
       "Rotation": 155.28,
@@ -5333,7 +5333,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 110.920044,
-        "y": 19.8999977,
+        "y": 19.9221878,
         "z": -355.7901
       },
       "Rotation": 0,
@@ -5363,7 +5363,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -77.45996,
-        "y": 22.8500023,
+        "y": 22.8721924,
         "z": 287.670044
       },
       "Rotation": 155.28,
@@ -5419,7 +5419,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "ba82fb90-fa3c-4568-97bc-b32b51a5bfb5",
       "Infiltration": "",
@@ -5455,7 +5455,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 364.347168,
-        "y": 16.6800041,
+        "y": 16.7021942,
         "z": -187.650757
       },
       "Rotation": 229.3703,
@@ -5485,7 +5485,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 1.89001465,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 253.079956
       },
       "Rotation": 155.28,
@@ -5509,7 +5509,7 @@
           "Radius": 110
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 5,
       "DelayToCanSpawnSec": 40,
       "Id": "bdfd38df-2573-4712-8b82-c2d795ced0c2",
       "Infiltration": "",
@@ -5545,7 +5545,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -169.452881,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -391.343872
       },
       "Rotation": 0,
@@ -5569,7 +5569,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 3,
       "DelayToCanSpawnSec": 40,
       "Id": "c013b3dc-1fc1-45fc-8729-35ab4942fbcc",
       "Infiltration": "",
@@ -5661,7 +5661,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 40,
       "Id": "c4955fcd-ac95-44de-9901-f7802d19015b",
       "Infiltration": "",
@@ -5691,7 +5691,7 @@
           "Radius": 110
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "c622da3b-f686-462f-8791-df6a918595a1",
       "Infiltration": "",
@@ -5721,7 +5721,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 10,
       "DelayToCanSpawnSec": 40,
       "Id": "cac3029a-cbad-4827-b9e8-a9222ba23c0e",
       "Infiltration": "",
@@ -5757,7 +5757,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -168.00293,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -392.463867
       },
       "Rotation": 0,
@@ -5781,7 +5781,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 40,
       "Id": "cd1fe11e-2b28-4567-babb-4fcb5e83c4dd",
       "Infiltration": "",
@@ -5817,7 +5817,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 3.85998535,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 252.609985
       },
       "Rotation": 155.28,
@@ -5847,7 +5847,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 362.76416,
-        "y": 16.5400047,
+        "y": 16.5621948,
         "z": -185.49231
       },
       "Rotation": 229.3703,
@@ -5877,7 +5877,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 284.252563,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 90.93677
       },
       "Rotation": 272.052246,
@@ -5938,7 +5938,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -337.585083,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 265.785278
       },
       "Rotation": 109.723984,
@@ -5999,7 +5999,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -335.873657,
-        "y": 22.0980034,
+        "y": 22.1201935,
         "z": 256.930664
       },
       "Rotation": 109.723984,
@@ -6054,7 +6054,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "d628477f-2aac-49bc-b456-5cad12c28976",
       "Infiltration": "",
@@ -6090,7 +6090,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 150.890015,
-        "y": 19.6099968,
+        "y": 19.6321869,
         "z": -408.969971
       },
       "Rotation": 0,
@@ -6151,7 +6151,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 315.939575,
-        "y": 16.8100052,
+        "y": 16.8321953,
         "z": -140.75647
       },
       "Rotation": 267.59,
@@ -6181,7 +6181,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -215.150024,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 5.76001
       },
       "Rotation": 86.82,
@@ -6205,7 +6205,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "da52dacd-02f4-4387-8d92-d3b544ea4e34",
       "Infiltration": "",
@@ -6241,7 +6241,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -185.12,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 131.13
       },
       "Rotation": 111.17,
@@ -6271,7 +6271,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 284.0028,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 85.38306
       },
       "Rotation": 272.052246,
@@ -6301,7 +6301,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 280.62,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -9.160034
       },
       "Rotation": 267.59,
@@ -6331,7 +6331,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -201.039978,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -75.44995
       },
       "Rotation": 144.44,
@@ -6361,7 +6361,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 277.25,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -9.709961
       },
       "Rotation": 267.59,
@@ -6391,7 +6391,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -17.4884033,
-        "y": 22.5600014,
+        "y": 22.5821915,
         "z": -402.074951
       },
       "Rotation": 0,
@@ -6415,7 +6415,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 40,
       "Id": "dd96ca7a-f268-4b1a-9ce7-24a23a89d400",
       "Infiltration": "",
@@ -6445,7 +6445,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 40,
       "Id": "e1335910-f703-4e5e-b8a4-c1cdcb432a68",
       "Infiltration": "",
@@ -6512,7 +6512,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -195.530029,
-        "y": 24.8999977,
+        "y": 24.9221878,
         "z": 274.719971
       },
       "Rotation": 155.28,
@@ -6542,7 +6542,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -215.140015,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 7.43994141
       },
       "Rotation": 86.82,
@@ -6572,7 +6572,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 95.46997,
-        "y": 21.6000023,
+        "y": 21.6221924,
         "z": -412.24
       },
       "Rotation": 0,
@@ -6596,7 +6596,7 @@
           "Radius": 120
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "eb5eee75-8f6f-4f80-8cc3-a86873dcb66f",
       "Infiltration": "",
@@ -6632,7 +6632,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": -252.640015,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": 55.69995
       },
       "Rotation": 86.82,
@@ -6657,7 +6657,7 @@
           "Radius": 70
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 14,
       "DelayToCanSpawnSec": 40,
       "Id": "ed063ffb-a83d-43f6-bc4a-343d473da2ab",
       "Infiltration": "",
@@ -6687,7 +6687,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "eef064f2-7daa-41bc-ae11-d5deb297f691",
       "Infiltration": "",
@@ -6723,7 +6723,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 174.319336,
-        "y": 22.920002,
+        "y": 22.9421921,
         "z": 384.197632
       },
       "Rotation": 181.724625,
@@ -6753,7 +6753,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -15.04834,
-        "y": 21.8060036,
+        "y": 21.8281937,
         "z": -399.905029
       },
       "Rotation": 0,
@@ -6814,7 +6814,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 284.190552,
-        "y": 21.4100075,
+        "y": 21.4321976,
         "z": 89.203
       },
       "Rotation": 272.052246,
@@ -6838,7 +6838,7 @@
           "Radius": 110
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 5,
       "DelayToCanSpawnSec": 40,
       "Id": "f6c87742-c82b-4688-aeab-4fa434d630f9",
       "Infiltration": "",
@@ -6874,7 +6874,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 95.8900146,
-        "y": 21.6499977,
+        "y": 21.6721878,
         "z": -414.839844
       },
       "Rotation": 0,
@@ -6904,7 +6904,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": -168.412842,
-        "y": 21.4300041,
+        "y": 21.4521942,
         "z": -389.0738
       },
       "Rotation": 0,
@@ -6928,7 +6928,7 @@
           "Radius": 90
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 8,
       "DelayToCanSpawnSec": 40,
       "Id": "fa4dde22-b27b-47df-b90a-01d1adbea2b4",
       "Infiltration": "",
@@ -6995,7 +6995,7 @@
       "Infiltration": "MallSE",
       "Position": {
         "x": 162.405518,
-        "y": 22.2400017,
+        "y": 22.2621918,
         "z": 381.5232
       },
       "Rotation": 181.724625,
@@ -7019,7 +7019,7 @@
           "Radius": 80
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 18,
       "DelayToCanSpawnSec": 40,
       "Id": "fb857198-9943-4917-a29e-058ed8f818c4",
       "Infiltration": "",
@@ -7055,7 +7055,7 @@
       "Infiltration": "MallNW",
       "Position": {
         "x": 364.1361,
-        "y": 16.8000031,
+        "y": 16.8221931,
         "z": -189.043091
       },
       "Rotation": 229.3703,
@@ -7074,8 +7074,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "MallSE,MallNW",
-      "EventAvailable": true,
+      "EntryPoints": "MallSE",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -7090,8 +7090,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "MallSE,MallNW",
-      "EventAvailable": true,
+      "EntryPoints": "MallNW",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",

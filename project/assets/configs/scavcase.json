@@ -19,10 +19,11 @@
         "55802f4a4bdc2ddb688b4569",
         "5448bf274bdc2dfc2f8b456a",
         "5d52cc5ba4b9367408500062",
-        "5e997f0b86f7741ac73993e2",
-        "62f109593b54472778797866"
+        "62f109593b54472778797866",
+		"65649eb40bf0ed77b8044453"
     ],
     "rewardItemBlacklist": [
+        "5e997f0b86f7741ac73993e2",
         "5ede4739e0350d05467f73e8",
         "5ede47405b097655935d7d16",
         "5ede474b0c226a66f5402622",
@@ -31,19 +32,14 @@
         "62e910aaf957f2915e0a5e36",
         "619bc61e86e01e16f839a999",
         "619bddc6c9546643a67df6ee",
-        "5cde8864d7f00c0010373be1",
-        "5d2f2ab648f03550091993ca",
-        "6241c2c2117ad530666a5108",
         "6241c316234b593b5676b637",
         "5d70e500a4b9364de70d38ce",
         "619bde3dc9546643a67df6f2",
         "619bdeb986e01e16f839a99e",
         "619bddffc9546643a67df6f0",
         "619bdf9cc9546643a67df6f8",
-        "63a0b2eabea67a6d93009e52",
-        "609e860ebd219504d8507525"
+        "63a0b2eabea67a6d93009e52"
     ],
-
     "moneyRewards": {
         "moneyRewardChancePercent": 10,
         "rubCount": {

@@ -3,14 +3,14 @@ import { inject, injectable } from "tsyringe";
 import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { IFenceLevel, IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { IFenceLevel } from "@spt-aki/models/eft/common/IGlobals";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { Item, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -32,7 +32,7 @@ export class FenceService
 {
     /** Main assorts you see at all rep levels */
     protected fenceAssort: ITraderAssort = undefined;
-    /** Assorts shown on a separte tab when you max out fence rep */
+    /** Assorts shown on a separate tab when you max out fence rep */
     protected fenceDiscountAssort: ITraderAssort = undefined;
     protected traderConfig: ITraderConfig;
     protected nextMiniRefreshTimestamp: number;
@@ -66,11 +66,11 @@ export class FenceService
 
     /**
      * Replace high rep level fence assort with new assort
-     * @param assort New assorts to replace old with
+     * @param discountAssort New assorts to replace old with
      */
-    public setFenceDiscountAssort(assort: ITraderAssort): void
+    public setFenceDiscountAssort(discountAssort: ITraderAssort): void
     {
-        this.fenceDiscountAssort = assort;
+        this.fenceDiscountAssort = discountAssort;
     }
 
     /**
@@ -113,7 +113,7 @@ export class FenceService
 
     /**
      * Adjust all items contained inside an assort by a multiplier
-     * @param assort Assort that contains items with prices to adjust
+     * @param assort (clone)Assort that contains items with prices to adjust
      * @param itemMultipler multipler to use on items
      * @param presetMultiplier preset multipler to use on presets
      */
@@ -237,8 +237,8 @@ export class FenceService
 
         itemCountToReplace = this.getCountOfItemsToGenerate(itemCountToReplace);
 
-        const newItems = this.createBaseTraderAssortItem();
-        const newDiscountItems = this.createBaseTraderAssortItem();
+        const newItems = this.createFenceAssortSkeleton();
+        const newDiscountItems = this.createFenceAssortSkeleton();
         this.createAssorts(itemCountToReplace, newItems, 1);
         this.createAssorts(discountItemCountToReplace, newDiscountItems, 2);
 
@@ -324,12 +324,16 @@ export class FenceService
             itemToRemove = this.randomUtil.getArrayValue(assort.items);
         }
 
-        const indexOfItemToRemove = assort.items.findIndex((x) => x._id === itemToRemove._id);
+        const indexOfItemToRemove = assort.items.findIndex((item) => item._id === itemToRemove._id);
         assort.items.splice(indexOfItemToRemove, 1);
 
         // Clean up any mods if item removed was a weapon
-        // TODO: also check for mods attached down the item chain
-        assort.items = assort.items.filter((x) => x.parentId !== itemToRemove._id);
+        const itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(assort.items, itemToRemove._id);
+        for (const itemToDelete of itemWithChildren)
+        {
+            // Delete item from assort items array
+            assort.items.splice(assort.items.indexOf(itemToDelete), 1);
+        }
 
         delete assort.barter_scheme[itemToRemove._id];
         delete assort.loyal_level_items[itemToRemove._id];
@@ -361,21 +365,22 @@ export class FenceService
 
     /**
      * Create trader assorts for fence and store in fenceService cache
+     * Uses fence base cache generatedon server start as a base
      */
     public generateFenceAssorts(): void
     {
         // Reset refresh time now assorts are being generated
         this.incrementPartialRefreshTime();
 
-        const assorts = this.createBaseTraderAssortItem();
-        const discountAssorts = this.createBaseTraderAssortItem();
+        const assorts = this.createFenceAssortSkeleton();
+        const discountAssorts = this.createFenceAssortSkeleton();
         // Create basic fence assort
         this.createAssorts(this.traderConfig.fence.assortSize, assorts, 1);
 
         // Create level 2 assorts accessible at rep level 6
         this.createAssorts(this.traderConfig.fence.discountOptions.assortSize, discountAssorts, 2);
 
-        // store in fenceAssort class property
+        // store in fenceAssort class properties
         this.setFenceAssort(assorts);
         this.setFenceDiscountAssort(discountAssorts);
     }
@@ -384,7 +389,7 @@ export class FenceService
      * Create skeleton to hold assort items
      * @returns ITraderAssort object
      */
-    protected createBaseTraderAssortItem(): ITraderAssort
+    protected createFenceAssortSkeleton(): ITraderAssort
     {
         return {
             items: [],
@@ -401,22 +406,19 @@ export class FenceService
      */
     protected createAssorts(assortCount: number, assorts: ITraderAssort, loyaltyLevel: number): void
     {
-        const fenceAssort = this.databaseServer.getTables().traders[Traders.FENCE].assort;
-        const defaultWeaponPresets = this.presetHelper.getDefaultPresets();
-        const fenceAssortIds = Object.keys(fenceAssort.loyal_level_items);
+        const baseFenceAssort = this.databaseServer.getTables().traders[Traders.FENCE].assort;
         const itemTypeCounts = this.initItemLimitCounter(this.traderConfig.fence.itemTypeLimits);
-
-        this.addItemAssorts(assortCount, fenceAssortIds, assorts, fenceAssort, itemTypeCounts, loyaltyLevel);
-
+        
+        this.addItemAssorts(assortCount, assorts, baseFenceAssort, itemTypeCounts, loyaltyLevel);
+        
         // Add presets
         const maxPresetCount = Math.round(assortCount * (this.traderConfig.fence.maxPresetsPercent / 100));
         const randomisedPresetCount = this.randomUtil.getInt(0, maxPresetCount);
-        this.addPresets(randomisedPresetCount, defaultWeaponPresets, assorts, loyaltyLevel);
+        this.addPresetsToAssort(randomisedPresetCount, assorts, baseFenceAssort, loyaltyLevel);
     }
 
     protected addItemAssorts(
         assortCount: number,
-        fenceAssortIds: string[],
         assorts: ITraderAssort,
         fenceAssort: ITraderAssort,
         itemTypeCounts: Record<string, { current: number; max: number; }>,
@@ -424,63 +426,222 @@ export class FenceService
     ): void
     {
         const priceLimits = this.traderConfig.fence.itemCategoryRoublePriceLimit;
+        const assortRootItems = fenceAssort.items.filter(x => x.parentId === "hideout" && !x.upd?.sptPresetId);
         for (let i = 0; i < assortCount; i++)
         {
-            const itemTpl = fenceAssortIds[this.randomUtil.getInt(0, fenceAssortIds.length - 1)];
+            const chosenAssortRoot = this.randomUtil.getArrayValue(assortRootItems);
+            if (!chosenAssortRoot)
+            {
+                this.logger.error(this.localisationService.getText("fence-unable_to_find_assort_by_id", chosenAssortRoot._id));
 
-            const price = this.handbookHelper.getTemplatePrice(itemTpl);
-            const itemIsPreset = this.presetHelper.isPreset(itemTpl);
+                continue;
+            }
+            const desiredAssortItemAndChildrenClone = this.jsonUtil.clone(this.itemHelper.findAndReturnChildrenAsItems(fenceAssort.items, chosenAssortRoot._id));
 
+            const itemDbDetails = this.itemHelper.getItem(chosenAssortRoot._tpl)[1];
+            const itemLimitCount = itemTypeCounts[itemDbDetails._parent];
+            if (itemLimitCount && itemLimitCount.current > itemLimitCount.max)
+            {
+                // Skip adding item as assort as limit reached, decrement i counter so we still get another item
+                i--;
+                continue;
+            }
+            
+            const itemIsPreset = this.presetHelper.isPreset(chosenAssortRoot._id);
+
+            const price = fenceAssort.barter_scheme[chosenAssortRoot._id][0][0].count;
             if (price === 0 || (price === 1 && !itemIsPreset) || price === 100)
             {
                 // Don't allow "special" items
                 i--;
                 continue;
             }
-
-            // It's a normal non-preset item
-            if (!itemIsPreset)
+            
+            if (price > priceLimits[itemDbDetails._parent])
             {
-                const desiredAssort = fenceAssort.items[fenceAssort.items.findIndex((i) => i._id === itemTpl)];
-                if (!desiredAssort)
-                {
-                    this.logger.error(this.localisationService.getText("fence-unable_to_find_assort_by_id", itemTpl));
-                }
+                i--;
+                continue;
+            }
 
-                const itemDbDetails = this.itemHelper.getItem(desiredAssort._tpl)[1];
-                const itemLimitCount = itemTypeCounts[itemDbDetails._parent];
+            // Increment count as item is being added
+            if (itemLimitCount)
+            {
+                itemLimitCount.current++;
+            }
 
-                if (itemLimitCount && itemLimitCount.current > itemLimitCount.max)
+            // MUST randomise Ids as its possible to add the same base fence assort twice = duplicate IDs = dead client
+            this.itemHelper.remapRootItemId(desiredAssortItemAndChildrenClone);
+            this.itemHelper.replaceIDs(null, desiredAssortItemAndChildrenClone);
+
+            const rootItemBeingAdded = desiredAssortItemAndChildrenClone[0];
+            this.randomiseItemUpdProperties(itemDbDetails, rootItemBeingAdded);
+
+            rootItemBeingAdded.upd.StackObjectsCount = this.getSingleItemStackCount(itemDbDetails);
+            //rootItemBeingAdded.upd.BuyRestrictionCurrent = 0;
+            //rootItemBeingAdded.upd.UnlimitedCount = false;
+
+            // Need to add mods to armors so they dont show as red in the trade screen
+            if (this.itemHelper.itemRequiresSoftInserts(rootItemBeingAdded._tpl))
+            {
+                this.randomiseArmorModDurability(desiredAssortItemAndChildrenClone, itemDbDetails);
+            }
+
+            assorts.items.push(...desiredAssortItemAndChildrenClone);
+            assorts.barter_scheme[rootItemBeingAdded._id] = fenceAssort.barter_scheme[chosenAssortRoot._id];
+            assorts.loyal_level_items[rootItemBeingAdded._id] = loyaltyLevel;
+        }
+    }
+
+    /**
+     * Find presets in base fence assort and add desired number to 'assorts' parameter
+     * @param desiredPresetCount 
+     * @param assorts 
+     * @param baseFenceAssort 
+     * @param loyaltyLevel Which loyalty level is required to see/buy item
+     */
+    protected addPresetsToAssort(desiredPresetCount: number, assorts: ITraderAssort, baseFenceAssort: ITraderAssort, loyaltyLevel: number): void
+    {
+        let presetsAddedCount = 0;
+        if (desiredPresetCount <= 0)
+        {
+            return;
+        }
+
+        const presetRootItems = baseFenceAssort.items.filter(item => item.upd?.sptPresetId);
+        while (presetsAddedCount < desiredPresetCount)
+        {
+            const randomPresetRoot = this.randomUtil.getArrayValue(presetRootItems);
+            const rootItemDb = this.itemHelper.getItem(randomPresetRoot._tpl)[1];
+            const presetWithChildrenClone = this.jsonUtil.clone(this.itemHelper.findAndReturnChildrenAsItems(baseFenceAssort.items, randomPresetRoot._id));
+
+            // Need to add mods to armors so they dont show as red in the trade screen
+            if (this.itemHelper.itemRequiresSoftInserts(randomPresetRoot._tpl))
+            {
+                this.randomiseArmorModDurability(presetWithChildrenClone, rootItemDb);
+            }
+
+            if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.WEAPON))
+            {
+                this.randomiseItemUpdProperties(rootItemDb, presetWithChildrenClone[0]);
+            }
+
+            this.removeRandomModsOfItem(presetWithChildrenClone);
+
+            // MUST randomise Ids as its possible to add the same base fence assort twice = duplicate IDs = dead client
+            this.itemHelper.remapRootItemId(presetWithChildrenClone);
+            this.itemHelper.replaceIDs(null, presetWithChildrenClone);
+
+            assorts.items.push(...presetWithChildrenClone);
+
+            // Must be careful to use correct id as the item has had its IDs regenerated
+            assorts.barter_scheme[presetWithChildrenClone[0]._id] = baseFenceAssort.barter_scheme[randomPresetRoot._id];
+            assorts.loyal_level_items[presetWithChildrenClone[0]._id] = loyaltyLevel;
+
+            presetsAddedCount++;
+        }
+    }
+
+    /**
+     * Adjust plate / soft insert durability values
+     * @param armor Armor item array to add mods into
+     * @param itemDbDetails Armor items db template
+     */
+    protected randomiseArmorModDurability(armor: Item[], itemDbDetails: ITemplateItem): void
+    {
+        // Armor has no mods, make no changes
+        const hasMods = itemDbDetails._props.Slots.length > 0;
+        if (!hasMods)
+        {
+            return;
+        }
+
+        // Check for and adjust soft insert durability values
+        const requiredSlots = itemDbDetails._props.Slots.filter(slot => slot._required);
+        const hasRequiredSlots = requiredSlots.length > 0;
+        if (hasRequiredSlots)
+        {
+            for (const requiredSlot of requiredSlots)
+            {
+                const modItemDbDetails = this.itemHelper.getItem(requiredSlot._props.filters[0].Plate)[1];
+                const durabilityValues = this.getRandomisedArmorDurabilityValues(
+                    modItemDbDetails,
+                    this.traderConfig.fence.armorMaxDurabilityPercentMinMax);
+                const plateTpl = requiredSlot._props.filters[0].Plate; // `Plate` property appears to be the 'default' item for slot
+                if (plateTpl === "")
                 {
-                    // Skip adding item as assort as limit reached, decrement i counter so we still get another item
-                    i--;
+                    // Some bsg plate properties are empty, skip mod
                     continue;
                 }
 
-                // Increment count as item is being added
-                if (itemLimitCount)
+                // Find items mod to apply dura changes to
+                const modItemToAdjust = armor.find(mod => mod.slotId.toLowerCase() === requiredSlot._name.toLowerCase());
+                if (!modItemToAdjust.upd)
                 {
-                    itemLimitCount.current++;
+                    modItemToAdjust.upd = {}
                 }
 
-                if (price > priceLimits[itemDbDetails._parent])
+                if (!modItemToAdjust.upd.Repairable)
                 {
-                    i--;
+                    modItemToAdjust.upd.Repairable = {
+                        Durability: modItemDbDetails._props.MaxDurability,
+                        MaxDurability: modItemDbDetails._props.MaxDurability
+                    };
+                }
+                modItemToAdjust.upd.Repairable.Durability = durabilityValues.Durability;
+                modItemToAdjust.upd.Repairable.MaxDurability = durabilityValues.MaxDurability;
+
+                // 25% chance to add shots to visor when its below max durability
+                if (this.randomUtil.getChance100(25)
+                    && modItemToAdjust.parentId === BaseClasses.ARMORED_EQUIPMENT && modItemToAdjust.slotId === "mod_equipment_000"
+                    && modItemToAdjust.upd.Repairable.Durability < modItemDbDetails._props.MaxDurability) // Is damaged
+                {
+                    modItemToAdjust.upd.FaceShield = {
+                        Hits: this.randomUtil.getInt(1,3)
+                    }
+                }
+            }
+        }
+
+        // Check for and adjust plate durability values
+        const plateSlots = itemDbDetails._props.Slots.filter(slot => this.itemHelper.isRemovablePlateSlot(slot._name));
+        if (plateSlots.length > 0)
+        {
+            for (const plateSlot of plateSlots)
+            {
+                // Chance to not add plate
+                if (!this.randomUtil.getChance100(this.traderConfig.fence.chancePlateExistsInArmorPercent))
+                {
                     continue;
                 }
 
-                const toPush = this.jsonUtil.clone(desiredAssort);
+                const plateTpl = plateSlot._props.filters[0].Plate
+                if (!plateTpl)
+                {
+                    // Bsg data lacks a default plate, skip adding mod
+                    continue;
+                }
+                const modItemDbDetails = this.itemHelper.getItem(plateTpl)[1];
+                const durabilityValues = this.getRandomisedArmorDurabilityValues(
+                    modItemDbDetails,
+                    this.traderConfig.fence.armorMaxDurabilityPercentMinMax);
 
-                this.randomiseItemUpdProperties(itemDbDetails, toPush);
+                // Find items mod to apply dura changes to
+                const modItemToAdjust = armor.find(mod => mod.slotId.toLowerCase() === plateSlot._name.toLowerCase());
+                if (!modItemToAdjust.upd)
+                {
+                    modItemToAdjust.upd = {}
+                }
 
-                toPush.upd.StackObjectsCount = this.getSingleItemStackCount(itemDbDetails);
-                toPush.upd.BuyRestrictionCurrent = 0;
-                toPush.upd.UnlimitedCount = false;
+                if (!modItemToAdjust.upd.Repairable)
+                {
+                    modItemToAdjust.upd.Repairable = {
+                        Durability: modItemDbDetails._props.MaxDurability,
+                        MaxDurability: modItemDbDetails._props.MaxDurability
+                    };
+                }
 
-                toPush._id = this.hashUtil.generate();
-                assorts.items.push(toPush);
-                assorts.barter_scheme[toPush._id] = fenceAssort.barter_scheme[itemTpl];
-                assorts.loyal_level_items[toPush._id] = loyaltyLevel;
+                modItemToAdjust.upd.Repairable.Durability = durabilityValues.Durability;
+                modItemToAdjust.upd.Repairable.MaxDurability = durabilityValues.MaxDurability;
             }
         }
     }
@@ -511,124 +672,37 @@ export class FenceService
     }
 
     /**
-     * Add preset weapons to fence presets
-     * @param assortCount how many assorts to add to assorts
-     * @param defaultWeaponPresets a dictionary of default weapon presets
-     * @param assorts object to add presets to
-     * @param loyaltyLevel loyalty level to requre item at
-     */
-    protected addPresets(
-        desiredPresetCount: number,
-        defaultWeaponPresets: Record<string, IPreset>,
-        assorts: ITraderAssort,
-        loyaltyLevel: number,
-    ): void
-    {
-        let presetCount = 0;
-        const presetKeys = Object.keys(defaultWeaponPresets);
-        for (let index = 0; index < desiredPresetCount; index++)
-        {
-            const presetId = presetKeys[this.randomUtil.getInt(0, presetKeys.length - 1)];
-            const preset = defaultWeaponPresets[presetId];
-
-            // Check we're under preset limit
-            if (presetCount > desiredPresetCount)
-            {
-                return;
-            }
-
-            // Skip presets we've already added
-            if (assorts.items.some((i) => i.upd && i.upd.sptPresetId === preset._id))
-            {
-                continue;
-            }
-
-            // Construct weapon + mods
-            const weaponAndMods: Item[] = this.itemHelper.replaceIDs(
-                null,
-                this.jsonUtil.clone(defaultWeaponPresets[preset._id]._items),
-            );
-            this.removeRandomPartsOfWeapon(weaponAndMods);
-            for (let i = 0; i < weaponAndMods.length; i++)
-            {
-                const mod = weaponAndMods[i];
-
-                // build root Item info
-                if (!("parentId" in mod))
-                {
-                    mod._id = weaponAndMods[0]._id;
-                    mod.parentId = "hideout";
-                    mod.slotId = "hideout";
-                    mod.upd = {
-                        UnlimitedCount: false,
-                        StackObjectsCount: 1,
-                        BuyRestrictionCurrent: 0,
-                        sptPresetId: preset._id, // Store preset id here so we can check it later to prevent preset dupes
-                    };
-                }
-            }
-
-            const weaponItemDb = this.itemHelper.getItem(weaponAndMods[0]._tpl)[1];
-            this.randomiseItemUpdProperties(weaponItemDb, weaponAndMods[0]);
-
-            // Add weapon preset to assorts
-            assorts.items.push(...weaponAndMods);
-
-            // Calculate preset price
-            let rub = 0;
-            for (const it of weaponAndMods)
-            {
-                rub += this.handbookHelper.getTemplatePrice(it._tpl);
-            }
-
-            // Multiply weapon+mods rouble price by multipler in config
-            assorts.barter_scheme[weaponAndMods[0]._id] = [[]];
-            assorts.barter_scheme[weaponAndMods[0]._id][0][0] = { _tpl: Money.ROUBLES, count: Math.round(rub) };
-
-            assorts.loyal_level_items[weaponAndMods[0]._id] = loyaltyLevel;
-
-            presetCount++;
-        }
-    }
-
-    /**
      * Remove parts of a weapon prior to being listed on flea
-     * @param weaponAndMods Weapon to remove parts from
+     * @param itemAndMods Weapon to remove parts from
      */
-    protected removeRandomPartsOfWeapon(weaponAndMods: Item[]): void
+    protected removeRandomModsOfItem(itemAndMods: Item[]): void
     {
         // Items to be removed from inventory
         const toDelete: string[] = [];
 
-        // Loop over insurance items, find items to delete from player inventory
-        for (const weaponMod of weaponAndMods)
+        // Find mods to remove from item that could've been scavenged by other players in-raid
+        for (const itemMod of itemAndMods)
         {
-            if (this.presetModItemWillBeRemoved(weaponMod, toDelete))
+            if (this.presetModItemWillBeRemoved(itemMod, toDelete))
             {
                 // Skip if not an item
-                const itemDbDetails = this.itemHelper.getItem(weaponMod._tpl);
+                const itemDbDetails = this.itemHelper.getItem(itemMod._tpl);
                 if (!itemDbDetails[0])
                 {
                     continue;
                 }
 
-                // Is a mod and can't be edited in-raid
-                if (weaponMod.slotId !== "hideout" && !itemDbDetails[1]._props.RaidModdable)
-                {
-                    continue;
-                }
-
                 // Remove item and its sub-items to prevent orphans
-                toDelete.push(...this.itemHelper.findAndReturnChildrenByItems(weaponAndMods, weaponMod._id));
+                toDelete.push(...this.itemHelper.findAndReturnChildrenByItems(itemAndMods, itemMod._id));
             }
         }
 
         // Reverse loop and remove items
-        for (let index = weaponAndMods.length - 1; index >= 0; --index)
+        for (let index = itemAndMods.length - 1; index >= 0; --index)
         {
-            if (toDelete.includes(weaponAndMods[index]._id))
+            if (toDelete.includes(itemAndMods[index]._id))
             {
-                weaponAndMods.splice(index, 1);
+                itemAndMods.splice(index, 1);
             }
         }
     }
@@ -678,21 +752,14 @@ export class FenceService
 
         // Randomise armor durability
         if (
-            (itemDetails._parent === BaseClasses.ARMOR
-                || itemDetails._parent === BaseClasses.HEADWEAR
-                || itemDetails._parent === BaseClasses.VEST
-                || itemDetails._parent === BaseClasses.ARMOREDEQUIPMENT
-                || itemDetails._parent === BaseClasses.FACECOVER) && itemDetails._props.MaxDurability > 0
+            (itemDetails._parent === BaseClasses.ARMORED_EQUIPMENT
+                || itemDetails._parent === BaseClasses.FACECOVER
+                || itemDetails._parent === BaseClasses.ARMOR_PLATE
+            ) && itemDetails._props.MaxDurability > 0
         )
         {
-            const armorMaxDurabilityLimits = this.traderConfig.fence.armorMaxDurabilityPercentMinMax;
-            const duraMin = armorMaxDurabilityLimits.min / 100 * itemDetails._props.MaxDurability;
-            const duraMax = armorMaxDurabilityLimits.max / 100 * itemDetails._props.MaxDurability;
-
-            const maxDurability = this.randomUtil.getInt(duraMin, duraMax);
-            const durability = this.randomUtil.getInt(1, maxDurability);
-
-            itemToAdjust.upd.Repairable = { Durability: durability, MaxDurability: maxDurability };
+            const values = this.getRandomisedArmorDurabilityValues(itemDetails, this.traderConfig.fence.armorMaxDurabilityPercentMinMax);
+            itemToAdjust.upd.Repairable = { Durability: values.Durability, MaxDurability: values.MaxDurability };
 
             return;
         }
@@ -743,6 +810,23 @@ export class FenceService
     }
 
     /**
+     * Generate a randomised current and max durabiltiy value for an armor item
+     * @param itemDetails Item to create values for
+     * @param maxDurabilityMinMaxPercent Max durabiltiy percent min/max values
+     * @returns Durability + MaxDurability values
+     */
+    protected getRandomisedArmorDurabilityValues(itemDetails: ITemplateItem, maxDurabilityMinMaxPercent: MinMax): Repairable
+    {
+        const duraMin = maxDurabilityMinMaxPercent.min / 100 * itemDetails._props.MaxDurability;
+        const duraMax = maxDurabilityMinMaxPercent.max / 100 * itemDetails._props.MaxDurability;
+
+        const maxDurability = this.randomUtil.getInt(duraMin, duraMax);
+        const durability = this.randomUtil.getInt(1, maxDurability);
+
+        return { Durability: durability, MaxDurability: maxDurability };
+    }
+
+    /**
      * Construct item limit record to hold max and current item count
      * @param limits limits as defined in config
      * @returns record, key: item tplId, value: current/max item count allowed
@@ -772,6 +856,7 @@ export class FenceService
 
     /**
      * Get fence refresh time in seconds
+     * @returns Refresh time in seconds
      */
     protected getFenceRefreshTime(): number
     {
@@ -817,18 +902,28 @@ export class FenceService
      */
     public removeFenceOffer(assortIdToRemove: string): void
     {
-        let relatedAssortIndex = this.fenceAssort.items.findIndex((i) => i._id === assortIdToRemove);
-
-        // No offer found in main assort, check discount items
-        if (relatedAssortIndex === -1)
+        // Assort could have child items, remove those too
+        const itemWithChildrenToRemove = this.itemHelper.findAndReturnChildrenAsItems(this.fenceAssort.items, assortIdToRemove);
+        for (const itemToRemove of itemWithChildrenToRemove)
         {
-            relatedAssortIndex = this.fenceDiscountAssort.items.findIndex((i) => i._id === assortIdToRemove);
-            this.fenceDiscountAssort.items.splice(relatedAssortIndex, 1);
+            let indexToRemove = this.fenceAssort.items.findIndex(item => item._id === itemToRemove._id);
 
-            return;
+            // No offer found in main assort, check discount items
+            if (indexToRemove === -1)
+            {
+                indexToRemove = this.fenceDiscountAssort.items.findIndex((i) => i._id === itemToRemove._id);
+                this.fenceDiscountAssort.items.splice(indexToRemove, 1);
+
+                if (indexToRemove === -1)
+                {
+                    this.logger.warning(`unable to remove fence assort item: ${itemToRemove._id} tpl: ${itemToRemove._tpl}`)
+                }
+
+                return;
+            }
+
+            // Remove offer from assort
+            this.fenceAssort.items.splice(indexToRemove, 1);
         }
-
-        // Remove offer from assort
-        this.fenceAssort.items.splice(relatedAssortIndex, 1);
     }
 }

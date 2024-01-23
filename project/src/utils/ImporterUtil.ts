@@ -127,14 +127,14 @@ export class ImporterUtil
         directoriesToRead.enqueueAll(directories.map((d) => `${filepath}${d}`));
         filesToProcess.enqueueAll(files.map((f) => new VisitNode(filepath, f)));
 
-        while (!directoriesToRead.isEmpty())
+        while (directoriesToRead.length !== 0)
         {
             const directory = directoriesToRead.dequeue();
             filesToProcess.enqueueAll(this.vfs.getFiles(directory).map((f) => new VisitNode(`${directory}/`, f)));
             directoriesToRead.enqueueAll(this.vfs.getDirs(directory).map((d) => `${directory}/${d}`));
         }
 
-        while (!filesToProcess.isEmpty())
+        while (filesToProcess.length !== 0)
         {
             const fileNode = filesToProcess.dequeue();
             if (this.vfs.getFileExtension(fileNode.fileName) === "json")

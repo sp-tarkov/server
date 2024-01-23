@@ -1,6 +1,8 @@
 import { DependencyContainer, Lifecycle } from "tsyringe";
 
+import { AchievementCallbacks } from "@spt-aki/callbacks/AchievementCallbacks";
 import { BotCallbacks } from "@spt-aki/callbacks/BotCallbacks";
+import { BuildsCallbacks } from "@spt-aki/callbacks/BuildsCallbacks";
 import { BundleCallbacks } from "@spt-aki/callbacks/BundleCallbacks";
 import { ClientLogCallbacks } from "@spt-aki/callbacks/ClientLogCallbacks";
 import { CustomizationCallbacks } from "@spt-aki/callbacks/CustomizationCallbacks";
@@ -21,7 +23,6 @@ import { MatchCallbacks } from "@spt-aki/callbacks/MatchCallbacks";
 import { ModCallbacks } from "@spt-aki/callbacks/ModCallbacks";
 import { NoteCallbacks } from "@spt-aki/callbacks/NoteCallbacks";
 import { NotifierCallbacks } from "@spt-aki/callbacks/NotifierCallbacks";
-import { PresetBuildCallbacks } from "@spt-aki/callbacks/PresetBuildCallbacks";
 import { PresetCallbacks } from "@spt-aki/callbacks/PresetCallbacks";
 import { ProfileCallbacks } from "@spt-aki/callbacks/ProfileCallbacks";
 import { QuestCallbacks } from "@spt-aki/callbacks/QuestCallbacks";
@@ -33,7 +34,9 @@ import { TraderCallbacks } from "@spt-aki/callbacks/TraderCallbacks";
 import { WeatherCallbacks } from "@spt-aki/callbacks/WeatherCallbacks";
 import { WishlistCallbacks } from "@spt-aki/callbacks/WishlistCallbacks";
 import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
+import { AchievementController } from "@spt-aki/controllers/AchievementController";
 import { BotController } from "@spt-aki/controllers/BotController";
+import { BuildController } from "@spt-aki/controllers/BuildController";
 import { ClientLogController } from "@spt-aki/controllers/ClientLogController";
 import { CustomizationController } from "@spt-aki/controllers/CustomizationController";
 import { DialogueController } from "@spt-aki/controllers/DialogueController";
@@ -49,7 +52,6 @@ import { LocationController } from "@spt-aki/controllers/LocationController";
 import { MatchController } from "@spt-aki/controllers/MatchController";
 import { NoteController } from "@spt-aki/controllers/NoteController";
 import { NotifierController } from "@spt-aki/controllers/NotifierController";
-import { PresetBuildController } from "@spt-aki/controllers/PresetBuildController";
 import { PresetController } from "@spt-aki/controllers/PresetController";
 import { ProfileController } from "@spt-aki/controllers/ProfileController";
 import { QuestController } from "@spt-aki/controllers/QuestController";
@@ -86,6 +88,10 @@ import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
 import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
 import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
+import { SptCommandoCommands } from "@spt-aki/helpers/Dialogue/Commando/SptCommandoCommands";
+import { GiveSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveSptCommand";
+import { CommandoDialogueChatBot } from "@spt-aki/helpers/Dialogue/CommandoDialogueChatBot";
+import { SptDialogueChatBot } from "@spt-aki/helpers/Dialogue/SptDialogueChatBot";
 import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
 import { DurabilityLimitsHelper } from "@spt-aki/helpers/DurabilityLimitsHelper";
 import { GameEventHelper } from "@spt-aki/helpers/GameEventHelper";
@@ -143,7 +149,6 @@ import { HideoutItemEventRouter } from "@spt-aki/routers/item_events/HideoutItem
 import { InsuranceItemEventRouter } from "@spt-aki/routers/item_events/InsuranceItemEventRouter";
 import { InventoryItemEventRouter } from "@spt-aki/routers/item_events/InventoryItemEventRouter";
 import { NoteItemEventRouter } from "@spt-aki/routers/item_events/NoteItemEventRouter";
-import { PresetBuildItemEventRouter } from "@spt-aki/routers/item_events/PresetBuildItemEventRouter";
 import { QuestItemEventRouter } from "@spt-aki/routers/item_events/QuestItemEventRouter";
 import { RagfairItemEventRouter } from "@spt-aki/routers/item_events/RagfairItemEventRouter";
 import { RepairItemEventRouter } from "@spt-aki/routers/item_events/RepairItemEventRouter";
@@ -156,7 +161,9 @@ import { ProfileSaveLoadRouter } from "@spt-aki/routers/save_load/ProfileSaveLoa
 import { BundleSerializer } from "@spt-aki/routers/serializers/BundleSerializer";
 import { ImageSerializer } from "@spt-aki/routers/serializers/ImageSerializer";
 import { NotifySerializer } from "@spt-aki/routers/serializers/NotifySerializer";
+import { AchievementStaticRouter } from "@spt-aki/routers/static/AchievementStaticRouter";
 import { BotStaticRouter } from "@spt-aki/routers/static/BotStaticRouter";
+import { BuildsStaticRouter } from "@spt-aki/routers/static/BuildStaticRouter";
 import { BundleStaticRouter } from "@spt-aki/routers/static/BundleStaticRouter";
 import { ClientLogStaticRouter } from "@spt-aki/routers/static/ClientLogStaticRouter";
 import { CustomizationStaticRouter } from "@spt-aki/routers/static/CustomizationStaticRouter";
@@ -171,7 +178,6 @@ import { LauncherStaticRouter } from "@spt-aki/routers/static/LauncherStaticRout
 import { LocationStaticRouter } from "@spt-aki/routers/static/LocationStaticRouter";
 import { MatchStaticRouter } from "@spt-aki/routers/static/MatchStaticRouter";
 import { NotifierStaticRouter } from "@spt-aki/routers/static/NotifierStaticRouter";
-import { PresetStaticRouter } from "@spt-aki/routers/static/PresetStaticRouter";
 import { ProfileStaticRouter } from "@spt-aki/routers/static/ProfileStaticRouter";
 import { QuestStaticRouter } from "@spt-aki/routers/static/QuestStaticRouter";
 import { RagfairStaticRouter } from "@spt-aki/routers/static/RagfairStaticRouter";
@@ -244,6 +250,7 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { Watermark, WatermarkLocale } from "@spt-aki/utils/Watermark";
 import { WinstonMainLogger } from "@spt-aki/utils/logging/WinstonMainLogger";
 import { WinstonRequestLogger } from "@spt-aki/utils/logging/WinstonRequestLogger";
+import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
 
 /**
  * Handle the registration of classes to be used by the Dependency Injection code
@@ -320,8 +327,9 @@ export class Container
         depContainer.registerType("StaticRoutes", "MatchStaticRouter");
         depContainer.registerType("StaticRoutes", "QuestStaticRouter");
         depContainer.registerType("StaticRoutes", "RagfairStaticRouter");
-        depContainer.registerType("StaticRoutes", "PresetStaticRouter");
         depContainer.registerType("StaticRoutes", "BundleStaticRouter");
+        depContainer.registerType("StaticRoutes", "AchievementStaticRouter");
+        depContainer.registerType("StaticRoutes", "BuildsStaticRouter");
         depContainer.registerType("StaticRoutes", "NotifierStaticRouter");
         depContainer.registerType("StaticRoutes", "ProfileStaticRouter");
         depContainer.registerType("StaticRoutes", "TraderStaticRouter");
@@ -341,7 +349,6 @@ export class Container
         depContainer.registerType("IERouters", "InsuranceItemEventRouter");
         depContainer.registerType("IERouters", "InventoryItemEventRouter");
         depContainer.registerType("IERouters", "NoteItemEventRouter");
-        depContainer.registerType("IERouters", "PresetBuildItemEventRouter");
         depContainer.registerType("IERouters", "QuestItemEventRouter");
         depContainer.registerType("IERouters", "RagfairItemEventRouter");
         depContainer.registerType("IERouters", "RepairItemEventRouter");
@@ -355,6 +362,16 @@ export class Container
         depContainer.registerType("SaveLoadRouter", "InraidSaveLoadRouter");
         depContainer.registerType("SaveLoadRouter", "InsuranceSaveLoadRouter");
         depContainer.registerType("SaveLoadRouter", "ProfileSaveLoadRouter");
+
+        // Chat Bots
+        depContainer.registerType("DialogueChatBot", "SptDialogueChatBot");
+        depContainer.registerType("DialogueChatBot", "CommandoDialogueChatBot");
+
+        // Commando Commands
+        depContainer.registerType("CommandoCommand", "SptCommandoCommands");
+
+        // SptCommando Commands
+        depContainer.registerType("SptCommand", "GiveSptCommand");
     }
 
     private static registerUtils(depContainer: DependencyContainer): void
@@ -424,9 +441,6 @@ export class Container
             useClass: InventoryItemEventRouter,
         });
         depContainer.register<NoteItemEventRouter>("NoteItemEventRouter", { useClass: NoteItemEventRouter });
-        depContainer.register<PresetBuildItemEventRouter>("PresetBuildItemEventRouter", {
-            useClass: PresetBuildItemEventRouter,
-        });
         depContainer.register<QuestItemEventRouter>("QuestItemEventRouter", { useClass: QuestItemEventRouter });
         depContainer.register<RagfairItemEventRouter>("RagfairItemEventRouter", { useClass: RagfairItemEventRouter });
         depContainer.register<RepairItemEventRouter>("RepairItemEventRouter", { useClass: RepairItemEventRouter });
@@ -466,12 +480,13 @@ export class Container
         depContainer.register<LocationStaticRouter>("LocationStaticRouter", { useClass: LocationStaticRouter });
         depContainer.register<MatchStaticRouter>("MatchStaticRouter", { useClass: MatchStaticRouter });
         depContainer.register<NotifierStaticRouter>("NotifierStaticRouter", { useClass: NotifierStaticRouter });
-        depContainer.register<PresetStaticRouter>("PresetStaticRouter", { useClass: PresetStaticRouter });
         depContainer.register<ProfileStaticRouter>("ProfileStaticRouter", { useClass: ProfileStaticRouter });
         depContainer.register<QuestStaticRouter>("QuestStaticRouter", { useClass: QuestStaticRouter });
         depContainer.register<RagfairStaticRouter>("RagfairStaticRouter", { useClass: RagfairStaticRouter });
         depContainer.register<TraderStaticRouter>("TraderStaticRouter", { useClass: TraderStaticRouter });
         depContainer.register<WeatherStaticRouter>("WeatherStaticRouter", { useClass: WeatherStaticRouter });
+        depContainer.register<AchievementStaticRouter>("AchievementStaticRouter", { useClass: AchievementStaticRouter });
+        depContainer.register<BuildsStaticRouter>("BuildsStaticRouter", { useClass: BuildsStaticRouter });
     }
 
     private static registerGenerators(depContainer: DependencyContainer): void
@@ -563,6 +578,18 @@ export class Container
         });
         depContainer.register<BotDifficultyHelper>("BotDifficultyHelper", { useClass: BotDifficultyHelper });
         depContainer.register<RepeatableQuestHelper>("RepeatableQuestHelper", { useClass: RepeatableQuestHelper });
+
+        // ChatBots
+        depContainer.register<SptDialogueChatBot>("SptDialogueChatBot", SptDialogueChatBot);
+        depContainer.register<CommandoDialogueChatBot>("CommandoDialogueChatBot", CommandoDialogueChatBot, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        // SptCommando
+        depContainer.register<SptCommandoCommands>("SptCommandoCommands", SptCommandoCommands, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        // SptCommands
+        depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand);
     }
 
     private static registerLoaders(depContainer: DependencyContainer): void
@@ -600,7 +627,6 @@ export class Container
         depContainer.register<PostDBModLoader>("PostDBModLoader", { useClass: PostDBModLoader });
         depContainer.register<NoteCallbacks>("NoteCallbacks", { useClass: NoteCallbacks });
         depContainer.register<NotifierCallbacks>("NotifierCallbacks", { useClass: NotifierCallbacks });
-        depContainer.register<PresetBuildCallbacks>("PresetBuildCallbacks", { useClass: PresetBuildCallbacks });
         depContainer.register<PresetCallbacks>("PresetCallbacks", { useClass: PresetCallbacks });
         depContainer.register<ProfileCallbacks>("ProfileCallbacks", { useClass: ProfileCallbacks });
         depContainer.register<QuestCallbacks>("QuestCallbacks", { useClass: QuestCallbacks });
@@ -611,6 +637,8 @@ export class Container
         depContainer.register<TraderCallbacks>("TraderCallbacks", { useClass: TraderCallbacks });
         depContainer.register<WeatherCallbacks>("WeatherCallbacks", { useClass: WeatherCallbacks });
         depContainer.register<WishlistCallbacks>("WishlistCallbacks", { useClass: WishlistCallbacks });
+        depContainer.register<AchievementCallbacks>("AchievementCallbacks", { useClass: AchievementCallbacks });
+        depContainer.register<BuildsCallbacks>("BuildsCallbacks", { useClass: BuildsCallbacks });
     }
 
     private static registerServices(depContainer: DependencyContainer): void
@@ -627,6 +655,9 @@ export class Container
             lifecycle: Lifecycle.Singleton,
         });
         depContainer.register<TraderAssortService>("TraderAssortService", TraderAssortService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<TraderServicesService>("TraderServicesService", TraderServicesService, {
             lifecycle: Lifecycle.Singleton,
         });
 
@@ -727,7 +758,9 @@ export class Container
         depContainer.register<CustomizationController>("CustomizationController", {
             useClass: CustomizationController,
         });
-        depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController });
+        depContainer.register<DialogueController>("DialogueController", { useClass: DialogueController }, {
+            lifecycle: Lifecycle.Singleton,
+        });
         depContainer.register<GameController>("GameController", { useClass: GameController });
         depContainer.register<HandbookController>("HandbookController", { useClass: HandbookController });
         depContainer.register<HealthController>("HealthController", { useClass: HealthController });
@@ -740,7 +773,7 @@ export class Container
         depContainer.register<MatchController>("MatchController", MatchController);
         depContainer.register<NoteController>("NoteController", { useClass: NoteController });
         depContainer.register<NotifierController>("NotifierController", { useClass: NotifierController });
-        depContainer.register<PresetBuildController>("PresetBuildController", { useClass: PresetBuildController });
+        depContainer.register<BuildController>("BuildController", { useClass: BuildController });
         depContainer.register<PresetController>("PresetController", { useClass: PresetController });
         depContainer.register<ProfileController>("ProfileController", { useClass: ProfileController });
         depContainer.register<QuestController>("QuestController", { useClass: QuestController });
@@ -753,5 +786,6 @@ export class Container
         depContainer.register<TraderController>("TraderController", { useClass: TraderController });
         depContainer.register<WeatherController>("WeatherController", { useClass: WeatherController });
         depContainer.register<WishlistController>("WishlistController", WishlistController);
+        depContainer.register<AchievementController>("AchievementController", AchievementController);
     }
 }

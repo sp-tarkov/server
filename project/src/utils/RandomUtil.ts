@@ -200,7 +200,9 @@ export class ProbabilityObject<K, V = undefined>
 @injectable()
 export class RandomUtil
 {
-    constructor(@inject("JsonUtil") protected jsonUtil: JsonUtil, @inject("WinstonLogger") protected logger: ILogger)
+    constructor(
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("WinstonLogger") protected logger: ILogger)
     {
     }
 
@@ -275,12 +277,13 @@ export class RandomUtil
     }
 
     /**
-     * Draw from normal distribution
-     * @param   {number}    mu      Mean of the normal distribution
+     * Generate a normally distributed random number
+     * Uses the Box-Muller transform
+     * @param   {number}    mean    Mean of the normal distribution
      * @param   {number}    sigma   Standard deviation of the normal distribution
      * @returns {number}            The value drawn
      */
-    public randn(mu: number, sigma: number): number
+    public getNormallyDistributedRandomNumber(mean: number, sigma: number, attempt = 0): number
     {
         let u = 0;
         let v = 0;
@@ -292,8 +295,19 @@ export class RandomUtil
         {
             v = Math.random();
         }
-        const w = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-        return mu + w * sigma;
+        const w = Math.sqrt(-2.0 * Math.log(u)) * Math.cos((2.0 * Math.PI) * v);
+        const valueDrawn =  mean + w * sigma;
+        if (valueDrawn < 0)
+        {
+          if (attempt > 100)
+          {
+              return this.getFloat(0.01, mean * 2);
+          }
+
+          return this.getNormallyDistributedRandomNumber(mean, sigma, attempt++);
+        }
+
+        return valueDrawn;
     }
 
     /**
@@ -309,10 +323,8 @@ export class RandomUtil
         {
             return low + Math.floor(Math.random() * (high - low));
         }
-        else
-        {
-            return Math.floor(Math.random() * low);
-        }
+
+        return Math.floor(Math.random() * low);
     }
 
     /**
@@ -459,5 +471,22 @@ export class RandomUtil
         }
 
         return array;
+    }
+
+    /**
+     * Rolls for a probability based on chance
+     * @param number Probability Chance as float (0-1)
+     * @returns If roll succeed or not
+     * @example
+     * rollForChanceProbability(0.25); // returns true 25% probability
+     */
+    public rollForChanceProbability(probabilityChance: number): boolean
+    {
+        const maxRoll = 9999;
+
+        // Roll a number between 0 and 1
+        const rolledChance = this.getInt(0, maxRoll) / 10000;
+        
+        return rolledChance <= probabilityChance;
     }
 }

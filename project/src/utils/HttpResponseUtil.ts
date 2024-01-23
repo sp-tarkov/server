@@ -36,14 +36,16 @@ export class HttpResponseUtil
 
     /**
      * Game client needs server responses in a particular format
-     * @param data 
-     * @param err 
-     * @param errmsg 
-     * @returns 
+     * @param data
+     * @param err
+     * @param errmsg
+     * @returns
      */
-    public getBody<T>(data: T, err = 0, errmsg = null): IGetBodyResponseData<T>
+    public getBody<T>(data: T, err = 0, errmsg = null, sanitize = true): IGetBodyResponseData<T>
     {
-        return this.clearString(this.getUnclearedBody(data, err, errmsg));
+        return sanitize
+            ? this.clearString(this.getUnclearedBody(data, err, errmsg))
+            : (this.getUnclearedBody(data, err, errmsg) as any);
     }
 
     public getUnclearedBody(data: any, err = 0, errmsg = null): string
@@ -66,13 +68,31 @@ export class HttpResponseUtil
         return this.getBody([]);
     }
 
+    /**
+     * Add an error into the 'warnings' array of the client response message
+     * @param output IItemEventRouterResponse
+     * @param message Error message
+     * @param errorCode Error code
+     * @returns IItemEventRouterResponse
+     */
     public appendErrorToOutput(
         output: IItemEventRouterResponse,
         message = this.localisationService.getText("http-unknown_error"),
         errorCode = BackendErrorCodes.NONE,
     ): IItemEventRouterResponse
     {
-        output.warnings = [{ index: 0, errmsg: message, code: errorCode.toString() }];
+        if (output.warnings?.length > 0)
+        {
+            output.warnings.push({
+                index: output.warnings?.length - 1,
+                errmsg: message,
+                code: errorCode.toString()
+            })
+        }
+        else
+        {
+            output.warnings = [{ index: 0, errmsg: message, code: errorCode.toString() }];
+        }
 
         return output;
     }

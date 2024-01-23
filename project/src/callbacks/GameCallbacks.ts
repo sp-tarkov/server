@@ -11,6 +11,7 @@ import { IGameKeepAliveResponse } from "@spt-aki/models/eft/game/IGameKeepAliveR
 import { IGameLogoutResponseData } from "@spt-aki/models/eft/game/IGameLogoutResponseData";
 import { IGameStartResponse } from "@spt-aki/models/eft/game/IGameStartResponse";
 import { IGetRaidTimeRequest } from "@spt-aki/models/eft/game/IGetRaidTimeRequest";
+import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeResponse";
 import { IReportNicknameRequestData } from "@spt-aki/models/eft/game/IReportNicknameRequestData";
 import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
 import { IVersionValidateRequestData } from "@spt-aki/models/eft/game/IVersionValidateRequestData";
@@ -154,7 +155,7 @@ export class GameCallbacks implements OnLoad
      * @returns string
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getRaidTime(url: string, request: IGetRaidTimeRequest, sessionID: string): any
+    public getRaidTime(url: string, request: IGetRaidTimeRequest, sessionID: string): IGetRaidTimeResponse
     {
         return this.httpResponse.noBody(this.gameController.getRaidTime(sessionID, request));
     }

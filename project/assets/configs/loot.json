@@ -1,6 +1,7 @@
 {
     "looseLoot": {
-        "woods": [{
+        "woods": [
+            {
                 "locationId": "(-25.021, -2.7881, 47.4380035)",
                 "probability": 0.02,
                 "template": {
@@ -22,20 +23,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63cd27b7ea6a1bd8b0096b43",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "1125653197",
                             "_tpl": "5c1e495a86f7743109743dfb"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "1125653197"
                         },
                         "relativeProbability": 50
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(233.650009, -1.4718, -70.695)",
                 "probability": 0.02,
                 "template": {
@@ -57,20 +61,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63cbc5ce259d34b1a90edfb9",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "1125653197",
                             "_tpl": "5c1e495a86f7743109743dfb"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "1125653197"
                         },
                         "relativeProbability": 50
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(54.5767, -2.0162, -46.6806)",
                 "probability": 0.02,
                 "template": {
@@ -92,13 +99,15 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63c4cbdb919427094d06750b",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "1125653197",
                             "_tpl": "5c1e495a86f7743109743dfb"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "1125653197"
                         },
@@ -107,11 +116,12 @@
                 ]
             }
         ],
-        "bigmap": [{
+        "bigmap": [
+            {
                 "locationId": "(292.121, 1.5664, -190.888)",
                 "probability": 0.03,
                 "template": {
-                    "Id": "Loot 19 (9)3596812",
+                    "Id": "Loot 19 (9)3856272",
                     "IsContainer": false,
                     "useGravity": true,
                     "randomRotation": false,
@@ -129,24 +139,27 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "64fb326d0a58bbc7fd05a7a5",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-125004426",
                             "_tpl": "5c1d0efb86f7744baf2e7b7b"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-125004426"
                         },
                         "relativeProbability": 3
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(291.785, 1.5664, -191.529)",
                 "probability": 0.03,
                 "template": {
-                    "Id": "Loot 19 (8)3601082",
+                    "Id": "Loot 19 (8)3860542",
                     "IsContainer": false,
                     "useGravity": true,
                     "randomRotation": false,
@@ -164,21 +177,25 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "64fb2b6683a4346102070964",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1231523193",
                             "_tpl": "5c1d0dc586f7744baf2e7b79"
-                        }, {
+                        },
+                        {
                             "_id": "1125653197",
                             "_tpl": "5c1e495a86f7743109743dfb"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1231523193"
                         },
                         "relativeProbability": 3
-                    }, {
+                    },
+                    {
                         "composedKey": {
                             "key": "1125653197"
                         },
@@ -187,7 +204,8 @@
                 ]
             }
         ],
-        "laboratory": [{
+        "laboratory": [
+            {
                 "locationId": "(-181.633011, 1.09229994, -356.657562)",
                 "probability": 0.02,
                 "template": {
@@ -209,20 +227,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63caf08c53b6e4b2aa090a99",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1371362302",
                             "_tpl": "5c1d0d6d86f7744bb2683e1f"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1371362302"
                         },
                         "relativeProbability": 4
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(-172.989716, 5.138, -343.798859)",
                 "probability": 0.02,
                 "template": {
@@ -244,20 +265,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63d179fb9e39bdf34308d3d4",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1371362302",
                             "_tpl": "5c1d0d6d86f7744bb2683e1f"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1371362302"
                         },
                         "relativeProbability": 4
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(-231.327515, 5.269, -312.286743)",
                 "probability": 0.02,
                 "template": {
@@ -279,20 +303,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63d31d81f81d58f3810b61db",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1371362302",
                             "_tpl": "5c1d0d6d86f7744bb2683e1f"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1371362302"
                         },
                         "relativeProbability": 6
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(-134.165161, 0.902, -409.97)",
                 "probability": 0.02,
                 "template": {
@@ -314,20 +341,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "640295d734fb3e2db801acb7",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1231523193",
                             "_tpl": "5c1d0dc586f7744baf2e7b79"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1231523193"
                         },
                         "relativeProbability": 2
                     }
                 ]
-            }, {
+            },
+            {
                 "locationId": "(-178.263245, 4.982, -343.265442)",
                 "probability": 0.02,
                 "template": {
@@ -349,55 +379,23 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63e42737e49e4c1a4302b3cc",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-1231523193",
                             "_tpl": "5c1d0dc586f7744baf2e7b79"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-1231523193"
                         },
                         "relativeProbability": 4
                     }
                 ]
-            }, {
-                "locationId": "(-139.5908, 5.018, -368.5823)",
-                "probability": 0.02,
-                "template": {
-                    "Id": "loot_op_room (5)5242932",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -139.5908,
-                        "y": 5.018,
-                        "z": -368.5823
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "64184f8d4a4e08ca020b609f",
-                    "Items": [{
-                            "_id": "-140181362",
-                            "_tpl": "5c1d0f4986f7744bb01837fa"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "-140181362"
-                        },
-                        "relativeProbability": 2
-                    }
-                ]
-            }, {
+            },
+            {
                 "locationId": "(-182.166885, 1.04699993, -363.043823)",
                 "probability": 0.02,
                 "template": {
@@ -419,13 +417,15 @@
                     "GroupPositions": [],
                     "IsAlwaysSpawn": false,
                     "Root": "63cc8153f075bf65710626e2",
-                    "Items": [{
+                    "Items": [
+                        {
                             "_id": "-140181362",
                             "_tpl": "5c1d0f4986f7744bb01837fa"
                         }
                     ]
                 },
-                "itemDistribution": [{
+                "itemDistribution": [
+                    {
                         "composedKey": {
                             "key": "-140181362"
                         },
@@ -433,251 +433,11 @@
                     }
                 ]
             }
-        ],
-        "shoreline": [{
-                "locationId": "(-227.977051, -6.41899967, -102.800995)",
-                "probability": 0.007,
-                "template": {
-                    "Id": "key_lab_weapon_store (35)6033844",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -227.977051,
-                        "y": -6.41899967,
-                        "z": -102.800995
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "63fd6bea4f17dff63901d2ca",
-                    "Items": [{
-                            "_id": "-125004426",
-                            "_tpl": "5c1d0efb86f7744baf2e7b7b"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "-125004426"
-                        },
-                        "relativeProbability": 3
-                    }
-                ]
-            }, {
-                "locationId": "(-335.261, -0.0619997978, -88.9129944)",
-                "probability": 0.007,
-                "template": {
-                    "Id": "key_lab_weapon_store (36)6032572",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -335.261,
-                        "y": -0.0619997978,
-                        "z": -88.9129944
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "63c147d4d25689a1b00a4824",
-                    "Items": [{
-                            "_id": "-125024426",
-                            "_tpl": "5c1d0efb86f7744baf2e7b7b"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "-125024426"
-                        },
-                        "relativeProbability": 5
-                    }
-                ]
-            }, {
-                "locationId": "(-171.123047, -0.0277996063, -87.7450562)",
-                "probability": 0.007,
-                "template": {
-                    "Id": "key_lab_weapon_store (37)6032436",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -171.123047,
-                        "y": -0.0277996063,
-                        "z": -87.7450562
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "63de0be6aba2b30295076b29",
-                    "Items": [{
-                            "_id": "-125014426",
-                            "_tpl": "5c1d0efb86f7744baf2e7b7b"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "-125014426"
-                        },
-                        "relativeProbability": 5
-                    }
-                ]
-            }, {
-                "locationId": "(-155.865112, -2.97210026, -89.4736)",
-                "probability": 0.007,
-                "template": {
-                    "Id": "key_lab_karantin (36)6029734",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -155.865112,
-                        "y": -2.97210026,
-                        "z": -89.4736
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "63cb993ecb1fd51df108accc",
-                    "Items": [{
-                            "_id": "477360964",
-                            "_tpl": "5c1d0c5f86f7744bb2683cf0"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "477360964"
-                        },
-                        "relativeProbability": 4
-                    }
-                ]
-            }, {
-                "locationId": "(-257.266, -4.6257, -86.741)",
-                "probability": 0.007,
-                "template": {
-                    "Id": "key_lab_karantin (38)6033420",
-                    "IsContainer": false,
-                    "useGravity": false,
-                    "randomRotation": false,
-                    "Position": {
-                        "x": -257.266,
-                        "y": -4.6257,
-                        "z": -86.741
-                    },
-                    "Rotation": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
-                    },
-                    "IsGroupPosition": false,
-                    "GroupPositions": [],
-                    "IsAlwaysSpawn": false,
-                    "Root": "63c4c4ccc9e7b5d565056b85",
-                    "Items": [{
-                            "_id": "477360964",
-                            "_tpl": "5c1d0c5f86f7744bb2683cf0"
-                        }
-                    ]
-                },
-                "itemDistribution": [{
-                        "composedKey": {
-                            "key": "477360964"
-                        },
-                        "relativeProbability": 7
-                    }
-                ]
-            }
         ]
     },
     "looseLootSpawnPointAdjustments": {
-        "bigmap": {
-            "Loot 135 (2)3599514": 0.2,
-            "Loot 135 (4)3600488": 0.2,
-            "Loot 135 (7)3597904": 0.2,
-            "Loot_jever (16)3602946": 0.2,
-            "Loot_jever (17)3595320": 0.2,
-            "Loot_jever (18)3595296": 0.2,
-            "Loot_jever (19)3597186": 0.2,
-            "Loot_jever (21)3600138": 0.2,
-            "Loot_jever (22)3596514": 0.2,
-            "Loot_jever (23)3596796": 0.2
-        },
-        "rezervbase": {
-            "Loot 135 (2)4656148": 0.2,
-            "Loot 135 (8)4674834": 0.2,
-            "loot_cult_jeverly (11)4667844": 0.2,
-            "loot_cult_jeverly (13)4663538": 0.2,
-            "loot_cult_jeverly (14)4670424": 0.2,
-            "loot_cult_jeverly (16)4647888": 0.2,
-            "loot_cult_jeverly (9)4670392": 0.2,
-            "loot_jeverly (1)4663474": 0.2,
-            "loot_jeverly (10)4673942": 0.2,
-            "loot_jeverly (11)4642814": 0.2,
-            "loot_jeverly (11)4661016": 0.2,
-            "loot_jeverly (12)4650958": 0.2,
-            "loot_jeverly (12)4661810": 0.2,
-            "loot_jeverly (13)4673870": 0.2,
-            "loot_jeverly (17)4666756": 0.2,
-            "loot_jeverly (5)4657240": 0.2,
-            "loot_jeverly (6)4674618": 0.2,
-            "loot_jeverly (9)4667184": 0.2,
-            "loot_jeverly4652274": 0.2
-        },
-        "tarkovstreets": {
-            "Loot 135_Leo_Rare (12)96028": 0.2,
-            "Loot 135_Leo_Rare (32)90450": 0.2,
-            "Loot 135_Leo_Rare (40)102062": 0.2,
-            "Loot 135_Leo_Rare (8)151610": 0.2,
-            "Loot 135_Leo_Rare106522": 0.2,
-            "sh_ee_loot (1)60376": 0.2,
-            "sh_ee_loot (18)60048": 0.2,
-            "sh_ee_loot (19)58688": 0.2,
-            "sh_ee_loot (2)52522": 0.2,
-            "sh_ee_loot (20)52458": 0.2,
-            "sh_ee_loot (21)56872": 0.2,
-            "sh_ee_loot (22)57016": 0.2,
-            "sh_ee_loot (3)55668": 0.2,
-            "sh_ee_loot (4)58464": 0.2,
-            "sh_ee_loot (5)58888": 0.2,
-            "sh_ee_loot (6)55270": 0.2,
-            "sh_ee_loot (7)56116": 0.2,
-            "sh_ee_loot (8)57536": 0.2,
-            "sh_ee_loot (9)59180": 0.2,
-            "sh_ee_loot54910": 0.2,
-            "sh_ee_m870 (2)60160": 0.2,
-            "sh_ee_m87053586": 0.2,
-            "sh_ee_Mosin (2)56204": 0.2,
-            "sh_ee_Mosin51890": 0.2,
-            "sh_ee_mp43 (1)60144": 0.2,
-            "sh_ee_mp4359880": 0.2,
-            "technikal_staff_Leo_Rare (9)100946": 0.2,
-            "tools&building_Leo_Rare (1)108052": 0.2,
-            "tools&building_Leo_Rare (2)108670": 0.2,
-            "tools&building_Leo_Rare (3)90386": 0.2,
-            "tools&building_Leo_Rare92824": 0.2
-        }
+        "bigmap": {},
+        "rezervbase": {},
+        "tarkovstreets": {}
     }
 }

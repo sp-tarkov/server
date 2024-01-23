@@ -234,7 +234,7 @@
     "eventBotMapping": {
         "peacefullZryachiyEvent": "bossZryachiy",
         "sectactPriestEvent": "sectantPriest",
-        "ravangeZryachiyEvent": "bossZryachiy",
+        "ravangeZryachiyEvent": "ravangeZryachiyEvent",
         "arenaFighterEvent": "arenaFighterEvent",
 		"crazyAssaultEvent": "crazyAssaultEvent"
     },
@@ -399,7 +399,7 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "reservbase": [{
+            "rezervbase": [{
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -671,7 +671,7 @@
             "type": "NEW_YEARS",
             "startDay": "1",
             "startMonth": "1",
-            "endDay": "7",
+            "endDay": "20",
             "endMonth": "1"
         }
     ]

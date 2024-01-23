@@ -78,7 +78,7 @@ export class RagfairServer
      * Get traders who need to be periodically refreshed
      * @returns string array of traders
      */
-    protected getUpdateableTraders(): string[]
+    public getUpdateableTraders(): string[]
     {
         return Object.keys(this.ragfairConfig.traders).filter((x) => this.ragfairConfig.traders[x]);
     }

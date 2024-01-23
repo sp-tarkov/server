@@ -37,13 +37,16 @@ export interface AirdropChancePercent
     interchange: number;
     reserve: number;
     tarkovStreets: number;
+    sandbox: number;
 }
 
 /** Loot inside crate */
 export interface AirdropLoot
 {
     /** Min/max of weapons inside crate */
-    presetCount?: MinMax;
+    weaponPresetCount?: MinMax;
+    /** Min/max of armors (head/chest/rig) inside crate */
+    armorPresetCount?: MinMax;
     /** Min/max of items inside crate */
     itemCount: MinMax;
     /** Min/max of sealed weapon boxes inside crate */

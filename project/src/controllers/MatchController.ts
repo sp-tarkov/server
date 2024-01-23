@@ -10,6 +10,7 @@ import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ICreateGroupRequestData } from "@spt-aki/models/eft/match/ICreateGroupRequestData";
 import { IEndOfflineRaidRequestData } from "@spt-aki/models/eft/match/IEndOfflineRaidRequestData";
 import { IGetGroupStatusRequestData } from "@spt-aki/models/eft/match/IGetGroupStatusRequestData";
+import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
 import { IGetProfileRequestData } from "@spt-aki/models/eft/match/IGetProfileRequestData";
 import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
 import { IJoinMatchRequestData } from "@spt-aki/models/eft/match/IJoinMatchRequestData";
@@ -37,7 +38,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class MatchController
 {
     protected matchConfig: IMatchConfig;
-    protected inraidConfig: IInRaidConfig;
+    protected inRaidConfig: IInRaidConfig;
     protected traderConfig: ITraderConfig;
     protected pmcConfig: IPmcConfig;
 
@@ -60,7 +61,7 @@ export class MatchController
     )
     {
         this.matchConfig = this.configServer.getConfig(ConfigTypes.MATCH);
-        this.inraidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
+        this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
@@ -99,6 +100,7 @@ export class MatchController
     }
 
     /** Handle match/group/start_game */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public joinMatch(info: IJoinMatchRequestData, sessionId: string): IJoinMatchResult
     {
         const output: IJoinMatchResult = { maxPveCountExceeded: false, profiles: [] };
@@ -116,6 +118,7 @@ export class MatchController
             raidMode: "Online",
             mode: "deathmatch",
             shortid: null,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             additional_info: null,
         });
 
@@ -123,7 +126,8 @@ export class MatchController
     }
 
     /** Handle client/match/group/status */
-    public getGroupStatus(info: IGetGroupStatusRequestData): any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public getGroupStatus(info: IGetGroupStatusRequestData): IGetGroupStatusResponse
     {
         return { players: [], maxPveCountExceeded: false };
     }
@@ -140,7 +144,7 @@ export class MatchController
 
         // TODO: add code to strip PMC of equipment now they've started the raid
 
-        // Set PMCs to difficulty set in pre-raid screen if override in bot config isn't enabled
+        // Set pmcs to difficulty set in pre-raid screen if override in bot config isnt enabled
         if (!this.pmcConfig.useDifficultyOverride)
         {
             this.pmcConfig.difficulty = this.convertDifficultyDropdownIntoBotDifficulty(
@@ -209,7 +213,7 @@ export class MatchController
             return false;
         }
 
-        return (this.inraidConfig.coopExtracts.includes(extractName.trim()));
+        return (this.inRaidConfig.coopExtracts.includes(extractName.trim()));
     }
 
     protected sendCoopTakenFenceMessage(sessionId: string): void
@@ -265,7 +269,7 @@ export class MatchController
         // Get new fence standing value
         const newFenceStanding = this.getFenceStandingAfterExtract(
             pmcData,
-            this.inraidConfig.coopExtractBaseStandingGain,
+            this.inRaidConfig.coopExtractBaseStandingGain,
             pmcData.CoopExtractCounts[extractName],
         );
         const fenceId: string = Traders.FENCE;
@@ -294,7 +298,7 @@ export class MatchController
             return true;
         }
 
-        return this.inraidConfig.carExtracts.includes(extractName.trim());
+        return this.inRaidConfig.carExtracts.includes(extractName.trim());
     }
 
     /**
@@ -318,7 +322,7 @@ export class MatchController
         // Simplified for now, no real reason to do the whole (unconfirmed) extra 0.01 standing per day regeneration mechanic
         const newFenceStanding = this.getFenceStandingAfterExtract(
             pmcData,
-            this.inraidConfig.carExtractBaseStandingGain,
+            this.inRaidConfig.carExtractBaseStandingGain,
             pmcData.CarExtractCounts[extractName],
         );
         const fenceId: string = Traders.FENCE;

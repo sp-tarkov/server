@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
@@ -22,6 +23,7 @@ export class RagfairAssortGenerator
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -60,11 +62,11 @@ export class RagfairAssortGenerator
     protected generateRagfairAssortItems(): Item[]
     {
         const results: Item[] = [];
-        const items = this.itemHelper.getItems();
+        const items = this.itemHelper.getItems().filter(item => item._type !== "Node");
 
-        const weaponPresets = (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
-            ? this.getDefaultPresets()
-            : this.getPresets();
+        const presets = (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
+            ? Object.values(this.presetHelper.getDefaultPresets())
+            : this.presetHelper.getAllPresets()
 
         const ragfairItemInvalidBaseTypes: string[] = [
             BaseClasses.LOOT_CONTAINER, // safe, barrel cache etc
@@ -73,17 +75,16 @@ export class RagfairAssortGenerator
             BaseClasses.INVENTORY,
             BaseClasses.STATIONARY_CONTAINER,
             BaseClasses.POCKETS,
+			BaseClasses.BUILT_IN_INSERTS,
+            BaseClasses.ARMOR, // Handled by presets
+            BaseClasses.VEST, // Handled by presets
+            BaseClasses.HEADWEAR, // Handled by presets
         ];
 
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getInactiveSeasonalEventItems();
         for (const item of items)
         {
-            if (item._type === "Node")
-            {
-                continue;
-            }
-
             if (!this.itemHelper.isValidItem(item._id, ragfairItemInvalidBaseTypes))
             {
                 continue;
@@ -100,31 +101,12 @@ export class RagfairAssortGenerator
             results.push(this.createRagfairAssortItem(item._id, item._id)); // tplid and id must be the same so hideout recipe reworks work
         }
 
-        for (const weapon of weaponPresets)
+        for (const weapon of presets)
         {
-            results.push(this.createRagfairAssortItem(weapon._items[0]._tpl, weapon._id)); // preset id must be passed thruogh to ensure flea shows presets
+            results.push(this.createRagfairAssortItem(weapon._items[0]._tpl, weapon._id)); // Preset id must be passed through to ensure flea shows presets
         }
 
         return results;
-    }
-
-    /**
-     * Get presets from globals.json
-     * @returns Preset object array
-     */
-    protected getPresets(): IPreset[]
-    {
-        const presets = Object.values(this.databaseServer.getTables().globals.ItemPresets);
-        return presets;
-    }
-
-    /**
-     * Get default presets from globals.json
-     * @returns Preset object array
-     */
-    protected getDefaultPresets(): IPreset[]
-    {
-        return this.getPresets().filter((x) => x._encyclopedia);
     }
 
     /**

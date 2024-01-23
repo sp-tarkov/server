@@ -277,16 +277,16 @@ export class BotGeneratorHelper
 
     /**
      * Can item be added to another item without conflict
-     * @param items Items to check compatibilities with
+     * @param itemsEquipped Items to check compatibilities with
      * @param tplToCheck Tpl of the item to check for incompatibilities
      * @param equipmentSlot Slot the item will be placed into
      * @returns false if no incompatibilities, also has incompatibility reason
      */
     public isItemIncompatibleWithCurrentItems(
-        items: Item[],
+        itemsEquipped: Item[],
         tplToCheck: string,
         equipmentSlot: string,
-    ): { incompatible: boolean; reason: string; }
+    ): { incompatible: boolean; reason: string; slotBlocked?: boolean; }
     {
         // Skip slots that have no incompatibilities
         if (["Scabbard", "Backpack", "SecureContainer", "Holster", "ArmBand"].includes(equipmentSlot))
@@ -295,11 +295,11 @@ export class BotGeneratorHelper
         }
 
         // TODO: Can probably be optimized to cache itemTemplates as items are added to inventory
-        const equippedItems = items.map((i) => this.databaseServer.getTables().templates.items[i._tpl]);
-        const item = this.itemHelper.getItem(tplToCheck);
-        const itemToCheck = item[1];
+        const equippedItemsDb = itemsEquipped.map((i) => this.databaseServer.getTables().templates.items[i._tpl]);
+        const itemToEquipDb = this.itemHelper.getItem(tplToCheck);
+        const itemToEquip = itemToEquipDb[1];
 
-        if (!item[0])
+        if (!itemToEquipDb[0])
         {
             this.logger.warning(
                 this.localisationService.getText("bot-invalid_item_compatibility_check", {
@@ -311,12 +311,12 @@ export class BotGeneratorHelper
             return { incompatible: true, reason: `item: ${tplToCheck} does not exist in the database` }; 
         }
 
-        if (!itemToCheck._props)
+        if (!itemToEquip._props)
         {
             this.logger.warning(
                 this.localisationService.getText("bot-compatibility_check_missing_props", {
-                    id: itemToCheck._id,
-                    name: itemToCheck._name,
+                    id: itemToEquip._id,
+                    name: itemToEquip._name,
                     slot: equipmentSlot,
                 }),
             );
@@ -325,31 +325,93 @@ export class BotGeneratorHelper
         }
 
         // Does an equipped item have a property that blocks the desired item - check for prop "BlocksX" .e.g BlocksEarpiece / BlocksFaceCover
-        let blockingItem = equippedItems.find((x) => x._props[`Blocks${equipmentSlot}`]);
+        let blockingItem = equippedItemsDb.find((x) => x._props[`Blocks${equipmentSlot}`]);
         if (blockingItem)
         {
             // this.logger.warning(`1 incompatibility found between - ${itemToEquip[1]._name} and ${blockingItem._name} - ${equipmentSlot}`);
             return {
                 incompatible: true,
                 reason:
-                    `${tplToCheck} ${itemToCheck._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
+                    `${tplToCheck} ${itemToEquip._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
+                slotBlocked: true,
             };
         }
 
         // Check if any of the current inventory templates have the incoming item defined as incompatible
-        blockingItem = equippedItems.find((x) => x._props.ConflictingItems?.includes(tplToCheck));
+        blockingItem = equippedItemsDb.find((x) => x._props.ConflictingItems?.includes(tplToCheck));
         if (blockingItem)
         {
             // this.logger.warning(`2 incompatibility found between - ${itemToEquip[1]._name} and ${blockingItem._props.Name} - ${equipmentSlot}`);
             return {
                 incompatible: true,
                 reason:
-                    `${tplToCheck} ${itemToCheck._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
+                    `${tplToCheck} ${itemToEquip._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
+                slotBlocked: true,
             };
         }
 
+        // Does item being checked get blocked/block existing item
+        if (itemToEquip._props.BlocksHeadwear)
+        {
+            const existingHeadwear = itemsEquipped.find(x => x.slotId === "Headwear");
+            if (existingHeadwear)
+            {
+                return {
+                    incompatible: true,
+                    reason:
+                        `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingHeadwear._tpl} in slot: ${existingHeadwear.slotId}`,
+                    slotBlocked: true,
+                };
+            }
+        }
+        
+        // Does item being checked get blocked/block existing item
+        if (itemToEquip._props.BlocksFaceCover)
+        {
+            const existingFaceCover = itemsEquipped.find(item => item.slotId === "FaceCover");
+            if (existingFaceCover)
+            {
+                return {
+                    incompatible: true,
+                    reason:
+                        `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingFaceCover._tpl} in slot: ${existingFaceCover.slotId}`,
+                    slotBlocked: true,
+                };
+            }
+        }
+
+        // Does item being checked get blocked/block existing item
+        if (itemToEquip._props.BlocksEarpiece)
+        {
+            const existingEarpiece = itemsEquipped.find(item => item.slotId === "Earpiece");
+            if (existingEarpiece)
+            {
+                return {
+                    incompatible: true,
+                    reason:
+                        `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingEarpiece._tpl} in slot: ${existingEarpiece.slotId}`,
+                    slotBlocked: true,
+                };
+            }
+        }
+
+        // Does item being checked get blocked/block existing item
+        if (itemToEquip._props.BlocksArmorVest)
+        {
+            const existingArmorVest = itemsEquipped.find(item => item.slotId === "ArmorVest");
+            if (existingArmorVest)
+            {
+                return {
+                    incompatible: true,
+                    reason:
+                        `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingArmorVest._tpl} in slot: ${existingArmorVest.slotId}`,
+                    slotBlocked: true,
+                };
+            }
+        }
+
         // Check if the incoming item has any inventory items defined as incompatible
-        const blockingInventoryItem = items.find((x) => itemToCheck._props.ConflictingItems?.includes(x._tpl));
+        const blockingInventoryItem = itemsEquipped.find((x) => itemToEquip._props.ConflictingItems?.includes(x._tpl));
         if (blockingInventoryItem)
         {
             // this.logger.warning(`3 incompatibility found between - ${itemToEquip[1]._name} and ${blockingInventoryItem._tpl} - ${equipmentSlot}`)

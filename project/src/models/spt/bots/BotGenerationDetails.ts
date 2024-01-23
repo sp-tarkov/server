@@ -8,8 +8,10 @@ export interface BotGenerationDetails
     side: string;
     /** Active players current level */
     playerLevel: number;
-    /** Delta of highest level of bot */
+    /** Delta of highest level of bot e.g. 50 means 50 levels above player */
     botRelativeLevelDeltaMax: number;
+    /** Delta of lowest level of bot e.g. 50 means 50 levels below player */
+    botRelativeLevelDeltaMin: number;
     /** How many to create and store */
     botCountToGenerate: number;
     /** Desired difficulty of the bot */

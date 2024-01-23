@@ -42,23 +42,25 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 5,
+      "BossChance": 25,
       "BossDifficult": "normal",
-      "BossEscortAmount": "2",
+      "BossEscortAmount": "0",
       "BossEscortDifficult": "normal",
-      "BossEscortType": "crazyAssaultEvent",
-      "BossName": "crazyAssaultEvent",
+      "BossEscortType": "pmcBot",
+      "BossName": "gifter",
       "BossPlayer": false,
-      "BossZone": "ZoneForestTruck",
-      "RandomTimeSpawn": false,
-      "Supports": null,
-      "Time": -1,
-	  "Delay": 0,
+      "BossZone": "ZoneSanatorium1,ZonePort,ZonePowerStation",
+      "Delay": 0,
       "ForceSpawn": false,
-      "IgnoreMaxBots": false
+      "IgnoreMaxBots": false,
+      "RandomTimeSpawn": false,
+      "Supports": [],
+      "Time": -1,
+      "TriggerId": "",
+      "TriggerName": ""
     },
     {
-      "BossChance": 35,
+      "BossChance": 5,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -98,7 +100,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 35,
+      "BossChance": 5,
       "BossDifficult": "normal",
       "BossEscortAmount": "2,3",
       "BossEscortDifficult": "normal",
@@ -110,13 +112,13 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
     },
     {
-      "BossChance": 12,
+      "BossChance": 5,
       "BossDifficult": "normal",
       "BossEscortAmount": "3",
       "BossEscortDifficult": "normal",
@@ -128,13 +130,13 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
     },
     {
-      "BossChance": 12,
+      "BossChance": 5,
       "BossDifficult": "normal",
       "BossEscortAmount": "3",
       "BossEscortDifficult": "normal",
@@ -146,23 +148,10 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
-    },
-    {
-      "BossChance": 5,
-      "BossDifficult": "normal",
-      "BossEscortAmount": "3,4",
-      "BossEscortDifficult": "normal",
-      "BossEscortType": "arenaFighterEvent",
-      "BossName": "arenaFighterEvent",
-      "BossPlayer": false,
-      "BossZone": "ZoneStartVillage,ZoneGasStation,ZoneForestGasStation,ZonePowerStation",
-      "RandomTimeSpawn": false,
-      "Supports": null,
-      "Time": -1
     }
   ],
   "BotAssault": 80,
@@ -204,9 +193,9 @@
   "EscapeTimeLimitCoop": 35,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.3,
-  "IconX": 238,
-  "IconY": 85,
+  "GlobalLootChanceModifier": 0.45,
+  "IconX": 220,
+  "IconY": 300,
   "Id": "Shoreline",
   "Insurance": true,
   "IsSecret": false,
@@ -263,7 +252,7 @@
   "OfflineNewSpawn": true,
   "OfflineOldSpawn": false,
   "OldSpawn": false,
-  "OpenZones": "ZoneSanatorium1,ZoneSanatorium2,ZoneIsland,ZoneGasStation,ZoneMeteoStation,ZonePowerStation,ZoneBusStation,ZoneRailWays,ZonePort,ZoneBunkeSniper,ZonePowerStationSniper,ZoneForestTruck,ZoneForestSpawn",
+  "OpenZones": "ZoneSanatorium1,ZoneSanatorium2,ZoneIsland,ZoneGasStation,ZoneMeteoStation,ZonePowerStation,ZoneBusStation,ZoneRailWays,ZonePort,ZoneBunkeSniper,ZonePowerStationSniper,ZoneForestTruck,ZoneForestSpawn,ZoneSmuglers",
   "PlayersRequestCount": -1,
   "PmcMaxPlayersInGroup": 5,
   "Preview": {
@@ -311,7 +300,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGasStation",
+      "BotZoneName": "ZoneSanatorium2",
       "Categories": [
         "Bot"
       ],
@@ -323,17 +312,47 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 70
         }
       },
-      "CorePointId": 20,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 4,
-      "Id": "0411ce35-16f3-4833-9a18-0d858eaa6ac6",
+      "Id": "022690b2-2baf-4e69-a93d-55ea0141b79b",
       "Infiltration": "",
       "Position": {
-        "x": -166.7232,
-        "y": -55.6530457,
-        "z": 368.7158
+        "x": -343.3,
+        "y": -5.16733074,
+        "z": -113.69
+      },
+      "Rotation": 19.4150581,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneIsland",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 117
+        }
+      },
+      "CorePointId": 17,
+      "DelayToCanSpawnSec": 4,
+      "Id": "0479a467-5b2d-44b7-aba5-d44ada5723e1",
+      "Infiltration": "",
+      "Position": {
+        "x": 228.1,
+        "y": -64.56713,
+        "z": 425.740021
       },
       "Rotation": 0,
       "Sides": [
@@ -361,9 +380,9 @@
       "Id": "04a50f48-34c2-4e5d-9714-06988624c36a",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -938.429932,
-        "y": -56.66,
-        "z": 156.55
+        "x": -936.449951,
+        "y": -55.47,
+        "z": 163.39003
       },
       "Rotation": 28.5099983,
       "Sides": [
@@ -371,7 +390,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
+      "BotZoneName": "ZoneSmuglers",
       "Categories": [
         "Bot"
       ],
@@ -383,17 +402,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 71.23
+          "Radius": 50
         }
       },
-      "CorePointId": 13,
+      "CorePointId": 26,
       "DelayToCanSpawnSec": 4,
-      "Id": "05b625a1-c32a-4136-82f6-8ba32a2a5f4e",
+      "Id": "05fbc02c-7eb9-4010-9864-cce78ff51ed7",
       "Infiltration": "",
       "Position": {
-        "x": -308.7532,
-        "y": -62.0376167,
-        "z": 477.2958
+        "x": -615.14,
+        "y": -29.7413483,
+        "z": -177.85
       },
       "Rotation": 0,
       "Sides": [
@@ -401,7 +420,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneMeteoStation",
+      "BotZoneName": "ZoneStartVillage",
       "Categories": [
         "Bot"
       ],
@@ -413,49 +432,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 170
+          "Radius": 158.9
         }
       },
-      "CorePointId": 5,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 4,
-      "Id": "0801b334-74f5-415e-b1d5-2c22b5d2ce27",
+      "Id": "083124e9-0e5c-4116-8f1f-98b6b157bfb7",
       "Infiltration": "",
       "Position": {
-        "x": -520.37,
-        "y": -25.6599045,
-        "z": 284.63
+        "x": 458.95,
+        "y": -54.54093,
+        "z": 159.47
       },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneMeteoStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 170
-        }
-      },
-      "CorePointId": 5,
-      "DelayToCanSpawnSec": 4,
-      "Id": "0831ca46-91e2-480c-8434-4bc90e22d9f5",
-      "Infiltration": "",
-      "Position": {
-        "x": -443.47998,
-        "y": -25.283453,
-        "z": 248.040009
-      },
-      "Rotation": 0,
+      "Rotation": 89.74151,
       "Sides": [
         "Savage"
       ]
@@ -551,6 +540,96 @@
       ]
     },
     {
+      "BotZoneName": "ZoneSmuglers",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 30
+        }
+      },
+      "CorePointId": 26,
+      "DelayToCanSpawnSec": 4,
+      "Id": "096f6165-0280-4991-9180-694703f99f24",
+      "Infiltration": "",
+      "Position": {
+        "x": -659.261,
+        "y": -26.8373489,
+        "z": -162.341
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium2",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "09cf04db-53c8-4330-b07a-a688d2a2d14b",
+      "Infiltration": "",
+      "Position": {
+        "x": -318.789978,
+        "y": -5.134326,
+        "z": -173.12999
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePassClose",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 175
+        }
+      },
+      "CorePointId": 18,
+      "DelayToCanSpawnSec": 4,
+      "Id": "0a5f3d13-da27-4b98-920e-879cf60aeb08",
+      "Infiltration": "",
+      "Position": {
+        "x": -891.31,
+        "y": -46.061348,
+        "z": 2.02999878
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -598,76 +677,16 @@
       },
       "CorePointId": 0,
       "DelayToCanSpawnSec": 4,
-      "Id": "0b9c7508-27ca-4fe2-8874-0847eb253cb4",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -499.379944,
-        "y": -9.860001,
-        "z": -390.2
-      },
-      "Rotation": 328.7,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
       "Id": "0baf5b66-31b0-4c2f-8f2e-4f4320a25243",
       "Infiltration": "Village",
       "Position": {
         "x": 338.3902,
-        "y": -42.07,
+        "y": -41.93,
         "z": -272.38
       },
       "Rotation": 349.17,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneMeteoStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 170
-        }
-      },
-      "CorePointId": 5,
-      "DelayToCanSpawnSec": 4,
-      "Id": "0c534e86-be0c-40df-aec9-ca428e378b06",
-      "Infiltration": "",
-      "Position": {
-        "x": -443.9,
-        "y": -25.962225,
-        "z": 259.87
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -692,7 +711,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 336.5401,
-        "y": -42.1,
+        "y": -41.72,
         "z": -269.62
       },
       "Rotation": 349.17,
@@ -721,75 +740,13 @@
       "Id": "0d4d2d64-9c67-4369-92c6-993bdcc2745f",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -877.269958,
-        "y": -45.12,
-        "z": -1.01997375
+        "x": -872.579956,
+        "y": -43.98,
+        "z": 5.260025
       },
       "Rotation": 319.98,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePort",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 95
-        }
-      },
-      "CorePointId": 13,
-      "DelayToCanSpawnSec": 4,
-      "Id": "0d8b7ae8-16d2-4e35-bb75-12932f102043",
-      "Infiltration": "",
-      "Position": {
-        "x": -296.3232,
-        "y": -62.0376167,
-        "z": 490.1558
-      },
-      "Rotation": 197.8742,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePort",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 95
-        }
-      },
-      "CorePointId": 13,
-      "DelayToCanSpawnSec": 4,
-      "Id": "0e1f629c-42ed-46eb-920a-618a0cdb7781",
-      "Infiltration": "",
-      "Position": {
-        "x": -309.5032,
-        "y": -62.0376167,
-        "z": 505.5958
-      },
-      "Rotation": 197.8742,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -814,7 +771,7 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -837.809937,
-        "y": -55.88,
+        "y": -55.4400024,
         "z": 279.81
       },
       "Rotation": 316.25,
@@ -851,6 +808,36 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSmuglers",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 26,
+      "DelayToCanSpawnSec": 4,
+      "Id": "0fa03b15-1a78-4bb4-951b-fecb4a0db2e2",
+      "Infiltration": "",
+      "Position": {
+        "x": -622.62,
+        "y": -29.7413483,
+        "z": -172.66
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -904,43 +891,13 @@
       "Id": "10b6c3eb-78df-4487-9e83-ac0240062165",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -847.509949,
-        "y": -56.45,
-        "z": 373.52002
+        "x": -847.959961,
+        "y": -55.86,
+        "z": 372.850037
       },
       "Rotation": 212.59,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "10cc67d9-b562-496e-a5f7-e35116e9d9bf",
-      "Infiltration": "",
-      "Position": {
-        "x": -234.599991,
-        "y": -5.16861629,
-        "z": -174.900009
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -964,11 +921,11 @@
       "Id": "11941eb6-c3a3-4386-b873-8afa20560fcf",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -873.9899,
-        "y": -42.93,
-        "z": -1.04997253
+        "x": -876.2899,
+        "y": -44.89,
+        "z": 6.17002869
       },
-      "Rotation": 305.82,
+      "Rotation": 2.969004,
       "Sides": [
         "Pmc"
       ]
@@ -1034,36 +991,6 @@
       ]
     },
     {
-      "BotZoneName": "ZonePowerStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 2,
-      "DelayToCanSpawnSec": 4,
-      "Id": "13161a26-f578-4281-8046-ac3bd216ee54",
-      "Infiltration": "",
-      "Position": {
-        "x": -248.72998,
-        "y": -40.9998665,
-        "z": 158.86
-      },
-      "Rotation": 200.5934,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -1115,9 +1042,9 @@
       "Id": "153e740f-bdd1-4bd7-8a6c-668b14616343",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -680.399963,
-        "y": -38.12,
-        "z": -43.2799835
+        "x": -780.16,
+        "y": -40.2,
+        "z": 3.82002258
       },
       "Rotation": 12.65,
       "Sides": [
@@ -1125,37 +1052,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneStartVillage",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 6,
-      "DelayToCanSpawnSec": 4,
-      "Id": "16bcd9ef-2edf-48f2-b2bf-9a2817843549",
-      "Infiltration": "",
-      "Position": {
-        "x": 459.38,
-        "y": -54.585,
-        "z": 181.860016
-      },
-      "Rotation": 91.269104,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
+      "BotZoneName": "ZoneForestSpawn",
       "Categories": [
         "Bot",
         "Boss"
@@ -1168,17 +1065,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 50
+          "Radius": 170
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 9,
       "DelayToCanSpawnSec": 4,
-      "Id": "183b8bee-e971-4f3b-8ce6-62fd38205327",
+      "Id": "1885424a-9202-4567-aab5-091bc247a2f0",
       "Infiltration": "",
       "Position": {
-        "x": -342.65,
-        "y": -3.711999,
-        "z": -82.83
+        "x": 162.59,
+        "y": -34.96685,
+        "z": -296.289978
       },
       "Rotation": 0,
       "Sides": [
@@ -1186,7 +1083,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneForestTruck",
+      "BotZoneName": "ZoneSanatorium2",
       "Categories": [
         "Bot"
       ],
@@ -1198,17 +1095,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 170
+          "Radius": 70
         }
       },
-      "CorePointId": 11,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 4,
-      "Id": "1888fe5e-df97-4cb6-8e8e-6d0a0f0880cb",
+      "Id": "189ab454-4413-4d10-9dc7-041138ea86ff",
       "Infiltration": "",
       "Position": {
-        "x": 72.59999,
-        "y": -31.1844521,
-        "z": -156.3
+        "x": -350.31,
+        "y": -5.134326,
+        "z": -175.090012
       },
       "Rotation": 0,
       "Sides": [
@@ -1243,6 +1140,36 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium2",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "1b54123b-bbfe-454e-a01d-104927723544",
+      "Infiltration": "",
+      "Position": {
+        "x": -295.389984,
+        "y": -5.134326,
+        "z": -127.259995
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -1306,7 +1233,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneForestSpawn",
+      "BotZoneName": "ZonePort",
       "Categories": [
         "Bot",
         "Boss"
@@ -1319,27 +1246,28 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 165
+          "Radius": 95
         }
       },
-      "CorePointId": 9,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 4,
-      "Id": "1dc5ee81-a8fb-47fb-b456-297bbd1d3e91",
+      "Id": "1ec850c9-cee0-420f-8514-1570f53ddd88",
       "Infiltration": "",
       "Position": {
-        "x": 148.15,
-        "y": -37.44359,
-        "z": -256.349976
+        "x": -296.3232,
+        "y": -62.0376167,
+        "z": 490.1558
       },
-      "Rotation": 0,
+      "Rotation": 197.8742,
       "Sides": [
         "Savage"
       ]
     },
     {
-      "BotZoneName": "ZoneMeteoStation",
+      "BotZoneName": "ZoneGreenHouses",
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -1349,17 +1277,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 170
+          "Radius": 5
         }
       },
-      "CorePointId": 5,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 4,
-      "Id": "1fd5d815-478b-4cd0-89a4-da65bf71a13d",
+      "Id": "1fe7dfd1-9e33-436c-aee2-4ff9379dc0e3",
       "Infiltration": "",
       "Position": {
-        "x": -451.626526,
-        "y": -25.96373,
-        "z": 286.029572
+        "x": 128.37,
+        "y": -48.44106,
+        "z": 76.78
       },
       "Rotation": 0,
       "Sides": [
@@ -1429,7 +1357,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePowerStationSniper",
+      "BotZoneName": "ZoneSanatorium1",
       "Categories": [
         "Bot"
       ],
@@ -1441,17 +1369,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 25
+          "Radius": 70
         }
       },
-      "CorePointId": 10,
-      "DelayToCanSpawnSec": 1700,
-      "Id": "2257d8d3-56a5-48dc-80bf-4f79f0135606",
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "237912ed-a166-42c9-bdb0-2126261f747f",
       "Infiltration": "",
       "Position": {
-        "x": -232.69,
-        "y": -29.7583351,
-        "z": 192.980011
+        "x": -197.609985,
+        "y": -5.05,
+        "z": -169.939987
       },
       "Rotation": 0,
       "Sides": [
@@ -1459,9 +1387,10 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBunker",
+      "BotZoneName": "ZoneForestSpawn",
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -1471,47 +1400,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 120
+          "Radius": 165
         }
       },
-      "CorePointId": 15,
+      "CorePointId": 9,
       "DelayToCanSpawnSec": 4,
-      "Id": "23487c2b-3302-4216-afe5-48feddfe82d7",
+      "Id": "2392d197-eb8c-4ee8-adee-c4903b94f81c",
       "Infiltration": "",
       "Position": {
-        "x": -143.76,
-        "y": -11.7710037,
-        "z": -343.349976
-      },
-      "Rotation": 27.9957886,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePassFar",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 18,
-      "DelayToCanSpawnSec": 4,
-      "Id": "2647fdcd-0a7a-4b16-bec8-d918a4db0474",
-      "Infiltration": "",
-      "Position": {
-        "x": -915.344238,
-        "y": -53.7701874,
-        "z": 115.429367
+        "x": 181.433884,
+        "y": -37.2266273,
+        "z": -268.557648
       },
       "Rotation": 0,
       "Sides": [
@@ -1549,66 +1448,6 @@
       ]
     },
     {
-      "BotZoneName": "ZonePassFar",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 3,
-      "DelayToCanSpawnSec": 4,
-      "Id": "28ab3452-75fa-4b60-ae53-7a7c3300f7e6",
-      "Infiltration": "",
-      "Position": {
-        "x": -928.31,
-        "y": -56.9792328,
-        "z": 140.44
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "28d0606a-8ce2-4252-86c7-50ad14bb92d7",
-      "Infiltration": "",
-      "Position": {
-        "x": -318.789978,
-        "y": -5.134326,
-        "z": -173.12999
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -1640,6 +1479,66 @@
       ]
     },
     {
+      "BotZoneName": "ZoneGasStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 20,
+      "DelayToCanSpawnSec": 4,
+      "Id": "29cdcee1-39c7-415c-ae31-840903f9a144",
+      "Infiltration": "",
+      "Position": {
+        "x": -166.7232,
+        "y": -55.6530457,
+        "z": 368.7158
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneRailWays",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 4,
+      "DelayToCanSpawnSec": 4,
+      "Id": "29efa145-f725-47f7-984c-8ff037e38146",
+      "Infiltration": "",
+      "Position": {
+        "x": -697.6,
+        "y": -59.5997047,
+        "z": 497.7
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -1667,6 +1566,37 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 95
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "2ce3720b-5e38-42c4-bafd-8c0518982838",
+      "Infiltration": "",
+      "Position": {
+        "x": -309.5032,
+        "y": -62.0376167,
+        "z": 505.5958
+      },
+      "Rotation": 197.8742,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -1701,6 +1631,96 @@
       ]
     },
     {
+      "BotZoneName": "ZoneSanatorium1",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 7,
+      "DelayToCanSpawnSec": 4,
+      "Id": "2feb5d85-c55d-4d69-8dfa-644627b2b86b",
+      "Infiltration": "",
+      "Position": {
+        "x": -131.652,
+        "y": -5.080117,
+        "z": -103.83
+      },
+      "Rotation": 301.760071,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium1",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "326e30ff-d547-4175-9c87-724f0ffa10f3",
+      "Infiltration": "",
+      "Position": {
+        "x": -195.01,
+        "y": -5.16733074,
+        "z": -113.72
+      },
+      "Rotation": 19.4150581,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGasStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 20,
+      "DelayToCanSpawnSec": 4,
+      "Id": "33c0b5ea-01b1-4a25-bedf-c2f6808b19c0",
+      "Infiltration": "",
+      "Position": {
+        "x": -192.393188,
+        "y": -55.693428,
+        "z": 367.8458
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -1728,37 +1748,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestSpawn",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 165
-        }
-      },
-      "CorePointId": 9,
-      "DelayToCanSpawnSec": 4,
-      "Id": "34eafa11-aaa1-4fb3-a0a4-89a7ce0dc3be",
-      "Infiltration": "",
-      "Position": {
-        "x": 181.433884,
-        "y": -37.2266273,
-        "z": -268.557648
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -1812,9 +1801,9 @@
       "Id": "373f1d18-1627-415d-8f9f-0acf5d415f4b",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -936.759949,
-        "y": -57.09,
-        "z": 156.42
+        "x": -932.7399,
+        "y": -54.97,
+        "z": 160.74
       },
       "Rotation": 30.89,
       "Sides": [
@@ -1853,36 +1842,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneTunnel",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 1800
-        }
-      },
-      "CorePointId": 6,
-      "DelayToCanSpawnSec": 4,
-      "Id": "39be12b3-1b88-42a4-bc2e-6af33f896b4c",
-      "Infiltration": "",
-      "Position": {
-        "x": 450.560028,
-        "y": -45.9254341,
-        "z": 243.749985
-      },
-      "Rotation": 195.719528,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -1903,41 +1862,11 @@
       "Id": "3a50464e-38ed-483d-8945-8c43ab5850e6",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -600.129944,
-        "y": -46.61,
-        "z": 164.780014
+        "x": -597.399963,
+        "y": -45.4100037,
+        "z": 155.610031
       },
       "Rotation": 88.89,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "3c3ca272-7901-4bb7-ab9a-c7c79f36361a",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -567.259949,
-        "y": -32.62,
-        "z": -131.569992
-      },
-      "Rotation": 307.1,
       "Sides": [
         "Pmc"
       ]
@@ -1993,73 +1922,13 @@
       "Id": "3fd55f19-ef15-4017-b468-cff2d9fe9b35",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -936.629944,
-        "y": -57.05,
-        "z": 157.960037
+        "x": -932.111938,
+        "y": -54.481,
+        "z": 162.864029
       },
       "Rotation": 33.26,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePassClose",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 165
-        }
-      },
-      "CorePointId": 18,
-      "DelayToCanSpawnSec": 4,
-      "Id": "407fcc4e-5328-48d3-9741-b5b8a6bd9740",
-      "Infiltration": "",
-      "Position": {
-        "x": -882.13,
-        "y": -47.5835953,
-        "z": -4.80999756
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestTruck",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 165
-        }
-      },
-      "CorePointId": 11,
-      "DelayToCanSpawnSec": 4,
-      "Id": "41603e25-db69-4228-94a6-4d89946538a2",
-      "Infiltration": "",
-      "Position": {
-        "x": 27.3945618,
-        "y": -20.5940456,
-        "z": -211.800018
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -2093,7 +1962,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGreenHouses",
+      "BotZoneName": "ZoneGasStation",
       "Categories": [
         "Bot"
       ],
@@ -2105,17 +1974,47 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 112
+          "Radius": 170
         }
       },
-      "CorePointId": 1,
+      "CorePointId": 20,
       "DelayToCanSpawnSec": 4,
-      "Id": "431e5472-f75c-4b39-babe-6279270ec408",
+      "Id": "41736f9e-482a-4629-931f-78eec3f9c3fb",
       "Infiltration": "",
       "Position": {
-        "x": 78.95999,
-        "y": -48.4015732,
-        "z": 91.57999
+        "x": -188.5232,
+        "y": -65.00135,
+        "z": 447.6358
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneTunnel",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 220
+        }
+      },
+      "CorePointId": 19,
+      "DelayToCanSpawnSec": 4,
+      "Id": "42e41992-cad0-4904-9453-f72feb8a34b3",
+      "Infiltration": "",
+      "Position": {
+        "x": 328.860016,
+        "y": -64.65135,
+        "z": 326.53
       },
       "Rotation": 0,
       "Sides": [
@@ -2144,7 +2043,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 335.399963,
-        "y": -41.97,
+        "y": -41.8500023,
         "z": -273.149963
       },
       "Rotation": 349.17,
@@ -2183,36 +2082,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneTunnel",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 220
-        }
-      },
-      "CorePointId": 19,
-      "DelayToCanSpawnSec": 4,
-      "Id": "44667a60-af02-46f1-a9de-7eead569f243",
-      "Infiltration": "",
-      "Position": {
-        "x": 328.900024,
-        "y": -64.7312546,
-        "z": 325.69
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -2233,9 +2102,9 @@
       "Id": "4514864e-beb2-4e98-aa1e-c39d9da1db0c",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -599.2099,
-        "y": -46.61,
-        "z": 166.950027
+        "x": -596.4799,
+        "y": -45.4100037,
+        "z": 157.780045
       },
       "Rotation": 108.770004,
       "Sides": [
@@ -2243,7 +2112,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneIsland",
+      "BotZoneName": "ZoneRailWays",
       "Categories": [
         "Bot"
       ],
@@ -2255,17 +2124,47 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 117
+          "Radius": 158.9
         }
       },
-      "CorePointId": 17,
+      "CorePointId": 4,
       "DelayToCanSpawnSec": 4,
-      "Id": "4588cab6-e89b-4eb1-9059-7968e6f3c209",
+      "Id": "4524d903-747c-478c-8756-127afd0f06ee",
       "Infiltration": "",
       "Position": {
-        "x": 206.450012,
-        "y": -64.8,
-        "z": 443.370026
+        "x": -581,
+        "y": -59.3917923,
+        "z": 499.800018
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneForestTruck",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 170
+        }
+      },
+      "CorePointId": 11,
+      "DelayToCanSpawnSec": 4,
+      "Id": "4561ce9a-aa86-405d-a474-48be917d2d50",
+      "Infiltration": "",
+      "Position": {
+        "x": 72.59999,
+        "y": -31.1844521,
+        "z": -156.3
       },
       "Rotation": 0,
       "Sides": [
@@ -2324,7 +2223,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 235.570114,
-        "y": -56.18,
+        "y": -56.13,
         "z": 129.720016
       },
       "Rotation": 271.08,
@@ -2353,9 +2252,9 @@
       "Id": "47f2d197-7e3e-49b6-803b-66fea4a4f34e",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -677.119934,
-        "y": -38.02,
-        "z": -44.7499847
+        "x": -776.879944,
+        "y": -40.06,
+        "z": 2.35002136
       },
       "Rotation": 17.1399956,
       "Sides": [
@@ -2363,7 +2262,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
+      "BotZoneName": "ZoneForestTruck",
       "Categories": [
         "Bot"
       ],
@@ -2375,48 +2274,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 71.23
+          "Radius": 165
         }
       },
-      "CorePointId": 13,
+      "CorePointId": 11,
       "DelayToCanSpawnSec": 4,
-      "Id": "4850ebc6-6b85-4059-a1cd-ab705e88e822",
+      "Id": "4b087685-b3d2-4059-9386-3088e541a462",
       "Infiltration": "",
       "Position": {
-        "x": -320.104218,
-        "y": -61.55635,
-        "z": 487.7708
-      },
-      "Rotation": 55.15233,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestGasStation",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 2,
-      "DelayToCanSpawnSec": 4,
-      "Id": "4897f155-137b-40a4-b2d5-1b1b96188cde",
-      "Infiltration": "",
-      "Position": {
-        "x": -105.990021,
-        "y": -40.13835,
-        "z": 244.969986
+        "x": 13.6999817,
+        "y": -26.2264748,
+        "z": -163.839981
       },
       "Rotation": 0,
       "Sides": [
@@ -2484,6 +2352,36 @@
       ]
     },
     {
+      "BotZoneName": "ZoneStartVillage",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 6,
+      "DelayToCanSpawnSec": 4,
+      "Id": "4e06ab3f-4a84-4ea3-a78d-e679b08b8e2a",
+      "Infiltration": "",
+      "Position": {
+        "x": 462.4,
+        "y": -54.4639664,
+        "z": 119.560013
+      },
+      "Rotation": 195.821518,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -2514,10 +2412,9 @@
       ]
     },
     {
-      "BotZoneName": "ZoneSanatorium2",
+      "BotZoneName": "ZoneSmuglers",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -2530,14 +2427,14 @@
           "Radius": 50
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 26,
       "DelayToCanSpawnSec": 4,
-      "Id": "4e47415a-1af5-4f41-8a9d-cc59bfc5ff0d",
+      "Id": "4e8af6e0-b057-442c-93d3-eabb63252650",
       "Infiltration": "",
       "Position": {
-        "x": -325.729,
-        "y": -3.711999,
-        "z": -82.48799
+        "x": -644.133,
+        "y": -26.85735,
+        "z": -230.226013
       },
       "Rotation": 0,
       "Sides": [
@@ -2575,6 +2472,67 @@
       ]
     },
     {
+      "BotZoneName": "ZoneGreenHouses",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 5
+        }
+      },
+      "CorePointId": 1,
+      "DelayToCanSpawnSec": 4,
+      "Id": "4fdabc47-befa-4711-93b7-a0395b624fb3",
+      "Infiltration": "",
+      "Position": {
+        "x": 122.47,
+        "y": -48.44106,
+        "z": 92.81999
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium2",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "4fe78674-ecb1-4636-9a7e-2d7f94809cfb",
+      "Infiltration": "",
+      "Position": {
+        "x": -299.15,
+        "y": -5.134326,
+        "z": -151.41
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -2605,9 +2563,10 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBusStation",
+      "BotZoneName": "ZoneForestSpawn",
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -2617,77 +2576,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 130
+          "Radius": 165
         }
       },
-      "CorePointId": 14,
+      "CorePointId": 9,
       "DelayToCanSpawnSec": 4,
-      "Id": "50b0c9f1-d416-4686-9e25-d85b744aaa38",
+      "Id": "5227e44f-575e-4592-9bd3-e5e01e3e4026",
       "Infiltration": "",
       "Position": {
-        "x": -143.63,
-        "y": -21.7317162,
-        "z": -21.1499939
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneGreenHouses",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 112
-        }
-      },
-      "CorePointId": 1,
-      "DelayToCanSpawnSec": 4,
-      "Id": "50dec41f-4850-4f59-be23-df2acc021286",
-      "Infiltration": "",
-      "Position": {
-        "x": 110.25,
-        "y": -48.48343,
-        "z": 138.139984
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePowerStationSniper",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 25
-        }
-      },
-      "CorePointId": 10,
-      "DelayToCanSpawnSec": 1700,
-      "Id": "512db93b-1e90-4209-afa2-e08d3ccbcd7e",
-      "Infiltration": "",
-      "Position": {
-        "x": -220.86,
-        "y": -29.7583351,
-        "z": 189.53
+        "x": 143.34,
+        "y": -33.54049,
+        "z": -288.24
       },
       "Rotation": 0,
       "Sides": [
@@ -2757,37 +2656,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGreenHouses",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 5
-        }
-      },
-      "CorePointId": 1,
-      "DelayToCanSpawnSec": 4,
-      "Id": "5456e9f2-6def-4280-bf5c-4aec633c1d26",
-      "Infiltration": "",
-      "Position": {
-        "x": 128.37,
-        "y": -48.44106,
-        "z": 76.78
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -2809,12 +2677,42 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -667.779968,
-        "y": -54.62,
+        "y": -54.45,
         "z": 324.839966
       },
-      "Rotation": 271.08,
+      "Rotation": 120.843109,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneIsland",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 117
+        }
+      },
+      "CorePointId": 17,
+      "DelayToCanSpawnSec": 4,
+      "Id": "547e6f58-82c9-421c-9e46-22eeb01e35fd",
+      "Infiltration": "",
+      "Position": {
+        "x": 212.299988,
+        "y": -64.98019,
+        "z": 443.23
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -2838,43 +2736,13 @@
       "Id": "56a56015-97cc-46fc-8940-03dd1d9dd3ea",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -845.869934,
-        "y": -56.59,
-        "z": 373.459961
+        "x": -846.319946,
+        "y": -56,
+        "z": 372.789978
       },
       "Rotation": 218.2,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneRailWays",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 4,
-      "DelayToCanSpawnSec": 4,
-      "Id": "56b5664c-114c-4ac2-b895-7c4c0890c7e6",
-      "Infiltration": "",
-      "Position": {
-        "x": -665.5697,
-        "y": -53.87608,
-        "z": 420.347137
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -2899,12 +2767,102 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -837.1699,
-        "y": -55.94,
+        "y": -55.5,
         "z": 276.69
       },
       "Rotation": 123.109993,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneStartVillage",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 6,
+      "DelayToCanSpawnSec": 4,
+      "Id": "56d550e7-f871-481a-863c-6045ba1e9ebc",
+      "Infiltration": "",
+      "Position": {
+        "x": 459.89,
+        "y": -54.4532776,
+        "z": 92.4900055
+      },
+      "Rotation": 277.9801,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneRailWays",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 4,
+      "DelayToCanSpawnSec": 4,
+      "Id": "5763be21-e44a-4f43-bfa9-c54fa1f54337",
+      "Infiltration": "",
+      "Position": {
+        "x": -663.53,
+        "y": -59.5880241,
+        "z": 496.900024
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneBunker",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 120
+        }
+      },
+      "CorePointId": 15,
+      "DelayToCanSpawnSec": 4,
+      "Id": "58186668-ecbf-44b9-9cf0-b40f6d81bde9",
+      "Infiltration": "",
+      "Position": {
+        "x": -143.76,
+        "y": -11.7710037,
+        "z": -343.349976
+      },
+      "Rotation": 27.9957886,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -2958,9 +2916,9 @@
       "Id": "58a5c474-0e2f-4f65-98d0-50106e504300",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -683.769958,
-        "y": -38.26,
-        "z": -42.1799774
+        "x": -783.529968,
+        "y": -40.16,
+        "z": 4.92002869
       },
       "Rotation": 9.06,
       "Sides": [
@@ -2996,36 +2954,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 7,
-      "DelayToCanSpawnSec": 4,
-      "Id": "5a570e48-4e5c-40e9-a12a-e8a6475c397a",
-      "Infiltration": "",
-      "Position": {
-        "x": -343.3,
-        "y": -5.16733074,
-        "z": -113.69
-      },
-      "Rotation": 19.4150581,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -3112,7 +3040,7 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -837.819946,
-        "y": -55.61,
+        "y": -55.170002,
         "z": 281.51
       },
       "Rotation": 22.96,
@@ -3121,9 +3049,10 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
+      "BotZoneName": "ZoneForestGasStation",
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -3133,17 +3062,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 145.2
+          "Radius": 158.9
         }
       },
-      "CorePointId": 13,
+      "CorePointId": 2,
       "DelayToCanSpawnSec": 4,
-      "Id": "5e9b5165-8433-457e-87e5-8bb6a95ef4eb",
+      "Id": "5e799dee-af2b-4556-9e82-f7d220d45a56",
       "Infiltration": "",
       "Position": {
-        "x": -358.3532,
-        "y": -62.0151253,
-        "z": 555.8658
+        "x": -96.84,
+        "y": -41.01888,
+        "z": 211.62999
       },
       "Rotation": 0,
       "Sides": [
@@ -3181,6 +3110,36 @@
       ]
     },
     {
+      "BotZoneName": "ZoneForestTruck",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 165
+        }
+      },
+      "CorePointId": 11,
+      "DelayToCanSpawnSec": 4,
+      "Id": "5f33a25d-c8ea-441b-87ca-5c008b561eb0",
+      "Infiltration": "",
+      "Position": {
+        "x": 27.3945618,
+        "y": -20.5940456,
+        "z": -211.800018
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -3208,6 +3167,36 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 145.2
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "60d33a81-33a3-42dd-8f12-309b3d5297f9",
+      "Infiltration": "",
+      "Position": {
+        "x": -358.3532,
+        "y": -62.0151253,
+        "z": 555.8658
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -3273,36 +3262,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneRailWays",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 4,
-      "DelayToCanSpawnSec": 4,
-      "Id": "62414081-a282-4fad-8455-6c6b6b2111fc",
-      "Infiltration": "",
-      "Position": {
-        "x": -621.76,
-        "y": -59.59,
-        "z": 496.840027
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -3324,12 +3283,73 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -836.779968,
-        "y": -56,
+        "y": -55.56,
         "z": 275.040039
       },
       "Rotation": 199.74,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGreenHouses",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 5
+        }
+      },
+      "CorePointId": 1,
+      "DelayToCanSpawnSec": 4,
+      "Id": "625f7a08-0ad7-44bc-a8b3-ef6c43fe1540",
+      "Infiltration": "",
+      "Position": {
+        "x": 109.22998,
+        "y": -48.30135,
+        "z": 95.87999
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneStartVillage",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 6,
+      "DelayToCanSpawnSec": 4,
+      "Id": "6337b9d9-c4c0-4e0a-8258-11b02c683a64",
+      "Infiltration": "",
+      "Position": {
+        "x": 459.31,
+        "y": -54.17835,
+        "z": 55.7920074
+      },
+      "Rotation": 266.625641,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -3364,6 +3384,36 @@
       ]
     },
     {
+      "BotZoneName": "ZonePowerStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 2,
+      "DelayToCanSpawnSec": 4,
+      "Id": "63b51a54-a9b3-461b-afb0-89371d617784",
+      "Infiltration": "",
+      "Position": {
+        "x": -251.06,
+        "y": -40.9783936,
+        "z": 195.32
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -3385,10 +3435,10 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -665.9699,
-        "y": -54.73,
+        "y": -54.56,
         "z": 326.3
       },
-      "Rotation": 271.08,
+      "Rotation": 120.843109,
       "Sides": [
         "Pmc"
       ]
@@ -3414,9 +3464,9 @@
       "Id": "6433d24d-cd7b-45a9-9383-04971236e848",
       "Infiltration": "Village",
       "Position": {
-        "x": 397.500061,
-        "y": -59.48,
-        "z": 260.719971
+        "x": 391.45,
+        "y": -60.17,
+        "z": 254.159988
       },
       "Rotation": 271.08,
       "Sides": [
@@ -3484,6 +3534,66 @@
       ]
     },
     {
+      "BotZoneName": "ZoneBunker",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 98.1
+        }
+      },
+      "CorePointId": 15,
+      "DelayToCanSpawnSec": 4,
+      "Id": "682bc5af-3d71-413f-9394-4c3bec74c1e9",
+      "Infiltration": "",
+      "Position": {
+        "x": -116.02,
+        "y": -10,
+        "z": -360.64
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneBunkeSniper",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 25
+        }
+      },
+      "CorePointId": 12,
+      "DelayToCanSpawnSec": 1700,
+      "Id": "684b9f6e-a3cd-4a5a-8595-fa5303ac2ab4",
+      "Infiltration": "",
+      "Position": {
+        "x": -153.28,
+        "y": -4.86000061,
+        "z": -269.44
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -3511,36 +3621,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "6a5dd707-4466-48f7-8ee7-b0766aa65228",
-      "Infiltration": "",
-      "Position": {
-        "x": -299.15,
-        "y": -5.134326,
-        "z": -151.41
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -3622,66 +3702,6 @@
       },
       "CorePointId": 0,
       "DelayToCanSpawnSec": 4,
-      "Id": "6c7c9155-1768-45c0-91b8-26c648ca103a",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -494.4499,
-        "y": -9.459999,
-        "z": -390.38
-      },
-      "Rotation": 358.53,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "6ca2e437-a02d-41b0-90d9-462567349798",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -497.739929,
-        "y": -9.799999,
-        "z": -390.24
-      },
-      "Rotation": 336.94,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
       "Id": "6cae38ee-8013-49e2-83e6-74e038360c5e",
       "Infiltration": "Riverside",
       "Position": {
@@ -3692,6 +3712,36 @@
       "Rotation": 340.76,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePowerStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 2,
+      "DelayToCanSpawnSec": 4,
+      "Id": "6d3f55cd-fe0c-48ad-afea-e50d1e37df80",
+      "Infiltration": "",
+      "Position": {
+        "x": -248.72998,
+        "y": -40.9998665,
+        "z": 158.86
+      },
+      "Rotation": 200.5934,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -3715,9 +3765,9 @@
       "Id": "6dcbdea1-20f6-4b76-afcb-b286e5bc139a",
       "Infiltration": "Village",
       "Position": {
-        "x": 397.93,
+        "x": 388.870178,
         "y": -58.39,
-        "z": 265.2
+        "z": 252.770035
       },
       "Rotation": 271.08,
       "Sides": [
@@ -3725,10 +3775,9 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
+      "BotZoneName": "ZonePowerStationSniper",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -3738,17 +3787,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 95
+          "Radius": 25
         }
       },
-      "CorePointId": 13,
-      "DelayToCanSpawnSec": 4,
-      "Id": "6eb4ce5e-839c-42b0-8805-efe093e45329",
+      "CorePointId": 10,
+      "DelayToCanSpawnSec": 1700,
+      "Id": "6ed02d54-2936-4785-b2d8-75e6687a5415",
       "Infiltration": "",
       "Position": {
-        "x": -323.5232,
-        "y": -62.0376167,
-        "z": 498.4858
+        "x": -220.86,
+        "y": -29.7583351,
+        "z": 189.53
       },
       "Rotation": 0,
       "Sides": [
@@ -3756,7 +3805,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGasStation",
+      "BotZoneName": "ZoneBusStation",
       "Categories": [
         "Bot"
       ],
@@ -3771,14 +3820,105 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 20,
+      "CorePointId": 14,
       "DelayToCanSpawnSec": 4,
-      "Id": "7416a007-bcd7-4184-a4ba-d2894f273a5d",
+      "Id": "702dfabf-5090-464f-9edd-f2e198d67bfd",
       "Infiltration": "",
       "Position": {
-        "x": -215.5632,
-        "y": -55.7550659,
-        "z": 407.585815
+        "x": -78.19,
+        "y": -21.8066673,
+        "z": -6.08999634
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneStartVillage",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 6,
+      "DelayToCanSpawnSec": 4,
+      "Id": "716b2933-2a92-4ee4-8c62-e076a37a6e74",
+      "Infiltration": "",
+      "Position": {
+        "x": 459.38,
+        "y": -54.585,
+        "z": 181.860016
+      },
+      "Rotation": 91.269104,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 71.23
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "745138f1-3888-4091-8f93-a7b9edeafb01",
+      "Infiltration": "",
+      "Position": {
+        "x": -320.104218,
+        "y": -61.55635,
+        "z": 487.7708
+      },
+      "Rotation": 55.15233,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium2",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 7,
+      "DelayToCanSpawnSec": 4,
+      "Id": "7544625e-e3d8-46dd-8e7d-ddecd80682e4",
+      "Infiltration": "",
+      "Position": {
+        "x": -325.729,
+        "y": -3.711999,
+        "z": -82.48799
       },
       "Rotation": 0,
       "Sides": [
@@ -3807,12 +3947,42 @@
       "Infiltration": "Village",
       "Position": {
         "x": 235.570114,
-        "y": -56.17,
+        "y": -56.12,
         "z": 131.48
       },
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneBusStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 14,
+      "DelayToCanSpawnSec": 4,
+      "Id": "75e1a10e-bb12-477e-bdc0-2afdaa3a29f6",
+      "Infiltration": "",
+      "Position": {
+        "x": -72.17,
+        "y": -21.967,
+        "z": 10.4600067
+      },
+      "Rotation": 233.659576,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -3876,7 +4046,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePassFar",
+      "BotZoneName": "ZonePort",
       "Categories": [
         "Bot"
       ],
@@ -3888,17 +4058,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 71.23
         }
       },
-      "CorePointId": 18,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 4,
-      "Id": "7ae2415b-081d-4762-b706-1a81da1409c4",
+      "Id": "78a16a38-28d6-4fe3-be01-9a42f41b9bf8",
       "Infiltration": "",
       "Position": {
-        "x": -915.6,
-        "y": -51.6073532,
-        "z": 87.8
+        "x": -308.7532,
+        "y": -62.0376167,
+        "z": 477.2958
       },
       "Rotation": 0,
       "Sides": [
@@ -3936,7 +4106,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBusStation",
+      "BotZoneName": "ZoneRailWays",
       "Categories": [
         "Bot"
       ],
@@ -3951,16 +4121,16 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 14,
+      "CorePointId": 4,
       "DelayToCanSpawnSec": 4,
-      "Id": "7c202864-3ccc-422a-9071-ef9162bd3ced",
+      "Id": "7be7f6e4-7e6f-4168-a49d-551dfe72f6e0",
       "Infiltration": "",
       "Position": {
-        "x": -72.17,
-        "y": -21.967,
-        "z": 10.4600067
+        "x": -665.5697,
+        "y": -53.87608,
+        "z": 420.347137
       },
-      "Rotation": 233.659576,
+      "Rotation": 0,
       "Sides": [
         "Savage"
       ]
@@ -3994,6 +4164,36 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGreenHouses",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 112
+        }
+      },
+      "CorePointId": 1,
+      "DelayToCanSpawnSec": 4,
+      "Id": "7c73b7ac-46bc-41a8-9b69-8e42ab472d22",
+      "Infiltration": "",
+      "Position": {
+        "x": 110.25,
+        "y": -48.48343,
+        "z": 138.139984
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -4108,9 +4308,9 @@
       "Id": "7fd13404-5b44-4bff-b18b-b42ff698b52c",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -873.819946,
-        "y": -42.94,
-        "z": -2.9099884
+        "x": -876.529968,
+        "y": -43.85,
+        "z": 1.32002258
       },
       "Rotation": 305.88,
       "Sides": [
@@ -4138,13 +4338,44 @@
       "Id": "8003226b-ab94-41da-81c7-aef012c52444",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -600.9599,
-        "y": -46.35,
-        "z": 163.23
+        "x": -598.2299,
+        "y": -45.15,
+        "z": 154.060013
       },
       "Rotation": 94.42,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium1",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 7,
+      "DelayToCanSpawnSec": 4,
+      "Id": "8164588c-af20-443c-9576-f76ce7dd2a6f",
+      "Infiltration": "",
+      "Position": {
+        "x": -156.265991,
+        "y": -3.644,
+        "z": -82.5099945
+      },
+      "Rotation": 19.4150581,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -4175,66 +4406,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneTunnel",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 6,
-      "DelayToCanSpawnSec": 4,
-      "Id": "823bd6a4-58e2-489e-b557-c64ea6a8cb08",
-      "Infiltration": "",
-      "Position": {
-        "x": 446.98,
-        "y": -47.7655678,
-        "z": 237.01
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneStartVillage",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 6,
-      "DelayToCanSpawnSec": 4,
-      "Id": "826c70a2-7983-49a9-94f1-433b364fa01a",
-      "Infiltration": "",
-      "Position": {
-        "x": 458.95,
-        "y": -54.54093,
-        "z": 159.47
-      },
-      "Rotation": 89.74151,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -4288,9 +4459,9 @@
       "Id": "84a96df9-883b-496e-b44d-9fef512b29a0",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -850.7299,
-        "y": -56.76,
-        "z": 373.37
+        "x": -851.179932,
+        "y": -56.17,
+        "z": 372.7
       },
       "Rotation": 209.65,
       "Sides": [
@@ -4349,12 +4520,163 @@
       "Infiltration": "Village",
       "Position": {
         "x": 233.840134,
-        "y": -56.19,
+        "y": -56.14,
         "z": 130.820023
       },
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGreenHouses",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 112
+        }
+      },
+      "CorePointId": 1,
+      "DelayToCanSpawnSec": 4,
+      "Id": "865fe7b3-63e3-459c-9319-60be77c753b5",
+      "Infiltration": "",
+      "Position": {
+        "x": 122.43399,
+        "y": -48.48343,
+        "z": 136.44
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneTunnel",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 100
+        }
+      },
+      "CorePointId": 19,
+      "DelayToCanSpawnSec": 4,
+      "Id": "86971dff-1846-4912-8071-d5cd8ecdc289",
+      "Infiltration": "",
+      "Position": {
+        "x": 418.5,
+        "y": -47.68135,
+        "z": 255.329987
+      },
+      "Rotation": 200.381073,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium2",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 7,
+      "DelayToCanSpawnSec": 4,
+      "Id": "8762e6a0-65f4-436d-8429-a54d76d2a004",
+      "Infiltration": "",
+      "Position": {
+        "x": -342.65,
+        "y": -3.711999,
+        "z": -82.83
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneMeteoStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 170
+        }
+      },
+      "CorePointId": 5,
+      "DelayToCanSpawnSec": 4,
+      "Id": "87e97069-aa96-42a2-95fe-3964b0c458d9",
+      "Infiltration": "",
+      "Position": {
+        "x": -451.626526,
+        "y": -25.96373,
+        "z": 286.029572
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneIsland",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 117
+        }
+      },
+      "CorePointId": 17,
+      "DelayToCanSpawnSec": 4,
+      "Id": "8934a001-2b3e-43ca-88f0-9257c86fa7d3",
+      "Infiltration": "",
+      "Position": {
+        "x": 244.94,
+        "y": -64.2984848,
+        "z": 442.58
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -4419,6 +4741,36 @@
       ]
     },
     {
+      "BotZoneName": "ZoneSmuglers",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 26,
+      "DelayToCanSpawnSec": 4,
+      "Id": "8acd0e94-255d-4df7-9df7-a977751037b2",
+      "Infiltration": "",
+      "Position": {
+        "x": -623.65,
+        "y": -26.7413483,
+        "z": -224.44
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -4449,96 +4801,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBunker",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 98.1
-        }
-      },
-      "CorePointId": 15,
-      "DelayToCanSpawnSec": 4,
-      "Id": "8c7dcf3c-2e1b-4d36-b23c-ca1c99260166",
-      "Infiltration": "",
-      "Position": {
-        "x": -134.798325,
-        "y": -10.67804,
-        "z": -351.499146
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneRailWays",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 4,
-      "DelayToCanSpawnSec": 4,
-      "Id": "8d0f7f84-2ef1-4779-869e-4e9d8954d0ae",
-      "Infiltration": "",
-      "Position": {
-        "x": -663.53,
-        "y": -59.5880241,
-        "z": 496.900024
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneIsland",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 117
-        }
-      },
-      "CorePointId": 17,
-      "DelayToCanSpawnSec": 4,
-      "Id": "8d83f63c-b4c0-420f-b594-7c55017641ef",
-      "Infiltration": "",
-      "Position": {
-        "x": 199.670013,
-        "y": -64.42,
-        "z": 436.79
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "ZoneGasStation",
       "Categories": [
         "Bot"
@@ -4556,12 +4818,12 @@
       },
       "CorePointId": 20,
       "DelayToCanSpawnSec": 4,
-      "Id": "8f7d2c94-5cc8-490b-895d-4c89092fd9f9",
+      "Id": "8cc79948-8e65-4ad5-ac8d-b825093deb8b",
       "Infiltration": "",
       "Position": {
-        "x": -192.393188,
-        "y": -55.693428,
-        "z": 367.8458
+        "x": -175.86319,
+        "y": -55.7017365,
+        "z": 394.2658
       },
       "Rotation": 0,
       "Sides": [
@@ -4569,7 +4831,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePassClose",
+      "BotZoneName": "ZoneGreenHouses",
       "Categories": [
         "Bot"
       ],
@@ -4581,17 +4843,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 170
+          "Radius": 112
         }
       },
-      "CorePointId": 18,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 4,
-      "Id": "90c561a8-e884-4e68-8846-01a97eb68004",
+      "Id": "8d5ee1c7-e08c-40a9-9e96-22c8f8dce1ed",
       "Infiltration": "",
       "Position": {
-        "x": -897.6,
-        "y": -48.94338,
-        "z": 36.2400055
+        "x": 125.065,
+        "y": -48.48343,
+        "z": 136.388
       },
       "Rotation": 0,
       "Sides": [
@@ -4619,9 +4881,9 @@
       "Id": "914d1a86-0305-4e7c-b9ab-913ca92c1233",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -875.5999,
-        "y": -43.81,
-        "z": -1.01997375
+        "x": -873.889954,
+        "y": -44.58,
+        "z": 8.420029
       },
       "Rotation": 328.44,
       "Sides": [
@@ -4629,7 +4891,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneRailWays",
+      "BotZoneName": "ZoneBusStation",
       "Categories": [
         "Bot"
       ],
@@ -4641,17 +4903,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 130
         }
       },
-      "CorePointId": 4,
+      "CorePointId": 14,
       "DelayToCanSpawnSec": 4,
-      "Id": "91726af6-c2c1-4003-ae0d-3dec9970c35c",
+      "Id": "9156c388-6cac-4560-b136-8bc266c9b9cb",
       "Infiltration": "",
       "Position": {
-        "x": -697.6,
-        "y": -59.5997047,
-        "z": 497.7
+        "x": -143.63,
+        "y": -21.7317162,
+        "z": -21.1499939
       },
       "Rotation": 0,
       "Sides": [
@@ -4679,9 +4941,9 @@
       "Id": "91ecd38d-841e-49fa-8c2c-8edae515393f",
       "Infiltration": "Village",
       "Position": {
-        "x": 394.510071,
+        "x": 388.31012,
         "y": -59.16,
-        "z": 265.14
+        "z": 261.210022
       },
       "Rotation": 271.08,
       "Sides": [
@@ -4781,37 +5043,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneForestSpawn",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 165
-        }
-      },
-      "CorePointId": 9,
-      "DelayToCanSpawnSec": 4,
-      "Id": "925829df-028b-4adc-9e87-a2291529cdc1",
-      "Infiltration": "",
-      "Position": {
-        "x": 143.34,
-        "y": -33.54049,
-        "z": -288.24
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -4862,9 +5093,9 @@
       "Id": "92d8e295-31b6-49ed-a345-0d527f169f8c",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -686.639954,
-        "y": -41.81,
-        "z": 115.700027
+        "x": -683.5899,
+        "y": -40.09,
+        "z": 122.38002
       },
       "Rotation": 26.4700012,
       "Sides": [
@@ -4872,10 +5103,9 @@
       ]
     },
     {
-      "BotZoneName": "ZoneSanatorium2",
+      "BotZoneName": "ZoneSmuglers",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -4885,17 +5115,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 50
+          "Radius": 30
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 26,
       "DelayToCanSpawnSec": 4,
-      "Id": "938b250b-41f5-4c0f-b942-8f918c6a7298",
+      "Id": "95787f2c-27bb-44ed-bc6e-0ba7ea2e86aa",
       "Infiltration": "",
       "Position": {
-        "x": -312.623,
-        "y": -3.711999,
-        "z": -83.31999
+        "x": -655.188,
+        "y": -26.8373489,
+        "z": -164.215
       },
       "Rotation": 0,
       "Sides": [
@@ -4934,39 +5164,10 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBusStation",
+      "BotZoneName": "ZoneSanatorium2",
       "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 130
-        }
-      },
-      "CorePointId": 14,
-      "DelayToCanSpawnSec": 4,
-      "Id": "96ca0195-311a-428c-b617-fc5f1bc21c1b",
-      "Infiltration": "",
-      "Position": {
-        "x": -139.86,
-        "y": -21.86,
-        "z": 5.12001038
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -4979,18 +5180,18 @@
           "Radius": 50
         }
       },
-      "CorePointId": 0,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 4,
-      "Id": "96d99ac5-c5ec-44c1-9979-f0f548ac56ce",
-      "Infiltration": "Riverside",
+      "Id": "96984f20-0e19-486e-b20a-26ef0171ef65",
+      "Infiltration": "",
       "Position": {
-        "x": -565.4899,
-        "y": -32.6,
-        "z": -130.719986
+        "x": -312.623,
+        "y": -3.711999,
+        "z": -83.31999
       },
-      "Rotation": 309.41,
+      "Rotation": 0,
       "Sides": [
-        "Pmc"
+        "Savage"
       ]
     },
     {
@@ -5042,72 +5243,12 @@
       },
       "CorePointId": 0,
       "DelayToCanSpawnSec": 4,
-      "Id": "980c108b-6d31-4458-aa32-7f9b2b86590a",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -562.4699,
-        "y": -32.55,
-        "z": -129.089981
-      },
-      "Rotation": 342.3,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePowerStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 16,
-      "DelayToCanSpawnSec": 4,
-      "Id": "981b88f5-a184-4b55-be4d-8ff67c765f22",
-      "Infiltration": "",
-      "Position": {
-        "x": -284.300018,
-        "y": -34.408,
-        "z": 195.3
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
       "Id": "98684f29-1a14-4872-bfe7-ad4832881a44",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -849.059937,
-        "y": -56.83,
-        "z": 373.12
+        "x": -849.509949,
+        "y": -56.24,
+        "z": 372.45
       },
       "Rotation": 208.52,
       "Sides": [
@@ -5196,7 +5337,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 340.8001,
-        "y": -42.17,
+        "y": -42.05,
         "z": -271.269958
       },
       "Rotation": 349.17,
@@ -5226,7 +5367,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 235.649948,
-        "y": -56.17,
+        "y": -56.12,
         "z": 133.270035
       },
       "Rotation": 271.08,
@@ -5256,16 +5397,16 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -667.629944,
-        "y": -54.57,
+        "y": -54.4,
         "z": 326.170044
       },
-      "Rotation": 271.08,
+      "Rotation": 120.843109,
       "Sides": [
         "Pmc"
       ]
     },
     {
-      "BotZoneName": "ZoneIsland",
+      "BotZoneName": "ZonePowerStation",
       "Categories": [
         "Bot"
       ],
@@ -5277,25 +5418,25 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 117
+          "Radius": 90
         }
       },
-      "CorePointId": 17,
+      "CorePointId": 2,
       "DelayToCanSpawnSec": 4,
-      "Id": "9b67a27d-6caf-48b0-be50-0217ebd0dbd9",
+      "Id": "9b858065-6f85-4762-85aa-55329b561bd2",
       "Infiltration": "",
       "Position": {
-        "x": 203.769989,
-        "y": -64.57,
-        "z": 441.370026
+        "x": -217.540009,
+        "y": -41.0012,
+        "z": 166.4
       },
-      "Rotation": 0,
+      "Rotation": 276.228271,
       "Sides": [
         "Savage"
       ]
     },
     {
-      "BotZoneName": "ZonePassFar",
+      "BotZoneName": "ZoneMeteoStation",
       "Categories": [
         "Bot"
       ],
@@ -5307,47 +5448,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 170
         }
       },
-      "CorePointId": 3,
+      "CorePointId": 5,
       "DelayToCanSpawnSec": 4,
-      "Id": "9bd84efe-dfce-46ed-ab04-60bbba500158",
+      "Id": "9bf39d67-208d-454f-9d04-f1a911ad3e06",
       "Infiltration": "",
       "Position": {
-        "x": -935.62,
-        "y": -57.2327232,
-        "z": 155.210022
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 7,
-      "DelayToCanSpawnSec": 4,
-      "Id": "9c654abe-54da-4a4b-8ce2-f09922d84ae2",
-      "Infiltration": "",
-      "Position": {
-        "x": -350.31,
-        "y": -5.134326,
-        "z": -175.090012
+        "x": -443.9,
+        "y": -25.962225,
+        "z": 259.87
       },
       "Rotation": 0,
       "Sides": [
@@ -5496,10 +5607,10 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -667.9299,
-        "y": -54.87,
+        "y": -54.7,
         "z": 323.56
       },
-      "Rotation": 271.08,
+      "Rotation": 120.843109,
       "Sides": [
         "Pmc"
       ]
@@ -5525,9 +5636,9 @@
       "Id": "a16c0809-6476-48e9-8d18-cb005c3c79b5",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -845.869934,
-        "y": -56.7,
-        "z": 371.86
+        "x": -846.319946,
+        "y": -56.11,
+        "z": 371.19
       },
       "Rotation": 181.54,
       "Sides": [
@@ -5562,67 +5673,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestSpawn",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 170
-        }
-      },
-      "CorePointId": 9,
-      "DelayToCanSpawnSec": 4,
-      "Id": "a294d2da-60f6-4803-bd40-6fa33bcca45f",
-      "Infiltration": "",
-      "Position": {
-        "x": 162.59,
-        "y": -34.96685,
-        "z": -296.289978
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneTunnel",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 19,
-      "DelayToCanSpawnSec": 4,
-      "Id": "a2e7aa5f-add8-47a7-9ba6-226b0b57a1a1",
-      "Infiltration": "",
-      "Position": {
-        "x": 432.44,
-        "y": -43.6527176,
-        "z": 261.849976
-      },
-      "Rotation": 200.381073,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -5747,66 +5797,6 @@
       ]
     },
     {
-      "BotZoneName": "ZonePassFar",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 18,
-      "DelayToCanSpawnSec": 4,
-      "Id": "a5e05573-62eb-4692-ada5-00bb62697fb6",
-      "Infiltration": "",
-      "Position": {
-        "x": -910.05,
-        "y": -49.8761139,
-        "z": 66.78999
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneIsland",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 117
-        }
-      },
-      "CorePointId": 17,
-      "DelayToCanSpawnSec": 4,
-      "Id": "a719320f-225f-4ebe-a8cf-0adbcb6a9586",
-      "Infiltration": "",
-      "Position": {
-        "x": 212.299988,
-        "y": -64.98019,
-        "z": 443.23
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -5858,13 +5848,43 @@
       "Id": "a7c7a365-ea94-481f-b15a-c880eb6df6e6",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -688.2299,
-        "y": -41.36,
-        "z": 115.070023
+        "x": -684.5699,
+        "y": -39.27,
+        "z": 123.930008
       },
       "Rotation": 10.1100016,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGreenHouses",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 112
+        }
+      },
+      "CorePointId": 1,
+      "DelayToCanSpawnSec": 4,
+      "Id": "a82ea519-4676-45b8-a6a9-9e9f8d73cb0f",
+      "Infiltration": "",
+      "Position": {
+        "x": 123.419983,
+        "y": -48.44106,
+        "z": 55.3199921
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -5895,36 +5915,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 7,
-      "DelayToCanSpawnSec": 4,
-      "Id": "a989147e-ac05-4166-b9a5-762c9bfdc61d",
-      "Infiltration": "",
-      "Position": {
-        "x": -131.652,
-        "y": -5.080117,
-        "z": -103.83
-      },
-      "Rotation": 301.760071,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -5979,43 +5969,13 @@
       "Id": "aaeee0f3-0a91-46b0-bc4a-9c6bcc31d097",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -685.249939,
-        "y": -41.11,
-        "z": 112.410019
+        "x": -683.379944,
+        "y": -39.88,
+        "z": 119.13002
       },
       "Rotation": 79.99,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "ab0b8d38-e6ae-4a29-af4f-0408fef79778",
-      "Infiltration": "",
-      "Position": {
-        "x": -195.01,
-        "y": -5.16733074,
-        "z": -113.72
-      },
-      "Rotation": 19.4150581,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -6040,7 +6000,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 235.780075,
-        "y": -56.03,
+        "y": -55.98,
         "z": 125.530014
       },
       "Rotation": 271.08,
@@ -6049,7 +6009,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneTunnel",
+      "BotZoneName": "ZoneSmuglers",
       "Categories": [
         "Bot"
       ],
@@ -6061,109 +6021,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 212
+          "Radius": 50
         }
       },
-      "CorePointId": 19,
+      "CorePointId": 26,
       "DelayToCanSpawnSec": 4,
-      "Id": "ac458490-015b-483c-903c-e37482705e07",
+      "Id": "b0994adc-9ae8-4270-9c28-b36ffd4220a8",
       "Infiltration": "",
       "Position": {
-        "x": 357.550018,
-        "y": -59.62579,
-        "z": 328.87
+        "x": -632.42,
+        "y": -26.8423481,
+        "z": -240.12
       },
       "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneGreenHouses",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 112
-        }
-      },
-      "CorePointId": 1,
-      "DelayToCanSpawnSec": 4,
-      "Id": "ac818198-061f-473f-8295-a0bb06ac574c",
-      "Infiltration": "",
-      "Position": {
-        "x": 122.43399,
-        "y": -48.48343,
-        "z": 136.44
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneRailWays",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 4,
-      "DelayToCanSpawnSec": 4,
-      "Id": "afc031e2-8a83-48d7-aabd-991abb6b17b3",
-      "Infiltration": "",
-      "Position": {
-        "x": -638.28,
-        "y": -59.2350578,
-        "z": 423.48
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneStartVillage",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 6,
-      "DelayToCanSpawnSec": 4,
-      "Id": "b023d356-ee7e-490a-a5fa-0f1cc67bad93",
-      "Infiltration": "",
-      "Position": {
-        "x": 459.31,
-        "y": -54.17835,
-        "z": 55.7920074
-      },
-      "Rotation": 266.625641,
       "Sides": [
         "Savage"
       ]
@@ -6190,12 +6060,42 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -666.1799,
-        "y": -54.73,
+        "y": -54.56,
         "z": 324.74
       },
-      "Rotation": 271.08,
+      "Rotation": 120.843109,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePassClose",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 170
+        }
+      },
+      "CorePointId": 18,
+      "DelayToCanSpawnSec": 4,
+      "Id": "b0ed321e-3cdc-4930-8408-1d62316084db",
+      "Infiltration": "",
+      "Position": {
+        "x": -897.18,
+        "y": -48.50135,
+        "z": 44.3399963
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -6249,9 +6149,9 @@
       "Id": "b1f26a54-31e6-448e-a890-706cbc56420d",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -684.909851,
-        "y": -41.64,
-        "z": 113.990005
+        "x": -683.039856,
+        "y": -40.03,
+        "z": 120.710007
       },
       "Rotation": 39.11,
       "Sides": [
@@ -6319,38 +6219,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneForestGasStation",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 2,
-      "DelayToCanSpawnSec": 4,
-      "Id": "b63d6bee-c914-471f-9c2d-78a3fc6c32e6",
-      "Infiltration": "",
-      "Position": {
-        "x": -96.84,
-        "y": -41.01888,
-        "z": 211.62999
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneGreenHouses",
+      "BotZoneName": "ZoneBunker",
       "Categories": [
         "Bot"
       ],
@@ -6362,19 +6231,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 112
+          "Radius": 98.1
         }
       },
-      "CorePointId": 1,
+      "CorePointId": 15,
       "DelayToCanSpawnSec": 4,
-      "Id": "b6842fd6-2a9f-4d1e-a64f-d36188ede81d",
+      "Id": "b417aab5-1733-4e41-886b-810394feefe7",
       "Infiltration": "",
       "Position": {
-        "x": 123.419983,
-        "y": -48.44106,
-        "z": 55.3199921
+        "x": -156.61,
+        "y": -13.4983215,
+        "z": -343.31
       },
-      "Rotation": 0,
+      "Rotation": 44.298996,
       "Sides": [
         "Savage"
       ]
@@ -6410,36 +6279,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGreenHouses",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 112
-        }
-      },
-      "CorePointId": 1,
-      "DelayToCanSpawnSec": 4,
-      "Id": "b8f30e4e-7b17-4e65-834e-d2589d2900ee",
-      "Infiltration": "",
-      "Position": {
-        "x": 160.559982,
-        "y": -48.30135,
-        "z": 62.09999
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -6467,36 +6306,6 @@
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneBunkeSniper",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 25
-        }
-      },
-      "CorePointId": 12,
-      "DelayToCanSpawnSec": 1700,
-      "Id": "b91e3a38-0087-44d2-9940-aac3bb71cf1e",
-      "Infiltration": "",
-      "Position": {
-        "x": -152.72,
-        "y": -3.30123138,
-        "z": -260.01
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -6531,7 +6340,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneBunker",
+      "BotZoneName": "ZonePassClose",
       "Categories": [
         "Bot"
       ],
@@ -6543,17 +6352,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 120
+          "Radius": 170
         }
       },
-      "CorePointId": 15,
+      "CorePointId": 18,
       "DelayToCanSpawnSec": 4,
-      "Id": "bbc42143-f4e8-44b3-bd41-90d3d994b402",
+      "Id": "be3b0428-2759-42c7-8940-b2033726ada4",
       "Infiltration": "",
       "Position": {
-        "x": -122.083717,
-        "y": -9.238266,
-        "z": -356.685
+        "x": -893.32,
+        "y": -47.8613472,
+        "z": 35.4900055
       },
       "Rotation": 0,
       "Sides": [
@@ -6581,9 +6390,9 @@
       "Id": "bf0c91c9-6ee4-4fd3-8f03-9c02d79355ce",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -938.589966,
-        "y": -56.91,
-        "z": 159.88002
+        "x": -934.569946,
+        "y": -54.56,
+        "z": 164.200027
       },
       "Rotation": 33.75,
       "Sides": [
@@ -6652,36 +6461,6 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGasStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 170
-        }
-      },
-      "CorePointId": 20,
-      "DelayToCanSpawnSec": 4,
-      "Id": "bfffe275-5b13-4fc0-b596-e4778ff08eb5",
-      "Infiltration": "",
-      "Position": {
-        "x": -188.5232,
-        "y": -65.00135,
-        "z": 447.6358
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -6702,13 +6481,43 @@
       "Id": "c018a1cc-6aca-45bf-80b6-b0dacc6b796f",
       "Infiltration": "Village",
       "Position": {
-        "x": 398.81012,
-        "y": -58.62,
-        "z": 261.22998
+        "x": 388.8001,
+        "y": -60.23,
+        "z": 249.969986
       },
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneBunkeSniper",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 25
+        }
+      },
+      "CorePointId": 12,
+      "DelayToCanSpawnSec": 1700,
+      "Id": "c080ada3-90b6-40f3-972f-063b838bb0c5",
+      "Infiltration": "",
+      "Position": {
+        "x": -151.93,
+        "y": -4.86000061,
+        "z": -268.55
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -6762,9 +6571,9 @@
       "Id": "c0f12c99-a339-46f3-be4b-fa6dbb58184d",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -686.5999,
-        "y": -41.38,
-        "z": 114.12001
+        "x": -681.379944,
+        "y": -40.92,
+        "z": 120.08
       },
       "Rotation": 32.49001,
       "Sides": [
@@ -6772,7 +6581,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGasStation",
+      "BotZoneName": "ZoneIsland",
       "Categories": [
         "Bot"
       ],
@@ -6784,17 +6593,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 117
         }
       },
-      "CorePointId": 20,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 4,
-      "Id": "c0f63e2d-cb8a-4a19-99cf-7b8a3d0b8949",
+      "Id": "c23d0f88-4e27-4550-a89d-d9391a9614af",
       "Infiltration": "",
       "Position": {
-        "x": -218.900024,
-        "y": -55.6409073,
-        "z": 379.015839
+        "x": 206.450012,
+        "y": -64.8,
+        "z": 443.370026
       },
       "Rotation": 0,
       "Sides": [
@@ -6822,9 +6631,9 @@
       "Id": "c2b1f531-0bb7-48f1-9ec8-9adf34f5260e",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -874.029968,
-        "y": -43.01,
-        "z": -4.76997375
+        "x": -872.259949,
+        "y": -44.01,
+        "z": 7.96000671
       },
       "Rotation": 319.63,
       "Sides": [
@@ -6832,7 +6641,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
+      "BotZoneName": "ZoneBunker",
       "Categories": [
         "Bot"
       ],
@@ -6844,19 +6653,80 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 71.23
+          "Radius": 120
         }
       },
-      "CorePointId": 13,
+      "CorePointId": 15,
       "DelayToCanSpawnSec": 4,
-      "Id": "c3f56b58-a7b4-4922-9669-950d44de75e7",
+      "Id": "c2f8425a-8a7d-4058-9070-ae69677b6729",
       "Infiltration": "",
       "Position": {
-        "x": -340.0132,
-        "y": -62.021347,
-        "z": 500.8758
+        "x": -122.083717,
+        "y": -9.238266,
+        "z": -356.685
       },
-      "Rotation": 55.15233,
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneForestSpawn",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 165
+        }
+      },
+      "CorePointId": 9,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c34cf35a-b5c0-452e-a2b9-008064e3cf65",
+      "Infiltration": "",
+      "Position": {
+        "x": 148.15,
+        "y": -37.44359,
+        "z": -256.349976
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneMeteoStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 170
+        }
+      },
+      "CorePointId": 5,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c3760608-8817-4038-8929-e5db63dd189e",
+      "Infiltration": "",
+      "Position": {
+        "x": -443.47998,
+        "y": -25.283453,
+        "z": 248.040009
+      },
+      "Rotation": 0,
       "Sides": [
         "Savage"
       ]
@@ -6882,9 +6752,9 @@
       "Id": "c5425f62-ced4-4198-9a77-dc186b09fee9",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -938.2899,
-        "y": -56.9,
-        "z": 158.070023
+        "x": -934.2699,
+        "y": -55.26,
+        "z": 162.39003
       },
       "Rotation": 30.3,
       "Sides": [
@@ -6953,6 +6823,67 @@
       ]
     },
     {
+      "BotZoneName": "ZoneSanatorium1",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c6a6bb13-f9af-4286-a9ef-f8841490c48a",
+      "Infiltration": "",
+      "Position": {
+        "x": -168.695984,
+        "y": -3.644,
+        "z": -83.987
+      },
+      "Rotation": 19.4150581,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 71.23
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c6ed5398-c447-4e19-8098-aba0024b089f",
+      "Infiltration": "",
+      "Position": {
+        "x": -340.0132,
+        "y": -62.021347,
+        "z": 500.8758
+      },
+      "Rotation": 55.15233,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -6984,67 +6915,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneIsland",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 117
-        }
-      },
-      "CorePointId": 17,
-      "DelayToCanSpawnSec": 4,
-      "Id": "c826160b-4d5a-4e0a-b918-93c5df909d13",
-      "Infiltration": "",
-      "Position": {
-        "x": 228.1,
-        "y": -64.56713,
-        "z": 425.740021
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "c8a44191-2caa-4c18-9bc1-872fb21a980e",
-      "Infiltration": "",
-      "Position": {
-        "x": -170.957,
-        "y": -5.131999,
-        "z": -129.347992
-      },
-      "Rotation": 359.157959,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePassFar",
+      "BotZoneName": "ZonePowerStation",
       "Categories": [
         "Bot"
       ],
@@ -7059,14 +6930,74 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 18,
+      "CorePointId": 16,
       "DelayToCanSpawnSec": 4,
-      "Id": "c9306832-7442-48d8-a3bc-d78fb6ad456a",
+      "Id": "c86317fd-4e91-4eaa-a927-acb309310554",
       "Infiltration": "",
       "Position": {
-        "x": -893.55,
-        "y": -48.21432,
-        "z": 41.5399933
+        "x": -284.300018,
+        "y": -34.408,
+        "z": 195.3
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSmuglers",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 26,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c8c42be4-9ee8-47a7-82e0-6242483d1b6b",
+      "Infiltration": "",
+      "Position": {
+        "x": -604.48,
+        "y": -29.8313484,
+        "z": -179.41
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneMeteoStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 170
+        }
+      },
+      "CorePointId": 5,
+      "DelayToCanSpawnSec": 4,
+      "Id": "c9cad217-352f-4be9-8f3a-49d1099aad8b",
+      "Infiltration": "",
+      "Position": {
+        "x": -520.37,
+        "y": -25.6599045,
+        "z": 284.63
       },
       "Rotation": 0,
       "Sides": [
@@ -7105,7 +7036,7 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGreenHouses",
+      "BotZoneName": "ZoneForestGasStation",
       "Categories": [
         "Bot",
         "Boss"
@@ -7118,17 +7049,78 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 5
+          "Radius": 158.9
         }
       },
-      "CorePointId": 1,
+      "CorePointId": 2,
       "DelayToCanSpawnSec": 4,
-      "Id": "ccd7a541-5afc-4054-a51a-9979490a2f2e",
+      "Id": "ca4c37b5-79a5-4918-aac4-99a2eef4f095",
       "Infiltration": "",
       "Position": {
-        "x": 122.47,
-        "y": -48.44106,
-        "z": 92.81999
+        "x": -105.990021,
+        "y": -40.13835,
+        "z": 244.969986
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 71.23
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "cc3ff729-5506-4934-ae44-bb6b6bf9a68f",
+      "Infiltration": "",
+      "Position": {
+        "x": -358.7232,
+        "y": -62.0376167,
+        "z": 523.105835
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneForestGasStation",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 2,
+      "DelayToCanSpawnSec": 4,
+      "Id": "cd2df98d-5f11-4f2c-bab2-fe3fd54a25f3",
+      "Infiltration": "",
+      "Position": {
+        "x": -87.8699951,
+        "y": -42.39235,
+        "z": 272.28
       },
       "Rotation": 0,
       "Sides": [
@@ -7156,71 +7148,11 @@
       "Id": "cd50d306-1cfa-4829-a915-043e547288af",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -597.889954,
-        "y": -46.27,
-        "z": 168.36
+        "x": -595.16,
+        "y": -45.0700035,
+        "z": 159.190018
       },
       "Rotation": 96.22,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneIsland",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 117
-        }
-      },
-      "CorePointId": 17,
-      "DelayToCanSpawnSec": 4,
-      "Id": "ce9993f4-2376-4717-a1c7-780b75fde60d",
-      "Infiltration": "",
-      "Position": {
-        "x": 244.94,
-        "y": -64.2984848,
-        "z": 442.58
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "ced937d7-c30d-4166-9c22-e1fbbd776604",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -564.129944,
-        "y": -32.62,
-        "z": -129.639984
-      },
-      "Rotation": 339.76,
       "Sides": [
         "Pmc"
       ]
@@ -7238,17 +7170,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 1800
+          "Radius": 80
         }
       },
       "CorePointId": 19,
       "DelayToCanSpawnSec": 4,
-      "Id": "d09377f6-9b63-4850-8b9c-89ba5b6555a9",
+      "Id": "d11085f3-3c60-44f9-a2a1-7d52781e49fe",
       "Infiltration": "",
       "Position": {
-        "x": 379.710022,
-        "y": -59.52235,
-        "z": 315.8
+        "x": 374.68,
+        "y": -59.69135,
+        "z": 314.669983
       },
       "Rotation": 277.5449,
       "Sides": [
@@ -7256,9 +7188,10 @@
       ]
     },
     {
-      "BotZoneName": "ZoneRailWays",
+      "BotZoneName": "ZoneSanatorium1",
       "Categories": [
-        "Bot"
+        "Bot",
+        "Boss"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -7268,49 +7201,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 50
         }
       },
-      "CorePointId": 4,
+      "CorePointId": 7,
       "DelayToCanSpawnSec": 4,
-      "Id": "d1856a0e-3988-463e-a177-53d1b6673992",
+      "Id": "d18a32e4-5fbe-4905-bae4-f0ac1de69114",
       "Infiltration": "",
       "Position": {
-        "x": -581,
-        "y": -59.3917923,
-        "z": 499.800018
+        "x": -146.11,
+        "y": -3.644,
+        "z": -82.6199951
       },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneGreenHouses",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 112
-        }
-      },
-      "CorePointId": 1,
-      "DelayToCanSpawnSec": 4,
-      "Id": "d27f5052-b7db-4886-9d49-b8d05d6dc7b1",
-      "Infiltration": "",
-      "Position": {
-        "x": 125.065,
-        "y": -48.48343,
-        "z": 136.388
-      },
-      "Rotation": 0,
+      "Rotation": 19.4150581,
       "Sides": [
         "Savage"
       ]
@@ -7347,96 +7250,6 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 71.23
-        }
-      },
-      "CorePointId": 13,
-      "DelayToCanSpawnSec": 4,
-      "Id": "d374eb79-72b6-4bd9-aefc-b19ded42c7f6",
-      "Infiltration": "",
-      "Position": {
-        "x": -358.7232,
-        "y": -62.0376167,
-        "z": 523.105835
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneBunkeSniper",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 25
-        }
-      },
-      "CorePointId": 12,
-      "DelayToCanSpawnSec": 1700,
-      "Id": "d3cd70b1-9a90-4d8f-91bc-28f433a9ef09",
-      "Infiltration": "",
-      "Position": {
-        "x": -156.537766,
-        "y": -4.22773,
-        "z": -264.2645
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneGasStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 20,
-      "DelayToCanSpawnSec": 4,
-      "Id": "d4bc284a-88d8-4f53-a9d4-cc1120c4f908",
-      "Infiltration": "",
-      "Position": {
-        "x": -175.86319,
-        "y": -55.7017365,
-        "z": 394.2658
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -7465,36 +7278,6 @@
       "Rotation": 83.38443,
       "Sides": [
         "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneBusStation",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 14,
-      "DelayToCanSpawnSec": 4,
-      "Id": "d6f672ad-ca9a-4437-a517-e02a07840143",
-      "Infiltration": "",
-      "Position": {
-        "x": -78.19,
-        "y": -21.8066673,
-        "z": -6.08999634
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
       ]
     },
     {
@@ -7540,47 +7323,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 130
         }
       },
       "CorePointId": 14,
       "DelayToCanSpawnSec": 4,
-      "Id": "d84e957d-f726-4426-b3b1-a774f8973935",
+      "Id": "d857382a-90df-4754-bfcf-58eb1eb5cfda",
       "Infiltration": "",
       "Position": {
-        "x": -100.12,
-        "y": -22.2816,
-        "z": 10.7100067
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneBunker",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 98.1
-        }
-      },
-      "CorePointId": 15,
-      "DelayToCanSpawnSec": 4,
-      "Id": "d904fe54-6447-4723-899a-7e14e05ae9a7",
-      "Infiltration": "",
-      "Position": {
-        "x": -116.02,
-        "y": -10,
-        "z": -360.64
+        "x": -139.86,
+        "y": -21.86,
+        "z": 5.12001038
       },
       "Rotation": 0,
       "Sides": [
@@ -7696,12 +7449,72 @@
       },
       "CorePointId": 8,
       "DelayToCanSpawnSec": 4,
-      "Id": "dc8b4a31-bd12-4591-bb4a-d9a252c34232",
+      "Id": "dc2b3bc6-0c1c-4fa5-ab23-afb4c698be9f",
       "Infiltration": "",
       "Position": {
-        "x": -197.609985,
-        "y": -5.05,
-        "z": -169.939987
+        "x": -234.599991,
+        "y": -5.16861629,
+        "z": -174.900009
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSmuglers",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 50
+        }
+      },
+      "CorePointId": 26,
+      "DelayToCanSpawnSec": 4,
+      "Id": "dc6943fc-d800-4876-b64b-048e09172cfb",
+      "Infiltration": "",
+      "Position": {
+        "x": -604.62,
+        "y": -29.8313484,
+        "z": -176.88
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZonePassClose",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 165
+        }
+      },
+      "CorePointId": 18,
+      "DelayToCanSpawnSec": 4,
+      "Id": "dce68291-02f7-41f7-8ea4-335d34aa4b32",
+      "Infiltration": "",
+      "Position": {
+        "x": -874.03,
+        "y": -44.55135,
+        "z": 6.779999
       },
       "Rotation": 0,
       "Sides": [
@@ -7770,10 +7583,9 @@
       ]
     },
     {
-      "BotZoneName": "ZoneGreenHouses",
+      "BotZoneName": "ZoneIsland",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -7783,50 +7595,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 5
+          "Radius": 117
         }
       },
-      "CorePointId": 1,
+      "CorePointId": 17,
       "DelayToCanSpawnSec": 4,
-      "Id": "ddd33365-1757-4d21-bf0c-d34d51ac5920",
+      "Id": "ddff13a6-00cf-485b-aff7-e8f9d7f122a5",
       "Infiltration": "",
       "Position": {
-        "x": 109.22998,
-        "y": -48.30135,
-        "z": 95.87999
+        "x": 199.670013,
+        "y": -64.42,
+        "z": 436.79
       },
       "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 7,
-      "DelayToCanSpawnSec": 4,
-      "Id": "de404ee2-edfe-46e3-aa54-473c35e5d226",
-      "Infiltration": "",
-      "Position": {
-        "x": -146.11,
-        "y": -3.644,
-        "z": -82.6199951
-      },
-      "Rotation": 19.4150581,
       "Sides": [
         "Savage"
       ]
@@ -7943,9 +7724,9 @@
       "Id": "e0dfb1f3-189b-4da7-bf05-8e68e4346f13",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -678.8,
-        "y": -38.06,
-        "z": -44.12999
+        "x": -778.56,
+        "y": -40.27,
+        "z": 2.97001648
       },
       "Rotation": 6.340001,
       "Sides": [
@@ -7953,7 +7734,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePowerStation",
+      "BotZoneName": "ZoneRailWays",
       "Categories": [
         "Bot"
       ],
@@ -7965,19 +7746,19 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 90
+          "Radius": 158.9
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 4,
       "DelayToCanSpawnSec": 4,
-      "Id": "e1d1ed4f-a087-4947-8af2-87131b26c963",
+      "Id": "e1f2441d-21c1-46fc-98a9-bae9e2593ab8",
       "Infiltration": "",
       "Position": {
-        "x": -217.540009,
-        "y": -41.0012,
-        "z": 166.4
+        "x": -621.76,
+        "y": -59.59,
+        "z": 496.840027
       },
-      "Rotation": 276.228271,
+      "Rotation": 0,
       "Sides": [
         "Savage"
       ]
@@ -8013,6 +7794,36 @@
       ]
     },
     {
+      "BotZoneName": "ZoneIsland",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 117
+        }
+      },
+      "CorePointId": 17,
+      "DelayToCanSpawnSec": 4,
+      "Id": "e4809395-3ce8-40b2-b5ab-c678bd4cd7c7",
+      "Infiltration": "",
+      "Position": {
+        "x": 203.769989,
+        "y": -64.57,
+        "z": 441.370026
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Coop",
@@ -8044,98 +7855,7 @@
       ]
     },
     {
-      "BotZoneName": "ZonePort",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 131.2
-        }
-      },
-      "CorePointId": 13,
-      "DelayToCanSpawnSec": 4,
-      "Id": "e5dba50e-19e5-45f3-a993-474f34d853c1",
-      "Infiltration": "",
-      "Position": {
-        "x": -292.6332,
-        "y": -62.0376167,
-        "z": 493.6858
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestGasStation",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 158.9
-        }
-      },
-      "CorePointId": 2,
-      "DelayToCanSpawnSec": 4,
-      "Id": "e61d1eae-714c-480c-b3fe-035608fbf8a6",
-      "Infiltration": "",
-      "Position": {
-        "x": -87.8699951,
-        "y": -42.39235,
-        "z": 272.28
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneSanatorium2",
-      "Categories": [
-        "Bot"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 70
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "e69e6216-1071-4a19-91dc-c3da26f483d6",
-      "Infiltration": "",
-      "Position": {
-        "x": -295.389984,
-        "y": -5.134326,
-        "z": -127.259995
-      },
-      "Rotation": 0,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneStartVillage",
+      "BotZoneName": "ZoneRailWays",
       "Categories": [
         "Bot"
       ],
@@ -8150,16 +7870,46 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 6,
+      "CorePointId": 4,
       "DelayToCanSpawnSec": 4,
-      "Id": "e72294f1-07bc-4a75-8a10-a49951ab935b",
+      "Id": "e5289fbf-42d4-42b4-a74a-1d7561bd3223",
       "Infiltration": "",
       "Position": {
-        "x": 459.89,
-        "y": -54.4532776,
-        "z": 92.4900055
+        "x": -638.28,
+        "y": -59.2350578,
+        "z": 423.48
       },
-      "Rotation": 277.9801,
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneTunnel",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 212
+        }
+      },
+      "CorePointId": 19,
+      "DelayToCanSpawnSec": 4,
+      "Id": "e6c06ccc-11d6-4010-9eaf-081b3ba69cde",
+      "Infiltration": "",
+      "Position": {
+        "x": 357.550018,
+        "y": -59.62579,
+        "z": 328.87
+      },
+      "Rotation": 222.77774,
       "Sides": [
         "Savage"
       ]
@@ -8195,6 +7945,66 @@
       ]
     },
     {
+      "BotZoneName": "ZoneTunnel",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 6,
+      "DelayToCanSpawnSec": 4,
+      "Id": "ea27291c-82b2-4271-8aed-b47b32e91bf4",
+      "Infiltration": "",
+      "Position": {
+        "x": 446.610016,
+        "y": -48.09135,
+        "z": 235.079987
+      },
+      "Rotation": 210.132233,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneGasStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 20,
+      "DelayToCanSpawnSec": 4,
+      "Id": "ea576e37-2e1f-46b6-b2d3-b5e96113a3b8",
+      "Infiltration": "",
+      "Position": {
+        "x": -215.5632,
+        "y": -55.7550659,
+        "z": 407.585815
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "",
       "Categories": [
         "Player"
@@ -8216,7 +8026,7 @@
       "Infiltration": "Riverside",
       "Position": {
         "x": -837.7199,
-        "y": -55.91,
+        "y": -55.47,
         "z": 278.280029
       },
       "Rotation": 302.84,
@@ -8256,6 +8066,37 @@
       ]
     },
     {
+      "BotZoneName": "ZonePort",
+      "Categories": [
+        "Bot",
+        "Boss"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 95
+        }
+      },
+      "CorePointId": 13,
+      "DelayToCanSpawnSec": 4,
+      "Id": "eab6626b-e220-4211-b803-67898c618b81",
+      "Infiltration": "",
+      "Position": {
+        "x": -323.5232,
+        "y": -62.0376167,
+        "z": 498.4858
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
       "BotZoneName": "ZoneBunker",
       "Categories": [
         "Bot"
@@ -8273,51 +8114,20 @@
       },
       "CorePointId": 15,
       "DelayToCanSpawnSec": 4,
-      "Id": "ead31b34-16c2-48b2-abe4-fae5f5e97e36",
+      "Id": "eb9cc2ab-569f-43e3-9b24-4289533daa38",
       "Infiltration": "",
       "Position": {
-        "x": -156.61,
-        "y": -13.4983215,
-        "z": -343.31
+        "x": -134.798325,
+        "y": -10.67804,
+        "z": -351.499146
       },
-      "Rotation": 44.298996,
+      "Rotation": 0,
       "Sides": [
         "Savage"
       ]
     },
     {
-      "BotZoneName": "ZoneSanatorium1",
-      "Categories": [
-        "Bot",
-        "Boss"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 8,
-      "DelayToCanSpawnSec": 4,
-      "Id": "eb855092-1185-4ee8-a67f-219238d5b35a",
-      "Infiltration": "",
-      "Position": {
-        "x": -168.695984,
-        "y": -3.644,
-        "z": -83.987
-      },
-      "Rotation": 19.4150581,
-      "Sides": [
-        "Savage"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneForestTruck",
+      "BotZoneName": "ZonePowerStationSniper",
       "Categories": [
         "Bot"
       ],
@@ -8329,17 +8139,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 165
+          "Radius": 25
         }
       },
-      "CorePointId": 11,
-      "DelayToCanSpawnSec": 4,
-      "Id": "ebc374a7-883a-4769-a1c0-068a707fecee",
+      "CorePointId": 10,
+      "DelayToCanSpawnSec": 1700,
+      "Id": "ee0fb761-cb88-40d7-8a80-052e28db9451",
       "Infiltration": "",
       "Position": {
-        "x": 13.6999817,
-        "y": -26.2264748,
-        "z": -163.839981
+        "x": -232.69,
+        "y": -29.7583351,
+        "z": 192.980011
       },
       "Rotation": 0,
       "Sides": [
@@ -8347,10 +8157,9 @@
       ]
     },
     {
-      "BotZoneName": "ZoneSanatorium1",
+      "BotZoneName": "ZoneGasStation",
       "Categories": [
-        "Bot",
-        "Boss"
+        "Bot"
       ],
       "ColliderParams": {
         "_parent": "SpawnSphereParams",
@@ -8360,19 +8169,49 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 50
+          "Radius": 158.9
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 20,
       "DelayToCanSpawnSec": 4,
-      "Id": "ef21d970-5152-41df-8578-82e053fbc320",
+      "Id": "ee7aa9cd-02f6-4897-a29f-38e335f6f4e4",
       "Infiltration": "",
       "Position": {
-        "x": -156.265991,
-        "y": -3.644,
-        "z": -82.5099945
+        "x": -218.900024,
+        "y": -55.6409073,
+        "z": 379.015839
       },
-      "Rotation": 19.4150581,
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneTunnel",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 80
+        }
+      },
+      "CorePointId": 19,
+      "DelayToCanSpawnSec": 4,
+      "Id": "eefa0cd2-7d19-49d4-8f67-b57ef3862d9d",
+      "Infiltration": "",
+      "Position": {
+        "x": 420.2,
+        "y": -47.58135,
+        "z": 243.54
+      },
+      "Rotation": 195.719528,
       "Sides": [
         "Savage"
       ]
@@ -8399,7 +8238,7 @@
       "Infiltration": "Village",
       "Position": {
         "x": 341.990051,
-        "y": -42.28,
+        "y": -42.16,
         "z": -267.94
       },
       "Rotation": 349.17,
@@ -8428,13 +8267,43 @@
       "Id": "ef4e1953-ed0d-42c5-b1e8-6b58db5c6f44",
       "Infiltration": "Village",
       "Position": {
-        "x": 397.649963,
-        "y": -59.43,
-        "z": 256.68
+        "x": 387.879944,
+        "y": -60.33,
+        "z": 263.87
       },
       "Rotation": 271.08,
       "Sides": [
         "Pmc"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneBusStation",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 158.9
+        }
+      },
+      "CorePointId": 14,
+      "DelayToCanSpawnSec": 4,
+      "Id": "f16e036e-db41-4453-bb2b-e0b71ee73ada",
+      "Infiltration": "",
+      "Position": {
+        "x": -100.12,
+        "y": -22.2816,
+        "z": 10.7100067
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
       ]
     },
     {
@@ -8519,41 +8388,11 @@
       "Id": "f3fab340-0d6e-49d3-abf9-609f10262382",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -601.279968,
-        "y": -45.84,
-        "z": 161.310013
+        "x": -598.55,
+        "y": -44.6400032,
+        "z": 152.14003
       },
       "Rotation": 111.609993,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "f428129a-95b4-424d-accc-c89b301cb3c1",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -568.919861,
-        "y": -32.61,
-        "z": -133.069992
-      },
-      "Rotation": 312.9,
       "Sides": [
         "Pmc"
       ]
@@ -8579,9 +8418,9 @@
       "Id": "f451a986-9344-43f7-a6cd-4c2c25993bd6",
       "Infiltration": "Riverside",
       "Position": {
-        "x": -682.009949,
-        "y": -38.2,
-        "z": -42.64998
+        "x": -781.769958,
+        "y": -40.22,
+        "z": 4.45002747
       },
       "Rotation": 15.250001,
       "Sides": [
@@ -8589,37 +8428,7 @@
       ]
     },
     {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "f474e253-6abe-416b-99cd-f5c3ed524804",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -496.119934,
-        "y": -9.610001,
-        "z": -390.279968
-      },
-      "Rotation": 7.29,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZoneStartVillage",
+      "BotZoneName": "ZoneGreenHouses",
       "Categories": [
         "Bot"
       ],
@@ -8631,25 +8440,25 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 112
         }
       },
-      "CorePointId": 6,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 4,
-      "Id": "f487ecdc-1bcc-41bf-b948-9bac5116b933",
+      "Id": "f473bfd3-f168-4385-8c00-4a4f12f9cf35",
       "Infiltration": "",
       "Position": {
-        "x": 462.4,
-        "y": -54.4639664,
-        "z": 119.560013
+        "x": 160.559982,
+        "y": -48.30135,
+        "z": 62.09999
       },
-      "Rotation": 195.821518,
+      "Rotation": 0,
       "Sides": [
         "Savage"
       ]
     },
     {
-      "BotZoneName": "ZonePowerStation",
+      "BotZoneName": "ZonePort",
       "Categories": [
         "Bot"
       ],
@@ -8661,19 +8470,49 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 158.9
+          "Radius": 131.2
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 13,
       "DelayToCanSpawnSec": 4,
-      "Id": "f67f1b62-76f7-4974-9374-2df04368a862",
+      "Id": "f6d89cec-f342-4543-b860-bb4e946249bf",
       "Infiltration": "",
       "Position": {
-        "x": -251.06,
-        "y": -40.9783936,
-        "z": 195.32
+        "x": -292.6332,
+        "y": -62.0376167,
+        "z": 493.6858
       },
       "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ]
+    },
+    {
+      "BotZoneName": "ZoneSanatorium1",
+      "Categories": [
+        "Bot"
+      ],
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 70
+        }
+      },
+      "CorePointId": 8,
+      "DelayToCanSpawnSec": 4,
+      "Id": "f75776a1-d4af-4e10-87a0-6f8d016851a4",
+      "Infiltration": "",
+      "Position": {
+        "x": -170.957,
+        "y": -5.131999,
+        "z": -129.347992
+      },
+      "Rotation": 359.157959,
       "Sides": [
         "Savage"
       ]
@@ -8831,37 +8670,7 @@
       ]
     },
     {
-      "BotZoneName": "",
-      "Categories": [
-        "Player"
-      ],
-      "ColliderParams": {
-        "_parent": "SpawnSphereParams",
-        "_props": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Radius": 50
-        }
-      },
-      "CorePointId": 0,
-      "DelayToCanSpawnSec": 4,
-      "Id": "fba8398f-90ea-433e-a3bb-669e08b18937",
-      "Infiltration": "Riverside",
-      "Position": {
-        "x": -492.8299,
-        "y": -9.380001,
-        "z": -390.26
-      },
-      "Rotation": 41.13,
-      "Sides": [
-        "Pmc"
-      ]
-    },
-    {
-      "BotZoneName": "ZonePassClose",
+      "BotZoneName": "ZoneGreenHouses",
       "Categories": [
         "Bot"
       ],
@@ -8873,17 +8682,17 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 175
+          "Radius": 112
         }
       },
-      "CorePointId": 18,
+      "CorePointId": 1,
       "DelayToCanSpawnSec": 4,
-      "Id": "fd9ae1ee-6358-44d6-a344-edcf4ed1556f",
+      "Id": "fda8f23d-c141-482a-9861-2d82752c52c1",
       "Infiltration": "",
       "Position": {
-        "x": -888.48,
-        "y": -49.26746,
-        "z": 3.08000183
+        "x": 78.95999,
+        "y": -48.4015732,
+        "z": 91.57999
       },
       "Rotation": 0,
       "Sides": [
@@ -8900,87 +8709,163 @@
   "exits": [
     {
       "Chance": 100,
-      "EntryPoints": "Village,Riverside",
-      "EventAvailable": true,
+      "Count": 0,
+      "EntryPoints": "Riverside",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Tunnel",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 0,
-      "EntryPoints": "Village,Riverside",
+      "Count": 0,
+      "EntryPoints": "Riverside,Village",
       "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Rock Passage",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 50,
-      "EntryPoints": "Village,Riverside",
+      "Count": 0,
+      "EntryPoints": "Riverside,Village",
       "EventAvailable": false,
       "ExfiltrationTime": 30,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Pier Boat",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 50,
+      "Count": 0,
       "EntryPoints": "Village",
       "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "CCP Temporary",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 100,
-      "EntryPoints": "Village,Riverside",
-      "EventAvailable": true,
+      "Count": 0,
+      "EntryPoints": "Village",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Road to Customs",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 100,
-      "EntryPoints": "Village,Riverside",
-      "EventAvailable": true,
+      "Count": 0,
+      "EntryPoints": "Riverside,Village",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Lighthouse_pass",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
     },
     {
       "Chance": 100,
-      "EntryPoints": "Village,Riverside",
-      "EventAvailable": true,
+      "Count": 0,
+      "EntryPoints": "Village",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
       "Id": "",
       "MaxTime": 0,
       "MinTime": 0,
       "Name": "Road_at_railbridge",
+      "PassageRequirement": "None",
       "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
       "RequirementTip": ""
+    },
+    {
+      "Chance": 100,
+      "Count": 5000,
+      "EntryPoints": "Riverside,Village",
+      "EventAvailable": false,
+      "ExfiltrationTime": 60,
+      "ExfiltrationType": "SharedTimer",
+      "Id": "5449016a4bdc2d6f028b456f",
+      "MaxTime": 0,
+      "MinTime": 0,
+      "Name": "Shorl_V-Ex",
+      "PassageRequirement": "TransferItem",
+      "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "RequirementTip": "EXFIL_Item"
+    },
+    {
+      "Chance": 100,
+      "Count": 0,
+      "EntryPoints": "Riverside,Village",
+      "EventAvailable": false,
+      "ExfiltrationTime": 8,
+      "ExfiltrationType": "Individual",
+      "Id": "Alpinist",
+      "MaxTime": 0,
+      "MinTime": 0,
+      "Name": "RedRebel_alp",
+      "PassageRequirement": "Reference",
+      "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "RequirementTip": ""
+    },
+    {
+      "Chance": 100,
+      "Count": 0,
+      "EntryPoints": "Riverside,Village",
+      "EventAvailable": false,
+      "ExfiltrationTime": 8,
+      "ExfiltrationType": "SharedTimer",
+      "Id": "",
+      "MaxTime": 0,
+      "MinTime": 0,
+      "Name": "Smugglers_Trail_coop",
+      "PassageRequirement": "ScavCooperation",
+      "PlayersCount": 0,
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "RequirementTip": "EXFIL_Cooperate"
     }
   ],
   "filter_ex": [],

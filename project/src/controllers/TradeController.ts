@@ -8,9 +8,10 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { IProcessBaseTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBaseTradeRequestData";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
-import { IProcessRagfairTradeRequestData } from "@spt-aki/models/eft/trade/IProcessRagfairTradeRequestData";
+import { IOfferRequest, IProcessRagfairTradeRequestData } from "@spt-aki/models/eft/trade/IProcessRagfairTradeRequestData";
 import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
 import { ISellScavItemsToFenceRequestData } from "@spt-aki/models/eft/trade/ISellScavItemsToFenceRequestData";
 import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
@@ -60,19 +61,43 @@ export class TradeController
         sessionID: string,
     ): IItemEventRouterResponse
     {
-        return this.confirmTradingInternal(pmcData, request, sessionID, this.traderConfig.purchasesAreFoundInRaid);
+        const output = this.eventOutputHolder.getOutput(sessionID);
+
+        // Buying
+        if (request.type === "buy_from_trader")
+        {
+            const foundInRaid = this.traderConfig.purchasesAreFoundInRaid;
+            const buyData = <IProcessBuyTradeRequestData>request;
+            this.tradeHelper.buyItem(pmcData, buyData, sessionID, foundInRaid, output);
+
+            return output;
+        }
+
+        // Selling
+        if (request.type === "sell_to_trader")
+        {
+            const sellData = <IProcessSellTradeRequestData>request;
+            this.tradeHelper.sellItem(pmcData, pmcData, sellData, sessionID, output);
+
+            return output;
+        }
+
+        const errorMessage = `Unhandled trade event: ${request.type}`;
+        this.logger.error(errorMessage);
+
+        return this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.RAGFAIRUNAVAILABLE);
     }
 
     /** Handle RagFairBuyOffer event */
     public confirmRagfairTrading(
         pmcData: IPmcData,
-        body: IProcessRagfairTradeRequestData,
+        request: IProcessRagfairTradeRequestData,
         sessionID: string,
     ): IItemEventRouterResponse
     {
-        let output = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
 
-        for (const offer of body.offers)
+        for (const offer of request.offers)
         {
             const fleaOffer = this.ragfairServer.getOffer(offer.id);
             if (!fleaOffer)
@@ -94,57 +119,105 @@ export class TradeController
             }
 
             const sellerIsTrader = fleaOffer.user.memberType === MemberCategory.TRADER;
-
-            // Skip buying items when player doesn't have needed loyalty
-            if (sellerIsTrader && fleaOffer.loyaltyLevel > pmcData.TradersInfo[fleaOffer.user.id].loyaltyLevel)
+            if (sellerIsTrader)
             {
-                this.logger.debug(
-                    `Unable to buy item: ${
-                        fleaOffer.items[0]._tpl
-                    } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`,
-                );
-
-                continue;
+                this.buyTraderItemFromRagfair(sessionID, pmcData, fleaOffer, offer, output);
+            }
+            else
+            {
+                this.buyPmcItemFromRagfair(sessionID, pmcData, fleaOffer, offer, output);
             }
 
-            // Log full purchase JSON
-            this.logger.debug(this.jsonUtil.serializeAdvanced(offer, null, 2));
-
-            const buyData: IProcessBuyTradeRequestData = {
-                Action: "TradingConfirm",
-                type: "buy_from_trader",
-                tid: (sellerIsTrader) ? fleaOffer.user.id : "ragfair",
-                // eslint-disable-next-line @typescript-eslint/naming-convention
-                item_id: fleaOffer.root,
-                count: offer.count,
-                // eslint-disable-next-line @typescript-eslint/naming-convention
-                scheme_id: 0,
-                // eslint-disable-next-line @typescript-eslint/naming-convention
-                scheme_items: offer.items,
-            };
-            
-            // Trader / PMC offers use different found in raid config values
-            const purchasedItemFoundInRaid = (sellerIsTrader)
-            ? this.traderConfig.purchasesAreFoundInRaid
-            : this.ragfairConfig.dynamic.purchasesAreFoundInRaid;
-            
-            // confirmTrading() must occur prior to removing the offer stack, otherwise item inside offer doesn't exist for confirmTrading() to use
-            output = this.confirmTradingInternal(
-                pmcData,
-                buyData,
-                sessionID,
-                purchasedItemFoundInRaid,
-                fleaOffer.items[0].upd,
-            );
-
-            if (!sellerIsTrader)
+            // Exit loop early if problem found
+            if (output.warnings.length > 0)
             {
-                // Remove the item purchased from flea offer
-                this.ragfairServer.removeOfferStack(fleaOffer._id, offer.count);
+                return output;
             }
         }
 
         return output;
+    }
+
+    /**
+     * Buy an item off the flea sold by a trader
+     * @param sessionId Session id
+     * @param pmcData Player profile
+     * @param fleaOffer Offer being purchased
+     * @param requestOffer request data from client
+     * @param output Output to send back to client
+     */
+    protected buyTraderItemFromRagfair(sessionId: string, pmcData: IPmcData, fleaOffer: IRagfairOffer, requestOffer: IOfferRequest, output: IItemEventRouterResponse): void
+    {
+        // Skip buying items when player doesn't have needed loyalty
+        if (this.playerLacksTraderLoyaltyLevelToBuyOffer(fleaOffer, pmcData))
+        {
+            const errorMessage = `Unable to buy item: ${
+                fleaOffer.items[0]._tpl
+            } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`
+            this.logger.debug(errorMessage);
+
+            this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.RAGFAIRUNAVAILABLE);
+
+            return;
+        }
+
+        const buyData: IProcessBuyTradeRequestData = {
+            Action: "TradingConfirm",
+            type: "buy_from_ragfair",
+            tid: fleaOffer.user.id,
+            item_id: fleaOffer.root,
+            count: requestOffer.count,
+            scheme_id: 0,
+            scheme_items: requestOffer.items,
+        };
+
+        this.tradeHelper.buyItem(pmcData, buyData, sessionId, this.traderConfig.purchasesAreFoundInRaid, output);
+    }
+
+    /**
+     * Buy an item off the flea sold by a PMC
+     * @param sessionId Session id
+     * @param pmcData Player profile
+     * @param fleaOffer Offer being purchased
+     * @param requestOffer Request data from client
+     * @param output Output to send back to client
+     */
+    protected buyPmcItemFromRagfair(sessionId: string, pmcData: IPmcData, fleaOffer: IRagfairOffer, requestOffer: IOfferRequest, output: IItemEventRouterResponse): void
+    {
+        const buyData: IProcessBuyTradeRequestData = {
+            Action: "TradingConfirm",
+            type: "buy_from_ragfair",
+            tid: "ragfair",
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            item_id: fleaOffer._id, // Store ragfair offerId in buyRequestData.item_id
+            count: requestOffer.count,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            scheme_id: 0,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            scheme_items: requestOffer.items,
+        };
+
+        // buyItem() must occur prior to removing the offer stack, otherwise item inside offer doesn't exist for confirmTrading() to use
+        this.tradeHelper.buyItem(pmcData, buyData, sessionId, this.ragfairConfig.dynamic.purchasesAreFoundInRaid, output);
+        if (output.warnings.length > 0)
+        {
+            return;
+        }
+
+        // Remove/lower stack count of item purchased from flea offer
+        this.ragfairServer.removeOfferStack(fleaOffer._id, requestOffer.count);
+    }
+
+    /**
+     * Does Player have necessary trader loyalty to purchase flea offer
+     * @param sellerIsTrader is seller trader
+     * @param fleaOffer FLea offer being bought
+     * @param pmcData Player profile
+     * @returns True if player can buy offer
+     */
+    protected playerLacksTraderLoyaltyLevelToBuyOffer(fleaOffer: IRagfairOffer, pmcData: IPmcData): boolean
+    {
+        return fleaOffer.loyaltyLevel > pmcData.TradersInfo[fleaOffer.user.id].loyaltyLevel;
     }
 
     /** Handle SellAllFromSavage event */
@@ -154,16 +227,19 @@ export class TradeController
         sessionId: string,
     ): IItemEventRouterResponse
     {
+        const output = this.eventOutputHolder.getOutput(sessionId);
         const scavProfile = this.profileHelper.getFullProfile(sessionId)?.characters?.scav;
         if (!scavProfile)
         {
             return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionId),
+                output,
                 `Profile ${request.fromOwner.id} has no scav account`,
             );
         }
 
-        return this.sellInventoryToTrader(sessionId, scavProfile, pmcData, Traders.FENCE);
+        this.sellInventoryToTrader(sessionId, scavProfile, pmcData, Traders.FENCE, output);
+
+        return output;
     }
 
     /**
@@ -173,14 +249,15 @@ export class TradeController
      * @param profileWithItemsToSell Profile with items to be sold to trader
      * @param profileThatGetsMoney Profile that gets the money after selling items
      * @param trader Trader to sell items to
-     * @returns IItemEventRouterResponse
+     * @param output IItemEventRouterResponse
      */
     protected sellInventoryToTrader(
         sessionId: string,
         profileWithItemsToSell: IPmcData,
         profileThatGetsMoney: IPmcData,
         trader: Traders,
-    ): IItemEventRouterResponse
+        output: IItemEventRouterResponse
+    ): void
     {
         const handbookPrices = this.ragfairPriceService.getAllStaticPrices();
         // TODO, apply trader sell bonuses?
@@ -219,7 +296,7 @@ export class TradeController
             });
         }
         this.logger.debug(`Selling scav items to fence for ${sellRequest.price} roubles`);
-        return this.tradeHelper.sellItem(profileWithItemsToSell, profileThatGetsMoney, sellRequest, sessionId);
+        this.tradeHelper.sellItem(profileWithItemsToSell, profileThatGetsMoney, sellRequest, sessionId, output);
     }
 
     /**
@@ -257,30 +334,5 @@ export class TradeController
         }
 
         return totalPrice;
-    }
-
-    protected confirmTradingInternal(
-        pmcData: IPmcData,
-        body: IProcessBaseTradeRequestData,
-        sessionID: string,
-        foundInRaid = false,
-        upd: Upd = null,
-    ): IItemEventRouterResponse
-    {
-        // buying
-        if (body.type === "buy_from_trader")
-        {
-            const buyData = <IProcessBuyTradeRequestData>body;
-            return this.tradeHelper.buyItem(pmcData, buyData, sessionID, foundInRaid, upd);
-        }
-
-        // selling
-        if (body.type === "sell_to_trader")
-        {
-            const sellData = <IProcessSellTradeRequestData>body;
-            return this.tradeHelper.sellItem(pmcData, pmcData, sellData, sessionID);
-        }
-
-        return null;
     }
 }

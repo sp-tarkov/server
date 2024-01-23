@@ -5,6 +5,7 @@ export interface IBotLootCache
     backpackLoot: ITemplateItem[];
     pocketLoot: ITemplateItem[];
     vestLoot: ITemplateItem[];
+    secureLoot: ITemplateItem[];
     combinedPoolLoot: ITemplateItem[];
 
     specialItems: ITemplateItem[];
@@ -20,6 +21,7 @@ export enum LootCacheType
     BACKPACK = "Backpack",
     POCKET = "Pocket",
     VEST = "Vest",
+    SECURE = "SecuredContainer",
     COMBINED = "Combined",
     HEALING_ITEMS = "HealingItems",
     DRUG_ITEMS = "DrugItems",

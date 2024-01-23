@@ -1,7 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
 import { InraidController } from "@spt-aki/controllers/InraidController";
+import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { IItemDeliveryRequestData } from "@spt-aki/models/eft/inRaid/IItemDeliveryRequestData";
 import { IRegisterPlayerRequestData } from "@spt-aki/models/eft/inRaid/IRegisterPlayerRequestData";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
@@ -79,5 +81,33 @@ export class InraidCallbacks
     public getAirdropConfig(): string
     {
         return this.httpResponse.noBody(this.inraidController.getAirdropConfig());
+    }
+
+    /**
+     * Handle singleplayer/btr/config
+     * @returns JSON as string
+     */
+    public getBTRConfig(): string
+    {
+        return this.httpResponse.noBody(this.inraidController.getBTRConfig());
+    }
+
+    /**
+     * Handle singleplayer/traderServices/getTraderServices
+     */
+    public getTraderServices(url: string, info: IEmptyRequestData, sessionId: string): string
+    {
+        const lastSlashPos = url.lastIndexOf('/');
+        const traderId = url.substring(lastSlashPos + 1);
+        return this.httpResponse.noBody(this.inraidController.getTraderServices(sessionId, traderId));
+    }
+
+    /**
+     * Handle singleplayer/traderServices/itemDelivery
+     */
+    public itemDelivery(url: string, request: IItemDeliveryRequestData, sessionId: string): INullResponseData
+    {
+        this.inraidController.itemDelivery(sessionId, request.traderId, request.items);
+        return this.httpResponse.nullResponse();
     }
 }

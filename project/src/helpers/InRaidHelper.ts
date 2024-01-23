@@ -22,6 +22,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { ProfileHelper } from "./ProfileHelper";
 
 @injectable()
@@ -44,6 +45,7 @@ export class InRaidHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RandomUtil") protected randomUtil: RandomUtil
     )
     {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
@@ -124,7 +126,15 @@ export class InRaidHelper
         }
 
         // PMCs - get by bear/usec
-        return botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
+        let pmcStandingForKill = botTypes[victim.Side.toLowerCase()]?.experience?.standingForKill;
+        const pmcKillProbabilityForScavGain = this.inRaidConfig.pmcKillProbabilityForScavGain;
+
+        if(this.randomUtil.rollForChanceProbability(pmcKillProbabilityForScavGain)) 
+        {
+            pmcStandingForKill += this.inRaidConfig.scavExtractGain
+        }
+
+        return pmcStandingForKill;
     }
 
     /**
@@ -150,9 +160,9 @@ export class InRaidHelper
         profileData.Skills = saveProgressRequest.profile.Skills;
         profileData.Stats.Eft = saveProgressRequest.profile.Stats.Eft;
         profileData.Encyclopedia = saveProgressRequest.profile.Encyclopedia;
-        profileData.ConditionCounters = saveProgressRequest.profile.ConditionCounters;
+        profileData.TaskConditionCounters = saveProgressRequest.profile.TaskConditionCounters;
 
-        this.validateBackendCounters(saveProgressRequest, profileData);
+        this.validateTaskConditionCounters(saveProgressRequest, profileData);
 
         profileData.SurvivorClass = saveProgressRequest.profile.SurvivorClass;
 
@@ -176,27 +186,27 @@ export class InRaidHelper
     }
 
     /** Check counters are correct in profile */
-    protected validateBackendCounters(saveProgressRequest: ISaveProgressRequestData, profileData: IPmcData): void
+    protected validateTaskConditionCounters(saveProgressRequest: ISaveProgressRequestData, profileData: IPmcData): void
     {
-        for (const backendCounterKey in saveProgressRequest.profile.BackendCounters)
+        for (const backendCounterKey in saveProgressRequest.profile.TaskConditionCounters)
         {
             // Skip counters with no id
-            if (!saveProgressRequest.profile.BackendCounters[backendCounterKey].id)
+            if (!saveProgressRequest.profile.TaskConditionCounters[backendCounterKey].id)
             {
                 continue;
             }
 
-            const postRaidValue = saveProgressRequest.profile.BackendCounters[backendCounterKey]?.value;
+            const postRaidValue = saveProgressRequest.profile.TaskConditionCounters[backendCounterKey]?.value;
             if (typeof postRaidValue === "undefined")
             {
                 // No value, skip
                 continue;
             }
 
-            const matchingPreRaidCounter = profileData.BackendCounters[backendCounterKey];
+            const matchingPreRaidCounter = profileData.TaskConditionCounters[backendCounterKey];
             if (!matchingPreRaidCounter)
             {
-                this.logger.error(`Backendcounter: ${backendCounterKey} cannot be found in pre-raid data`);
+                this.logger.error(`TaskConditionCounters: ${backendCounterKey} cannot be found in pre-raid data`);
 
                 continue;
             }
@@ -204,7 +214,7 @@ export class InRaidHelper
             if (matchingPreRaidCounter.value !== postRaidValue)
             {
                 this.logger.error(
-                    `Backendcounter: ${backendCounterKey} value is different post raid, old: ${matchingPreRaidCounter.value} new: ${postRaidValue}`
+                    `TaskConditionCounters: ${backendCounterKey} value is different post raid, old: ${matchingPreRaidCounter.value} new: ${postRaidValue}`
                 );
             }
         }
@@ -228,6 +238,8 @@ export class InRaidHelper
         // Trader standing only occur on pmc profile, scav kills are handled in handlePostRaidPlayerScavKarmaChanges()
         // Scav client data has standing values of 0 for all traders, DO NOT RUN ON SCAV RAIDS
         this.applyTraderStandingAdjustments(pmcData.TradersInfo, saveProgressRequest.profile.TradersInfo);
+
+        this.updateProfileAchievements(pmcData, saveProgressRequest.profile.Achievements);
 
         this.profileFixerService.checkForAndFixPmcProfileIssues(pmcData);
     }
@@ -315,7 +327,7 @@ export class InRaidHelper
             {
                 // Send failed message
                 const failBody: IFailQuestRequestData = {
-                    Action: "QuestComplete",
+                    Action: "QuestFail",
                     qid: postRaidQuest.qid,
                     removeExcessItems: true,
                 };
@@ -327,14 +339,14 @@ export class InRaidHelper
                 // Does failed quest have requirement to collect items from raid
                 const questDbData = this.questHelper.getQuestFromDb(postRaidQuest.qid, pmcData);
                 // AvailableForFinish
-                const matchingAffFindConditions = questDbData.conditions.AvailableForFinish.filter(x => x._parent === "FindItem");
+                const matchingAffFindConditions = questDbData.conditions.AvailableForFinish.filter(x => x.conditionType === "FindItem");
                 const itemsToCollect: string[] = [];
                 if (matchingAffFindConditions)
                 {
                     // Find all items the failed quest wanted
                     for (const condition of matchingAffFindConditions)
                     {
-                        itemsToCollect.push(...condition._props.target);
+                        itemsToCollect.push(...condition.target);
                     }
                 }
 
@@ -381,12 +393,12 @@ export class InRaidHelper
                 }
 
                 // Find the time requirement in AvailableForStart array (assuming there is one as quest in locked state === its time-gated)
-                const afsRequirement = dbQuest.conditions.AvailableForStart.find(x => x._parent === "Quest");
-                if (afsRequirement && afsRequirement._props.availableAfter > 0)
+                const afsRequirement = dbQuest.conditions.AvailableForStart.find(x => x.conditionType === "Quest");
+                if (afsRequirement && afsRequirement.availableAfter > 0)
                 {
                     // Prereq quest has a wait
                     // Set quest as AvailableAfter and set timer
-                    const timestamp = this.timeUtil.getTimestamp() + afsRequirement._props.availableAfter;
+                    const timestamp = this.timeUtil.getTimestamp() + afsRequirement.availableAfter;
                     lockedQuest.availableAfter = timestamp;
                     lockedQuest.statusTimers.AvailableAfter = timestamp;
                     lockedQuest.status = 9;
@@ -467,6 +479,24 @@ export class InRaidHelper
     }
 
     /**
+     * Transfer client achievements into profile
+     * @param profile Player pmc profile
+     * @param clientAchievements Achievements from client
+     */
+    protected updateProfileAchievements(profile: IPmcData, clientAchievements: Record<string, number>): void
+    {
+        if (!profile.Achievements)
+        {
+            profile.Achievements = {};
+        }
+
+        for (const achievementId in clientAchievements)
+        {
+            profile.Achievements[achievementId] = clientAchievements[achievementId];
+        }
+    }
+
+    /**
      * Set the SPT inraid location Profile property to 'none'
      * @param sessionID Session id
      */
@@ -523,7 +553,7 @@ export class InRaidHelper
 
         // Add the new items
         serverProfile.Inventory.items = [...postRaidProfile.Inventory.items, ...serverProfile.Inventory.items];
-        serverProfile.Inventory.fastPanel = postRaidProfile.Inventory.fastPanel;
+        serverProfile.Inventory.fastPanel = postRaidProfile.Inventory.fastPanel; // Quick access items bar
         serverProfile.InsuredItems = insured;
 
         return serverProfile;

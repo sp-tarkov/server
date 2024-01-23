@@ -1,5 +1,4 @@
-export enum HideoutAreas
-{
+export enum HideoutAreas {
     NOTSET = -1,
     VENTS = 0,
     SECURITY = 1,
@@ -26,5 +25,5 @@ export enum HideoutAreas
     EMERGENCY_WALL = 22,
     GYM = 23,
     WEAPON_STAND = 24,
-    WEAPON_STAND_SECONDARY = 25,
+    WEAPON_STAND_SECONDARY = 25
 }

@@ -7,6 +7,9 @@ import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyR
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
 import { IGetMiniProfileRequestData } from "@spt-aki/models/eft/launcher/IGetMiniProfileRequestData";
 import { GetProfileStatusResponseData } from "@spt-aki/models/eft/profile/GetProfileStatusResponseData";
+import { ICreateProfileResponse } from "@spt-aki/models/eft/profile/ICreateProfileResponse";
+import { IGetOtherProfileRequest } from "@spt-aki/models/eft/profile/IGetOtherProfileRequest";
+import { IGetOtherProfileResponse } from "@spt-aki/models/eft/profile/IGetOtherProfileResponse";
 import { IGetProfileSettingsRequest } from "@spt-aki/models/eft/profile/IGetProfileSettingsRequest";
 import { IProfileChangeNicknameRequestData } from "@spt-aki/models/eft/profile/IProfileChangeNicknameRequestData";
 import { IProfileChangeVoiceRequestData } from "@spt-aki/models/eft/profile/IProfileChangeVoiceRequestData";
@@ -31,10 +34,11 @@ export class ProfileCallbacks
     /**
      * Handle client/game/profile/create
      */
-    public createProfile(url: string, info: IProfileCreateRequestData, sessionID: string): IGetBodyResponseData<any>
+    public createProfile(url: string, info: IProfileCreateRequestData, sessionID: string): IGetBodyResponseData<ICreateProfileResponse>
     {
-        this.profileController.createProfile(info, sessionID);
-        return this.httpResponse.getBody({ uid: `pmc${sessionID}` });
+        const id = this.profileController.createProfile(info, sessionID);
+
+        return this.httpResponse.getBody({ uid: id });
     }
 
     /**
@@ -136,24 +140,20 @@ export class ProfileCallbacks
         sessionID: string,
     ): IGetBodyResponseData<GetProfileStatusResponseData>
     {
-        const response: GetProfileStatusResponseData = {
-            maxPveCountExceeded: false,
-            profiles: [{
-                profileid: `scav${sessionID}`,
-                profileToken: null,
-                status: "Free",
-                sid: "",
-                ip: "",
-                port: 0,
-                version: "live",
-                location: "bigmap",
-                raidMode: "Online",
-                mode: "deathmatch",
-                shortId: "xxx1x1",
-            }, { profileid: `pmc${sessionID}`, profileToken: null, status: "Free", sid: "", ip: "", port: 0 }],
-        };
+        return this.httpResponse.getBody(this.profileController.getProfileStatus(sessionID));
+    }
 
-        return this.httpResponse.getBody(response);
+    /**
+     * Handle client/profile/view
+     * Called when viewing another players profile
+     */
+    public getOtherProfile(
+        url: string,
+        request: IGetOtherProfileRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetOtherProfileResponse>
+    {
+        return this.httpResponse.getBody(this.profileController.getOtherProfile(sessionID, request));
     }
 
     /**

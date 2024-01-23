@@ -1,21 +1,30 @@
+import { LinkedList } from "../lists/LinkedList";
+
 export class Queue<T>
 {
-    private elements: Record<number, T>;
-    private head: number;
-    private tail: number;
+    private list: LinkedList<T>;
+
+    public get length(): number
+    {
+        return this.list.length;
+    }
+
     constructor()
     {
-        this.elements = {};
-        this.head = 0;
-        this.tail = 0;
+        this.list = new LinkedList<T>();
     }
 
+    /**
+     * Adds an element to the end of the queue.
+     */
     public enqueue(element: T): void
     {
-        this.elements[this.tail] = element;
-        this.tail++;
+        this.list.append(element);
     }
 
+    /**
+     * Iterates over the elements received and adds each one to the end of the queue.
+     */
     public enqueueAll(elements: T[]): void
     {
         for (const element of elements)
@@ -24,25 +33,19 @@ export class Queue<T>
         }
     }
 
+    /**
+     * Removes the first element from the queue and returns it's value. If the queue is empty, undefined is returned and the queue is not modified.
+     */
     public dequeue(): T
     {
-        const item = this.elements[this.head];
-        delete this.elements[this.head];
-        this.head++;
-        return item;
+        return this.list.shift();
     }
 
+    /**
+     * Returns the first element's value.
+     */
     public peek(): T
     {
-        return this.elements[this.head];
-    }
-    public getLength(): number
-    {
-        return this.tail - this.head;
-    }
-
-    public isEmpty(): boolean
-    {
-        return this.getLength() === 0;
+        return this.list.getHead();
     }
 }

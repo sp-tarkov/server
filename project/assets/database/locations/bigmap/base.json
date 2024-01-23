@@ -84,7 +84,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 15,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -136,7 +136,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -154,7 +154,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -170,7 +170,7 @@
       "BossZone": "ZoneFactoryCenter,ZoneScavBase",
       "Delay": 0,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -216,8 +216,8 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.8,
-  "IconX": 456,
-  "IconY": 443,
+  "IconX": 550,
+  "IconY": 460,
   "Id": "bigmap",
   "Insurance": true,
   "IsSecret": false,
@@ -8158,8 +8158,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "Customs,Boiler Tanks",
-      "EventAvailable": true,
+      "EntryPoints": "Boiler Tanks",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -8188,8 +8188,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "Customs,Boiler Tanks",
-      "EventAvailable": true,
+      "EntryPoints": "Boiler Tanks",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -8218,8 +8218,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "Customs,Boiler Tanks",
-      "EventAvailable": true,
+      "EntryPoints": "Customs",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",
@@ -8233,8 +8233,8 @@
     {
       "Chance": 100,
       "Count": 0,
-      "EntryPoints": "Customs,Boiler Tanks",
-      "EventAvailable": true,
+      "EntryPoints": "Boiler Tanks",
+      "EventAvailable": false,
       "ExfiltrationTime": 8,
       "ExfiltrationType": "Individual",
       "Id": "",

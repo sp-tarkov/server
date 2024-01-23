@@ -243,15 +243,18 @@ export class RagfairOfferService
             );
         }
 
-        profile.RagfairInfo.rating -= this.ragfairConfig.sell.reputation.loss;
+        // Reduce player ragfair rep
+        profile.RagfairInfo.rating -= this.databaseServer.getTables().globals.config.RagFair.ratingDecreaseCount;
         profile.RagfairInfo.isRatingGrowing = false;
 
-        if (offer.items[0].upd.StackObjectsCount > offer.items[0].upd.OriginalStackObjectsCount)
+        const firstOfferItem = offer.items[0];
+        if (firstOfferItem.upd.StackObjectsCount > firstOfferItem.upd.OriginalStackObjectsCount)
         {
-            offer.items[0].upd.StackObjectsCount = offer.items[0].upd.OriginalStackObjectsCount;
+            offer.items[0].upd.StackObjectsCount = firstOfferItem.upd.OriginalStackObjectsCount;
         }
         delete offer.items[0].upd.OriginalStackObjectsCount;
 
+        // Send failed offer items to player in mail
         this.ragfairServerHelper.returnItems(profile.sessionId, offer.items);
         profile.RagfairInfo.offers.splice(offerIndex, 1);
 

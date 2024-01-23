@@ -7,6 +7,7 @@ import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
@@ -14,6 +15,7 @@ import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 
 @injectable()
@@ -21,6 +23,7 @@ export class PaymentService
 {
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
@@ -46,6 +49,7 @@ export class PaymentService
         output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
+        // May need to convert to trader currency
         const trader = this.traderHelper.getTrader(request.tid, sessionID);
 
         // Track the amounts of each type of currency involved in the trade.
@@ -61,7 +65,7 @@ export class PaymentService
                 if (!this.paymentHelper.isMoneyTpl(item._tpl))
                 {
                     // If the item is not money, remove it from the inventory.
-                    output = this.inventoryHelper.removeItem(pmcData, item._id, sessionID, output);
+                    this.inventoryHelper.removeItem(pmcData, item._id, sessionID, output);
                     request.scheme_items[index].count = 0;
                 }
                 else
@@ -91,7 +95,7 @@ export class PaymentService
             if (currencyAmount > 0)
             {
                 // Find money stacks in inventory and remove amount needed + update output object to inform client of changes
-                output = this.addPaymentToOutput(pmcData, currencyTpl, currencyAmount, sessionID, output);
+                this.addPaymentToOutput(pmcData, currencyTpl, currencyAmount, sessionID, output);
 
                 // If there are warnings, exit early.
                 if (output.warnings.length > 0)
@@ -157,109 +161,88 @@ export class PaymentService
     /**
      * Receive money back after selling
      * @param {IPmcData} pmcData
-     * @param {number} amount
-     * @param {IProcessSellTradeRequestData} body
+     * @param {number} amountToSend
+     * @param {IProcessSellTradeRequestData} request
      * @param {IItemEventRouterResponse} output
      * @param {string} sessionID
      * @returns IItemEventRouterResponse
      */
-    public getMoney(
+    public giveProfileMoney(
         pmcData: IPmcData,
-        amount: number,
-        body: IProcessSellTradeRequestData,
+        amountToSend: number,
+        request: IProcessSellTradeRequestData,
         output: IItemEventRouterResponse,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): void
     {
-        const trader = this.traderHelper.getTrader(body.tid, sessionID);
+        const trader = this.traderHelper.getTrader(request.tid, sessionID);
         const currency = this.paymentHelper.getCurrency(trader.currency);
-        let calcAmount = this.handbookHelper.fromRUB(this.handbookHelper.inRUB(amount, currency), currency);
-        const maxStackSize = this.databaseServer.getTables().templates.items[currency]._props.StackMaxSize;
-        let skip = false;
+        let calcAmount = this.handbookHelper.fromRUB(this.handbookHelper.inRUB(amountToSend, currency), currency);
+        const currencyMaxStackSize = this.databaseServer.getTables().templates.items[currency]._props.StackMaxSize;
+        let skipSendingMoneyToStash = false;
 
         for (const item of pmcData.Inventory.items)
         {
-            // item is not currency
+            // Item is not currency
             if (item._tpl !== currency)
             {
                 continue;
             }
 
-            // item is not in the stash
-            if (!this.isItemInStash(pmcData, item))
+            // Item is not in the stash
+            if (!this.inventoryHelper.isItemInStash(pmcData, item))
             {
                 continue;
             }
 
-            if (item.upd.StackObjectsCount < maxStackSize)
+            // Found currency item
+            if (item.upd.StackObjectsCount < currencyMaxStackSize)
             {
-                if (item.upd.StackObjectsCount + calcAmount > maxStackSize)
+                if (item.upd.StackObjectsCount + calcAmount > currencyMaxStackSize)
                 {
                     // calculate difference
-                    calcAmount -= maxStackSize - item.upd.StackObjectsCount;
-                    item.upd.StackObjectsCount = maxStackSize;
+                    calcAmount -= currencyMaxStackSize - item.upd.StackObjectsCount;
+                    item.upd.StackObjectsCount = currencyMaxStackSize;
                 }
                 else
                 {
-                    skip = true;
+                    skipSendingMoneyToStash = true;
                     item.upd.StackObjectsCount = item.upd.StackObjectsCount + calcAmount;
                 }
 
                 output.profileChanges[sessionID].items.change.push(item);
 
-                if (skip)
+                if (skipSendingMoneyToStash)
                 {
                     break;
                 }
             }
         }
 
-        if (!skip)
+        if (!skipSendingMoneyToStash)
         {
-            const request = {
-                items: [{
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    item_id: currency,
-                    count: calcAmount,
-                }],
-                tid: body.tid,
+            const addItemToStashRequest: IAddItemDirectRequest = {
+                itemWithModsToAdd: [
+                    {
+                        _id: this.hashUtil.generate(),
+                        _tpl: currency,
+                        upd: {
+                            StackObjectsCount: calcAmount
+                        }
+                    }
+                ],
+                foundInRaid: false,
+                callback: null,
+                useSortingTable: true
             };
-
-            output = this.inventoryHelper.addItem(pmcData, request, output, sessionID, null, false, null, true);
+            this.inventoryHelper.addItemToStash(sessionID, addItemToStashRequest, pmcData, output);
         }
 
         // set current sale sum
-        const saleSum = pmcData.TradersInfo[body.tid].salesSum + amount;
+        const saleSum = pmcData.TradersInfo[request.tid].salesSum + amountToSend;
 
-        pmcData.TradersInfo[body.tid].salesSum = saleSum;
-        this.traderHelper.lvlUp(body.tid, pmcData);
-
-        return output;
-    }
-
-    /**
-     * Recursively checks if the given item is
-     * inside the stash, that is it has the stash as
-     * ancestor with slotId=hideout
-     */
-    protected isItemInStash(pmcData: IPmcData, item: Item): boolean
-    {
-        let container = item;
-
-        while ("parentId" in container)
-        {
-            if (container.parentId === pmcData.Inventory.stash && container.slotId === "hideout")
-            {
-                return true;
-            }
-
-            container = pmcData.Inventory.items.find((i) => i._id === container.parentId);
-            if (!container)
-            {
-                break;
-            }
-        }
-        return false;
+        pmcData.TradersInfo[request.tid].salesSum = saleSum;
+        this.traderHelper.lvlUp(request.tid, pmcData);
     }
 
     /**
@@ -269,7 +252,6 @@ export class PaymentService
      * @param amountToPay money value to pay
      * @param sessionID Session id
      * @param output output object to send to client
-     * @returns IItemEventRouterResponse
      */
     public addPaymentToOutput(
         pmcData: IPmcData,
@@ -277,7 +259,7 @@ export class PaymentService
         amountToPay: number,
         sessionID: string,
         output: IItemEventRouterResponse,
-    ): IItemEventRouterResponse
+    ): void
     {
         const moneyItemsInInventory = this.getSortedMoneyItemsInInventory(
             pmcData,
@@ -298,29 +280,29 @@ export class PaymentService
                     amountAvailable: amountAvailable,
                 }),
             );
-            output = this.httpResponse.appendErrorToOutput(
+            this.httpResponse.appendErrorToOutput(
                 output,
                 this.localisationService.getText("payment-not_enough_money_to_complete_transation_short"),
                 BackendErrorCodes.UNKNOWN_TRADING_ERROR,
             );
 
-            return output;
+            return;
         }
 
         let leftToPay = amountToPay;
-        for (const moneyItem of moneyItemsInInventory)
+        for (const profileMoneyItem of moneyItemsInInventory)
         {
-            const itemAmount = moneyItem.upd.StackObjectsCount;
+            const itemAmount = profileMoneyItem.upd.StackObjectsCount;
             if (leftToPay >= itemAmount)
             {
                 leftToPay -= itemAmount;
-                output = this.inventoryHelper.removeItem(pmcData, moneyItem._id, sessionID, output);
+                this.inventoryHelper.removeItem(pmcData, profileMoneyItem._id, sessionID, output);
             }
             else
             {
-                moneyItem.upd.StackObjectsCount -= leftToPay;
+                profileMoneyItem.upd.StackObjectsCount -= leftToPay;
                 leftToPay = 0;
-                output.profileChanges[sessionID].items.change.push(moneyItem);
+                output.profileChanges[sessionID].items.change.push(profileMoneyItem);
             }
 
             if (leftToPay === 0)
@@ -328,8 +310,6 @@ export class PaymentService
                 break;
             }
         }
-
-        return output;
     }
 
     /**
@@ -342,6 +322,10 @@ export class PaymentService
     protected getSortedMoneyItemsInInventory(pmcData: IPmcData, currencyTpl: string, playerStashId: string): Item[]
     {
         const moneyItemsInInventory = this.itemHelper.findBarterItems("tpl", pmcData.Inventory.items, currencyTpl);
+        if (moneyItemsInInventory?.length === 0)
+        {
+            this.logger.debug(`No ${currencyTpl} money items found in inventory`);
+        }
 
         // Prioritise items in stash to top of array
         moneyItemsInInventory.sort((a, b) => this.prioritiseStashSort(a, b, pmcData.Inventory.items, playerStashId));

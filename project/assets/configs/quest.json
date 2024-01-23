@@ -169,7 +169,8 @@
                 "Lighthouse": ["Lighthouse"],
                 "laboratory": ["laboratory"],
                 "RezervBase": ["RezervBase"],
-                "TarkovStreets": ["TarkovStreets"]
+                "TarkovStreets": ["TarkovStreets"],
+				"Sandbox": ["Sandbox"]
             },
             "traderWhitelist": [{
                     "traderId": "54cb50c76803fa8b248b4571",
@@ -805,9 +806,9 @@
                     }
                 ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
+            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442", "65649eb40bf0ed77b8044453"],
             "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 20
+            "rewardAmmoStackMinSize": 5
         }, {
             "id": "618035d38012292db3081bf0",
             "name": "Weekly",
@@ -840,7 +841,8 @@
                 "Lighthouse": ["Lighthouse"],
                 "laboratory": ["laboratory"],
                 "RezervBase": ["RezervBase"],
-                "TarkovStreets": ["TarkovStreets"]
+                "TarkovStreets": ["TarkovStreets"],
+				"Sandbox": ["Sandbox"]
             },
             "traderWhitelist": [{
                     "traderId": "54cb50c76803fa8b248b4571",
@@ -1542,9 +1544,9 @@
                     }
                 ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
+            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442", "65649eb40bf0ed77b8044453"],
             "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 15
+            "rewardAmmoStackMinSize": 5
         }, {
             "id": "62825ef60e88d037dc1eb426",
             "name": "Daily_Savage",
@@ -1552,8 +1554,7 @@
             "types": [
                 "Exploration",
                 "Elimination",
-                "Completion",
-                "Pickup"
+                "Completion"
             ],
             "resetTime": 86400,
             "numQuests": 1,
@@ -1577,7 +1578,8 @@
                 "Interchange": ["Interchange"],
                 "Lighthouse": ["Lighthouse"],
                 "RezervBase": ["RezervBase"],
-                "TarkovStreets": ["TarkovStreets"]
+                "TarkovStreets": ["TarkovStreets"],
+				"Sandbox": ["Sandbox"]
             },
             "traderWhitelist": [{
                     "traderId": "579dc571d53a0658a154fbec",
@@ -1901,9 +1903,9 @@
                     }
                 ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248"],
+            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248", "65649eb40bf0ed77b8044453"],
             "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 15
+            "rewardAmmoStackMinSize": 5
         }
     ],
     "locationIdMap": {
@@ -1917,6 +1919,7 @@
         "Lighthouse": "5704e4dad2720bb55b8b4567",
         "laboratory": "5b0fc42d86f7744a585f9105",
         "RezervBase": "5704e5fad2720bc05b8b4567",
-        "TarkovStreets": "5714dc692459777137212e12"
+        "TarkovStreets": "5714dc692459777137212e12",
+		"Sandbox": "653e6760052c01c1c805532f"
     }
 }

@@ -173,6 +173,7 @@
     "useDifficultyOverride": false,
     "difficulty": "AsOnline",
     "botRelativeLevelDeltaMax": 10,
+    "botRelativeLevelDeltaMin": 70,
     "_isUsec": "Percentage chance PMC will be USEC",
     "isUsec": 50,
     "chanceSameSideIsHostilePercent": 80,
@@ -379,7 +380,29 @@
                 "arenaFighterEvent": 0,
                 "crazyAssaultEvent": 3,
                 "pmcBot": 5
-            }
+            },
+			"sandbox": {
+				"bossKilla": 2,
+                "bossKnight": 2,
+                "bossGluhar": 0,
+                "bossSanitar": 1,
+                "bossTagilla": 1,
+                "bossZryachiy": 0,
+                "bossBoar": 0,
+                "followerGluharAssault": 0,
+                "followerBully": 2,
+                "followerBigPipe": 2,
+                "followerSanitar": 0,
+				"followerKolontayAssault": 0,
+				"followerKolontaySecurity": 0,
+                "assault": 3,
+                "cursedAssault": 0,
+                "exUsec": 0,
+                "arenaFighter": 0,
+                "arenaFighterEvent": 0,
+                "crazyAssaultEvent": 0,
+                "pmcBot": 7
+			}
         },
         "sptusec": {
             "factory4_day": {
@@ -582,7 +605,29 @@
                 "arenaFighterEvent": 0,
                 "crazyAssaultEvent": 3,
                 "pmcBot": 5
-            }
+            },
+			"sandbox": {
+				"bossKilla": 2,
+                "bossKnight": 2,
+                "bossGluhar": 0,
+                "bossSanitar": 1,
+                "bossTagilla": 1,
+                "bossZryachiy": 0,
+                "bossBoar": 0,
+                "followerGluharAssault": 0,
+                "followerBully": 2,
+                "followerBigPipe": 2,
+                "followerSanitar": 0,
+				"followerKolontayAssault": 0,
+				"followerKolontaySecurity": 0,
+                "assault": 3,
+                "cursedAssault": 0,
+                "exUsec": 0,
+                "arenaFighter": 0,
+                "arenaFighterEvent": 0,
+                "crazyAssaultEvent": 0,
+                "pmcBot": 7
+			}
         }
     },
     "usecType": "sptUsec",
@@ -598,8 +643,8 @@
     "maxVestLootTotalRub": 50000,
     "convertIntoPmcChance": {
         "assault": {
-            "min": 20,
-            "max": 30
+            "min": 25,
+            "max": 35
         },
         "cursedassault": {
             "min": 15,
@@ -626,7 +671,7 @@
             "max": 0
         }
     },
-    "enemyTypes": ["assault", "marksman", "pmcBot", "bossBully", "bossKilla", "bossKojaniy", "bossGluhar", "bossSanitar", "bossTagilla", "bossKnight", "bossZryachiy", "bossBoar", "bossBoarSniper", "followerBully", "followerKojaniy", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe", "followerSanitar", "followerBirdEye", "followerBigPipe", "followerZryachiy", "followerBoar", "arenafighter", "arenafighterevent", "crazyassaultevent", "sectantWarrior", "sectantPriest"],
+    "enemyTypes": ["assault", "marksman", "pmcBot", "bossBully", "bossKilla", "bossKojaniy", "bossGluhar", "bossSanitar", "bossTagilla", "bossKnight", "bossZryachiy", "bossBoar", "bossBoarSniper", "bossKolontay", "followerBully", "followerKojaniy", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe", "followerSanitar", "followerBirdEye", "followerBigPipe", "followerZryachiy", "followerBoar", "followerKolontayAssault", "followerKolontaySecurity", "arenafighter", "arenafighterevent", "crazyassaultevent", "sectantWarrior", "sectantPriest"],
     "forceHealingItemsIntoSecure": true,
     "addPrefixToSameNamePMCAsPlayerChance": 40,
     "allPMCsHavePlayerNameWithRandomPrefixChance": 1

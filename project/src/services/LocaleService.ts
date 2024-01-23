@@ -36,7 +36,7 @@ export class LocaleService
         }
 
         this.logger.warning(
-            `Unable to find desired locale file using locale ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
+            `Unable to find desired locale file using locale: ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
         );
 
         return this.databaseServer.getTables().locales.global.en;
@@ -101,6 +101,12 @@ export class LocaleService
                 `Unsupported system langauge found ${platformLocale.baseName}, falling back to english`,
             );
             return "en";
+        }
+
+        // BSG map Czech to CZ for some reason
+        if (platformLocale.language === "cs")
+        {
+            return "cz";
         }
 
         return platformLocale.language;

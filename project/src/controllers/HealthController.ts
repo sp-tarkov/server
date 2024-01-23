@@ -114,7 +114,7 @@ export class HealthController
      */
     public offraidEat(pmcData: IPmcData, request: IOffraidEatRequestData, sessionID: string): IItemEventRouterResponse
     {
-        let output = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
         let resourceLeft = 0;
 
         const itemToConsume = pmcData.Inventory.items.find((x) => x._id === request.item);
@@ -145,7 +145,7 @@ export class HealthController
         // Remove item from inventory if resource has dropped below threshold
         if (consumedItemMaxResource === 1 || resourceLeft < 1)
         {
-            output = this.inventoryHelper.removeItem(pmcData, request.item, sessionID, output);
+            this.inventoryHelper.removeItem(pmcData, request.item, sessionID, output);
         }
 
         return output;
@@ -165,7 +165,7 @@ export class HealthController
         sessionID: string,
     ): IItemEventRouterResponse
     {
-        let output = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
         const payMoneyRequest: IProcessBuyTradeRequestData = {
             Action: healthTreatmentRequest.Action,
             tid: Traders.THERAPIST,
@@ -179,7 +179,7 @@ export class HealthController
             scheme_id: 0,
         };
 
-        output = this.paymentService.payMoney(pmcData, payMoneyRequest, sessionID, output);
+        this.paymentService.payMoney(pmcData, payMoneyRequest, sessionID, output);
         if (output.warnings.length > 0)
         {
             return output;

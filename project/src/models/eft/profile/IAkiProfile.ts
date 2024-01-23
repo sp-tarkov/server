@@ -7,6 +7,7 @@ import { IProfileChangeEvent } from "@spt-aki/models/spt/dialog/ISendMessageDeta
 
 export interface IAkiProfile
 {
+    
     info: Info;
     characters: Characters;
     /** Clothing purchases */
@@ -19,6 +20,8 @@ export interface IAkiProfile
     insurance: Insurance[];
     /** Assort purchases made by player since last trader refresh */
     traderPurchases?: Record<string, Record<string, TraderPurchaseData>>;
+    /** Achievements earned by player */
+    achievements: Record<string, number>;
 }
 
 export class TraderPurchaseData
@@ -29,7 +32,9 @@ export class TraderPurchaseData
 
 export interface Info
 {
+    /** main profile id */
     id: string;
+    scavId: string;
     aid: number;
     username: string;
     password: string;
@@ -43,47 +48,73 @@ export interface Characters
     scav: IPmcData;
 }
 
+/** used by profile.userbuilds */
 export interface IUserBuilds
 {
     weaponBuilds: IWeaponBuild[];
     equipmentBuilds: IEquipmentBuild[];
+    magazineBuilds: IMagazineBuild[]
 }
 
-export interface IWeaponBuild
+export interface IUserBuild
 {
-    id: string;
-    name: string;
-    root: string;
-    items: Item[];
-    type: string;
+    Id: string;
+    Name: string;
 }
 
-export interface IEquipmentBuild
+export interface IWeaponBuild extends IUserBuild
 {
-    id: string;
-    name: string;
-    root: string;
-    items: Item[]; // same as PMC inventory items
-    type: string;
-    fastPanel: Record<string, string>;
-    buildType: EquipmentBuildType;
+
+    Root: string;
+    Items: Item[]; // Same as PMC inventory items
+}
+
+export interface IEquipmentBuild extends IUserBuild
+{
+    Root: string;
+    Items: Item[]; // Same as PMC inventory items
+    BuildType: EquipmentBuildType;
+}
+
+export interface IMagazineBuild extends IUserBuild
+{
+    Caliber: string
+    TopCount: number
+    BottomCount: number
+    Items: IMagazineTemplateAmmoItem[]
+}
+
+export interface IMagazineTemplateAmmoItem
+{
+    TemplateId: string
+    Count: number
+}
+
+/** Used by defaultEquipmentPresets.json */
+export interface IDefaultEquipmentPreset extends IUserBuild
+{
+    Items: Item[]
+    Root: string
+    BuildType: EquipmentBuildType
+    type: string
 }
 
 export interface Dialogue
 {
     attachmentsNew: number;
-    type: MessageType;
     new: number;
-    _id: string;
+    type: MessageType;
     Users?: IUserDialogInfo[];
     pinned: boolean;
     messages: Message[];
+    _id: string;
 }
 
 export interface IUserDialogInfo
 {
     _id: string;
-    info: IUserDialogDetails;
+    aid: number;
+    Info: IUserDialogDetails;
 }
 
 export interface IUserDialogDetails

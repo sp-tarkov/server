@@ -29,7 +29,7 @@ export class CustomizationCallbacks
     public getSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetSuitsResponse>
     {
         const result: IGetSuitsResponse = {
-            _id: `pmc${sessionID}`,
+            _id: sessionID,
             suites: this.saveServer.getProfile(sessionID).suits,
         };
         return this.httpResponse.getBody(result);

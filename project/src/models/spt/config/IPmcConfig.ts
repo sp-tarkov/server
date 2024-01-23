@@ -44,6 +44,8 @@ export interface IPmcConfig extends IBaseConfig
     enemyTypes: string[];
     /** How many levels above player level can a PMC be */
     botRelativeLevelDeltaMax: number;
+    /** How many levels below player level can a PMC be */
+    botRelativeLevelDeltaMin: number;
     /** Force a number of healing items into PMCs secure container to ensure they can heal */
     forceHealingItemsIntoSecure: boolean;
     addPrefixToSameNamePMCAsPlayerChance: number;

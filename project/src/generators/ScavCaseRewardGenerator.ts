@@ -1,8 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { Product } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IHideoutScavCase } from "@spt-aki/models/eft/hideout/IHideoutScavCase";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
@@ -19,6 +20,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 /**
@@ -34,8 +36,10 @@ export class ScavCaseRewardGenerator
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
@@ -50,7 +54,7 @@ export class ScavCaseRewardGenerator
      * @param recipeId recipe of the scav case craft
      * @returns Product array
      */
-    public generate(recipeId: string): Product[]
+    public generate(recipeId: string): Item[][]
     {
         this.cacheDbItems();
 
@@ -274,42 +278,61 @@ export class ScavCaseRewardGenerator
      * @param rewardItems items to convert
      * @returns Product array
      */
-    protected randomiseContainerItemRewards(rewardItems: ITemplateItem[], rarity: string): Product[]
+    protected randomiseContainerItemRewards(rewardItems: ITemplateItem[], rarity: string): Item[][]
     {
-        const result: Product[] = [];
-        for (const item of rewardItems)
+        /** Each array is an item + children */
+        const result: Item[][] = [];
+        for (const rewardItemDb of rewardItems)
         {
-            const resultItem = { _id: this.hashUtil.generate(), _tpl: item._id, upd: undefined };
+            let resultItem: Item[] = [
+                {
+                    _id: this.hashUtil.generate(),
+                    _tpl: rewardItemDb._id,
+                    upd: undefined 
+                }
+            ];
+            const rootItem = resultItem[0];
 
-            this.addStackCountToAmmoAndMoney(item, resultItem, rarity);
-
-            // Clean up upd object if it wasn't used
-            if (!resultItem.upd)
+            if (this.itemHelper.isOfBaseclass(rewardItemDb._id, BaseClasses.AMMO_BOX))
             {
-                delete resultItem.upd;
+                this.itemHelper.addCartridgesToAmmoBox(resultItem, rewardItemDb);
+            }
+            // Armor or weapon = use default preset from globals.json
+            else if (this.itemHelper.armorItemCanHoldMods(rewardItemDb._id)
+            || this.itemHelper.isOfBaseclass(rewardItemDb._id, BaseClasses.WEAPON))
+            {
+                const preset = this.presetHelper.getDefaultPreset(rewardItemDb._id);
+                if (!preset)
+                {
+                    this.logger.warning(`No preset for item: ${rewardItemDb._id} ${rewardItemDb._name}, skipping`);
+
+                    continue;
+                }
+                
+                // Ensure preset has unique ids and is cloned so we don't alter the preset data stored in memory
+                const presetAndMods: Item[] = this.itemHelper.replaceIDs(
+                    null,
+                    this.jsonUtil.clone(preset._items),
+                );
+                this.itemHelper.remapRootItemId(presetAndMods);
+
+                resultItem = presetAndMods;
+            }
+            else if (this.itemHelper.isOfBaseclasses(rewardItemDb._id, [BaseClasses.AMMO, BaseClasses.MONEY]))
+            {
+                rootItem.upd = { StackObjectsCount: this.getRandomAmountRewardForScavCase(rewardItemDb, rarity) };
             }
 
-            result.push(resultItem);
+            // Clean up upd object if it wasn't used
+            if (!rootItem.upd)
+            {
+                delete rootItem.upd;
+            }
+
+            result.push(resultItem)
         }
 
         return result;
-    }
-
-    /**
-     * Add a randomised stack count to ammo or money items
-     * @param item money or ammo item
-     * @param resultItem money or ammo item with a randomise stack size
-     */
-    protected addStackCountToAmmoAndMoney(
-        item: ITemplateItem,
-        resultItem: { _id: string; _tpl: string; upd: Upd; },
-        rarity: string,
-    ): void
-    {
-        if (item._parent === BaseClasses.AMMO || item._parent === BaseClasses.MONEY)
-        {
-            resultItem.upd = { StackObjectsCount: this.getRandomAmountRewardForScavCase(item, rarity) };
-        }
     }
 
     /**

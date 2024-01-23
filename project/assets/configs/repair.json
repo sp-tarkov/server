@@ -52,6 +52,72 @@
                 }
             }
         },
+        "vest": {
+            "rarityWeight": {
+                "common": 5,
+                "rare": 1
+            },
+            "bonusTypeWeight": {
+                "DamageReduction": 1
+            },
+            "common": {
+                "DamageReduction": {
+                    "valuesMinMax": {
+                        "min": 0.9,
+                        "max": 0.98
+                    },
+                    "activeDurabilityPercentMinMax": {
+                        "min": 75,
+                        "max": 90
+                    }
+                }
+            },
+            "rare": {
+                "DamageReduction": {
+                    "valuesMinMax": {
+                        "min": 0.8,
+                        "max": 0.9
+                    },
+                    "activeDurabilityPercentMinMax": {
+                        "min": 75,
+                        "max": 90
+                    }
+                }
+            }
+        },
+        "headwear": {
+            "rarityWeight": {
+                "common": 5,
+                "rare": 1
+            },
+            "bonusTypeWeight": {
+                "DamageReduction": 1
+            },
+            "common": {
+                "DamageReduction": {
+                    "valuesMinMax": {
+                        "min": 0.9,
+                        "max": 0.98
+                    },
+                    "activeDurabilityPercentMinMax": {
+                        "min": 75,
+                        "max": 90
+                    }
+                }
+            },
+            "rare": {
+                "DamageReduction": {
+                    "valuesMinMax": {
+                        "min": 0.8,
+                        "max": 0.9
+                    },
+                    "activeDurabilityPercentMinMax": {
+                        "min": 75,
+                        "max": 90
+                    }
+                }
+            }
+        },
         "weapon": {
             "rarityWeight": {
                 "common": 5,

@@ -83,6 +83,7 @@ export class BotGenerator
             role: role,
             playerLevel: 0,
             botRelativeLevelDeltaMax: 0,
+            botRelativeLevelDeltaMin: 0,
             botCountToGenerate: 1,
             botDifficulty: difficulty,
             isPlayerScav: true,
@@ -94,39 +95,30 @@ export class BotGenerator
     }
 
     /**
-     * Create x number of bots of the type/side/difficulty defined in botGenerationDetails
+     * Create 1  bots of the type/side/difficulty defined in botGenerationDetails
      * @param sessionId Session id
      * @param botGenerationDetails details on how to generate bots
-     * @returns array of bots
+     * @returns constructed bot
      */
-    public prepareAndGenerateBots(sessionId: string, botGenerationDetails: BotGenerationDetails): IBotBase[]
+    public prepareAndGenerateBot(sessionId: string, botGenerationDetails: BotGenerationDetails): IBotBase
     {
-        const output: IBotBase[] = [];
-        for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
-        {
-            let bot = this.getCloneOfBotBase();
+        let bot = this.getCloneOfBotBase();
+        bot.Info.Settings.Role = botGenerationDetails.eventRole
+            ? botGenerationDetails.eventRole
+            : botGenerationDetails.role;
+        bot.Info.Side = botGenerationDetails.side;
+        bot.Info.Settings.BotDifficulty = botGenerationDetails.botDifficulty;
 
-            bot.Info.Settings.Role = botGenerationDetails.role;
-            bot.Info.Side = botGenerationDetails.side;
-            bot.Info.Settings.BotDifficulty = botGenerationDetails.botDifficulty;
-
-            // Get raw json data for bot (Cloned)
-            const botJsonTemplate = this.jsonUtil.clone(
-                this.botHelper.getBotTemplate((botGenerationDetails.isPmc) ? bot.Info.Side : botGenerationDetails.role),
-            );
-
-            bot = this.generateBot(sessionId, bot, botJsonTemplate, botGenerationDetails);
-
-            output.push(bot);
-        }
-
-        this.logger.debug(
-            `Generated ${botGenerationDetails.botCountToGenerate} ${output[0].Info.Settings.Role} (${
-                botGenerationDetails.eventRole ?? ""
-            }) bots`,
+        // Get raw json data for bot (Cloned)
+        const botJsonTemplate = this.jsonUtil.clone(
+            this.botHelper.getBotTemplate((botGenerationDetails.isPmc)
+                ? bot.Info.Side
+                : botGenerationDetails.role),
         );
 
-        return output;
+        bot = this.generateBot(sessionId, bot, botJsonTemplate, botGenerationDetails);
+
+        return bot;
     }
 
     /**
@@ -215,8 +207,12 @@ export class BotGenerator
         if (this.botHelper.isBotPmc(botRole))
         {
             this.getRandomisedGameVersionAndCategory(bot.Info);
-            bot = this.generateDogtag(bot);
             bot.Info.IsStreamerModeAvailable = true; // Set to true so client patches can pick it up later - client sometimes alters botrole to assaultGroup
+        }
+
+        if (this.botConfig.botRolesWithDogTags.includes(botRole))
+        {
+            this.addDogtagToBot(bot);
         }
 
         // generate new bot ID
@@ -534,9 +530,9 @@ export class BotGenerator
      * @param bot bot to add dogtag to
      * @returns Bot with dogtag added
      */
-    protected generateDogtag(bot: IBotBase): IBotBase
+    protected addDogtagToBot(bot: IBotBase): void
     {
-        const upd: Upd = {
+        const dogtagUpd: Upd = {
             SpawnedInSession: true,
             Dogtag: {
                 AccountId: bot.sessionId,
@@ -559,11 +555,9 @@ export class BotGenerator
             parentId: bot.Inventory.equipment,
             slotId: "Dogtag",
             location: undefined,
-            upd: upd,
+            upd: dogtagUpd,
         };
 
         bot.Inventory.items.push(inventoryItem);
-
-        return bot;
     }
 }

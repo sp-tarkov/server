@@ -83,6 +83,8 @@ export class TraderAssortHelper
             trader.assort = this.assortHelper.stripLockedLoyaltyAssort(pmcProfile, traderId, trader.assort);
         }
 
+        this.resetBuyRestrictionCurrentValue(trader.assort.items);
+
         // Append nextResupply value to assorts so client knows when refresh is occuring
         trader.assort.nextResupply = trader.base.nextResupply;
 
@@ -137,6 +139,25 @@ export class TraderAssortHelper
         }
 
         return trader.assort;
+    }
+
+    /**
+     * Reset every traders root item `BuyRestrictionCurrent` property to 0
+     * @param assortItems Items to adjust
+     */
+    protected resetBuyRestrictionCurrentValue(assortItems: Item[]): void
+    {
+        // iterate over root items
+        for (const assort of assortItems.filter(item => item.slotId === "hideout"))
+        {
+            // no value to adjust
+            if (!assort.upd.BuyRestrictionCurrent)
+            {
+                continue;
+            }
+
+            assort.upd.BuyRestrictionCurrent = 0;
+        }
     }
 
     /**

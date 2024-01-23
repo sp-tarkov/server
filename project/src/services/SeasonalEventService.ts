@@ -10,6 +10,7 @@ import { SeasonalEventType } from "@spt-aki/models/enums/SeasonalEventType";
 import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
 import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
 import { ISeasonalEvent, ISeasonalEventConfig } from "@spt-aki/models/spt/config/ISeasonalEventConfig";
+import { IWeatherConfig } from "@spt-aki/models/spt/config/IWeatherConfig";
 import { ILocationData } from "@spt-aki/models/spt/server/ILocations";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -24,9 +25,13 @@ export class SeasonalEventService
     protected seasonalEventConfig: ISeasonalEventConfig;
     protected questConfig: IQuestConfig;
     protected httpConfig: IHttpConfig;
+    protected weatherConfig: IWeatherConfig;
 
-    protected halloweenEventActive = undefined;
-    protected christmasEventActive = undefined;
+    protected halloweenEventActive: boolean = undefined;
+    protected christmasEventActive: boolean = undefined;
+
+    /** All events active at this point in time */
+    protected currentlyActiveEvents: SeasonalEventType[] = [];
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -42,6 +47,7 @@ export class SeasonalEventService
         this.seasonalEventConfig = this.configServer.getConfig(ConfigTypes.SEASONAL_EVENT);
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
+        this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
 
         this.cacheActiveEvents();
     }
@@ -213,15 +219,13 @@ export class SeasonalEventService
      */
     public enableSeasonalEvents(sessionId: string): void
     {
-        const globalConfig = this.databaseServer.getTables().globals.config;
-        if (this.christmasEventActive)
+        if (this.currentlyActiveEvents)
         {
-            this.updateGlobalEvents(sessionId, globalConfig, SeasonalEventType.CHRISTMAS);
-        }
-
-        if (this.halloweenEventActive)
-        {
-            this.updateGlobalEvents(sessionId, globalConfig, SeasonalEventType.HALLOWEEN);
+            const globalConfig = this.databaseServer.getTables().globals.config;
+            for (const event of this.currentlyActiveEvents)
+            {
+                this.updateGlobalEvents(sessionId, globalConfig, event);
+            }
         }
     }
 
@@ -238,8 +242,17 @@ export class SeasonalEventService
             // Current date is between start/end dates
             if (currentDate >= eventStartDate && currentDate <= eventEndDate)
             {
-                this.christmasEventActive = SeasonalEventType[event.type] === SeasonalEventType.CHRISTMAS;
-                this.halloweenEventActive = SeasonalEventType[event.type] === SeasonalEventType.HALLOWEEN;
+                this.currentlyActiveEvents.push(SeasonalEventType[event.type]);
+
+                if (SeasonalEventType[event.type] === SeasonalEventType.CHRISTMAS)
+                {
+                    this.christmasEventActive = true;
+                }
+
+                if (SeasonalEventType[event.type] === SeasonalEventType.HALLOWEEN)
+                {
+                    this.halloweenEventActive = true;
+                }
             }
         }
     }
@@ -325,9 +338,11 @@ export class SeasonalEventService
                 this.addLootItemsToGifterDropItemsList();
                 this.enableDancingTree();
                 this.giveGift(sessionId, "Christmas2022");
+                this.enableSnow();
                 break;
             case SeasonalEventType.NEW_YEARS.toLowerCase():
-                this.giveGift(sessionId, "NewYear2021");
+                this.giveGift(sessionId, "NewYear2023");
+                this.enableSnow();
                 break;
             default:
                 // Likely a mod event
@@ -510,6 +525,12 @@ export class SeasonalEventService
         for (const gifterMapSettings of gifterSettings)
         {
             const mapData: ILocationData = maps[gifterMapSettings.map];
+            // Dont add gifter to map twice
+            if (mapData.base.BossLocationSpawn.some(boss => boss.BossName === "gifter"))
+            {
+                continue;
+            }
+
             mapData.base.BossLocationSpawn.push({
                 BossName: "gifter",
                 BossChance: gifterMapSettings.spawnChance,
@@ -549,5 +570,10 @@ export class SeasonalEventService
     public getBaseRoleForEventBot(eventBotRole: string): string
     {
         return this.seasonalEventConfig.eventBotMapping[eventBotRole];
+    }
+
+    public enableSnow(): void
+    {
+        this.weatherConfig.forceWinterEvent = true;
     }
 }

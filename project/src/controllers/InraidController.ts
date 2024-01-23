@@ -12,22 +12,30 @@ import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { BodyPartHealth } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IRegisterPlayerRequestData } from "@spt-aki/models/eft/inRaid/IRegisterPlayerRequestData";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { PlayerRaidEndState } from "@spt-aki/models/enums/PlayerRaidEndState";
 import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { IAirdropConfig } from "@spt-aki/models/spt/config/IAirdropConfig";
+import { IBTRConfig } from "@spt-aki/models/spt/config/IBTRConfig";
 import { IInRaidConfig } from "@spt-aki/models/spt/config/IInRaidConfig";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
+import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { InsuranceService } from "@spt-aki/services/InsuranceService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
 import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCacheService";
 import { PmcChatResponseService } from "@spt-aki/services/PmcChatResponseService";
+import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 /**
@@ -37,7 +45,9 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class InraidController
 {
     protected airdropConfig: IAirdropConfig;
-    protected inraidConfig: IInRaidConfig;
+    protected btrConfig: IBTRConfig;
+    protected inRaidConfig: IInRaidConfig;
+    protected traderConfig: ITraderConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -53,14 +63,19 @@ export class InraidController
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("HealthHelper") protected healthHelper: HealthHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
+        @inject("TraderServicesService") protected traderServicesService: TraderServicesService,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
         @inject("InRaidHelper") protected inRaidHelper: InRaidHelper,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("RandomUtil") protected randomUtil: RandomUtil,
     )
     {
         this.airdropConfig = this.configServer.getConfig(ConfigTypes.AIRDROP);
-        this.inraidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
+        this.btrConfig = this.configServer.getConfig(ConfigTypes.BTR);
+        this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
+        this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
     }
 
     /**
@@ -85,7 +100,7 @@ export class InraidController
     {
         this.logger.debug(`Raid outcome: ${offraidData.exit}`);
 
-        if (!this.inraidConfig.save.loot)
+        if (!this.inRaidConfig.save.loot)
         {
             return;
         }
@@ -222,7 +237,7 @@ export class InraidController
                 );
                 if (Object.keys(questAndFindItemConditionId)?.length > 0)
                 {
-                    this.profileHelper.removeCompletedQuestConditionFromProfile(pmcData, questAndFindItemConditionId);
+                    this.profileHelper.removeQuestConditionFromProfile(pmcData, questAndFindItemConditionId);
                 }
             }
 
@@ -316,11 +331,12 @@ export class InraidController
      */
     protected profileHasConditionCounters(profile: IPmcData): boolean
     {
-        if (!profile.ConditionCounters.Counters)
+        if (!profile.TaskConditionCounters?.Counters)
         {
             return false;
         }
-        return profile.ConditionCounters.Counters.length > 0;
+
+        return Object.keys(profile.TaskConditionCounters).length > 0;
     }
 
     /**
@@ -364,16 +380,16 @@ export class InraidController
         }
 
         // Loop over all scav counters and add into pmc profile
-        for (const scavCounter of scavProfile.ConditionCounters.Counters)
+        for (const scavCounter of Object.values(scavProfile.TaskConditionCounters))
         {
             this.logger.debug(
-                `Processing counter: ${scavCounter.id} value:${scavCounter.value} quest:${scavCounter.qid}`,
+                `Processing counter: ${scavCounter.id} value: ${scavCounter.value} quest: ${scavCounter.sourceId}`,
             );
-            const counterInPmcProfile = pmcProfile.ConditionCounters.Counters.find((x) => x.id === scavCounter.id);
+            const counterInPmcProfile = pmcProfile.TaskConditionCounters.Counters[scavCounter.id];
             if (!counterInPmcProfile)
             {
                 // Doesn't exist yet, push it straight in
-                pmcProfile.ConditionCounters.Counters.push(scavCounter);
+                pmcProfile.TaskConditionCounters[scavCounter.id] = scavCounter;
                 continue;
             }
 
@@ -384,7 +400,7 @@ export class InraidController
             // Only adjust counter value if its changed
             if (counterInPmcProfile.value !== scavCounter.value)
             {
-                this.logger.debug(`OVERWRITING with values: ${scavCounter.value} quest: ${scavCounter.qid}`);
+                this.logger.debug(`OVERWRITING with values: ${scavCounter.value} quest: ${scavCounter.sourceId}`);
                 counterInPmcProfile.value = scavCounter.value;
             }
         }
@@ -470,7 +486,7 @@ export class InraidController
         // Successful extract with scav adds 0.01 standing
         if (offraidData.exit === PlayerRaidEndState.SURVIVED)
         {
-            fenceStanding += this.inraidConfig.scavExtractGain;
+            fenceStanding += this.inRaidConfig.scavExtractGain;
         }
 
         // Make standing changes to pmc profile
@@ -486,7 +502,7 @@ export class InraidController
      */
     public getInraidConfig(): IInRaidConfig
     {
-        return this.inraidConfig;
+        return this.inRaidConfig;
     }
 
     /**
@@ -496,5 +512,51 @@ export class InraidController
     public getAirdropConfig(): IAirdropConfig
     {
         return this.airdropConfig;
+    }
+
+    /**
+     * Get BTR config from configs/btr.json
+     * @returns Airdrop config
+     */
+    public getBTRConfig(): IBTRConfig
+    {
+        return this.btrConfig;
+    }
+
+    /**
+     * Handle singleplayer/traderServices/getTraderServices
+     * @returns Trader services data
+     */
+    public getTraderServices(sessionId: string, traderId: string): ITraderServiceModel[]
+    {
+        return this.traderServicesService.getTraderServices(traderId);
+    }
+
+    /**
+     * Handle singleplayer/traderServices/itemDelivery
+     */
+    public itemDelivery(sessionId: string, traderId: string, items: Item[]): void
+    {
+        const serverProfile = this.saveServer.getProfile(sessionId);
+        const pmcData = serverProfile.characters.pmc;
+
+        const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
+        const messageId = this.randomUtil.getArrayValue(dialogueTemplates.itemsDelivered);
+        const messageStoreTime = this.timeUtil.getHoursAsSeconds(this.traderConfig.fence.btrDeliveryExpireHours);
+
+        // Remove any items that were returned by the item delivery, but also insured, from the player's insurance list
+        // This is to stop items being duplicated by being returned from both the item delivery, and insurance
+        const deliveredItemIds = items.map(x => x._id);
+        pmcData.InsuredItems = pmcData.InsuredItems.filter(x => !deliveredItemIds.includes(x.itemId));
+        
+        // Send the items to the player
+        this.mailSendService.sendLocalisedNpcMessageToPlayer(
+            sessionId,
+            this.traderHelper.getTraderById(traderId),
+            MessageType.BTR_ITEMS_DELIVERY,
+            messageId,
+            items,
+            messageStoreTime,
+        );
     }
 }

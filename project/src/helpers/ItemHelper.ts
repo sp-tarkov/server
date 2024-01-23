@@ -99,6 +99,61 @@ export class ItemHelper
     }
 
     /**
+     * Does the provided item have the chance to require soft armor inserts
+     * Only applies to helmets/vest/armors.
+     * Not all head gear needs them
+     * @param itemTpl item to check
+     * @returns Does item have the possibility ot need soft inserts
+     */
+    public armorItemCanHoldMods(itemTpl: string): boolean
+    {
+       return this.isOfBaseclasses(itemTpl, [BaseClasses.HEADWEAR, BaseClasses.VEST, BaseClasses.ARMOR]);
+    }
+
+    /**
+     * Does the provided item tpl require soft inserts to become a valid armor item
+     * @param itemTpl Item tpl to check
+     * @returns True if it needs armor inserts
+     */
+    public itemRequiresSoftInserts(itemTpl: string): boolean
+    {
+        // not a slot that takes soft-inserts
+        if (!this.armorItemCanHoldMods(itemTpl))
+        {
+            return false;
+        }
+
+        // Check is an item
+        const itemDbDetails = this.getItem(itemTpl);
+        if (!itemDbDetails[0])
+        {
+            return false;
+        }
+
+        // Has no slots
+        if (!(itemDbDetails[1]._props.Slots ?? []).length)
+        {
+            return false;
+        }
+
+        // Check if item has slots that match soft insert name ids
+        const softInsertSlotIds = ["groin", "soft_armor_back", "soft_armor_front", "soft_armor_left", "soft_armor_right", "shoulder_l", "shoulder_r", "collar"];
+        if (itemDbDetails[1]._props.Slots.find(slot => softInsertSlotIds.includes(slot._name.toLowerCase())))
+        {
+            return true;
+        }
+
+        // Also classified as BUILT_IN_INSERTS
+        const helmetInsertSlotIds = ["helmet_top", "helmet_back", "helmet_ears"]
+        if (itemDbDetails[1]._props.Slots.find(slot => helmetInsertSlotIds.includes(slot._name.toLowerCase())))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns the item price based on the handbook or as a fallback from the prices.json if the item is not
      * found in the handbook. If the price can't be found at all return 0
      * @param tpl Item to look price up of
@@ -392,30 +447,30 @@ export class ItemHelper
     /**
      * Recursive function that looks at every item from parameter and gets their childrens Ids + includes parent item in results
      * @param items Array of items (item + possible children)
-     * @param itemId Parent items id
+     * @param baseItemId Parent items id
      * @returns an array of strings
      */
-    public findAndReturnChildrenByItems(items: Item[], itemId: string): string[]
+    public findAndReturnChildrenByItems(items: Item[], baseItemId: string): string[]
     {
         const list: string[] = [];
 
         for (const childitem of items)
         {
-            if (childitem.parentId === itemId)
+            if (childitem.parentId === baseItemId)
             {
                 list.push(...this.findAndReturnChildrenByItems(items, childitem._id));
             }
         }
 
-        list.push(itemId); // Required, push original item id onto array
+        list.push(baseItemId); // Required, push original item id onto array
 
         return list;
     }
 
     /**
      * A variant of findAndReturnChildren where the output is list of item objects instead of their ids.
-     * @param items
-     * @param baseItemId
+     * @param items Array of items (item + possible children)
+     * @param baseItemId Parent items id
      * @returns An array of Item objects
      */
     public findAndReturnChildrenAsItems(items: Item[], baseItemId: string): Item[]
@@ -452,7 +507,8 @@ export class ItemHelper
 
         for (const itemFromAssort of assort)
         {
-            if (itemFromAssort.parentId === itemIdToFind && !list.find((item) => itemFromAssort._id === item._id))
+            if (itemFromAssort.parentId === itemIdToFind
+                && !list.find((item) => itemFromAssort._id === item._id))
             {
                 list.push(itemFromAssort);
                 list = list.concat(this.findAndReturnChildrenByAssort(itemFromAssort._id, assort));
@@ -560,32 +616,36 @@ export class ItemHelper
     /**
      * Find Barter items from array of items
      * @param {string} by tpl or id
-     * @param {Item[]} items Array of items to iterate over
-     * @param {string} barterItemId
+     * @param {Item[]} itemsToSearch Array of items to iterate over
+     * @param {string} desiredBarterItemIds
      * @returns Array of Item objects
      */
-    public findBarterItems(by: "tpl" | "id", items: Item[], barterItemId: string): Item[]
+    public findBarterItems(by: "tpl" | "id", itemsToSearch: Item[], desiredBarterItemIds: string | string[]): Item[]
     {
-        // find required items to take after buying (handles multiple items)
-        const barterIDs = typeof barterItemId === "string" ? [barterItemId] : barterItemId;
+        // Find required items to take after buying (handles multiple items)
+        const desiredBarterIds = typeof desiredBarterItemIds === "string"
+            ? [desiredBarterItemIds]
+            : desiredBarterItemIds;
 
-        let barterItems: Item[] = [];
-        for (const barterID of barterIDs)
+        const matchingItems: Item[] = [];
+        for (const barterId of desiredBarterIds)
         {
-            const filterResult = items.filter((item) =>
+            const filterResult = itemsToSearch.filter((item) =>
             {
-                return by === "tpl" ? (item._tpl === barterID) : (item._id === barterID);
+                return by === "tpl"
+                    ? (item._tpl === barterId)
+                    : (item._id === barterId);
             });
 
-            barterItems = Object.assign(barterItems, filterResult);
+            matchingItems.push(...filterResult);
         }
 
-        if (barterItems.length === 0)
+        if (matchingItems.length === 0)
         {
-            this.logger.warning(`No items found for barter Id: ${barterIDs}`);
+            this.logger.warning(`No items found for barter Id: ${desiredBarterIds}`);
         }
 
-        return barterItems;
+        return matchingItems;
     }
 
     /**
@@ -974,10 +1034,8 @@ export class ItemHelper
         {
             return true;
         }
-        else
-        {
-            return this.itemIsInsideContainer(parent, desiredContainerSlotId, items);
-        }
+
+        return this.itemIsInsideContainer(parent, desiredContainerSlotId, items);
     }
 
     /**
@@ -1032,7 +1090,17 @@ export class ItemHelper
         const cartridgeMaxStackSize = cartridgeDetails[1]._props.StackMaxSize;
 
         // Get max number of cartridges in magazine, choose random value between min/max
-        const magazineCartridgeMaxCount = magTemplate._props.Cartridges[0]._max_count;
+        const magazineCartridgeMaxCount = (this.isOfBaseclass(magTemplate._id, BaseClasses.SPRING_DRIVEN_CYLINDER))
+            ? magTemplate._props.Slots.length // Edge case for rotating grenade launcher magazine
+            : magTemplate._props.Cartridges[0]?._max_count;
+
+        if (!magazineCartridgeMaxCount)
+        {
+            this.logger.warning(`Magazine: ${magTemplate._id} ${magTemplate._name} lacks a Cartridges array, unable to fill magazine with ammo`);
+
+            return;
+        }
+
         const desiredStackCount = this.randomUtil.getInt(
             Math.round(minSizePercent * magazineCartridgeMaxCount),
             magazineCartridgeMaxCount,
@@ -1095,7 +1163,13 @@ export class ItemHelper
     protected drawAmmoTpl(caliber: string, staticAmmoDist: Record<string, IStaticAmmoDetails[]>): string
     {
         const ammoArray = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
-        for (const icd of staticAmmoDist[caliber])
+        const ammos = staticAmmoDist[caliber];
+        if (!ammos)
+        {
+            this.logger.error(`missing caliber data for: ${caliber}`);
+        }
+
+        for (const icd of ammos)
         {
             ammoArray.push(new ProbabilityObject(icd.tpl, icd.relativeProbability));
         }
@@ -1152,6 +1226,195 @@ export class ItemHelper
         return Object.values(this.databaseServer.getTables().templates.items).filter((x) =>
             x._parent === desiredBaseType
         ).map((x) => x._id);
+    }
+
+    /**
+     * Add child slot items to an item, chooses random child item if multiple choices exist
+     * @param itemToAdd array with single object (root item)
+     * @param itemToAddTemplate Db tempalte for root item
+     * @param modSpawnChanceDict Optional dictionary of mod name + % chance mod will be included in item (e.g. front_plate: 100)
+     * @param requiredOnly Only add required mods
+     * @returns Item with children
+     */
+    public addChildSlotItems(itemToAdd: Item[], itemToAddTemplate: ITemplateItem, modSpawnChanceDict: Record<string, number> = null, requiredOnly = false): Item[]
+    {
+        const result = itemToAdd;
+        const incompatibleModTpls: Set<string> = new Set();
+        for (const slot of itemToAddTemplate._props.Slots)
+        {
+            // If only required mods is requested, skip non-essential
+            if (requiredOnly && !slot._required)
+            {
+                continue;
+            }
+
+            // Roll chance for non-required slot mods
+            if (modSpawnChanceDict && !slot._required)
+            {
+                // only roll chance to not include mod if dict exists and has value for this mod type (e.g. front_plate)
+                const modSpawnChance = modSpawnChanceDict[slot._name.toLowerCase()];
+                if (modSpawnChance)
+                {
+                    if (!this.randomUtil.getChance100(modSpawnChanceDict[slot._name]))
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            const itemPool = slot._props.filters[0].Filter  ?? [];
+            const chosenTpl = this.getCompatibleTplFromArray(itemPool, incompatibleModTpls);
+            if (!chosenTpl)
+            {
+                this.logger.debug(`Unable to add mod to item: ${itemToAddTemplate._id} ${itemToAddTemplate._name} slot: ${slot._name} as no compatible tpl could be found in pool of ${itemPool.length}, skipping`);
+
+                continue;
+            }
+
+            const modItemToAdd = {
+                _id: this.hashUtil.generate(),
+                _tpl: chosenTpl,
+                parentId: result[0]._id,
+                slotId: slot._name
+            };
+            result.push(modItemToAdd);
+
+            const modItemDbDetails = this.getItem(modItemToAdd._tpl)[1];
+
+            // Include conflicting items of newly added mod in pool to be used for next mod choice
+            // biome-ignore lint/complexity/noForEach: <explanation>
+            modItemDbDetails._props.ConflictingItems.forEach(incompatibleModTpls.add, incompatibleModTpls);
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a compatible tpl from the array provided where it is not found in the provided incompatible mod tpls parameter
+     * @param possibleTpls Tpls to randomply choose from
+     * @param incompatibleModTpls Incompatible tpls to not allow
+     * @returns Chosen tpl or null
+     */
+    public getCompatibleTplFromArray(possibleTpls: string[], incompatibleModTpls: Set<string>): string
+    {
+        if (possibleTpls.length === 0)
+        {
+            return null;
+        }
+
+        let chosenTpl = null;
+        let count = 0;
+        while (!chosenTpl)
+        {
+            // Loop over choosing a random tpl until one is found or count varaible reaches the same size as the possible tpls array
+            const tpl = this.randomUtil.getArrayValue(possibleTpls);
+            if (incompatibleModTpls.has(tpl))
+            {
+                // Incompatible tpl was chosen, try again
+                count++
+                if (count >= possibleTpls.length)
+                {
+                    return null;
+                }
+                continue;
+            }
+
+            chosenTpl = tpl;
+        }
+
+        return chosenTpl;
+    }
+
+    /**
+     * Is the provided item._props.Slots._name property a plate slot
+     * @param slotName Name of slot (_name) of Items Slot array
+     * @returns True if its a slot that holds a removable palte
+     */
+    public isRemovablePlateSlot(slotName: string): boolean
+    {
+        return this.getRevovablePlateSlotIds().includes(slotName.toLowerCase());
+    }
+
+    /**
+     * Get a list of slot names that hold removable plates
+     * @returns Array of slot ids (e.g. front_plate)
+     */
+    public getRevovablePlateSlotIds(): string[]
+    {
+        return ["front_plate", "back_plate", "side_plate", "left_side_plate", "right_side_plate"];
+    }
+
+    /**
+     * Generate new unique ids for child items while preserving hierarchy
+     * @param rootItem Base/primary item
+     * @param itemWithChildren Primary item + children of primary item
+     * @returns Item array with updated IDs
+     */
+    public reparentItemAndChildren(rootItem: Item, itemWithChildren: Item[]): Item[]
+    {
+        const oldRootId = itemWithChildren[0]._id;
+        const idMappings = {};
+
+        idMappings[oldRootId] = rootItem._id;
+
+        for (const mod of itemWithChildren)
+        {
+            if (idMappings[mod._id] === undefined)
+            {
+                idMappings[mod._id] = this.hashUtil.generate();
+            }
+
+            // Has parentId + no remapping exists for its parent
+            if (mod.parentId !== undefined && idMappings[mod.parentId] === undefined)
+            {
+                // Make remapping for items parentId
+                idMappings[mod.parentId] = this.hashUtil.generate();
+            }
+
+            mod._id = idMappings[mod._id];
+
+            if (mod.parentId !== undefined)
+            {
+                mod.parentId = idMappings[mod.parentId];
+            }
+        }
+
+        // Force item's details into first location of presetItems
+        if (itemWithChildren[0]._tpl !== rootItem._tpl)
+        {
+            this.logger.warning(`Reassigning root item from ${itemWithChildren[0]._tpl} to ${rootItem._tpl}`);
+        }
+
+        itemWithChildren[0] = rootItem;
+
+        return itemWithChildren;
+    }
+
+    /**
+     * Update a root items _id property value to be unique
+     * @param itemWithChildren Item to update root items _id property
+     * @param newId Optional: new id to use
+     */
+    public remapRootItemId(itemWithChildren: Item[], newId = this.hashUtil.generate()): void
+    {
+        const rootItemExistingId = itemWithChildren[0]._id;
+
+        for (const item of itemWithChildren)
+        {
+            // Root, update id
+            if (item._id === rootItemExistingId)
+            {
+                item._id = newId;
+
+                continue;
+            }
+
+            // Child with parent of root, update
+            if (item.parentId === rootItemExistingId)
+            {
+                item.parentId = newId;
+            }
+        }
     }
 }
 

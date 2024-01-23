@@ -39,10 +39,15 @@ export class BotLevelGenerator
             levelDetails,
             expTable,
         );
+        const lowestLevel = this.getLowestRelativeBotLevel(
+            botGenerationDetails.playerLevel,
+            botGenerationDetails.botRelativeLevelDeltaMin,
+            levelDetails,
+            expTable);
 
         // Get random level based on the exp table.
         let exp = 0;
-        const level = this.randomUtil.getInt(1, highestLevel);
+        const level = this.randomUtil.getInt(lowestLevel, highestLevel);
 
         for (let i = 0; i < level; i++)
         {
@@ -71,12 +76,38 @@ export class BotLevelGenerator
         expTable: IExpTable[],
     ): number
     {
+        // Some bots have a max level of 1
         const maxPossibleLevel = Math.min(levelDetails.max, expTable.length);
 
         let level = playerLevel + relativeDeltaMax;
         if (level > maxPossibleLevel)
         {
             level = maxPossibleLevel;
+        }
+
+        return level;
+    }
+
+    /**
+     * Get the lowest level a bot can be relative to the players level, but no lower than 1
+     * @param playerLevel Players current level
+     * @param relativeDeltaMin Min delta below player level to go
+     * @returns lowest level possible for bot
+     */
+    protected getLowestRelativeBotLevel(
+        playerLevel: number,
+        relativeDeltaMin: number,
+        levelDetails: MinMax,
+        expTable: IExpTable[],
+    ): number
+    {
+        // Some bots have a max level of 1
+        const minPossibleLevel = Math.min(levelDetails.min, expTable.length);
+
+        let level = playerLevel - relativeDeltaMin;
+        if (level < minPossibleLevel)
+        {
+            level = minPossibleLevel;
         }
 
         return level;

@@ -5,6 +5,7 @@ export enum ELocationName
     BIGMAP = "bigmap",
     WOODS = "Woods",
     SHORELINE = "Shoreline",
+    SANDBOX = "Sandbox",
     INTERCHANGE = "Interchange",
     LIGHTHOUSE = "Lighthouse",
     LABORATORY = "laboratory",

@@ -37,7 +37,8 @@
   "items_buy_prohibited": {
     "category": [],
     "id_list": [
-      "62e910aaf957f2915e0a5e36"
+      "62e910aaf957f2915e0a5e36",
+      "64d0b40fbe2eed70e254e2d4"
     ]
   },
   "location": "Предпортовая",
@@ -89,10 +90,8 @@
   "nickname": "Peacekeeper",
   "repair": {
     "availability": false,
-    "currency_coefficient": 0,
     "excluded_category": [],
     "excluded_id_list": [],
-    "price_rate": 0,
     "quality": "2"
   },
   "sell_category": [
@@ -122,6 +121,7 @@
     "5b47574386f77428ca22b344",
     "5b47574386f77428ca22b341"
   ],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Пилсудский",
   "unlockedByDefault": true
 }

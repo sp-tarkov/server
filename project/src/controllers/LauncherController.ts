@@ -17,6 +17,8 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class LauncherController
@@ -26,6 +28,8 @@ export class LauncherController
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -110,9 +114,11 @@ export class LauncherController
 
     protected createAccount(info: IRegisterData): string
     {
-        const sessionID = this.hashUtil.generate();
+        const profileId = this.generateProfileId();
+        const scavId = this.generateProfileId();
         const newProfileDetails: Info = {
-            id: sessionID,
+            id: profileId,
+            scavId: scavId,
             aid: this.hashUtil.generateAccountId(),
             username: info.username,
             password: info.password,
@@ -121,10 +127,25 @@ export class LauncherController
         };
         this.saveServer.createProfile(newProfileDetails);
 
-        this.saveServer.loadProfile(sessionID);
-        this.saveServer.saveProfile(sessionID);
+        this.saveServer.loadProfile(profileId);
+        this.saveServer.saveProfile(profileId);
 
-        return sessionID;
+        return profileId;
+    }
+    
+    protected generateProfileId(): string
+    {
+        const timestamp = this.timeUtil.getTimestamp();
+
+        return this.formatID(timestamp, timestamp * this.randomUtil.getInt(1, 1000000));
+    }
+
+    protected formatID(timeStamp: number, counter: number): string
+    {
+        const timeStampStr = timeStamp.toString(16).padStart(8, '0');
+        const counterStr = counter.toString(16).padStart(16, '0');
+
+        return timeStampStr.toLowerCase() + counterStr.toLowerCase();
     }
 
     public changeUsername(info: IChangeRequestData): string

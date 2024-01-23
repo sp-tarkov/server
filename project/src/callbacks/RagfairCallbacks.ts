@@ -13,6 +13,8 @@ import { IExtendOfferRequestData } from "@spt-aki/models/eft/ragfair/IExtendOffe
 import { IGetItemPriceResult } from "@spt-aki/models/eft/ragfair/IGetItemPriceResult";
 import { IGetMarketPriceRequestData } from "@spt-aki/models/eft/ragfair/IGetMarketPriceRequestData";
 import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
+import { IGetRagfairOfferByIdRequest } from "@spt-aki/models/eft/ragfair/IGetRagfairOfferByIdRequest";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { IRemoveOfferRequestData } from "@spt-aki/models/eft/ragfair/IRemoveOfferRequestData";
 import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
 import { ISendRagfairReportRequestData } from "@spt-aki/models/eft/ragfair/ISendRagfairReportRequestData";
@@ -61,10 +63,13 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
         {
             // There is a flag inside this class that only makes it run once.
             this.ragfairServer.addPlayerOffers();
-            await this.ragfairServer.update();
-            // function below used to be split, merged
+
+            // Check player offers and mail payment to player if sold
             this.ragfairController.update();
 
+            // Process all offers / expire offers
+            await this.ragfairServer.update();
+            
             return true;
         }
         return false;
@@ -134,5 +139,11 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
     {
         this.ragfairTaxService.storeClientOfferTaxValue(sessionId, request);
         return this.httpResponse.nullResponse();
+    }
+
+    /** Handle client/ragfair/offer/findbyid */
+    public getFleaOfferById(url: string, request: IGetRagfairOfferByIdRequest, sessionID: string): IGetBodyResponseData<IRagfairOffer>
+    {
+        return this.httpResponse.getBody(this.ragfairController.getOfferById(sessionID, request));
     }
 }

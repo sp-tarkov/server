@@ -49,7 +49,7 @@
       "BossEscortType": "followerGluharAssault",
       "BossName": "bossGluhar",
       "BossPlayer": false,
-      "BossZone": "ZoneRailStrorage,ZoneRailStrorage,ZoneRailStrorage,ZonePTOR1,ZonePTOR2,ZoneBarrack,ZoneBarrack,ZoneBarrack,ZoneSubStorage",
+      "BossZone": "ZoneRailStrorage,ZonePTOR2,ZoneBarrack,ZoneSubStorage",
       "Delay": 0,
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
@@ -94,7 +94,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": 1470,
       "TriggerId": "",
       "TriggerName": ""
@@ -112,7 +112,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "autoId_00632_EXFIL",
       "TriggerName": "interactObject"
@@ -130,7 +130,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": -1,
       "TriggerId": "autoId_00000_D2_LEVER",
       "TriggerName": "interactObject"
@@ -148,7 +148,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": null,
+      "Supports": [],
       "Time": 3,
       "TriggerId": "raider_simple_patroling",
       "TriggerName": "interactObject"
@@ -193,8 +193,8 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.33,
-  "IconX": 156,
-  "IconY": 286,
+  "IconX": 360,
+  "IconY": 410,
   "Id": "RezervBase",
   "Insurance": true,
   "IsSecret": false,
@@ -6030,7 +6030,7 @@
       ]
     }
   ],
-  "UnixDateTime": 1636384172,
+  "UnixDateTime": 1636384173,
   "_Id": "5704e5fad2720bc05b8b4567",
   "doors": [],
   "exit_access_time": 50,
@@ -6041,7 +6041,7 @@
       "Chance": 100,
       "Count": 420,
       "EntryPoints": "Common",
-      "EventAvailable": true,
+      "EventAvailable": false,
       "ExfiltrationTime": 5,
       "ExfiltrationType": "SharedTimer",
       "Id": "0",

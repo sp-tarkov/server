@@ -11,6 +11,7 @@
         "plugin:@typescript-eslint/eslint-recommended"
     ],
     "rules": {
+        "brace-style": ["error", "allman"],
         "@typescript-eslint/no-namespace": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-explicit-any": "off", // We use a bunch of these.

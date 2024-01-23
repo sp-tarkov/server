@@ -15,6 +15,7 @@
         "suburbs": 1,
         "tarkovstreets": 3.6,
         "terminal": 1,
+        "sandbox": 3,
         "town": 0
     },
     "staticLootMultiplier": {
@@ -33,6 +34,7 @@
         "suburbs": 1,
         "tarkovstreets": 1,
         "terminal": 1,
+        "sandbox": 1,
         "town": 1
     },
     "customWaves": {
@@ -513,8 +515,7 @@
                     "ChanceGroup": 0
                 }
             ],
-			"rezervbase": [
-			{
+            "rezervbase": [{
                     "sptId": "sptBearReserveNormalSpawn",
                     "BossName": "sptBear",
                     "BossChance": 15,
@@ -535,8 +536,7 @@
                     ],
                     "RandomTimeSpawn": false,
                     "ChanceGroup": 0
-                },
-				{
+                }, {
                     "sptId": "sptUsecReserveNormalSpawn",
                     "BossName": "sptUsec",
                     "BossChance": 15,
@@ -558,7 +558,51 @@
                     "RandomTimeSpawn": false,
                     "ChanceGroup": 0
                 }
-			]
+            ],
+            "sandbox": [{
+                    "sptId": "sptBearSandboxNormalSpawn",
+                    "BossName": "sptBear",
+                    "BossChance": 30,
+                    "BossZone": "ZoneSandbox",
+                    "BossPlayer": false,
+                    "BossDifficult": "normal",
+                    "BossEscortType": "sptBear",
+                    "BossEscortDifficult": "normal",
+                    "BossEscortAmount": "2",
+                    "Time": -1,
+                    "Supports": [{
+                            "BossEscortType": "sptBear",
+                            "BossEscortDifficult": [
+                                "normal"
+                            ],
+                            "BossEscortAmount": "2"
+                        }
+                    ],
+                    "RandomTimeSpawn": false,
+                    "ChanceGroup": 0
+                }, {
+                    "sptId": "sptUsecSandboxNormalSpawn",
+                    "BossName": "sptUsec",
+                    "BossChance": 30,
+                    "BossZone": "ZoneSandbox",
+                    "BossPlayer": false,
+                    "BossDifficult": "normal",
+                    "BossEscortType": "sptUsec",
+                    "BossEscortDifficult": "normal",
+                    "BossEscortAmount": "2",
+                    "Time": -1,
+                    "Supports": [{
+                            "BossEscortType": "sptUsec",
+                            "BossEscortDifficult": [
+                                "normal"
+                            ],
+                            "BossEscortAmount": "2"
+                        }
+                    ],
+                    "RandomTimeSpawn": false,
+                    "ChanceGroup": 0
+                }
+            ]
         },
         "normal": {
             "factory4_day": [{
@@ -765,11 +809,15 @@
             "64f09c02b63b74469b6c149f",
             "64f07f7726cfa02c506f8ac0",
             "64f69b4267e11a7c6206e010",
-			"64f5b4f71a5f313cb144c06c"
+            "64f5b4f71a5f313cb144c06c"
         ],
         "laboratory": [
             "6398a4cfb5992f573c6562b3",
             "64e74a44c2b4f829615ec334"
+        ],
+        "sandbox": [
+            "6575a6ca8778e96ded05a802",
+            "6582bd252b50c61c565828e2"
         ]
     },
     "splitWaveIntoSingleSpawnsSettings": {
@@ -821,7 +869,8 @@
             "interchange": true,
             "lighthouse": true,
             "laboratory": true,
-            "rezervbase": true
+            "rezervbase": true,
+            "sandbox": true
         },
         "containerTypesToNotRandomise": [
             "5d6fd45b86f774317075ed43",
@@ -841,6 +890,7 @@
     "minFillStaticMagazinePercent": 50,
     "makeWishingTreeAlwaysGiveGift": true,
     "allowDuplicateItemsInStaticContainers": true,
+	"magazineLootHasAmmoChancePercent": 50,
     "looseLootBlacklist": {},
     "scavRaidTimeSettings": {
         "settings": {
@@ -1014,6 +1064,22 @@
                 },
                 "adjustWaves": true
             },
+            "sandbox": {
+                "reduceLootByPercent": true,
+                "minDynamicLootPercent": 50,
+                "minStaticLootPercent": 40,
+                "reducedChancePercent": 95,
+                "reductionPercentWeights": {
+                    "20": 3,
+                    "30": 5,
+                    "40": 5,
+                    "50": 5,
+                    "60": 1,
+                    "70": 1,
+                    "80": 1
+                },
+                "adjustWaves": true
+            },
             "default": {
                 "reduceLootByPercent": true,
                 "minDynamicLootPercent": 50,
@@ -1031,6 +1097,17 @@
                 },
                 "adjustWaves": true
             }
+        }
+    },
+    "equipmentLootSettings": {
+        "modSpawnChancePercent": {
+            "mod_nvg": 5,
+            "front_plate": 50,
+            "back_plate": 50,
+			"mod_equipment_000": 5,
+			"mod_equipment_001": 5,
+			"mod_equipment_002": 5,
+			"mod_mount": 5
         }
     }
 }

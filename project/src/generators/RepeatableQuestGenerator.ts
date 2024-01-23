@@ -9,24 +9,13 @@ import { RepeatableQuestHelper } from "@spt-aki/helpers/RepeatableQuestHelper";
 import { Exit, ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { TraderInfo } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import {
-    ICompletion,
-    ICompletionAvailableFor,
-    IElimination,
-    IEliminationCondition,
-    IEquipmentConditionProps,
-    IExploration,
-    IExplorationCondition,
-    IKillConditionProps,
-    IPickup,
-    IRepeatableQuest,
-    IReward,
-    IRewards,
-} from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
+import { IQuestCondition, IQuestConditionCounterCondition, IQuestReward, IQuestRewards } from "@spt-aki/models/eft/common/tables/IQuest";
+import { IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
+import { QuestRewardType } from "@spt-aki/models/enums/QuestRewardType";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import {
     IBaseQuestConfig,
@@ -136,7 +125,7 @@ export class RepeatableQuestGenerator
         traderId: string,
         questTypePool: IQuestTypePool,
         repeatableConfig: IRepeatableQuestConfig,
-    ): IElimination
+    ): IRepeatableQuest
     {
         const eliminationConfig = this.repeatableQuestHelper.getEliminationConfigByPmcLevel(pmcLevel, repeatableConfig);
         const locationsConfig = repeatableConfig.locations;
@@ -337,7 +326,7 @@ export class RepeatableQuestGenerator
         // crazy maximum difficulty will lead to a higher difficulty reward gain factor than 1
         const difficulty = this.mathUtil.mapToRange(curDifficulty, minDifficulty, maxDifficulty, 0.5, 2);
 
-        const quest = this.generateRepeatableTemplate("Elimination", traderId, repeatableConfig.side) as IElimination;
+        const quest = this.generateRepeatableTemplate("Elimination", traderId, repeatableConfig.side);
 
         // ASSUMPTION: All fence quests are for scavs
         if (traderId === Traders.FENCE)
@@ -346,17 +335,17 @@ export class RepeatableQuestGenerator
         }
 
         const availableForFinishCondition = quest.conditions.AvailableForFinish[0];
-        availableForFinishCondition._props.counter.id = this.objectId.generate();
-        availableForFinishCondition._props.counter.conditions = [];
+        availableForFinishCondition.counter.id = this.objectId.generate();
+        availableForFinishCondition.counter.conditions = [];
 
         // Only add specific location condition if specific map selected
         if (locationKey !== "any")
         {
-            availableForFinishCondition._props.counter.conditions.push(
+            availableForFinishCondition.counter.conditions.push(
                 this.generateEliminationLocation(locationsConfig[locationKey]),
             );
         }
-        availableForFinishCondition._props.counter.conditions.push(
+        availableForFinishCondition.counter.conditions.push(
             this.generateEliminationCondition(
                 targetKey,
                 bodyPartsToClient,
@@ -365,8 +354,8 @@ export class RepeatableQuestGenerator
                 allowedWeaponsCategory,
             ),
         );
-        availableForFinishCondition._props.value = desiredKillCount;
-        availableForFinishCondition._props.id = this.objectId.generate();
+        availableForFinishCondition.value = desiredKillCount;
+        availableForFinishCondition.id = this.objectId.generate();
         quest.location = this.getQuestLocationByMapId(locationKey);
 
         quest.rewards = this.generateReward(
@@ -413,11 +402,13 @@ export class RepeatableQuestGenerator
      * @param   {string}    location        the location on which to fulfill the elimination quest
      * @returns {IEliminationCondition}     object of "Elimination"-location-subcondition
      */
-    protected generateEliminationLocation(location: string[]): IEliminationCondition
+    protected generateEliminationLocation(location: string[]): IQuestConditionCounterCondition
     {
-        const propsObject: IEliminationCondition = {
-            _props: { target: location, id: this.objectId.generate(), dynamicLocale: true },
-            _parent: "Location",
+        const propsObject: IQuestConditionCounterCondition = {
+            id: this.objectId.generate(),
+            dynamicLocale: true,
+            target: location,
+            conditionType: "Location"
         };
 
         return propsObject;
@@ -438,13 +429,14 @@ export class RepeatableQuestGenerator
         distance: number,
         allowedWeapon: string,
         allowedWeaponCategory: string,
-    ): IEliminationCondition
+    ): IQuestConditionCounterCondition
     {
-        const killConditionProps: IKillConditionProps = {
+        const killConditionProps: IQuestConditionCounterCondition = {
             target: target,
             value: 1,
             id: this.objectId.generate(),
             dynamicLocale: true,
+            conditionType: "Kills",
         };
 
         if (target.startsWith("boss"))
@@ -474,10 +466,11 @@ export class RepeatableQuestGenerator
         // Has specific weapon category requirement
         if (allowedWeaponCategory?.length > 0)
         {
-            killConditionProps.weaponCategories = [allowedWeaponCategory];
+            // TODO - fix - does weaponCategories exist?
+            //killConditionProps.weaponCategories = [allowedWeaponCategory];
         }
 
-        return { _props: killConditionProps, _parent: "Kills" };
+        return killConditionProps;
     }
 
     /**
@@ -492,7 +485,7 @@ export class RepeatableQuestGenerator
         pmcLevel: number,
         traderId: string,
         repeatableConfig: IRepeatableQuestConfig,
-    ): ICompletion
+    ): IRepeatableQuest
     {
         const completionConfig = repeatableConfig.questConfig.Completion;
         const levelsConfig = repeatableConfig.rewardScaling.levels;
@@ -500,7 +493,7 @@ export class RepeatableQuestGenerator
 
         const distinctItemsToRetrieveCount = this.randomUtil.getInt(1, completionConfig.uniqueItemCount);
 
-        const quest = this.generateRepeatableTemplate("Completion", traderId, repeatableConfig.side) as ICompletion;
+        const quest = this.generateRepeatableTemplate("Completion", traderId, repeatableConfig.side);
 
         // Filter the items.json items to items the player must retrieve to complete quest: shouldn't be a quest item or "non-existant"
         const possibleItemsToRetrievePool = this.getRewardableItems(repeatableConfig, traderId);
@@ -566,9 +559,18 @@ export class RepeatableQuestGenerator
 
         // Draw items to ask player to retrieve
         let isAmmo = 0
+		const randomNumbersUsed = [];
         for (let i = 0; i < distinctItemsToRetrieveCount; i++)
         {
-            const itemSelected = itemSelection[this.randomUtil.randInt(itemSelection.length)];
+            let randomNumber = this.randomUtil.randInt(itemSelection.length);
+            while (randomNumbersUsed.includes(randomNumber) && randomNumbersUsed.length !== itemSelection.length)
+            {
+                randomNumber = this.randomUtil.randInt(itemSelection.length);
+            }
+
+            randomNumbersUsed.push(randomNumber);
+
+            const itemSelected = itemSelection[randomNumber];
             const itemUnitPrice = this.itemHelper.getItemPrice(itemSelected[0]);
             let minValue = completionConfig.minRequestedAmount;
             let maxValue = completionConfig.maxRequestedAmount;
@@ -628,7 +630,7 @@ export class RepeatableQuestGenerator
      * @param   {integer}   value           amount of items of this specific type to request
      * @returns {object}                    object of "Completion"-condition
      */
-    protected generateCompletionAvailableForFinish(itemTpl: string, value: number): ICompletionAvailableFor
+    protected generateCompletionAvailableForFinish(itemTpl: string, value: number): IQuestCondition
     {
         let minDurability = 0;
         let onlyFoundInRaid = true;
@@ -650,21 +652,18 @@ export class RepeatableQuestGenerator
         }
 
         return {
-            _props: {
-                id: this.objectId.generate(),
-                parentId: "",
-                dynamicLocale: true,
-                index: 0,
-                visibilityConditions: [],
-                target: [itemTpl],
-                value: value,
-                minDurability: minDurability,
-                maxDurability: 100,
-                dogtagLevel: 0,
-                onlyFoundInRaid: onlyFoundInRaid,
-            },
-            _parent: "HandoverItem",
+            id: this.objectId.generate(),
+            parentId: "",
             dynamicLocale: true,
+            index: 0,
+            visibilityConditions: [],
+            target: [itemTpl],
+            value: value,
+            minDurability: minDurability,
+            maxDurability: 100,
+            dogtagLevel: 0,
+            onlyFoundInRaid: onlyFoundInRaid,
+            conditionType: "HandoverItem",
         };
     }
 
@@ -682,7 +681,7 @@ export class RepeatableQuestGenerator
         traderId: string,
         questTypePool: IQuestTypePool,
         repeatableConfig: IRepeatableQuestConfig,
-    ): IExploration
+    ): IRepeatableQuest
     {
         const explorationConfig = repeatableConfig.questConfig.Exploration;
         const requiresSpecificExtract = Math.random() < repeatableConfig.questConfig.Exploration.specificExits.probability;
@@ -694,50 +693,76 @@ export class RepeatableQuestGenerator
             return null;
         }
 
-        // if the location we draw is factory, it's possible to either get factory4_day and factory4_night or only one
+        // If location drawn is factory, it's possible to either get factory4_day and factory4_night or only one
         // of the both
         const locationKey: string = this.randomUtil.drawRandomFromDict(questTypePool.pool.Exploration.locations)[0];
         const locationTarget = questTypePool.pool.Exploration.locations[locationKey];
 
-        // remove the location from the available pool
+        // Remove the location from the available pool
         delete questTypePool.pool.Exploration.locations[locationKey];
 
         // Different max extract count when specific extract needed
-        const numExtracts = this.randomUtil.randInt(1, requiresSpecificExtract ? explorationConfig.maxExtractsWithSpecificExit : explorationConfig.maxExtracts + 1);
+        const exitTimesMax = requiresSpecificExtract
+            ? explorationConfig.maxExtractsWithSpecificExit
+            : explorationConfig.maxExtracts + 1;
+        const numExtracts = this.randomUtil.randInt(1, exitTimesMax);
 
-        const quest = this.generateRepeatableTemplate("Exploration", traderId, repeatableConfig.side) as IExploration;
+        const quest = this.generateRepeatableTemplate("Exploration", traderId, repeatableConfig.side);
 
-        const exitStatusCondition: IExplorationCondition = {
-            _parent: "ExitStatus",
-            _props: { id: this.objectId.generate(), dynamicLocale: true, status: ["Survived"] },
+        const exitStatusCondition: IQuestConditionCounterCondition = {
+            conditionType: "ExitStatus",
+            id: this.objectId.generate(),
+            dynamicLocale: true,
+            status: ["Survived"],
         };
-        const locationCondition: IExplorationCondition = {
-            _parent: "Location",
-            _props: { id: this.objectId.generate(), dynamicLocale: true, target: locationTarget },
+        const locationCondition: IQuestConditionCounterCondition = {
+            conditionType: "Location",
+            id: this.objectId.generate(),
+            dynamicLocale: true,
+            target: locationTarget,
         };
-
-        quest.conditions.AvailableForFinish[0]._props.counter.id = this.objectId.generate();
-        quest.conditions.AvailableForFinish[0]._props.counter.conditions = [exitStatusCondition, locationCondition];
-        quest.conditions.AvailableForFinish[0]._props.value = numExtracts;
-        quest.conditions.AvailableForFinish[0]._props.id = this.objectId.generate();
+        
+        quest.conditions.AvailableForFinish[0].counter.id = this.objectId.generate();
+        quest.conditions.AvailableForFinish[0].counter.conditions = [exitStatusCondition, locationCondition];
+        quest.conditions.AvailableForFinish[0].value = numExtracts;
+        quest.conditions.AvailableForFinish[0].id = this.objectId.generate();
         quest.location = this.getQuestLocationByMapId(locationKey);
 
-        
         if (requiresSpecificExtract)
         {
             // Filter by whitelist, it's also possible that the field "PassageRequirement" does not exist (e.g. Shoreline)
-            // Scav exits are not listed at all in locations.base currently. If that changes at some point, additional filtering will be required
-            const mapExits =
-                (this.databaseServer.getTables().locations[locationKey.toLowerCase()].base as ILocationBase).exits;
-            const possibleExists = mapExits.filter((x) =>
-                (!("PassageRequirement" in x)
+            let mapExits = this.getLocationExitsForSide(locationKey, repeatableConfig.side);
+            
+            // Exclude scav coop exits when choosing pmc exit
+            if (repeatableConfig.side === "Pmc")
+            {
+                mapExits = mapExits.filter(exit => exit.PassageRequirement !== "ScavCooperation")
+            }
+
+            // Only get exits that have a greater than 0% chance to spawn
+            const exitPool = mapExits.filter(exit => exit.Chance > 0);
+
+            // Exclude exits with a requirement to leave (e.g. car extracts)
+            const possibleExits = exitPool.filter((exit) =>
+                (!("PassageRequirement" in exit)
                     || repeatableConfig.questConfig.Exploration.specificExits.passageRequirementWhitelist.includes(
-                        x.PassageRequirement,
-                    )) && x.Chance > 0
+                        exit.PassageRequirement
+                    ))
             );
-            const exit = this.randomUtil.drawRandomFromList(possibleExists, 1)[0];
-            const exitCondition = this.generateExplorationExitCondition(exit);
-            quest.conditions.AvailableForFinish[0]._props.counter.conditions.push(exitCondition);
+
+            if (possibleExits.length === 0)
+            {
+                this.logger.error(`Unable to choose specific exit on map: ${locationKey}, Possible exit pool was empty`);
+            }
+            else
+            {
+                // Choose one of the exits we filtered above
+                const chosenExit = this.randomUtil.drawRandomFromList(possibleExits, 1)[0];
+
+                // Create a quest condition to leave raid via chosen exit
+                const exitCondition = this.generateExplorationExitCondition(chosenExit);
+                quest.conditions.AvailableForFinish[0].counter.conditions.push(exitCondition);
+            }
         }
 
         // Difficulty for exploration goes from 1 extract to maxExtracts
@@ -748,16 +773,47 @@ export class RepeatableQuestGenerator
         return quest;
     }
 
+    /**
+     * Filter a maps exits to just those for the desired side
+     * @param locationKey Map id (e.g. factory4_day)
+     * @param playerSide Scav/Bear
+     * @returns Array of Exit objects
+     */
+    protected getLocationExitsForSide(locationKey: string, playerSide: string): Exit[]
+    {
+        const mapBase = this.databaseServer.getTables().locations[locationKey.toLowerCase()].base as ILocationBase;
+        
+        const infilPointsOfSameSide = new Set<string>();
+        for (const spawnPoint of mapBase.SpawnPointParams)
+        {
+            // Same side, add infil to list
+            if (spawnPoint.Sides.includes(playerSide)
+                || spawnPoint.Sides.includes("All"))
+            {
+                // Has specific start location
+                if (spawnPoint.Infiltration.length > 0)
+                {
+                    infilPointsOfSameSide.add(spawnPoint.Infiltration);
+                }
+            }
+        }
+
+        // use list of allowed infils to figure out side of exits
+        const infilPointsArray = Array.from(infilPointsOfSameSide);
+
+        return mapBase.exits.filter(exit => exit.EntryPoints.split(",").some(entryPoint => infilPointsArray.includes(entryPoint)));
+    }
+
     protected generatePickupQuest(
         pmcLevel: number,
         traderId: string,
         questTypePool: IQuestTypePool,
         repeatableConfig: IRepeatableQuestConfig,
-    ): IPickup
+    ): IRepeatableQuest
     {
         const pickupConfig = repeatableConfig.questConfig.Pickup;
 
-        const quest = this.generateRepeatableTemplate("Pickup", traderId, repeatableConfig.side) as IPickup;
+        const quest = this.generateRepeatableTemplate("Pickup", traderId, repeatableConfig.side);
 
         const itemTypeToFetchWithCount = this.randomUtil.getArrayValue(pickupConfig.ItemTypeToFetchWithMaxCount);
         const itemCountToFetch = this.randomUtil.randInt(
@@ -768,18 +824,18 @@ export class RepeatableQuestGenerator
         // const locationKey: string = this.randomUtil.drawRandomFromDict(questTypePool.pool.Pickup.locations)[0];
         // const locationTarget = questTypePool.pool.Pickup.locations[locationKey];
 
-        const findCondition = quest.conditions.AvailableForFinish.find((x) => x._parent === "FindItem");
-        findCondition._props.target = [itemTypeToFetchWithCount.itemType];
-        findCondition._props.value = itemCountToFetch;
+        const findCondition = quest.conditions.AvailableForFinish.find((x) => x.conditionType === "FindItem");
+        findCondition.target = [itemTypeToFetchWithCount.itemType];
+        findCondition.value = itemCountToFetch;
 
-        const counterCreatorCondition = quest.conditions.AvailableForFinish.find((x) => x._parent === "CounterCreator");
+        const counterCreatorCondition = quest.conditions.AvailableForFinish.find((x) => x.conditionType === "CounterCreator");
         // const locationCondition = counterCreatorCondition._props.counter.conditions.find(x => x._parent === "Location");
         // (locationCondition._props as ILocationConditionProps).target = [...locationTarget];
 
-        const equipmentCondition = counterCreatorCondition._props.counter.conditions.find((x) =>
-            x._parent === "Equipment"
+        const equipmentCondition = counterCreatorCondition.counter.conditions.find((x) =>
+            x.conditionType === "Equipment"
         );
-        (equipmentCondition._props as IEquipmentConditionProps).equipmentInclusive = [[
+        equipmentCondition.equipmentInclusive = [[
             itemTypeToFetchWithCount.itemType,
         ]];
 
@@ -806,11 +862,13 @@ export class RepeatableQuestGenerator
      * @param   {string}        exit                The exit name to generate the condition for
      * @returns {object}                            Exit condition
      */
-    protected generateExplorationExitCondition(exit: Exit): IExplorationCondition
+    protected generateExplorationExitCondition(exit: Exit): IQuestConditionCounterCondition
     {
         return {
-            _parent: "ExitName",
-            _props: { exitName: exit.Name, id: this.objectId.generate(), dynamicLocale: true },
+            conditionType: "ExitName",
+            exitName: exit.Name,
+            id: this.objectId.generate(),
+            dynamicLocale: true,
         };
     }
 
@@ -840,7 +898,7 @@ export class RepeatableQuestGenerator
         traderId: string,
         repeatableConfig: IRepeatableQuestConfig,
         questConfig: IBaseQuestConfig,
-    ): IRewards
+    ): IQuestRewards
     {
         // difficulty could go from 0.2 ... -> for lowest diffuculty receive 0.2*nominal reward
         const levelsConfig = repeatableConfig.rewardScaling.levels;
@@ -883,7 +941,7 @@ export class RepeatableQuestGenerator
         let roublesBudget = rewardRoubles;
         let rewardItemPool = this.chooseRewardItemsWithinBudget(repeatableConfig, roublesBudget, traderId);
 
-        const rewards: IRewards = {
+        const rewards: IQuestRewards = {
             Started: [],
             Success: [],
             Fail: [],
@@ -893,7 +951,7 @@ export class RepeatableQuestGenerator
         // Add xp reward
         if (rewardXP > 0)
         {
-            rewards.Success.push({ value: rewardXP, type: "Experience", index: rewardIndex });
+            rewards.Success.push({ value: rewardXP, type: QuestRewardType.EXPERIENCE, index: rewardIndex });
             rewardIndex++;
         }
 
@@ -916,7 +974,7 @@ export class RepeatableQuestGenerator
         {
             // Add a random default preset weapon as reward
             const defaultPresets = Object.values(this.presetHelper.getDefaultPresets());
-            const defaultPreset = this.randomUtil.getArrayValue(defaultPresets);
+            const defaultPreset = this.jsonUtil.clone(this.randomUtil.getArrayValue(defaultPresets));
 
             // use _encyclopedia as its always the base items _tpl, items[0] isnt guaranteed to be base item
             rewards.Success.push(this.generateRewardItem(defaultPreset._encyclopedia, 1, rewardIndex, defaultPreset._items));
@@ -929,6 +987,7 @@ export class RepeatableQuestGenerator
             {
                 let rewardItemStackCount = 1;
                 const itemSelected = rewardItemPool[this.randomUtil.randInt(rewardItemPool.length)];
+
                 if (this.itemHelper.isOfBaseclass(itemSelected._id, BaseClasses.AMMO))
                 {
                     // Dont reward ammo that stacks to less than what's defined in config
@@ -937,14 +996,22 @@ export class RepeatableQuestGenerator
                         continue;
                     }
 
-                    // Randomise the cartridge count returned
-                    rewardItemStackCount = this.randomUtil.randInt(
-                        repeatableConfig.rewardAmmoStackMinSize,
-                        itemSelected._props.StackMaxSize,
-                    );
+                    // The budget for this ammo stack
+                    const stackRoubleBudget = roublesBudget / rewardNumItems;
+
+                    const singleCartridgePrice = this.handbookHelper.getTemplatePrice(itemSelected._id);
+
+                    // Get a stack size of ammo that fits rouble budget
+                    const stackSizeThatFitsBudget = Math.round(stackRoubleBudget / singleCartridgePrice);
+
+                    // Get itemDbs max stack size for ammo - dont go above 100 (some mods mess around with stack sizes)
+                    const stackMaxCount = Math.min(itemSelected._props.StackMaxSize, 100);
+
+                    // Choose smallest value between budget fitting size and stack max
+                    rewardItemStackCount = Math.min(stackSizeThatFitsBudget, stackMaxCount);
                 }
 
-                // 25% chance to double reward stack (item should be stackable and not weapon)
+                // 25% chance to double,triple quadruple reward stack (Only occurs when item is stackable and not weapon or ammo)
                 if (this.canIncreaseRewardItemStackSize(itemSelected, 70000))
                 {
                     rewardItemStackCount = this.getRandomisedRewardItemStackSizeByPrice(itemSelected);
@@ -978,7 +1045,11 @@ export class RepeatableQuestGenerator
         // Add rep reward to rewards array
         if (rewardReputation > 0)
         {
-            const reward: IReward = { target: traderId, value: rewardReputation, type: "TraderStanding", index: rewardIndex };
+            const reward: IQuestReward = {
+                target: traderId,
+                value: rewardReputation,
+                type: QuestRewardType.TRADER_STANDING,
+                index: rewardIndex };
             rewards.Success.push(reward);
             rewardIndex++;
         }
@@ -986,10 +1057,10 @@ export class RepeatableQuestGenerator
         // Chance of adding skill reward
         if (this.randomUtil.getChance100(skillRewardChance * 100))
         {
-            const reward: IReward = {
+            const reward: IQuestReward = {
                 target: this.randomUtil.getArrayValue(questConfig.possibleSkillRewards),
                 value: skillPointReward,
-                type: "Skill",
+                type: QuestRewardType.SKILL,
                 index: rewardIndex,
             };
             rewards.Success.push(reward);
@@ -1019,10 +1090,13 @@ export class RepeatableQuestGenerator
     protected getRandomisedRewardItemStackSizeByPrice(item: ITemplateItem): number
     {
         const rewardItemPrice = this.itemHelper.getStaticItemPrice(item._id);
-        if (rewardItemPrice < 3000) {
+        if (rewardItemPrice < 3000)
+        {
             return this.randomUtil.getArrayValue([2, 3, 4]);
         }
-        else if (rewardItemPrice < 10000) {
+
+        if (rewardItemPrice < 10000)
+        {
             return this.randomUtil.getArrayValue([2, 3]);
         }
 
@@ -1073,16 +1147,16 @@ export class RepeatableQuestGenerator
      * @param   {integer}   index           All rewards will be appended to a list, for unknown reasons the client wants the index
      * @returns {object}                    Object of "Reward"-item-type
      */
-    protected generateRewardItem(tpl: string, value: number, index: number, preset: Item[] = null): IReward
+    protected generateRewardItem(tpl: string, value: number, index: number, preset: Item[] = null): IQuestReward
     {
         const id = this.objectId.generate();
-        const rewardItem: IReward = { target: id, value: value, type: "Item", index: index };
+        const rewardItem: IQuestReward = { target: id, value: value, type: QuestRewardType.ITEM, index: index };
 
         if (preset)
         {
             const rootItem = preset.find(x => x._tpl === tpl);
             rewardItem.target = rootItem._id; // Target property and root items id must match
-            rewardItem.items = this.ragfairServerHelper.reparentPresets(rootItem, preset);
+            rewardItem.items = this.itemHelper.reparentItemAndChildren(rootItem, preset);
         }
         else
         {

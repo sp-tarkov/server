@@ -9,7 +9,7 @@ import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { AvailableForConditions, IQuest, Reward } from "@spt-aki/models/eft/common/tables/IQuest";
+import { IQuest, IQuestCondition } from "@spt-aki/models/eft/common/tables/IQuest";
 import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IAcceptQuestRequestData } from "@spt-aki/models/eft/quests/IAcceptQuestRequestData";
@@ -104,6 +104,15 @@ export class QuestController
                 continue;
             }
 
+            // Player can use trader mods then remove them, leaving quests behind
+            const trader = profile.TradersInfo[quest.traderId];
+            if (!trader)
+            {
+                this.logger.debug(`Unable to show quest: ${quest.QuestName} as its for a trader: ${quest.traderId} that no longer exists.`);
+
+                continue;
+            }
+
             const questRequirements = this.questConditionHelper.getQuestConditions(quest.conditions.AvailableForStart);
             const loyaltyRequirements = this.questConditionHelper.getLoyaltyConditions(
                 quest.conditions.AvailableForStart,
@@ -126,7 +135,7 @@ export class QuestController
             for (const conditionToFulfil of questRequirements)
             {
                 // If the previous quest isn't in the user profile, it hasn't been completed or started
-                const prerequisiteQuest = profile.Quests.find((pq) => pq.qid === conditionToFulfil._props.target);
+                const prerequisiteQuest = profile.Quests.find((profileQuest) => conditionToFulfil.target.includes(profileQuest.qid));
                 if (!prerequisiteQuest)
                 {
                     haveCompletedPreviousQuest = false;
@@ -134,18 +143,18 @@ export class QuestController
                 }
 
                 // Prereq does not have its status requirement fulfilled
-                if (!conditionToFulfil._props.status.includes(prerequisiteQuest.status))
+                if (!conditionToFulfil.status.includes(prerequisiteQuest.status))
                 {
                     haveCompletedPreviousQuest = false;
                     break;
                 }
 
                 // Has a wait timer
-                if (conditionToFulfil._props.availableAfter > 0)
+                if (conditionToFulfil.availableAfter > 0)
                 {
                     // Compare current time to unlock time for previous quest
                     const previousQuestCompleteTime = prerequisiteQuest.statusTimers[prerequisiteQuest.status];
-                    const unlockTime = previousQuestCompleteTime + conditionToFulfil._props.availableAfter;
+                    const unlockTime = previousQuestCompleteTime + conditionToFulfil.availableAfter;
                     if (unlockTime > this.timeUtil.getTimestamp())
                     {
                         this.logger.debug(
@@ -166,7 +175,7 @@ export class QuestController
             let passesLoyaltyRequirements = true;
             for (const condition of loyaltyRequirements)
             {
-                if (!this.questHelper.traderLoyaltyLevelRequirementCheck(condition._props, profile))
+                if (!this.questHelper.traderLoyaltyLevelRequirementCheck(condition, profile))
                 {
                     passesLoyaltyRequirements = false;
                     break;
@@ -176,7 +185,7 @@ export class QuestController
             let passesStandingRequirements = true;
             for (const condition of standingRequirements)
             {
-                if (!this.questHelper.traderStandingRequirementCheck(condition._props, profile))
+                if (!this.questHelper.traderStandingRequirementCheck(condition, profile))
                 {
                     passesStandingRequirements = false;
                     break;
@@ -486,13 +495,6 @@ export class QuestController
             completeQuestResponse,
         );
 
-        // Check for linked failed + unrestartable quests
-        const questsToFail = this.getQuestsFailedByCompletingQuest(completedQuestId);
-        if (questsToFail?.length > 0)
-        {
-            this.failQuests(sessionID, pmcData, questsToFail, completeQuestResponse);
-        }
-
         // Show modal on player screen
         this.sendSuccessDialogMessageOnQuestComplete(sessionID, pmcData, completedQuestId, questRewards);
 
@@ -500,7 +502,7 @@ export class QuestController
         const questDelta = this.questHelper.getDeltaQuests(beforeQuests, this.getClientQuests(sessionID));
 
         // Check newly available + failed quests for timegates and add them to profile
-        this.addTimeLockedQuestsToProfile(pmcData, [...questDelta, ...questsToFail], body.qid);
+        this.addTimeLockedQuestsToProfile(pmcData, [...questDelta], body.qid);
 
         // Inform client of quest changes
         completeQuestResponse.profileChanges[sessionID].quests.push(...questDelta);
@@ -517,7 +519,10 @@ export class QuestController
                 currentRepeatable.inactiveQuests.push(repeatableQuest);
 
                 // Need to remove redundant scav quest object as its no longer necessary, is tracked in pmc profile
-                this.removeQuestFromScavProfile(sessionID, repeatableQuest._id);
+                if (repeatableQuest.side === "Scav")
+                {
+                    this.removeQuestFromScavProfile(sessionID, repeatableQuest._id);
+                }
             }
         }
 
@@ -600,7 +605,7 @@ export class QuestController
         sessionID: string,
         pmcData: IPmcData,
         completedQuestId: string,
-        questRewards: Reward[],
+        questRewards: Item[],
     ): void
     {
         const quest = this.questHelper.getQuestFromDb(completedQuestId, pmcData);
@@ -628,13 +633,13 @@ export class QuestController
         {
             // If quest has prereq of completed quest + availableAfter value > 0 (quest has wait time)
             const nextQuestWaitCondition = quest.conditions.AvailableForStart.find((x) =>
-                x._props.target === completedQuestId && x._props.availableAfter > 0
+                x.target?.includes(completedQuestId) && x.availableAfter > 0
             );
             if (nextQuestWaitCondition)
             {
                 // Now + wait time
                 const availableAfterTimestamp = this.timeUtil.getTimestamp()
-                    + nextQuestWaitCondition._props.availableAfter;
+                    + nextQuestWaitCondition.availableAfter;
 
                 // Update quest in profile with status of AvailableAfter
                 const existingQuestInProfile = pmcData.Quests.find((x) => x.qid === quest._id);
@@ -663,26 +668,6 @@ export class QuestController
     }
 
     /**
-     * Returns a list of quests that should be failed when a quest is completed
-     * @param completedQuestId quest completed id
-     * @returns array of quests
-     */
-    protected getQuestsFailedByCompletingQuest(completedQuestId: string): IQuest[]
-    {
-        const questsInDb = this.questHelper.getQuestsFromDb();
-        return questsInDb.filter((x) =>
-        {
-            // No fail conditions, exit early
-            if (!x.conditions.Fail || x.conditions.Fail.length === 0)
-            {
-                return false;
-            }
-
-            return x.conditions.Fail.some((y) => y._props.target === completedQuestId);
-        });
-    }
-
-    /**
      * Fail the provided quests
      * Update quest in profile, otherwise add fresh quest object with failed status
      * @param sessionID session id
@@ -700,7 +685,7 @@ export class QuestController
         for (const questToFail of questsToFail)
         {
             // Skip failing a quest that has a fail status of something other than success
-            if (questToFail.conditions.Fail?.some((x) => x._props.status?.some((y) => y !== QuestStatus.Success)))
+            if (questToFail.conditions.Fail?.some((x) => x.status?.some((y) => y !== QuestStatus.Success)))
             {
                 continue;
             }
@@ -708,15 +693,19 @@ export class QuestController
             const isActiveQuestInPlayerProfile = pmcData.Quests.find((y) => y.qid === questToFail._id);
             if (isActiveQuestInPlayerProfile)
             {
-                const failBody: IFailQuestRequestData = {
-                    Action: "QuestComplete",
-                    qid: questToFail._id,
-                    removeExcessItems: true,
-                };
-                this.questHelper.failQuest(pmcData, failBody, sessionID, output);
+                if (isActiveQuestInPlayerProfile.status !== QuestStatus.Fail)
+                {
+                    const failBody: IFailQuestRequestData = {
+                        Action: "QuestFail",
+                        qid: questToFail._id,
+                        removeExcessItems: true,
+                    };
+                    this.questHelper.failQuest(pmcData, failBody, sessionID, output);
+                }
             }
             else
             {
+                // Failing an entirely new quest that doesnt exist in profile
                 const statusTimers = {};
                 statusTimers[QuestStatus.Fail] = this.timeUtil.getTimestamp();
                 const questData: IQuestStatus = {
@@ -751,20 +740,20 @@ export class QuestController
         let handedInCount = 0;
 
         // Decrement number of items handed in
-        let handoverRequirements: AvailableForConditions;
+        let handoverRequirements: IQuestCondition;
         for (const condition of quest.conditions.AvailableForFinish)
         {
             if (
-                condition._props.id === handoverQuestRequest.conditionId
-                && handoverQuestTypes.includes(condition._parent)
+                condition.id === handoverQuestRequest.conditionId
+                && handoverQuestTypes.includes(condition.conditionType)
             )
             {
-                handedInCount = Number.parseInt(<string>condition._props.value);
-                isItemHandoverQuest = condition._parent === handoverQuestTypes[0];
+                handedInCount = Number.parseInt(<string>condition.value);
+                isItemHandoverQuest = condition.conditionType === handoverQuestTypes[0];
                 handoverRequirements = condition;
 
-                const profileCounter = (handoverQuestRequest.conditionId in pmcData.BackendCounters)
-                    ? pmcData.BackendCounters[handoverQuestRequest.conditionId].value
+                const profileCounter = (handoverQuestRequest.conditionId in pmcData.TaskConditionCounters)
+                    ? pmcData.TaskConditionCounters[handoverQuestRequest.conditionId].value
                     : 0;
                 handedInCount -= profileCounter;
 
@@ -797,8 +786,8 @@ export class QuestController
         let totalItemCountToRemove = 0;
         for (const itemHandover of handoverQuestRequest.items)
         {
-            const matchingItemInProfile = pmcData.Inventory.items.find((x) => x._id === itemHandover.id);
-            if (!handoverRequirements._props.target.includes(matchingItemInProfile._tpl))
+            const matchingItemInProfile = pmcData.Inventory.items.find((item) => item._id === itemHandover.id);
+            if (!matchingItemInProfile || !handoverRequirements.target.includes(matchingItemInProfile._tpl))
             {
                 // Item handed in by player doesnt match what was requested
                 return this.showQuestItemHandoverMatchError(
@@ -847,7 +836,7 @@ export class QuestController
             }
         }
 
-        this.updateProfileBackendCounterValue(
+        this.updateProfileTaskConditionCounterValue(
             pmcData,
             handoverQuestRequest.conditionId,
             handoverQuestRequest.qid,
@@ -888,14 +877,14 @@ export class QuestController
     protected showQuestItemHandoverMatchError(
         handoverQuestRequest: IHandoverQuestRequestData,
         itemHandedOver: Item,
-        handoverRequirements: AvailableForConditions,
+        handoverRequirements: IQuestCondition,
         output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
         const errorMessage = this.localisationService.getText("quest-handover_wrong_item", {
             questId: handoverQuestRequest.qid,
             handedInTpl: itemHandedOver._tpl,
-            requiredTpl: handoverRequirements._props.target[0],
+            requiredTpl: handoverRequirements.target[0],
         });
         this.logger.error(errorMessage);
 
@@ -910,19 +899,36 @@ export class QuestController
      * @param questId quest id counter is associated with
      * @param counterValue value to increment the backend counter with
      */
-    protected updateProfileBackendCounterValue(
+    protected updateProfileTaskConditionCounterValue(
         pmcData: IPmcData,
         conditionId: string,
         questId: string,
         counterValue: number,
     ): void
     {
-        if (pmcData.BackendCounters[conditionId] !== undefined)
+        if (pmcData.TaskConditionCounters[conditionId] !== undefined)
         {
-            pmcData.BackendCounters[conditionId].value += counterValue;
+            pmcData.TaskConditionCounters[conditionId].value += counterValue;
+
             return;
         }
 
-        pmcData.BackendCounters[conditionId] = { id: conditionId, qid: questId, value: counterValue };
+        pmcData.TaskConditionCounters[conditionId] = {
+            id: conditionId,
+            sourceId: questId,
+            type: "HandoverItem",
+            value: counterValue };
+    }
+
+    /**
+     * Handle /client/game/profile/items/moving - QuestFail
+     * @param pmcData Pmc profile
+     * @param request Fail qeust request
+     * @param sessionID Session id
+     * @returns IItemEventRouterResponse
+     */
+    public failQuest(pmcData: IPmcData, request: IFailQuestRequestData, sessionID: string): IItemEventRouterResponse
+    {
+        return this.questHelper.failQuest(pmcData, request, sessionID);
     }
 }

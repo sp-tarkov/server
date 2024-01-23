@@ -12,33 +12,35 @@ export class ApplicationContext
 
     /**
      * Called like:
-     *
+     * ```
      * const registerPlayerInfo = this.applicationContext.getLatestValue(ContextVariableType.REGISTER_PLAYER_REQUEST).getValue<IRegisterPlayerRequestData>();
      *
      * const activePlayerSessionId = this.applicationContext.getLatestValue(ContextVariableType.SESSION_ID).getValue<string>();
      *
      * const matchInfo = this.applicationContext.getLatestValue(ContextVariableType.RAID_CONFIGURATION).getValue<IGetRaidConfigurationRequestData>();
-     * @param type
-     * @returns
+     * ```
      */
     public getLatestValue(type: ContextVariableType): ContextVariable
     {
         if (this.variables.has(type))
         {
-            return this.variables.get(type)?.getTail()?.getValue();
+            return this.variables.get(type)?.getTail();
         }
-
-        return undefined;
     }
 
     public getValues(type: ContextVariableType): ContextVariable[]
     {
         if (this.variables.has(type))
         {
-            return this.variables.get(type).toList();
-        }
+            const res: ContextVariable[] = [];
 
-        return undefined;
+            for (const value of this.variables.get(type).values())
+            {
+                res.push(value);
+            }
+
+            return res;
+        }
     }
 
     public addValue(type: ContextVariableType, value: any): void
@@ -53,18 +55,18 @@ export class ApplicationContext
             list = new LinkedList<ContextVariable>();
         }
 
-        if (list.getSize() >= ApplicationContext.holderMaxSize)
+        if (list.length >= ApplicationContext.holderMaxSize)
         {
-            list.removeFirst();
+            list.shift();
         }
 
-        list.add(new ContextVariable(value, type));
+        list.append(new ContextVariable(value, type));
         this.variables.set(type, list);
     }
 
     public clearValues(type: ContextVariableType): void
     {
-        this.variables.has(type)
+        if (this.variables.has(type))
         {
             this.variables.delete(type);
         }

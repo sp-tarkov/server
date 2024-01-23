@@ -366,7 +366,7 @@ export class BotWeaponGenerator
             // Iterate over slots in db item, if required, check tpl in that slot matches the filter list
             for (const modSlot of modDbTemplate._props.Slots)
             {
-                // ignore optional mods
+                // Ignore optional mods
                 if (!modSlot._required)
                 {
                     continue;
@@ -568,13 +568,13 @@ export class BotWeaponGenerator
             {
                 // Shouldn't happen
                 this.logger.warning(
-                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", weaponTemplate._id),
+                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", {weaponId: weaponTemplate._id, botRole: botRole}),
                 );
             }
 
             const defaultMagTplId = this.botWeaponGeneratorHelper.getWeaponsDefaultMagazineTpl(weaponTemplate);
             this.logger.debug(
-                `[${botRole}] Unable to find magazine for weapon ${weaponTemplate._id} ${weaponTemplate._name}, using mag template default ${defaultMagTplId}.`,
+                `[${botRole}] Unable to find magazine for weapon: ${weaponTemplate._id} ${weaponTemplate._name}, using mag template default: ${defaultMagTplId}.`,
             );
 
             return defaultMagTplId;
@@ -666,7 +666,10 @@ export class BotWeaponGenerator
 
         if (weaponTemplate._props.ammoCaliber)
         {
-            return weaponTemplate._props.ammoCaliber;
+            // 9x18pmm has a typo, should be Caliber9x18PM
+            return weaponTemplate._props.ammoCaliber === "Caliber9x18PMM"
+                ? "Caliber9x18PM"
+                : weaponTemplate._props.ammoCaliber;
         }
 
         if (weaponTemplate._props.LinkedWeapon)

@@ -27,7 +27,8 @@ export interface Appearance
 export interface Chances
 {
     equipment: EquipmentChances;
-    mods: ModsChances;
+    weaponMods: ModsChances;
+    equipmentMods: ModsChances;
 }
 
 export interface EquipmentChances

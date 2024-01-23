@@ -23,6 +23,9 @@
         }, {
             "traderId": "5c0647fdd443bc2504c2d371",
             "seconds": 3600
+		}, {
+            "traderId": "656f0f98d80a697f855d34b1",
+            "seconds": 3600
         }, {
             "traderId": "ragfair",
             "seconds": 3600
@@ -36,7 +39,7 @@
         "discountOptions": {
             "assortSize": 50,
             "itemPriceMult": 0.8,
-            "presetPriceMult": 1.5
+            "presetPriceMult": 1.3
         },
         "partialRefreshTimeSeconds": 240,
         "partialRefreshChangePercent": 15,
@@ -84,6 +87,7 @@
             "min": 35,
             "max": 60
         },
+		"chancePlateExistsInArmorPercent": 40,
         "armorMaxDurabilityPercentMinMax": {
             "min": 35,
             "max": 60
@@ -139,7 +143,11 @@
             "mod_tactical_000": 40,
             "mod_tactical_001": 40,
             "mod_tactical_002": 40,
-            "mod_tactical_003": 40
+            "mod_tactical_003": 40,
+			"front_plate": 25,
+			"back_plate": 25,
+			"left_side_plate": 25,
+			"right_side_plate": 25
         },
         "blacklistSeasonalItems": true,
         "blacklist": [
@@ -159,7 +167,12 @@
             "5e99711486f7744bfc4af328",
             "62f10b79e7ee985f386b2f47",
 			"633ffb5d419dbf4bea7004c6",
-			"543be5dd4bdc2deb348b4569"
+			"543be5dd4bdc2deb348b4569",
+			"65649eb40bf0ed77b8044453",
+			"5448e54d4bdc2dcc718b4568",
+			"5a341c4086f77401f2541505",
+			"5422acb9af1c889c16000029",
+			"5448e5284bdc2dcb718b4567"
         ],
 		"coopExtractGift": {
 			"sendGift": true,
@@ -236,7 +249,8 @@
                 }
             },
             "allowBossItems": false
-		}
+		},
+        "btrDeliveryExpireHours": 240
     }
 
 }

@@ -13,6 +13,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCacheService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -22,6 +23,7 @@ export class PmcChatResponseService
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
         @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
@@ -95,7 +97,8 @@ export class PmcChatResponseService
 
         const killerDetails: IUserDialogInfo = {
             _id: killerDetailsInCache._id,
-            info: {
+            aid: this.hashUtil.generateAccountId(), // TODO- pass correct value
+            Info: {
                 Nickname: killerDetailsInCache.Info.Nickname,
                 Side: killerDetailsInCache.Info.Side,
                 Level: killerDetailsInCache.Info.Level,
@@ -273,7 +276,8 @@ export class PmcChatResponseService
         ];
         return {
             _id: pmcVictim.Name,
-            info: {
+            aid: this.hashUtil.generateAccountId(), // TODO- pass correct value
+            Info: {
                 Nickname: pmcVictim.Name,
                 Level: pmcVictim.Level,
                 Side: pmcVictim.Side,

@@ -61,10 +61,10 @@ export class RagfairOfferHolder
     {
         const trader = offer.user.id;
         const offerId = offer._id;
-        const template = offer.items[0]._tpl;
+        const itemTpl = offer.items[0]._tpl;
         this.offersById.set(offerId, offer);
         this.addOfferByTrader(trader, offer);
-        this.addOfferByTemplates(template, offer);
+        this.addOfferByTemplates(itemTpl, offer);
     }
 
     public removeOffer(offer: IRagfairOffer): void

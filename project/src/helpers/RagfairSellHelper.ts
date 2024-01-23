@@ -5,6 +5,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -17,6 +18,7 @@ export class RagfairSellHelper
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -36,32 +38,28 @@ export class RagfairSellHelper
         qualityMultiplier: number,
     ): number
     {
-        const baseSellChancePercent = this.ragfairConfig.sell.chance.base * qualityMultiplier;
+        const sellConfig = this.ragfairConfig.sell.chance;
 
-        const listedPriceAboveAverage = playerListedPriceRub > averageOfferPriceRub;
-        // Get sell chance multiplier
-        const multiplier = listedPriceAboveAverage
-            ? this.ragfairConfig.sell.chance.overpriced // Player price is over average listing price
-            : this.getSellMultiplierWhenPlayerPriceIsBelowAverageListingPrice(
-                averageOfferPriceRub,
-                playerListedPriceRub,
-            );
+        // Base sell chance modified by items quality
+        const baseSellChancePercent = sellConfig.base * qualityMultiplier;
+        
+        // Modfier gets applied twice to either penalize or incentivize over/under pricing (Probably a cleaner way to do this)
+        const sellModifier = (averageOfferPriceRub / playerListedPriceRub) * sellConfig.sellMultiplier;
+        let sellChance = Math.round((baseSellChancePercent * sellModifier) * sellModifier);
+        
+        // Adjust sell chance if below config value
+        if (sellChance < sellConfig.minSellChancePercent)
+        {
+            sellChance = sellConfig.minSellChancePercent;
+        }
 
-        return Math.round(baseSellChancePercent * (averageOfferPriceRub / playerListedPriceRub * multiplier));
-    }
+        // Adjust sell chance if above config value
+        if (sellChance > sellConfig.maxSellChancePercent)
+        {
+            sellChance = sellConfig.maxSellChancePercent;
+        }
 
-    /**
-     * Get percent chance to sell an item when price is below items average listing price
-     * @param playerListedPriceRub Price player listed item for in roubles
-     * @param averageOfferPriceRub Price of average offer in roubles
-     * @returns percent value
-     */
-    protected getSellMultiplierWhenPlayerPriceIsBelowAverageListingPrice(
-        averageOfferPriceRub: number,
-        playerListedPriceRub: number,
-    ): number
-    {
-        return (playerListedPriceRub < averageOfferPriceRub) ? this.ragfairConfig.sell.chance.underpriced : 1;
+        return sellChance;
     }
 
     /**
@@ -75,10 +73,7 @@ export class RagfairSellHelper
         const startTime = this.timeUtil.getTimestamp();
 
         // Get a time in future to stop simulating sell chances at
-        const endTime = startTime + this.timeUtil.getHoursAsSeconds(this.ragfairConfig.sell.simulatedSellHours);
-
-        // TODO - Write comment - what is going on here
-        const chance = 100 - Math.min(Math.max(sellChancePercent, 0), 100);
+        const endTime = startTime + this.timeUtil.getHoursAsSeconds(this.databaseServer.getTables().globals.config.RagFair.offerDurationTimeInHour);
 
         let sellTime = startTime;
         let remainingCount = itemSellCount;
@@ -107,10 +102,13 @@ export class RagfairSellHelper
             if (this.randomUtil.getChance100(sellChancePercent))
             {
                 // Passed roll check, item will be sold
-                sellTime += Math.max(
-                    Math.round(chance / 100 * this.ragfairConfig.sell.time.max * 60),
-                    this.ragfairConfig.sell.time.min * 60,
-                );
+                // Weight time to sell towards selling faster based on how cheap the item sold
+                const weighting = (100 - sellChancePercent) / 100;
+                let maximumTime = weighting * (this.ragfairConfig.sell.time.max * 60);
+                const minimumTime = this.ragfairConfig.sell.time.min * 60;
+                if (maximumTime < minimumTime) maximumTime = minimumTime + 5;
+                // Sell time will be random between min/max
+                sellTime += Math.floor(Math.random() * (maximumTime - minimumTime) + minimumTime);
 
                 result.push({ sellTime: sellTime, amount: boughtAmount });
 

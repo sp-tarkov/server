@@ -36,7 +36,7 @@ export class ProfileHelper
      * @param sessionID Session id
      * @param questConditionId Quest with condition to remove
      */
-    public removeCompletedQuestConditionFromProfile(pmcData: IPmcData, questConditionId: Record<string, string>): void
+    public removeQuestConditionFromProfile(pmcData: IPmcData, questConditionId: Record<string, string>): void
     {
         for (const questId in questConditionId)
         {

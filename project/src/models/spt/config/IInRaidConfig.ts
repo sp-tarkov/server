@@ -18,6 +18,8 @@ export interface IInRaidConfig extends IBaseConfig
     coopExtractBaseStandingGain: number;
     /** Fence rep gain when successfully extracting as pscav */
     scavExtractGain: number;
+    /** The likelihood of PMC eliminating a minimum of 2 scavs while you engage them as a pscav. */
+    pmcKillProbabilityForScavGain: number;
     /** On death should items in your secure keep their Find in raid status regardless of how you finished the raid */
     keepFiRSecureContainerOnDeath: boolean;
 }
@@ -30,6 +32,8 @@ export interface RaidMenuSettings
     scavWars: boolean;
     taggedAndCursed: boolean;
     enablePve: boolean;
+    randomWeather: boolean;
+    randomTime: boolean;
 }
 
 export interface Save

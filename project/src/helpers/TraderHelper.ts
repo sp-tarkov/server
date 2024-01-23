@@ -308,12 +308,11 @@ export class TraderHelper
      */
     public addTraderPurchasesToPlayerProfile(
         sessionID: string,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        newPurchaseDetails: { items: { item_id: string; count: number; }[]; tid: string; },
+        newPurchaseDetails: { items: { itemId: string; count: number; }[]; traderId: string; },
     ): void
     {
         const profile = this.profileHelper.getFullProfile(sessionID);
-        const traderId = newPurchaseDetails.tid;
+        const traderId = newPurchaseDetails.traderId;
 
         // Iterate over assorts bought and add to profile
         for (const purchasedItem of newPurchaseDetails.items)
@@ -330,9 +329,9 @@ export class TraderHelper
 
             // Null guard when dict doesnt exist
             const currentTime = this.timeUtil.getTimestamp();
-            if (!profile.traderPurchases[traderId][purchasedItem.item_id])
+            if (!profile.traderPurchases[traderId][purchasedItem.itemId])
             {
-                profile.traderPurchases[traderId][purchasedItem.item_id] = {
+                profile.traderPurchases[traderId][purchasedItem.itemId] = {
                     count: purchasedItem.count,
                     purchaseTimestamp: currentTime,
                 };
@@ -340,8 +339,8 @@ export class TraderHelper
                 continue;
             }
 
-            profile.traderPurchases[traderId][purchasedItem.item_id].count += purchasedItem.count;
-            profile.traderPurchases[traderId][purchasedItem.item_id].purchaseTimestamp = currentTime;
+            profile.traderPurchases[traderId][purchasedItem.itemId].count += purchasedItem.count;
+            profile.traderPurchases[traderId][purchasedItem.itemId].purchaseTimestamp = currentTime;
         }
     }
 

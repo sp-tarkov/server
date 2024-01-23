@@ -1,12 +1,12 @@
 {
     "runIntervalSeconds": 45,
     "sell": {
-        "simulatedSellHours": 12,
         "fees": true,
         "chance": {
             "base": 50,
-            "overpriced": 1.7,
-            "underpriced": 2
+            "sellMultiplier": 1.24,
+            "maxSellChancePercent": 100,
+            "minSellChancePercent": 0
         },
         "time": {
             "base": 1.5,
@@ -116,10 +116,28 @@
                 "min": 0.05,
                 "max": 1
             },
+            "644120aa86ffbe10ee032b6f": {
+                "_name": "ARMOR_PLATE",
+                "conditionChance": 0.6,
+                "min": 0.3,
+                "max": 1
+            },
+            "65649eb40bf0ed77b8044453": {
+                "_name": "BUILT_IN_INSERTS",
+                "conditionChance": 0.3,
+                "min": 0.1,
+                "max": 1
+            },
             "57bef4c42459772e8d35a53b": {
                 "_name": "ARMORED_EQUIPMENT",
-                "conditionChance": 0.6,
+                "conditionChance": 0.25,
                 "min": 0.05,
+                "max": 1
+            },
+            "644120aa86ffbe10ee032b6f": {
+                "_name": "ARMOR_PLATE",
+                "conditionChance": 0.45,
+                "min": 0.2,
                 "max": 1
             },
             "543be6674bdc2df1348b4569": {
@@ -130,9 +148,21 @@
             },
             "5d650c3e815116009f6201d2": {
                 "_name": "FUEL",
-                "conditionChance": 0.06,
-                "min": 0.01,
-                "max": 0.15
+                "conditionChance": 0.12,
+                "min": 0.7,
+                "max": 0.99
+            },
+            "5a341c4686f77469e155819e": {
+                "_name": "FACECOVER",
+                "conditionChance": 0.32,
+                "min": 0.6,
+                "max": 1
+            },
+            "5448e5724bdc2ddf718b4568": {
+                "_name": "VISORS",
+                "conditionChance": 0.32,
+                "min": 0.7,
+                "max": 1
             }
         },
         "stackablePercent": {

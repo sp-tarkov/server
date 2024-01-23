@@ -69,6 +69,8 @@ export class BotLootCacheService
                 return this.lootCache[botRole].pocketLoot;
             case LootCacheType.VEST:
                 return this.lootCache[botRole].vestLoot;
+            case LootCacheType.SECURE:
+                return this.lootCache[botRole].secureLoot;
             case LootCacheType.COMBINED:
                 return this.lootCache[botRole].combinedPoolLoot;
             case LootCacheType.HEALING_ITEMS:
@@ -107,6 +109,7 @@ export class BotLootCacheService
         const backpackLootTemplates: ITemplateItem[] = [];
         const pocketLootTemplates: ITemplateItem[] = [];
         const vestLootTemplates: ITemplateItem[] = [];
+        const secureLootTemplates: ITemplateItem[] = [];
         const combinedPoolTemplates: ITemplateItem[] = [];
 
         if (isPmc)
@@ -143,15 +146,16 @@ export class BotLootCacheService
                     this.addUniqueItemsToPool(vestLootTemplates, itemsToAdd);
                     break;
                 case "securedcontainer":
-                    // Don't add these items to loot pool
+                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
+                    this.addUniqueItemsToPool(secureLootTemplates, itemsToAdd);
                     break;
                 default:
                     itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
                     this.addUniqueItemsToPool(backpackLootTemplates, itemsToAdd);
             }
 
-            // Add items to combined pool if any exist
-            if (Object.keys(itemsToAdd).length > 0)
+            // Add items to combined pool if any exist (excluding secured)
+            if (Object.keys(itemsToAdd).length > 0 && slot.toLowerCase() !== "securedcontainer")
             {
                 this.addUniqueItemsToPool(combinedPoolTemplates, itemsToAdd);
             }
@@ -231,6 +235,7 @@ export class BotLootCacheService
         this.lootCache[botRole].backpackLoot = backpackLootItems;
         this.lootCache[botRole].pocketLoot = pocketLootItems;
         this.lootCache[botRole].vestLoot = vestLootItems;
+        this.lootCache[botRole].secureLoot = secureLootTemplates;
     }
 
     /**
@@ -328,6 +333,7 @@ export class BotLootCacheService
             backpackLoot: [],
             pocketLoot: [],
             vestLoot: [],
+            secureLoot: [],
             combinedPoolLoot: [],
 
             specialItems: [],

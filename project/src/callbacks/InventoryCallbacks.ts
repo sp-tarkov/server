@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { InventoryController } from "@spt-aki/controllers/InventoryController";
+import { QuestController } from "@spt-aki/controllers/QuestController";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IInventoryBindRequestData } from "@spt-aki/models/eft/inventory/IInventoryBindRequestData";
 import { IInventoryCreateMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryCreateMarkerRequestData";
@@ -20,15 +21,20 @@ import { IInventoryToggleRequestData } from "@spt-aki/models/eft/inventory/IInve
 import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IOpenRandomLootContainerRequestData } from "@spt-aki/models/eft/inventory/IOpenRandomLootContainerRequestData";
 import { IRedeemProfileRequestData } from "@spt-aki/models/eft/inventory/IRedeemProfileRequestData";
+import { ISetFavoriteItems } from "@spt-aki/models/eft/inventory/ISetFavoriteItems";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { IFailQuestRequestData } from "@spt-aki/models/eft/quests/IFailQuestRequestData";
 
 @injectable()
 export class InventoryCallbacks
 {
-    constructor(@inject("InventoryController") protected inventoryController: InventoryController)
+    constructor(
+        @inject("InventoryController") protected inventoryController: InventoryController,
+        @inject("QuestController") protected questController: QuestController
+    )
     {}
 
-    /** Handle Move event */
+    /** Handle client/game/profile/items/moving Move event */
     public moveItem(pmcData: IPmcData, body: IInventoryMoveRequestData, sessionID: string): IItemEventRouterResponse
     {
         return this.inventoryController.moveItem(pmcData, body, sessionID);
@@ -164,5 +170,21 @@ export class InventoryCallbacks
     ): IItemEventRouterResponse
     {
         return this.inventoryController.redeemProfileReward(pmcData, body, sessionId)
+    }
+
+    public setFavoriteItem(pmcData: IPmcData,
+        body: ISetFavoriteItems,
+        sessionId: string): IItemEventRouterResponse
+    {
+        return this.inventoryController.setFavoriteItem(pmcData, body, sessionId);
+    }
+
+    /**
+     * TODO - MOVE INTO QUEST CODE
+     * Handle game/profile/items/moving - QuestFail
+     */
+    public failQuest(pmcData: IPmcData, request: IFailQuestRequestData, sessionID: string): IItemEventRouterResponse
+    {
+        return this.questController.failQuest(pmcData, request, sessionID);
     }
 }

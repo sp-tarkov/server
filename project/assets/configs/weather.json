@@ -1,5 +1,6 @@
 {
     "acceleration": 7,
+	"forceWinterEvent": false,
     "weather": {
 		"clouds": {
             "values": [-1.5, -1, 0, 0.5, 1, 1.5],
@@ -7,11 +8,11 @@
         },
         "windSpeed": {
 			"values": [0, 1, 2, 3],
-			"weights": [20, 15, 10, 5]
+			"weights": [4, 3, 2, 1]
         },
         "windDirection": {
 			"values": [1, 2, 3, 4, 5, 6, 7, 8],
-			"weights": [10, 10, 10, 10, 10, 10, 10, 10]
+			"weights": [1, 1, 1, 1, 1, 1, 1, 1]
         },
         "windGustiness": {
             "min": 0,
@@ -19,15 +20,15 @@
         },
         "rain": {
 			"values": [1, 2, 3],
-			"weights": [100, 10, 5]
+			"weights": [25, 1, 1]
         },
         "rainIntensity": {
             "min": 0,
             "max": 1
         },
         "fog": {
-			"values": [0.002, 0.006, 0.008, 0.012, 0.087],
-			"weights": [100, 40, 25, 25, 5]
+			"values": [0.002, 0.004, 0.008, 0.012, 0.087],
+			"weights": [20, 8, 5, 5, 1]
         },
         "temp": {
             "min": 0,

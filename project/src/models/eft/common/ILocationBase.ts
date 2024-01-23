@@ -225,9 +225,11 @@ export interface Props
 
 export interface Exit
 {
+    /** % Chance out of 100 exit will appear in raid */
     Chance: number;
     Count: number;
     EntryPoints: string;
+    EventAvailable: boolean
     ExfiltrationTime: number;
     ExfiltrationType: string;
     RequiredSlot?: string;

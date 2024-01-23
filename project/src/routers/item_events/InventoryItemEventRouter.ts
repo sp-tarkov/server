@@ -41,6 +41,8 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
             new HandledRoute(ItemEventActions.OPEN_RANDOM_LOOT_CONTAINER, false),
             new HandledRoute(ItemEventActions.HIDEOUT_QTE_EVENT, false),
             new HandledRoute(ItemEventActions.REDEEM_PROFILE_REWARD, false),
+            new HandledRoute(ItemEventActions.SET_FAVORITE_ITEMS, false),
+            new HandledRoute(ItemEventActions.QUEST_FAIL, false),
         ];
     }
 
@@ -93,8 +95,12 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
                 return this.hideoutCallbacks.handleQTEEvent(pmcData, body, sessionID);
             case ItemEventActions.REDEEM_PROFILE_REWARD:
                 return this.inventoryCallbacks.redeemProfileReward(pmcData, body, sessionID);
+            case ItemEventActions.SET_FAVORITE_ITEMS:
+                return this.inventoryCallbacks.setFavoriteItem(pmcData, body, sessionID);
+            case ItemEventActions.QUEST_FAIL:
+                return this.inventoryCallbacks.failQuest(pmcData, body, sessionID);
             default:
-                throw new Error(`Unhandled event ${url}`);
+                throw new Error(`Unhandled event ${url} request: ${JSON.stringify(body)}`);
         }
     }
 }

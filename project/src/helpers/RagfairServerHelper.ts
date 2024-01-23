@@ -160,7 +160,7 @@ export class RagfairServerHelper
             MessageType.MESSAGE_WITH_ITEMS,
             RagfairServerHelper.goodsReturnedTemplate,
             returnedItems,
-            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
+            this.timeUtil.getHoursAsSeconds(this.databaseServer.getTables().globals.config.RagFair.yourOfferDidNotSellMaxStorageTimeInHour),
         );
     }
 
@@ -272,7 +272,7 @@ export class RagfairServerHelper
     public getPresetItems(item: Item): Item[]
     {
         const preset = this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[item._id]._items);
-        return this.reparentPresets(item, preset);
+        return this.itemHelper.reparentItemAndChildren(item, preset);
     }
 
     /**
@@ -290,54 +290,10 @@ export class RagfairServerHelper
                 const presetItems = this.jsonUtil.clone(
                     this.databaseServer.getTables().globals.ItemPresets[itemId]._items,
                 );
-                presets.push(this.reparentPresets(item, presetItems));
+                presets.push(this.itemHelper.reparentItemAndChildren(item, presetItems));
             }
         }
 
         return presets;
-    }
-
-    /**
-     * Generate new unique ids for child items while preserving hierarchy
-     * @param rootItem Base/primary item of preset
-     * @param preset Primary item + children of primary item
-     * @returns Item array with new IDs
-     */
-    public reparentPresets(rootItem: Item, preset: Item[]): Item[]
-    {
-        const oldRootId = preset[0]._id;
-        const idMappings = {};
-
-        idMappings[oldRootId] = rootItem._id;
-
-        for (const mod of preset)
-        {
-            if (idMappings[mod._id] === undefined)
-            {
-                idMappings[mod._id] = this.hashUtil.generate();
-            }
-
-            if (mod.parentId !== undefined && idMappings[mod.parentId] === undefined)
-            {
-                idMappings[mod.parentId] = this.hashUtil.generate();
-            }
-
-            mod._id = idMappings[mod._id];
-
-            if (mod.parentId !== undefined)
-            {
-                mod.parentId = idMappings[mod.parentId];
-            }
-        }
-
-        // Force item's details into first location of presetItems
-        if (preset[0]._tpl !== rootItem._tpl)
-        {
-            this.logger.warning(`Reassigning root item from ${preset[0]._tpl} to ${rootItem._tpl}`);
-        }
-
-        preset[0] = rootItem;
-
-        return preset;
     }
 }

@@ -1,18 +1,18 @@
 [
   {
-    "_id": "5df8e8e086f774570a4e6714",
+    "_id": "5f5f6160354701500f60f78c",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5df8e5c886f7744a122d6834",
+    "suiteId": "5f5f45df0bc58666c37e7832",
     "isActive": true,
     "requirements": {
-      "loyaltyLevel": 3,
-      "profileLevel": 45,
+      "loyaltyLevel": 4,
+      "profileLevel": 55,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 2800000,
+          "count": 5500000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -20,33 +20,19 @@
     }
   },
   {
-    "_id": "5d1f555086f7744bcd134594",
+    "_id": "658007b7b0bc0f28b1783151",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5cd946231388ce000d572fe3",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 0,
-      "profileLevel": 0,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": []
-    }
-  },
-  {
-    "_id": "5d1f669086f7744bcd135848",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f646286f7744bce0ef70a",
+    "suiteId": "657f90b67ba4217c5e65b6e7",
     "isActive": true,
     "requirements": {
       "loyaltyLevel": 2,
-      "profileLevel": 28,
+      "profileLevel": 18,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 800000,
+          "count": 280000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -68,43 +54,17 @@
     }
   },
   {
-    "_id": "5d1f66f686f7744bcb0ae328",
+    "_id": "5d1f555086f7744bcd134594",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f647186f7744bce0ef70c",
+    "suiteId": "5cd946231388ce000d572fe3",
     "isActive": true,
     "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 7,
+      "loyaltyLevel": 0,
+      "profileLevel": 0,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 30000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5d1f661686f7744bcb0adfb5",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f60ae86f7744bcc04998b",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 5,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 25000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
+      "itemRequirements": []
     }
   },
   {
@@ -128,59 +88,19 @@
     }
   },
   {
-    "_id": "629a2530c274b820b032edfd",
+    "_id": "5d1f66d886f7744a9b5031a7",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "6295ef7d1f798f3be747969e",
+    "suiteId": "5d1f646c86f7743f8362cf3f",
     "isActive": true,
     "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 22,
+      "loyaltyLevel": 2,
+      "profileLevel": 30,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 500000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5e4bc01086f77406a511c9da",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5e4bb08f86f774069619fbbc",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 4,
-      "profileLevel": 50,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 4500000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5f5f6160354701500f60f78c",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5f5f45df0bc58666c37e7832",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 4,
-      "profileLevel": 55,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 5500000,
+          "count": 790000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -208,19 +128,275 @@
     }
   },
   {
-    "_id": "5fd3ef59dd870108a754b238",
+    "_id": "5d1f671486f7744bcc04a2c0",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5fd3e7e2dd870108a754b230",
+    "suiteId": "5d1f647586f7744bcb0adfb0",
     "isActive": true,
     "requirements": {
       "loyaltyLevel": 2,
-      "profileLevel": 25,
+      "profileLevel": 35,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 720000,
+          "count": 1240000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5e4bc01086f77406a511c9da",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5e4bb08f86f774069619fbbc",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 4,
+      "profileLevel": 50,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 4500000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "603d0f55b5690f28cd32c2fa",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "603d01a1b41c9b37c6592047",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 2,
+      "profileLevel": 26,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 180000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "629a238ec274b820b032edfa",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "6295eeed13119346e55d4523",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 17,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 350000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5d1f673086f7744bcb0ae333",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5d1f647a86f7744bca3f1691",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 14,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 200000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "603d0e54cced70331818bc46",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "6038b228af2e28262649af14",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 23,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 650000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5fd3eef9b1f9ad0f60509cb7",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5fd3e8e5bdd50d684f73a51d",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 11,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 155000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5d1f661686f7744bcb0adfb5",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5d1f60ae86f7744bcc04998b",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 5,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 25000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5d1f669086f7744bcd135848",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5d1f646286f7744bce0ef70a",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 2,
+      "profileLevel": 28,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 800000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5d1f66f686f7744bcb0ae328",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5d1f647186f7744bce0ef70c",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 7,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 30000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "64ef40b89a4f905106515148",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "64ef3fa81a5f313cb144bf89",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 4,
+      "profileLevel": 42,
+      "standing": 0.6,
+      "skillRequirements": [],
+      "questRequirements": [
+        "64f1d6e732bed22c3e0c7423"
+      ],
+      "itemRequirements": []
+    }
+  },
+  {
+    "_id": "5df8e8e086f774570a4e6714",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5df8e5c886f7744a122d6834",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 3,
+      "profileLevel": 45,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 2800000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5f5f61313236973dbf149055",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5f5f46fa5021ce62144be7bd",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 4,
+      "profileLevel": 52,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 3500000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "629a2530c274b820b032edfd",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "6295ef7d1f798f3be747969e",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 22,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 500000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -250,141 +426,19 @@
     }
   },
   {
-    "_id": "5fd3eef9b1f9ad0f60509cb7",
+    "_id": "5fd3ef59dd870108a754b238",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5fd3e8e5bdd50d684f73a51d",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 11,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 155000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "63a967dc9de65a4ac6100664",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "63a8a41e8523141c3d055228",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 12,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 180000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5d1f66d886f7744a9b5031a7",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f646c86f7743f8362cf3f",
+    "suiteId": "5fd3e7e2dd870108a754b230",
     "isActive": true,
     "requirements": {
       "loyaltyLevel": 2,
-      "profileLevel": 30,
+      "profileLevel": 25,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 790000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5df8e9aa86f77412672a1e4a",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5df8e72186f7741263108806",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 3,
-      "profileLevel": 43,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 2450000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5e4bbf4786f774069342dece",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5e4bb6d786f77406975c9364",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 3,
-      "profileLevel": 47,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [
-        "5e381b0286f77420e3417a74"
-      ],
-      "itemRequirements": [
-        {
-          "count": 3000000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5e9de4739c4b4508e90cd336",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5e9dcc8a86f77434375990e2",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 3,
-      "profileLevel": 46,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 2800000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "619d08ab6b8a1b37a54eec05",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "619bf75264927e572d0d5853",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 2,
-      "profileLevel": 34,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 1200000,
+          "count": 720000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -412,19 +466,99 @@
     }
   },
   {
-    "_id": "5d1f671486f7744bcc04a2c0",
+    "_id": "5d1f667786f7744b36437b77",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f647586f7744bcb0adfb0",
+    "suiteId": "5d1f60f086f7744bce0ef704",
     "isActive": true,
     "requirements": {
-      "loyaltyLevel": 2,
-      "profileLevel": 35,
+      "loyaltyLevel": 1,
+      "profileLevel": 15,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
-          "count": 1240000,
+          "count": 230000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "619d093b56a8f86e411c9234",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "619b99ad604fcc392676806c",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 2,
+      "profileLevel": 38,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 1400000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5df8e9aa86f77412672a1e4a",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5df8e72186f7741263108806",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 3,
+      "profileLevel": 43,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 2450000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "658007a524d2053bb360b52c",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "657f90e5a9176671262fe34e",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 2,
+      "profileLevel": 21,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 400000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5e9de4739c4b4508e90cd336",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "5e9dcc8a86f77434375990e2",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 3,
+      "profileLevel": 46,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 2800000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -454,19 +588,21 @@
     }
   },
   {
-    "_id": "5f5f61313236973dbf149055",
+    "_id": "5e4bbf4786f774069342dece",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5f5f46fa5021ce62144be7bd",
+    "suiteId": "5e4bb6d786f77406975c9364",
     "isActive": true,
     "requirements": {
-      "loyaltyLevel": 4,
-      "profileLevel": 52,
+      "loyaltyLevel": 3,
+      "profileLevel": 47,
       "standing": 0,
       "skillRequirements": [],
-      "questRequirements": [],
+      "questRequirements": [
+        "5e381b0286f77420e3417a74"
+      ],
       "itemRequirements": [
         {
-          "count": 3500000,
+          "count": 3000000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }
@@ -494,135 +630,39 @@
     }
   },
   {
-    "_id": "64ef40b89a4f905106515148",
+    "_id": "619d08ab6b8a1b37a54eec05",
     "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "64ef3fa81a5f313cb144bf89",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 4,
-      "profileLevel": 42,
-      "standing": 0.6,
-      "skillRequirements": [],
-      "questRequirements": [
-        "64f1d6e732bed22c3e0c7423"
-      ],
-      "itemRequirements": []
-    }
-  },
-  {
-    "_id": "629a238ec274b820b032edfa",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "6295eeed13119346e55d4523",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 17,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 350000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5d1f667786f7744b36437b77",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f60f086f7744bce0ef704",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 15,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 230000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "603d0f55b5690f28cd32c2fa",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "603d01a1b41c9b37c6592047",
+    "suiteId": "619bf75264927e572d0d5853",
     "isActive": true,
     "requirements": {
       "loyaltyLevel": 2,
-      "profileLevel": 26,
+      "profileLevel": 34,
+      "standing": 0,
+      "skillRequirements": [],
+      "questRequirements": [],
+      "itemRequirements": [
+        {
+          "count": 1200000,
+          "_tpl": "5449016a4bdc2d6f028b456f",
+          "onlyFunctional": true
+        }
+      ]
+    }
+  },
+  {
+    "_id": "63a967dc9de65a4ac6100664",
+    "tid": "5ac3b934156ae10c4430e83c",
+    "suiteId": "63a8a41e8523141c3d055228",
+    "isActive": true,
+    "requirements": {
+      "loyaltyLevel": 1,
+      "profileLevel": 12,
       "standing": 0,
       "skillRequirements": [],
       "questRequirements": [],
       "itemRequirements": [
         {
           "count": 180000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "603d0e54cced70331818bc46",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "6038b228af2e28262649af14",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 23,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 650000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "5d1f673086f7744bcb0ae333",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "5d1f647a86f7744bca3f1691",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 1,
-      "profileLevel": 14,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 200000,
-          "_tpl": "5449016a4bdc2d6f028b456f",
-          "onlyFunctional": true
-        }
-      ]
-    }
-  },
-  {
-    "_id": "619d093b56a8f86e411c9234",
-    "tid": "5ac3b934156ae10c4430e83c",
-    "suiteId": "619b99ad604fcc392676806c",
-    "isActive": true,
-    "requirements": {
-      "loyaltyLevel": 2,
-      "profileLevel": 38,
-      "standing": 0,
-      "skillRequirements": [],
-      "questRequirements": [],
-      "itemRequirements": [
-        {
-          "count": 1400000,
           "_tpl": "5449016a4bdc2d6f028b456f",
           "onlyFunctional": true
         }

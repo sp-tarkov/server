@@ -1,7 +1,7 @@
-import { inject, injectable } from "tsyringe";
+import { inject, injectAll, injectable } from "tsyringe";
 
+import { IDialogueChatBot } from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
 import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
 import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
 import { IGetMailDialogViewRequestData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewRequestData";
@@ -9,38 +9,50 @@ import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetM
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { GiftService } from "@spt-aki/services/GiftService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class DialogueController
 {
-    protected coreConfig: ICoreConfig;
-
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
-        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("MailSendService") protected mailSendService: MailSendService,
-        @inject("GiftService") protected giftService: GiftService,
-        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @injectAll("DialogueChatBot") protected dialogueChatBots: IDialogueChatBot[],
     )
     {
-        this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
+        const coreConfigs = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+        // if give command is disabled or commando commands are disabled
+        if (!coreConfigs.features?.chatbotFeatures?.commandoEnabled)
+        {
+            const sptCommando = this.dialogueChatBots.find((c) =>
+                c.getChatBot()._id.toLocaleLowerCase() === "sptcommando"
+            );
+            this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptCommando), 1);
+        }
+        if (!coreConfigs.features?.chatbotFeatures?.sptFriendEnabled)
+        {
+            const sptFriend = this.dialogueChatBots.find((c) => c.getChatBot()._id.toLocaleLowerCase() === "sptFriend");
+            this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptFriend), 1);
+        }
+    }
+
+    public registerChatBot(chatBot: IDialogueChatBot): void
+    {
+        if (this.dialogueChatBots.some((cb) => cb.getChatBot()._id === chatBot.getChatBot()._id))
+        {
+            throw new Error(`The chat bot ${chatBot.getChatBot()._id} being registered already exists!`);
+        }
+        this.dialogueChatBots.push(chatBot);
     }
 
     /** Handle onUpdate spt event */
@@ -57,10 +69,11 @@ export class DialogueController
      * Handle client/friend/list
      * @returns IGetFriendListDataResponse
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getFriendList(sessionID: string): IGetFriendListDataResponse
     {
         // Force a fake friend called SPT into friend list
-        return { Friends: [this.getSptFriendData()], Ignore: [], InIgnoreList: [] };
+        return { Friends: this.dialogueChatBots.map((v) => v.getChatBot()), Ignore: [], InIgnoreList: [] };
     }
 
     /**
@@ -117,7 +130,8 @@ export class DialogueController
 
         // User to user messages are special in that they need the player to exist in them, add if they don't
         if (
-            messageType === MessageType.USER_MESSAGE && !dialog.Users?.find((x) => x._id === profile.characters.pmc._id)
+            messageType === MessageType.USER_MESSAGE
+            && !dialog.Users?.find((x) => x._id === profile.characters.pmc.sessionId)
         )
         {
             if (!dialog.Users)
@@ -126,8 +140,9 @@ export class DialogueController
             }
 
             dialog.Users.push({
-                _id: profile.characters.pmc._id,
-                info: {
+                _id: profile.characters.pmc.sessionId,
+                aid: profile.characters.pmc.aid,
+                Info: {
                     Level: profile.characters.pmc.Info.Level,
                     Nickname: profile.characters.pmc.Info.Nickname,
                     Side: profile.characters.pmc.Info.Side,
@@ -141,7 +156,7 @@ export class DialogueController
 
     /**
      * Handle client/mail/dialog/view
-     * Handle player clicking 'messenger' and seeing all the messages they've received
+     * Handle player clicking 'messenger' and seeing all the messages they've recieved
      * Set the content of the dialogue on the details panel, showing all the messages
      * for the specified dialogue.
      * @param request Get dialog request
@@ -173,7 +188,7 @@ export class DialogueController
     /**
      * Get dialog from player profile, create if doesn't exist
      * @param profile Player profile
-     * @param request get dialog request (params used when dialog doesn't exist in profile)
+     * @param request get dialog request (params used when dialog doesnt exist in profile)
      * @returns Dialogue
      */
     protected getDialogByIdFromProfile(profile: IAkiProfile, request: IGetMailDialogViewRequestData): Dialogue
@@ -192,7 +207,11 @@ export class DialogueController
             if (request.type === MessageType.USER_MESSAGE)
             {
                 profile.dialogues[request.dialogId].Users = [];
-                profile.dialogues[request.dialogId].Users.push(this.getSptFriendData(request.dialogId));
+                const chatBot = this.dialogueChatBots.find((cb) => cb.getChatBot()._id === request.dialogId);
+                if (chatBot)
+                {
+                    profile.dialogues[request.dialogId].Users.push(chatBot.getChatBot());
+                }
             }
         }
 
@@ -211,13 +230,14 @@ export class DialogueController
         {
             result.push(...dialogUsers);
 
-            // Player doesn't exist, add them in before returning
+            // Player doesnt exist, add them in before returning
             if (!result.find((x) => x._id === fullProfile.info.id))
             {
                 const pmcProfile = fullProfile.characters.pmc;
                 result.push({
                     _id: fullProfile.info.id,
-                    info: {
+                    aid: fullProfile.info.aid,
+                    Info: {
                         Nickname: pmcProfile.Info.Nickname,
                         Side: pmcProfile.Info.Side,
                         Level: pmcProfile.Info.Level,
@@ -274,6 +294,7 @@ export class DialogueController
         if (!dialog)
         {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
+
             return;
         }
 
@@ -287,6 +308,7 @@ export class DialogueController
         if (!dialog)
         {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
+
             return;
         }
 
@@ -305,6 +327,7 @@ export class DialogueController
         if (!dialogs)
         {
             this.logger.error(`No dialog object in profile: ${sessionId}`);
+
             return;
         }
 
@@ -329,6 +352,7 @@ export class DialogueController
         if (!dialog)
         {
             this.logger.error(`No dialog in profile: ${sessionId} found with id: ${dialogueId}`);
+
             return;
         }
 
@@ -346,132 +370,15 @@ export class DialogueController
     }
 
     /** client/mail/msg/send */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendMessage(sessionId: string, request: ISendMessageRequest): string
     {
         this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);
 
-        // Handle when player types a keyword to sptFriend user
-        if (request.dialogId.includes("sptFriend"))
-        {
-            this.handleChatWithSPTFriend(sessionId, request);
-        }
-
-        return request.dialogId;
-    }
-
-    /**
-     * Send responses back to player when they communicate with SPT friend on friends list
-     * @param sessionId Session Id
-     * @param request send message request
-     */
-    protected handleChatWithSPTFriend(sessionId: string, request: ISendMessageRequest): void
-    {
-        const sender = this.profileHelper.getPmcProfile(sessionId);
-        const sptFriendUser = this.getSptFriendData();
-        const giftSent = this.giftService.sendGiftToPlayer(sessionId, request.text);
-
-        if (giftSent === GiftSentResult.SUCCESS)
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue([
-                    "Hey! you got the right code!",
-                    "A secret code, how exciting!",
-                    "You found a gift code!",
-                ]),
-            );
-            return;
-        }
-
-        if (giftSent === GiftSentResult.FAILED_GIFT_ALREADY_RECEIVED)
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"]),
-            );
-            return;
-        }
-
-        if (request.text.toLowerCase().includes("love you"))
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue([
-                    "That's quite forward but i love you too in a purely chatbot-human way",
-                    "I love you too buddy :3!",
-                    "uwu",
-                    `love you too ${sender?.Info?.Nickname}`,
-                ]),
-            );
-        }
-
-        if (request.text.toLowerCase() === "spt")
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"]),
-            );
-        }
-
-        if (["hello", "hi", "sup", "yo", "hey"].includes(request.text.toLowerCase()))
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue([
-                    "Howdy",
-                    "Hi",
-                    "Greetings",
-                    "Hello",
-                    "Bonjour",
-                    "Yo",
-                    "Sup",
-                    "Heyyyyy",
-                    "Hey there",
-                    `Hello ${sender?.Info?.Nickname}`,
-                ]),
-            );
-        }
-
-        if (request.text.toLowerCase() === "nikita")
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue([
-                    "I know that guy!",
-                    "Cool guy, he made EFT!",
-                    "Legend",
-                    "Remember when he said webel-webel-webel-webel, classic nikita moment",
-                ]),
-            );
-        }
-
-        if (request.text.toLowerCase() === "are you a bot")
-        {
-            this.mailSendService.sendUserMessageToPlayer(
-                sessionId,
-                sptFriendUser,
-                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"]),
-            );
-        }
-    }
-
-    protected getSptFriendData(friendId = "sptFriend"): IUserDialogInfo
-    {
-        return {
-            _id: friendId,
-            info: {
-                Level: 1,
-                MemberCategory: MemberCategory.DEVELOPER,
-                Nickname: this.coreConfig.sptFriendNickname,
-                Side: "Usec",
-            },
-        };
+        return this.dialogueChatBots.find((cb) => cb.getChatBot()._id === request.dialogId)?.handleMessage(
+            sessionId,
+            request,
+        ) ?? request.dialogId;
     }
 
     /**

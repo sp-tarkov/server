@@ -53,6 +53,10 @@
       "TacticalVest": 100
     },
     "mods": {
+	"front_plate": 100,
+	"back_plate": 100,
+	"left_side_plate": 25,
+	"rightside_plate": 25,
       "mod_charge": 100,
       "mod_equipment": 0,
       "mod_equipment_000": 11,

@@ -1,0 +1,63 @@
+{
+  "_id": "656f0f98d80a697f855d34b1",
+  "availableInRaid": true,
+  "avatar": "/files/trader/avatar/656f0f98d80a697f855d34b1.png",
+  "balance_dol": 0,
+  "balance_eur": 0,
+  "balance_rub": 7000000,
+  "buyer_up": false,
+  "currency": "RUB",
+  "customization_seller": false,
+  "discount": 0,
+  "discount_end": 0,
+  "gridHeight": 120,
+  "insurance": {
+    "availability": false,
+    "excluded_category": [],
+    "max_return_hour": 0,
+    "max_storage_time": 48,
+    "min_payment": 0,
+    "min_return_hour": 0
+  },
+  "items_buy": {
+    "category": [],
+    "id_list": []
+  },
+  "items_buy_prohibited": {
+    "category": [
+      null
+    ],
+    "id_list": [
+      "64d0b40fbe2eed70e254e2d4"
+    ]
+  },
+  "location": "БТР",
+  "loyaltyLevels": [
+    {
+      "buy_price_coef": 0,
+      "exchange_price_coef": 0,
+      "heal_price_coef": 0,
+      "insurance_price_coef": "0",
+      "minLevel": 1,
+      "minSalesSum": 0,
+      "minStanding": 0,
+      "repair_price_coef": 0
+    }
+  ],
+  "medic": false,
+  "name": "БТР",
+  "nextResupply": 1703691958,
+  "nickname": "БТР",
+  "repair": {
+    "availability": false,
+    "currency": "5449016a4bdc2d6f028b456f",
+    "currency_coefficient": 1,
+    "excluded_category": [],
+    "excluded_id_list": [],
+    "quality": 0
+  },
+  "sell_category": [],
+  "sell_modifier_for_prohibited_items": 0,
+  "surname": "БТР",
+  "unlockedByDefault": false
+}

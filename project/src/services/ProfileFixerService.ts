@@ -59,10 +59,11 @@ export class ProfileFixerService
     public checkForAndFixPmcProfileIssues(pmcProfile: IPmcData): void
     {
         this.removeDanglingConditionCounters(pmcProfile);
-        this.removeDanglingBackendCounters(pmcProfile);
+        this.removeDanglingTaskConditionCounters(pmcProfile);
         this.addMissingRepeatableQuestsProperty(pmcProfile);
         this.addLighthouseKeeperIfMissing(pmcProfile);
         this.addUnlockedInfoObjectIfMissing(pmcProfile);
+		this.removeOrphanedQuests(pmcProfile);
 
         if (pmcProfile.Inventory)
         {
@@ -76,6 +77,7 @@ export class ProfileFixerService
             this.addMissingWallImprovements(pmcProfile);
             this.addMissingHideoutWallAreas(pmcProfile);
             this.addMissingGunStandContainerImprovements(pmcProfile);
+            this.addMissingHallOfFameContainerImprovements(pmcProfile);
             this.ensureGunStandLevelsMatch(pmcProfile);
 
             this.removeResourcesFromSlotsInHideoutWithoutLocationIndexValue(pmcProfile);
@@ -153,7 +155,6 @@ export class ProfileFixerService
         }
 
         this.fixNullTraderSalesSums(pmcProfile);
-        this.updateProfilePocketsToNewId(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
 
         if (Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices).length > 0)
@@ -284,6 +285,70 @@ export class ProfileFixerService
         }
     }
 
+    protected addMissingHallOfFameContainerImprovements(pmcProfile: IPmcData): void
+    {
+        const placeOfFameArea = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.PLACE_OF_FAME);
+        if (!placeOfFameArea || placeOfFameArea.level === 0)
+        {
+            // No place of fame in profile or its level 0, skip
+            return;
+        }
+
+        const db = this.databaseServer.getTables();
+        const placeOfFameAreaDb = db.hideout.areas.find((x) => x.type === HideoutAreas.PLACE_OF_FAME);
+        const stageCurrentlyAt = placeOfFameAreaDb.stages[placeOfFameArea.level];
+        const placeOfFameStashId = pmcProfile.Inventory.hideoutAreaStashes[HideoutAreas.PLACE_OF_FAME];
+
+        // `hideoutAreaStashes` empty but profile has built gun stand
+        if (!placeOfFameStashId && stageCurrentlyAt)
+        {
+            // Value is missing, add it
+            pmcProfile.Inventory.hideoutAreaStashes[HideoutAreas.PLACE_OF_FAME] = placeOfFameAreaDb._id;
+
+            // Add stash item to profile
+            const placeOfFameStashItem = pmcProfile.Inventory.items.find((x) => x._id === placeOfFameAreaDb._id);
+            if (placeOfFameStashItem)
+            {
+                placeOfFameStashItem._tpl = stageCurrentlyAt.container;
+                this.logger.debug(
+                    `Updated existing place of fame inventory stash: ${placeOfFameStashItem._id} tpl to ${stageCurrentlyAt.container}`,
+                );
+            }
+            else
+            {
+                pmcProfile.Inventory.items.push({ _id: placeOfFameAreaDb._id, _tpl: stageCurrentlyAt.container });
+                this.logger.debug(
+                    `Added missing place of fame inventory stash: ${placeOfFameAreaDb._id} tpl to ${stageCurrentlyAt.container}`,
+                );
+            }
+
+            return;
+        }
+
+        let stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id);
+        if (!stashItem)
+        {
+            // Stand inventory stash item doesnt exist, add it
+            pmcProfile.Inventory.items.push(
+                {
+                    _id: placeOfFameAreaDb._id,
+                    _tpl: stageCurrentlyAt.container
+                }
+            )
+            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id)
+        }
+
+        // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
+        if (placeOfFameStashId && stashItem._tpl !== stageCurrentlyAt.container)
+        {
+            this.logger.debug(
+                `primary Stash tpl was: ${stashItem._tpl}, but should be ${stageCurrentlyAt.container}, updating`,
+            );
+            // The id inside the profile does not match what the hideout db value is, out of sync, adjust
+            stashItem._tpl = stageCurrentlyAt.container;
+        }
+    }
+
     protected ensureGunStandLevelsMatch(pmcProfile: IPmcData): void
     {
         // only proceed if stand is level 1 or above
@@ -400,9 +465,16 @@ export class ProfileFixerService
      */
     public removeDanglingConditionCounters(pmcProfile: IPmcData): void
     {
-        if (pmcProfile.ConditionCounters)
+        if (pmcProfile.TaskConditionCounters)
         {
-            pmcProfile.ConditionCounters.Counters = pmcProfile.ConditionCounters.Counters.filter((c) => c.qid !== null);
+            for (const counterId in pmcProfile.TaskConditionCounters)
+            {
+                const counter = pmcProfile.TaskConditionCounters[counterId];
+                if (!counter.sourceId)
+                {
+                    delete pmcProfile.TaskConditionCounters[counterId];
+                }
+            }
         }
     }
 
@@ -437,31 +509,40 @@ export class ProfileFixerService
         }
     }
 
-    protected removeDanglingBackendCounters(pmcProfile: IPmcData): void
+    /**
+     * Repeatable quests leave behind TaskConditionCounter objects that make the profile bloat with time, remove them
+     * @param pmcProfile Player profile to check
+     */
+    protected removeDanglingTaskConditionCounters(pmcProfile: IPmcData): void
     {
-        if (pmcProfile.BackendCounters)
+        if (pmcProfile.TaskConditionCounters)
         {
-            const counterKeysToRemove: string[] = [];
-            const activeQuests = this.getActiveRepeatableQuests(pmcProfile.RepeatableQuests);
-            for (const [key, backendCounter] of Object.entries(pmcProfile.BackendCounters))
+            const taskConditionKeysToRemove: string[] = [];
+            const activeRepeatableQuests = this.getActiveRepeatableQuests(pmcProfile.RepeatableQuests);
+            const achievements = this.databaseServer.getTables().templates.achievements;
+            
+            // Loop over TaskConditionCounters objects and add once we want to remove to counterKeysToRemove
+            for (const [key, taskConditionCounter] of Object.entries(pmcProfile.TaskConditionCounters))
             {
-                if (pmcProfile.RepeatableQuests && activeQuests.length > 0)
+                // Only check if profile has repeatable quests
+                if (pmcProfile.RepeatableQuests && activeRepeatableQuests.length > 0)
                 {
-                    const existsInActiveRepeatableQuests = activeQuests.some((x) => x._id === backendCounter.qid);
-                    const existsInQuests = pmcProfile.Quests.some((q) => q.qid === backendCounter.qid);
+                    const existsInActiveRepeatableQuests = activeRepeatableQuests.some((quest) => quest._id === taskConditionCounter.sourceId);
+                    const existsInQuests = pmcProfile.Quests.some((quest) => quest.qid === taskConditionCounter.sourceId);
+                    const isAchievementTracker = achievements.some((quest) => quest.id === taskConditionCounter.sourceId);
 
-                    // if BackendCounter's quest is neither in activeQuests nor Quests it's stale
-                    if (!(existsInActiveRepeatableQuests || existsInQuests))
+                    // If task conditions id is neither in activeQuests, quests or achievements - it's stale and should be cleaned up
+                    if (!(existsInActiveRepeatableQuests || existsInQuests || isAchievementTracker))
                     {
-                        counterKeysToRemove.push(key);
+                        taskConditionKeysToRemove.push(key);
                     }
                 }
             }
 
-            for (const counterKeyToRemove of counterKeysToRemove)
+            for (const counterKeyToRemove of taskConditionKeysToRemove)
             {
-                this.logger.debug(`Removed ${counterKeyToRemove} backend count object`);
-                delete pmcProfile.BackendCounters[counterKeyToRemove];
+                this.logger.debug(`Removed ${counterKeyToRemove} TaskConditionCounter object`);
+                delete pmcProfile.TaskConditionCounters[counterKeyToRemove];
             }
         }
     }
@@ -733,23 +814,6 @@ export class ProfileFixerService
     }
 
     /**
-     * In 18876 bsg changed the pockets tplid to be one that has 3 additional special slots
-     * @param pmcProfile
-     */
-    protected updateProfilePocketsToNewId(pmcProfile: IPmcData): void
-    {
-        const pocketItem = pmcProfile.Inventory?.items?.find((x) => x.slotId === "Pockets");
-        if (pocketItem)
-        {
-            if (pocketItem._tpl === "557ffd194bdc2d28148b457f")
-            {
-                this.logger.success(this.localisationService.getText("fixer-updated_pockets"));
-                pocketItem._tpl = "627a4e6b255f7527fb05a0f6";
-            }
-        }
-    }
-
-    /**
      * Iterate over players hideout areas and find what's build, look for missing bonuses those areas give and add them if missing
      * @param pmcProfile Profile to update
      */
@@ -881,7 +945,7 @@ export class ProfileFixerService
         // Iterate over player-made weapon builds, look for missing items and remove weapon preset if found
         for (const buildId in fullProfile.userbuilds?.weaponBuilds)
         {
-            for (const item of fullProfile.userbuilds.weaponBuilds[buildId].items)
+            for (const item of fullProfile.userbuilds.weaponBuilds[buildId].Items)
             {
                 // Check item exists in itemsDb
                 if (!itemsDb[item._tpl])
@@ -1303,6 +1367,31 @@ export class ProfileFixerService
             pmcProfile.Hideout.Improvement = this.jsonUtil.clone(improvements);
             delete pmcProfile.Hideout.Improvements;
             this.logger.success("Successfully migrated hideout Improvements data to new location, deleted old data");
+        }
+    }
+
+	/**
+	 * After removing mods that add quests, the quest panel will break without removing these
+	 * @param pmcProfile Profile to remove dead quests from
+	 */
+    protected removeOrphanedQuests(pmcProfile: IPmcData): void
+    {
+        const quests = this.databaseServer.getTables().templates.quests;
+        const profileQuests = pmcProfile.Quests;
+        
+        let repeatableQuests: IRepeatableQuest[] = [];
+        for (const repeatableQuestType of pmcProfile.RepeatableQuests)
+        {
+            repeatableQuests.push(...repeatableQuestType.activeQuests);
+        }
+        
+        for (let i = 0; i < profileQuests.length; i++)
+        {
+            if (!quests[profileQuests[i].qid] && !repeatableQuests.find(x => x._id == profileQuests[i].qid))
+            {
+                profileQuests.splice(i, 1);
+                this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");
+            }            
         }
     }
 }

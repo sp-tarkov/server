@@ -9,9 +9,10 @@ import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import { Inventory as PmcInventory } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Chances, Generation, IBotType, Inventory, Mods } from "@spt-aki/models/eft/common/tables/IBotType";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
-import { EquipmentFilterDetails, IBotConfig, RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
+import { EquipmentFilterDetails, EquipmentFilters, IBotConfig, RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -63,18 +64,18 @@ export class BotInventoryGenerator
     ): PmcInventory
     {
         const templateInventory = botJsonTemplate.inventory;
-        const equipmentChances = botJsonTemplate.chances;
+        const wornItemChances = botJsonTemplate.chances;
         const itemGenerationLimitsMinMax = botJsonTemplate.generation;
 
         // Generate base inventory with no items
         const botInventory = this.generateInventoryBase();
 
-        this.generateAndAddEquipmentToBot(templateInventory, equipmentChances, botRole, botInventory, botLevel);
+        this.generateAndAddEquipmentToBot(templateInventory, wornItemChances, botRole, botInventory, botLevel);
 
         // Roll weapon spawns (primary/secondary/holster) and generate a weapon for each roll that passed
         this.generateAndAddWeaponsToBot(
             templateInventory,
-            equipmentChances,
+            wornItemChances,
             sessionId,
             botInventory,
             botRole,
@@ -125,20 +126,21 @@ export class BotInventoryGenerator
             sortingTable: sortingTableId,
             hideoutAreaStashes: {},
             fastPanel: {},
+            favoriteItems: []
         };
     }
 
     /**
      * Add equipment to a bot
      * @param templateInventory bot/x.json data from db
-     * @param equipmentChances Chances items will be added to bot
+     * @param wornItemChances Chances items will be added to bot
      * @param botRole Role bot has (assault/pmcBot)
      * @param botInventory Inventory to add equipment to
      * @param botLevel Level of bot
      */
     protected generateAndAddEquipmentToBot(
         templateInventory: Inventory,
-        equipmentChances: Chances,
+        wornItemChances: Chances,
         botRole: string,
         botInventory: PmcInventory,
         botLevel: number,
@@ -158,7 +160,6 @@ export class BotInventoryGenerator
 
         const botEquipConfig = this.botConfig.equipment[this.botGeneratorHelper.getBotEquipmentRole(botRole)];
         const randomistionDetails = this.botHelper.getBotRandomizationDetails(botLevel, botEquipConfig);
-
         for (const equipmentSlot in templateInventory.equipment)
         {
             // Weapons have special generation and will be generated separately; ArmorVest should be generated after TactivalVest
@@ -167,164 +168,194 @@ export class BotInventoryGenerator
                 continue;
             }
 
-            this.generateEquipment(
-                equipmentSlot,
-                templateInventory.equipment[equipmentSlot],
-                templateInventory.mods,
-                equipmentChances,
-                botRole,
-                botInventory,
-                randomistionDetails,
-            );
+            this.generateEquipment({
+                rootEquipmentSlot: equipmentSlot,
+                rootEquipmentPool: templateInventory.equipment[equipmentSlot],
+                modPool: templateInventory.mods,
+                spawnChances: wornItemChances,
+                botRole: botRole,
+                botLevel: botLevel,
+                inventory: botInventory,
+                botEquipmentConfig: botEquipConfig,
+                randomisationDetails: randomistionDetails
+            });
         }
 
         // Generate below in specific order
-        this.generateEquipment(
-            EquipmentSlots.FACE_COVER,
-            templateInventory.equipment.FaceCover,
-            templateInventory.mods,
-            equipmentChances,
-            botRole,
-            botInventory,
-            randomistionDetails,
-        );
-        this.generateEquipment(
-            EquipmentSlots.HEADWEAR,
-            templateInventory.equipment.Headwear,
-            templateInventory.mods,
-            equipmentChances,
-            botRole,
-            botInventory,
-            randomistionDetails,
-        );
-        this.generateEquipment(
-            EquipmentSlots.EARPIECE,
-            templateInventory.equipment.Earpiece,
-            templateInventory.mods,
-            equipmentChances,
-            botRole,
-            botInventory,
-            randomistionDetails,
-        );
-        this.generateEquipment(
-            EquipmentSlots.TACTICAL_VEST,
-            templateInventory.equipment.TacticalVest,
-            templateInventory.mods,
-            equipmentChances,
-            botRole,
-            botInventory,
-            randomistionDetails,
-        );
-        this.generateEquipment(
-            EquipmentSlots.ARMOR_VEST,
-            templateInventory.equipment.ArmorVest,
-            templateInventory.mods,
-            equipmentChances,
-            botRole,
-            botInventory,
-            randomistionDetails,
-        );
+        this.generateEquipment({
+            rootEquipmentSlot: EquipmentSlots.FACE_COVER,
+            rootEquipmentPool: templateInventory.equipment.FaceCover,
+            modPool: templateInventory.mods,
+            spawnChances: wornItemChances,
+            botRole: botRole,
+            botLevel: botLevel,
+            inventory: botInventory,
+            botEquipmentConfig: botEquipConfig,
+            randomisationDetails: randomistionDetails
+        });
+        this.generateEquipment({
+            rootEquipmentSlot: EquipmentSlots.HEADWEAR,
+            rootEquipmentPool: templateInventory.equipment.Headwear,
+            modPool: templateInventory.mods,
+            spawnChances: wornItemChances,
+            botRole: botRole,
+            botLevel: botLevel,
+            inventory: botInventory,
+            botEquipmentConfig: botEquipConfig,
+            randomisationDetails: randomistionDetails
+        });
+        this.generateEquipment({
+            rootEquipmentSlot: EquipmentSlots.EARPIECE,
+            rootEquipmentPool: templateInventory.equipment.Earpiece,
+            modPool: templateInventory.mods,
+            spawnChances: wornItemChances,
+            botRole: botRole,
+            botLevel: botLevel,
+            inventory: botInventory,
+            botEquipmentConfig: botEquipConfig,
+            randomisationDetails: randomistionDetails
+        });
+        this.generateEquipment({
+            rootEquipmentSlot: EquipmentSlots.ARMOR_VEST,
+            rootEquipmentPool: templateInventory.equipment.ArmorVest,
+            modPool: templateInventory.mods,
+            spawnChances: wornItemChances,
+            botRole: botRole,
+            botLevel: botLevel,
+            inventory: botInventory,
+            botEquipmentConfig: botEquipConfig,
+            randomisationDetails: randomistionDetails
+        });
+        this.generateEquipment({
+            rootEquipmentSlot: EquipmentSlots.TACTICAL_VEST,
+            rootEquipmentPool: templateInventory.equipment.TacticalVest,
+            modPool: templateInventory.mods,
+            spawnChances: wornItemChances,
+            botRole: botRole,
+            botLevel: botLevel,
+            inventory: botInventory,
+            botEquipmentConfig: botEquipConfig,
+            randomisationDetails: randomistionDetails
+        });
     }
 
     /**
      * Add a piece of equipment with mods to inventory from the provided pools
-     * @param equipmentSlot Slot to select an item for
-     * @param equipmentPool Possible items to choose from
-     * @param modPool Possible mods to apply to item chosen
-     * @param spawnChances Chances items will be chosen to be added
-     * @param botRole Role of bot e.g. assault
-     * @param inventory Inventory to add item into
-     * @param randomisationDetails settings from bot.json to adjust how item is generated
+     * @param settings Values to adjust how item is chosen and added to bot
      */
-    protected generateEquipment(
-        equipmentSlot: string,
-        equipmentPool: Record<string, number>,
-        modPool: Mods,
-        spawnChances: Chances,
-        botRole: string,
-        inventory: PmcInventory,
-        randomisationDetails: RandomisationDetails,
-    ): void
+    protected generateEquipment(settings: IGenerateEquipmentProperties): void
     {
         const spawnChance =
-            ([EquipmentSlots.POCKETS, EquipmentSlots.SECURED_CONTAINER] as string[]).includes(equipmentSlot)
+            ([EquipmentSlots.POCKETS, EquipmentSlots.SECURED_CONTAINER] as string[]).includes(settings.rootEquipmentSlot)
                 ? 100
-                : spawnChances.equipment[equipmentSlot];
+                : settings.spawnChances.equipment[settings.rootEquipmentSlot];
         if (typeof spawnChance === "undefined")
         {
             this.logger.warning(
-                this.localisationService.getText("bot-no_spawn_chance_defined_for_equipment_slot", equipmentSlot),
+                this.localisationService.getText("bot-no_spawn_chance_defined_for_equipment_slot", settings.rootEquipmentSlot),
             );
 
             return;
         }
 
         const shouldSpawn = this.randomUtil.getChance100(spawnChance);
-        if (Object.keys(equipmentPool).length && shouldSpawn)
+        if (shouldSpawn && Object.keys(settings.rootEquipmentPool).length)
         {
+            let pickedItemDb: ITemplateItem;
+            let found = false;
+            let attempts = 0;
+            while (!found)
+            {
+                if (Object.values(settings.rootEquipmentPool).length === 0)
+                {
+                    return;
+                }
+
+                const chosenItemTpl = this.weightedRandomHelper.getWeightedValue<string>(settings.rootEquipmentPool);
+                const dbResult = this.itemHelper.getItem(chosenItemTpl);
+
+                if (!dbResult[0])
+                {
+                    this.logger.error(this.localisationService.getText("bot-missing_item_template", chosenItemTpl));
+                    this.logger.info(`EquipmentSlot -> ${settings.rootEquipmentSlot}`);
+
+                    // remove picked item
+                    delete settings.rootEquipmentPool[chosenItemTpl];
+
+                    attempts++;
+
+                    continue;
+                }
+
+                const compatabilityResult = this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(
+                    settings.inventory.items,
+                    chosenItemTpl,
+                    settings.rootEquipmentSlot);
+                if (compatabilityResult.incompatible)
+                {
+                    // Entire slot is blocked by another item, no point in checking other items
+                    if (compatabilityResult.slotBlocked)
+                    {
+                        return;
+                    }
+
+                    // Tried 8 different items that failed, stop
+                    if (attempts >= 8)
+                    {
+                        return;
+                    }
+
+                    // Remove picked item
+                    delete settings.rootEquipmentPool[chosenItemTpl];
+
+                    attempts++;
+                }
+                else
+                {
+                    // Success
+                    found = true;
+                    pickedItemDb = dbResult[1];
+                }
+            }
+
+            // Create root item
             const id = this.hashUtil.generate();
-            const equipmentItemTpl = this.weightedRandomHelper.getWeightedValue<string>(equipmentPool);
-            const itemTemplate = this.itemHelper.getItem(equipmentItemTpl);
-
-            if (!itemTemplate[0])
-            {
-                this.logger.error(this.localisationService.getText("bot-missing_item_template", equipmentItemTpl));
-                this.logger.info(`EquipmentSlot -> ${equipmentSlot}`);
-
-                return;
-            }
-
-            if (
-                this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(
-                    inventory.items,
-                    equipmentItemTpl,
-                    equipmentSlot,
-                ).incompatible
-            )
-            {
-                // Bad luck - randomly picked item was not compatible with current gear
-                return;
-            }
-
             const item = {
                 _id: id,
-                _tpl: equipmentItemTpl,
-                parentId: inventory.equipment,
-                slotId: equipmentSlot,
-                ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemTemplate[1], botRole),
+                _tpl: pickedItemDb._id,
+                parentId: settings.inventory.equipment,
+                slotId: settings.rootEquipmentSlot,
+                ...this.botGeneratorHelper.generateExtraPropertiesForItem(pickedItemDb, settings.botRole),
             };
 
-            // use dynamic mod pool if enabled in config
-            const botEquipmentRole = this.botGeneratorHelper.getBotEquipmentRole(botRole);
+            // Use dynamic mod pool if enabled in config for this bot
+            const botEquipmentRole = this.botGeneratorHelper.getBotEquipmentRole(settings.botRole);
             if (
                 this.botConfig.equipment[botEquipmentRole]
-                && randomisationDetails?.randomisedArmorSlots?.includes(equipmentSlot)
+                && settings.randomisationDetails?.randomisedArmorSlots?.includes(settings.rootEquipmentSlot)
             )
             {
-                modPool[equipmentItemTpl] = this.getFilteredDynamicModsForItem(
-                    equipmentItemTpl,
+                settings.modPool[pickedItemDb._id] = this.getFilteredDynamicModsForItem(
+                    pickedItemDb._id,
                     this.botConfig.equipment[botEquipmentRole].blacklist,
                 );
             }
 
-            if (
-                typeof (modPool[equipmentItemTpl]) !== "undefined"
-                || Object.keys(modPool[equipmentItemTpl] || {}).length > 0
-            )
+            // Item has slots, fill them
+            if ( pickedItemDb._props.Slots?.length > 0 )
             {
                 const items = this.botEquipmentModGenerator.generateModsForEquipment(
                     [item],
-                    modPool,
                     id,
-                    itemTemplate[1],
-                    spawnChances.mods,
-                    botRole,
+                    pickedItemDb,
+                    settings
                 );
-                inventory.items.push(...items);
+                settings.inventory.items.push(...items);
             }
             else
             {
-                inventory.items.push(item);
+                // No slots, push root item only
+                settings.inventory.items.push(item);
             }
         }
     }
@@ -447,7 +478,7 @@ export class BotInventoryGenerator
             weaponSlot.slot,
             templateInventory,
             botInventory.equipment,
-            equipmentChances.mods,
+            equipmentChances.weaponMods,
             botRole,
             isPmc,
             botLevel,
@@ -463,3 +494,22 @@ export class BotInventoryGenerator
         );
     }
 }
+
+export interface IGenerateEquipmentProperties
+    {
+        /** Root Slot being generated */
+        rootEquipmentSlot: string,
+        /** Equipment pool for root slot being generated */
+        rootEquipmentPool: Record<string, number>,
+        modPool: Mods,
+        /** Dictionary of mod items and their chance to spawn for this bot type */
+        spawnChances: Chances,
+        /** Role being generated for */
+        botRole: string,
+        /** Level of bot being generated */
+        botLevel: number,
+        inventory: PmcInventory,
+        botEquipmentConfig: EquipmentFilters,
+        /** Settings from bot.json to adjust how item is generated */
+        randomisationDetails: RandomisationDetails
+    }

@@ -1,4 +1,5 @@
 import { IGlobals } from "@spt-aki/models/eft/common/IGlobals";
+import { IAchievement } from "@spt-aki/models/eft/common/tables/IAchievement";
 import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { IBotCore } from "@spt-aki/models/eft/common/tables/IBotCore";
 import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
@@ -16,7 +17,7 @@ import { IHideoutProduction } from "@spt-aki/models/eft/hideout/IHideoutProducti
 import { IHideoutScavCase } from "@spt-aki/models/eft/hideout/IHideoutScavCase";
 import { IHideoutSettingsBase } from "@spt-aki/models/eft/hideout/IHideoutSettingsBase";
 import { IQteData } from "@spt-aki/models/eft/hideout/IQteData";
-import { IEquipmentBuild } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IDefaultEquipmentPreset } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { ILocaleBase } from "@spt-aki/models/spt/server/ILocaleBase";
 import { ILocations } from "@spt-aki/models/spt/server/ILocations";
 import { IServerBase } from "@spt-aki/models/spt/server/IServerBase";
@@ -51,7 +52,10 @@ export interface IDatabaseTables
         prices: Record<string, number>;
 
         /** Default equipment loadouts that show on main inventory screen */
-        defaultEquipmentPresets: IEquipmentBuild[];
+        defaultEquipmentPresets: IDefaultEquipmentPreset[];
+
+        /** Achievements */
+        achievements: IAchievement[]
     };
     traders?: Record<string, ITrader>;
 

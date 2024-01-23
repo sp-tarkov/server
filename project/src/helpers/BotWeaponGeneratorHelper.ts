@@ -159,25 +159,26 @@ export class BotWeaponGeneratorHelper
      * TODO - move into BotGeneratorHelper, this is not the class for it
      * Adds an item with all its children into specified equipmentSlots, wherever it fits.
      * @param equipmentSlots Slot to add item+children into
-     * @param parentId
-     * @param parentTpl
+     * @param rootItemId Root item id to use as mod items parentid
+     * @param rootItemTplId Root itms tpl id
      * @param itemWithChildren Item to add
      * @param inventory Inventory to add item+children into
-     * @returns a `boolean` indicating item was added
+     * @returns ItemAddedResult result object
      */
     public addItemWithChildrenToEquipmentSlot(
         equipmentSlots: string[],
-        parentId: string,
-        parentTpl: string,
+        rootItemId: string,
+        rootItemTplId: string,
         itemWithChildren: Item[],
         inventory: Inventory,
     ): ItemAddedResult
     {
+        /** Track how many containers are unable to be found */
         let missingContainerCount = 0;
-        for (const slot of equipmentSlots)
+        for (const equipmentSlotId of equipmentSlots)
         {
             // Get container to put item into
-            const container = inventory.items.find((i) => i.slotId === slot);
+            const container = inventory.items.find((item) => item.slotId === equipmentSlotId);
             if (!container)
             {
                 missingContainerCount++;
@@ -214,7 +215,7 @@ export class BotWeaponGeneratorHelper
             }
 
             // Get x/y grid size of item
-            const itemSize = this.inventoryHelper.getItemSize(parentTpl, parentId, itemWithChildren);
+            const itemSize = this.inventoryHelper.getItemSize(rootItemTplId, rootItemId, itemWithChildren);
 
             // Iterate over each grid in the container and look for a big enough space for the item to be placed in
             let currentGridCount = 1;
@@ -228,7 +229,7 @@ export class BotWeaponGeneratorHelper
                 }
 
                 // Can't put item type in grid, skip all grids as we're assuming they have the same rules
-                if (!this.itemAllowedInContainer(slotGrid, parentTpl))
+                if (!this.itemAllowedInContainer(slotGrid, rootItemTplId))
                 {
                     // Only one possible slot and item is incompatible, exit function and inform caller
                     if (equipmentSlots.length === 1)
@@ -240,9 +241,9 @@ export class BotWeaponGeneratorHelper
                     break;
                 }
 
-                // Get all root items in backpack
-                const existingContainerItems = inventory.items.filter((i) =>
-                    i.parentId === container._id && i.slotId === slotGrid._name
+                // Get all root items in found container
+                const existingContainerItems = inventory.items.filter((item) =>
+                    item.parentId === container._id && item.slotId === slotGrid._name
                 );
 
                 // Get root items in container we can iterate over to find out what space is free
@@ -272,7 +273,7 @@ export class BotWeaponGeneratorHelper
                 // Open slot found, add item to inventory
                 if (findSlotResult.success)
                 {
-                    const parentItem = itemWithChildren.find((i) => i._id === parentId);
+                    const parentItem = itemWithChildren.find((i) => i._id === rootItemId);
 
                     // Set items parent to container id
                     parentItem.parentId = container._id;

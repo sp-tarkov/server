@@ -47,8 +47,8 @@ export class HashUtil
 
     public generateAccountId(): number
     {
-        const min = 1;
-        const max = 1000;
+        const min = 1000000;
+        const max = 1999999;
         return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
     }
 }

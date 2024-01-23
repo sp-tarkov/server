@@ -152,6 +152,14 @@ export class MatchStaticRouter extends StaticRouter
                 },
             ),
             new RouteAction(
+                "/client/raid/configuration-by-profile",
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.matchCallbacks.getConfigurationByProfile(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
                 "/client/match/group/player/remove",
                 (url: string, info: any, sessionID: string, output: string): any =>
                 {

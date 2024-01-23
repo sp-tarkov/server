@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { LootGenerator } from "@spt-aki/generators/LootGenerator";
+import { HideoutHelper } from "@spt-aki/helpers/HideoutHelper";
 import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
@@ -9,6 +10,7 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
 import { IAddItemRequestData } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
 import { IInventoryBindRequestData } from "@spt-aki/models/eft/inventory/IInventoryBindRequestData";
 import { IInventoryCreateMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryCreateMarkerRequestData";
@@ -28,6 +30,7 @@ import { IInventoryToggleRequestData } from "@spt-aki/models/eft/inventory/IInve
 import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IOpenRandomLootContainerRequestData } from "@spt-aki/models/eft/inventory/IOpenRandomLootContainerRequestData";
 import { IRedeemProfileRequestData } from "@spt-aki/models/eft/inventory/IRedeemProfileRequestData";
+import { ISetFavoriteItems } from "@spt-aki/models/eft/inventory/ISetFavoriteItems";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
@@ -58,6 +61,7 @@ export class InventoryController
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("QuestHelper") protected questHelper: QuestHelper,
+        @inject("HideoutHelper") protected hideoutHelper: HideoutHelper,
         @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
@@ -96,7 +100,7 @@ export class InventoryController
         const ownerInventoryItems = this.inventoryHelper.getOwnerInventoryItems(moveRequest, sessionID);
         if (ownerInventoryItems.sameInventory)
         {
-            // Don't move items from trader to profile, this can happen when editing a traders preset weapons
+            // Dont move items from trader to profile, this can happen when editing a traders preset weapons
             if (moveRequest.fromOwner?.type === "Trader" && !ownerInventoryItems.isMail)
             {
                 return this.getTraderExploitErrorResponse(output);
@@ -104,6 +108,7 @@ export class InventoryController
 
             // Check for item in inventory before allowing internal transfer
             const originalItemLocation = ownerInventoryItems.from.find((x) => x._id === moveRequest.item);
+            const originalLocationSlotId = originalItemLocation.slotId;
             if (!originalItemLocation)
             {
                 // Internal item move but item never existed, possible dupe glitch
@@ -114,6 +119,13 @@ export class InventoryController
             if (!moveResult.success)
             {
                 return this.httpResponseUtil.appendErrorToOutput(output, moveResult.errorMessage);
+            }
+
+            // Item is moving into or out of place of fame dogtag slot
+            if (moveRequest.to.container.startsWith("dogtag")
+                || originalLocationSlotId.startsWith("dogtag"))
+            {
+                this.hideoutHelper.applyPlaceOfFameDogtagBonus(pmcData);
             }
         }
         else
@@ -162,13 +174,17 @@ export class InventoryController
         sessionID: string,
     ): IItemEventRouterResponse
     {
+        const output = this.eventOutputHolder.getOutput(sessionID);
+
         if (body.fromOwner?.type === "Mail")
         {
-            return this.inventoryHelper.removeItemAndChildrenFromMailRewards(
+            this.inventoryHelper.removeItemAndChildrenFromMailRewards(
                 sessionID,
                 body,
-                this.eventOutputHolder.getOutput(sessionID),
+                output,
             );
+
+            return;
         }
 
         const profileToRemoveItemFrom = (!body.fromOwner || body.fromOwner.id === pmcData._id)
@@ -179,13 +195,13 @@ export class InventoryController
             profileToRemoveItemFrom,
             body.item,
             sessionID,
-            this.eventOutputHolder.getOutput(sessionID),
+            output,
         );
     }
 
     /**
      * Split Item
-     * splitting 1 stack into 2
+     * spliting 1 stack into 2
      * @param pmcData Player profile (unused, getOwnerInventoryItems() gets profile)
      * @param request Split request
      * @param sessionID Session/player id
@@ -209,8 +225,7 @@ export class InventoryController
             request.container.location = matchingItems.length; // Wrong location for first cartridge
         }
 
-        // The item being merged has three possible sources: pmc, scav or mail, getOwnerInventoryItems() handles getting
-        // correct one.
+        // The item being merged has three possible sources: pmc, scav or mail, getOwnerInventoryItems() handles getting correct one
         const itemToSplit = inventoryItems.from.find((x) => x._id === request.splitItem);
         if (!itemToSplit)
         {
@@ -284,7 +299,7 @@ export class InventoryController
 
         if (!(destinationItem.upd?.StackObjectsCount))
         {
-            // No stack count on destination, add one
+            // No stackcount on destination, add one
             destinationItem.upd = { StackObjectsCount: 1 };
         }
 
@@ -294,11 +309,17 @@ export class InventoryController
         }
         else if (!sourceItem.upd.StackObjectsCount)
         {
-            // Items pulled out of raid can have no stack count if the stack should be 1
+            // Items pulled out of raid can have no stackcount if the stack should be 1
             sourceItem.upd.StackObjectsCount = 1;
         }
 
-        destinationItem.upd.StackObjectsCount += sourceItem.upd.StackObjectsCount; // Add source stack count to destination
+        // Remove FiR status from destination stack when source stack has no FiR but destination does
+        if (!sourceItem.upd.SpawnedInSession && destinationItem.upd.SpawnedInSession)
+        {
+            delete destinationItem.upd.SpawnedInSession;
+        }
+
+        destinationItem.upd.StackObjectsCount += sourceItem.upd.StackObjectsCount; // Add source stackcount to destination
         output.profileChanges[sessionID].items.del.push({ _id: sourceItem._id }); // Inform client source item being deleted
 
         const indexOfItemToRemove = inventoryItems.from.findIndex((x) => x._id === sourceItem._id);
@@ -315,8 +336,8 @@ export class InventoryController
     }
 
     /**
-     * // TODO: Adds no data to output to send to client, is this by design?
-     * // TODO: should make use of getOwnerInventoryItems(), stack being transferred may not always be on pmc
+     * TODO: Adds no data to output to send to client, is this by design?
+     * TODO: should make use of getOwnerInventoryItems(), stack being transferred may not always be on pmc
      * Transfer items from one stack into another while keeping original stack
      * Used to take items from scav inventory into stash or to insert ammo into mags (shotgun ones) and reloading weapon by clicking "Reload"
      * @param pmcData Player profile
@@ -422,10 +443,10 @@ export class InventoryController
             this.logger.error(`Unable to find item: ${request.item2} to swap positions with: ${request.item}`);
         }
 
-        // to.id is the parentId
+        // to.id is the parentid
         itemOne.parentId = request.to.id;
 
-        // to.container is the slotId
+        // to.container is the slotid
         itemOne.slotId = request.to.container;
 
         // Request object has location data, add it in, otherwise remove existing location from object
@@ -477,7 +498,7 @@ export class InventoryController
     }
 
     /**
-     * Toggles "toggleable" items like night vision goggles and face shields.
+     * Toggles "Toggleable" items like night vision goggles and face shields.
      * @param pmcData player profile
      * @param body Toggle request
      * @param sessionID Session id
@@ -549,7 +570,7 @@ export class InventoryController
      * Bind an inventory item to the quick access menu at bottom of player screen
      * Handle bind event
      * @param pmcData Player profile
-     * @param bindRequest Request object
+     * @param bindRequest Reqeust object
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */
@@ -680,9 +701,9 @@ export class InventoryController
     }
 
     /**
-     * Get the tplId of an item from the examine request object
+     * Get the tplid of an item from the examine request object
      * @param body response request
-     * @returns string
+     * @returns tplid
      */
     protected getExaminedItemTpl(body: IInventoryExamineRequestData): string
     {
@@ -692,41 +713,40 @@ export class InventoryController
         }
         else if (body.fromOwner.id === Traders.FENCE)
         {
-            // Get tpl from fence assorts
+            // get tpl from fence assorts
             return this.fenceService.getRawFenceAssorts().items.find((x) => x._id === body.item)._tpl;
         }
         else if (body.fromOwner.type === "Trader")
         { // not fence
-            // Not fence
-            // Get tpl from trader assort
+            // get tpl from trader assort
             return this.databaseServer.getTables().traders[body.fromOwner.id].assort.items.find((item) =>
                 item._id === body.item
             )._tpl;
         }
         else if (body.fromOwner.type === "RagFair")
         {
-            // try to get tplId from items.json first
+            // try to get tplid from items.json first
             const item = this.databaseServer.getTables().templates.items[body.item];
             if (item)
             {
                 return item._id;
             }
 
-            // Try alternate way of getting offer if first approach fails
+            // try alternate way of getting offer if first approach fails
             let offer = this.ragfairOfferService.getOfferByOfferId(body.item);
             if (!offer)
             {
                 offer = this.ragfairOfferService.getOfferByOfferId(body.fromOwner.id);
             }
 
-            // Try find examine item inside offer items array
+            // try find examine item inside offer items array
             const matchingItem = offer.items.find((x) => x._id === body.item);
             if (matchingItem)
             {
                 return matchingItem._tpl;
             }
 
-            // Unable to find item in database or ragfair
+            // unable to find item in database or ragfair
             throw new Error(this.localisationService.getText("inventory-unable_to_find_item", body.item));
         }
     }
@@ -741,6 +761,7 @@ export class InventoryController
         {
             pmcData.Encyclopedia[id] = true;
         }
+
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
@@ -894,36 +915,50 @@ export class InventoryController
         sessionID: string,
     ): IItemEventRouterResponse
     {
+        const output = this.eventOutputHolder.getOutput(sessionID);
+
+        /** Container player opened in their inventory */
         const openedItem = pmcData.Inventory.items.find((x) => x._id === body.item);
-        const containerDetails = this.itemHelper.getItem(openedItem._tpl);
-        const isSealedWeaponBox = containerDetails[1]._name.includes("event_container_airdrop");
+        const containerDetailsDb = this.itemHelper.getItem(openedItem._tpl);
+        const isSealedWeaponBox = containerDetailsDb[1]._name.includes("event_container_airdrop");
 
-        const newItemRequest: IAddItemRequestData = { tid: "RandomLootContainer", items: [] };
-
-        let foundInRaid = false;
+        let foundInRaid = openedItem.upd?.SpawnedInSession;
+        const rewards: Item[][] = [];
         if (isSealedWeaponBox)
         {
             const containerSettings = this.inventoryHelper.getInventoryConfig().sealedAirdropContainer;
-            newItemRequest.items.push(...this.lootGenerator.getSealedWeaponCaseLoot(containerSettings));
+            rewards.push(...this.lootGenerator.getSealedWeaponCaseLoot(containerSettings));
 
-            foundInRaid = containerSettings.foundInRaid;
+            if (containerSettings.foundInRaid)
+            {
+                foundInRaid = containerSettings.foundInRaid
+            }
         }
         else
         {
-            // Get summary of loot from config
             const rewardContainerDetails = this.inventoryHelper.getRandomLootContainerRewardDetails(openedItem._tpl);
-            newItemRequest.items.push(...this.lootGenerator.getRandomLootContainerLoot(rewardContainerDetails));
+            rewards.push(...this.lootGenerator.getRandomLootContainerLoot(rewardContainerDetails));
 
-            foundInRaid = rewardContainerDetails.foundInRaid;
+            if (rewardContainerDetails.foundInRaid)
+            {
+                foundInRaid = rewardContainerDetails.foundInRaid;
+            }
         }
-
-        const output = this.eventOutputHolder.getOutput(sessionID);
 
         // Find and delete opened item from player inventory
         this.inventoryHelper.removeItem(pmcData, body.item, sessionID, output);
 
         // Add reward items to player inventory
-        this.inventoryHelper.addItem(pmcData, newItemRequest, output, sessionID, null, foundInRaid, null, true);
+        for (const itemWithChildrenToAdd of rewards)
+        {
+            const request: IAddItemDirectRequest = {
+                itemWithModsToAdd: itemWithChildrenToAdd,
+                foundInRaid: foundInRaid,
+                callback: null,
+                useSortingTable: true
+            };
+            this.inventoryHelper.addItemToStash(sessionID, request, pmcData, output);
+        }
 
         return output;
     }
@@ -980,6 +1015,32 @@ export class InventoryController
             }
         }
 
+        return output;
+    }
+
+    public setFavoriteItem(pmcData: IPmcData, request: ISetFavoriteItems, sessionId: string): IItemEventRouterResponse
+    {
+        const output = this.eventOutputHolder.getOutput(sessionId);
+
+        if (!pmcData.Inventory.favoriteItems)
+        {
+            pmcData.Inventory.favoriteItems = [];
+        }
+
+        for (const itemId of request.items)
+        {
+            // If id already exists in array, we're removing it
+            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex(x => x === itemId);
+            if (indexOfItemAlreadyFavorited > -1)
+            {
+                pmcData.Inventory.favoriteItems.splice(indexOfItemAlreadyFavorited, 1);
+            }
+            else
+            {
+                pmcData.Inventory.favoriteItems.push(itemId);
+            }
+        }
+        
         return output;
     }
 }

@@ -68,7 +68,7 @@ export class RepairHelper
             newCurrentDurability = itemMaxDurability;
         }
 
-        // Construct object to return
+        // Update Repairable properties with new values after repair
         itemToRepair.upd.Repairable = { Durability: newCurrentDurability, MaxDurability: newCurrentMaxDurability };
 
         // when modders set the repair coefficient to 0 it means that they dont want to lose durability on items
@@ -100,7 +100,7 @@ export class RepairHelper
         }
 
         // Repair mask cracks
-        if (itemToRepair.upd.FaceShield && itemToRepair.upd.FaceShield.Hits > 0)
+        if (itemToRepair.upd.FaceShield && itemToRepair.upd.FaceShield?.Hits > 0)
         {
             itemToRepair.upd.FaceShield.Hits = 0;
         }

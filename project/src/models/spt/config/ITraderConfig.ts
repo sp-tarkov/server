@@ -31,6 +31,7 @@ export interface FenceConfig
     presetPriceMult: number;
     armorMaxDurabilityPercentMinMax: MinMax;
     presetMaxDurabilityPercentMinMax: MinMax;
+    chancePlateExistsInArmorPercent: number;
     /** Key: item tpl */
     itemStackSizeOverrideMinMax: Record<string, MinMax>;
     itemTypeLimits: Record<string, number>;
@@ -43,6 +44,7 @@ export interface FenceConfig
     blacklistSeasonalItems: boolean;
     blacklist: string[];
     coopExtractGift: CoopExtractReward;
+    btrDeliveryExpireHours: number;
 }
 
 export interface CoopExtractReward extends LootRequest
