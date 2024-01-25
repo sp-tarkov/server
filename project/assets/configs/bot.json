@@ -48,7 +48,19 @@
         "sptUsec": 25,
         "sptBear": 25
     },
-    "bosses": ["bossbully", "bossgluhar", "bosskilla", "bosskojaniy", "bosssanitar", "bosstagilla", "bossknight", "bosszryachiy", "bossboar", "bossboarSniper", "bosskolontay"],
+    "bosses": [
+        "bossbully",
+        "bossgluhar",
+        "bosskilla",
+        "bosskojaniy",
+        "bosssanitar",
+        "bosstagilla",
+        "bossknight",
+        "bosszryachiy",
+        "bossboar",
+        "bossboarSniper",
+        "bosskolontay"
+    ],
     "durability": {
         "default": {
             "armor": {
@@ -308,15 +320,29 @@
         "sectantwarrior": 4,
         "shooterbtr": 1,
         "test": 4,
-		"ravangezryachiyevent": 4
+        "ravangezryachiyevent": 4
     },
     "chanceAssaultScavHasPlayerScavName": 10,
     "secureContainerAmmoStackCount": 20,
-	"botRolesWithDogTags": ["sptbear", "sptusec"],
+    "botRolesWithDogTags": [
+        "sptbear",
+        "sptusec"
+    ],
     "revenge": {
-        "assault": ["assault", "marksman", "gifter"],
-        "marksman": ["assault", "marksman", "gifter"],
-        "pmcBot": ["pmcBot", "gifter"]
+        "assault": [
+            "assault",
+            "marksman",
+            "gifter"
+        ],
+        "marksman": [
+            "assault",
+            "marksman",
+            "gifter"
+        ],
+        "pmcBot": [
+            "pmcBot",
+            "gifter"
+        ]
     },
     "itemSpawnLimits": {
         "default": {},
@@ -399,7 +425,8 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 85,
             "laserIsActiveChancePercent": 75,
-            "weightingAdjustmentsByPlayerLevel": [{
+            "weightingAdjustmentsByPlayerLevel": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 6
@@ -416,7 +443,6 @@
                             }
                         }
                     }
-
                 }
             ]
         },
@@ -758,16 +784,65 @@
                 "lightLaserLimit": 1
             },
             "weaponSightWhitelist": {
-                "5447b5fc4bdc2d87278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e", "55818add4bdc2d5b648b456f", "55818aeb4bdc2ddc698b456a"],
-                "5447b5f14bdc2d61278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e", "55818add4bdc2d5b648b456f", "55818aeb4bdc2ddc698b456a"],
-                "5447bedf4bdc2d87278b4568": ["55818ad54bdc2ddc698b4569", "55818add4bdc2d5b648b456f", "55818aeb4bdc2ddc698b456a"],
-                "5447bed64bdc2d97278b4568": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e", "55818add4bdc2d5b648b456f", "55818aeb4bdc2ddc698b456a"],
-                "5447b6194bdc2d67278b4567": ["55818ad54bdc2ddc698b4569", "55818ae44bdc2dde698b456c", "55818ac54bdc2d5b648b456e", "55818aeb4bdc2ddc698b456a", "55818add4bdc2d5b648b456f"],
-                "5447b5cf4bdc2d65278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e"],
-                "617f1ef5e8b54b0998387733": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e"],
-                "5447b6094bdc2dc3278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e"],
-                "5447b5e04bdc2d62278b4567": ["55818ad54bdc2ddc698b4569", "55818acf4bdc2dde698b456b", "55818ac54bdc2d5b648b456e"],
-                "5447b6254bdc2dc3278b4568": ["55818ae44bdc2dde698b456c", "55818ac54bdc2d5b648b456e", "55818aeb4bdc2ddc698b456a", "55818add4bdc2d5b648b456f"]
+                "5447b5fc4bdc2d87278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e",
+                    "55818add4bdc2d5b648b456f",
+                    "55818aeb4bdc2ddc698b456a"
+                ],
+                "5447b5f14bdc2d61278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e",
+                    "55818add4bdc2d5b648b456f",
+                    "55818aeb4bdc2ddc698b456a"
+                ],
+                "5447bedf4bdc2d87278b4568": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818add4bdc2d5b648b456f",
+                    "55818aeb4bdc2ddc698b456a"
+                ],
+                "5447bed64bdc2d97278b4568": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e",
+                    "55818add4bdc2d5b648b456f",
+                    "55818aeb4bdc2ddc698b456a"
+                ],
+                "5447b6194bdc2d67278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818ae44bdc2dde698b456c",
+                    "55818ac54bdc2d5b648b456e",
+                    "55818aeb4bdc2ddc698b456a",
+                    "55818add4bdc2d5b648b456f"
+                ],
+                "5447b5cf4bdc2d65278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e"
+                ],
+                "617f1ef5e8b54b0998387733": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e"
+                ],
+                "5447b6094bdc2dc3278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e"
+                ],
+                "5447b5e04bdc2d62278b4567": [
+                    "55818ad54bdc2ddc698b4569",
+                    "55818acf4bdc2dde698b456b",
+                    "55818ac54bdc2d5b648b456e"
+                ],
+                "5447b6254bdc2dc3278b4568": [
+                    "55818ae44bdc2dde698b456c",
+                    "55818ac54bdc2d5b648b456e",
+                    "55818aeb4bdc2ddc698b456a",
+                    "55818add4bdc2d5b648b456f"
+                ]
             },
             "nvgIsActiveChanceDayPercent": 10,
             "nvgIsActiveChanceNightPercent": 95,
@@ -775,8 +850,9 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 95,
             "laserIsActiveChancePercent": 85,
-			"filterPlatesByLevel": true,
-            "randomisation": [{
+            "filterPlatesByLevel": true,
+            "randomisation": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -874,7 +950,7 @@
                     "equipmentMods": {
                         "back_plate": 60,
                         "left_side_plate": 0,
-                        "rightside_plate": 0,
+                        "right_side_plate": 0,
                         "mod_equipment": 3,
                         "mod_equipment_000": 3,
                         "mod_equipment_001": 3,
@@ -888,7 +964,7 @@
                         "mod_foregrip": 10,
                         "mod_handguard": 10,
                         "mod_launcher": 0,
-						"mod_reciever": 15,
+                        "mod_reciever": 15,
                         "mod_magazine": 10,
                         "mod_mount": 15,
                         "mod_mount_000": 10,
@@ -922,7 +998,8 @@
                         "mod_tactical_003": 10,
                         "mod_tactical_2": 10
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 22
@@ -939,20 +1016,56 @@
                         "Scabbard": 100,
                         "TacticalVest": 90
                     },
-                    "randomisedArmorSlots": ["Headwear", "ArmorVest", "TacticalVest"],
-                    "randomisedWeaponModSlots": ["mod_scope", "mod_scope_000", "mod_scope_001", "mod_scope_002", "mod_scope_003",
-                        "mod_handguard", "mod_magazine", "mod_muzzle", "mod_bipod",
-                        "mod_muzzle_000", "mod_muzzle_001", "mod_charge",
-                        "mod_gas_block", "mod_pistol_grip", "mod_pistolgrip", "mod_pistol_grip_akms", "mod_pistolgrip_000",
-                        "mod_foregrip", "mod_trigger", "mod_reciever", "mod_hammer",
-                        "mod_stock", "mod_stock_000", "mod_stock_001", "mod_stock_akms", "mod_stock_axis",
-                        "mod_mount_000", "mod_mount_001", "mod_mount_002", "mod_mount_003", "mod_mount_004", "mod_mount_005", "mod_mount_006",
-                        "mod_tactical", "mod_tactical_2", "mod_tactical_000", "mod_tactical_001", "mod_tactical_002", "mod_tactical_003"
+                    "randomisedArmorSlots": [
+                        "Headwear",
+                        "ArmorVest",
+                        "TacticalVest"
+                    ],
+                    "randomisedWeaponModSlots": [
+                        "mod_scope",
+                        "mod_scope_000",
+                        "mod_scope_001",
+                        "mod_scope_002",
+                        "mod_scope_003",
+                        "mod_handguard",
+                        "mod_magazine",
+                        "mod_muzzle",
+                        "mod_bipod",
+                        "mod_muzzle_000",
+                        "mod_muzzle_001",
+                        "mod_charge",
+                        "mod_gas_block",
+                        "mod_pistol_grip",
+                        "mod_pistolgrip",
+                        "mod_pistol_grip_akms",
+                        "mod_pistolgrip_000",
+                        "mod_foregrip",
+                        "mod_trigger",
+                        "mod_reciever",
+                        "mod_hammer",
+                        "mod_stock",
+                        "mod_stock_000",
+                        "mod_stock_001",
+                        "mod_stock_akms",
+                        "mod_stock_axis",
+                        "mod_mount_000",
+                        "mod_mount_001",
+                        "mod_mount_002",
+                        "mod_mount_003",
+                        "mod_mount_004",
+                        "mod_mount_005",
+                        "mod_mount_006",
+                        "mod_tactical",
+                        "mod_tactical_2",
+                        "mod_tactical_000",
+                        "mod_tactical_001",
+                        "mod_tactical_002",
+                        "mod_tactical_003"
                     ],
                     "equipmentMods": {
                         "back_plate": 75,
                         "left_side_plate": 25,
-                        "rightside_plate": 25,
+                        "right_side_plate": 25,
                         "mod_equipment": 10,
                         "mod_equipment_000": 10,
                         "mod_equipment_001": 10,
@@ -994,7 +1107,8 @@
                         "mod_tactical_003": 30,
                         "mod_tactical_2": 15
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 23,
                         "max": 45
@@ -1002,17 +1116,54 @@
                     "equipment": {
                         "SecondPrimaryWeapon": 20
                     },
-                    "randomisedArmorSlots": ["Headwear", "TacticalVest", "ArmorVest"],
-                    "randomisedWeaponModSlots": ["mod_scope", "mod_scope_000", "mod_scope_001", "mod_scope_002", "mod_scope_003",
-                        "mod_handguard", "mod_magazine", "mod_muzzle", "mod_bipod",
-                        "mod_muzzle_000", "mod_muzzle_001", "mod_charge",
-                        "mod_gas_block", "mod_pistol_grip", "mod_pistolgrip", "mod_pistol_grip_akms", "mod_pistolgrip_000",
-                        "mod_foregrip", "mod_trigger", "mod_reciever", "mod_hammer",
-                        "mod_stock", "mod_stock_000", "mod_stock_001", "mod_stock_akms", "mod_stock_axis",
-                        "mod_mount_000", "mod_mount_001", "mod_mount_002", "mod_mount_003", "mod_mount_004", "mod_mount_005", "mod_mount_006",
-                        "mod_tactical", "mod_tactical_2", "mod_tactical_000", "mod_tactical_001", "mod_tactical_002", "mod_tactical_003"
+                    "randomisedArmorSlots": [
+                        "Headwear",
+                        "TacticalVest",
+                        "ArmorVest"
+                    ],
+                    "randomisedWeaponModSlots": [
+                        "mod_scope",
+                        "mod_scope_000",
+                        "mod_scope_001",
+                        "mod_scope_002",
+                        "mod_scope_003",
+                        "mod_handguard",
+                        "mod_magazine",
+                        "mod_muzzle",
+                        "mod_bipod",
+                        "mod_muzzle_000",
+                        "mod_muzzle_001",
+                        "mod_charge",
+                        "mod_gas_block",
+                        "mod_pistol_grip",
+                        "mod_pistolgrip",
+                        "mod_pistol_grip_akms",
+                        "mod_pistolgrip_000",
+                        "mod_foregrip",
+                        "mod_trigger",
+                        "mod_reciever",
+                        "mod_hammer",
+                        "mod_stock",
+                        "mod_stock_000",
+                        "mod_stock_001",
+                        "mod_stock_akms",
+                        "mod_stock_axis",
+                        "mod_mount_000",
+                        "mod_mount_001",
+                        "mod_mount_002",
+                        "mod_mount_003",
+                        "mod_mount_004",
+                        "mod_mount_005",
+                        "mod_mount_006",
+                        "mod_tactical",
+                        "mod_tactical_2",
+                        "mod_tactical_000",
+                        "mod_tactical_001",
+                        "mod_tactical_002",
+                        "mod_tactical_003"
                     ]
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 46,
                         "max": 100
@@ -1022,50 +1173,116 @@
                     },
                     "equipmentMods": {
                         "left_side_plate": 90,
-                        "rightside_plate": 90,
+                        "right_side_plate": 90,
                         "mod_equipment": 75,
                         "mod_equipment_000": 80,
                         "mod_equipment_001": 75,
                         "mod_equipment_002": 90,
                         "mod_nvg": 60
                     },
-                    "randomisedArmorSlots": ["Headwear", "TacticalVest", "ArmorVest"],
-                    "randomisedWeaponModSlots": ["mod_scope", "mod_scope_000", "mod_scope_001", "mod_scope_002", "mod_scope_003",
-                        "mod_handguard", "mod_magazine", "mod_muzzle", "mod_bipod",
-                        "mod_muzzle_000", "mod_muzzle_001", "mod_charge",
-                        "mod_gas_block", "mod_pistol_grip", "mod_pistolgrip", "mod_pistol_grip_akms", "mod_pistolgrip_000",
-                        "mod_foregrip", "mod_trigger", "mod_reciever", "mod_hammer",
-                        "mod_stock", "mod_stock_000", "mod_stock_001", "mod_stock_akms", "mod_stock_axis",
-                        "mod_mount_000", "mod_mount_001", "mod_mount_002", "mod_mount_003", "mod_mount_004", "mod_mount_005", "mod_mount_006",
-                        "mod_tactical", "mod_tactical_2", "mod_tactical_000", "mod_tactical_001", "mod_tactical_002", "mod_tactical_003"
+                    "randomisedArmorSlots": [
+                        "Headwear",
+                        "TacticalVest",
+                        "ArmorVest"
+                    ],
+                    "randomisedWeaponModSlots": [
+                        "mod_scope",
+                        "mod_scope_000",
+                        "mod_scope_001",
+                        "mod_scope_002",
+                        "mod_scope_003",
+                        "mod_handguard",
+                        "mod_magazine",
+                        "mod_muzzle",
+                        "mod_bipod",
+                        "mod_muzzle_000",
+                        "mod_muzzle_001",
+                        "mod_charge",
+                        "mod_gas_block",
+                        "mod_pistol_grip",
+                        "mod_pistolgrip",
+                        "mod_pistol_grip_akms",
+                        "mod_pistolgrip_000",
+                        "mod_foregrip",
+                        "mod_trigger",
+                        "mod_reciever",
+                        "mod_hammer",
+                        "mod_stock",
+                        "mod_stock_000",
+                        "mod_stock_001",
+                        "mod_stock_akms",
+                        "mod_stock_axis",
+                        "mod_mount_000",
+                        "mod_mount_001",
+                        "mod_mount_002",
+                        "mod_mount_003",
+                        "mod_mount_004",
+                        "mod_mount_005",
+                        "mod_mount_006",
+                        "mod_tactical",
+                        "mod_tactical_2",
+                        "mod_tactical_000",
+                        "mod_tactical_001",
+                        "mod_tactical_002",
+                        "mod_tactical_003"
                     ]
                 }
             ],
-            "blacklist": [{
+            "blacklist": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 100
                     },
                     "equipment": {
-                        "mod_magazine": ["57838f0b2459774a256959b2", "5aaa5e60e5b5b000140293d6", "5b1fd4e35acfc40018633c39", "59e5d83b86f7745aed03d262",
-                            "5b7bef1e5acfc43d82528402", "617130016c780c1e710c9a24", "55d4837c4bdc2d1d4e8b456c", "5c503ac82e221602b21d6e9a",
-                            "6241c2c2117ad530666a5108"],
-                        "mod_scope": ["5a1ead28fcdbcb001912fa9f", "5a1eaa87fcdbcb001865f75e", "5d1b5e94d7ad1a2b865a96b0", "5a7c74b3e899ef0014332c29",
-                            "618b9643526131765025ab35", "618bab21526131765025ab3f"],
-                        "mod_nvg": ["5c11046cd174af02a012e42b"],
-                        "mod_reciever": ["5d4405aaa4b9361e6a4e6bd3"],
-                        "mod_stock": ["5cde739cd7f00c0010373bd3"],
-                        "mod_rear_sight": ["5a0ed824fcdbcb0176308b0d"],
-                        "mod_front_sight": ["5a0f096dfcdbcb0176308b15"]
+                        "mod_magazine": [
+                            "57838f0b2459774a256959b2",
+                            "5aaa5e60e5b5b000140293d6",
+                            "5b1fd4e35acfc40018633c39",
+                            "59e5d83b86f7745aed03d262",
+                            "5b7bef1e5acfc43d82528402",
+                            "617130016c780c1e710c9a24",
+                            "55d4837c4bdc2d1d4e8b456c",
+                            "5c503ac82e221602b21d6e9a",
+                            "6241c2c2117ad530666a5108"
+                        ],
+                        "mod_scope": [
+                            "5a1ead28fcdbcb001912fa9f",
+                            "5a1eaa87fcdbcb001865f75e",
+                            "5d1b5e94d7ad1a2b865a96b0",
+                            "5a7c74b3e899ef0014332c29",
+                            "618b9643526131765025ab35",
+                            "618bab21526131765025ab3f"
+                        ],
+                        "mod_nvg": [
+                            "5c11046cd174af02a012e42b"
+                        ],
+                        "mod_reciever": [
+                            "5d4405aaa4b9361e6a4e6bd3"
+                        ],
+                        "mod_stock": [
+                            "5cde739cd7f00c0010373bd3"
+                        ],
+                        "mod_rear_sight": [
+                            "5a0ed824fcdbcb0176308b0d"
+                        ],
+                        "mod_front_sight": [
+                            "5a0f096dfcdbcb0176308b15"
+                        ]
                     },
                     "cartridge": {
-                        "Caliber23x75": ["5e85a9f4add9fe03027d9bf1"],
-                        "Caliber127x55": ["5cadf6e5ae921500113bb973", "5cadf6ddae9215051e1c23b2"]
+                        "Caliber23x75": [
+                            "5e85a9f4add9fe03027d9bf1"
+                        ],
+                        "Caliber127x55": [
+                            "5cadf6e5ae921500113bb973",
+                            "5cadf6ddae9215051e1c23b2"
+                        ]
                     }
                 }
             ],
             "weightingAdjustmentsByBotLevel": [
-			{
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -1103,7 +1320,7 @@
                             },
                             "Caliber9x39": {
                                 "57a0dfb82459774d3078b56c": 10,
-								"6576f96220d53a5b8f3e395e": 14
+                                "6576f96220d53a5b8f3e395e": 14
                             },
                             "Caliber12g": {
                                 "5d6e6806a4b936088465b17e": 20
@@ -1115,49 +1332,48 @@
                     },
                     "equipment": {
                         "add": {
-							"ArmorVest": {
-								"59e7635f86f7742cbf2c1095": 120
-							},
+                            "ArmorVest": {
+                                "59e7635f86f7742cbf2c1095": 120
+                            },
                             "TacticalVest": {
                                 "6034d0230ca681766b6a0fb5": 120,
                                 "6034cf5fffd42c541047f72e": 150
                             },
-                            "Backpack": {
-                            },
+                            "Backpack": {},
                             "Headwear": {
                                 "59e7711e86f7746cae05fbe1": 90
                             }
                         },
                         "edit": {
                             "ArmorVest": {
-								"5648a7494bdc2d9d488b4583": 290,
-								"5b44d22286f774172b0c9de8": 280,
+                                "5648a7494bdc2d9d488b4583": 290,
+                                "5b44d22286f774172b0c9de8": 280,
                                 "5c0e5bab86f77461f55ed1f3": 280,
                                 "5c0e5edb86f77461f55ed1f7": 270,
                                 "5ab8e4ed86f7742d8e50c7fa": 260,
                                 "5df8a2ca86f7740bfe6df777": 185,
-								"64be79c487d1510151095552": 270,
-								"64be79e2bf8412471d0d9bcc": 270,
+                                "64be79c487d1510151095552": 270,
+                                "64be79e2bf8412471d0d9bcc": 270,
                                 "5c0e655586f774045612eeb2": 80,
                                 "5e4abb5086f77406975c9342": 4,
                                 "6038b4ca92ec1c3103795a0d": 4,
                                 "6038b4b292ec1c3103795a0b": 4,
-								"5b44cd8b86f774503d30cba2": 4,
-								"5ca21c6986f77479963115a7": 4,
-								"5b44d0de86f774503d30cba8": 4,
-								"5b44cf1486f77431723e3d05": 4,
-								"60a283193cb70855c43a381d": 4,
-								"5c0e541586f7747fa54205c9": 4,
-								"545cdb794bdc2d3a198b456a": 4,
-								"5ca2151486f774244a3b8d30": 1
+                                "5b44cd8b86f774503d30cba2": 4,
+                                "5ca21c6986f77479963115a7": 4,
+                                "5b44d0de86f774503d30cba8": 4,
+                                "5b44cf1486f77431723e3d05": 4,
+                                "60a283193cb70855c43a381d": 4,
+                                "5c0e541586f7747fa54205c9": 4,
+                                "545cdb794bdc2d3a198b456a": 4,
+                                "5ca2151486f774244a3b8d30": 1
                             },
                             "TacticalVest": {
-								"5c0e446786f7742013381639": 210,
-								"5e4abfed86f77406a2713cf7": 200,
-								"5d5d8ca986f7742798716522": 200,
-								"5d5d646386f7742797261fd9": 230,
-								"64be7095047e826eae02b0c1": 230,
-								"5e4abc1f86f774069619fbaa": 230,
+                                "5c0e446786f7742013381639": 210,
+                                "5e4abfed86f77406a2713cf7": 200,
+                                "5d5d8ca986f7742798716522": 200,
+                                "5d5d646386f7742797261fd9": 230,
+                                "64be7095047e826eae02b0c1": 230,
+                                "5e4abc1f86f774069619fbaa": 230,
                                 "628d0618d1ba6e4fa07ce5a4": 1,
                                 "628b9c7d45122232a872358f": 1,
                                 "628b9784bcf6e2659e09b8a2": 1,
@@ -1166,7 +1382,7 @@
                                 "60a3c68c37ea821725773ef5": 1,
                                 "5e4ac41886f77406a511c9a8": 1,
                                 "5b44cad286f77402a54ae7e5": 1,
-								"628dc750b910320f4c27a732": 1,
+                                "628dc750b910320f4c27a732": 1,
                                 "5c0e3eb886f7742015526062": 230,
                                 "572b7adb24597762ae139821": 250,
                                 "544a5caa4bdc2d1a388b4568": 50,
@@ -1187,7 +1403,7 @@
                                 "5645bc214bdc2d363b8b4571": 230,
                                 "5aa7cfc0e5b5b00015693143": 310,
                                 "5c06c6a80db834001b735491": 350,
-								"5aa7d193e5b5b000171d063f": 350,
+                                "5aa7d193e5b5b000171d063f": 350,
                                 "5aa7d03ae5b5b00016327db5": 230
                             },
                             "FirstPrimaryWeapon": {
@@ -1222,10 +1438,10 @@
                                 "5d43021ca4b9362eab4b5e25": 1,
                                 "6275303a9f372d6ea97f9ec7": 1,
                                 "5fb64bc92b1b027b1f50bcf2": 1,
-								"6499849fc93611967b034949": 140,
-								"59984ab886f7743e98271174": 170,
-								"57dc2fa62459775949412633": 170,
-								"606dae0ab0e443224b421bb7": 110
+                                "6499849fc93611967b034949": 140,
+                                "59984ab886f7743e98271174": 170,
+                                "57dc2fa62459775949412633": 170,
+                                "606dae0ab0e443224b421bb7": 110
                             },
                             "SecondPrimaryWeapon": {
                                 "5e81ebcd8e146c7080625e15": 0
@@ -1251,13 +1467,13 @@
                             "Earpiece": {
                                 "5b432b965acfc47a8774094e": 200
                             },
-							"ArmBand": {
-								"5b3f16c486f7747c327f55f7": 200,
-								"5b3f3ade86f7746b6b790d8e": 200,
-								"5b3f3af486f774679e752c1f": 200,
-								"5b3f3b0186f774021a2afef7": 200,
-								"5b3f3b0e86f7746752107cda": 200
-							}
+                            "ArmBand": {
+                                "5b3f16c486f7747c327f55f7": 200,
+                                "5b3f3ade86f7746b6b790d8e": 200,
+                                "5b3f3af486f774679e752c1f": 200,
+                                "5b3f3b0186f774021a2afef7": 200,
+                                "5b3f3b0e86f7746752107cda": 200
+                            }
                         },
                         "clothing": {
                             "add": {},
@@ -1273,7 +1489,8 @@
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 22
@@ -1327,7 +1544,8 @@
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 30,
                         "max": 50
@@ -1341,7 +1559,6 @@
                                 "5ca21c6986f77479963115a7": 35,
                                 "5e9dacf986f774054d6b89f4": 35,
                                 "5f5f41476bdad616ad46d631": 35,
-
                                 "5e4abb5086f77406975c9342": 25,
                                 "5fd4c474dd870108a754b241": 25,
                                 "6038b4b292ec1c3103795a0b": 25,
@@ -1355,7 +1572,6 @@
                                 "60a3c68c37ea821725773ef5": 45,
                                 "628b9784bcf6e2659e09b8a2": 45,
                                 "628b9c7d45122232a872358f": 45,
-
                                 "609e860ebd219504d8507525": 25,
                                 "628cd624459354321c4b7fa2": 35
                             },
@@ -1367,13 +1583,13 @@
                                 "5b40e4035acfc47a87740943": 40,
                                 "5d6d3716a4b9361bc8618872": 40,
                                 "5ea17ca01412a1425304d1c0": 40,
-
                                 "5c17a7ed2e2216152142459c": 45,
                                 "5f60c74e3b85f6263c145586": 15
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 51,
                         "max": 100
@@ -1440,22 +1656,20 @@
                                 "5ca21c6986f77479963115a7": 50,
                                 "5e9dacf986f774054d6b89f4": 50,
                                 "5f5f41476bdad616ad46d631": 50,
-
                                 "5e4abb5086f77406975c9342": 70,
                                 "5fd4c474dd870108a754b241": 70,
                                 "6038b4b292ec1c3103795a0b": 70,
                                 "6038b4ca92ec1c3103795a0d": 70,
                                 "60a283193cb70855c43a381d": 70,
                                 "545cdb794bdc2d3a198b456a": 70,
-								"5c0e625a86f7742d77340f62": 70,
-								"5b44cf1486f77431723e3d05": 70,
-								
-								"5c0e655586f774045612eeb2": 25,
-								"5c0e53c886f7747fa54205c7": 10,
-								"5c0e51be86f774598e797894": 10,
-								"5c0e57ba86f7747fa141986d": 10,
-								"609e8540d5c319764c2bc2e9": 10,
-								"64abd93857958b4249003418": 10
+                                "5c0e625a86f7742d77340f62": 70,
+                                "5b44cf1486f77431723e3d05": 70,
+                                "5c0e655586f774045612eeb2": 25,
+                                "5c0e53c886f7747fa54205c7": 10,
+                                "5c0e51be86f774598e797894": 10,
+                                "5c0e57ba86f7747fa141986d": 10,
+                                "609e8540d5c319764c2bc2e9": 10,
+                                "64abd93857958b4249003418": 10
                             },
                             "TacticalVest": {
                                 "5b44cad286f77402a54ae7e5": 70,
@@ -1463,13 +1677,11 @@
                                 "60a3c68c37ea821725773ef5": 70,
                                 "628b9784bcf6e2659e09b8a2": 70,
                                 "628b9c7d45122232a872358f": 70,
-
                                 "609e860ebd219504d8507525": 35,
                                 "628cd624459354321c4b7fa2": 65,
-								"628d0618d1ba6e4fa07ce5a4": 65,
-								
-								"5df8a42886f77412640e2e75": 50,
-								"5648a69d4bdc2ded0b8b457b": 45
+                                "628d0618d1ba6e4fa07ce5a4": 65,
+                                "5df8a42886f77412640e2e75": 50,
+                                "5648a69d4bdc2ded0b8b457b": 45
                             },
                             "Headwear": {
                                 "5aa7e4a4e5b5b000137b76f2": 60,
@@ -1479,24 +1691,24 @@
                                 "5b40e4035acfc47a87740943": 60,
                                 "5d6d3716a4b9361bc8618872": 60,
                                 "5ea17ca01412a1425304d1c0": 60,
-
                                 "5c17a7ed2e2216152142459c": 65,
                                 "5f60c74e3b85f6263c145586": 50
                             },
-							"Backpack": {
-								"5df8a4d786f77412672a1e3b": 10,
-								"5f5e46b96bdad616ad46d613": 10,
-								"5ab8ebf186f7742d8b372e80": 10,
-								"639346cc1c8f182ad90c8972": 10
-							},
-							"FaceCover": {
-								"657089638db3adca1009f4ca": 20 
-							}
+                            "Backpack": {
+                                "5df8a4d786f77412672a1e3b": 10,
+                                "5f5e46b96bdad616ad46d613": 10,
+                                "5ab8ebf186f7742d8b372e80": 10,
+                                "639346cc1c8f182ad90c8972": 10
+                            },
+                            "FaceCover": {
+                                "657089638db3adca1009f4ca": 20
+                            }
                         }
                     }
                 }
             ],
-            "armorPlateWeighting": [{
+            "armorPlateWeighting": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 10
@@ -1522,21 +1734,22 @@
                         "5": 1,
                         "6": 1
                     },
-					"left_side_plate":{
-						"2": 25,
+                    "left_side_plate": {
+                        "2": 25,
                         "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
-					},
-					"right_side_plate":{
-						"2": 25,
+                    },
+                    "right_side_plate": {
+                        "2": 25,
                         "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
-					}
-                }, {
+                    }
+                },
+                {
                     "levelRange": {
                         "min": 11,
                         "max": 14
@@ -1562,21 +1775,22 @@
                         "5": 1,
                         "6": 1
                     },
-					"left_side_plate":{
-						"2": 30,
+                    "left_side_plate": {
+                        "2": 30,
                         "3": 15,
                         "4": 5,
                         "5": 1,
                         "6": 1
-					},
-					"right_side_plate":{
-						"2": 30,
+                    },
+                    "right_side_plate": {
+                        "2": 30,
                         "3": 15,
                         "4": 5,
                         "5": 1,
                         "6": 1
-					}
-                }, {
+                    }
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 24
@@ -1602,21 +1816,22 @@
                         "5": 8,
                         "6": 4
                     },
-					"left_side_plate":{
-						"2": 10,
+                    "left_side_plate": {
+                        "2": 10,
                         "3": 15,
                         "4": 20,
                         "5": 8,
                         "6": 4
-					},
-					"right_side_plate":{
-						"2": 10,
+                    },
+                    "right_side_plate": {
+                        "2": 10,
                         "3": 15,
                         "4": 20,
                         "5": 8,
                         "6": 4
-					}
-                }, {
+                    }
+                },
+                {
                     "levelRange": {
                         "min": 25,
                         "max": 35
@@ -1642,21 +1857,22 @@
                         "5": 20,
                         "6": 10
                     },
-					"left_side_plate":{
-						"2": 3,
+                    "left_side_plate": {
+                        "2": 3,
                         "3": 15,
                         "4": 30,
                         "5": 20,
                         "6": 10
-					},
-					"right_side_plate":{
-						"2": 3,
+                    },
+                    "right_side_plate": {
+                        "2": 3,
                         "3": 15,
                         "4": 30,
                         "5": 20,
                         "6": 10
-					}
-                }, {
+                    }
+                },
+                {
                     "levelRange": {
                         "min": 36,
                         "max": 55
@@ -1682,21 +1898,22 @@
                         "5": 40,
                         "6": 20
                     },
-					"left_side_plate":{
-						"2": 1,
+                    "left_side_plate": {
+                        "2": 1,
                         "3": 10,
                         "4": 30,
                         "5": 40,
                         "6": 20
-					},
-					"right_side_plate":{
-						"2": 1,
+                    },
+                    "right_side_plate": {
+                        "2": 1,
                         "3": 10,
                         "4": 30,
                         "5": 40,
                         "6": 20
-					}
-                }, {
+                    }
+                },
+                {
                     "levelRange": {
                         "min": 56,
                         "max": 90
@@ -1722,23 +1939,24 @@
                         "5": 40,
                         "6": 50
                     },
-					"left_side_plate":{
-						"2": 0,
+                    "left_side_plate": {
+                        "2": 0,
                         "3": 0,
                         "4": 10,
                         "5": 40,
                         "6": 50
-					},
-					"right_side_plate":{
-						"2": 0,
+                    },
+                    "right_side_plate": {
+                        "2": 0,
                         "3": 0,
                         "4": 10,
                         "5": 40,
                         "6": 50
-					}
+                    }
                 }
             ],
-            "whitelist": [{
+            "whitelist": [
+                {
                     "levelRange": {
                         "min": 101,
                         "max": 101
