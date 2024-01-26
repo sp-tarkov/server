@@ -1102,8 +1102,8 @@
     "equipmentLootSettings": {
         "modSpawnChancePercent": {
             "mod_nvg": 5,
-            "front_plate": 50,
-            "back_plate": 50,
+            "front_plate": 75,
+            "back_plate": 75,
 			"left_side_plate": 25,
 			"right_side_plate": 25,
 			"mod_equipment_000": 5,

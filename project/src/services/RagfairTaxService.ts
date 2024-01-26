@@ -37,8 +37,16 @@ export class RagfairTaxService
         return this.playerOfferTaxCache[offerIdToGet];
     }
 
+    /**
     // This method, along with calculateItemWorth, is trying to mirror the client-side code found in the method "CalculateTaxPrice".
     // It's structured to resemble the client-side code as closely as possible - avoid making any big structure changes if it's not necessary.
+     * @param item Item being sold on flea
+     * @param pmcData player profile
+     * @param requirementsValue 
+     * @param offerItemCount Number of offers being created
+     * @param sellInOnePiece 
+     * @returns Tax in roubles
+     */
     public calculateTax(
         item: Item,
         pmcData: IPmcData,

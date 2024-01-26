@@ -23,6 +23,7 @@ import { IGetMarketPriceRequestData } from "@spt-aki/models/eft/ragfair/IGetMark
 import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
 import { IGetRagfairOfferByIdRequest } from "@spt-aki/models/eft/ragfair/IGetRagfairOfferByIdRequest";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { IRemoveOfferRequestData } from "@spt-aki/models/eft/ragfair/IRemoveOfferRequestData";
 import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -666,64 +667,73 @@ export class RagfairController
     /**
      * User requested removal of the offer, actually reduces the time to 71 seconds,
      * allowing for the possibility of extending the auction before it's end time
-     * @param offerId offer to 'remove'
-     * @param sessionID Players id
+     * @param removeRequest Remove offer request
+     * @param sessionId Players id
      * @returns IItemEventRouterResponse
      */
-    public removeOffer(offerId: string, sessionID: string): IItemEventRouterResponse
+    public removeOffer(removeRequest: IRemoveOfferRequestData, sessionId: string): IItemEventRouterResponse
     {
-        const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
-        const offers = pmcData.RagfairInfo.offers;
-        if (!offers)
+        const output = this.eventOutputHolder.getOutput(sessionId);
+
+        const pmcData = this.saveServer.getProfile(sessionId).characters.pmc;
+        const playerProfileOffers = pmcData.RagfairInfo.offers;
+        if (!playerProfileOffers)
         {
             this.logger.warning(
                 this.localisationService.getText("ragfair-unable_to_remove_offer_not_found_in_profile", {
-                    profileId: sessionID,
-                    offerId: offerId,
+                    profileId: sessionId,
+                    offerId: removeRequest.offerId,
                 }),
             );
 
             pmcData.RagfairInfo.offers = [];
         }
 
-        const index = offers.findIndex((offer) => offer._id === offerId);
-        if (index === -1)
+        const playerOfferIndex = playerProfileOffers.findIndex((offer) => offer._id === removeRequest.offerId);
+        if (playerOfferIndex === -1)
         {
             this.logger.error(
-                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: offerId }),
+                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: removeRequest.offerId }),
             );
             return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionID),
+                output,
                 this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
             );
         }
 
-        const differenceInSeconds = offers[index].endTime - this.timeUtil.getTimestamp();
+        const differenceInSeconds = playerProfileOffers[playerOfferIndex].endTime - this.timeUtil.getTimestamp();
         if (differenceInSeconds > this.ragfairConfig.sell.expireSeconds)
         {
-            // expireSeconds Default is 71 seconds
+            // `expireSeconds` Default is 71 seconds
             const newEndTime = this.ragfairConfig.sell.expireSeconds + this.timeUtil.getTimestamp();
-            offers[index].endTime = Math.round(newEndTime);
+            playerProfileOffers[playerOfferIndex].endTime = Math.round(newEndTime);
         }
 
-        return this.eventOutputHolder.getOutput(sessionID);
+        return output;
     }
 
-    public extendOffer(info: IExtendOfferRequestData, sessionID: string): IItemEventRouterResponse
+    /**
+     * Extend a ragfair offers listing time
+     * @param extendRequest Extend offer request
+     * @param sessionId Players id
+     * @returns IItemEventRouterResponse
+     */
+    public extendOffer(extendRequest: IExtendOfferRequestData, sessionId: string): IItemEventRouterResponse
     {
-        const output = this.eventOutputHolder.getOutput(sessionID);
-        const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
-        const offers = pmcData.RagfairInfo.offers;
-        const index = offers.findIndex((offer) => offer._id === info.offerId);
-        const secondsToAdd = info.renewalTime * TimeUtil.ONE_HOUR_AS_SECONDS;
+        const output = this.eventOutputHolder.getOutput(sessionId);
 
-        if (index === -1)
+        const pmcData = this.saveServer.getProfile(sessionId).characters.pmc;
+        const playerOffers = pmcData.RagfairInfo.offers;
+        const playerOfferIndex = playerOffers.findIndex((offer) => offer._id === extendRequest.offerId);
+        const secondsToAdd = extendRequest.renewalTime * TimeUtil.ONE_HOUR_AS_SECONDS;
+
+        if (playerOfferIndex === -1)
         {
             this.logger.warning(
-                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: info.offerId }),
+                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: extendRequest.offerId }),
             );
             return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionID),
+                output,
                 this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
             );
         }
@@ -731,19 +741,19 @@ export class RagfairController
         // MOD: Pay flea market fee
         if (this.ragfairConfig.sell.fees)
         {
-            const count = offers[index].sellInOnePiece
+            const count = playerOffers[playerOfferIndex].sellInOnePiece
                 ? 1
-                : offers[index].items.reduce((sum, item) => sum += item.upd.StackObjectsCount, 0);
+                : playerOffers[playerOfferIndex].items.reduce((sum, item) => sum += item.upd.StackObjectsCount, 0);
             const tax = this.ragfairTaxService.calculateTax(
-                offers[index].items[0],
-                this.profileHelper.getPmcProfile(sessionID),
-                offers[index].requirementsCost,
+                playerOffers[playerOfferIndex].items[0],
+                this.profileHelper.getPmcProfile(sessionId),
+                playerOffers[playerOfferIndex].requirementsCost,
                 count,
-                offers[index].sellInOnePiece,
+                playerOffers[playerOfferIndex].sellInOnePiece,
             );
 
             const request = this.createBuyTradeRequestObject("RUB", tax);
-            this.paymentService.payMoney(pmcData, request, sessionID, output);
+            this.paymentService.payMoney(pmcData, request, sessionId, output);
             if (output.warnings.length > 0)
             {
                 return this.httpResponse.appendErrorToOutput(
@@ -753,9 +763,10 @@ export class RagfairController
             }
         }
 
-        offers[index].endTime += Math.round(secondsToAdd);
+        // Add extra time to offer
+        playerOffers[playerOfferIndex].endTime += Math.round(secondsToAdd);
 
-        return this.eventOutputHolder.getOutput(sessionID);
+        return output;
     }
 
     /**

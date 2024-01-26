@@ -103,7 +103,7 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
     /** Handle RagFairRemoveOffer event */
     public removeOffer(pmcData: IPmcData, info: IRemoveOfferRequestData, sessionID: string): IItemEventRouterResponse
     {
-        return this.ragfairController.removeOffer(info.offerId, sessionID);
+        return this.ragfairController.removeOffer(info, sessionID);
     }
 
     /** Handle RagFairRenewOffer event */
