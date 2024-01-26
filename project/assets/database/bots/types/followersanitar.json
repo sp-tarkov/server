@@ -7,13 +7,13 @@
       "64a2e970a74bb33d140e6dc5": 65,
       "5cde9fb87d6c8b0474535da9": 52,
       "6193be546e5968395b260157": 55,
-      "61922589bb2cea6f7a22d964": 53,
-      "5d28af3486f774292364a6e7": 50,
       "5df8a15186f77412640e2e6a": 55,
+      "61922589bb2cea6f7a22d964": 53,
       "5f5e41366760b4138443b343": 49,
       "637df25a1e688345e1097bd4": 48,
-      "5f5e41576760b4138443b344": 39,
+      "5d28af3486f774292364a6e7": 50,
       "5f5e410c6bdad616ad46d60b": 51,
+      "5f5e41576760b4138443b344": 39,
       "5cc2e5d014c02e15d53d9c03": 44
     },
     "hands": [
@@ -23,14 +23,14 @@
       "5cc2e4d014c02e000d0115f8",
       "5f68c4a7c174a17c0f4c8945",
       "5f68c4c217d579077152a252",
-      "5d28afe786f774292668618d",
-      "5cde9ff17d6c8b0474535daa"
+      "5cde9ff17d6c8b0474535daa",
+      "5d28afe786f774292668618d"
     ],
     "voice": [
       "Scav_5",
       "Scav_1",
-      "Scav_3",
       "Scav_4",
+      "Scav_3",
       "Scav_6",
       "Scav_2"
     ]
@@ -126,12 +126,12 @@
       "Headwear": {
         "5aa7e4a4e5b5b000137b76f2": 145,
         "5aa7d193e5b5b000171d063f": 90,
-        "5aa7e454e5b5b0214e506fa2": 141,
-        "5d6d3716a4b9361bc8618872": 13,
         "5aa7e276e5b5b000171d0647": 21,
         "5aa2b89be5b5b0001569311f": 96,
         "5aa2b9ede5b5b000137b758b": 26,
-        "5b40e4035acfc47a87740943": 26
+        "5aa7e454e5b5b0214e506fa2": 141,
+        "5b40e4035acfc47a87740943": 26,
+        "5d6d3716a4b9361bc8618872": 13
       },
       "Earpiece": {},
       "FaceCover": {
@@ -143,8 +143,8 @@
         "5f5f41476bdad616ad46d631": 196,
         "5b44d22286f774172b0c9de8": 86,
         "5ab8e79e86f7742d8b372e78": 74,
-        "5e9dacf986f774054d6b89f4": 52,
         "5ca2151486f774244a3b8d30": 17,
+        "5e9dacf986f774054d6b89f4": 52,
         "545cdb794bdc2d3a198b456a": 6,
         "6038b4b292ec1c3103795a0b": 10,
         "6038b4ca92ec1c3103795a0d": 4
@@ -162,9 +162,9 @@
       "Backpack": {
         "5ab8ebf186f7742d8b372e80": 103,
         "5e4abc6786f77406812bd572": 106,
-        "5ca20d5986f774331e7c9602": 100,
         "5b44c6ae86f7742d1627baea": 115,
         "56e33634d2720bd8058b456b": 114,
+        "5ca20d5986f774331e7c9602": 100,
         "6034d103ca006d2dca39b3f0": 23
       },
       "FirstPrimaryWeapon": {
@@ -192,8 +192,8 @@
         "59e0d99486f7744a32234762": 3
       },
       "Caliber12g": {
-        "5d6e68a8a4b9360b6c0d54e2": 7,
-        "5d6e68d1a4b93622fe60e845": 106
+        "5d6e68d1a4b93622fe60e845": 106,
+        "5d6e68a8a4b9360b6c0d54e2": 7
       },
       "Caliber762x51": {
         "5e023e88277cce2b522ff2b1": 102,
@@ -365,19 +365,45 @@
           "57616ca52459773c69055192"
         ],
         "mod_handguard": [
-          "576169e62459773c69055191",
-          "5827272a24597748c74bdeea"
-        ],
-        "mod_mount_000": [
-          "5947db3f86f77447880cf76f"
+          "5827272a24597748c74bdeea",
+          "576169e62459773c69055191"
         ],
         "mod_magazine": [
           "5cf8f3b0d7f00c00217872ef"
+        ],
+        "mod_mount_000": [
+          "5947db3f86f77447880cf76f"
         ]
       },
-      "5947db3f86f77447880cf76f": {
-        "mod_tactical": [
-          "591c4e1186f77410354b316e"
+      "5827272a24597748c74bdeea": {
+        "mod_foregrip": [
+          "5cf4fb76d7f00c065703d3ac"
+        ],
+        "mod_tactical_002": [
+          "5a5f1ce64f39f90b401987bc"
+        ]
+      },
+      "5ab8e79e86f7742d8b372e78": {
+        "Front_plate": [
+          "656f611f94b480b8a500c0db"
+        ],
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Soft_armor_front": [
+          "65732688d9d89ff7ac0d9c4c"
+        ],
+        "Soft_armor_back": [
+          "657326978c1cc6dcd9098b56"
+        ],
+        "Soft_armor_left": [
+          "657326a28c1cc6dcd9098b5a"
+        ],
+        "soft_armor_right": [
+          "657326b08c1cc6dcd9098b5e"
+        ],
+        "Collar": [
+          "657326bc5d3a3129fb05f36b"
         ]
       },
       "5c501a4d2e221602b412b540": {
@@ -405,44 +431,7 @@
           "5cf639aad7f00c065703d455"
         ]
       },
-      "5aa7e454e5b5b0214e506fa2": {
-        "Helmet_top": [
-          "657f925dada5fadd1f07a57a"
-        ],
-        "Helmet_back": [
-          "657f92acada5fadd1f07a57e"
-        ],
-        "Helmet_ears": [
-          "657f92e7f4c82973640b2354"
-        ],
-        "mod_equipment": [
-          "5aa7e3abe5b5b000171d064d"
-        ]
-      },
-      "5ab8e79e86f7742d8b372e78": {
-        "Front_plate": [
-          "656f611f94b480b8a500c0db"
-        ],
-        "Back_plate": [
-          "65573fa5655447403702a816"
-        ],
-        "Soft_armor_front": [
-          "65732688d9d89ff7ac0d9c4c"
-        ],
-        "Soft_armor_back": [
-          "657326978c1cc6dcd9098b56"
-        ],
-        "Soft_armor_left": [
-          "657326a28c1cc6dcd9098b5a"
-        ],
-        "soft_armor_right": [
-          "657326b08c1cc6dcd9098b5e"
-        ],
-        "Collar": [
-          "657326bc5d3a3129fb05f36b"
-        ]
-      },
-      "5e9dacf986f774054d6b89f4": {
+      "5ca2151486f774244a3b8d30": {
         "Front_plate": [
           "65573fa5655447403702a816"
         ],
@@ -450,22 +439,44 @@
           "65573fa5655447403702a816"
         ],
         "Soft_armor_front": [
-          "65732de75d3a3129fb05f3dd"
+          "6575dd3e9e27f4a85e081142"
         ],
         "Soft_armor_back": [
-          "65732df4d0acf75aea06c87b"
+          "6575dd519e27f4a85e081146"
         ],
         "Soft_armor_left": [
-          "65732e05d0acf75aea06c87f"
+          "6575dd64945bf78edd04c438"
         ],
         "soft_armor_right": [
-          "65732e0f6784ca384b0167ad"
+          "6575dd6e9d3a0ddf660b9047"
         ],
         "Collar": [
-          "65732e215d3a3129fb05f3e1"
+          "6575dd769d3a0ddf660b904b"
         ],
         "Groin": [
-          "65732e30dd8739f6440ef383"
+          "6575dd800546f8b1de093df6"
+        ],
+        "Groin_back": [
+          "6575dd94945bf78edd04c43c"
+        ]
+      },
+      "5947db3f86f77447880cf76f": {
+        "mod_tactical": [
+          "591c4e1186f77410354b316e"
+        ]
+      },
+      "5aa7e276e5b5b000171d0647": {
+        "Helmet_top": [
+          "657bc06daab96fccee08be9b"
+        ],
+        "Helmet_back": [
+          "657bc0d8a1c61ee0c303632f"
+        ],
+        "Helmet_ears": [
+          "657bc107aab96fccee08be9f"
+        ],
+        "mod_equipment": [
+          "5aa7e373e5b5b000137b76f0"
         ]
       },
       "5839a40f24597726f856b511": {
@@ -501,6 +512,54 @@
           "560d657b4bdc2da74d8b4572"
         ]
       },
+      "5aa7e454e5b5b0214e506fa2": {
+        "Helmet_top": [
+          "657f925dada5fadd1f07a57a"
+        ],
+        "Helmet_back": [
+          "657f92acada5fadd1f07a57e"
+        ],
+        "Helmet_ears": [
+          "657f92e7f4c82973640b2354"
+        ],
+        "mod_equipment": [
+          "5aa7e3abe5b5b000171d064d"
+        ]
+      },
+      "5b40e4035acfc47a87740943": {
+        "Helmet_top": [
+          "657f95bff92cd718b701550c"
+        ],
+        "Helmet_back": [
+          "657f9605f4c82973640b2358"
+        ]
+      },
+      "5e9dacf986f774054d6b89f4": {
+        "Front_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Soft_armor_front": [
+          "65732de75d3a3129fb05f3dd"
+        ],
+        "Soft_armor_back": [
+          "65732df4d0acf75aea06c87b"
+        ],
+        "Soft_armor_left": [
+          "65732e05d0acf75aea06c87f"
+        ],
+        "soft_armor_right": [
+          "65732e0f6784ca384b0167ad"
+        ],
+        "Collar": [
+          "65732e215d3a3129fb05f3e1"
+        ],
+        "Groin": [
+          "65732e30dd8739f6440ef383"
+        ]
+      },
       "5d6d3716a4b9361bc8618872": {
         "Helmet_top": [
           "657fa009d4caf976440afe3a"
@@ -513,65 +572,6 @@
         ],
         "mod_equipment_000": [
           "5d6d3829a4b9361bc8618943"
-        ]
-      },
-      "5827272a24597748c74bdeea": {
-        "mod_tactical_002": [
-          "5a5f1ce64f39f90b401987bc"
-        ],
-        "mod_foregrip": [
-          "5cf4fb76d7f00c065703d3ac"
-        ]
-      },
-      "5aa7e276e5b5b000171d0647": {
-        "Helmet_top": [
-          "657bc06daab96fccee08be9b"
-        ],
-        "Helmet_back": [
-          "657bc0d8a1c61ee0c303632f"
-        ],
-        "Helmet_ears": [
-          "657bc107aab96fccee08be9f"
-        ],
-        "mod_equipment": [
-          "5aa7e373e5b5b000137b76f0"
-        ]
-      },
-      "5ca2151486f774244a3b8d30": {
-        "Front_plate": [
-          "65573fa5655447403702a816"
-        ],
-        "Back_plate": [
-          "65573fa5655447403702a816"
-        ],
-        "Soft_armor_front": [
-          "6575dd3e9e27f4a85e081142"
-        ],
-        "Soft_armor_back": [
-          "6575dd519e27f4a85e081146"
-        ],
-        "Soft_armor_left": [
-          "6575dd64945bf78edd04c438"
-        ],
-        "soft_armor_right": [
-          "6575dd6e9d3a0ddf660b9047"
-        ],
-        "Collar": [
-          "6575dd769d3a0ddf660b904b"
-        ],
-        "Groin": [
-          "6575dd800546f8b1de093df6"
-        ],
-        "Groin_back": [
-          "6575dd94945bf78edd04c43c"
-        ]
-      },
-      "5b40e4035acfc47a87740943": {
-        "Helmet_top": [
-          "657f95bff92cd718b701550c"
-        ],
-        "Helmet_back": [
-          "657f9605f4c82973640b2358"
         ]
       },
       "545cdb794bdc2d3a198b456a": {
@@ -797,11 +797,11 @@
         "5e99711486f7744bfc4af328",
         "5e99735686f7744bfc4af32c",
         "64b7af5a8532cf95ee0a0dbd",
-        "5d6e68a8a4b9360b6c0d54e2",
-        "5e023e88277cce2b522ff2b1",
-        "56dff061d2720bb5668b4567",
-        "64b7af434b75259c590fa893",
         "5d6e68d1a4b93622fe60e845",
+        "5e023e88277cce2b522ff2b1",
+        "64b7af434b75259c590fa893",
+        "5d6e68a8a4b9360b6c0d54e2",
+        "56dff061d2720bb5668b4567",
         "5a608bf24f39f98ffc77720e",
         "5c0d5e4486f77478390952fe",
         "59e4cf5286f7741778269d8a",
@@ -814,34 +814,34 @@
     "Проктолог",
     "Лор",
     "Анестезиолог",
-    "Пилюля",
-    "Терапевт",
-    "Лаборант",
-    "Труповоз",
-    "Травматолог",
-    "Гомеопат",
-    "Акушер",
-    "Иммунолог",
-    "Физиолог",
     "Невролог",
     "Шприц",
+    "Иммунолог",
+    "Физиолог",
+    "Гомеопат",
     "Психиатр",
+    "Травматолог",
+    "Акушер",
     "Фельдшер",
+    "Терапевт",
+    "Пилюля",
+    "Лаборант",
+    "Труповоз",
     "Окулист",
+    "Стоматолог",
     "Венеролог",
     "Ревматолог",
-    "Стоматолог",
     "Уролог",
+    "Парацетамол",
     "Дерматолог",
     "Заведующий",
     "Главврач",
     "Жгут",
-    "Парацетамол",
     "Фармацевт",
     "Медбрат",
     "Хирург",
-    "Кардиолог",
-    "Медсестра"
+    "Медсестра",
+    "Кардиолог"
   ],
   "lastName": [],
   "difficulty": {

@@ -70,7 +70,13 @@ export class BotInventoryGenerator
         // Generate base inventory with no items
         const botInventory = this.generateInventoryBase();
 
-        this.generateAndAddEquipmentToBot(templateInventory, wornItemChances, botRole, botInventory, botLevel);
+        this.generateAndAddEquipmentToBot(
+            templateInventory,
+            wornItemChances,
+            botRole,
+            botInventory,
+            botLevel,
+        );
 
         // Roll weapon spawns (primary/secondary/holster) and generate a weapon for each roll that passed
         this.generateAndAddWeaponsToBot(
@@ -85,7 +91,13 @@ export class BotInventoryGenerator
         );
 
         // Pick loot and add to bots containers (rig/backpack/pockets/secure)
-        this.botLootGenerator.generateLoot(sessionId, botJsonTemplate, isPmc, botRole, botInventory, botLevel);
+        this.botLootGenerator.generateLoot(
+            sessionId,
+            botJsonTemplate,
+            isPmc,
+            botRole,
+            botInventory,
+            botLevel);
 
         return botInventory;
     }

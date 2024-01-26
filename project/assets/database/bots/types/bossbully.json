@@ -82,34 +82,34 @@
       "Headwear": {
         "5a43957686f7742a2c2f11b0": 20,
         "59e7708286f7742cbd762753": 81,
-        "60bf74184a63fc79b60c57f6": 37,
-        "5aa2b9ede5b5b000137b758b": 36,
-        "61c18db6dfd64163ea78fbb4": 34
+        "60bf74184a63fc79b60c57f6": 41,
+        "5aa2b9ede5b5b000137b758b": 44,
+        "61c18db6dfd64163ea78fbb4": 38
       },
       "Earpiece": {},
       "FaceCover": {},
       "ArmorVest": {},
       "Eyewear": {
-        "5d6d2ef3a4b93618084f58bd": 136,
-        "61c18d83b00456371a66814b": 137,
-        "5aa2b9aee5b5b00015693121": 148,
-        "5aa2b986e5b5b00014028f4c": 156
+        "5d6d2ef3a4b93618084f58bd": 155,
+        "61c18d83b00456371a66814b": 157,
+        "5aa2b9aee5b5b00015693121": 163,
+        "5aa2b986e5b5b00014028f4c": 172
       },
       "ArmBand": {},
       "TacticalVest": {},
       "Backpack": {},
       "FirstPrimaryWeapon": {
-        "5ac66cb05acfc40198510a10": 495,
-        "5926bb2186f7744b1c6c6e60": 178,
-        "5ac66d015acfc400180ae6e4": 549,
-        "576165642459773c7a400233": 201,
-        "5dcbd56fdbd3d91b3e5468d5": 133
+        "5ac66cb05acfc40198510a10": 569,
+        "5926bb2186f7744b1c6c6e60": 204,
+        "5ac66d015acfc400180ae6e4": 616,
+        "576165642459773c7a400233": 226,
+        "5dcbd56fdbd3d91b3e5468d5": 150
       },
       "SecondPrimaryWeapon": {},
       "Holster": {
-        "5b3b713c5acfc4330140bd8d": 1258,
-        "6193a720f8ee7e52e42109ed": 151,
-        "602a9740da11d6478d5a06dc": 147
+        "5b3b713c5acfc4330140bd8d": 1423,
+        "6193a720f8ee7e52e42109ed": 167,
+        "602a9740da11d6478d5a06dc": 175
       },
       "Scabbard": {},
       "Pockets": {
@@ -121,32 +121,32 @@
     },
     "Ammo": {
       "Caliber556x45NATO": {
-        "59e6906286f7746c9f75e847": 842,
-        "5c0d5ae286f7741e46554302": 75,
-        "59e6920f86f77411d82aa167": 79,
-        "59e690b686f7746c9f75e848": 48
+        "59e6906286f7746c9f75e847": 955,
+        "5c0d5ae286f7741e46554302": 84,
+        "59e6920f86f77411d82aa167": 88,
+        "59e690b686f7746c9f75e848": 58
       },
       "Caliber762x25TT": {
         "5736026a245977644601dc61": 1
       },
       "Caliber9x19PARA": {
-        "64b7bbb74b75259c590fa897": 436,
-        "5c0d56a986f774449d5de529": 423,
-        "5a3c16fe86f77452b62de32a": 100,
-        "5efb0da7a29a85116f6ea05f": 50,
-        "5c925fa22e221601da359b7b": 144
+        "64b7bbb74b75259c590fa897": 508,
+        "5c0d56a986f774449d5de529": 507,
+        "5a3c16fe86f77452b62de32a": 112,
+        "5efb0da7a29a85116f6ea05f": 58,
+        "5c925fa22e221601da359b7b": 156
       },
       "Caliber1143x23ACP": {
-        "5e81f423763d9f754677bf2e": 138,
+        "5e81f423763d9f754677bf2e": 154,
         "5efb0cabfb3e451d70735af5": 13
       },
       "Caliber12g": {
-        "5d6e68a8a4b9360b6c0d54e2": 111,
-        "5d6e68c4a4b9361b93413f79": 791
+        "5d6e68a8a4b9360b6c0d54e2": 125,
+        "5d6e68c4a4b9361b93413f79": 896
       },
       "Caliber762x51": {
-        "5a608bf24f39f98ffc77720e": 64,
-        "5e023e88277cce2b522ff2b1": 58,
+        "5a608bf24f39f98ffc77720e": 73,
+        "5e023e88277cce2b522ff2b1": 66,
         "5e023e53d4353e3302577c4c": 10,
         "5a6086ea4f39f99cd479502f": 1
       }
@@ -551,13 +551,13 @@
         "64ccc1d4a0f13c24561edf27",
         "5d80ccac86f77470841ff452",
         "5d80c88d86f77440556dbf07",
-        "5d95d6be86f77424444eb3a7",
         "59387a4986f77401cc236e62",
+        "5d95d6be86f77424444eb3a7",
         "5d80c78786f774403a401e3e",
         "5a0ee4b586f7743698200d22",
         "5a0eec9686f77402ac5c39f2",
-        "63a399193901f439517cafb6",
         "5a1452ee86f7746f33111763",
+        "63a399193901f439517cafb6",
         "63a39c69af870e651d58e6aa",
         "63a39667c9b3aa4b61683e98",
         "5d80cd1a86f77402aa362f42",
@@ -575,7 +575,8 @@
         "6582dc5740562727a654ebb1",
         "6582dc4b6ba9e979af6b79f4",
         "5a0ee76686f7743698200d5c",
-        "5da46e3886f774653b7a83fe"
+        "5da46e3886f774653b7a83fe",
+        "64ccc206793ca11c8f450a38"
       ],
       "Backpack": [
         "5c1d0d6d86f7744bb2683e1f",
@@ -2599,11 +2600,11 @@
   },
   "chances": {
     "equipment": {
-      "Headwear": 13,
+      "Headwear": 12,
       "Earpiece": 0,
       "FaceCover": 0,
       "ArmorVest": 0,
-      "Eyewear": 37,
+      "Eyewear": 36,
       "ArmBand": 0,
       "TacticalVest": 0,
       "Backpack": 0,
@@ -2622,12 +2623,12 @@
       "mod_stock": 100,
       "mod_magazine": 100,
       "mod_mount_000": 7,
-      "mod_charge": 60,
+      "mod_charge": 59,
       "mod_mount_003": 100,
-      "mod_scope": 42,
+      "mod_scope": 43,
       "mod_tactical": 0,
       "mod_mount": 0,
-      "mod_foregrip": 82,
+      "mod_foregrip": 83,
       "mod_tactical_000": 0,
       "mod_tactical_001": 0,
       "mod_tactical_002": 0,
