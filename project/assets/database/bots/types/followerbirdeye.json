@@ -6,15 +6,15 @@
     "feet": {
       "628a4645c9327c7587388849": 1
     },
-    "hands": [
-      "5cc2e68f14c02e28b47de290"
-    ],
-    "head": [
-      "628b57d800f171376e7b2634"
-    ],
-    "voice": [
-      "BossBirdEye"
-    ]
+    "hands": {
+      "5cc2e68f14c02e28b47de290": 1
+    },
+    "head": {
+      "628b57d800f171376e7b2634": 1
+    },
+    "voice": {
+      "BossBirdEye": 1
+    }
   },
   "chances": {
     "equipment": {

@@ -33,21 +33,21 @@
             "6295e944e9de5e7b3751c4da": 1,
             "637ba17aa10a96c2b605dbc2": 1
         },
-        "hands": [
-            "5cde95fa7d6c8b04737c2d13"
-        ],
-        "head": [
-            "5cde96047d6c8b20b577f016",
-            "5fdb5950f5264a66150d1c6e",
-            "5fdb4139e4ed5b5ea251e4ed"
-        ],
-        "voice": [
-            "Usec_1",
-            "Usec_2",
-            "Usec_3",
-            "Usec_4",
-            "Usec_5"
-        ]
+        "hands": {
+            "5cde95fa7d6c8b04737c2d13": 1
+        },
+        "head": {
+            "5cde96047d6c8b20b577f016": 1,
+            "5fdb5950f5264a66150d1c6e": 1,
+            "5fdb4139e4ed5b5ea251e4ed": 1
+        },
+        "voice": {
+            "Usec_1": 1,
+            "Usec_2": 1,
+            "Usec_3": 1,
+            "Usec_4": 1,
+            "Usec_5": 1
+        }
     },
     "chances": {
         "equipment": {

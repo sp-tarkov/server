@@ -28,27 +28,28 @@
       "637df25a1e688345e1097bd4": 9,
       "64a2e970a74bb33d140e6dc5": 8
     },
-    "hands": [
-      "5fd78fe9e3bfcf6cab4c9f54",
-      "5cc2e68f14c02e28b47de290",
-      "5e9da2dd86f774054e7d0f63",
-      "618cf9540a5a59657e5f5677",
-      "5df8eac086f77412640e2ea7",
-      "6197aca964ae5436d76c1f98",
-      "6391c6205dbbdb3b1b049840",
-      "5e4bb49586f77406a313ec5a",
-      "5fd7901bdd870108a754c0e6"
-    ],
-    "head": [
-      "5f68c4a7c174a17c0f4c8945",
-      "5d28afe786f774292668618d",
-      "5cc2e4d014c02e000d0115f8",
-      "5f68c4c217d579077152a252",
-      "5cde9ff17d6c8b0474535daa"
-    ],
-    "voice": [
-      "SectantPriest"
-    ]
+    "hands": {
+      "5cc2e68f14c02e28b47de290": 239,
+      "5df8eac086f77412640e2ea7": 63,
+      "5e4bb49586f77406a313ec5a": 58,
+      "5e9da2dd86f774054e7d0f63": 54,
+      "5fd78fe9e3bfcf6cab4c9f54": 65,
+      "5fd7901bdd870108a754c0e6": 55,
+      "618cf9540a5a59657e5f5677": 69,
+      "6197aca964ae5436d76c1f98": 68,
+      "6391c6205dbbdb3b1b049840": 63,
+      "64ac23c449d74fd5ec0a124e": 71
+    },
+    "head": {
+      "5cc2e4d014c02e000d0115f8": 8,
+      "5cde9ff17d6c8b0474535daa": 6,
+      "5d28afe786f774292668618d": 8,
+      "5f68c4a7c174a17c0f4c8945": 7,
+      "5f68c4c217d579077152a252": 4
+    },
+    "voice": {
+      "SectantPriest": 1
+    }
   },
   "chances": {
     "equipment": {

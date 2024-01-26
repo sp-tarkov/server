@@ -36,21 +36,21 @@
             "6295e63de08ed747e64ae991": 1,
             "6377315993a3b4967208e437": 1
         },
-        "hands": [
-            "5cc0876314c02e000c6bea6b"
-        ],
-        "head": [
-            "5cc084dd14c02e000b0550a3",
-            "5fdb50bb2b730a787b3f78cf",
-            "5fdb7571e4ed5b5ea251e529"
-        ],
-        "voice": [
-            "Bear_1",
-            "Bear_1_Eng",
-            "Bear_2",
-            "Bear_2_Eng",
-            "Bear_3"
-        ]
+        "hands": {
+            "5cc0876314c02e000c6bea6b": 1
+        },
+        "head": {
+            "5cc084dd14c02e000b0550a3": 1,
+            "5fdb50bb2b730a787b3f78cf": 1,
+            "5fdb7571e4ed5b5ea251e529": 1
+        },
+        "voice": {
+            "Bear_1": 1,
+            "Bear_1_Eng": 1,
+            "Bear_2": 1,
+            "Bear_2_Eng": 1,
+            "Bear_3": 1
+        }
     },
     "chances": {
         "equipment": {

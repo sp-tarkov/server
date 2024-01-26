@@ -6,15 +6,15 @@
     "feet": {
       "5cde9fb87d6c8b0474535da9": 1
     },
-    "hands": [
-      "5fd7901bdd870108a754c0e6"
-    ],
-    "head": [
-      "5f68c4c217d579077152a252"
-    ],
-    "voice": [
-      "Scav_5"
-    ]
+    "hands": {
+      "5fd7901bdd870108a754c0e6": 1
+    },
+    "head": {
+      "5f68c4c217d579077152a252": 1
+    },
+    "voice": {
+      "Scav_5": 1
+    }
   },
   "chances": {
     "equipment": {

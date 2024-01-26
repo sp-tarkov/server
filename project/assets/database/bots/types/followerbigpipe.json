@@ -6,15 +6,15 @@
     "feet": {
       "6287b14b66bb7d4a3c32bc94": 1
     },
-    "hands": [
-      "5cc2e68f14c02e28b47de290"
-    ],
-    "head": [
-      "6287b0d239d8207cb27d66c7"
-    ],
-    "voice": [
-      "BossBigPipe"
-    ]
+    "hands": {
+      "5cc2e68f14c02e28b47de290": 1
+    },
+    "head": {
+      "6287b0d239d8207cb27d66c7": 1
+    },
+    "voice": {
+      "BossBigPipe": 1
+    }
   },
   "chances": {
     "equipment": {

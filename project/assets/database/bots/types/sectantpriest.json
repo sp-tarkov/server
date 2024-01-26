@@ -7,15 +7,15 @@
       "5fb535bd1c69e5198e234125": 1,
       "5fb535cf1c69e5198e234126": 3
     },
-    "hands": [
-      "5cc2e68f14c02e28b47de290"
-    ],
-    "head": [
-      "5fb52a3a1c69e5198e234118"
-    ],
-    "voice": [
-      "SectantPriest"
-    ]
+    "hands": {
+      "5cc2e68f14c02e28b47de290": 1
+    },
+    "head": {
+      "5fb52a3a1c69e5198e234118": 1
+    },
+    "voice": {
+      "SectantPriest": 1
+    }
   },
   "chances": {
     "equipment": {

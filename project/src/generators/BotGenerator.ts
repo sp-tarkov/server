@@ -189,7 +189,7 @@ export class BotGenerator
             botJsonTemplate.experience.reward.max,
         );
         bot.Info.Settings.StandingForKill = botJsonTemplate.experience.standingForKill;
-        bot.Info.Voice = this.randomUtil.getArrayValue(botJsonTemplate.appearance.voice);
+        bot.Info.Voice = this.weightedRandomHelper.getWeightedValue<string>(botJsonTemplate.appearance.voice);
         bot.Health = this.generateHealth(botJsonTemplate.health, bot.Info.Side === "Savage");
         bot.Skills = this.generateSkills(<any>botJsonTemplate.skills); // TODO: fix bad type, bot jsons store skills in dict, output needs to be array
 
@@ -237,10 +237,10 @@ export class BotGenerator
      */
     protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
     {
-        bot.Customization.Head = this.randomUtil.getArrayValue(appearance.head);
+        bot.Customization.Head = this.weightedRandomHelper.getWeightedValue<string>(appearance.head);
         bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
         bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
-        bot.Customization.Hands = this.randomUtil.getArrayValue(appearance.hands);
+        bot.Customization.Hands = this.weightedRandomHelper.getWeightedValue<string>(appearance.hands);
     }
 
     /**
