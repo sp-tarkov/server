@@ -9,6 +9,7 @@ import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { IChooseRandomCompatibleModResult } from "@spt-aki/models/spt/bots/IChooseRandomCompatibleModResult";
 import { EquipmentFilters, IBotConfig, IRandomisedResourceValues } from "@spt-aki/models/spt/config/IBotConfig";
 import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -286,12 +287,12 @@ export class BotGeneratorHelper
         itemsEquipped: Item[],
         tplToCheck: string,
         equipmentSlot: string,
-    ): { incompatible: boolean; reason: string; slotBlocked?: boolean; }
+    ): IChooseRandomCompatibleModResult
     {
         // Skip slots that have no incompatibilities
         if (["Scabbard", "Backpack", "SecureContainer", "Holster", "ArmBand"].includes(equipmentSlot))
         {
-            return { incompatible: false, reason: "" };
+            return { incompatible: false, found: false, reason: "" };
         }
 
         // TODO: Can probably be optimized to cache itemTemplates as items are added to inventory
@@ -308,7 +309,7 @@ export class BotGeneratorHelper
                 }),
             );
 
-            return { incompatible: true, reason: `item: ${tplToCheck} does not exist in the database` }; 
+            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not exist in the database` }; 
         }
 
         if (!itemToEquip._props)
@@ -321,7 +322,11 @@ export class BotGeneratorHelper
                 }),
             );
 
-            return { incompatible: true, reason: `item: ${tplToCheck} does not have a _props field` }; 
+            return {
+                incompatible: true,
+                found: false,
+                reason: `item: ${tplToCheck} does not have a _props field`
+            }; 
         }
 
         // Does an equipped item have a property that blocks the desired item - check for prop "BlocksX" .e.g BlocksEarpiece / BlocksFaceCover
@@ -331,6 +336,7 @@ export class BotGeneratorHelper
             // this.logger.warning(`1 incompatibility found between - ${itemToEquip[1]._name} and ${blockingItem._name} - ${equipmentSlot}`);
             return {
                 incompatible: true,
+                found: false,
                 reason:
                     `${tplToCheck} ${itemToEquip._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
                 slotBlocked: true,
@@ -344,6 +350,7 @@ export class BotGeneratorHelper
             // this.logger.warning(`2 incompatibility found between - ${itemToEquip[1]._name} and ${blockingItem._props.Name} - ${equipmentSlot}`);
             return {
                 incompatible: true,
+                found: false,
                 reason:
                     `${tplToCheck} ${itemToEquip._name} in slot: ${equipmentSlot} blocked by: ${blockingItem._id} ${blockingItem._name}`,
                 slotBlocked: true,
@@ -358,6 +365,7 @@ export class BotGeneratorHelper
             {
                 return {
                     incompatible: true,
+                    found: false,
                     reason:
                         `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingHeadwear._tpl} in slot: ${existingHeadwear.slotId}`,
                     slotBlocked: true,
@@ -373,6 +381,7 @@ export class BotGeneratorHelper
             {
                 return {
                     incompatible: true,
+                    found: false,
                     reason:
                         `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingFaceCover._tpl} in slot: ${existingFaceCover.slotId}`,
                     slotBlocked: true,
@@ -388,6 +397,7 @@ export class BotGeneratorHelper
             {
                 return {
                     incompatible: true,
+                    found: false,
                     reason:
                         `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingEarpiece._tpl} in slot: ${existingEarpiece.slotId}`,
                     slotBlocked: true,
@@ -403,6 +413,7 @@ export class BotGeneratorHelper
             {
                 return {
                     incompatible: true,
+                    found: false,
                     reason:
                         `${tplToCheck} ${itemToEquip._name} is blocked by: ${existingArmorVest._tpl} in slot: ${existingArmorVest.slotId}`,
                     slotBlocked: true,
@@ -417,6 +428,7 @@ export class BotGeneratorHelper
             // this.logger.warning(`3 incompatibility found between - ${itemToEquip[1]._name} and ${blockingInventoryItem._tpl} - ${equipmentSlot}`)
             return {
                 incompatible: true,
+                found: false,
                 reason:
                     `${tplToCheck} blocks existing item ${blockingInventoryItem._tpl} in slot ${blockingInventoryItem.slotId}`,
             };

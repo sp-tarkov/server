@@ -821,6 +821,7 @@ export class GameController
                 dateAdded: Date.now(),
                 name: modDetails.name,
                 version: modDetails.version,
+                url: modDetails.url
             });
         }
     }

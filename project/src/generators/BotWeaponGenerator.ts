@@ -357,46 +357,33 @@ export class BotWeaponGenerator
     {
         for (const mod of weaponItemArray)
         {
-            const modDbTemplate = this.itemHelper.getItem(mod._tpl)[1];
-            if (!modDbTemplate._props.Slots?.length)
+            const modTemplate = this.itemHelper.getItem(mod._tpl)[1];
+            if (!modTemplate._props.Slots?.length)
             {
                 continue;
             }
 
             // Iterate over slots in db item, if required, check tpl in that slot matches the filter list
-            for (const modSlot of modDbTemplate._props.Slots)
+            for (const modSlotTemplate of modTemplate._props.Slots)
             {
                 // Ignore optional mods
-                if (!modSlot._required)
+                if (!modSlotTemplate._required)
                 {
                     continue;
                 }
 
-                const allowedTpls = modSlot._props.filters[0].Filter;
-                const slotName = modSlot._name;
+                const allowedTplsOnSlot = modSlotTemplate._props.filters[0].Filter;
+                const slotName = modSlotTemplate._name;
 
-                const weaponSlotItem = weaponItemArray.find((x) => x.parentId === mod._id && x.slotId === slotName);
+                const weaponSlotItem = weaponItemArray.find((weaponItem) => weaponItem.parentId === mod._id && weaponItem.slotId === slotName);
                 if (!weaponSlotItem)
                 {
                     this.logger.warning(
                         this.localisationService.getText("bot-weapons_required_slot_missing_item", {
-                            modSlot: modSlot._name,
-                            modName: modDbTemplate._name,
+                            modSlot: modSlotTemplate._name,
+                            modName: modTemplate._name,
                             slotId: mod.slotId,
                             botRole: botRole,
-                        }),
-                    );
-
-                    return false;
-                }
-
-                if (!allowedTpls.includes(weaponSlotItem._tpl))
-                {
-                    this.logger.warning(
-                        this.localisationService.getText("bot-weapon_contains_invalid_item", {
-                            modSlot: modSlot._name,
-                            modName: modDbTemplate._name,
-                            weaponTpl: weaponSlotItem._tpl,
                         }),
                     );
 

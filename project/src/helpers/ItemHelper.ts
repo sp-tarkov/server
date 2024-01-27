@@ -1012,13 +1012,13 @@ export class ItemHelper
 
     /**
      * Add child items to a magazine of a specific cartridge
-     * @param magazine Magazine to add child items to
+     * @param magazineWithChildCartridges Magazine to add child items to
      * @param magTemplate Db template of magazine
      * @param cartridgeTpl Cartridge to add to magazine
      * @param minSizePercent % the magazine must be filled to
      */
     public fillMagazineWithCartridge(
-        magazine: Item[],
+        magazineWithChildCartridges: Item[],
         magTemplate: ITemplateItem,
         cartridgeTpl: string,
         minSizePercent = 0.25,
@@ -1045,7 +1045,7 @@ export class ItemHelper
             magazineCartridgeMaxCount,
         );
 
-        if (magazine.length > 1)
+        if (magazineWithChildCartridges.length > 1)
         {
             this.logger.warning(`Magazine ${magTemplate._name} already has cartridges defined, this may cause issues`);
         }
@@ -1068,10 +1068,23 @@ export class ItemHelper
             }
 
             // Add cartridge item object into items array
-            magazine.push(this.createCartridges(magazine[0]._id, cartridgeTpl, cartridgeCountToAdd, location, magazine[0].upd?.SpawnedInSession));
+            magazineWithChildCartridges.push(
+                this.createCartridges(
+                    magazineWithChildCartridges[0]._id,
+                    cartridgeTpl, cartridgeCountToAdd,
+                    location,
+                    magazineWithChildCartridges[0].upd?.SpawnedInSession
+                )
+            );
 
             currentStoredCartridgeCount += cartridgeCountToAdd;
             location++;
+        }
+
+        // Only one cartridge stack added, remove location property as its only used for 2 or more stacks
+        if (location === 1)
+        {
+            delete magazineWithChildCartridges[1].location;
         }
     }
 

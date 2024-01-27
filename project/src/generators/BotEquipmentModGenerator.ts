@@ -14,6 +14,7 @@ import { ITemplateItem, Slot } from "@spt-aki/models/eft/common/tables/ITemplate
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ModSpawn } from "@spt-aki/models/enums/ModSpawn";
+import { IChooseRandomCompatibleModResult } from "@spt-aki/models/spt/bots/IChooseRandomCompatibleModResult";
 import { EquipmentFilterDetails, IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -735,9 +736,6 @@ export class BotEquipmentModGenerator
         modSpawnResult: ModSpawn
     ): [boolean, ITemplateItem]
     {
-        /** Chosen mod tpl */
-        let modTpl: string;
-        let found = false;
         /** Slot mod will fill */
         const parentSlot = parentTemplate._props.Slots.find((i) => i._name === modSlot);
         const weaponTemplate = this.itemHelper.getItem(weapon[0]._tpl)[1];
@@ -745,79 +743,64 @@ export class BotEquipmentModGenerator
         // It's ammo, use predefined ammo parameter
         if (this.getAmmoContainers().includes(modSlot) && modSlot !== "mod_magazine")
         {
-            modTpl = ammoTpl;
+            return this.itemHelper.getItem(ammoTpl)
         }
-        else
+    
+        // Ensure there's a pool of mods to pick from
+        let modPool = this.getModPoolForSlot(itemModPool, modSpawnResult, parentTemplate, weaponTemplate, modSlot, botEquipBlacklist, isRandomisableSlot);
+        if (!(modPool || parentSlot._required))
         {
-            // Ensure there's a pool of mods to pick from
-            let modPool = this.getModPoolForSlot(itemModPool, modSpawnResult, parentTemplate, weaponTemplate, modSlot, botEquipBlacklist, isRandomisableSlot);
-            if (!(modPool || parentSlot._required))
+            // Nothing in mod pool + item not required
+            this.logger.debug(
+                `Mod pool for slot: ${modSlot} on item: ${parentTemplate._name} was empty, skipping mod`,
+            );
+            return null;
+        }
+
+        // Filter out non-whitelisted scopes, use full modpool if filtered pool would have no elements
+        if (modSlot.includes("mod_scope") && botWeaponSightWhitelist)
+        {
+            // scope pool has more than one scope
+            if (modPool.length > 1)
             {
-                // Nothing in mod pool + item not required
-                this.logger.debug(
-                    `Mod pool for slot: ${modSlot} on item: ${parentTemplate._name} was empty, skipping mod`,
+                modPool = this.filterSightsByWeaponType(
+                    weapon[0],
+                    modPool,
+                    botWeaponSightWhitelist,
                 );
-                return null;
             }
+        }
+        
+        // Pick random mod that's compatible
+        const chosenModResult = this.chooseRandomCompatibleModTpl(modPool, parentSlot, modSpawnResult, weapon, modSlot);
 
-            // Filter out non-whitelisted scopes, use full modpool if filtered pool would have no elements
-            if (modSlot.includes("mod_scope") && botWeaponSightWhitelist)
-            {
-                // scope pool has more than one scope
-                if (modPool.length > 1)
-                {
-                    modPool = this.filterSightsByWeaponType(
-                        weapon[0],
-                        modPool,
-                        botWeaponSightWhitelist,
-                    );
-                }
-            }
-            
-            // Pick random mod and check it's compatible
-            const exhaustableModPool = new ExhaustableArray(modPool, this.randomUtil, this.jsonUtil);
-            let modCompatibilityResult: { incompatible: boolean; reason: string; } = {
-                incompatible: false,
-                reason: "",
-            };
-            while (exhaustableModPool.hasValues())
-            {
-                modTpl = exhaustableModPool.getRandomValue();
-                modCompatibilityResult = this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(
-                    weapon,
-                    modTpl,
-                    modSlot,
-                );
-                if (!modCompatibilityResult.incompatible && !this.weaponModComboIsIncompatible(weapon, modTpl))
-                {
-                    found = true;
+        if (chosenModResult.slotBlocked)
+        {
+            // Don't bother trying to fit mod, slot is completely blocked
+            return null;
+        }
 
-                    break;
-                }
-            }
-
-            // Log mod chosen was incompatible
-            if (modCompatibilityResult.incompatible && parentSlot._required)
-            {
-                this.logger.debug(modCompatibilityResult.reason);
-                this.logger.debug(`Weapon: ${weapon.map(x => `${x._tpl} ${x.slotId ?? ""}`).join(",")}`)
-            }
+        // Log if mod chosen was incompatible
+        if (chosenModResult.incompatible && parentSlot._required)
+        {
+            this.logger.debug(chosenModResult.reason);
+            this.logger.debug(`Weapon: ${weapon.map(x => `${x._tpl} ${x.slotId ?? ""}`).join(",")}`)
         }
 
         // Get random mod to attach from items db for required slots if none found above
-        if (!found && parentSlot !== undefined && parentSlot._required)
+        if (!chosenModResult.found && parentSlot !== undefined && parentSlot._required)
         {
-            modTpl = this.getRandomModTplFromItemDb(modTpl, parentSlot, modSlot, weapon);
-            found = !!modTpl;
+            chosenModResult.chosenTpl = this.getRandomModTplFromItemDb("", parentSlot, modSlot, weapon);
+            chosenModResult.found = true;
         }
 
         // Compatible item not found + not required
-        if (!found && parentSlot !== undefined && !parentSlot._required)
+        if (!chosenModResult.found && parentSlot !== undefined && !parentSlot._required)
         {
             return null;
         }
 
-        if (!found && parentSlot !== undefined)
+        if (!chosenModResult.found && parentSlot !== undefined)
         {
             if (parentSlot._required)
             {
@@ -831,7 +814,65 @@ export class BotEquipmentModGenerator
             return null;
         }
 
-        return this.itemHelper.getItem(modTpl);
+        return this.itemHelper.getItem(chosenModResult.chosenTpl);
+    }
+
+    protected chooseRandomCompatibleModTpl(
+        modPool: string[],
+        parentSlot: Slot,
+        modSpawnResult: ModSpawn,
+        weapon: Item[],
+        modSlotname: string): IChooseRandomCompatibleModResult
+    {
+        let chosenTpl: string;
+        const exhaustableModPool = new ExhaustableArray(modPool, this.randomUtil, this.jsonUtil);
+        let chosenModResult: IChooseRandomCompatibleModResult = {
+            incompatible: true,
+            found: false,
+            reason: "unknown",
+        };
+        const modParentFilterList = parentSlot._props.filters[0].Filter;
+
+        while (exhaustableModPool.hasValues())
+        {
+            chosenTpl = exhaustableModPool.getRandomValue();
+            if (modSpawnResult === ModSpawn.DEFAULT_MOD && modPool.length === 1)
+            {
+                // Default mod wanted and only one choice in pool
+                chosenModResult.found = true;
+                chosenModResult.chosenTpl = chosenTpl;
+
+                break;
+            }
+
+            const isOnModParentFilterList = modParentFilterList.includes(chosenTpl);
+            if (!isOnModParentFilterList)
+            {
+                continue;
+            }
+
+            chosenModResult = this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(
+                weapon,
+                chosenTpl,
+                modSlotname,
+            );
+
+            if (chosenModResult.slotBlocked)
+            {
+                break;
+            }
+            
+            // Some mod combos will never work, make sure its not happened
+            if (!chosenModResult.incompatible && !this.weaponModComboIsIncompatible(weapon, chosenTpl))
+            {
+                chosenModResult.found = true;
+                chosenModResult.chosenTpl = chosenTpl;
+
+                break;
+            }
+        }
+
+        return chosenModResult;
     }
 
     /**
@@ -968,26 +1009,28 @@ export class BotEquipmentModGenerator
     /**
      * Log errors if mod is not compatible with slot
      * @param modToAdd template of mod to check
-     * @param itemSlot slot the item will be placed in
+     * @param slotAddedToTemplate slot the item will be placed in
      * @param modSlot slot the mod will fill
-     * @param parentTemplate template of the mods parent item
+     * @param parentTemplate template of the mods being added
      * @param botRole
      * @returns true if valid
      */
     protected isModValidForSlot(
         modToAdd: [boolean, ITemplateItem],
-        itemSlot: Slot,
+        slotAddedToTemplate: Slot,
         modSlot: string,
         parentTemplate: ITemplateItem,
         botRole: string
     ): boolean
     {
+        const modBeingAddedTemplate = modToAdd[1];
+
         // Mod lacks template item
-        if (!modToAdd[1])
+        if (!modBeingAddedTemplate)
         {
             this.logger.error(
                 this.localisationService.getText("bot-no_item_template_found_when_adding_mod", {
-                    modId: modToAdd[1]._id,
+                    modId: modBeingAddedTemplate._id,
                     modSlot: modSlot,
                 }),
             );
@@ -1000,34 +1043,17 @@ export class BotEquipmentModGenerator
         if (!modToAdd[0])
         {
             // Slot must be filled, show warning
-            if (itemSlot._required)
+            if (slotAddedToTemplate._required)
             {
                 this.logger.warning(
                     this.localisationService.getText("bot-unable_to_add_mod_item_invalid", {
-                        itemName: modToAdd[1]._name,
+                        itemName: modBeingAddedTemplate._name,
                         modSlot: modSlot,
                         parentItemName: parentTemplate._name,
+                        botRole: botRole
                     }),
                 );
             }
-
-            return false;
-        }
-
-        // If mod id doesn't exist in slots filter list and mod id doesn't have any of the slots filters as a base class, mod isn't valid for the slot
-        if (
-            !(itemSlot._props.filters[0].Filter.includes(modToAdd[1]._id)
-                || this.itemHelper.isOfBaseclasses(modToAdd[1]._id, itemSlot._props.filters[0].Filter))
-        )
-        {
-            this.logger.warning(
-                this.localisationService.getText("bot-mod_not_in_slot_filter_list", {
-                    modId: modToAdd[1]._id,
-                    modSlot: modSlot,
-                    parentName: parentTemplate._name,
-                    botRole: botRole
-                }),
-            );
 
             return false;
         }

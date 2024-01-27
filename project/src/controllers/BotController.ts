@@ -280,9 +280,9 @@ export class BotController
             {
                 botGenerationDetails.isPmc = true;
                 botGenerationDetails.role = this.botHelper.getRandomizedPmcRole();
-                botGenerationDetails.side = this.botHelper.getPmcSideByRole(requestedBot.Role);
+                botGenerationDetails.side = this.botHelper.getPmcSideByRole(botGenerationDetails.role);
                 botGenerationDetails.botDifficulty = this.getPMCDifficulty(requestedBot.Difficulty);
-                botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[requestedBot.Role];
+                botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
             }
         }
 
