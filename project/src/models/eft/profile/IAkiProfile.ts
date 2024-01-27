@@ -210,6 +210,7 @@ export interface ModDetails
     version: string;
     author: string;
     dateAdded: number;
+    url: string;
 }
 
 export interface ReceivedGift

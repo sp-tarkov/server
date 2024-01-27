@@ -16,24 +16,24 @@
       "5f5e41366760b4138443b343": 1,
       "5f5e41576760b4138443b344": 1
     },
-    "hands": [
-      "5df8eac086f77412640e2ea7",
-      "5cc2e68f14c02e28b47de290",
-      "5fd78fe9e3bfcf6cab4c9f54",
-      "5e4bb49586f77406a313ec5a",
-      "5e9da2dd86f774054e7d0f63"
-    ],
-    "head": [
-      "5cc2e4d014c02e000d0115f8",
-      "5f68c4c217d579077152a252",
-      "5f68c4a7c174a17c0f4c8945",
-      "5cde9ff17d6c8b0474535daa",
-      "5d28afe786f774292668618d"
-    ],
-    "voice": [
-      "Arena_Guard_1",
-      "Arena_Guard_2"
-    ]
+    "hands": {
+      "5df8eac086f77412640e2ea7": 1,
+      "5cc2e68f14c02e28b47de290": 1,
+      "5fd78fe9e3bfcf6cab4c9f54": 1,
+      "5e4bb49586f77406a313ec5a": 1,
+      "5e9da2dd86f774054e7d0f63": 1
+    },
+    "head": {
+      "5cc2e4d014c02e000d0115f8": 1,
+      "5f68c4c217d579077152a252": 1,
+      "5f68c4a7c174a17c0f4c8945": 1,
+      "5cde9ff17d6c8b0474535daa": 1,
+      "5d28afe786f774292668618d": 1
+    },
+    "voice": {
+      "Arena_Guard_1": 1,
+      "Arena_Guard_2": 1
+    }
   },
   "chances": {
     "equipment": {
@@ -53,10 +53,10 @@
       "TacticalVest": 100
     },
     "mods": {
-	"front_plate": 100,
-	"back_plate": 100,
-	"left_side_plate": 25,
-	"rightside_plate": 25,
+      "front_plate": 100,
+      "back_plate": 100,
+      "left_side_plate": 25,
+      "right_side_plate": 25,
       "mod_charge": 100,
       "mod_equipment": 0,
       "mod_equipment_000": 11,

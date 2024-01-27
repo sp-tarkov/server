@@ -13,6 +13,7 @@ import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem, Slot } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ModSpawn } from "@spt-aki/models/enums/ModSpawn";
 import { EquipmentFilterDetails, IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -82,14 +83,14 @@ export class BotEquipmentModGenerator
         }
 
         // Iterate over mod pool and choose mods to add to item
-        for (const modSlot in compatibleModsPool)
+        for (const modSlotName in compatibleModsPool)
         {
-            const itemSlot = this.getModItemSlot(modSlot, parentTemplate);
-            if (!itemSlot)
+            const itemSlotTemplate = this.getModItemSlotFromDb(modSlotName, parentTemplate);
+            if (!itemSlotTemplate)
             {
                 this.logger.error(
                     this.localisationService.getText("bot-mod_slot_missing_from_item", {
-                        modSlot: modSlot,
+                        modSlot: modSlotName,
                         parentId: parentTemplate._id,
                         parentName: parentTemplate._name,
                         botRole: settings.botRole
@@ -97,32 +98,32 @@ export class BotEquipmentModGenerator
                 );
                 continue;
             }
-
-            if (!(this.shouldModBeSpawned(itemSlot, modSlot.toLowerCase(), settings.spawnChances.equipmentMods) || forceSpawn))
+            const modSpawnResult = this.shouldModBeSpawned(itemSlotTemplate, modSlotName.toLowerCase(), settings.spawnChances.equipmentMods);
+            if (modSpawnResult === ModSpawn.SKIP && !forceSpawn)
             {
                 continue;
             }
 
             // Ensure submods for nvgs all spawn together
-            if (modSlot === "mod_nvg")
+            if (modSlotName === "mod_nvg")
             {
                 forceSpawn = true;
             }
 
-            let modPoolToChooseFrom = compatibleModsPool[modSlot];
-            if (settings.botEquipmentConfig.filterPlatesByLevel && this.itemHelper.isRemovablePlateSlot(modSlot.toLowerCase()))
+            let modPoolToChooseFrom = compatibleModsPool[modSlotName];
+            if (settings.botEquipmentConfig.filterPlatesByLevel && this.itemHelper.isRemovablePlateSlot(modSlotName.toLowerCase()))
             {
-                const outcome = this.filterPlateModsForSlotByLevel(settings, modSlot.toLowerCase(), compatibleModsPool[modSlot], parentTemplate);
+                const outcome = this.filterPlateModsForSlotByLevel(settings, modSlotName.toLowerCase(), compatibleModsPool[modSlotName], parentTemplate);
                 if ([Result.UNKNOWN_FAILURE, Result.NO_DEFAULT_FILTER].includes(outcome.result))
                 {
-                    this.logger.debug(`Plate slot: ${modSlot} selection for armor: ${parentTemplate._id} failed: ${Result[outcome.result]}, skipping`);
+                    this.logger.debug(`Plate slot: ${modSlotName} selection for armor: ${parentTemplate._id} failed: ${Result[outcome.result]}, skipping`);
 
                     continue;
                 }
                 
                 if ([Result.LACKS_PLATE_WEIGHTS].includes(outcome.result))
                 {
-                    this.logger.warning(`Plate slot: ${modSlot} lacks weights for armor: ${parentTemplate._id}, unable to adjust plate choice, using existing data`);
+                    this.logger.warning(`Plate slot: ${modSlotName} lacks weights for armor: ${parentTemplate._id}, unable to adjust plate choice, using existing data`);
                 }
                 
                 modPoolToChooseFrom = outcome.plateModTpls;
@@ -140,7 +141,7 @@ export class BotEquipmentModGenerator
             {
                 modTpl = exhaustableModPool.getRandomValue();
                 if (
-                    !this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(equipment, modTpl, modSlot).incompatible
+                    !this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(equipment, modTpl, modSlotName).incompatible
                 )
                 {
                     found = true;
@@ -149,28 +150,28 @@ export class BotEquipmentModGenerator
             }
 
             // Compatible item not found but slot REQUIRES item, get random item from db
-            const parentSlot = parentTemplate._props.Slots.find((i) => i._name === modSlot);
-            if (!found && parentSlot !== undefined && parentSlot._required)
+            if (!found && itemSlotTemplate._required)
             {
-                modTpl = this.getModTplFromItemDb(modTpl, parentSlot, modSlot, equipment);
+                modTpl = this.getRandomModTplFromItemDb(modTpl, itemSlotTemplate, modSlotName, equipment);
                 found = !!modTpl;
             }
 
             // Compatible item not found + not required
-            if (!found && parentSlot !== undefined && !parentSlot._required)
+            if (!(found || itemSlotTemplate._required))
             {
                 // Don't add item
                 continue;
             }
 
             const modTemplate = this.itemHelper.getItem(modTpl);
-            if (!this.isModValidForSlot(modTemplate, itemSlot, modSlot, parentTemplate, settings.botRole))
+            if (!this.isModValidForSlot(modTemplate, itemSlotTemplate, modSlotName, parentTemplate, settings.botRole))
             {
                 continue;
             }
 
+            // Generate new id to ensure all items are unique on bot
             const modId = this.hashUtil.generate();
-            equipment.push(this.createModItem(modId, modTpl, parentId, modSlot, modTemplate[1], settings.botRole));
+            equipment.push(this.createModItem(modId, modTpl, parentId, modSlotName, modTemplate[1], settings.botRole));
 
             // Does the item being added have possible child mods?
             if (Object.keys(settings.modPool).includes(modTpl))
@@ -251,7 +252,8 @@ export class BotEquipmentModGenerator
             this.logger.debug(`Plate filter was too restrictive for armor: ${armorItem._id}, unable to find plates of level: ${chosenArmorPlateLevel}. Using mod items default plate`);
 
             const relatedItemDbModSlot = armorItem._props.Slots.find(slot => slot._name.toLowerCase() === modSlot);
-            if (!relatedItemDbModSlot._props.filters[0].Plate)
+            const defaultPlate = relatedItemDbModSlot._props.filters[0].Plate
+            if (!defaultPlate)
             {
                 // No relevant plate found after filtering AND no default plate
 
@@ -275,7 +277,7 @@ export class BotEquipmentModGenerator
             }
 
             result.result = Result.SUCCESS;
-            result.plateModTpls = [relatedItemDbModSlot._props.filters[0].Plate];
+            result.plateModTpls = [defaultPlate];
 
             return result;
         }
@@ -292,7 +294,7 @@ export class BotEquipmentModGenerator
      * @param sessionId session id
      * @param weapon Weapon to add mods to
      * @param modPool Pool of compatible mods to attach to weapon
-     * @param weaponParentId parentId of weapon
+     * @param weaponId parentId of weapon
      * @param parentTemplate Weapon which mods will be generated on
      * @param modSpawnChances Mod spawn chances
      * @param ammoTpl Ammo tpl to use when generating magazines/cartridges
@@ -306,7 +308,7 @@ export class BotEquipmentModGenerator
         sessionId: string,
         weapon: Item[],
         modPool: Mods,
-        weaponParentId: string,
+        weaponId: string,
         parentTemplate: ITemplateItem,
         modSpawnChances: ModsChances,
         ammoTpl: string,
@@ -350,7 +352,7 @@ export class BotEquipmentModGenerator
         for (const modSlot of sortedModKeys)
         {
             // Check weapon has slot for mod to fit in
-            const modsParentSlot = this.getModItemSlot(modSlot, parentTemplate);
+            const modsParentSlot = this.getModItemSlotFromDb(modSlot, parentTemplate);
             if (!modsParentSlot)
             {
                 this.logger.error(
@@ -366,7 +368,8 @@ export class BotEquipmentModGenerator
             }
 
             // Check spawn chance of mod
-            if (!this.shouldModBeSpawned(modsParentSlot, modSlot, modSpawnChances))
+            const modSpawnResult = this.shouldModBeSpawned(modsParentSlot, modSlot, modSpawnChances);
+            if (modSpawnResult === ModSpawn.SKIP)
             {
                 continue;
             }
@@ -381,6 +384,7 @@ export class BotEquipmentModGenerator
                 weapon,
                 ammoTpl,
                 parentTemplate,
+                modSpawnResult
             );
 
             // Compatible mod not found
@@ -465,7 +469,7 @@ export class BotEquipmentModGenerator
 
             const modId = this.hashUtil.generate();
             weapon.push(
-                this.createModItem(modId, modToAddTemplate._id, weaponParentId, modSlot, modToAddTemplate, botRole),
+                this.createModItem(modId, modToAddTemplate._id, weaponId, modSlot, modToAddTemplate, botRole),
             );
 
             // I first thought we could use the recursive generateModsForItems as previously for cylinder magazines.
@@ -666,7 +670,7 @@ export class BotEquipmentModGenerator
      * @param parentTemplate item template
      * @returns Slot item
      */
-    protected getModItemSlot(modSlot: string, parentTemplate: ITemplateItem): Slot
+    protected getModItemSlotFromDb(modSlot: string, parentTemplate: ITemplateItem): Slot
     {
         const modSlotLower = modSlot.toLowerCase();
         switch (modSlotLower)
@@ -684,24 +688,28 @@ export class BotEquipmentModGenerator
 
     /**
      * Randomly choose if a mod should be spawned, 100% for required mods OR mod is ammo slot
-     * never return true for an item that has 0% spawn chance
      * @param itemSlot slot the item sits in
      * @param modSlot slot the mod sits in
      * @param modSpawnChances Chances for various mod spawns
-     * @returns boolean true if it should spawn
+     * @returns ModSpawn.SPAWN when mod should be spawned, ModSpawn.DEFAULT_MOD when default mod should spawn, ModSpawn.SKIP when mod is skipped
      */
-    protected shouldModBeSpawned(itemSlot: Slot, modSlot: string, modSpawnChances: ModsChances): boolean
+    protected shouldModBeSpawned(itemSlot: Slot, modSlot: string, modSpawnChances: ModsChances): ModSpawn
     {
-        const modSpawnChance = itemSlot._required || this.getAmmoContainers().includes(modSlot) // Required OR it is ammo
-            ? 100
-            : modSpawnChances[modSlot];
-
-        if (modSpawnChance === 100)
+        const slotRequired = itemSlot._required;
+        if (this.getAmmoContainers().includes(modSlot))
         {
-            return true;
+            return ModSpawn.SPAWN
+        }
+        const spawnMod = this.probabilityHelper.rollChance(modSpawnChances[modSlot]);
+        if (!spawnMod && slotRequired)
+        {
+            // Mod is required but spawn chance roll failed, choose default mod spawn for slot
+            return ModSpawn.DEFAULT_MOD;
         }
 
-        return this.probabilityHelper.rollChance(modSpawnChance);
+        return spawnMod
+            ? ModSpawn.SPAWN
+            : ModSpawn.SKIP;
     }
 
     /**
@@ -713,7 +721,7 @@ export class BotEquipmentModGenerator
      * @param weapon array with only weapon tpl in it, ready for mods to be added
      * @param ammoTpl ammo tpl to use if slot requires a cartridge to be added (e.g. mod_magazine)
      * @param parentTemplate Parent item the mod will go into
-     * @returns ITemplateItem
+     * @returns itemHelper.getItem() result
      */
     protected chooseModToPutIntoSlot(
         modSlot: string,
@@ -724,11 +732,15 @@ export class BotEquipmentModGenerator
         weapon: Item[],
         ammoTpl: string,
         parentTemplate: ITemplateItem,
+        modSpawnResult: ModSpawn
     ): [boolean, ITemplateItem]
     {
+        /** Chosen mod tpl */
         let modTpl: string;
         let found = false;
+        /** Slot mod will fill */
         const parentSlot = parentTemplate._props.Slots.find((i) => i._name === modSlot);
+        const weaponTemplate = this.itemHelper.getItem(weapon[0]._tpl)[1];
 
         // It's ammo, use predefined ammo parameter
         if (this.getAmmoContainers().includes(modSlot) && modSlot !== "mod_magazine")
@@ -737,15 +749,11 @@ export class BotEquipmentModGenerator
         }
         else
         {
-            // Get randomised pool of mods if this is a slot we randomise
-            if (isRandomisableSlot)
-            {
-                itemModPool[modSlot] = this.getDynamicModPool(parentTemplate._id, modSlot, botEquipBlacklist);
-            }
-
             // Ensure there's a pool of mods to pick from
-            if (!(itemModPool[modSlot] || parentSlot._required))
+            let modPool = this.getModPoolForSlot(itemModPool, modSpawnResult, parentTemplate, weaponTemplate, modSlot, botEquipBlacklist, isRandomisableSlot);
+            if (!(modPool || parentSlot._required))
             {
+                // Nothing in mod pool + item not required
                 this.logger.debug(
                     `Mod pool for slot: ${modSlot} on item: ${parentTemplate._name} was empty, skipping mod`,
                 );
@@ -756,18 +764,18 @@ export class BotEquipmentModGenerator
             if (modSlot.includes("mod_scope") && botWeaponSightWhitelist)
             {
                 // scope pool has more than one scope
-                if (itemModPool[modSlot].length > 1)
+                if (modPool.length > 1)
                 {
-                    itemModPool[modSlot] = this.filterSightsByWeaponType(
+                    modPool = this.filterSightsByWeaponType(
                         weapon[0],
-                        itemModPool[modSlot],
+                        modPool,
                         botWeaponSightWhitelist,
                     );
                 }
             }
-
+            
             // Pick random mod and check it's compatible
-            const exhaustableModPool = new ExhaustableArray(itemModPool[modSlot], this.randomUtil, this.jsonUtil);
+            const exhaustableModPool = new ExhaustableArray(modPool, this.randomUtil, this.jsonUtil);
             let modCompatibilityResult: { incompatible: boolean; reason: string; } = {
                 incompatible: false,
                 reason: "",
@@ -799,7 +807,7 @@ export class BotEquipmentModGenerator
         // Get random mod to attach from items db for required slots if none found above
         if (!found && parentSlot !== undefined && parentSlot._required)
         {
-            modTpl = this.getModTplFromItemDb(modTpl, parentSlot, modSlot, weapon);
+            modTpl = this.getRandomModTplFromItemDb(modTpl, parentSlot, modSlot, weapon);
             found = !!modTpl;
         }
 
@@ -824,6 +832,54 @@ export class BotEquipmentModGenerator
         }
 
         return this.itemHelper.getItem(modTpl);
+    }
+
+    /**
+     * Filter mod pool down based on various criteria:
+     * Is slot flagged as randomisable
+     * Is slot required
+     * Is slot flagged as default mod only
+     * @param itemModPool Existing pool of mods to choose
+     * @param modSpawnResult outcome of random roll to select if mod should be added
+     * @param parentTemplate Mods parent
+     * @param weaponTemplate Mods root parent (weapon/equipment)
+     * @param modSlot name of mod slot to choose for
+     * @param botEquipBlacklist 
+     * @param isRandomisableSlot is flagged as a randomisable slot
+     * @returns 
+     */
+    protected getModPoolForSlot(
+        itemModPool: Record<string, string[]>,
+        modSpawnResult: ModSpawn,
+        parentTemplate: ITemplateItem,
+        weaponTemplate: ITemplateItem,
+        modSlot: string,
+        botEquipBlacklist: EquipmentFilterDetails,
+        isRandomisableSlot: boolean): string[]
+    {
+        // Mod is flagged as being default only, try and find it in globals
+        if (modSpawnResult === ModSpawn.DEFAULT_MOD)
+        {
+            const defaultWeaponPreset = this.presetHelper.getDefaultPreset(weaponTemplate._id)
+            const matchingMod = defaultWeaponPreset._items.find(item => item?.slotId?.toLowerCase() === modSlot.toLowerCase());
+            if (matchingMod)
+            {
+                return [matchingMod._tpl];
+            }
+
+            this.logger.warning(`No default: ${modSlot} mod found on: ${weaponTemplate._name}`);
+
+            // Couuldnt find default in globals, use existing mod pool data
+            return itemModPool[modSlot];
+        }
+
+        if (isRandomisableSlot)
+        {
+            return this.getDynamicModPool(parentTemplate._id, modSlot, botEquipBlacklist);
+        }
+
+        // Required mod is not default or randomisable, use existing pool
+        return itemModPool[modSlot];
     }
 
     /**
@@ -888,7 +944,7 @@ export class BotEquipmentModGenerator
      * @param items items to ensure picked mod is compatible with
      * @returns item tpl
      */
-    protected getModTplFromItemDb(modTpl: string, parentSlot: Slot, modSlot: string, items: Item[]): string
+    protected getRandomModTplFromItemDb(modTpl: string, parentSlot: Slot, modSlot: string, items: Item[]): string
     {
         // Find compatible mods and make an array of them
         const allowedItems = parentSlot._props.filters[0].Filter;

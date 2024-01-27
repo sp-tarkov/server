@@ -221,16 +221,6 @@ export class GameController
             {
                 this.addPlayerToPMCNames(pmcProfile);
 
-                if (this.randomUtil.getChance100(this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance))
-                {
-                    this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance = 100;
-                    if (pmcProfile?.Info?.Nickname)
-                    {
-                        this.databaseServer.getTables().bots.types.bear.firstName = [pmcProfile.Info.Nickname];
-                        this.databaseServer.getTables().bots.types.usec.firstName = [pmcProfile.Info.Nickname];
-                    }
-                }
-
                 this.checkForAndRemoveUndefinedDialogs(fullProfile);
             }
 

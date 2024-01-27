@@ -498,7 +498,8 @@ export class HideoutController
             itemWithModsToAdd: [
                 {
                     _id: this.hashUtil.generate(),
-                    _tpl: itemToReturn._tpl
+                    _tpl: itemToReturn._tpl,
+                    upd: itemToReturn.upd
                 }
             ],
             foundInRaid: !!itemToReturn.upd.SpawnedInSession,

@@ -528,8 +528,9 @@ export class RagfairOfferHelper
         pmcProfile: IPmcData,
     ): boolean
     {
-        const item = offer.items[0];
-        const money = offer.requirements[0]._tpl;
+        const offerRootItem = offer.items[0];
+        /** Currency offer is sold for */
+        const moneyTypeTpl = offer.requirements[0]._tpl;
         const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
         const isDefaultUserOffer = offer.user.memberType === MemberCategory.DEFAULT;
 
@@ -542,7 +543,8 @@ export class RagfairOfferHelper
             return false;
         }
 
-        if (!!itemsToAdd && !itemsToAdd.includes(item._tpl))
+        // Offer root items tpl not in searched for array
+        if (!itemsToAdd?.includes(offerRootItem._tpl))
         {
             // skip items we shouldn't include
             return false;
@@ -551,6 +553,14 @@ export class RagfairOfferHelper
         // Performing a required search and offer doesn't have requirement for item
         if (searchRequest.neededSearchId && !offer.requirements.some((x) => x._tpl === searchRequest.neededSearchId))
         {
+            return false;
+        }
+
+        // Filter out presets when search request has multiple buildItems
+        // Assuming 1 build item = single item e.g. gun
+        if (searchRequest.buildCount && this.presetHelper.hasPreset(offerRootItem._tpl) && Object.keys(searchRequest.buildItems).length > 1)
+        {
+            // Don't include preset offer
             return false;
         }
 
@@ -575,32 +585,26 @@ export class RagfairOfferHelper
             return false;
         }
 
-        if (searchRequest.quantityFrom > 0 && searchRequest.quantityFrom >= item.upd.StackObjectsCount)
+        if (searchRequest.quantityFrom > 0 && searchRequest.quantityFrom >= offerRootItem.upd.StackObjectsCount)
         {
             // too little items to offer
             return false;
         }
 
-        if (searchRequest.quantityTo > 0 && searchRequest.quantityTo <= item.upd.StackObjectsCount)
+        if (searchRequest.quantityTo > 0 && searchRequest.quantityTo <= offerRootItem.upd.StackObjectsCount)
         {
             // too many items to offer
             return false;
         }
 
-        if (searchRequest.onlyFunctional && this.presetHelper.hasPreset(item._tpl) && offer.items.length === 1)
+        if (searchRequest.onlyFunctional && this.presetHelper.hasPreset(offerRootItem._tpl) && offer.items.length === 1)
         {
             // don't include non-functional items
             return false;
         }
 
-        if (searchRequest.buildCount && this.presetHelper.hasPreset(item._tpl) && offer.items.length > 1)
-        {
-            // don't include preset items
-            return false;
-        }
-
-        if (this.isConditionItem(item)
-            && !this.itemQualityInRange(item, searchRequest.conditionFrom, searchRequest.conditionTo)
+        if (this.isConditionItem(offerRootItem)
+            && !this.itemQualityInRange(offerRootItem, searchRequest.conditionFrom, searchRequest.conditionTo)
         )
         {
             return false;
@@ -608,17 +612,17 @@ export class RagfairOfferHelper
 
         // commented out as required search "which is for checking offers that are barters"
         // has info.removeBartering as true, this if statement removed barter items.
-        if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(money))
+        if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(moneyTypeTpl))
         {
             // don't include barter offers
             return false;
         }
 
-        if (searchRequest.currency > 0 && this.paymentHelper.isMoneyTpl(money))
+        if (searchRequest.currency > 0 && this.paymentHelper.isMoneyTpl(moneyTypeTpl))
         {
             const currencies = ["all", "RUB", "USD", "EUR"];
 
-            if (this.ragfairHelper.getCurrencyTag(money) !== currencies[searchRequest.currency])
+            if (this.ragfairHelper.getCurrencyTag(moneyTypeTpl) !== currencies[searchRequest.currency])
             {
                 // don't include item paid in wrong currency
                 return false;

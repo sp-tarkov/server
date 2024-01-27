@@ -28,33 +28,33 @@
       "637df25a1e688345e1097bd4": 197,
       "64a2e970a74bb33d140e6dc5": 209
     },
-    "hands": [
-      "6391c6205dbbdb3b1b049840",
-      "5fd7901bdd870108a754c0e6",
-      "5fd78fe9e3bfcf6cab4c9f54",
-      "618cf9540a5a59657e5f5677",
-      "6197aca964ae5436d76c1f98",
-      "5cc2e68f14c02e28b47de290",
-      "5df8eac086f77412640e2ea7",
-      "5e9da2dd86f774054e7d0f63",
-      "5e4bb49586f77406a313ec5a",
-      "64ac23c449d74fd5ec0a124e"
-    ],
-    "head": [
-      "5f68c4c217d579077152a252",
-      "5cde9ff17d6c8b0474535daa",
-      "5cc2e4d014c02e000d0115f8",
-      "5f68c4a7c174a17c0f4c8945",
-      "5d28afe786f774292668618d"
-    ],
-    "voice": [
-      "Scav_5",
-      "Scav_2",
-      "Scav_1",
-      "Scav_6",
-      "Scav_3",
-      "Scav_4"
-    ]
+    "hands": {
+      "6391c6205dbbdb3b1b049840": 1,
+      "5fd7901bdd870108a754c0e6": 1,
+      "5fd78fe9e3bfcf6cab4c9f54": 1,
+      "618cf9540a5a59657e5f5677": 1,
+      "6197aca964ae5436d76c1f98": 1,
+      "5cc2e68f14c02e28b47de290": 1,
+      "5df8eac086f77412640e2ea7": 1,
+      "5e9da2dd86f774054e7d0f63": 1,
+      "5e4bb49586f77406a313ec5a": 1,
+      "64ac23c449d74fd5ec0a124e": 1
+    },
+    "head": {
+      "5f68c4c217d579077152a252": 1,
+      "5cde9ff17d6c8b0474535daa": 1,
+      "5cc2e4d014c02e000d0115f8": 1,
+      "5f68c4a7c174a17c0f4c8945": 1,
+      "5d28afe786f774292668618d": 1
+    },
+    "voice": {
+      "Scav_5": 1,
+      "Scav_2": 1,
+      "Scav_1": 1,
+      "Scav_6": 1,
+      "Scav_3": 1,
+      "Scav_4": 1
+  }
   },
   "chances": {
     "equipment": {

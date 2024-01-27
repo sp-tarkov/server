@@ -6,15 +6,15 @@
     "feet": {
       "5f5e410c6bdad616ad46d60b": 1
     },
-    "hands": [
-      "5df8eac086f77412640e2ea7"
-    ],
-    "head": [
-      "5cc2e4d014c02e000d0115f8"
-    ],
-    "voice": [
-      "Scav_1"
-    ]
+    "hands": {
+      "5df8eac086f77412640e2ea7": 1
+    },
+    "head": {
+      "5cc2e4d014c02e000d0115f8": 1
+    },
+    "voice": {
+      "Scav_1": 1
+    }
   },
   "chances": {
     "equipment": {
@@ -1997,7 +1997,7 @@
       "max": -1,
       "min": -1
     },
-    "standingForKill": -0.05
+    "standingForKill": 0
   },
   "firstName": [
     "Кирюха"
@@ -2081,6 +2081,11 @@
     }
   },
   "inventory": {
+    "Ammo": {
+      "Caliber762x54R": {
+        "5e023d48186a883be655e551": 1
+      }
+    },
     "equipment": {
       "ArmBand": {},
       "ArmorVest": {},
@@ -2090,10 +2095,14 @@
       "FaceCover": {
         "63626d904aa74b8fe30ab426": 1
       },
-      "FirstPrimaryWeapon": {},
+      "FirstPrimaryWeapon": {
+        "5c46fbd72e2216398b5a8c9c": 1
+      },
       "Headwear": {},
       "Holster": {},
-      "Pockets": {},
+      "Pockets": {
+        "60c7272c204bc17802313365": 1
+      },
       "Scabbard": {},
       "SecondPrimaryWeapon": {},
       "SecuredContainer": {
@@ -2115,7 +2124,69 @@
       "SpecialLoot": [],
       "TacticalVest": []
     },
-    "mods": {}
+    "mods": {
+      "57c69dd424597774c03b7bbc": {
+        "mod_scope": [
+          "57c5ac0824597754771e88a9"
+        ]
+      },
+      "5a9d6d13a2750c00164f6b03": {
+        "mod_foregrip": [
+          "5c791e872e2216001219c40a"
+        ]
+      },
+      "5c46fbd72e2216398b5a8c9c": {
+        "mod_barrel": [
+          "5c471cb32e221602b177afaa"
+        ],
+        "mod_magazine": [
+          "5c88f24b2e22160bc12c69a6"
+        ],
+        "mod_mount_001": [
+          "5dfcd0e547101c39625f66f9"
+        ],
+        "mod_pistol_grip": [
+          "5b30ac585acfc433000eb79c"
+        ],
+        "mod_reciever": [
+          "5dfce88fe9dc277128008b2e"
+        ],
+        "mod_stock": [
+          "6197b229af1f5202c57a9bea"
+        ]
+      },
+      "5c471bfc2e221602b21d4e17": {
+        "mod_muzzle": [
+          "5e01e9e273d8eb11426f5bc3"
+        ]
+      },
+      "5c471cb32e221602b177afaa": {
+        "mod_gas_block": [
+          "5c471c842e221615214259b5"
+        ],
+        "mod_muzzle": [
+          "5c471bfc2e221602b21d4e17"
+        ]
+      },
+      "5dfcd0e547101c39625f66f9": {
+        "mod_foregrip": [
+          "5a9d6d13a2750c00164f6b03"
+        ],
+        "mod_scope": [
+          "57c69dd424597774c03b7bbc"
+        ]
+      },
+      "5e01e9e273d8eb11426f5bc3": {
+        "mod_muzzle": [
+          "5e01ea19e9dc277128008c0b"
+        ]
+      },
+      "6197b229af1f5202c57a9bea": {
+        "mod_stock": [
+          "5947e98b86f774778f1448bc"
+        ]
+      }
+    }
   },
   "lastName": [
     "Якубович"

@@ -81,7 +81,6 @@ export class BotGenerator
             isPmc: false,
             side: "Savage",
             role: role,
-            playerLevel: 0,
             botRelativeLevelDeltaMax: 0,
             botRelativeLevelDeltaMin: 0,
             botCountToGenerate: 1,
@@ -164,7 +163,7 @@ export class BotGenerator
 
         bot.Info.Nickname = this.generateBotNickname(
             botJsonTemplate,
-            botGenerationDetails.isPlayerScav,
+            botGenerationDetails,
             botRole,
             sessionId,
         );
@@ -190,7 +189,7 @@ export class BotGenerator
             botJsonTemplate.experience.reward.max,
         );
         bot.Info.Settings.StandingForKill = botJsonTemplate.experience.standingForKill;
-        bot.Info.Voice = this.randomUtil.getArrayValue(botJsonTemplate.appearance.voice);
+        bot.Info.Voice = this.weightedRandomHelper.getWeightedValue<string>(botJsonTemplate.appearance.voice);
         bot.Health = this.generateHealth(botJsonTemplate.health, bot.Info.Side === "Savage");
         bot.Skills = this.generateSkills(<any>botJsonTemplate.skills); // TODO: fix bad type, bot jsons store skills in dict, output needs to be array
 
@@ -238,26 +237,28 @@ export class BotGenerator
      */
     protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
     {
-        bot.Customization.Head = this.randomUtil.getArrayValue(appearance.head);
+        bot.Customization.Head = this.weightedRandomHelper.getWeightedValue<string>(appearance.head);
         bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
         bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
-        bot.Customization.Hands = this.randomUtil.getArrayValue(appearance.hands);
+        bot.Customization.Hands = this.weightedRandomHelper.getWeightedValue<string>(appearance.hands);
     }
 
     /**
      * Create a bot nickname
      * @param botJsonTemplate x.json from database
-     * @param isPlayerScav Will bot be player scav
+     * @param botGenerationDetails
      * @param botRole role of bot e.g. assault
      * @returns Nickname for bot
      */
     protected generateBotNickname(
         botJsonTemplate: IBotType,
-        isPlayerScav: boolean,
+        botGenerationDetails: BotGenerationDetails,
         botRole: string,
         sessionId: string,
     ): string
     {
+        const isPlayerScav = botGenerationDetails.isPlayerScav;
+
         let name = `${this.randomUtil.getArrayValue(botJsonTemplate.firstName)} ${
             this.randomUtil.getArrayValue(botJsonTemplate.lastName) || ""
         }`;
@@ -285,14 +286,11 @@ export class BotGenerator
             name += ` ${botRole}`;
         }
 
-        // If bot name matches current players name, chance to add localised prefix to name
-        if (name.toLowerCase() === playerProfile.Info.Nickname.toLowerCase())
+        // We want to replace pmc bot names with player name + prefix
+        if (botGenerationDetails.isPmc && botGenerationDetails.allPmcsHaveSameNameAsPlayer)
         {
-            if (this.randomUtil.getChance100(this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance))
-            {
-                const prefix = this.localisationService.getRandomTextThatMatchesPartialKey("pmc-name_prefix_");
-                name = `${prefix} ${name}`;
-            }
+            const prefix = this.localisationService.getRandomTextThatMatchesPartialKey("pmc-name_prefix_");
+            name = `${prefix} ${botGenerationDetails.playerName}`;
         }
 
         return name;

@@ -67,6 +67,10 @@ export class RagfairOfferHolder
         this.addOfferByTemplates(itemTpl, offer);
     }
 
+    /**
+     * Purge offer from offer cache
+     * @param offer Offer to remove
+     */
     public removeOffer(offer: IRagfairOffer): void
     {
         if (this.offersById.has(offer._id))
@@ -85,7 +89,7 @@ export class RagfairOfferHolder
         }
     }
 
-    public removeOfferByTrader(traderId: string): void
+    public removeAllOffersByTrader(traderId: string): void
     {
         if (this.offersByTrader.has(traderId))
         {

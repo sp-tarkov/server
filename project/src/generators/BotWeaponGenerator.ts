@@ -175,7 +175,7 @@ export class BotWeaponGenerator
                 sessionId,
                 weaponWithModsArray,
                 modPool,
-                weaponWithModsArray[0]._id,
+                weaponWithModsArray[0]._id, // Weapon root id
                 weaponItemTemplate,
                 modChances,
                 ammoTpl,

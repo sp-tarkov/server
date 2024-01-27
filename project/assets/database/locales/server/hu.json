@@ -1,1 +1,23 @@
-{}
+{
+	"assort-missing_loyalty_level_object": "stripQuestAssort(): Kereskedő {{traderId}} kínálata nem tartalmazza a loyal_level_items adatot, a küldetés kínálatok törlése át lesz ugorva",
+	"assort-missing_questassort": "stripQuestAssort(): Kereskedő %s kínálata nem tartalmaz egy questassort json fájlt, a küldetés kínáltatok törlése át lesz ugorva",
+	"assort-missing_quest_assort_unlock": "Nem található küldetés kínálat feloldás {{traderName}} kereskedőnél ehhez a küldetéshez: {{questName}}. A küldetés teljesítése nem fog jutalmazni megvásárolható tárgyat a kereskedőnél",
+	"baseclass-item_not_found": "Tétel %s nem létezik a tárgyak gyorsítótárjában, ezért a gyorsítótár újra lesz csinálva",
+	"baseclass-item_not_found_failed": "Tétel %s még mindig nem létezik a tárgyak gyorsítótárjába újracsinálása után",
+	"baseclass-missing_db_no_cache": "Az adatbázis üres volt, nem lehetett a tételek alapvetó gyorsítótárját újracsinálni",
+	"bleeding_edge_build": "BLEEDINGEDGE",
+	"bot-bot-cache_has_zero_bots_of_requested_type": "FIGYELMEZTETÉS - A bot gyorsítótár nem tartalmaz előre elkészített botot ebben a típusban %s, így el kell készíteni. Módosítsad a szerver beállítását, hogy csinálj többet",
+	"bot-compatibility_check_missing_props": "Érvénytelen tétel: {{id}} {{name}} ezen a helyen {{slot}} fel lehet szerelni, hiányzik egy _props érték",
+	"bot-generation_failed": "bot generálása sikertelen, lásd a szerver naplót további részletekért",
+	"bot-incompatible_ammo_for_weapon_falling_back_to_default": "Összeférhetetlen lőszer {{chosenAmmo}} lett találva ehhez {{weaponId}} - {{weaponName}}, vissza lesz állítva az alapértelmezetthez: {{defaultAmmo}}",
+	"bot-invalid_item_compatibility_check": "Nem lehetett ellenőrizni a tételek összeegyeztethetőségét a felszerelt tételekkel, kívánt tétel: {{itemTpl}} itt: {{slot}} egy érvénytelen tétel",
+	"bot-item_spawn_limit_reached_skipping_item": "{{botRole}} Nem lehetett a {{itemName}} tételt lehelyezni {{attempts}} próbálkozás után, figyelmen kívül lesz hagyva a lehelyezés korlát",
+	"bot-loot_type_not_found": "Zsákmány gyorsítótár sikertelen ehhez a zsákmányhoz: {{lootType}} ezen a boton: {{botRole}}, pmc volt: {{isPmc}}",
+	"bot-missing_cartridge_slot": "Nem lehetett lőszert adni a fegyverhez mert a modPool nem tartalmaz lőszereket egy tekercselő dobtárhoz %s, át lesz ugorva",
+	"bot-missing_container_with_tpl": "Nem található tárolósablon a következő tpl-lel: %s",
+	"bot-missing_equipment_settings": "A Botnak {{botRole}} hiányzik a felszerelés beállításai: nem lehetett az értéket megszerezni: {{setting}}, vissza fog esni az alapértelmezettre: {{defaultValue}}",
+	"bot-missing_equipment_settings_property": "A Botnak {{botRole}} hiányzik a felszerelés beállításai: nem lehetett az értéket megszerezni: {{setting}}, vissza fog esni az alapértelmezettre: {{defaultValue}}",
+	"bot-missing_item_template": "Nem lehetett megtalálni az elem sablont tpl-lel: %s",
+	"bot-missing_saved_match_info": "getBotCap() Nem sikerült lekérni a mentett meccsadatokat, visszaesés az alaphoz. Újraindítottad a szervert és nem a klienset?",
+	"bot-missing_weapon_preset": "Nem található a következő beprogramozott fegyver beállítás tpl-lel: %s"
+}
