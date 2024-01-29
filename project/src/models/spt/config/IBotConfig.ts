@@ -108,6 +108,7 @@ export interface EquipmentFilters
     nvgIsActiveChanceDayPercent?: number;
     /** Chance NODS are down/active during the night */
     nvgIsActiveChanceNightPercent?: number;
+    forceOnlyArmoredRigWhenNoArmor?: boolean;
     /** Adjust weighting/chances of items on bot by level of bot */
     randomisation: RandomisationDetails[];
     /** Blacklist equipment by level of bot */

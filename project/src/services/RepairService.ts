@@ -14,6 +14,7 @@ import { RepairKitsInfo } from "@spt-aki/models/eft/repair/IRepairActionDataRequ
 import { RepairItem } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { BonusSettings, IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
@@ -342,7 +343,7 @@ export class RepairService
         if (isArmor)
         {
             const durabilityPointCostArmor = globalRepairSettings.durabilityPointCostArmor;
-            const repairArmorBonus = this.getBonusMultiplierValue("RepairArmorBonus", pmcData);
+            const repairArmorBonus = this.getBonusMultiplierValue(BonusType.REPAIR_ARMOR_BONUS, pmcData);
             const armorBonus = 1.0 - (repairArmorBonus - 1.0) - intellectPointReduction;
             const materialType = itemToRepairDetails._props.ArmorMaterial ?? "";
             const armorMaterial = globals.config.ArmorMaterials[materialType] as IArmorType;
@@ -355,7 +356,7 @@ export class RepairService
         }
         else
         {
-            const repairWeaponBonus = this.getBonusMultiplierValue("RepairWeaponBonus", pmcData) - 1;
+            const repairWeaponBonus = this.getBonusMultiplierValue(BonusType.REPAIR_WEAPON_BONUS, pmcData) - 1;
             const repairPointMultiplier = 1.0 - repairWeaponBonus - intellectPointReduction;
             const durabilityPointCostGuns = globals.config.RepairSettings.durabilityPointCostGuns;
 
@@ -365,13 +366,13 @@ export class RepairService
 
     /**
      * Get the bonus multiplier for a skill from a player profile
-     * @param skillBonusName Name of bonus to get multipler of
+     * @param skillBonus Bonus to get multipler of
      * @param pmcData Player profile to look in for skill
      * @returns Multiplier value
      */
-    protected getBonusMultiplierValue(skillBonusName: string, pmcData: IPmcData): number
+    protected getBonusMultiplierValue(skillBonus: BonusType, pmcData: IPmcData): number
     {
-        const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonusName);
+        const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonus);
         let value = 1;
         if (bonusesMatched != null)
         {

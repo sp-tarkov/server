@@ -51,7 +51,7 @@ export class LocaleService
     {
         if (this.localeConfig.gameLocale.toLowerCase() === "system")
         {
-            return this.getPlatformLocale();
+            return this.getPlatformForClientLocale();
         }
 
         return this.localeConfig.gameLocale.toLowerCase();
@@ -66,7 +66,7 @@ export class LocaleService
     {
         if (this.localeConfig.serverLocale.toLowerCase() === "system")
         {
-            return this.getPlatformLocale();
+            return this.getPlatformForServerLocale();
         }
 
         return this.localeConfig.serverLocale.toLowerCase();
@@ -91,30 +91,59 @@ export class LocaleService
     }
 
     /**
-     * Get the locale of the computer running the server
-     * @returns langage part of locale e.g. 'en' part of 'en-US'
+     * Get the full locale of the computer running the server lowercased e.g. en-gb / pt-pt
+     * @returns string
      */
-    protected getPlatformLocale(): string
+    protected getPlatformForServerLocale(): string
     {
         const platformLocale = new Intl.Locale(Intl.DateTimeFormat().resolvedOptions().locale);
-
         if (!platformLocale)
         {
             this.logger.warning("System langauge could not be found, falling back to english");
+
             return "en";
         }
 
-        if (!this.localeConfig.serverSupportedLocales.includes(platformLocale.baseName.toLowerCase()))
+        const localeCode = platformLocale.baseName.toLowerCase();
+        if (!this.localeConfig.serverSupportedLocales.includes(localeCode))
         {
-            // Chek if base language (CN/EN) exists
+            // Chek if base language (e.g. CN / EN / DE) exists
             if (this.localeConfig.serverSupportedLocales.includes(platformLocale.language))
             {
                 return platformLocale.language;
             }
 
             this.logger.warning(
-                `Unsupported system langauge found ${platformLocale.baseName}, falling back to english`,
+                `Unsupported system langauge found: ${localeCode}, falling back to english`,
             );
+
+            return "en";
+        }
+
+        return localeCode;
+    }
+
+    /**
+     * Get the locale of the computer running the server
+     * @returns langage part of locale e.g. 'en' part of 'en-US'
+     */
+    protected getPlatformForClientLocale(): string
+    {
+        const platformLocale = new Intl.Locale(Intl.DateTimeFormat().resolvedOptions().locale);
+        if (!platformLocale)
+        {
+            this.logger.warning("System langauge could not be found, falling back to english");
+
+            return "en";
+        }
+
+        const langaugeCode = platformLocale.language.toLowerCase();
+        if (!this.localeConfig.serverSupportedLocales.includes(langaugeCode))
+        {
+            this.logger.warning(
+                `Unsupported system langauge found: ${langaugeCode}, falling back to english`,
+            );
+
             return "en";
         }
 
@@ -124,6 +153,6 @@ export class LocaleService
             return "cz";
         }
 
-        return platformLocale.baseName;
+        return langaugeCode;
     }
 }

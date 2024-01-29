@@ -170,10 +170,14 @@ export class BotGenerator
 
         if (!this.seasonalEventService.christmasEventEnabled())
         {
-            this.seasonalEventService.removeChristmasItemsFromBotInventory(
-                botJsonTemplate.inventory,
-                botGenerationDetails.role,
-            );
+            // Process all bots EXCEPT gifter, he needs christmas items
+            if (botGenerationDetails.role !== "gifter")
+            {
+                this.seasonalEventService.removeChristmasItemsFromBotInventory(
+                    botJsonTemplate.inventory,
+                    botGenerationDetails.role,
+                );
+            }
         }
 
         // Remove hideout data if bot is not a PMC or pscav
@@ -214,11 +218,11 @@ export class BotGenerator
             this.addDogtagToBot(bot);
         }
 
-        // generate new bot ID
-        bot = this.generateId(bot);
+        // Generate new bot ID
+        this.generateId(bot);
 
-        // generate new inventory ID
-        bot = this.generateInventoryID(bot);
+        // Generate new inventory ID
+        this.generateInventoryID(bot);
 
         // Set role back to originally requested now its been generated
         if (botGenerationDetails.eventRole)
@@ -442,17 +446,15 @@ export class BotGenerator
      * @param bot bot to update
      * @returns updated IBotBase object
      */
-    protected generateId(bot: IBotBase): IBotBase
+    protected generateId(bot: IBotBase): void
     {
         const botId = this.hashUtil.generate();
 
         bot._id = botId;
         bot.aid = this.hashUtil.generateAccountId();
-
-        return bot;
     }
 
-    protected generateInventoryID(profile: IBotBase): IBotBase
+    protected generateInventoryID(profile: IBotBase): void
     {
         const defaultInventory = "55d7217a4bdc2d86028b456d";
         const itemsByParentHash: Record<string, Item[]> = {};
@@ -496,8 +498,6 @@ export class BotGenerator
                 item.parentId = newInventoryId;
             }
         }
-
-        return profile;
     }
 
     /**

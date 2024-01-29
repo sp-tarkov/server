@@ -5,6 +5,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IStorePlayerOfferTaxAmountRequestData } from "@spt-aki/models/eft/ragfair/IStorePlayerOfferTaxAmountRequestData";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
@@ -88,7 +89,7 @@ export class RagfairTaxService
         itemPriceMult = 4 ** itemPriceMult;
         requirementPriceMult = 4 ** requirementPriceMult;
 
-        const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === "RagfairCommission");
+        const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === BonusType.RAGFAIR_COMMISSION);
         const taxDiscountPercent = hideoutFleaTaxDiscountBonus ? Math.abs(hideoutFleaTaxDiscountBonus.value) : 0;
 
         const tax = itemWorth * itemTaxMult * itemPriceMult

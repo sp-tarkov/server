@@ -459,13 +459,13 @@ export class RagfairOfferGenerator
         else if (isBarterOffer)
         {
             // Apply randomised properties
-            itemWithChildren = this.randomiseItemUpdProperties(randomUserId, itemWithChildren, itemDetails[1]);
+            this.randomiseOfferItemUpdProperties(randomUserId, itemWithChildren, itemDetails[1]);
             barterScheme = this.createBarterBarterScheme(itemWithChildren);
         }
         else
         {
             // Apply randomised properties
-            itemWithChildren = this.randomiseItemUpdProperties(randomUserId, itemWithChildren, itemDetails[1]);
+            this.randomiseOfferItemUpdProperties(randomUserId, itemWithChildren, itemDetails[1]);
             barterScheme = this.createCurrencyBarterScheme(itemWithChildren, isPackOffer);
         }
 
@@ -563,14 +563,13 @@ export class RagfairOfferGenerator
      * Get array of an item with its mods + condition properties (e.g durability)
      * Apply randomisation adjustments to condition if item base is found in ragfair.json/dynamic/condition
      * @param userID id of owner of item
-     * @param itemWithMods Item and mods, get condition of first item (only first array item is used)
+     * @param itemWithMods Item and mods, get condition of first item (only first array item is modified)
      * @param itemDetails db details of first item
-     * @returns
      */
-    protected randomiseItemUpdProperties(userID: string, itemWithMods: Item[], itemDetails: ITemplateItem): Item[]
+    protected randomiseOfferItemUpdProperties(userID: string, itemWithMods: Item[], itemDetails: ITemplateItem): void
     {
         // Add any missing properties to first item in array
-        itemWithMods[0] = this.addMissingConditions(itemWithMods[0]);
+        this.addMissingConditions(itemWithMods[0]);
 
         if (!(this.ragfairServerHelper.isPlayer(userID) || this.ragfairServerHelper.isTrader(userID)))
         {
@@ -578,7 +577,7 @@ export class RagfairOfferGenerator
             if (!parentId)
             {
                 // No condition details found, don't proceed with modifying item conditions
-                return itemWithMods;
+                return;
             }
 
             // Roll random chance to randomise item condition
@@ -587,8 +586,6 @@ export class RagfairOfferGenerator
                 this.randomiseItemCondition(parentId, itemWithMods, itemDetails);
             }
         }
-
-        return itemWithMods;
     }
 
     /**
@@ -781,9 +778,8 @@ export class RagfairOfferGenerator
      * Durabiltiy for repairable items
      * HpResource for medical items
      * @param item item to add conditions to
-     * @returns Item with conditions added
      */
-    protected addMissingConditions(item: Item): Item
+    protected addMissingConditions(item: Item): void
     {
         const props = this.itemHelper.getItem(item._tpl)[1]._props;
         const isRepairable = "Durability" in props;
@@ -816,8 +812,6 @@ export class RagfairOfferGenerator
         {
             item.upd.RepairKit = { Resource: props.MaxRepairResource };
         }
-
-        return item;
     }
 
     /**

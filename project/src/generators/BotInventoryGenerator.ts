@@ -238,6 +238,14 @@ export class BotInventoryGenerator
             botEquipmentConfig: botEquipConfig,
             randomisationDetails: randomistionDetails
         });
+
+        // Bot has no armor vest
+        if (botEquipConfig.forceOnlyArmoredRigWhenNoArmor && !botInventory.items.find(item => item.slotId === "ArmorVest"))
+        {
+            // Filter rigs down to only those with armor
+            this.filterRigsToOnlyThoseWithProtection(templateInventory);
+        }
+
         this.generateEquipment({
             rootEquipmentSlot: EquipmentSlots.TACTICAL_VEST,
             rootEquipmentPool: templateInventory.equipment.TacticalVest,
@@ -249,6 +257,25 @@ export class BotInventoryGenerator
             botEquipmentConfig: botEquipConfig,
             randomisationDetails: randomistionDetails
         });
+    }
+
+    /**
+     * Remove non-armored rigs from parameter data
+     * @param templateInventory 
+     */
+    protected filterRigsToOnlyThoseWithProtection(templateInventory: Inventory): void
+    {
+        const tacVestsWithArmor = Object.entries(templateInventory.equipment.TacticalVest)
+            .reduce((newVestDictionary, [tplKey]) =>
+            {
+                if (this.itemHelper.getItem(tplKey)[1]._props.Slots?.length > 0)
+                {
+                    newVestDictionary[tplKey] = templateInventory.equipment.TacticalVest[tplKey];
+                }
+                return newVestDictionary;
+            }, {});
+
+        templateInventory.equipment.TacticalVest = tacVestsWithArmor;
     }
 
     /**

@@ -1,5 +1,5 @@
 {
-    "moveSpeed": 15,
+    "moveSpeed": 5,
     "coverFireTime": 90,
     "pointWaitTime": {
         "min": 60,

@@ -12,6 +12,7 @@ import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
 import { IInsuredItemsData } from "@spt-aki/models/eft/inRaid/IInsuredItemsData";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { Traders } from "@spt-aki/models/enums/Traders";
@@ -203,7 +204,7 @@ export class InsuranceService
             return this.timeUtil.getTimestamp() + this.insuranceConfig.returnTimeOverrideSeconds;
         }
 
-        const insuranceReturnTimeBonus = pmcData.Bonuses.find((b) => b.type === "InsuranceReturnTime");
+        const insuranceReturnTimeBonus = pmcData.Bonuses.find((b) => b.type === BonusType.INSURANCE_RETURN_TIME);
         const insuranceReturnTimeBonusPercent = 1.0
             - (insuranceReturnTimeBonus ? Math.abs(insuranceReturnTimeBonus.value) : 0) / 100;
 

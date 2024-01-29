@@ -344,6 +344,9 @@ export class SeasonalEventService
                 this.giveGift(sessionId, "NewYear2023");
                 this.enableSnow();
                 break;
+            case SeasonalEventType.SNOW.toLowerCase():
+                this.enableSnow();
+                break;
             default:
                 // Likely a mod event
                 this.addEventGearToBots(eventType);

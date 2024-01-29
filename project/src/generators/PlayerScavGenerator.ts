@@ -11,6 +11,7 @@ import { Settings, Skills, Stats } from "@spt-aki/models/eft/common/tables/IBotB
 import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
@@ -313,7 +314,7 @@ export class PlayerScavGenerator
 
         for (const bonus of pmcData.Bonuses)
         {
-            if (bonus.type === "ScavCooldownTimer")
+            if (bonus.type === BonusType.SCAV_COOLDOWN_TIMER)
             {
                 // Value is negative, so add.
                 // Also note that for scav cooldown, multiple bonuses stack additively.

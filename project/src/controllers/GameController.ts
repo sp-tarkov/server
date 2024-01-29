@@ -19,6 +19,7 @@ import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeRespo
 import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { Traders } from "@spt-aki/models/enums/Traders";
@@ -569,15 +570,15 @@ export class GameController
             let hpRegenPerHour = 456.6;
 
             // Set new values, whatever is smallest
-            energyRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "EnergyRegeneration").reduce(
+            energyRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === BonusType.ENERGY_REGENERATION).reduce(
                 (sum, curr) => sum + curr.value,
                 0,
             );
-            hydrationRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "HydrationRegeneration").reduce(
+            hydrationRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === BonusType.HYDRATION_REGENERATION).reduce(
                 (sum, curr) => sum + curr.value,
                 0,
             );
-            hpRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "HealthRegeneration").reduce(
+            hpRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === BonusType.HEALTH_REGENERATION).reduce(
                 (sum, curr) => sum + curr.value,
                 0,
             );

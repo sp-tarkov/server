@@ -671,8 +671,15 @@
             "type": "NEW_YEARS",
             "startDay": "1",
             "startMonth": "1",
-            "endDay": "27",
+            "endDay": "7",
             "endMonth": "1"
+        }, {
+            "name": "snow",
+            "type": "SNOW",
+            "startDay": "8",
+            "startMonth": "1",
+            "endDay": "5",
+            "endMonth": "2"
         }
     ]
 }

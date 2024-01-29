@@ -225,7 +225,7 @@ export class RagfairPriceService implements OnLoad
 
             // Check if item type is weapon preset, handle differently
             const itemDetails = this.itemHelper.getItem(item._tpl);
-            if (this.presetHelper.isPreset(item._id) && itemDetails[1]._props.weapFireType)
+            if (this.presetHelper.isPreset(item.upd?.sptPresetId) && itemDetails[1]._props.weapFireType)
             {
                 itemPrice = this.getWeaponPresetPrice(item, items, itemPrice);
                 endLoop = true;
@@ -326,32 +326,22 @@ export class RagfairPriceService implements OnLoad
 
     /**
      * Calculate the cost of a weapon preset by adding together the price of its mods + base price of default weapon preset
-     * @param item base weapon
-     * @param items weapon plus mods
+     * @param weaponRootItem base weapon
+     * @param weaponWithChildren weapon plus mods
      * @param existingPrice price of existing base weapon
      * @returns price of weapon in roubles
      */
-    protected getWeaponPresetPrice(item: Item, items: Item[], existingPrice: number): number
+    protected getWeaponPresetPrice(weaponRootItem: Item, weaponWithChildren: Item[], existingPrice: number): number
     {
-        // Find all presets for this weapon type
-        // If no presets found, return existing price
-        const presets = this.presetHelper.getPresets(item._tpl);
-        if (!presets || presets.length === 0)
-        {
-            this.logger.warning(this.localisationService.getText("ragfair-unable_to_find_preset_with_id", item._tpl));
-
-            return existingPrice;
-        }
-
         // Get the default preset for this weapon
-        const presetResult = this.getWeaponPreset(presets, item);
+        const presetResult = this.getWeaponPreset(weaponRootItem);
         if (presetResult.isDefault)
         {
-            return this.getFleaPriceForItem(item._tpl);
+            return this.getFleaPriceForItem(weaponRootItem._tpl);
         }
 
         // Get mods on current gun not in default preset
-        const newOrReplacedModsInPresetVsDefault = items.filter((x) =>
+        const newOrReplacedModsInPresetVsDefault = weaponWithChildren.filter((x) =>
             !presetResult.preset._items.some((y) => y._tpl === x._tpl)
         );
 
@@ -409,31 +399,31 @@ export class RagfairPriceService implements OnLoad
      * @param presets weapon presets to choose from
      * @returns Default preset object
      */
-    protected getWeaponPreset(presets: IPreset[], weapon: Item): { isDefault: boolean; preset: IPreset; }
+    protected getWeaponPreset(weapon: Item): { isDefault: boolean; preset: IPreset; }
     {
-        const defaultPreset = presets.find((x) => x._encyclopedia);
+        const defaultPreset = this.presetHelper.getDefaultPreset(weapon._tpl)
         if (defaultPreset)
         {
             return { isDefault: true, preset: defaultPreset };
         }
-
-        if (presets.length === 1)
+        const nonDefaultPresets = this.presetHelper.getPresets(weapon._tpl)
+        if (nonDefaultPresets.length === 1)
         {
             this.logger.debug(
                 `Item Id: ${weapon._tpl} has no default encyclopedia entry but only one preset (${
-                    presets[0]._name
-                }), choosing preset (${presets[0]._name})`,
+                    nonDefaultPresets[0]._name
+                }), choosing preset (${nonDefaultPresets[0]._name})`,
             );
         }
         else
         {
             this.logger.debug(
                 `Item Id: ${weapon._tpl} has no default encyclopedia entry, choosing first preset (${
-                    presets[0]._name
-                }) of ${presets.length}`,
+                    nonDefaultPresets[0]._name
+                }) of ${nonDefaultPresets.length}`,
             );
         }
 
-        return { isDefault: false, preset: presets[0] };
+        return { isDefault: false, preset: nonDefaultPresets[0] };
     }
 }

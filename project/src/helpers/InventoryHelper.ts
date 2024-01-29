@@ -127,7 +127,7 @@ export class InventoryHelper
         output.profileChanges[sessionId].items.new.push(...itemWithModsToAddClone);
         pmcData.Inventory.items.push(...itemWithModsToAddClone);
 
-        this.logger.debug(`Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount} item: ${itemWithModsToAddClone[0]._tpl} with: ${itemWithModsToAddClone.length - 1} mods to inventory`);
+        this.logger.debug(`Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount ?? 1} item: ${itemWithModsToAddClone[0]._tpl} with: ${itemWithModsToAddClone.length - 1} mods to inventory`);
     }
 
     /**

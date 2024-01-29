@@ -11,6 +11,7 @@ import { IHideoutImprovement } from "@spt-aki/models/eft/common/tables/IBotBase"
 import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { StageBonus } from "@spt-aki/models/eft/hideout/IHideoutArea";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
@@ -765,10 +766,10 @@ export class ProfileFixerService
 
         for (const areaId of areasToCheck)
         {
-            const area = pmcProfile.Hideout.Areas.find((x) => x.type === areaId);
+            const area = pmcProfile.Hideout.Areas.find((area) => area.type === areaId);
             if (!area)
             {
-                this.logger.debug(`unable to sort ${areaId} slots, no area found`);
+                this.logger.debug(`unable to sort: ${area.type} (${areaId}) slots, no area found`);
                 continue;
             }
 
@@ -890,12 +891,12 @@ export class ProfileFixerService
             return profileBonuses.find((x) => x.id === bonus.id);
         }
 
-        if (bonus.type.toLowerCase() === "stashsize")
+        if (bonus.type === BonusType.STASH_SIZE)
         {
             return profileBonuses.find((x) => x.type === bonus.type && x.templateId === bonus.templateId);
         }
 
-        if (bonus.type.toLowerCase() === "additionalslots")
+        if (bonus.type === BonusType.ADDITIONAL_SLOTS)
         {
             return profileBonuses.find((x) =>
                 x.type === bonus.type && x.value === bonus.value && x.visible === bonus.visible
@@ -1379,7 +1380,7 @@ export class ProfileFixerService
         const quests = this.databaseServer.getTables().templates.quests;
         const profileQuests = pmcProfile.Quests;
         
-        let repeatableQuests: IRepeatableQuest[] = [];
+        const repeatableQuests: IRepeatableQuest[] = [];
         for (const repeatableQuestType of pmcProfile.RepeatableQuests)
         {
             repeatableQuests.push(...repeatableQuestType.activeQuests);
