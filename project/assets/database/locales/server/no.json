@@ -210,7 +210,7 @@
 	"websocket-pinging_player": "[WS] Pinger spiller: %s",
 	"websocket-player_connected": "[WS] Spiller: %s har koblet til",
 	"websocket-received_message": "[WS] Mottatt melding fra bruker %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket tapt, sletter handle, status: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Socket tapt, sletter handle",
 	"websocket-started": "Startet webserver på %s",
 	"pmcresponse-victim_positive_1": "Bra skudd",
 	"pmcresponse-victim_positive_2": "Bra skudd",

@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Pinging player: %s",
 	"websocket-player_connected": "[WS] Player: %s has connected",
 	"websocket-received_message": "[WS] Received message from user %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket lost, deleting handle, status: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Socket lost, deleting handle",
 	"websocket-started": "Started websocket at %s",
 	"pmcresponse-victim_positive_1": "Nice shot",
 	"pmcresponse-victim_positive_2": "Great shot",

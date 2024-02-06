@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Έλεγχος διαθεσιμότητας παίκτη: %s",
 	"websocket-player_connected": "[WS] Παίκτης: Το %s έχει συνδεθεί",
 	"websocket-received_message": "[WS] Ελήφθη μήνυμα από τον χρήστη %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Η υποδοχή χάθηκε, διαγραφή της λαβής, κατάσταση: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Η υποδοχή χάθηκε, διαγραφή της λαβής",
 	"websocket-started": "Ξεκίνησε ο διακομιστής ιστού στο %s",
 	"pmcresponse-victim_positive_1": "Ωραία βολή",
 	"pmcresponse-victim_positive_2": "Εξαιρετική βολή",

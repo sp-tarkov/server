@@ -229,7 +229,7 @@
 	"websocket-pinging_player": "[WS] notifikasikan player: %s",
 	"websocket-player_connected": "[WS] Player: %s tersambung",
 	"websocket-received_message": "[WS] Menerima pesan dari pengguna %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Soket hilang, menghapus pegangan, status: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Soket hilang, menghapus pegangan",
 	"websocket-started": "Websocket mulai di %s",
 	"pmc-name_prefix_42": "Palsu",
 	"pmc-name_prefix_47": "Besar",

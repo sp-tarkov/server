@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Vyzvánění hráče: %s",
 	"websocket-player_connected": "[WS] Hráč: %s se připojil",
 	"websocket-received_message": "[WS] Obdržená zpráva od uživatele %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket ztracen, odstraňuji přezdívku, stav: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Socket ztracen, odstraňuji přezdívku",
 	"websocket-started": "Spuštěn websocket na %s",
 	"pmcresponse-victim_positive_1": "Dobrá trefa",
 	"pmcresponse-victim_positive_2": "Skvělá trefa",

@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Pingando il giocatore: %s",
 	"websocket-player_connected": "[WS] Giocatore: %s si è connesso",
 	"websocket-received_message": "[WS] Ricevuto messaggio dall'utente %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket perso, cancellazione dell'handle, status: %s",
+	"websocket-socket_lost_deleting_handle": "[WS] Socket perso, cancellazione dell'handle",
 	"websocket-started": "Websocket partito all'indirizzo %s",
 	"pmcresponse-victim_positive_1": "Bel colpo",
 	"pmcresponse-victim_positive_2": "Gran colpo",
