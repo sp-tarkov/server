@@ -123,9 +123,7 @@ export class WebSocketServer
             }
             else
             {
-                this.logger.debug(
-                    this.localisationService.getText("websocket-socket_lost_deleting_handle", ws.readyState),
-                );
+                this.logger.debug(this.localisationService.getText("websocket-socket_lost_deleting_handle"));
                 clearInterval(this.websocketPingHandler);
                 delete this.webSockets[sessionID];
             }
