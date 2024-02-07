@@ -93,18 +93,24 @@ export class InRaidHelper
         // Run callback on every victim, adding up the standings gained/lossed, starting value is existing fence standing
         const newFenceStanding = victims.reduce((acc, victim) =>
         {
-            let additionalReduction = 0;
-            if (existingFenceStanding >= 6 && existingFenceStanding <= 8)
-            {
-                additionalReduction = 1;
-            }
-
-            if (existingFenceStanding > 8)
-            {
-                additionalReduction = 2;
-            }
-
             const standingForKill = this.getFenceStandingChangeForKillAsScav(victim);
+
+            let additionalReduction = 0;
+
+            // Only subtract (up to) 2 reputation on penalties, not on rewards
+            if (standingForKill < 0)
+            {
+                if (acc >= 6 && acc <= 8)
+                {
+                    // Reset fence rep to 6 before subtracting penalty
+                    additionalReduction = acc - 6.0;
+                }
+                else
+                {
+                    additionalReduction = 2;
+                }
+            }
+
             if (standingForKill)
             {
                 return (acc + standingForKill) - additionalReduction;
