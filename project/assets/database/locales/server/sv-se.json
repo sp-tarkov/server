@@ -582,7 +582,7 @@
 	"launcher-profile_leftbehind": "Samma som Standard, plus större förrådsstorlek (10x38), extra utrustning/artiklar, 500 dollar",
 	"launcher-profile_preparetoescape": "Samma som Left Behind, plus större förrådsstorlek (10x48), extra utrustning/artiklar, högre startrykte med handlare, 250 euro",
 	"launcher-profile-edgeofdarkness": "Samma som Prepare to Escape, plus större förrådsstorlek (10x68), extra utrustning/artiklar, högre startrykte med handlare, 1000 dollar, 500 euro",
-	"launcher-profile_spteasystart": "Massor av rubel/dollar/euro, vissa QoL-färdigheter är nivå 20, handlarrykte är maxat, startnivå är 69, inga uppdrag slutförda",
+	"launcher-profile_spteasystart": "Massor av rubel/dollar/euro, vissa QoL-färdigheter är nivå 20, handlarrykte är maxat, startnivå är 15, inga uppdrag slutförda",
 	"launcher-profile_sptzerotohero": "Börja med nästan ingenting, inga rubel/dollar/euro, inget handlarrykte, en kniv, inga uppdrag slutförda",
 	"launcher-profile_sptdeveloper": "Testprofil, startnivån är 69, massor av rubel/dollar/euro, USEC börjar med alla uppdrag redo att starta, BEAR börjar med alla uppdrag redo att lämna in, odödlighetsbalaclava",
 	"launcher-missing_property": "Profil: %s saknar en descriptionLocaleKey-egenskap"

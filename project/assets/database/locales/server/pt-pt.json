@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "O mesmo que a edição Standard com; inventário maior (10x38), itens/equipamento extra, 500 dólares",
 	"launcher-profile_preparetoescape": "O mesmo que a edição Left Behind com; inventário maior (10x48), itens/equipamento extra, maior reputação com comerciantes, 250 euros",
 	"launcher-profile-edgeofdarkness": "O mesmo que a edição Prepare To Escape com; inventário maior (10x68), itens/equipamento extra, maior reputação com comerciantes, 1000 dólares, 500 euros",
-	"launcher-profile_spteasystart": "Muitos Rublos/Dólares/Euros, algumas habilidades QoL começam a nível 20, quantidade máxima de reputação com comerciantes, nível inicial 69, nenhuma missão concluída",
+	"launcher-profile_spteasystart": "Muitos Rublos/Dólares/Euros, algumas habilidades QoL começam a nível 20, quantidade máxima de reputação com comerciantes, nível inicial 15, nenhuma missão concluída",
 	"launcher-profile_sptzerotohero": "Começa com quase nada, sem Rublos/Dólares/Euros, sem reputação com comerciantes, 1 faca, nenhuma missão concluída",
 	"launcher-profile_sptdeveloper": "Perfil de teste, nível inicial 69, muitos Rublos/Dólares/Euros, USEC iniciam com todas missões prontas para começar, BEAR começam com todas missões prontas para entregar, balaclava de invencibilidade",
 	"launcher-missing_property": "Perfil: %s não tem a propriedade descriptionLocaleKey"

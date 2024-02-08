@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Stejné jako Standard plus; větší velikost skrýše (10x38), bonusové vybavení a věci, 500 dolarů",
 	"launcher-profile_preparetoescape": "Stejné jako Left Behind plus; větší velikost skrýše (10x48), extra vybavení/věci, vyšší startovací reputace s obchodníky, 250 Eur",
 	"launcher-profile-edgeofdarkness": "Stejné jako Prepare To Escape plus; větší velikost skrýše (10x68), extra vybavení a věci, vyšší startovací reputace s obchodníky, 1000 dolarů, 500 Eur",
-	"launcher-profile_spteasystart": "Spousta Roublů/Dollarů/Euro, některé QoL dovednosti jsou úrovně 20, reputace na max, počáteční úroveň je 69 a žádné úkoly nejsou dokončeny",
+	"launcher-profile_spteasystart": "Spousta Roublů/Dollarů/Euro, některé QoL dovednosti jsou úrovně 20, reputace na max, počáteční úroveň je 15 a žádné úkoly nejsou dokončeny",
 	"launcher-profile_sptzerotohero": "Začněte s téměř ničím, bez Roublů/Dolarů/Eur, bez reputace u obchodníků, 1 nůž, bez vyplněných úkolů",
 	"launcher-profile_sptdeveloper": "Testovací profil, startovací úroveň je 69, spousta Roublů/Dolarů/Eur, USEC začíná se všemi úkoly připravenými k plnění, BEAR začíná se všemi úkoly připravenými k odevzdání, balaklava která umožňuje nesmrtelnost",
 	"launcher-missing_property": "Profilu: %s chybí vlastnost descriptionLocaleKey"

@@ -238,7 +238,7 @@
 	"launcher-profile_leftbehind": "Sama seperti Standard tambahan; ukuran penyimpanan lebih besar (10x38), ekstra perlengkapan/barang, 500 dolar",
 	"launcher-profile_preparetoescape": "Sama seperti Left Behind tambahan; penyimpanan lebih besar (10x48), ekstra perlengkapan/barang, reputasi awal lebih tinggi dengan vendor, 250 euro",
 	"launcher-profile-edgeofdarkness": "Sama seperti Prepare To Escape tambahan; penyimpanan lebih besar (10x68), ekstra perlengkapan/barang, reputasi awal lebih tinggi dengan vendor, 1000 dolar, 500 euro",
-	"launcher-profile_spteasystart": "Banyak sekali Rubel/Dolar/Euro, Beberapa keahlian qualitas hidup berlevel 20, Reputasi vendor maksimal, level awal 69, belum ada quest yang selesai",
+	"launcher-profile_spteasystart": "Banyak sekali Rubel/Dolar/Euro, Beberapa keahlian qualitas hidup berlevel 20, Reputasi vendor maksimal, level awal 15, belum ada quest yang selesai",
 	"launcher-profile_sptzerotohero": "Mulai dengan tidak ada apapun, tidak ada Rubel/Dolar/Euro, tidak ada reputasi vendor, 1 senjata melee, tidak ada quest selesai",
 	"launcher-profile_sptdeveloper": "Profil percobaan, level awal 69, Banyak Rubel/Dolar/Euro, USEC mulai dengan quest siap diterima, BEAR mulai dengan quest siap diserahkan, balaklava kekebalan",
 	"launcher-missing_property": "Profil: %s kehilangan sebuah data descriptionLocaleKey"

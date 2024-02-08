@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "包含标准版内容以及；更大的储物空间;（10×38），额外的装备和物品，500美元",
 	"launcher-profile_preparetoescape": "包含深入敌后版内容以及：更大的储物空间（10×48），额外的装备和物品，更高的商人初始声望，250欧元",
 	"launcher-profile-edgeofdarkness": "包含严阵以离版内容以及：更大的储物空间（10×68），额外的装备和物品，更高的商人初始声望，1000美元，500欧元",
-	"launcher-profile_spteasystart": "大量卢布、美元和欧元，一些基础技能等级20，商人声望满，初始等级69，没有已完成任务",
+	"launcher-profile_spteasystart": "大量卢布、美元和欧元，一些基础技能等级20，商人声望满，初始等级15，没有已完成任务",
 	"launcher-profile_sptzerotohero": "开局几乎没有物资，没有卢布、美元或欧元，没有商人声望，就一把刀，没有已完成任务",
 	"launcher-profile_sptdeveloper": "测试用存档，初始等级69，大量卢布、美元和欧元，USEC开局所有的任务已准备开始，BEAR开局所有任务已准备接取，无敌面罩",
 	"launcher-missing_property": "存档：%s缺少descriptionLocaleKey属性"

@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Standart artı ile aynı; daha büyük zula boyutu (10x38), ekstra ekipman/eşya, 500 dolar",
 	"launcher-profile_preparetoescape": "Left Behind ile aynı artı; daha büyük zula boyutu (10x48), ekstra ekipman/eşya, tüccarlar arasında daha yüksek başlangıç itibarı, 250 avro",
 	"launcher-profile-edgeofdarkness": "Prepare To Escape ile aynı artı; daha büyük zula boyutu (10x68), ekstra ekipman/eşya, tüccarlar nezdinde daha yüksek başlangıç itibarı, 1000 dolar, 500 avro",
-	"launcher-profile_spteasystart": "Bir sürü Ruble/Dolar/Euro, Bazı QoL becerileri seviye 20, tüccar rep'i maksimum, başlangıç seviyesi 69, tamamlanan görev yok",
+	"launcher-profile_spteasystart": "Bir sürü Ruble/Dolar/Euro, Bazı QoL becerileri seviye 20, tüccar rep'i maksimum, başlangıç seviyesi 15, tamamlanan görev yok",
 	"launcher-profile_sptzerotohero": "Neredeyse hiçbir şey olmadan başlayın, Ruble/Dolar/Euro yok, tüccar repliği yok, 1 bıçak, tamamlanmış görev yok",
 	"launcher-profile_sptdeveloper": "Test profili, başlangıç seviyesi 69, çok sayıda Ruble/Dolar/Euro, USEC başlangıcı tüm görevler hazır, BEAR başlangıcı tüm görevler teslim edilmeye hazır, yenilmezlik kar maskesi",
 	"launcher-missing_property": "Profil: %s için bir descriptionLocaleKey özelliği eksik"

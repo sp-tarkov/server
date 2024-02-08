@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "스탠다드 + 더 큰 보관함 크기(10x38), 추가 장비/아이템, 500달러",
 	"launcher-profile_preparetoescape": "레프트 비하인드와 동일 더 큰 보관함 크기(10x48), 추가 장비/아이템, 상인과의 시작 평판 상승, 250유로",
 	"launcher-profile-edgeofdarkness": "프리페어 투 이스케이프와 동일 더 큰 은신처 크기(10x68), 추가 장비/아이템, 상인과의 높은 시작 평판, 1000달러, 500유로",
-	"launcher-profile_spteasystart": "많은 루블/달러/유로, 일부 품질 관리 기술 레벨 20, 상인 담당자 최대 레벨, 시작 레벨 69, 완료된 퀘스트 없음",
+	"launcher-profile_spteasystart": "많은 루블/달러/유로, 일부 품질 관리 기술 레벨 20, 상인 담당자 최대 레벨, 시작 레벨 15, 완료된 퀘스트 없음",
 	"launcher-profile_sptzerotohero": "루블/달러/유로, 상인 대표, 칼 1개, 퀘스트 완료 등 거의 아무것도 없이 시작하세요.",
 	"launcher-profile_sptdeveloper": "테스트 프로필, 시작 레벨은 69, 많은 루블/달러/유로, USEC는 모든 퀘스트를 시작할 준비가 된 상태로 시작, BEAR는 모든 퀘스트를 제출할 준비가 된 상태로 시작, 무적 발라 클라바",
 	"launcher-missing_property": "프로필: %s 은(는) descriptionLocaleKey 속성이 누락되어 있습니다"

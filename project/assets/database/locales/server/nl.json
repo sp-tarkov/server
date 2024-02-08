@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Zelfde als Standard plus; grotere stash (10x38), extra uitrusting/items, 500 dollars",
 	"launcher-profile_preparetoescape": "Zelfde als Left Behind plus; grotere stash (10x48), extra uitrusting/items, hogere start reputatie met traders, 250 euros",
 	"launcher-profile-edgeofdarkness": "Zelfde als Prepare To Escape plus; grotere stash (10x68), extra uitrusting/items, hogere start reputatie met traders, 1000 dollars, 500 euros",
-	"launcher-profile_spteasystart": "Heel veel Roubles/Dollars/Euros, Een aantal QoL skills zijn level 20, trader rep maximaal, start level is 69, geen voltooide missies",
+	"launcher-profile_spteasystart": "Heel veel Roubles/Dollars/Euros, Een aantal QoL skills zijn level 20, trader rep maximaal, start level is 15, geen voltooide missies",
 	"launcher-profile_sptzerotohero": "Begin met bijna niets, geen roze/Dollars/Euros, geen handelaar rep, 1 mes, geen missies voltooid",
 	"launcher-profile_sptdeveloper": "Test profiel, start level is 69, heel veel Roubles/Dollars/Euros, USEC start met alle missies klaar om te starten, BEAR start met alle missies klaar om ingeleverd te worden, onverwoestbare balaclava",
 	"launcher-missing_property": "Profiel: %s mist de eigenschap descriptionLocaleKey"

@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Tak samo jak w wersji Standard plus; większy rozmiar schowka (10x38), dodatkowy sprzęt/przedmioty, 500 dolarów",
 	"launcher-profile_preparetoescape": "Tak samo jak w wersji Left Behind plus; większy rozmiar schowka (10x48), dodatkowy sprzęt/przedmioty, wyższa startowa reputacja u handlarzy, 250 euro",
 	"launcher-profile-edgeofdarkness": "Tak samo jak w wersji Prepare To Escape plus; większy rozmiar schowka (10x68), dodatkowy sprzęt/przedmioty, wyższa startowa reputacja u handlarzy, 1000 dolarów, 500 euro",
-	"launcher-profile_spteasystart": "Dużo rubli/dolarów/euro, niektóre pomocne umiejętności na poziomie 20, maksymalna reputacja u handlarzy, początkowy poziom to 69, żadne zadania nie zostały ukończone",
+	"launcher-profile_spteasystart": "Dużo rubli/dolarów/euro, niektóre pomocne umiejętności na poziomie 20, maksymalna reputacja u handlarzy, początkowy poziom to 15, żadne zadania nie zostały ukończone",
 	"launcher-profile_sptzerotohero": "Zacznij praktycznie od zera, bez rubli/dolarów/euro, bez reputacji u handlarzy, 1 nóż, żadne zadania nie zostały ukończone",
 	"launcher-profile_sptdeveloper": "Profil testowy, początkowy poziom to 69, dużo rubli/dolarów/euro, USEC zaczyna z wszystkimi zadaniami gotowymi do rozpoczęcia, BEAR zaczyna z wszystkimi zadaniami gotowymi do oddania, kominiarka nieśmiertelności",
 	"launcher-missing_property": "Profil: %s nie ma właściwości descriptionLocaleKey"

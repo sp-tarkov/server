@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Uguale al profilo standard di live EFT ed in più; dimensioni del nascondiglio aumentato (10x38), oggetti/equipaggiamento extra, 500 dollari",
 	"launcher-profile_preparetoescape": "Uguale al profilo Left Behind di live EFT ed in più; dimensioni del nascondiglio aumentato (10x48), oggetti/equipaggiamento extra, reputazione con i mercanti più alta, 250 euro",
 	"launcher-profile-edgeofdarkness": "Uguale al profilo Prepare to Escape di live EFT ed in più; dimensioni del nascondiglio massime (10x68), oggetti/equipaggiamento extra, reputazione con i mercanti più alta, 1000 dollari, 500 euro",
-	"launcher-profile_spteasystart": "Un sacco di Rubli/Dollari/Euro, alcune abilità utili sono al livello 20, la reputazione con i mercanti è già al massimo, si inizia già al livello 69, nessuna missione già completata",
+	"launcher-profile_spteasystart": "Un sacco di Rubli/Dollari/Euro, alcune abilità utili sono al livello 20, la reputazione con i mercanti è già al massimo, si inizia già al livello 15, nessuna missione già completata",
 	"launcher-profile_sptzerotohero": "Inizi con quasi nulla, niente Rubli/Dollari/Euro, reputazione mercanti a zero, un coltello, nessuna missione completata",
 	"launcher-profile_sptdeveloper": "Profilo di prova, i PMC iniziano al livello 69, molti Rubli/Dollari/Euro, gli USEC cominciano con tutte le quest pronte a cominciare, i BEAR cominciano con tutte le quest pronte per essere consegnate, Balaclava dell'invincibilità incluso",
 	"launcher-missing_property": "Al profilo: %s manca la property descriptionLocaleKey"

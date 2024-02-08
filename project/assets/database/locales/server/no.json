@@ -405,7 +405,7 @@
 	"launcher-profile_leftbehind": "Samme som standard, pluss; større stash-størrelse (10x38), ekstra utstyr/elementer, 500 dollar",
 	"launcher-profile_preparetoescape": "Samme som Left Behind, pluss; større stash-størrelse (10x48), ekstra utstyr/gjenstander, høyere omdømme med handelsfolk, 250 euro",
 	"launcher-profile-edgeofdarkness": "Samme som Prepare To Escape, pluss; større stash-størrelse (10x68), ekstra utstyr/gjenstander, høyere startomdømme med handlere, 1000 dollar, 500 euro",
-	"launcher-profile_spteasystart": "Massevis av Rubler/Dollar/Euro, enkelte QoL ferdigheter er allerede nivå 20, kjøpmann omdømme på maks, startnivå er level 69, ingen oppdrag fullført",
+	"launcher-profile_spteasystart": "Massevis av Rubler/Dollar/Euro, enkelte QoL ferdigheter er allerede nivå 20, kjøpmann omdømme på maks, startnivå er level 15, ingen oppdrag fullført",
 	"launcher-profile_sptzerotohero": "Start med nesten ingenting, ingen Rubler/Dollar/Euro, ingen omdømme hos kjøpmenn, 1 kniv, ingen oppdrag fullført",
 	"launcher-profile_sptdeveloper": "Testprofil, startnivå er level 69, masse Rubler/Dollar/Euro, USEC starter med alle oppdrag som er klare for å starte, BEAR starter med alle oppdrag klare til å levere, uovervinnelighets-balaklava",
 	"launcher-missing_property": "Profil: %s mangler en descriptionLocaleKey egenskap"

@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Wie Standard plus; größere Lagergröße (10x38), zusätzliche Ausrüstung/Gegenstände, 500 Dollar",
 	"launcher-profile_preparetoescape": "Dasselbe wie Left Behind plus; größere Lagergröße (10x48), zusätzliche Ausrüstung/Gegenstände, höhere Startreputation bei Händlern, 250 Euro",
 	"launcher-profile-edgeofdarkness": "Wie Prepare To Escape plus; größere Lagergröße (10x68), zusätzliche Ausrüstung/Gegenstände, höhere Startreputation bei Händlern, 1000 Dollar, 500 Euro",
-	"launcher-profile_spteasystart": "Viele Rubel/Dollar/Euro, einige QoL-Fähigkeiten sind Level 20, Händler-Reputation maximal, Startlevel ist 69, keine Quests abgeschlossen",
+	"launcher-profile_spteasystart": "Viele Rubel/Dollar/Euro, einige QoL-Fähigkeiten sind Level 20, Händler-Reputation maximal, Startlevel ist 15, keine Quests abgeschlossen",
 	"launcher-profile_sptzerotohero": "Beging mit fast nichts, keine Rubel/Dollar/Euro, kein Händlervertreter, 1 Messer, keine abgeschlossenen Quests",
 	"launcher-profile_sptdeveloper": "Testprofil, Startlevel ist 69, viele Rubel/Dollar/Euro, USEC startet mit allen Quests bereit zum Start, BEAR startet mit allen Quests bereit zur Abgabe, Unbesiegbarkeits-Sturmhaube",
 	"launcher-missing_property": "Profil: %s fehlt eine Eigenschaft descriptionLocaleKey"

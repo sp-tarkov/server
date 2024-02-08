@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Igual que Standard plus; mayor tamaño de inventario(10x38), equipamiento extra, 500 dólares",
 	"launcher-profile_preparetoescape": "Igual que Left Behind plus; mayor tamaño de inventario (10x48), equipamiento adicional/artículos, mayor reputación inicial con los comerciantes, 250 euros",
 	"launcher-profile-edgeofdarkness": "Igual que Prepare to Escape plus; mayor tamaño de escondite (10x68), equipo adicional/artículos, mayor reputación inicial con los comerciantes, 1000 dólares, 500 euros",
-	"launcher-profile_spteasystart": "Muchos rublos/dóalres/euros, algunas habilidades de QoL son de nivel 20, la reputación de los comerciantes al máximo, el nivel inicial es 69, no hay misiones completadas",
+	"launcher-profile_spteasystart": "Muchos rublos/dóalres/euros, algunas habilidades de QoL son de nivel 20, la reputación de los comerciantes al máximo, el nivel inicial es 15, no hay misiones completadas",
 	"launcher-profile_sptzerotohero": "Comienza con casi nada, sin rublos/dólares/euros, sin reputación de comerciantes, 1 cuchillo y sin misiones completadas",
 	"launcher-profile_sptdeveloper": "Prefil de prueba, el nivel inicial es 69, muchos rublos/dólares/euros, USEC comienza con todas las misiones listas para empezar, BEAR comienza con todas las misiones listas para entregar, pasamontañas de invencibilidad",
 	"launcher-missing_property": "Profile: %s no dispone de la propiedad descriptionLocaleKey"

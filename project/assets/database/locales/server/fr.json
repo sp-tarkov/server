@@ -594,7 +594,7 @@
 	"launcher-profile_leftbehind": "Edition Left Behind, stash moyenne (10x38), équipement en plus, 500 dollars",
 	"launcher-profile_preparetoescape": "Edition Prepare for Escape, stash grande (10x48), plus d'équipement, meilleure rép de démarrage vendeurs, 250 euros",
 	"launcher-profile-edgeofdarkness": "Edition EoD, stash de taille maximale (10x68), un max d'équipement, gros boost avec la rép des traders, 1000 dollars, 500 euros",
-	"launcher-profile_spteasystart": "SPT mode touriste. Beaucoup de Roubles/Dollars/Euros, certains skills confort sont à 20, réputation traders maximale, level de départ à 69. Aucune quête validée",
+	"launcher-profile_spteasystart": "SPT mode touriste. Beaucoup de Roubles/Dollars/Euros, certains skills confort sont à 20, réputation traders maximale, level de départ à 15. Aucune quête validée",
 	"launcher-profile_sptzerotohero": "SPT zero to hero ! Tu démarres avec rien, juste ta bite et ton couteau ! Aucune quête validée",
 	"launcher-profile_sptdeveloper": "SPT dév/testing/debug, lvl 69, max Roubles/Dollars/Euros, USEC ==> toutes les quêtes prêtes à être débutées, BEAR ==> toutes les quêtes terminées prêtes à être validées, item balaclava d'invincibilité",
 	"launcher-missing_property": "Profile: %s, propriété descriptionLocaleKey manquante"
