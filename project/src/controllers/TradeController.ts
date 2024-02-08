@@ -262,55 +262,24 @@ export class TradeController
     ): IItemEventRouterResponse
     {
         const output = this.eventOutputHolder.getOutput(sessionId);
-        const scavProfile = this.profileHelper.getFullProfile(sessionId)?.characters?.scav;
-        if (!scavProfile)
-        {
-            return this.httpResponse.appendErrorToOutput(output, `Profile ${request.fromOwner.id} has no scav account`);
-        }
 
-        this.calculateCostOfScavInventoryAndMailMoneyToPlayer(sessionId, scavProfile, Traders.FENCE);
+        this.mailMoneyToPlayer(sessionId, request.totalValue, Traders.FENCE);
 
         return output;
     }
 
     /**
-     * Get cost of items in inventory and send rouble total to player as mail
+     * Send the specified rouble total to player as mail
      * @param sessionId Session id
-     * @param profileWithItemsToSell Profile with items to be sold to trader
-     * @param profileThatGetsMoney Profile that gets the money after selling items
      * @param trader Trader to sell items to
      * @param output IItemEventRouterResponse
      */
-    protected calculateCostOfScavInventoryAndMailMoneyToPlayer(
+    protected mailMoneyToPlayer(
         sessionId: string,
-        profileWithItemsToSell: IPmcData,
+        roublesToSend: number,
         trader: Traders,
     ): void
     {
-        const handbookPrices = this.ragfairPriceService.getAllStaticPrices();
-        // TODO, apply trader sell bonuses?
-        const traderDetails = this.traderHelper.getTrader(trader, sessionId);
-
-        // Get all base items that scav has (primaryweapon/backpack/pockets etc)
-        // Add items that trader will buy (only sell items that have the container as parent) to request object
-        let roublesToSend = 0;
-        const containerAndEquipmentItems = profileWithItemsToSell.Inventory.items.filter((item) =>
-            item.parentId === profileWithItemsToSell.Inventory.equipment
-        );
-        for (const itemToSell of containerAndEquipmentItems)
-        {
-            // Increment sell price in request
-            roublesToSend += this.getPriceOfItemAndChildren(
-                itemToSell._id,
-                profileWithItemsToSell.Inventory.items,
-                handbookPrices,
-                traderDetails,
-            );
-        }
-
-        // Server-side calcualted isnt matching clientside calcualtion, temp fix to get it to be closer
-        roublesToSend /= 2;
-
         this.logger.debug(`Selling scav items to fence for ${roublesToSend} roubles`);
 
         // Create single currency item with all currency on it
