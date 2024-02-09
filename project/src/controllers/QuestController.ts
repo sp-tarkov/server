@@ -835,7 +835,22 @@ export class QuestController
                 {
                     if (toRemove.includes(pmcData.Inventory.items[index]._id))
                     {
-                        pmcData.Inventory.items.splice(index, 1);
+                        // Remove the item
+                        const removedItem = pmcData.Inventory.items.splice(index, 1)[0];
+
+                        // If the removed item has a numeric `location` property, re-calculate all the child
+                        // element `location` properties of the parent so they are sequential, while retaining order
+                        if (typeof removedItem.location === "number")
+                        {
+                            const childItems = this.itemHelper.findAndReturnChildrenAsItems(pmcData.Inventory.items, removedItem.parentId);
+                            childItems.shift(); // Remove the parent
+
+                            // Sort by the current `location` and update
+                            childItems.sort((a, b) => a.location > b.location ? 1 : -1).forEach((item, index) =>
+                            {
+                                item.location = index;
+                            });
+                        }
                     }
                 }
             }
