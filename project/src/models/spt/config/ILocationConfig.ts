@@ -43,13 +43,13 @@ export interface ILocationConfig extends IBaseConfig
     /** Key: map, value: settings to control how long scav raids are*/
     scavRaidTimeSettings: IScavRaidTimeSettings;
     /** Settings to adjust mods for lootable equipment in raid */
-    equipmentLootSettings: IEquipmentLootSettings
+    equipmentLootSettings: IEquipmentLootSettings;
 }
 
 export interface IEquipmentLootSettings
 {
     // Percentage chance item will be added to equipment
-    modSpawnChancePercent: Record<string, number>
+    modSpawnChancePercent: Record<string, number>;
 }
 
 export interface IFixEmptyBotWavesSettings
@@ -118,13 +118,13 @@ export interface IContainerRandomistionSettings
 
 export interface IScavRaidTimeSettings
 {
-    settings: IScavRaidTimeConfigSettings
-    maps: Record<string, IScavRaidTimeLocationSettings>
+    settings: IScavRaidTimeConfigSettings;
+    maps: Record<string, IScavRaidTimeLocationSettings>;
 }
 
 export interface IScavRaidTimeConfigSettings
 {
-    trainArrivalDelayObservedSeconds: number
+    trainArrivalDelayObservedSeconds: number;
 }
 
 export interface IScavRaidTimeLocationSettings
@@ -133,7 +133,7 @@ export interface IScavRaidTimeLocationSettings
     reduceLootByPercent: boolean;
     /** Smallest % of container loot that should be spawned */
     minStaticLootPercent: number;
-/** Smallest % of loose loot that should be spawned */
+    /** Smallest % of loose loot that should be spawned */
     minDynamicLootPercent: number;
     /** Chance raid time is reduced */
     reducedChancePercent: number;

@@ -71,7 +71,7 @@ export class GameStaticRouter extends StaticRouter
                 {
                     return this.gameCallbacks.getRaidTime(url, info, sessionID);
                 },
-            )
+            ),
         ]);
     }
 }

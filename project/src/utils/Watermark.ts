@@ -129,7 +129,7 @@ export class Watermark
     public getInGameVersionLabel(): string
     {
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE`
+            ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE ${this.akiConfig.commit?.slice(0, 6) ?? ""}`
             : this.akiConfig.akiVersion;
 
         return `${this.akiConfig.projectName} ${versionTag}`;

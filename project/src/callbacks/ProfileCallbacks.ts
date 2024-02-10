@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ProfileController } from "@spt-aki/controllers/ProfileController";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
@@ -28,16 +29,20 @@ export class ProfileCallbacks
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ProfileController") protected profileController: ProfileController,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     )
     {}
 
     /**
      * Handle client/game/profile/create
      */
-    public createProfile(url: string, info: IProfileCreateRequestData, sessionID: string): IGetBodyResponseData<ICreateProfileResponse>
+    public createProfile(
+        url: string,
+        info: IProfileCreateRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ICreateProfileResponse>
     {
         const id = this.profileController.createProfile(info, sessionID);
-
         return this.httpResponse.getBody({ uid: id });
     }
 

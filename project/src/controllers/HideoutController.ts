@@ -8,7 +8,13 @@ import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { HideoutArea, Product, Production, ScavCase } from "@spt-aki/models/eft/common/tables/IBotBase";
+import {
+    HideoutArea,
+    ITaskConditionCounter,
+    Product,
+    Production,
+    ScavCase,
+} from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { HideoutUpgradeCompleteRequestData } from "@spt-aki/models/eft/hideout/HideoutUpgradeCompleteRequestData";
 import { IHandleQTEEventRequestData } from "@spt-aki/models/eft/hideout/IHandleQTEEventRequestData";
@@ -27,6 +33,7 @@ import { IHideoutUpgradeRequestData } from "@spt-aki/models/eft/hideout/IHideout
 import { IQteData } from "@spt-aki/models/eft/hideout/IQteData";
 import { IRecordShootingRangePoints } from "@spt-aki/models/eft/hideout/IRecordShootingRangePoints";
 import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
+import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
@@ -49,6 +56,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 @injectable()
 export class HideoutController
 {
+    /** Key used in TaskConditionCounters array */
     protected static nameTaskConditionCountersCrafting = "CounterHoursCrafting";
     protected hideoutConfig: IHideoutConfig;
 
@@ -126,17 +134,17 @@ export class HideoutController
         }
 
         // Construction time management
-        const hideoutArea = pmcData.Hideout.Areas.find((area) => area.type === request.areaType);
-        if (!hideoutArea)
+        const profileHideoutArea = pmcData.Hideout.Areas.find((area) => area.type === request.areaType);
+        if (!profileHideoutArea)
         {
             this.logger.error(this.localisationService.getText("hideout-unable_to_find_area", request.areaType));
             return this.httpResponse.appendErrorToOutput(output);
         }
 
-        const hideoutData = this.databaseServer.getTables().hideout.areas.find((area) =>
+        const hideoutDataDb = this.databaseServer.getTables().hideout.areas.find((area) =>
             area.type === request.areaType
         );
-        if (!hideoutData)
+        if (!hideoutDataDb)
         {
             this.logger.error(
                 this.localisationService.getText("hideout-unable_to_find_area_in_database", request.areaType),
@@ -144,13 +152,17 @@ export class HideoutController
             return this.httpResponse.appendErrorToOutput(output);
         }
 
-        const ctime = hideoutData.stages[hideoutArea.level + 1].constructionTime;
+        let ctime = hideoutDataDb.stages[profileHideoutArea.level + 1].constructionTime;
         if (ctime > 0)
         {
+            if (this.profileHelper.isDeveloperAccount(sessionID))
+            {
+                ctime = 40;
+            }
             const timestamp = this.timeUtil.getTimestamp();
 
-            hideoutArea.completeTime = Math.round(timestamp + ctime);
-            hideoutArea.constructing = true;
+            profileHideoutArea.completeTime = Math.round(timestamp + ctime);
+            profileHideoutArea.constructing = true;
         }
 
         return output;
@@ -464,7 +476,9 @@ export class HideoutController
         )
         {
             const response = this.removeResourceFromArea(sessionID, pmcData, request, output, hideoutArea);
-            this.update();
+
+            // Force a refresh of productions/hideout areas with resources
+            this.hideoutHelper.updatePlayerHideout(sessionID);
             return response;
         }
 
@@ -492,29 +506,25 @@ export class HideoutController
     {
         const slotIndexToRemove = removeResourceRequest.slots[0];
 
-        const itemToReturn = hideoutArea.slots.find((x) => x.locationIndex === slotIndexToRemove).item[0];
+        // Assume only one item in slot
+        const itemToReturn = hideoutArea.slots.find((slot) => slot.locationIndex === slotIndexToRemove).item[0];
 
         const request: IAddItemDirectRequest = {
-            itemWithModsToAdd: [
-                {
-                    _id: this.hashUtil.generate(),
-                    _tpl: itemToReturn._tpl
-                }
-            ],
+            itemWithModsToAdd: [itemToReturn],
             foundInRaid: !!itemToReturn.upd.SpawnedInSession,
             callback: null,
-            useSortingTable: false
-        }
-        
-        // If returned with errors, drop out
+            useSortingTable: false,
+        };
+
         this.inventoryHelper.addItemToStash(sessionID, request, pmcData, output);
         if (output.warnings && output.warnings.length > 0)
         {
+            // Adding to stash failed, drop out - dont remove item from hideout area slot
             return output;
         }
 
         // Remove items from slot, locationIndex remains
-        const hideoutSlotIndex = hideoutArea.slots.findIndex((x) => x.locationIndex === slotIndexToRemove);
+        const hideoutSlotIndex = hideoutArea.slots.findIndex((slot) => slot.locationIndex === slotIndexToRemove);
         hideoutArea.slots[hideoutSlotIndex].item = undefined;
 
         return output;
@@ -572,14 +582,16 @@ export class HideoutController
         const recipe = this.databaseServer.getTables().hideout.production.find((p) => p._id === body.recipeId);
 
         // Find the actual amount of items we need to remove because body can send weird data
-        const requirements = this.jsonUtil.clone(recipe.requirements.filter((i) => i.type === "Item"));
+        const recipeRequirementsClone = this.jsonUtil.clone(recipe.requirements.filter((i) => i.type === "Item"));
 
         const output = this.eventOutputHolder.getOutput(sessionID);
 
         for (const itemToDelete of body.items)
         {
             const itemToCheck = pmcData.Inventory.items.find((i) => i._id === itemToDelete.id);
-            const requirement = requirements.find((requirement) => requirement.templateId === itemToCheck._tpl);
+            const requirement = recipeRequirementsClone.find((requirement) =>
+                requirement.templateId === itemToCheck._tpl
+            );
             if (requirement.count <= 0)
             {
                 continue;
@@ -648,7 +660,7 @@ export class HideoutController
 
         pmcData.Hideout.Production[body.recipeId] = this.hideoutHelper.initProduction(
             body.recipeId,
-            modifiedScavCaseTime,
+            this.profileHelper.isDeveloperAccount(sessionID) ? 40 : modifiedScavCaseTime,
             false,
         );
         pmcData.Hideout.Production[body.recipeId].sptIsScavCase = true;
@@ -722,19 +734,27 @@ export class HideoutController
 
         if (request.recipeId === HideoutHelper.bitcoinFarm)
         {
-            return this.hideoutHelper.getBTC(pmcData, request, sessionID);
+            // Ensure server and client are in-sync when player presses 'get items' on farm
+            this.hideoutHelper.updatePlayerHideout(sessionID);
+            this.hideoutHelper.getBTC(pmcData, request, sessionID, output);
+
+            return output;
         }
 
         const recipe = hideoutDb.production.find((r) => r._id === request.recipeId);
         if (recipe)
         {
-            return this.handleRecipe(sessionID, recipe, pmcData, request, output);
+            this.handleRecipe(sessionID, recipe, pmcData, request, output);
+
+            return output;
         }
 
         const scavCase = hideoutDb.scavcase.find((r) => r._id === request.recipeId);
         if (scavCase)
         {
-            return this.handleScavCase(sessionID, pmcData, request, output);
+            this.handleScavCase(sessionID, pmcData, request, output);
+
+            return output;
         }
 
         this.logger.error(
@@ -754,7 +774,6 @@ export class HideoutController
      * @param pmcData Player profile
      * @param request Remove production from area request
      * @param output Output object to update
-     * @returns IItemEventRouterResponse
      */
     protected handleRecipe(
         sessionID: string,
@@ -762,23 +781,12 @@ export class HideoutController
         pmcData: IPmcData,
         request: IHideoutTakeProductionRequestData,
         output: IItemEventRouterResponse,
-    ): IItemEventRouterResponse
+    ): void
     {
         // Variables for managemnet of skill
         let craftingExpAmount = 0;
 
-        // ? move the logic of TaskConditionCounters in new method?
-        let counterHoursCrafting = pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting];
-        if (!counterHoursCrafting)
-        {
-            pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting] = {
-                id: recipe._id,
-                type: HideoutController.nameTaskConditionCountersCrafting,
-                sourceId: "CounterCrafting",
-                value: 0,
-            };
-            counterHoursCrafting = pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting];
-        }
+        const counterHoursCrafting = this.getHoursCraftingTaskConditionCounter(pmcData, recipe);
         let hoursCrafting = counterHoursCrafting.value;
 
         /** Array of arrays of item + children */
@@ -791,10 +799,7 @@ export class HideoutController
             const preset = this.presetHelper.getDefaultPreset(recipe.endProduct);
 
             // Ensure preset has unique ids and is cloned so we don't alter the preset data stored in memory
-            const presetAndMods: Item[] = this.itemHelper.replaceIDs(
-                null,
-                this.jsonUtil.clone(preset._items),
-            );
+            const presetAndMods: Item[] = this.itemHelper.replaceIDs(preset._items);
 
             this.itemHelper.remapRootItemId(presetAndMods);
 
@@ -805,68 +810,68 @@ export class HideoutController
         const rewardIsStackable = this.itemHelper.isItemTplStackable(recipe.endProduct);
         if (rewardIsStackable)
         {
-            // Add raw item to array without checking stack size
-            itemAndChildrenToSendToPlayer.push([{
+            // Create root item
+            const rewardToAdd: Item = {
                 _id: this.hashUtil.generate(),
                 _tpl: recipe.endProduct,
-                upd: {
-                    StackObjectsCount: recipe.count
-                }
-            }]);
+                upd: { StackObjectsCount: recipe.count },
+            };
 
             // Split item into separate items with acceptable stack sizes
-            const splitReward = this.itemHelper.splitStack(itemAndChildrenToSendToPlayer[0][0]);
-            if (splitReward.length > 1)
-            {
-                // Empty out reward array and replace with split items
-                itemAndChildrenToSendToPlayer = [];
-                for (const item of splitReward)
-                {
-                    itemAndChildrenToSendToPlayer.push([item]);
-                }
-            }
+            const splitReward = this.itemHelper.splitStackIntoSeparateItems(rewardToAdd);
+            itemAndChildrenToSendToPlayer.push(...splitReward);
         }
         else
         {
-            // Not stackable, send multiple single items
+            // Not stackable, may have to send send multiple of reward
 
-            // Add the initial item to array
+            // Add the first reward item to array when not a preset (first preset added above earlier)
             if (!rewardIsPreset)
             {
-                itemAndChildrenToSendToPlayer.push([{
-                    _id: this.hashUtil.generate(),
-                    _tpl: recipe.endProduct
-                }]);
+                itemAndChildrenToSendToPlayer.push([{ _id: this.hashUtil.generate(), _tpl: recipe.endProduct }]);
             }
 
+            // Add multiple of item if recipe requests it
             // Start index at one so we ignore first item in array
-            // (handles preset items already being added)
-            for (let index = 1; index < recipe.count; index++)
+            const countOfItemsToReward = recipe.count;
+            for (let index = 1; index < countOfItemsToReward; index++)
             {
-                const itemAndMods: Item[] = this.itemHelper.replaceIDs(
-                    null,
-                    this.jsonUtil.clone(itemAndChildrenToSendToPlayer[0]),
-                );
+                const itemAndMods: Item[] = this.itemHelper.replaceIDs(itemAndChildrenToSendToPlayer[0]);
                 itemAndChildrenToSendToPlayer.push(...[itemAndMods]);
             }
         }
 
-        // Loops over all current productions on profile
-        const entries = Object.entries(pmcData.Hideout.Production);
+        // Recipe has an `isEncoded` requirement for reward(s), Add `RecodableComponent` property
+        if (recipe.isEncoded)
+        {
+            for (const reward of itemAndChildrenToSendToPlayer)
+            {
+                if (!reward[0].upd)
+                {
+                    reward[0].upd = {};
+                }
+
+                reward[0].upd.RecodableComponent = { IsEncoded: true };
+            }
+        }
+
+        // Loops over all current productions on profile - we want to find a matching production
+        const productionDict = Object.entries(pmcData.Hideout.Production);
         let prodId: string;
-        for (const entry of entries)
+        for (const production of productionDict)
         {
             // Skip null production objects
-            if (!entry[1])
+            if (!production[1])
             {
                 continue;
             }
 
-            if (this.hideoutHelper.isProductionType(entry[1]))
-            { // Production or ScavCase
-                if ((entry[1] as Production).RecipeId === request.recipeId)
+            if (this.hideoutHelper.isProductionType(production[1]))
+            {
+                // Production or ScavCase
+                if ((production[1] as Production).RecipeId === request.recipeId)
                 {
-                    prodId = entry[0]; // set to objects key
+                    prodId = production[0]; // Set to objects key
                     break;
                 }
             }
@@ -881,51 +886,43 @@ export class HideoutController
                 ),
             );
 
-            return this.httpResponse.appendErrorToOutput(output);
+            this.httpResponse.appendErrorToOutput(output);
+
+            return;
         }
 
         // Check if the recipe is the same as the last one - get bonus when crafting same thing multiple times
-        const area = pmcData.Hideout.Areas.find((x) => x.type === recipe.areaType);
+        const area = pmcData.Hideout.Areas.find((area) => area.type === recipe.areaType);
         if (area && request.recipeId !== area.lastRecipe)
         {
             // 1 point per craft upon the end of production for alternating between 2 different crafting recipes in the same module
             craftingExpAmount += this.hideoutConfig.expCraftAmount; // Default is 10
         }
 
+        // Update variable with time spent crafting item(s)
         // 1 point per 8 hours of crafting
         hoursCrafting += recipe.productionTime;
         if ((hoursCrafting / this.hideoutConfig.hoursForSkillCrafting) >= 1)
         {
+            // Spent enough time crafting to get a bonus xp multipler
             const multiplierCrafting = Math.floor(hoursCrafting / this.hideoutConfig.hoursForSkillCrafting);
             craftingExpAmount += 1 * multiplierCrafting;
             hoursCrafting -= this.hideoutConfig.hoursForSkillCrafting * multiplierCrafting;
         }
 
-        // Loop over array of sub array (item+children) and add to stash
-        for (const itemAndChildrenToSend of itemAndChildrenToSendToPlayer)
+        // Create request for what we want to add to stash
+        const addItemsRequest: IAddItemsDirectRequest = {
+            itemsWithModsToAdd: itemAndChildrenToSendToPlayer,
+            foundInRaid: true,
+            useSortingTable: false,
+            callback: null,
+        };
+
+        // Add FiR crafted items(s) to player inventory
+        this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);
+        if (output.warnings.length > 0)
         {
-            // Recipe has an `isEncoded` requirement on reward, make root item adjustment
-            if (recipe.isEncoded)
-            {
-                if (!itemAndChildrenToSend[0].upd)
-                {
-                    itemAndChildrenToSend[0].upd = {}
-                }
-
-                itemAndChildrenToSend[0].upd.RecodableComponent = { IsEncoded: true };
-            }
-
-            const additemRequest: IAddItemDirectRequest = {
-                itemWithModsToAdd: itemAndChildrenToSend,
-                foundInRaid: true,
-                callback: null,
-                useSortingTable: false
-            };
-            this.inventoryHelper.addItemToStash(sessionID, additemRequest,pmcData, output)
-            if (output.warnings.length > 0)
-            {
-                return output;
-            }
+            return;
         }
 
         //  - increment skill point for crafting
@@ -939,6 +936,7 @@ export class HideoutController
             globals.config.SkillsSettings.HideoutManagement.SkillPointsPerCraft,
             true,
         );
+
         // Manager Crafting skill
         if (craftingExpAmount > 0)
         {
@@ -947,15 +945,12 @@ export class HideoutController
             const intellectAmountToGive = 0.5 * (Math.round(craftingExpAmount / 15));
             if (intellectAmountToGive > 0)
             {
-                this.profileHelper.addSkillPointsToPlayer(
-                    pmcData,
-                    SkillTypes.INTELLECT,
-                    intellectAmountToGive,
-                );
+                this.profileHelper.addSkillPointsToPlayer(pmcData, SkillTypes.INTELLECT, intellectAmountToGive);
             }
-
         }
         area.lastRecipe = request.recipeId;
+
+        // Update profiles hours crafting value
         counterHoursCrafting.value = hoursCrafting;
 
         // Continuous crafts have special handling in EventOutputHolder.updateOutputProperties()
@@ -967,8 +962,29 @@ export class HideoutController
         {
             pmcData.Hideout.Production[prodId].inProgress = false;
         }
+    }
 
-        return output;
+    /**
+     * Get the "CounterHoursCrafting" TaskConditionCounter from a profile
+     * @param pmcData Profile to get counter from
+     * @param recipe Recipe being crafted
+     * @returns ITaskConditionCounter
+     */
+    protected getHoursCraftingTaskConditionCounter(pmcData: IPmcData, recipe: IHideoutProduction): ITaskConditionCounter
+    {
+        let counterHoursCrafting = pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting];
+        if (!counterHoursCrafting)
+        {
+            // Doesn't exist, create
+            pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting] = {
+                id: recipe._id,
+                type: HideoutController.nameTaskConditionCountersCrafting,
+                sourceId: "CounterCrafting",
+                value: 0,
+            };
+            counterHoursCrafting = pmcData.TaskConditionCounters[HideoutController.nameTaskConditionCountersCrafting];
+        }
+        return counterHoursCrafting;
     }
 
     /**
@@ -977,14 +993,13 @@ export class HideoutController
      * @param pmcData Player profile
      * @param request Get rewards from scavcase craft request
      * @param output Output object to update
-     * @returns IItemEventRouterResponse
      */
     protected handleScavCase(
         sessionID: string,
         pmcData: IPmcData,
         request: IHideoutTakeProductionRequestData,
         output: IItemEventRouterResponse,
-    ): IItemEventRouterResponse
+    ): void
     {
         const ongoingProductions = Object.entries(pmcData.Hideout.Production);
         let prodId: string;
@@ -1009,26 +1024,25 @@ export class HideoutController
                 ),
             );
 
-            return this.httpResponse.appendErrorToOutput(output);
+            this.httpResponse.appendErrorToOutput(output);
+
+            return;
         }
 
         // Create rewards for scav case
         const scavCaseRewards = this.scavCaseRewardGenerator.generate(request.recipeId);
 
-        for (const itemWithChildren of scavCaseRewards)
+        const addItemsRequest: IAddItemsDirectRequest = {
+            itemsWithModsToAdd: scavCaseRewards,
+            foundInRaid: true,
+            callback: null,
+            useSortingTable: false,
+        };
+
+        this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);
+        if (output.warnings.length > 0)
         {
-            const addToStashRequest: IAddItemDirectRequest = {
-                itemWithModsToAdd: itemWithChildren,
-                foundInRaid: true,
-                callback: null,
-                useSortingTable: false
-            }
-            this.inventoryHelper.addItemToStash(sessionID, addToStashRequest, pmcData, output);
-            if (output.warnings.length > 0)
-            {
-                const errorMessage = "Unable to give scavcase reward to player";
-                return this.httpResponse.appendErrorToOutput(output, errorMessage);
-            }
+            return;
         }
 
         // Remove the old production from output object before its sent to client
@@ -1039,8 +1053,6 @@ export class HideoutController
 
         // Crafting complete, flag
         pmcData.Hideout.Production[prodId].inProgress = false;
-
-        return output;
     }
 
     /**

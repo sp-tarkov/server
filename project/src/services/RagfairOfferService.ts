@@ -21,6 +21,7 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 export class RagfairOfferService
 {
     protected playerOffersLoaded = false;
+    /** Offer id + offer object */
     protected expiredOffers: Record<string, IRagfairOffer> = {};
 
     protected ragfairConfig: IRagfairConfig;
@@ -71,27 +72,35 @@ export class RagfairOfferService
         this.expiredOffers[staleOffer._id] = staleOffer;
     }
 
+    /**
+     * Get total count of current expired offers
+     * @returns Number of expired offers
+     */
     public getExpiredOfferCount(): number
     {
         return Object.keys(this.expiredOffers).length;
     }
 
     /**
-     * Get an array of expired items not yet processed into new offers
-     * @returns items that need to be turned into offers
+     * Get an array of arrays of expired offer items + children
+     * @returns Expired offer assorts
      */
-    public getExpiredOfferItems(): Item[]
+    public getExpiredOfferAssorts(): Item[][]
     {
-        const expiredItems: Item[] = [];
+        const expiredItems: Item[][] = [];
 
         for (const expiredOfferId in this.expiredOffers)
         {
-            expiredItems.push(this.expiredOffers[expiredOfferId].items[0]);
+            const expiredOffer = this.expiredOffers[expiredOfferId];
+            expiredItems.push(expiredOffer.items);
         }
 
         return expiredItems;
     }
 
+    /**
+     * Clear out internal expiredOffers dictionary of all items
+     */
     public resetExpiredOffers(): void
     {
         this.expiredOffers = {};
@@ -143,7 +152,7 @@ export class RagfairOfferService
 
     public removeAllOffersByTrader(traderId: string): void
     {
-        this.ragfairOfferHandler.removeOfferByTrader(traderId);
+        this.ragfairOfferHandler.removeAllOffersByTrader(traderId);
     }
 
     /**
@@ -219,7 +228,6 @@ export class RagfairOfferService
         // Handle player offer - items need returning/XP adjusting. Checking if offer has actually expired or not.
         if (isPlayer && staleOffer.endTime <= this.timeUtil.getTimestamp())
         {
-            // TODO: something feels wrong, func returns ItemEventRouterResponse but we dont pass it back to caller?
             this.returnPlayerOffer(staleOffer);
         }
 
@@ -227,37 +235,35 @@ export class RagfairOfferService
         this.removeOfferById(staleOffer._id);
     }
 
-    protected returnPlayerOffer(offer: IRagfairOffer): IItemEventRouterResponse
+    protected returnPlayerOffer(playerOffer: IRagfairOffer): void
     {
-        const pmcID = String(offer.user.id);
-        const profile = this.profileHelper.getProfileByPmcId(pmcID);
-        const sessionID = profile.sessionId;
-        const offerIndex = profile.RagfairInfo.offers.findIndex((o) => o._id === offer._id);
+        const pmcId = String(playerOffer.user.id);
+        const profile = this.profileHelper.getProfileByPmcId(pmcId);
 
-        if (offerIndex === -1)
+        const offerinProfileIndex = profile.RagfairInfo.offers.findIndex((o) => o._id === playerOffer._id);
+        if (offerinProfileIndex === -1)
         {
-            this.logger.warning(this.localisationService.getText("ragfair-unable_to_find_offer_to_remove", offer._id));
-            return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionID),
-                this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
+            this.logger.warning(
+                this.localisationService.getText("ragfair-unable_to_find_offer_to_remove", playerOffer._id),
             );
+            return;
         }
 
         // Reduce player ragfair rep
         profile.RagfairInfo.rating -= this.databaseServer.getTables().globals.config.RagFair.ratingDecreaseCount;
         profile.RagfairInfo.isRatingGrowing = false;
 
-        const firstOfferItem = offer.items[0];
+        const firstOfferItem = playerOffer.items[0];
         if (firstOfferItem.upd.StackObjectsCount > firstOfferItem.upd.OriginalStackObjectsCount)
         {
-            offer.items[0].upd.StackObjectsCount = firstOfferItem.upd.OriginalStackObjectsCount;
+            playerOffer.items[0].upd.StackObjectsCount = firstOfferItem.upd.OriginalStackObjectsCount;
         }
-        delete offer.items[0].upd.OriginalStackObjectsCount;
+        delete playerOffer.items[0].upd.OriginalStackObjectsCount;
+        // Remove player offer from flea
+        this.ragfairOfferHandler.removeOffer(playerOffer);
 
         // Send failed offer items to player in mail
-        this.ragfairServerHelper.returnItems(profile.sessionId, offer.items);
-        profile.RagfairInfo.offers.splice(offerIndex, 1);
-
-        return this.eventOutputHolder.getOutput(sessionID);
+        this.ragfairServerHelper.returnItems(profile.sessionId, playerOffer.items);
+        profile.RagfairInfo.offers.splice(offerinProfileIndex, 1);
     }
 }

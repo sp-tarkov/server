@@ -344,6 +344,9 @@ export class SeasonalEventService
                 this.giveGift(sessionId, "NewYear2023");
                 this.enableSnow();
                 break;
+            case SeasonalEventType.SNOW.toLowerCase():
+                this.enableSnow();
+                break;
             default:
                 // Likely a mod event
                 this.addEventGearToBots(eventType);
@@ -526,7 +529,7 @@ export class SeasonalEventService
         {
             const mapData: ILocationData = maps[gifterMapSettings.map];
             // Dont add gifter to map twice
-            if (mapData.base.BossLocationSpawn.some(boss => boss.BossName === "gifter"))
+            if (mapData.base.BossLocationSpawn.some((boss) => boss.BossName === "gifter"))
             {
                 continue;
             }

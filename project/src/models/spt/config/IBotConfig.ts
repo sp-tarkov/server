@@ -102,12 +102,15 @@ export interface EquipmentFilters
     lightIsActiveNightChancePercent?: number;
     /** Chance gun laser is active during the day */
     laserIsActiveChancePercent?: number;
-    /** Should plates be filtered by level */
-    filterPlatesByLevel?:boolean
     /** Chance NODS are down/active during the day */
     nvgIsActiveChanceDayPercent?: number;
     /** Chance NODS are down/active during the night */
     nvgIsActiveChanceNightPercent?: number;
+    forceOnlyArmoredRigWhenNoArmor?: boolean;
+    /** Should plates be filtered by level */
+    filterPlatesByLevel?: boolean;
+    /** What additional slot ids should be seen as required when choosing a mod to add to a weapon */
+    weaponSlotIdsToMakeRequired?: string[];
     /** Adjust weighting/chances of items on bot by level of bot */
     randomisation: RandomisationDetails[];
     /** Blacklist equipment by level of bot */
@@ -119,8 +122,8 @@ export interface EquipmentFilters
     /** Same as weightingAdjustments but based on player level instead of bot level */
     weightingAdjustmentsByPlayerLevel?: WeightingAdjustmentDetails[];
     /** Should the stock mod be forced to spawn on bot */
-    forceStock: boolean;
-    armorPlateWeighting?: IArmorPlateWeights[]
+    forceStock?: boolean;
+    armorPlateWeighting?: IArmorPlateWeights[];
 }
 
 export interface ModLimits
@@ -168,7 +171,6 @@ export interface WeightingAdjustmentDetails
     equipment?: IAdjustmentDetails;
     /** Key: clothing slot e.g. feet, value: item tpl + weight */
     clothing?: IAdjustmentDetails;
-    
 }
 
 export interface IAdjustmentDetails

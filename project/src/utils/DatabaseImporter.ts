@@ -84,7 +84,7 @@ export class DatabaseImporter implements OnLoad
         const imageFilePath = `${this.filepath}images/`;
         const directories = this.vfs.getDirs(imageFilePath);
         this.loadImages(imageFilePath, directories, [
-			"/files/achievement/",
+            "/files/achievement/",
             "/files/CONTENT/banners/",
             "/files/handbook/",
             "/files/Hideout/",

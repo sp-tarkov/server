@@ -9,4 +9,5 @@ export interface ILocaleConfig extends IBaseConfig
     serverLocale: string;
     /** Languages server can be translated into */
     serverSupportedLocales: string[];
+    fallbacks: { [locale: string]: string; };
 }

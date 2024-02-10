@@ -6,7 +6,7 @@ export interface IWeatherData
     time: string;
     date: string;
     weather?: IWeather;
-    winterEventEnabled: boolean
+    winterEventEnabled: boolean;
 }
 
 export interface IWeather

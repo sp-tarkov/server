@@ -186,12 +186,12 @@ export class BotWeaponGeneratorHelper
                 {
                     // Bot doesnt have any containers we want to add item to
                     this.logger.debug(
-                        `Unable to add item: ${
-                            itemWithChildren[0]._tpl
-                        } to bot as it lacks the following containers: ${equipmentSlots.join(",")}`,
+                        `Unable to add item: ${itemWithChildren[0]._tpl} to bot as it lacks the following containers: ${
+                            equipmentSlots.join(",")
+                        }`,
                     );
 
-                    return ItemAddedResult.NO_CONTAINERS
+                    return ItemAddedResult.NO_CONTAINERS;
                 }
 
                 // No container of desired type found, skip to next container type

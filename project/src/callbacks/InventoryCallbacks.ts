@@ -30,7 +30,7 @@ export class InventoryCallbacks
 {
     constructor(
         @inject("InventoryController") protected inventoryController: InventoryController,
-        @inject("QuestController") protected questController: QuestController
+        @inject("QuestController") protected questController: QuestController,
     )
     {}
 
@@ -164,17 +164,16 @@ export class InventoryCallbacks
         return this.inventoryController.openRandomLootContainer(pmcData, body, sessionID);
     }
 
-    public redeemProfileReward(pmcData: IPmcData,
+    public redeemProfileReward(
+        pmcData: IPmcData,
         body: IRedeemProfileRequestData,
-        sessionId: string
+        sessionId: string,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.redeemProfileReward(pmcData, body, sessionId)
+        return this.inventoryController.redeemProfileReward(pmcData, body, sessionId);
     }
 
-    public setFavoriteItem(pmcData: IPmcData,
-        body: ISetFavoriteItems,
-        sessionId: string): IItemEventRouterResponse
+    public setFavoriteItem(pmcData: IPmcData, body: ISetFavoriteItems, sessionId: string): IItemEventRouterResponse
     {
         return this.inventoryController.setFavoriteItem(pmcData, body, sessionId);
     }

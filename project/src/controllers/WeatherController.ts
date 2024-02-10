@@ -29,7 +29,8 @@ export class WeatherController
             time: "",
             date: "",
             weather: null,
-            winterEventEnabled: this.weatherConfig.forceWinterEvent };
+            winterEventEnabled: this.weatherConfig.forceWinterEvent,
+        };
 
         result = this.weatherGenerator.calculateGameTime(result);
         result.weather = this.weatherGenerator.generateWeather();

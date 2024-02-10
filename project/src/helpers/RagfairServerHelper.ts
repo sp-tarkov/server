@@ -160,7 +160,9 @@ export class RagfairServerHelper
             MessageType.MESSAGE_WITH_ITEMS,
             RagfairServerHelper.goodsReturnedTemplate,
             returnedItems,
-            this.timeUtil.getHoursAsSeconds(this.databaseServer.getTables().globals.config.RagFair.yourOfferDidNotSellMaxStorageTimeInHour),
+            this.timeUtil.getHoursAsSeconds(
+                this.databaseServer.getTables().globals.config.RagFair.yourOfferDidNotSellMaxStorageTimeInHour,
+            ),
         );
     }
 
@@ -278,7 +280,7 @@ export class RagfairServerHelper
     /**
      * Possible bug, returns all items associated with an items tpl, could be multiple presets from globals.json
      * @param item Preset item
-     * @returns 
+     * @returns
      */
     public getPresetItemsByTpl(item: Item): Item[]
     {

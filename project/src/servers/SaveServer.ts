@@ -2,14 +2,14 @@ import { inject, injectAll, injectable } from "tsyringe";
 
 import { SaveLoadRouter } from "@spt-aki/di/Router";
 import { IAkiProfile, Info } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
 import { ConfigServer } from "./ConfigServer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 
 @injectable()
 export class SaveServer
@@ -27,7 +27,7 @@ export class SaveServer
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {}
 
@@ -207,7 +207,10 @@ export class SaveServer
         }
 
         const start = performance.now();
-        const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], !this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.compressProfile);
+        const jsonProfile = this.jsonUtil.serialize(
+            this.profiles[sessionID],
+            !this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.compressProfile,
+        );
         const fmd5 = this.hashUtil.generateMd5ForData(jsonProfile);
         if (typeof (this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
         {

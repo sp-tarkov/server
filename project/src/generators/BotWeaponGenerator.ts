@@ -175,7 +175,7 @@ export class BotWeaponGenerator
                 sessionId,
                 weaponWithModsArray,
                 modPool,
-                weaponWithModsArray[0]._id,
+                weaponWithModsArray[0]._id, // Weapon root id
                 weaponItemTemplate,
                 modChances,
                 ammoTpl,
@@ -200,7 +200,7 @@ export class BotWeaponGenerator
         }
 
         // Fill existing magazines to full and sync ammo type
-        for (const magazine of weaponWithModsArray.filter((x) => x.slotId === this.modMagazineSlotId))
+        for (const magazine of weaponWithModsArray.filter((item) => item.slotId === this.modMagazineSlotId))
         {
             this.fillExistingMagazines(weaponWithModsArray, magazine, ammoTpl);
         }
@@ -212,7 +212,7 @@ export class BotWeaponGenerator
         )
         {
             // Guns have variety of possible Chamber ids, patron_in_weapon/patron_in_weapon_000/patron_in_weapon_001
-            const chamberSlotNames = weaponItemTemplate._props.Chambers.map(x => x._name);
+            const chamberSlotNames = weaponItemTemplate._props.Chambers.map((x) => x._name);
             this.addCartridgeToChamber(weaponWithModsArray, ammoTpl, chamberSlotNames);
         }
 
@@ -311,7 +311,10 @@ export class BotWeaponGenerator
     {
         // Invalid weapon generated, fallback to preset
         this.logger.warning(
-            this.localisationService.getText("bot-weapon_generated_incorrect_using_default", weaponTpl),
+            this.localisationService.getText(
+                "bot-weapon_generated_incorrect_using_default",
+                `${weaponTpl} ${itemTemplate._name}`,
+            ),
         );
         const weaponMods = [];
 
@@ -357,46 +360,27 @@ export class BotWeaponGenerator
     {
         for (const mod of weaponItemArray)
         {
-            const modDbTemplate = this.itemHelper.getItem(mod._tpl)[1];
-            if (!modDbTemplate._props.Slots?.length)
+            const modTemplate = this.itemHelper.getItem(mod._tpl)[1];
+            if (!modTemplate._props.Slots?.length)
             {
                 continue;
             }
 
-            // Iterate over slots in db item, if required, check tpl in that slot matches the filter list
-            for (const modSlot of modDbTemplate._props.Slots)
+            // Iterate over required slots in db item, check mod exists for that slot
+            for (const modSlotTemplate of modTemplate._props.Slots.filter((slot) => slot._required))
             {
-                // Ignore optional mods
-                if (!modSlot._required)
-                {
-                    continue;
-                }
-
-                const allowedTpls = modSlot._props.filters[0].Filter;
-                const slotName = modSlot._name;
-
-                const weaponSlotItem = weaponItemArray.find((x) => x.parentId === mod._id && x.slotId === slotName);
+                const slotName = modSlotTemplate._name;
+                const weaponSlotItem = weaponItemArray.find((weaponItem) =>
+                    weaponItem.parentId === mod._id && weaponItem.slotId === slotName
+                );
                 if (!weaponSlotItem)
                 {
                     this.logger.warning(
                         this.localisationService.getText("bot-weapons_required_slot_missing_item", {
-                            modSlot: modSlot._name,
-                            modName: modDbTemplate._name,
+                            modSlot: modSlotTemplate._name,
+                            modName: modTemplate._name,
                             slotId: mod.slotId,
                             botRole: botRole,
-                        }),
-                    );
-
-                    return false;
-                }
-
-                if (!allowedTpls.includes(weaponSlotItem._tpl))
-                {
-                    this.logger.warning(
-                        this.localisationService.getText("bot-weapon_contains_invalid_item", {
-                            modSlot: modSlot._name,
-                            modName: modDbTemplate._name,
-                            weaponTpl: weaponSlotItem._tpl,
                         }),
                     );
 
@@ -568,7 +552,10 @@ export class BotWeaponGenerator
             {
                 // Shouldn't happen
                 this.logger.warning(
-                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", {weaponId: weaponTemplate._id, botRole: botRole}),
+                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", {
+                        weaponId: weaponTemplate._id,
+                        botRole: botRole,
+                    }),
                 );
             }
 
@@ -615,9 +602,10 @@ export class BotWeaponGenerator
         while (!chosenAmmoTpl)
         {
             const possibleAmmo = this.weightedRandomHelper.getWeightedValue<string>(compatibleCartridges);
-            
+
             // Weapon has chamber but does not support cartridge
-            if (weaponTemplate._props.Chambers[0]
+            if (
+                weaponTemplate._props.Chambers[0]
                 && !weaponTemplate._props.Chambers[0]._props.filters[0].Filter.includes(possibleAmmo)
             )
             {

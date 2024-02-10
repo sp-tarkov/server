@@ -81,7 +81,6 @@ export class BotGenerator
             isPmc: false,
             side: "Savage",
             role: role,
-            playerLevel: 0,
             botRelativeLevelDeltaMax: 0,
             botRelativeLevelDeltaMin: 0,
             botCountToGenerate: 1,
@@ -110,13 +109,11 @@ export class BotGenerator
         bot.Info.Settings.BotDifficulty = botGenerationDetails.botDifficulty;
 
         // Get raw json data for bot (Cloned)
-        const botJsonTemplate = this.jsonUtil.clone(
-            this.botHelper.getBotTemplate((botGenerationDetails.isPmc)
-                ? bot.Info.Side
-                : botGenerationDetails.role),
+        const botJsonTemplateClone = this.jsonUtil.clone(
+            this.botHelper.getBotTemplate((botGenerationDetails.isPmc) ? bot.Info.Side : botGenerationDetails.role),
         );
 
-        bot = this.generateBot(sessionId, bot, botJsonTemplate, botGenerationDetails);
+        bot = this.generateBot(sessionId, bot, botJsonTemplateClone, botGenerationDetails);
 
         return bot;
     }
@@ -162,19 +159,18 @@ export class BotGenerator
             );
         }
 
-        bot.Info.Nickname = this.generateBotNickname(
-            botJsonTemplate,
-            botGenerationDetails.isPlayerScav,
-            botRole,
-            sessionId,
-        );
+        bot.Info.Nickname = this.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole, sessionId);
 
         if (!this.seasonalEventService.christmasEventEnabled())
         {
-            this.seasonalEventService.removeChristmasItemsFromBotInventory(
-                botJsonTemplate.inventory,
-                botGenerationDetails.role,
-            );
+            // Process all bots EXCEPT gifter, he needs christmas items
+            if (botGenerationDetails.role !== "gifter")
+            {
+                this.seasonalEventService.removeChristmasItemsFromBotInventory(
+                    botJsonTemplate.inventory,
+                    botGenerationDetails.role,
+                );
+            }
         }
 
         // Remove hideout data if bot is not a PMC or pscav
@@ -190,7 +186,7 @@ export class BotGenerator
             botJsonTemplate.experience.reward.max,
         );
         bot.Info.Settings.StandingForKill = botJsonTemplate.experience.standingForKill;
-        bot.Info.Voice = this.randomUtil.getArrayValue(botJsonTemplate.appearance.voice);
+        bot.Info.Voice = this.weightedRandomHelper.getWeightedValue<string>(botJsonTemplate.appearance.voice);
         bot.Health = this.generateHealth(botJsonTemplate.health, bot.Info.Side === "Savage");
         bot.Skills = this.generateSkills(<any>botJsonTemplate.skills); // TODO: fix bad type, bot jsons store skills in dict, output needs to be array
 
@@ -215,11 +211,11 @@ export class BotGenerator
             this.addDogtagToBot(bot);
         }
 
-        // generate new bot ID
-        bot = this.generateId(bot);
+        // Generate new bot ID
+        this.generateId(bot);
 
-        // generate new inventory ID
-        bot = this.generateInventoryID(bot);
+        // Generate new inventory ID
+        this.generateInventoryID(bot);
 
         // Set role back to originally requested now its been generated
         if (botGenerationDetails.eventRole)
@@ -238,26 +234,28 @@ export class BotGenerator
      */
     protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
     {
-        bot.Customization.Head = this.randomUtil.getArrayValue(appearance.head);
+        bot.Customization.Head = this.weightedRandomHelper.getWeightedValue<string>(appearance.head);
         bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
         bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
-        bot.Customization.Hands = this.randomUtil.getArrayValue(appearance.hands);
+        bot.Customization.Hands = this.weightedRandomHelper.getWeightedValue<string>(appearance.hands);
     }
 
     /**
      * Create a bot nickname
      * @param botJsonTemplate x.json from database
-     * @param isPlayerScav Will bot be player scav
+     * @param botGenerationDetails
      * @param botRole role of bot e.g. assault
      * @returns Nickname for bot
      */
     protected generateBotNickname(
         botJsonTemplate: IBotType,
-        isPlayerScav: boolean,
+        botGenerationDetails: BotGenerationDetails,
         botRole: string,
         sessionId: string,
     ): string
     {
+        const isPlayerScav = botGenerationDetails.isPlayerScav;
+
         let name = `${this.randomUtil.getArrayValue(botJsonTemplate.firstName)} ${
             this.randomUtil.getArrayValue(botJsonTemplate.lastName) || ""
         }`;
@@ -285,14 +283,11 @@ export class BotGenerator
             name += ` ${botRole}`;
         }
 
-        // If bot name matches current players name, chance to add localised prefix to name
-        if (name.toLowerCase() === playerProfile.Info.Nickname.toLowerCase())
+        // We want to replace pmc bot names with player name + prefix
+        if (botGenerationDetails.isPmc && botGenerationDetails.allPmcsHaveSameNameAsPlayer)
         {
-            if (this.randomUtil.getChance100(this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance))
-            {
-                const prefix = this.localisationService.getRandomTextThatMatchesPartialKey("pmc-name_prefix_");
-                name = `${prefix} ${name}`;
-            }
+            const prefix = this.localisationService.getRandomTextThatMatchesPartialKey("pmc-name_prefix_");
+            name = `${prefix} ${botGenerationDetails.playerName}`;
         }
 
         return name;
@@ -304,10 +299,10 @@ export class BotGenerator
      */
     protected logPmcGeneratedCount(output: IBotBase[]): void
     {
-        const pmcCount = output.reduce(
-            (acc, cur) => cur.Info.Side === "Bear" || cur.Info.Side === "Usec" ? ++acc : acc,
-            0,
-        );
+        const pmcCount = output.reduce((acc, cur) =>
+        {
+            return cur.Info.Side === "Bear" || cur.Info.Side === "Usec" ? acc + 1 : acc;
+        }, 0);
         this.logger.debug(`Generated ${output.length} total bots. Replaced ${pmcCount} with PMCs`);
     }
 
@@ -444,17 +439,15 @@ export class BotGenerator
      * @param bot bot to update
      * @returns updated IBotBase object
      */
-    protected generateId(bot: IBotBase): IBotBase
+    protected generateId(bot: IBotBase): void
     {
         const botId = this.hashUtil.generate();
 
         bot._id = botId;
         bot.aid = this.hashUtil.generateAccountId();
-
-        return bot;
     }
 
-    protected generateInventoryID(profile: IBotBase): IBotBase
+    protected generateInventoryID(profile: IBotBase): void
     {
         const defaultInventory = "55d7217a4bdc2d86028b456d";
         const itemsByParentHash: Record<string, Item[]> = {};
@@ -498,8 +491,6 @@ export class BotGenerator
                 item.parentId = newInventoryId;
             }
         }
-
-        return profile;
     }
 
     /**

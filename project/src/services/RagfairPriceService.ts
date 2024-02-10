@@ -7,11 +7,13 @@ import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { MinMax } from "@spt-aki/models/common/MinMax";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { HandbookItem } from "@spt-aki/models/eft/common/tables/IHandbookBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { IRagfairConfig, IUnreasonableModPrices } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { IRagfairServerPrices } from "@spt-aki/models/spt/ragfair/IRagfairServerPrices";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -116,6 +118,28 @@ export class RagfairPriceService implements OnLoad
     }
 
     /**
+     * Get the flea price for an offers items + children
+     * @param offerItems offer item + children to process
+     * @returns Rouble price
+     */
+    public getFleaPriceForOfferItems(offerItems: Item[]): number
+    {
+        // Preset weapons take the direct prices.json value, otherwise they're massivly inflated
+        if (this.itemHelper.isOfBaseclass(offerItems[0]._tpl, BaseClasses.WEAPON))
+        {
+            return this.getFleaPriceForItem(offerItems[0]._tpl);
+        }
+
+        let totalPrice = 0;
+        for (const item of offerItems)
+        {
+            totalPrice += this.getFleaPriceForItem(item._tpl);
+        }
+
+        return totalPrice;
+    }
+
+    /**
      * get the dynamic (flea) price for an item
      * Grabs prices from prices.json and stores in class if none currently exist
      * @param itemTpl item template id to look up
@@ -198,11 +222,14 @@ export class RagfairPriceService implements OnLoad
      */
     public getDynamicOfferPriceForOffer(items: Item[], desiredCurrency: string, isPackOffer: boolean): number
     {
+        const rootItem = items[0];
+
         // Price to return
         let price = 0;
 
         let endLoop = false;
         let isPreset = false;
+        let manuallyAdjusted = false;
         for (const item of items)
         {
             // Get dynamic price, fallback to handbook price if value of 1 found
@@ -225,11 +252,18 @@ export class RagfairPriceService implements OnLoad
 
             // Check if item type is weapon preset, handle differently
             const itemDetails = this.itemHelper.getItem(item._tpl);
-            if (this.presetHelper.isPreset(item._id) && itemDetails[1]._props.weapFireType)
+            if (this.presetHelper.isPreset(item.upd?.sptPresetId) && itemDetails[1]._props.weapFireType)
             {
                 itemPrice = this.getWeaponPresetPrice(item, items, itemPrice);
                 endLoop = true;
                 isPreset = true;
+            }
+
+            const manualPriceMultipler = this.ragfairConfig.dynamic.itemPriceMultiplier[item._tpl];
+            if (manualPriceMultipler)
+            {
+                manuallyAdjusted = true;
+                itemPrice *= manualPriceMultipler;
             }
 
             // Convert to different currency if desiredCurrency param is not roubles
@@ -249,12 +283,74 @@ export class RagfairPriceService implements OnLoad
             }
         }
 
+        // Skip items with children
+        if (items.length === 1 && !manuallyAdjusted)
+        {
+            const rootItemDb = this.itemHelper.getItem(rootItem._tpl)[1];
+            let unreasonableItemPriceChange: IUnreasonableModPrices;
+            for (const key of Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices))
+            {
+                if (this.itemHelper.isOfBaseclass(rootItemDb._id, key))
+                {
+                    unreasonableItemPriceChange = this.ragfairConfig.dynamic.unreasonableModPrices[key];
+
+                    break;
+                }
+            }
+            if (unreasonableItemPriceChange?.enabled)
+            {
+                price = this.adjustUnreasonablePrice(
+                    this.databaseServer.getTables().templates.handbook.Items,
+                    unreasonableItemPriceChange,
+                    rootItem._tpl,
+                    price,
+                );
+            }
+        }
+
         const rangeValues = this.getOfferTypeRangeValues(isPreset, isPackOffer);
         price = this.randomiseOfferPrice(price, rangeValues);
 
         if (price < 1)
         {
             price = 1;
+        }
+
+        return price;
+    }
+
+    /**
+     * using data from config, adjust an items price to be relative to its handbook price
+     * @param handbookPrices Prices of items in handbook
+     * @param unreasonableItemChange Change object from config
+     * @param itemTpl Item being adjusted
+     * @param price Current price of item
+     * @returns Adjusted price of item
+     */
+    protected adjustUnreasonablePrice(
+        handbookPrices: HandbookItem[],
+        unreasonableItemChange: IUnreasonableModPrices,
+        itemTpl: string,
+        price: number,
+    ): number
+    {
+        const itemHandbookPrice = handbookPrices.find((handbookItem) => handbookItem.Id === itemTpl);
+        if (!itemHandbookPrice)
+        {
+            return price;
+        }
+
+        // Flea price is over handbook price
+        if (price > (itemHandbookPrice.Price * unreasonableItemChange.handbookPriceOverMultiplier))
+        {
+            // Skip extreme values
+            if (price <= 1)
+            {
+                return price;
+            }
+
+            // Price is over limit, adjust
+            return itemHandbookPrice.Price * unreasonableItemChange.newPriceHandbookMultiplier;
         }
 
         return price;
@@ -274,7 +370,8 @@ export class RagfairPriceService implements OnLoad
         {
             return priceRanges.preset;
         }
-        else if (isPack)
+
+        if (isPack)
         {
             return priceRanges.pack;
         }
@@ -283,7 +380,7 @@ export class RagfairPriceService implements OnLoad
     }
 
     /**
-     * Check to see if an items price is below its handbook price and adjust accoring to values set to config/ragfair.json
+     * Check to see if an items price is below its handbook price and adjust according to values set to config/ragfair.json
      * @param itemPrice price of item
      * @param itemTpl item template Id being checked
      * @returns adjusted price value in roubles
@@ -326,32 +423,22 @@ export class RagfairPriceService implements OnLoad
 
     /**
      * Calculate the cost of a weapon preset by adding together the price of its mods + base price of default weapon preset
-     * @param item base weapon
-     * @param items weapon plus mods
+     * @param weaponRootItem base weapon
+     * @param weaponWithChildren weapon plus mods
      * @param existingPrice price of existing base weapon
      * @returns price of weapon in roubles
      */
-    protected getWeaponPresetPrice(item: Item, items: Item[], existingPrice: number): number
+    protected getWeaponPresetPrice(weaponRootItem: Item, weaponWithChildren: Item[], existingPrice: number): number
     {
-        // Find all presets for this weapon type
-        // If no presets found, return existing price
-        const presets = this.presetHelper.getPresets(item._tpl);
-        if (!presets || presets.length === 0)
-        {
-            this.logger.warning(this.localisationService.getText("ragfair-unable_to_find_preset_with_id", item._tpl));
-
-            return existingPrice;
-        }
-
         // Get the default preset for this weapon
-        const presetResult = this.getWeaponPreset(presets, item);
+        const presetResult = this.getWeaponPreset(weaponRootItem);
         if (presetResult.isDefault)
         {
-            return this.getFleaPriceForItem(item._tpl);
+            return this.getFleaPriceForItem(weaponRootItem._tpl);
         }
 
         // Get mods on current gun not in default preset
-        const newOrReplacedModsInPresetVsDefault = items.filter((x) =>
+        const newOrReplacedModsInPresetVsDefault = weaponWithChildren.filter((x) =>
             !presetResult.preset._items.some((y) => y._tpl === x._tpl)
         );
 
@@ -409,31 +496,31 @@ export class RagfairPriceService implements OnLoad
      * @param presets weapon presets to choose from
      * @returns Default preset object
      */
-    protected getWeaponPreset(presets: IPreset[], weapon: Item): { isDefault: boolean; preset: IPreset; }
+    protected getWeaponPreset(weapon: Item): { isDefault: boolean; preset: IPreset; }
     {
-        const defaultPreset = presets.find((x) => x._encyclopedia);
+        const defaultPreset = this.presetHelper.getDefaultPreset(weapon._tpl);
         if (defaultPreset)
         {
             return { isDefault: true, preset: defaultPreset };
         }
-
-        if (presets.length === 1)
+        const nonDefaultPresets = this.presetHelper.getPresets(weapon._tpl);
+        if (nonDefaultPresets.length === 1)
         {
             this.logger.debug(
                 `Item Id: ${weapon._tpl} has no default encyclopedia entry but only one preset (${
-                    presets[0]._name
-                }), choosing preset (${presets[0]._name})`,
+                    nonDefaultPresets[0]._name
+                }), choosing preset (${nonDefaultPresets[0]._name})`,
             );
         }
         else
         {
             this.logger.debug(
                 `Item Id: ${weapon._tpl} has no default encyclopedia entry, choosing first preset (${
-                    presets[0]._name
-                }) of ${presets.length}`,
+                    nonDefaultPresets[0]._name
+                }) of ${nonDefaultPresets.length}`,
             );
         }
 
-        return { isDefault: false, preset: presets[0] };
+        return { isDefault: false, preset: nonDefaultPresets[0] };
     }
 }

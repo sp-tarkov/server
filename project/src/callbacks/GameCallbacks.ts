@@ -150,7 +150,7 @@ export class GameCallbacks implements OnLoad
         return this.httpResponse.nullResponse();
     }
 
-        /**
+    /**
      * Handle singleplayer/settings/getRaidTime
      * @returns string
      */

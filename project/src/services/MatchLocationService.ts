@@ -17,7 +17,6 @@ export class MatchLocationService
 
     public createGroup(sessionID: string, info: ICreateGroupRequestData): any
     {
-
         const account = this.saveServer.getProfile(sessionID).info;
         const groupID = "test";
 
@@ -31,13 +30,7 @@ export class MatchLocationService
             isSavage: false,
             timeShift: "CURR",
             dt: this.timeUtil.getTimestamp(),
-            players: [{
-                _id: account.id,
-                region: "EUR",
-                ip: "127.0.0.1",
-                savageId: account.scavId,
-                accessKeyId: "",
-            }],
+            players: [{ _id: account.id, region: "EUR", ip: "127.0.0.1", savageId: account.scavId, accessKeyId: "" }],
             customDataCenter: [],
         };
 

@@ -11,6 +11,8 @@ import { IHideoutImprovement } from "@spt-aki/models/eft/common/tables/IBotBase"
 import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { StageBonus } from "@spt-aki/models/eft/hideout/IHideoutArea";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
@@ -63,7 +65,7 @@ export class ProfileFixerService
         this.addMissingRepeatableQuestsProperty(pmcProfile);
         this.addLighthouseKeeperIfMissing(pmcProfile);
         this.addUnlockedInfoObjectIfMissing(pmcProfile);
-		this.removeOrphanedQuests(pmcProfile);
+        this.removeOrphanedQuests(pmcProfile);
 
         if (pmcProfile.Inventory)
         {
@@ -156,11 +158,6 @@ export class ProfileFixerService
 
         this.fixNullTraderSalesSums(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
-
-        if (Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices).length > 0)
-        {
-            this.adjustUnreasonableModFleaPrices();
-        }
     }
 
     /**
@@ -242,13 +239,8 @@ export class ProfileFixerService
         if (!stashItem)
         {
             // Stand inventory stash item doesnt exist, add it
-            pmcProfile.Inventory.items.push(
-                {
-                    _id: hideoutStandAreaDb._id,
-                    _tpl: stageCurrentAt.container
-                }
-            )
-            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandAreaDb._id)
+            pmcProfile.Inventory.items.push({ _id: hideoutStandAreaDb._id, _tpl: stageCurrentAt.container });
+            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -265,13 +257,8 @@ export class ProfileFixerService
         if (!stashSecondaryItem)
         {
             // Stand inventory stash item doesnt exist, add it
-            pmcProfile.Inventory.items.push(
-                {
-                    _id: hideoutStandSecondaryAreaDb._id,
-                    _tpl: stageCurrentAt.container
-                }
-            )
-            stashSecondaryItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandSecondaryAreaDb._id)
+            pmcProfile.Inventory.items.push({ _id: hideoutStandSecondaryAreaDb._id, _tpl: stageCurrentAt.container });
+            stashSecondaryItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandSecondaryAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -329,13 +316,8 @@ export class ProfileFixerService
         if (!stashItem)
         {
             // Stand inventory stash item doesnt exist, add it
-            pmcProfile.Inventory.items.push(
-                {
-                    _id: placeOfFameAreaDb._id,
-                    _tpl: stageCurrentlyAt.container
-                }
-            )
-            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id)
+            pmcProfile.Inventory.items.push({ _id: placeOfFameAreaDb._id, _tpl: stageCurrentlyAt.container });
+            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -401,47 +383,6 @@ export class ProfileFixerService
                 slots: [],
                 lastRecipe: "",
             });
-        }
-    }
-
-    protected adjustUnreasonableModFleaPrices(): void
-    {
-        const db = this.databaseServer.getTables();
-        const fleaPrices = db.templates.prices;
-        const handbookPrices = db.templates.handbook.Items;
-
-        for (const itemTypeKey in this.ragfairConfig.dynamic.unreasonableModPrices)
-        {
-            const details = this.ragfairConfig.dynamic.unreasonableModPrices[itemTypeKey];
-            if (!details?.enabled)
-            {
-                continue;
-            }
-
-            for (const itemTpl in fleaPrices)
-            {
-                if (!this.itemHelper.isOfBaseclass(itemTpl, itemTypeKey))
-                {
-                    continue;
-                }
-
-                const itemHandbookPrice = handbookPrices.find((x) => x.Id === itemTpl);
-                if (!itemHandbookPrice)
-                {
-                    continue;
-                }
-
-                if (fleaPrices[itemTpl] > (itemHandbookPrice.Price * details.handbookPriceOverMultiplier))
-                {
-                    if (fleaPrices[itemTpl] <= 1)
-                    {
-                        continue;
-                    }
-
-                    // Price is over limit, adjust
-                    fleaPrices[itemTpl] = itemHandbookPrice.Price * details.newPriceHandbookMultiplier;
-                }
-            }
         }
     }
 
@@ -520,16 +461,22 @@ export class ProfileFixerService
             const taskConditionKeysToRemove: string[] = [];
             const activeRepeatableQuests = this.getActiveRepeatableQuests(pmcProfile.RepeatableQuests);
             const achievements = this.databaseServer.getTables().templates.achievements;
-            
+
             // Loop over TaskConditionCounters objects and add once we want to remove to counterKeysToRemove
             for (const [key, taskConditionCounter] of Object.entries(pmcProfile.TaskConditionCounters))
             {
                 // Only check if profile has repeatable quests
                 if (pmcProfile.RepeatableQuests && activeRepeatableQuests.length > 0)
                 {
-                    const existsInActiveRepeatableQuests = activeRepeatableQuests.some((quest) => quest._id === taskConditionCounter.sourceId);
-                    const existsInQuests = pmcProfile.Quests.some((quest) => quest.qid === taskConditionCounter.sourceId);
-                    const isAchievementTracker = achievements.some((quest) => quest.id === taskConditionCounter.sourceId);
+                    const existsInActiveRepeatableQuests = activeRepeatableQuests.some((quest) =>
+                        quest._id === taskConditionCounter.sourceId
+                    );
+                    const existsInQuests = pmcProfile.Quests.some((quest) =>
+                        quest.qid === taskConditionCounter.sourceId
+                    );
+                    const isAchievementTracker = achievements.some((quest) =>
+                        quest.id === taskConditionCounter.sourceId
+                    );
 
                     // If task conditions id is neither in activeQuests, quests or achievements - it's stale and should be cleaned up
                     if (!(existsInActiveRepeatableQuests || existsInQuests || isAchievementTracker))
@@ -765,10 +712,10 @@ export class ProfileFixerService
 
         for (const areaId of areasToCheck)
         {
-            const area = pmcProfile.Hideout.Areas.find((x) => x.type === areaId);
+            const area = pmcProfile.Hideout.Areas.find((area) => area.type === areaId);
             if (!area)
             {
-                this.logger.debug(`unable to sort ${areaId} slots, no area found`);
+                this.logger.debug(`unable to sort: ${area.type} (${areaId}) slots, no area found`);
                 continue;
             }
 
@@ -890,12 +837,12 @@ export class ProfileFixerService
             return profileBonuses.find((x) => x.id === bonus.id);
         }
 
-        if (bonus.type.toLowerCase() === "stashsize")
+        if (bonus.type === BonusType.STASH_SIZE)
         {
             return profileBonuses.find((x) => x.type === bonus.type && x.templateId === bonus.templateId);
         }
 
-        if (bonus.type.toLowerCase() === "additionalslots")
+        if (bonus.type === BonusType.ADDITIONAL_SLOTS)
         {
             return profileBonuses.find((x) =>
                 x.type === bonus.type && x.value === bonus.value && x.visible === bonus.visible
@@ -1118,7 +1065,7 @@ export class ProfileFixerService
             if (itemAJson === itemBJson)
             {
                 // Both items match, we can safely delete one
-                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex(x => x._id === key);
+                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex((x) => x._id === key);
                 pmcProfile.Inventory.items.splice(indexOfItemToRemove, 1);
                 this.logger.warning(`Deleted duplicate item: ${key}`);
             }
@@ -1126,10 +1073,10 @@ export class ProfileFixerService
             {
                 // Items are different, replace ID with unique value
                 // Only replace ID if items have no children, we dont want orphaned children
-                const itemsHaveChildren = pmcProfile.Inventory.items.some(x => x.parentId === key);
+                const itemsHaveChildren = pmcProfile.Inventory.items.some((x) => x.parentId === key);
                 if (!itemsHaveChildren)
                 {
-                    const itemToAdjustId = pmcProfile.Inventory.items.find(x => x._id === key);
+                    const itemToAdjustId = pmcProfile.Inventory.items.find((x) => x._id === key);
                     itemToAdjustId._id = this.hashUtil.generate();
                     this.logger.warning(`Replace duplicate item Id: ${key} with ${itemToAdjustId._id}`);
                 }
@@ -1137,7 +1084,7 @@ export class ProfileFixerService
         }
 
         // Iterate over all inventory items
-        for (const item of pmcProfile.Inventory.items.filter(x => x.slotId))
+        for (const item of pmcProfile.Inventory.items.filter((x) => x.slotId))
         {
             if (!item.upd)
             {
@@ -1150,7 +1097,7 @@ export class ProfileFixerService
             if (regxp.test(item.upd.Tag?.Name))
             {
                 this.logger.warning(`Fixed item: ${item._id}s Tag value, removed invalid characters`);
-                item.upd.Tag.Name = item.upd.Tag.Name.replace(regxp, '');
+                item.upd.Tag.Name = item.upd.Tag.Name.replace(regxp, "");
             }
 
             // Check items with StackObjectsCount (null)
@@ -1169,36 +1116,36 @@ export class ProfileFixerService
         // Check Head
         if (!customizationDb[pmcProfile.Customization.Head])
         {
-            const defaultHead = (playerIsUsec)
-                ? customizationDbArray.find(x => x._name === "DefaultUsecHead")
-                : customizationDbArray.find(x => x._name === "DefaultBearHead");
+            const defaultHead = playerIsUsec
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecHead")
+                : customizationDbArray.find((x) => x._name === "DefaultBearHead");
             pmcProfile.Customization.Head = defaultHead._id;
         }
 
-        //check Body
+        // check Body
         if (!customizationDb[pmcProfile.Customization.Body])
         {
             const defaultBody = (pmcProfile.Info.Side.toLowerCase() === "usec")
-                ? customizationDbArray.find(x => x._name === "DefaultUsecBody")
-                : customizationDbArray.find(x => x._name === "DefaultBearBody");
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecBody")
+                : customizationDbArray.find((x) => x._name === "DefaultBearBody");
             pmcProfile.Customization.Body = defaultBody._id;
         }
 
-        //check Hands
+        // check Hands
         if (!customizationDb[pmcProfile.Customization.Hands])
         {
             const defaultHands = (pmcProfile.Info.Side.toLowerCase() === "usec")
-                ? customizationDbArray.find(x => x._name === "DefaultUsecHands")
-                : customizationDbArray.find(x => x._name === "DefaultBearHands");
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecHands")
+                : customizationDbArray.find((x) => x._name === "DefaultBearHands");
             pmcProfile.Customization.Hands = defaultHands._id;
         }
 
-        //check Hands
+        // check Hands
         if (!customizationDb[pmcProfile.Customization.Feet])
         {
             const defaultFeet = (pmcProfile.Info.Side.toLowerCase() === "usec")
-                ? customizationDbArray.find(x => x._name === "DefaultUsecFeet")
-                : customizationDbArray.find(x => x._name === "DefaultBearFeet");
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecFeet")
+                : customizationDbArray.find((x) => x._name === "DefaultBearFeet");
             pmcProfile.Customization.Feet = defaultFeet._id;
         }
     }
@@ -1275,7 +1222,7 @@ export class ProfileFixerService
     {
         // Not a number, regenerate
         // biome-ignore lint/suspicious/noGlobalIsNan: <value can be a valid string, Number.IsNaN() would ignore it>
-        if  (isNaN(fullProfile.characters.pmc.aid) || !fullProfile.info.aid)
+        if (isNaN(fullProfile.characters.pmc.aid) || !fullProfile.info.aid)
         {
             fullProfile.characters.pmc.sessionId = <string><unknown>fullProfile.characters.pmc.aid;
             fullProfile.characters.pmc.aid = this.hashUtil.generateAccountId();
@@ -1370,28 +1317,28 @@ export class ProfileFixerService
         }
     }
 
-	/**
-	 * After removing mods that add quests, the quest panel will break without removing these
-	 * @param pmcProfile Profile to remove dead quests from
-	 */
+    /**
+     * After removing mods that add quests, the quest panel will break without removing these
+     * @param pmcProfile Profile to remove dead quests from
+     */
     protected removeOrphanedQuests(pmcProfile: IPmcData): void
     {
         const quests = this.databaseServer.getTables().templates.quests;
         const profileQuests = pmcProfile.Quests;
-        
-        let repeatableQuests: IRepeatableQuest[] = [];
+
+        const repeatableQuests: IRepeatableQuest[] = [];
         for (const repeatableQuestType of pmcProfile.RepeatableQuests)
         {
             repeatableQuests.push(...repeatableQuestType.activeQuests);
         }
-        
+
         for (let i = 0; i < profileQuests.length; i++)
         {
-            if (!quests[profileQuests[i].qid] && !repeatableQuests.find(x => x._id == profileQuests[i].qid))
+            if (!(quests[profileQuests[i].qid] || repeatableQuests.find((x) => x._id === profileQuests[i].qid)))
             {
                 profileQuests.splice(i, 1);
                 this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");
-            }            
+            }
         }
     }
 }

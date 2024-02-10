@@ -19,9 +19,9 @@ export interface Appearance
 {
     body: Record<string, number>;
     feet: Record<string, number>;
-    hands: string[];
-    head: string[];
-    voice: string[];
+    hands: Record<string, number>;
+    head: Record<string, number>;
+    voice: Record<string, number>;
 }
 
 export interface Chances

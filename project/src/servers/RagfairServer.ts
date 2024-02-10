@@ -47,27 +47,27 @@ export class RagfairServer
 
         // Generate trader offers
         const traders = this.getUpdateableTraders();
-        for (const traderID of traders)
+        for (const traderId of traders)
         {
             // Skip generating fence offers
-            if (traderID === Traders.FENCE)
+            if (traderId === Traders.FENCE)
             {
                 continue;
             }
 
-            if (this.ragfairOfferService.traderOffersNeedRefreshing(traderID))
+            if (this.ragfairOfferService.traderOffersNeedRefreshing(traderId))
             {
-                this.ragfairOfferGenerator.generateFleaOffersForTrader(traderID);
+                this.ragfairOfferGenerator.generateFleaOffersForTrader(traderId);
             }
         }
 
-        // Regen expired offers when over threshold count
+        // Regenerate expired offers when over threshold limit
         if (this.ragfairOfferService.getExpiredOfferCount() >= this.ragfairConfig.dynamic.expiredOfferThreshold)
         {
-            const expiredOfferItems = this.ragfairOfferService.getExpiredOfferItems();
-            await this.ragfairOfferGenerator.generateDynamicOffers(expiredOfferItems);
+            const expiredAssortsWithChildren = this.ragfairOfferService.getExpiredOfferAssorts();
+            await this.ragfairOfferGenerator.generateDynamicOffers(expiredAssortsWithChildren);
 
-            // reset expired offers now we've genned them
+            // Clear out expired offers now we've generated them
             this.ragfairOfferService.resetExpiredOffers();
         }
 
@@ -83,7 +83,11 @@ export class RagfairServer
         return Object.keys(this.ragfairConfig.traders).filter((x) => this.ragfairConfig.traders[x]);
     }
 
-    public getAllActiveCategories(fleaUnlocked: boolean, searchRequestData: ISearchRequestData, offers: IRagfairOffer[]): Record<string, number>
+    public getAllActiveCategories(
+        fleaUnlocked: boolean,
+        searchRequestData: ISearchRequestData,
+        offers: IRagfairOffer[],
+    ): Record<string, number>
     {
         return this.ragfairCategoriesService.getCategoriesFromOffers(offers, searchRequestData, fleaUnlocked);
     }

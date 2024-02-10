@@ -97,7 +97,7 @@ export class InraidCallbacks
      */
     public getTraderServices(url: string, info: IEmptyRequestData, sessionId: string): string
     {
-        const lastSlashPos = url.lastIndexOf('/');
+        const lastSlashPos = url.lastIndexOf("/");
         const traderId = url.substring(lastSlashPos + 1);
         return this.httpResponse.noBody(this.inraidController.getTraderServices(sessionId, traderId));
     }

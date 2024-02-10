@@ -25,22 +25,19 @@ describe("HealthController", () =>
     {
         it("Should Heal Players heavy bleed and heal chest to full hp", () =>
         {
-            const maxHealth = 100
+            const maxHealth = 100;
             const pmcData = {
                 Health: {
                     BodyParts: {
                         Chest: {
                             Health: {
                                 Current: 50, // Has damage
-                                Maximum: maxHealth
+                                Maximum: maxHealth,
                             },
-                            Effects: {HeavyBleeding: {
-                                Time: 20
-                            }
-                            }
-                        }
-                    }
-                }
+                            Effects: { HeavyBleeding: { Time: 20 } },
+                        },
+                    },
+                },
             };
             const bleedRemovalAndLimbHealRequest = {
                 Action: "RestoreHealth",
@@ -49,62 +46,53 @@ describe("HealthController", () =>
                     BodyParts: {
                         Chest: {
                             Health: 23, // > 0 value means it will heal
-                            Effects: ["HeavyBleeding"] // non-null means it will remove effect from player
-                        }
-                    }
-                }
+                            Effects: ["HeavyBleeding"], // non-null means it will remove effect from player
+                        },
+                    },
+                },
             };
             const sessionId = "12345";
 
             // Mock output generation
-            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
             // Mock payment
-            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
-            const result = healthController.healthTreatment(pmcData as unknown as IPmcData, bleedRemovalAndLimbHealRequest as IHealthTreatmentRequestData, sessionId);
-            
+            const result = healthController.healthTreatment(
+                pmcData as unknown as IPmcData,
+                bleedRemovalAndLimbHealRequest as IHealthTreatmentRequestData,
+                sessionId,
+            );
+
             // Has healed chest to full
             expect(result.profileChanges[sessionId].health.BodyParts.Chest.Health.Current).equals(maxHealth);
-            
+
             // Has removed Heavy bleed effect from chest
             expect(result.profileChanges[sessionId].health.BodyParts.Chest).not.toHaveProperty("Effects");
         });
 
         it("Should Heal Players heavy bleed and leave limb health at existing value", () =>
         {
-            const maxHealth = 100
+            const maxHealth = 100;
             const pmcData = {
                 Health: {
                     BodyParts: {
                         Chest: {
                             Health: {
                                 Current: 50, // Has damage
-                                Maximum: maxHealth
+                                Maximum: maxHealth,
                             },
-                            Effects: {HeavyBleeding: {
-                                Time: 20
-                            }
-                            }
-                        }
-                    }
-                }
+                            Effects: { HeavyBleeding: { Time: 20 } },
+                        },
+                    },
+                },
             };
             const limbOnlyHealRequest = {
                 Action: "RestoreHealth",
@@ -113,47 +101,41 @@ describe("HealthController", () =>
                     BodyParts: {
                         Chest: {
                             Health: 23, // > 0 value means it will heal limb to full
-                            Effects: null // null means no healing of effects
-                        }
-                    }
-                }
+                            Effects: null, // null means no healing of effects
+                        },
+                    },
+                },
             };
             const sessionId = "12345";
 
             // Mock output generation
-            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
             // Mock payment
-            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
-            const result = healthController.healthTreatment(pmcData as unknown as IPmcData, limbOnlyHealRequest as IHealthTreatmentRequestData, sessionId);
-            
+            const result = healthController.healthTreatment(
+                pmcData as unknown as IPmcData,
+                limbOnlyHealRequest as IHealthTreatmentRequestData,
+                sessionId,
+            );
+
             // Has healed chest to full
             expect(result.profileChanges[sessionId].health.BodyParts.Chest.Health.Current).equals(maxHealth);
-            
+
             // Has not removed Heavy bleed effect from chest
             expect(result.profileChanges[sessionId].health.BodyParts.Chest).toHaveProperty("Effects");
         });
 
         it("Should Heal Players heavy bleed and leave limb health at existing value", () =>
         {
-            const maxHealth = 100
+            const maxHealth = 100;
             const currentHealth = 50;
             const pmcData = {
                 Health: {
@@ -161,15 +143,12 @@ describe("HealthController", () =>
                         Chest: {
                             Health: {
                                 Current: currentHealth, // Has damage
-                                Maximum: maxHealth
+                                Maximum: maxHealth,
                             },
-                            Effects: {HeavyBleeding: {
-                                Time: 20
-                            }
-                            }
-                        }
-                    }
-                }
+                            Effects: { HeavyBleeding: { Time: 20 } },
+                        },
+                    },
+                },
             };
             const limbOnlyHealRequest = {
                 Action: "RestoreHealth",
@@ -178,40 +157,34 @@ describe("HealthController", () =>
                     BodyParts: {
                         Chest: {
                             Health: 0, // 0 value means it will not heal and damage
-                            Effects: null // null means no healing of effects
-                        }
-                    }
-                }
+                            Effects: null, // null means no healing of effects
+                        },
+                    },
+                },
             };
             const sessionId = "12345";
 
             // Mock output generation
-            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
             // Mock payment
-            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue(
-                {
-                    warnings: {},
-                    profileChanges: {
-                        "12345": {
-                            health: {}
-                        }
-                    }
-                });
+            vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
+                warnings: {},
+                profileChanges: { "12345": { health: {} } },
+            });
 
-            const result = healthController.healthTreatment(pmcData as unknown as IPmcData, limbOnlyHealRequest as IHealthTreatmentRequestData, sessionId);
-            
+            const result = healthController.healthTreatment(
+                pmcData as unknown as IPmcData,
+                limbOnlyHealRequest as IHealthTreatmentRequestData,
+                sessionId,
+            );
+
             // Has not healed chest to full
             expect(result.profileChanges[sessionId].health.BodyParts.Chest.Health.Current).equals(currentHealth);
-            
+
             // Has not removed Heavy bleed effect from chest
             expect(result.profileChanges[sessionId].health.BodyParts.Chest).toHaveProperty("Effects");
         });

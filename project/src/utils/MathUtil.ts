@@ -22,9 +22,14 @@ export class MathUtil
      */
     public arrayCumsum(values: number[]): number[]
     {
-        // curried function for cumulative sum: (cum, x) => cum += x
-        // and 0 being the initial value for the map
-        return values.map(((cum) => (x) => cum += x)(0));
+        const cumsumArray = [];
+        let sum = 0;
+        for (let i = 0; i < values.length; i++)
+        {
+            sum += values[i];
+            cumsumArray[i] = sum;
+        }
+        return cumsumArray;
     }
 
     /**
@@ -86,18 +91,17 @@ export class MathUtil
         {
             return y[y.length - 1];
         }
-        else if (xp < x[0])
+
+        if (xp < x[0])
         {
             return y[0];
         }
-        else
+
+        for (let i = 0; i < x.length - 1; i++)
         {
-            for (let i = 0; i < x.length - 1; i++)
+            if (xp >= x[i] && xp <= x[i + 1])
             {
-                if (xp >= x[i] && xp <= x[i + 1])
-                {
-                    return y[i] + (xp - x[i]) * (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
-                }
+                return y[i] + (xp - x[i]) * (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
             }
         }
     }

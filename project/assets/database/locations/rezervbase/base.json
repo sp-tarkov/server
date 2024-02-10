@@ -94,7 +94,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": 1470,
       "TriggerId": "",
       "TriggerName": ""
@@ -112,7 +112,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "autoId_00632_EXFIL",
       "TriggerName": "interactObject"
@@ -130,7 +130,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "autoId_00000_D2_LEVER",
       "TriggerName": "interactObject"
@@ -148,7 +148,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": 3,
       "TriggerId": "raider_simple_patroling",
       "TriggerName": "interactObject"

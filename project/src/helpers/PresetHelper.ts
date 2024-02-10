@@ -1,18 +1,22 @@
 import { inject, injectable } from "tsyringe";
 
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { ItemHelper } from "./ItemHelper";
 
 @injectable()
 export class PresetHelper
 {
     protected lookup: Record<string, string[]> = {};
-    protected defaultPresets: Record<string, IPreset>;
+    protected defaultEquipmentPresets: Record<string, IPreset>;
+    protected defaultWeaponPresets: Record<string, IPreset>;
 
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
     )
     {}
 
@@ -21,12 +25,30 @@ export class PresetHelper
         this.lookup = input;
     }
 
+    /**
+     * Get default weapon and equipment presets
+     * @returns Dictionary
+     */
     public getDefaultPresets(): Record<string, IPreset>
     {
-        if (!this.defaultPresets)
+        const weapons = this.getDefaultWeaponPresets();
+        const equipment = this.getDefaultEquipmentPresets();
+
+        return Object.assign({}, weapons, equipment);
+    }
+
+    /**
+     * Get default weapon presets
+     * @returns Dictionary
+     */
+    public getDefaultWeaponPresets(): Record<string, IPreset>
+    {
+        if (!this.defaultWeaponPresets)
         {
-            this.defaultPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets).filter((x) =>
-                x._encyclopedia !== undefined
+            this.defaultWeaponPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets).filter((
+                preset,
+            ) => preset._encyclopedia !== undefined
+                && this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON)
             ).reduce((acc, cur) =>
             {
                 acc[cur._id] = cur;
@@ -34,7 +56,28 @@ export class PresetHelper
             }, {});
         }
 
-        return this.defaultPresets;
+        return this.defaultWeaponPresets;
+    }
+
+    /**
+     * Get default equipment presets
+     * @returns Dictionary
+     */
+    public getDefaultEquipmentPresets(): Record<string, IPreset>
+    {
+        if (!this.defaultEquipmentPresets)
+        {
+            this.defaultEquipmentPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets).filter((
+                preset,
+            ) => preset._encyclopedia !== undefined && this.itemHelper.armorItemCanHoldMods(preset._encyclopedia))
+                .reduce((acc, cur) =>
+                {
+                    acc[cur._id] = cur;
+                    return acc;
+                }, {});
+        }
+
+        return this.defaultEquipmentPresets;
     }
 
     public isPreset(id: string): boolean

@@ -141,8 +141,8 @@ export class InraidController
         this.markOrRemoveFoundInRaidItems(postRaidRequest);
 
         postRaidRequest.profile.Inventory.items = this.itemHelper.replaceIDs(
-            postRaidRequest.profile,
             postRaidRequest.profile.Inventory.items,
+            postRaidRequest.profile,
             serverPmcProfile.InsuredItems,
             postRaidRequest.profile.Inventory.fastPanel,
         );
@@ -153,14 +153,20 @@ export class InraidController
 
         this.healthHelper.saveVitality(serverPmcProfile, postRaidRequest.health, sessionID);
 
-        // Remove inventory if player died and send insurance items
-        if (mapHasInsuranceEnabled)
+        // Get array of insured items+child that were lost in raid
+        const gearToStore = this.insuranceService.getGearLostInRaid(
+            serverPmcProfile,
+            postRaidRequest,
+            preRaidGear,
+            sessionID,
+            isDead,
+        );
+
+        if (gearToStore.length > 0)
         {
-            this.insuranceService.storeLostGear(serverPmcProfile, postRaidRequest, preRaidGear, sessionID, isDead);
-        }
-        else
-        {
-            this.insuranceService.sendLostInsuranceMessage(sessionID, locationName);
+            mapHasInsuranceEnabled
+                ? this.insuranceService.storeGearLostInRaidToSendLater(sessionID, gearToStore)
+                : this.insuranceService.sendLostInsuranceMessage(sessionID, locationName);
         }
 
         // Edge case - Handle usec players leaving lighthouse with Rogues angry at them
@@ -203,7 +209,7 @@ export class InraidController
     }
 
     /**
-     * Make changes to pmc profile after they've died in raid,
+     * Make changes to PMC profile after they've died in raid,
      * Alter body part hp, handle insurance, delete inventory items, remove carried quest items
      * @param postRaidSaveRequest Post-raid save request
      * @param pmcData Pmc profile
@@ -224,8 +230,8 @@ export class InraidController
             // Find and remove the completed condition from profile if player died, otherwise quest is stuck in limbo
             // and quest items cannot be picked up again
             const allQuests = this.questHelper.getQuestsFromDb();
-            const activeQuestIdsInProfile = pmcData.Quests.filter((x) =>
-                ![QuestStatus.AvailableForStart, QuestStatus.Success, QuestStatus.Expired].includes(x.status)
+            const activeQuestIdsInProfile = pmcData.Quests.filter((profileQuest) =>
+                ![QuestStatus.AvailableForStart, QuestStatus.Success, QuestStatus.Expired].includes(profileQuest.status)
             ).map((x) => x.qid);
             for (const questItem of postRaidSaveRequest.profile.Stats.Eft.CarriedQuestItems)
             {
@@ -311,8 +317,8 @@ export class InraidController
         this.markOrRemoveFoundInRaidItems(postRaidRequest);
 
         postRaidRequest.profile.Inventory.items = this.itemHelper.replaceIDs(
-            postRaidRequest.profile,
             postRaidRequest.profile.Inventory.items,
+            postRaidRequest.profile,
             serverPmcProfile.InsuredItems,
             postRaidRequest.profile.Inventory.fastPanel,
         );
@@ -348,7 +354,7 @@ export class InraidController
     {
         for (const quest of scavProfile.Quests)
         {
-            const pmcQuest = pmcProfile.Quests.find(x => x.qid === quest.qid);
+            const pmcQuest = pmcProfile.Quests.find((x) => x.qid === quest.qid);
             if (!pmcQuest)
             {
                 this.logger.warning(`No PMC quest found for ID: ${quest.qid}`);
@@ -446,11 +452,11 @@ export class InraidController
     ): void
     {
         // Update scav profile inventory
-        scavData = this.inRaidHelper.setInventory(sessionID, scavData, offraidData.profile);
+        const updatedScavData = this.inRaidHelper.setInventory(sessionID, scavData, offraidData.profile);
 
         // Reset scav hp and save to json
         this.healthHelper.resetVitality(sessionID);
-        this.saveServer.getProfile(sessionID).characters.scav = scavData;
+        this.saveServer.getProfile(sessionID).characters.scav = updatedScavData;
 
         // Scav karma
         this.handlePostRaidPlayerScavKarmaChanges(pmcData, offraidData);
@@ -546,9 +552,9 @@ export class InraidController
 
         // Remove any items that were returned by the item delivery, but also insured, from the player's insurance list
         // This is to stop items being duplicated by being returned from both the item delivery, and insurance
-        const deliveredItemIds = items.map(x => x._id);
-        pmcData.InsuredItems = pmcData.InsuredItems.filter(x => !deliveredItemIds.includes(x.itemId));
-        
+        const deliveredItemIds = items.map((x) => x._id);
+        pmcData.InsuredItems = pmcData.InsuredItems.filter((x) => !deliveredItemIds.includes(x.itemId));
+
         // Send the items to the player
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionId,

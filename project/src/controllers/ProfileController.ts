@@ -12,7 +12,6 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { IMiniProfile } from "@spt-aki/models/eft/launcher/IMiniProfile";
 import { GetProfileStatusResponseData } from "@spt-aki/models/eft/profile/GetProfileStatusResponseData";
 import { IAkiProfile, Inraid, Vitality } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ICompletedAchievementsResponse } from "@spt-aki/models/eft/profile/ICompletedAchievementsResponse";
 import { IGetOtherProfileRequest } from "@spt-aki/models/eft/profile/IGetOtherProfileRequest";
 import { IGetOtherProfileResponse } from "@spt-aki/models/eft/profile/IGetOtherProfileResponse";
 import { IProfileChangeNicknameRequestData } from "@spt-aki/models/eft/profile/IProfileChangeNicknameRequestData";
@@ -21,7 +20,6 @@ import { IProfileCreateRequestData } from "@spt-aki/models/eft/profile/IProfileC
 import { ISearchFriendRequestData } from "@spt-aki/models/eft/profile/ISearchFriendRequestData";
 import { ISearchFriendResponse } from "@spt-aki/models/eft/profile/ISearchFriendResponse";
 import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -31,6 +29,7 @@ import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -46,6 +45,7 @@ export class ProfileController
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
+        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
@@ -164,10 +164,10 @@ export class ProfileController
             pmcData.UnlockedInfo = { unlockedProductionRecipe: [] };
         }
 
-        // Change item id's to be unique
+        // Change item IDs to be unique
         pmcData.Inventory.items = this.itemHelper.replaceIDs(
-            pmcData,
             pmcData.Inventory.items,
+            pmcData,
             null,
             pmcData.Inventory.fastPanel,
         );
@@ -185,7 +185,7 @@ export class ProfileController
             inraid: {} as Inraid,
             insurance: [],
             traderPurchases: {},
-            achievements: {}
+            achievements: {},
         };
 
         this.profileFixerService.checkForAndFixPmcProfileIssues(profileDetails.characters.pmc);
@@ -225,6 +225,12 @@ export class ProfileController
         // Completed account creation
         this.saveServer.getProfile(sessionID).info.wipe = false;
         this.saveServer.saveProfile(sessionID);
+
+        // Requires to enable seasonal changes after creating fresh profile
+        if (this.seasonalEventService.isAutomaticEventDetectionEnabled())
+        {
+            this.seasonalEventService.enableSeasonalEvents(sessionID);
+        }
 
         return pmcData._id;
     }
@@ -391,7 +397,7 @@ export class ProfileController
         return [{ _id: this.hashUtil.generate(), Info: { Level: 1, Side: "Bear", Nickname: info.nickname } }];
     }
 
-    /** 
+    /**
      * Handle client/profile/status
      */
     public getProfileStatus(sessionId: string): GetProfileStatusResponseData
@@ -399,20 +405,14 @@ export class ProfileController
         const account = this.saveServer.getProfile(sessionId).info;
         const response: GetProfileStatusResponseData = {
             maxPveCountExceeded: false,
-            profiles: [{
-                profileid: account.scavId,
-                profileToken: null,
-                status: "Free",
-                sid: "",
-                ip: "",
-                port: 0,
-            }, {
+            profiles: [{ profileid: account.scavId, profileToken: null, status: "Free", sid: "", ip: "", port: 0 }, {
                 profileid: account.id,
                 profileToken: null,
                 status: "Free",
                 sid: "",
                 ip: "",
-                port: 0 }],
+                port: 0,
+            }],
         };
 
         return response;
@@ -422,7 +422,7 @@ export class ProfileController
     {
         const player = this.profileHelper.getFullProfile(sessionId);
         const playerPmc = player.characters.pmc;
-        
+
         // return player for now
         return {
             id: playerPmc._id,
@@ -434,34 +434,34 @@ export class ProfileController
                 memberCategory: playerPmc.Info.MemberCategory,
                 bannedState: playerPmc.Info.BannedState,
                 bannedUntil: playerPmc.Info.BannedUntil,
-                registrationDate: playerPmc.Info.RegistrationDate
+                registrationDate: playerPmc.Info.RegistrationDate,
             },
             customization: {
                 head: playerPmc.Customization.Head,
                 body: playerPmc.Customization.Body,
                 feet: playerPmc.Customization.Feet,
-                hands: playerPmc.Customization.Hands
+                hands: playerPmc.Customization.Hands,
             },
             skills: playerPmc.Skills,
             equipment: {
                 // Default inventory tpl
-                Id: playerPmc.Inventory.items.find(x => x._tpl === "55d7217a4bdc2d86028b456d")._id,
-                Items: playerPmc.Inventory.items
+                Id: playerPmc.Inventory.items.find((x) => x._tpl === "55d7217a4bdc2d86028b456d")._id,
+                Items: playerPmc.Inventory.items,
             },
             achievements: playerPmc.Achievements,
             favoriteItems: playerPmc.Inventory.favoriteItems ?? [],
             pmcStats: {
                 eft: {
                     totalInGameTime: playerPmc.Stats.Eft.TotalInGameTime,
-                    overAllCounters: playerPmc.Stats.Eft.OverallCounters
-                }
+                    overAllCounters: playerPmc.Stats.Eft.OverallCounters,
+                },
             },
             scavStats: {
                 eft: {
                     totalInGameTime: player.characters.scav.Stats.Eft.TotalInGameTime,
-                    overAllCounters: player.characters.scav.Stats.Eft.OverallCounters
-                }
-            }
+                    overAllCounters: player.characters.scav.Stats.Eft.OverallCounters,
+                },
+            },
         };
     }
 }

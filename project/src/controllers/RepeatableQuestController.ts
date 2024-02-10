@@ -82,9 +82,9 @@ export class RepeatableQuestController
      * The new quests generated are again persisted in profile.RepeatableQuests
      *
      * @param   {string}    _info       Request from client
-     * @param   {string}    sessionID       Player's session id
-     * 
-     * @returns  {array}                    array of "repeatableQuestObjects" as descibed above
+     * @param   {string}    sessionID   Player's session id
+     *
+     * @returns  {array}                Array of "repeatableQuestObjects" as descibed above
      */
     public getClientRepeatableQuests(_info: IEmptyRequestData, sessionID: string): IPmcDataRepeatableQuest[]
     {
@@ -120,7 +120,7 @@ export class RepeatableQuestController
                     for (const activeQuest of currentRepeatableQuestType.activeQuests)
                     {
                         // Keep finished quests in list so player can hand in
-                        const quest = pmcData.Quests.find(quest => quest.qid === activeQuest._id);
+                        const quest = pmcData.Quests.find((quest) => quest.qid === activeQuest._id);
                         if (quest)
                         {
                             if (quest.status === QuestStatus.AvailableForFinish)
@@ -136,7 +136,7 @@ export class RepeatableQuestController
                         this.profileFixerService.removeDanglingConditionCounters(pmcData);
 
                         // Remove expired quest from pmc.quest array
-                        pmcData.Quests = pmcData.Quests.filter(quest => quest.qid !== activeQuest._id);
+                        pmcData.Quests = pmcData.Quests.filter((quest) => quest.qid !== activeQuest._id);
                         currentRepeatableQuestType.inactiveQuests.push(activeQuest);
                     }
                     currentRepeatableQuestType.activeQuests = questsToKeep;
@@ -263,24 +263,26 @@ export class RepeatableQuestController
     public generateDebugDailies(dailiesPool: any, factory: any, number: number): any
     {
         let randomQuests = [];
+        let numberOfQuests = number;
+
         if (factory)
         {
             // First is factory extract always add for debugging
             randomQuests.push(dailiesPool[0]);
-            number -= 1;
+            numberOfQuests -= 1;
         }
 
-        randomQuests = randomQuests.concat(this.randomUtil.drawRandomFromList(dailiesPool, number, false));
+        randomQuests = randomQuests.concat(this.randomUtil.drawRandomFromList(dailiesPool, numberOfQuests, false));
 
         for (const element of randomQuests)
         {
             element._id = this.objectId.generate();
             const conditions = element.conditions.AvailableForFinish;
-            for (const element of conditions)
+            for (const condition of conditions)
             {
-                if ("counter" in element._props)
+                if ("counter" in condition._props)
                 {
-                    element._props.counter.id = this.objectId.generate();
+                    condition._props.counter.id = this.objectId.generate();
                 }
             }
         }

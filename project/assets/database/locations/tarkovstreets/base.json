@@ -42,24 +42,6 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 25,
-      "BossDifficult": "normal",
-      "BossEscortAmount": "0",
-      "BossEscortDifficult": "normal",
-      "BossEscortType": "pmcBot",
-      "BossName": "gifter",
-      "BossPlayer": false,
-      "BossZone": "ZoneConcordiaParking,ZoneHotel_2,ZoneFactory,ZoneCinema",
-      "Delay": 0,
-      "ForceSpawn": false,
-      "IgnoreMaxBots": false,
-      "RandomTimeSpawn": false,
-      "Supports": [],
-      "Time": -1,
-      "TriggerId": "",
-      "TriggerName": ""
-    },
-    {
       "BossChance": 11,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
@@ -1254,11 +1236,11 @@
       "Id": "12bb197b-bc6b-449c-9cf1-54ed289a364b",
       "Infiltration": "E3_4",
       "Position": {
-        "x": 228.3,
-        "y": 0.642,
-        "z": 170.736
+        "x": 228.841,
+        "y": 0.663,
+        "z": 173.562
       },
-      "Rotation": 263.604279,
+      "Rotation": 177.974945,
       "Sides": [
         "All"
       ]
@@ -1947,9 +1929,9 @@
       "Id": "1fa87642-c899-4952-b848-2401a677f05d",
       "Infiltration": "E3_4",
       "Position": {
-        "x": 227.508,
+        "x": 228.391,
         "y": 0.642,
-        "z": 171.673
+        "z": 171.365
       },
       "Rotation": 263.604279,
       "Sides": [
@@ -2067,9 +2049,9 @@
       "Id": "20a712ad-fd79-4983-89e4-5234075c9638",
       "Infiltration": "E3_4",
       "Position": {
-        "x": 225.906,
-        "y": 0.642,
-        "z": 171.708
+        "x": 221.194,
+        "y": 0.646,
+        "z": 170.919
       },
       "Rotation": 263.604279,
       "Sides": [
@@ -7662,9 +7644,9 @@
       "Id": "8eb7065a-df86-48c9-ace7-bc6e59372ad3",
       "Infiltration": "E3_4",
       "Position": {
-        "x": 226.515,
-        "y": 0.642,
-        "z": 170.513
+        "x": 226.448,
+        "y": 0.696,
+        "z": 171.106
       },
       "Rotation": 263.604279,
       "Sides": [
@@ -11245,9 +11227,9 @@
       "Id": "d86d8ead-2302-4817-858e-74fa428a244e",
       "Infiltration": "E3_4",
       "Position": {
-        "x": 223.788,
-        "y": 0.642,
-        "z": 170.845
+        "x": 216.25,
+        "y": 0.67,
+        "z": 170.56
       },
       "Rotation": 263.604279,
       "Sides": [
@@ -13579,162 +13561,5 @@
   "users_spawn_seconds_n": 120,
   "users_spawn_seconds_n2": 200,
   "users_summon_seconds": 0,
-  "waves": [
-    {
-      "BotPreset": "normal",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSW00",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "number": 0,
-      "slots_max": 4,
-      "slots_min": 3,
-      "time_max": 10,
-      "time_min": 1
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneCarShowroom",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 1,
-      "slots_max": 3,
-      "slots_min": 2,
-      "time_max": 40,
-      "time_min": 10
-    },
-    {
-      "BotPreset": "normal",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneStilo",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 2,
-      "slots_max": 4,
-      "slots_min": 3,
-      "time_max": 50,
-      "time_min": 10
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSnipeStilo",
-      "WildSpawnType": "marksman",
-      "isPlayers": false,
-      "number": 3,
-      "slots_max": 1,
-      "slots_min": 1,
-      "time_max": 120,
-      "time_min": 1
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneCard1",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 4,
-      "slots_max": 4,
-      "slots_min": 2,
-      "time_max": 60,
-      "time_min": 20
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSnipeCard",
-      "WildSpawnType": "marksman",
-      "isPlayers": false,
-      "number": 5,
-      "slots_max": 1,
-      "slots_min": 1,
-      "time_max": 120,
-      "time_min": 1
-    },
-    {
-      "BotPreset": "normal",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneHotel_1",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 6,
-      "slots_max": 3,
-      "slots_min": 2,
-      "time_max": 90,
-      "time_min": 50
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSnipeBuilding",
-      "WildSpawnType": "marksman",
-      "isPlayers": false,
-      "number": 7,
-      "slots_max": 1,
-      "slots_min": 1,
-      "time_max": 120,
-      "time_min": 1
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSnipeSW01",
-      "WildSpawnType": "marksman",
-      "isPlayers": false,
-      "number": 8,
-      "slots_max": 1,
-      "slots_min": 1,
-      "time_max": 120,
-      "time_min": 1
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneSW01",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 9,
-      "slots_max": 4,
-      "slots_min": 1,
-      "time_max": 90,
-      "time_min": 40
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneConstruction",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "number": 10,
-      "slots_max": 4,
-      "slots_min": 1,
-      "time_max": 100,
-      "time_min": 70
-    },
-    {
-      "BotPreset": "normal",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneHotel_2",
-      "WildSpawnType": "assault",
-      "isPlayers": false,
-      "number": 11,
-      "slots_max": 3,
-      "slots_min": 2,
-      "time_max": 110,
-      "time_min": 80
-    },
-    {
-      "BotPreset": "hard",
-      "BotSide": "Savage",
-      "SpawnPoints": "ZoneConcordia_1",
-      "WildSpawnType": "assault",
-      "isPlayers": true,
-      "number": 12,
-      "slots_max": 4,
-      "slots_min": 2,
-      "time_max": 120,
-      "time_min": 110
-    }
-  ]
+  "waves": []
 }

@@ -1,0 +1,20 @@
+{
+	"assort-missing_loyalty_level_object": "stripQuestAssort(): 商人 {{traderId}} 的商品不包含 loyal_level_items 數據，正在跳過任務商品移除",
+	"assort-missing_questassort": "stripQuestAssort(): 商人： %s 商品不包含 questassort json，正在跳過任務商品移除",
+	"assort-missing_quest_assort_unlock": "找不到任務：{{questName}}相關的{{traderName}} 任務商品解鎖。完成這個任務不會獎勵商人物品的購買權",
+	"baseclass-item_not_found": "物品基礎緩存裡找不到物品%s, 緩存將重新生成",
+	"baseclass-item_not_found_failed": "重新生成後仍未在基礎緩存中找到物品 %s",
+	"baseclass-missing_db_no_cache": "資料庫為空，無法生成物品基礎緩存",
+	"bleeding_edge_build": "前沿版本",
+	"bot-bot-cache_has_zero_bots_of_requested_type": "警告 - Bot快取沒有%s種類的預生成bot，將需要生成，請自行配置服務端以生成更多該類bot",
+	"bot-compatibility_check_missing_props": "無法驗證槽位{{slot}}中的物品：{{id}} {{name}}可被裝備，缺少_props值",
+	"bot-generation_failed": "bot生成失敗查看服務端日誌以取得更多細節",
+	"bot-incompatible_ammo_for_weapon_falling_back_to_default": "{{weaponId}} - {{weaponName}}中找到不相容的彈藥{{chosenAmmo}}，回退到預設：{{defaultAmmo}}",
+	"bot-invalid_item_compatibility_check": "無法偵測已裝備物品的物品相容性，插槽：{{slot}}中預期的物品：{{itemTpl}}不是有效的物品",
+	"bot-item_spawn_limit_reached_skipping_item": "{{attempts}} 次嘗試後{{botRole}} 仍無法生成物品 {{itemName}}，將忽略生成限制",
+	"bot-missing_cartridge_slot": "無法添加彈種到武器，因為配件池不包含CylinderMagazine %s的彈種，正在跳過",
+	"bot-unable_to_find_loot_n_value_for_bot": "找不到bot：%s的戰利品N值，使用scav的n值代替",
+	"importing_database": "正在導入資料庫…",
+	"importing_database_finish": "資料庫導入完成",
+	"importing_spt_configs": "導入配置中…"
+}

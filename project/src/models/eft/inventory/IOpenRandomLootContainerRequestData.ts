@@ -3,7 +3,7 @@ import { IInventoryBaseActionRequestData } from "@spt-aki/models/eft/inventory/I
 export interface IOpenRandomLootContainerRequestData extends IInventoryBaseActionRequestData
 {
     Action: "OpenRandomLootContainer";
-    /** Container item opened */
+    /** Container item id being opened */
     item: string;
     to: To[];
 }

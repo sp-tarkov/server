@@ -32,7 +32,7 @@ export interface ITemplateSide
 
 export interface ProfileTraderTemplate
 {
-    initialLoyaltyLevel: number;
+    initialLoyaltyLevel: Record<string, number>;
     setQuestsAvailableForStart?: boolean;
     setQuestsAvailableForFinish?: boolean;
     initialStanding: number;

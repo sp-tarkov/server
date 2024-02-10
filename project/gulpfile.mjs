@@ -2,11 +2,11 @@ import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import pkg from "@yao-pkg/pkg";
+import pkgfetch from "@yao-pkg/pkg-fetch";
 import gulp from "gulp";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
-import pkg from "@yao-pkg/pkg";
-import pkgfetch from "@yao-pkg/pkg-fetch";
 import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 

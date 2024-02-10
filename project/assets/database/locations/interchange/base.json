@@ -54,7 +54,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""

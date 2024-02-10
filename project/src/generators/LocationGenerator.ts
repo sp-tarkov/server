@@ -3,7 +3,6 @@ import { inject, injectable } from "tsyringe";
 import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
 import { IContainerMinMax, IStaticContainer } from "@spt-aki/models/eft/common/ILocation";
 import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { ILooseLoot, Spawnpoint, SpawnpointTemplate, SpawnpointsForced } from "@spt-aki/models/eft/common/ILooseLoot";
@@ -14,7 +13,6 @@ import {
     IStaticForcedProps,
     IStaticLootDetails,
 } from "@spt-aki/models/eft/common/tables/ILootBase";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
@@ -24,7 +22,6 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
@@ -54,10 +51,8 @@ export class LocationGenerator
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ObjectId") protected objectId: ObjectId,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("RagfairServerHelper") protected ragfairServerHelper: RagfairServerHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
@@ -87,27 +82,27 @@ export class LocationGenerator
 
         const db = this.databaseServer.getTables();
 
-        const staticWeaponsOnMap = this.jsonUtil.clone(db.loot.staticContainers[locationBase.Name]?.staticWeapons);
-        if (!staticWeaponsOnMap)
+        const staticWeaponsOnMapClone = this.jsonUtil.clone(db.loot.staticContainers[locationBase.Name]?.staticWeapons);
+        if (!staticWeaponsOnMapClone)
         {
             this.logger.error(`Unable to find static weapon data for map: ${locationBase.Name}`);
         }
 
         // Add mounted weapons to output loot
-        result.push(...staticWeaponsOnMap ?? []);
+        result.push(...staticWeaponsOnMapClone ?? []);
 
-        const allStaticContainersOnMap = this.jsonUtil.clone(
+        const allStaticContainersOnMapClone = this.jsonUtil.clone(
             db.loot.staticContainers[locationBase.Name]?.staticContainers,
         );
-        if (!allStaticContainersOnMap)
+        if (!allStaticContainersOnMapClone)
         {
             this.logger.error(`Unable to find static container data for map: ${locationBase.Name}`);
         }
-        const staticRandomisableContainersOnMap = this.getRandomisableContainersOnMap(allStaticContainersOnMap);
+        const staticRandomisableContainersOnMap = this.getRandomisableContainersOnMap(allStaticContainersOnMapClone);
 
         // Containers that MUST be added to map (quest containers etc)
-        const staticForcedOnMap = this.jsonUtil.clone(db.loot.staticContainers[locationBase.Name]?.staticForced);
-        if (!staticForcedOnMap)
+        const staticForcedOnMapClone = this.jsonUtil.clone(db.loot.staticContainers[locationBase.Name]?.staticForced);
+        if (!staticForcedOnMapClone)
         {
             this.logger.error(`Unable to find forced static data for map: ${locationBase.Name}`);
         }
@@ -117,7 +112,7 @@ export class LocationGenerator
 
         // Find all 100% spawn containers
         const staticLootDist = db.loot.staticLoot;
-        const guaranteedContainers = this.getGuaranteedContainers(allStaticContainersOnMap);
+        const guaranteedContainers = this.getGuaranteedContainers(allStaticContainersOnMapClone);
         staticContainerCount += guaranteedContainers.length;
 
         // Add loot to guaranteed containers and add to result
@@ -125,7 +120,7 @@ export class LocationGenerator
         {
             const containerWithLoot = this.addLootToContainer(
                 container,
-                staticForcedOnMap,
+                staticForcedOnMapClone,
                 staticLootDist,
                 staticAmmoDist,
                 locationId,
@@ -150,7 +145,7 @@ export class LocationGenerator
             {
                 const containerWithLoot = this.addLootToContainer(
                     container,
-                    staticForcedOnMap,
+                    staticForcedOnMapClone,
                     staticLootDist,
                     staticAmmoDist,
                     locationId,
@@ -169,7 +164,7 @@ export class LocationGenerator
         const staticContainerGroupData: IStaticContainer = db.locations[locationId].statics;
         if (!staticContainerGroupData)
         {
-            this.logger.warning(`Map: ${locationId} lacks a statics file, skipping container generation.`)
+            this.logger.warning(`Map: ${locationId} lacks a statics file, skipping container generation.`);
 
             return result;
         }
@@ -239,7 +234,7 @@ export class LocationGenerator
                 // Add loot to container and push into result object
                 const containerWithLoot = this.addLootToContainer(
                     containerObject,
-                    staticForcedOnMap,
+                    staticForcedOnMapClone,
                     staticLootDist,
                     staticAmmoDist,
                     locationId,
@@ -248,7 +243,6 @@ export class LocationGenerator
                 staticContainerCount++;
 
                 staticLootItemCount += containerWithLoot.template.Items.length;
-
             }
         }
 
@@ -312,9 +306,10 @@ export class LocationGenerator
 
         // Create probability array with all possible container ids in this group and their relataive probability of spawning
         const containerDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
-        containerIds.forEach((x) =>
-            containerDistribution.push(new ProbabilityObject(x, containerData.containerIdsWithProbability[x]))
-        );
+        for (const x of containerIds)
+        {
+            containerDistribution.push(new ProbabilityObject(x, containerData.containerIdsWithProbability[x]));
+        }
 
         chosenContainerIds.push(...containerDistribution.draw(containerData.chosenCount));
 
@@ -400,13 +395,13 @@ export class LocationGenerator
         locationName: string,
     ): IStaticContainerData
     {
-        const container = this.jsonUtil.clone(staticContainer);
-        const containerTpl = container.template.Items[0]._tpl;
+        const containerClone = this.jsonUtil.clone(staticContainer);
+        const containerTpl = containerClone.template.Items[0]._tpl;
 
         // Create new unique parent id to prevent any collisions
         const parentId = this.objectId.generate();
-        container.template.Root = parentId;
-        container.template.Items[0]._id = parentId;
+        containerClone.template.Root = parentId;
+        containerClone.template.Items[0]._id = parentId;
 
         let containerMap = this.getContainerMapping(containerTpl);
 
@@ -417,7 +412,9 @@ export class LocationGenerator
         const containerLootPool = this.getPossibleLootItemsForContainer(containerTpl, staticLootDist);
 
         // Some containers need to have items forced into it (quest keys etc)
-        const tplsForced = staticForced.filter((x) => x.containerId === container.template.Id).map((x) => x.itemTpl);
+        const tplsForced = staticForced.filter((forcedStaticProp) =>
+            forcedStaticProp.containerId === containerClone.template.Id
+        ).map((x) => x.itemTpl);
 
         // Draw random loot
         // Money spawn more than once in container
@@ -430,7 +427,7 @@ export class LocationGenerator
             itemCountToAdd,
             this.locationConfig.allowDuplicateItemsInStaticContainers,
             locklist,
-        ).filter(x => !tplsForced.includes(x));
+        ).filter((tpl) => !tplsForced.includes(tpl));
 
         // Add forced loot to chosen item pool
         const tplsToAddToContainer = tplsForced.concat(chosenTpls);
@@ -445,9 +442,9 @@ export class LocationGenerator
             const result = this.containerHelper.findSlotForItem(containerMap, width, height);
             if (!result.success)
             {
-                // 2 attempts to fit an item, container is probably full, stop trying to add more
                 if (failedToFitCount >= this.locationConfig.fitLootIntoContainerAttempts)
                 {
+                    // x attempts to fit an item, container is probably full, stop trying to add more
                     break;
                 }
 
@@ -457,7 +454,7 @@ export class LocationGenerator
                 continue;
             }
 
-            containerMap = this.containerHelper.fillContainerMapWithItem(
+            this.containerHelper.fillContainerMapWithItem(
                 containerMap,
                 result.x,
                 result.y,
@@ -473,11 +470,11 @@ export class LocationGenerator
             // Add loot to container before returning
             for (const item of items)
             {
-                container.template.Items.push(item);
+                containerClone.template.Items.push(item);
             }
         }
 
-        return container;
+        return containerClone;
     }
 
     /**
@@ -516,7 +513,9 @@ export class LocationGenerator
         const countDistribution = staticLootDist[containerTypeId]?.itemcountDistribution;
         if (!countDistribution)
         {
-            this.logger.warning(`Unable to acquire count distrubution for container:  ${containerTypeId} on: ${locationName}. defaulting to 0`);
+            this.logger.warning(
+                `Unable to acquire count distrubution for container:  ${containerTypeId} on: ${locationName}. defaulting to 0`,
+            );
 
             return 0;
         }
@@ -603,7 +602,10 @@ export class LocationGenerator
         // Draw from random distribution
         const desiredSpawnpointCount = Math.round(
             this.getLooseLootMultiplerForLocation(locationName)
-                * this.randomUtil.getNormallyDistributedRandomNumber(dynamicLootDist.spawnpointCount.mean, dynamicLootDist.spawnpointCount.std),
+                * this.randomUtil.getNormallyDistributedRandomNumber(
+                    dynamicLootDist.spawnpointCount.mean,
+                    dynamicLootDist.spawnpointCount.std,
+                ),
         );
 
         // Positions not in forced but have 100% chance to spawn
@@ -823,10 +825,10 @@ export class LocationGenerator
     {
         const chosenItem = spawnPoint.template.Items.find((x) => x._id === chosenComposedKey);
         const chosenTpl = chosenItem._tpl;
-        const itemTemplate = this.itemHelper.getItem(chosenTpl)[1]; 
+        const itemTemplate = this.itemHelper.getItem(chosenTpl)[1];
 
         // Item array to return
-        let itemWithMods: Item[] = [];
+        const itemWithMods: Item[] = [];
 
         // Money/Ammo - don't rely on items in spawnPoint.template.Items so we can randomise it ourselves
         if (this.itemHelper.isOfBaseclasses(chosenTpl, [BaseClasses.MONEY, BaseClasses.AMMO]))
@@ -845,7 +847,7 @@ export class LocationGenerator
         {
             // Fill with cartridges
             const ammoBoxItem: Item[] = [{ _id: this.objectId.generate(), _tpl: chosenTpl }];
-            this.itemHelper.addCartridgesToAmmoBox(ammoBoxItem, itemTemplate); // ammo box template
+            this.itemHelper.addSingleStackCartridgesToAmmoBox(ammoBoxItem, itemTemplate);
             itemWithMods.push(...ammoBoxItem);
         }
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.MAGAZINE))
@@ -864,22 +866,12 @@ export class LocationGenerator
                     this.locationConfig.minFillLooseMagazinePercent / 100,
                 );
             }
-            
+
             itemWithMods.push(...magazineItem);
-        }
-        else if (this.itemHelper.armorItemCanHoldMods(chosenTpl))
-        {
-            itemWithMods.push({
-                _id: this.objectId.generate(),
-                _tpl: chosenTpl,
-            });
-            if (itemTemplate._props.Slots?.length > 0)
-            {
-                itemWithMods = this.itemHelper.addChildSlotItems(itemWithMods, itemTemplate, this.locationConfig.equipmentLootSettings.modSpawnChancePercent);
-            }
         }
         else
         {
+            // Also used by armors to get child mods
             // Get item + children and add into array we return
             const itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(
                 spawnPoint.template.Items,
@@ -1004,7 +996,10 @@ export class LocationGenerator
             if (!rootItem)
             {
                 this.logger.error(
-                    this.localisationService.getText("location-missing_root_item", { tpl: chosenTpl, parentId: parentId }),
+                    this.localisationService.getText("location-missing_root_item", {
+                        tpl: chosenTpl,
+                        parentId: parentId,
+                    }),
                 );
 
                 throw new Error(this.localisationService.getText("location-critical_error_see_log"));
@@ -1033,7 +1028,7 @@ export class LocationGenerator
             // it can handle revolver ammo (it's not restructured to be used here yet.)
             // General: Make a WeaponController for Ragfair preset stuff and the generating weapons and ammo stuff from
             // BotGenerator
-            const magazine = items.filter((x) => x.slotId === "mod_magazine")[0];
+            const magazine = items.filter((item) => item.slotId === "mod_magazine")[0];
             // some weapon presets come without magazine; only fill the mag if it exists
             if (magazine)
             {
@@ -1047,6 +1042,8 @@ export class LocationGenerator
                     magTemplate,
                     staticAmmoDist,
                     weaponTemplate._props.ammoCaliber,
+                    0.25,
+                    this.itemHelper.getItem(rootItem._tpl)[1],
                 );
 
                 // Replace existing magazine with above array
@@ -1060,7 +1057,7 @@ export class LocationGenerator
         // No spawnpoint to fall back on, generate manually
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.AMMO_BOX))
         {
-            this.itemHelper.addCartridgesToAmmoBox(items, itemTemplate);
+            this.itemHelper.addSingleStackCartridgesToAmmoBox(items, itemTemplate);
         }
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.MAGAZINE))
         {
@@ -1082,17 +1079,28 @@ export class LocationGenerator
         }
         else if (this.itemHelper.armorItemCanHoldMods(chosenTpl))
         {
-            // We make base item above, at start of function, no need to do it here
-            if (itemTemplate._props.Slots?.length > 0)
+            const defaultPreset = this.presetHelper.getDefaultPreset(chosenTpl);
+            if (defaultPreset)
             {
-                items = this.itemHelper.addChildSlotItems(items, itemTemplate, this.locationConfig.equipmentLootSettings.modSpawnChancePercent);
+                const presetAndMods: Item[] = this.itemHelper.replaceIDs(defaultPreset._items);
+                this.itemHelper.remapRootItemId(presetAndMods);
+
+                items = presetAndMods;
+            }
+            else
+            {
+                // We make base item above, at start of function, no need to do it here
+                if (itemTemplate._props.Slots?.length > 0)
+                {
+                    items = this.itemHelper.addChildSlotItems(
+                        items,
+                        itemTemplate,
+                        this.locationConfig.equipmentLootSettings.modSpawnChancePercent,
+                    );
+                }
             }
         }
 
-        return {
-            items: items,
-            width: width,
-            height: height
-        };
+        return { items: items, width: width, height: height };
     }
 }

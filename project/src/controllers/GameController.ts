@@ -18,10 +18,11 @@ import { IGetRaidTimeRequest } from "@spt-aki/models/eft/game/IGetRaidTimeReques
 import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeResponse";
 import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { Traders } from "@spt-aki/models/enums/Traders";
+import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
 import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
 import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
@@ -54,6 +55,7 @@ export class GameController
     protected ragfairConfig: IRagfairConfig;
     protected pmcConfig: IPmcConfig;
     protected lootConfig: ILootConfig;
+    protected botConfig: IBotConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -84,6 +86,7 @@ export class GameController
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
         this.lootConfig = this.configServer.getConfig(ConfigTypes.LOOT);
+        this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
     }
 
     public load(): void
@@ -100,7 +103,7 @@ export class GameController
      */
     public gameStart(_url: string, _info: IEmptyRequestData, sessionID: string, startTimeStampMS: number): void
     {
-        // Store start time in app context
+        // Store client start time in app context
         this.applicationContext.addValue(ContextVariableType.CLIENT_START_TIMESTAMP, startTimeStampMS);
 
         if (this.coreConfig.fixes.fixShotgunDispersion)
@@ -127,6 +130,8 @@ export class GameController
 
         this.checkTraderRepairValuesExist();
 
+        this.adjustLocationBotValues();
+
         // repeatableQuests are stored by in profile.Quests due to the responses of the client (e.g. Quests in
         // offraidData). Since we don't want to clutter the Quests list, we need to remove all completed (failed or
         // successful) repeatable quests. We also have to remove the Counters from the repeatableQuests
@@ -145,17 +150,12 @@ export class GameController
 
             if (this.coreConfig.fixes.fixProfileBreakingInventoryItemIssues)
             {
-                this.profileFixerService.fixProfileBreakingInventoryItemIssues(pmcProfile)
+                this.profileFixerService.fixProfileBreakingInventoryItemIssues(pmcProfile);
             }
 
             if (pmcProfile.Health)
             {
                 this.updateProfileHealthValues(pmcProfile);
-            }
-
-            if (fullProfile.info.edition.toLowerCase().startsWith(AccountTypes.SPT_DEVELOPER))
-            {
-                this.setHideoutAreasAndCraftsTo40Secs();
             }
 
             if (this.locationConfig.fixEmptyBotWavesSettings.enabled)
@@ -216,16 +216,6 @@ export class GameController
             {
                 this.addPlayerToPMCNames(pmcProfile);
 
-                if (this.randomUtil.getChance100(this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance))
-                {
-                    this.pmcConfig.addPrefixToSameNamePMCAsPlayerChance = 100;
-                    if (pmcProfile?.Info?.Nickname)
-                    {
-                        this.databaseServer.getTables().bots.types.bear.firstName = [pmcProfile.Info.Nickname];
-                        this.databaseServer.getTables().bots.types.usec.firstName = [pmcProfile.Info.Nickname];
-                    }
-                }
-
                 this.checkForAndRemoveUndefinedDialogs(fullProfile);
             }
 
@@ -244,6 +234,25 @@ export class GameController
             {
                 this.flagAllItemsInDbAsSellableOnFlea();
             }
+        }
+    }
+
+    protected adjustLocationBotValues(): void
+    {
+        const mapsDb = this.databaseServer.getTables().locations;
+
+        for (const locationKey in this.botConfig.maxBotCap)
+        {
+            const map: ILocationData = mapsDb[locationKey];
+            if (!map)
+            {
+                continue;
+            }
+
+            map.base.BotMax = this.botConfig.maxBotCap[locationKey];
+
+            // make values no larger than 30 secs
+            map.base.BotStart = Math.min(map.base.BotStart, 30);
         }
     }
 
@@ -341,40 +350,6 @@ export class GameController
         }
     }
 
-    protected setHideoutAreasAndCraftsTo40Secs(): void
-    {
-        for (const hideoutProd of this.databaseServer.getTables().hideout.production)
-        {
-            if (hideoutProd.productionTime > 40)
-            {
-                hideoutProd.productionTime = 40;
-            }
-        }
-        this.logger.warning("DEVELOPER: SETTING ALL HIDEOUT PRODUCTIONS TO 40 SECONDS");
-
-        for (const hideoutArea of this.databaseServer.getTables().hideout.areas)
-        {
-            for (const stageKey in hideoutArea.stages)
-            {
-                const stage = hideoutArea.stages[stageKey];
-                if (stage.constructionTime > 40)
-                {
-                    stage.constructionTime = 40;
-                }
-            }
-        }
-        this.logger.warning("DEVELOPER: SETTING ALL HIDEOUT AREAS TO 40 SECOND UPGRADES");
-
-        for (const scavCaseCraft of this.databaseServer.getTables().hideout.scavcase)
-        {
-            if (scavCaseCraft.ProductionTime > 40)
-            {
-                scavCaseCraft.ProductionTime = 40;
-            }
-        }
-        this.logger.warning("DEVELOPER: SETTING ALL SCAV CASES TO 40 SECONDS");
-    }
-
     /** Apply custom limits on bot types as defined in configs/location.json/botTypeLimits */
     protected adjustMapBotLimits(): void
     {
@@ -424,7 +399,10 @@ export class GameController
     public getGameConfig(sessionID: string): IGameConfigResponse
     {
         const profile = this.profileHelper.getPmcProfile(sessionID);
-        const gameTime = profile.Stats?.Eft.OverallCounters.Items?.find(counter => counter.Key.includes("LifeTime") && counter.Key.includes("Pmc"))?.Value ?? 0;
+        const gameTime =
+            profile.Stats?.Eft.OverallCounters.Items?.find((counter) =>
+                counter.Key.includes("LifeTime") && counter.Key.includes("Pmc")
+            )?.Value ?? 0;
 
         const config: IGameConfigResponse = {
             languages: this.databaseServer.getTables().locales.languages,
@@ -537,8 +515,7 @@ export class GameController
 
     /**
      * When player logs in, iterate over all active effects and reduce timer
-     * // TODO: Add body part HP regeneration
-     * @param pmcProfile
+     * @param pmcProfile Profile to adjust values for
      */
     protected updateProfileHealthValues(pmcProfile: IPmcData): void
     {
@@ -546,7 +523,7 @@ export class GameController
         const currentTimeStamp = this.timeUtil.getTimestamp();
         const diffSeconds = currentTimeStamp - healthLastUpdated;
 
-        // last update is in past
+        // Last update is in past
         if (healthLastUpdated < currentTimeStamp)
         {
             // Base values
@@ -555,19 +532,17 @@ export class GameController
             let hpRegenPerHour = 456.6;
 
             // Set new values, whatever is smallest
-            energyRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "EnergyRegeneration").reduce(
-                (sum, curr) => sum + curr.value,
-                0,
-            );
-            hydrationRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "HydrationRegeneration").reduce(
-                (sum, curr) => sum + curr.value,
-                0,
-            );
-            hpRegenPerHour += pmcProfile.Bonuses.filter((x) => x.type === "HealthRegeneration").reduce(
+            energyRegenPerHour += pmcProfile.Bonuses.filter((bonus) => bonus.type === BonusType.ENERGY_REGENERATION)
+                .reduce((sum, curr) => sum + curr.value, 0);
+            hydrationRegenPerHour += pmcProfile.Bonuses.filter((bonus) =>
+                bonus.type === BonusType.HYDRATION_REGENERATION
+            ).reduce((sum, curr) => sum + curr.value, 0);
+            hpRegenPerHour += pmcProfile.Bonuses.filter((bonus) => bonus.type === BonusType.HEALTH_REGENERATION).reduce(
                 (sum, curr) => sum + curr.value,
                 0,
             );
 
+            // Player has energy deficit
             if (pmcProfile.Health.Energy.Current !== pmcProfile.Health.Energy.Maximum)
             {
                 // Set new value, whatever is smallest
@@ -578,6 +553,7 @@ export class GameController
                 }
             }
 
+            // Player has hydration deficit
             if (pmcProfile.Health.Hydration.Current !== pmcProfile.Health.Hydration.Maximum)
             {
                 pmcProfile.Health.Hydration.Current += Math.round(hydrationRegenPerHour * (diffSeconds / 3600));
@@ -608,9 +584,15 @@ export class GameController
                     // Decrement effect time value by difference between current time and time health was last updated
                     for (const effectKey in bodyPart.Effects)
                     {
-                        // Skip effects below 1, .e.g. bleeds at -1
+                        // remove effects below 1, .e.g. bleeds at -1
                         if (bodyPart.Effects[effectKey].Time < 1)
                         {
+                            // More than 30 mins has passed
+                            if (diffSeconds > 1800)
+                            {
+                                delete bodyPart.Effects[effectKey];
+                            }
+
                             continue;
                         }
 
@@ -743,17 +725,17 @@ export class GameController
                     for (let index = indexOfWaveToSplit + 1; index < indexOfWaveToSplit + waveSize; index++)
                     {
                         // Clone wave ready to insert into array
-                        const waveToAdd = this.jsonUtil.clone(wave);
+                        const waveToAddClone = this.jsonUtil.clone(wave);
 
                         // Some waves have value of 0 for some reason, preserve
-                        if (waveToAdd.number !== 0)
+                        if (waveToAddClone.number !== 0)
                         {
                             // Update wave number to new location in array
-                            waveToAdd.number = index;
+                            waveToAddClone.number = index;
                         }
 
                         // Place wave into array in just-edited position + 1
-                        location.base.waves.splice(index, 0, waveToAdd);
+                        location.base.waves.splice(index, 0, waveToAddClone);
                         wavesAddedCount++;
                     }
 
@@ -807,6 +789,7 @@ export class GameController
                 dateAdded: Date.now(),
                 name: modDetails.name,
                 version: modDetails.version,
+                url: modDetails.url,
             });
         }
     }
@@ -846,7 +829,7 @@ export class GameController
                         traderName: Object.keys(Traders)[Object.values(Traders).indexOf(traderId)],
                         questName: quests[questKey]?.QuestName ?? "UNKNOWN",
                     };
-                    this.logger.debug(
+                    this.logger.warning(
                         this.localisationService.getText("assort-missing_quest_assort_unlock", messageValues),
                     );
                 }
@@ -924,7 +907,7 @@ export class GameController
     protected logProfileDetails(fullProfile: IAkiProfile): void
     {
         this.logger.debug(`Profile made with: ${fullProfile.aki.version}`);
-        this.logger.debug(`Server version: ${this.coreConfig.akiVersion}`);
+        this.logger.debug(`Server version: ${this.coreConfig.akiVersion} ${this.coreConfig.commit}`);
         this.logger.debug(`Debug enabled: ${globalThis.G_DEBUG_CONFIGURATION}`);
         this.logger.debug(`Mods enabled: ${globalThis.G_MODS_ENABLED}`);
     }

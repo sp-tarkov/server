@@ -53,7 +53,7 @@ export class InraidStaticRouter extends StaticRouter
                 (url: string, info: any, sessionID: string, output: string): any =>
                 {
                     return this.inraidCallbacks.itemDelivery(url, info, sessionID);
-                }
+                },
             ),
         ]);
     }

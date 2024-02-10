@@ -10,8 +10,7 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
-import { IAddItemRequestData } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
+import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IInventoryBindRequestData } from "@spt-aki/models/eft/inventory/IInventoryBindRequestData";
 import { IInventoryCreateMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryCreateMarkerRequestData";
 import { IInventoryDeleteMarkerRequestData } from "@spt-aki/models/eft/inventory/IInventoryDeleteMarkerRequestData";
@@ -122,8 +121,7 @@ export class InventoryController
             }
 
             // Item is moving into or out of place of fame dogtag slot
-            if (moveRequest.to.container.startsWith("dogtag")
-                || originalLocationSlotId.startsWith("dogtag"))
+            if (moveRequest.to.container.startsWith("dogtag") || originalLocationSlotId.startsWith("dogtag"))
             {
                 this.hideoutHelper.applyPlaceOfFameDogtagBonus(pmcData);
             }
@@ -178,25 +176,16 @@ export class InventoryController
 
         if (body.fromOwner?.type === "Mail")
         {
-            this.inventoryHelper.removeItemAndChildrenFromMailRewards(
-                sessionID,
-                body,
-                output,
-            );
+            this.inventoryHelper.removeItemAndChildrenFromMailRewards(sessionID, body, output);
 
-            return;
+            return output;
         }
 
         const profileToRemoveItemFrom = (!body.fromOwner || body.fromOwner.id === pmcData._id)
             ? pmcData
             : this.profileHelper.getFullProfile(sessionID).characters.scav;
 
-        return this.inventoryHelper.removeItem(
-            profileToRemoveItemFrom,
-            body.item,
-            sessionID,
-            output,
-        );
+        return this.inventoryHelper.removeItem(profileToRemoveItemFrom, body.item, sessionID, output);
     }
 
     /**
@@ -479,13 +468,15 @@ export class InventoryController
      */
     public foldItem(pmcData: IPmcData, body: IInventoryFoldRequestData, sessionID: string): IItemEventRouterResponse
     {
+        let playerData = pmcData;
+
         // Fix for folding weapons while on they're in the Scav inventory
-        if (body.fromOwner && body.fromOwner.type === "Profile" && body.fromOwner.id !== pmcData._id)
+        if (body.fromOwner && body.fromOwner.type === "Profile" && body.fromOwner.id !== playerData._id)
         {
-            pmcData = this.profileHelper.getScavProfile(sessionID);
+            playerData = this.profileHelper.getScavProfile(sessionID);
         }
 
-        for (const item of pmcData.Inventory.items)
+        for (const item of playerData.Inventory.items)
         {
             if (item._id && item._id === body.item)
             {
@@ -506,13 +497,15 @@ export class InventoryController
      */
     public toggleItem(pmcData: IPmcData, body: IInventoryToggleRequestData, sessionID: string): IItemEventRouterResponse
     {
+        let playerData = pmcData;
+
         // Fix for toggling items while on they're in the Scav inventory
-        if (body.fromOwner && body.fromOwner.type === "Profile" && body.fromOwner.id !== pmcData._id)
+        if (body.fromOwner && body.fromOwner.type === "Profile" && body.fromOwner.id !== playerData._id)
         {
-            pmcData = this.profileHelper.getScavProfile(sessionID);
+            playerData = this.profileHelper.getScavProfile(sessionID);
         }
 
-        const itemToToggle = pmcData.Inventory.items.find((x) => x._id === body.item);
+        const itemToToggle = playerData.Inventory.items.find((x) => x._id === body.item);
         if (itemToToggle)
         {
             if (!itemToToggle.upd)
@@ -527,12 +520,8 @@ export class InventoryController
 
             return this.eventOutputHolder.getOutput(sessionID);
         }
-        else
-        {
-            this.logger.warning(
-                this.localisationService.getText("inventory-unable_to_toggle_item_not_found", body.item),
-            );
-        }
+
+        this.logger.warning(this.localisationService.getText("inventory-unable_to_toggle_item_not_found", body.item));
 
         return { warnings: [], profileChanges: {} };
     }
@@ -688,7 +677,7 @@ export class InventoryController
             const item = this.databaseServer.getTables().templates.items[itemTpl];
             if (!item)
             {
-                this.logger.warning(`Unable to find item with id ${itemTpl}, skipping inspection`)
+                this.logger.warning(`Unable to find item with id ${itemTpl}, skipping inspection`);
                 return;
             }
 
@@ -702,52 +691,56 @@ export class InventoryController
 
     /**
      * Get the tplid of an item from the examine request object
-     * @param body response request
-     * @returns tplid
+     * @param request Response request
+     * @returns tplId
      */
-    protected getExaminedItemTpl(body: IInventoryExamineRequestData): string
+    protected getExaminedItemTpl(request: IInventoryExamineRequestData): string
     {
-        if (this.presetHelper.isPreset(body.item))
+        if (this.presetHelper.isPreset(request.item))
         {
-            return this.presetHelper.getBaseItemTpl(body.item);
+            return this.presetHelper.getBaseItemTpl(request.item);
         }
-        else if (body.fromOwner.id === Traders.FENCE)
+
+        if (request.fromOwner.id === Traders.FENCE)
         {
-            // get tpl from fence assorts
-            return this.fenceService.getRawFenceAssorts().items.find((x) => x._id === body.item)._tpl;
+            // Get tpl from fence assorts
+            return this.fenceService.getRawFenceAssorts().items.find((x) => x._id === request.item)._tpl;
         }
-        else if (body.fromOwner.type === "Trader")
-        { // not fence
+
+        if (request.fromOwner.type === "Trader")
+        {
+            // Not fence
             // get tpl from trader assort
-            return this.databaseServer.getTables().traders[body.fromOwner.id].assort.items.find((item) =>
-                item._id === body.item
+            return this.databaseServer.getTables().traders[request.fromOwner.id].assort.items.find((item) =>
+                item._id === request.item
             )._tpl;
         }
-        else if (body.fromOwner.type === "RagFair")
+
+        if (request.fromOwner.type === "RagFair")
         {
-            // try to get tplid from items.json first
-            const item = this.databaseServer.getTables().templates.items[body.item];
-            if (item)
+            // Try to get tplid from items.json first
+            const item = this.itemHelper.getItem(request.item);
+            if (item[0])
             {
-                return item._id;
+                return item[1]._id;
             }
 
-            // try alternate way of getting offer if first approach fails
-            let offer = this.ragfairOfferService.getOfferByOfferId(body.item);
+            // Try alternate way of getting offer if first approach fails
+            let offer = this.ragfairOfferService.getOfferByOfferId(request.item);
             if (!offer)
             {
-                offer = this.ragfairOfferService.getOfferByOfferId(body.fromOwner.id);
+                offer = this.ragfairOfferService.getOfferByOfferId(request.fromOwner.id);
             }
 
-            // try find examine item inside offer items array
-            const matchingItem = offer.items.find((x) => x._id === body.item);
+            // Try find examine item inside offer items array
+            const matchingItem = offer.items.find((offerItem) => offerItem._id === request.item);
             if (matchingItem)
             {
                 return matchingItem._tpl;
             }
 
-            // unable to find item in database or ragfair
-            throw new Error(this.localisationService.getText("inventory-unable_to_find_item", body.item));
+            // Unable to find item in database or ragfair
+            throw new Error(this.localisationService.getText("inventory-unable_to_find_item", request.item));
         }
     }
 
@@ -918,7 +911,7 @@ export class InventoryController
         const output = this.eventOutputHolder.getOutput(sessionID);
 
         /** Container player opened in their inventory */
-        const openedItem = pmcData.Inventory.items.find((x) => x._id === body.item);
+        const openedItem = pmcData.Inventory.items.find((item) => item._id === body.item);
         const containerDetailsDb = this.itemHelper.getItem(openedItem._tpl);
         const isSealedWeaponBox = containerDetailsDb[1]._name.includes("event_container_airdrop");
 
@@ -931,7 +924,7 @@ export class InventoryController
 
             if (containerSettings.foundInRaid)
             {
-                foundInRaid = containerSettings.foundInRaid
+                foundInRaid = containerSettings.foundInRaid;
             }
         }
         else
@@ -945,25 +938,29 @@ export class InventoryController
             }
         }
 
-        // Find and delete opened item from player inventory
-        this.inventoryHelper.removeItem(pmcData, body.item, sessionID, output);
-
-        // Add reward items to player inventory
-        for (const itemWithChildrenToAdd of rewards)
+        const addItemsRequest: IAddItemsDirectRequest = {
+            itemsWithModsToAdd: rewards,
+            foundInRaid: foundInRaid,
+            callback: null,
+            useSortingTable: true,
+        };
+        this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);
+        if (output.warnings.length > 0)
         {
-            const request: IAddItemDirectRequest = {
-                itemWithModsToAdd: itemWithChildrenToAdd,
-                foundInRaid: foundInRaid,
-                callback: null,
-                useSortingTable: true
-            };
-            this.inventoryHelper.addItemToStash(sessionID, request, pmcData, output);
+            return output;
         }
+
+        // Find and delete opened container item from player inventory
+        this.inventoryHelper.removeItem(pmcData, body.item, sessionID, output);
 
         return output;
     }
 
-    public redeemProfileReward(pmcData: IPmcData, request: IRedeemProfileRequestData, sessionId: string): IItemEventRouterResponse
+    public redeemProfileReward(
+        pmcData: IPmcData,
+        request: IRedeemProfileRequestData,
+        sessionId: string,
+    ): IItemEventRouterResponse
     {
         const output = this.eventOutputHolder.getOutput(sessionId);
 
@@ -973,8 +970,8 @@ export class InventoryController
             // Hard coded to `SYSTEM` for now
             // TODO: make this dynamic
             const dialog = fullprofile.dialogues["59e7125688a45068a6249071"];
-            const mail = dialog.messages.find(x => x._id === event.MessageId);
-            const mailEvent = mail.profileChangeEvents.find(x => x._id === event.EventId);
+            const mail = dialog.messages.find((x) => x._id === event.MessageId);
+            const mailEvent = mail.profileChangeEvents.find((x) => x._id === event.EventId);
 
             switch (mailEvent.Type)
             {
@@ -993,15 +990,15 @@ export class InventoryController
                     break;
                 case "SkillPoints":
                 {
-                    const profileSkill = pmcData.Skills.Common.find(x => x.Id === mailEvent.entity);
+                    const profileSkill = pmcData.Skills.Common.find((x) => x.Id === mailEvent.entity);
                     profileSkill.Progress = mailEvent.value;
                     this.logger.success(`Set profile skill: ${mailEvent.entity} to: ${mailEvent.value}`);
                     break;
                 }
                 case "ExamineAllItems":
                 {
-                    const itemsToInspect = this.itemHelper.getItems().filter(x => x._type !== "Node");
-                    this.flagItemsAsInspectedAndRewardXp(itemsToInspect.map(x => x._id), pmcData);
+                    const itemsToInspect = this.itemHelper.getItems().filter((x) => x._type !== "Node");
+                    this.flagItemsAsInspectedAndRewardXp(itemsToInspect.map((x) => x._id), pmcData);
                     this.logger.success(`Flagged ${itemsToInspect.length} items as examined`);
                     break;
                 }
@@ -1030,7 +1027,7 @@ export class InventoryController
         for (const itemId of request.items)
         {
             // If id already exists in array, we're removing it
-            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex(x => x === itemId);
+            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex((x) => x === itemId);
             if (indexOfItemAlreadyFavorited > -1)
             {
                 pmcData.Inventory.favoriteItems.splice(indexOfItemAlreadyFavorited, 1);
@@ -1040,7 +1037,7 @@ export class InventoryController
                 pmcData.Inventory.favoriteItems.push(itemId);
             }
         }
-        
+
         return output;
     }
 }

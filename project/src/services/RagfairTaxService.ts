@@ -5,6 +5,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IStorePlayerOfferTaxAmountRequestData } from "@spt-aki/models/eft/ragfair/IStorePlayerOfferTaxAmountRequestData";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
@@ -37,8 +38,16 @@ export class RagfairTaxService
         return this.playerOfferTaxCache[offerIdToGet];
     }
 
+    /**
     // This method, along with calculateItemWorth, is trying to mirror the client-side code found in the method "CalculateTaxPrice".
     // It's structured to resemble the client-side code as closely as possible - avoid making any big structure changes if it's not necessary.
+     * @param item Item being sold on flea
+     * @param pmcData player profile
+     * @param requirementsValue
+     * @param offerItemCount Number of offers being created
+     * @param sellInOnePiece
+     * @returns Tax in roubles
+     */
     public calculateTax(
         item: Item,
         pmcData: IPmcData,
@@ -80,7 +89,7 @@ export class RagfairTaxService
         itemPriceMult = 4 ** itemPriceMult;
         requirementPriceMult = 4 ** requirementPriceMult;
 
-        const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === "RagfairCommission");
+        const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === BonusType.RAGFAIR_COMMISSION);
         const taxDiscountPercent = hideoutFleaTaxDiscountBonus ? Math.abs(hideoutFleaTaxDiscountBonus.value) : 0;
 
         const tax = itemWorth * itemTaxMult * itemPriceMult

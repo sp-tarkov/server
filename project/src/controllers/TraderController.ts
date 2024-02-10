@@ -57,8 +57,8 @@ export class TraderController
             // Create dict of trader assorts on server start
             if (!this.traderAssortService.getPristineTraderAssort(traderId))
             {
-                const assorts = this.jsonUtil.clone(trader.assort);
-                this.traderAssortService.setPristineTraderAssort(traderId, assorts);
+                const assortsClone = this.jsonUtil.clone(trader.assort);
+                this.traderAssortService.setPristineTraderAssort(traderId, assortsClone);
             }
 
             this.traderPurchasePersisterService.removeStalePurchasesFromProfiles(traderId);

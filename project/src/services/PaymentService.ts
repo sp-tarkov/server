@@ -7,7 +7,7 @@ import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
+import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
@@ -210,6 +210,7 @@ export class PaymentService
                     item.upd.StackObjectsCount = item.upd.StackObjectsCount + calcAmount;
                 }
 
+                // Inform client of change to items StackObjectsCount
                 output.profileChanges[sessionID].items.change.push(item);
 
                 if (skipSendingMoneyToStash)
@@ -219,26 +220,28 @@ export class PaymentService
             }
         }
 
+        // Create single currency item with all currency on it
+        const rootCurrencyReward = {
+            _id: this.hashUtil.generate(),
+            _tpl: currency,
+            upd: { StackObjectsCount: Math.round(calcAmount) },
+        };
+
+        // Ensure money is properly split to follow its max stack size limit
+        const rewards = this.itemHelper.splitStackIntoSeparateItems(rootCurrencyReward);
+
         if (!skipSendingMoneyToStash)
         {
-            const addItemToStashRequest: IAddItemDirectRequest = {
-                itemWithModsToAdd: [
-                    {
-                        _id: this.hashUtil.generate(),
-                        _tpl: currency,
-                        upd: {
-                            StackObjectsCount: calcAmount
-                        }
-                    }
-                ],
+            const addItemToStashRequest: IAddItemsDirectRequest = {
+                itemsWithModsToAdd: rewards,
                 foundInRaid: false,
                 callback: null,
-                useSortingTable: true
+                useSortingTable: true,
             };
-            this.inventoryHelper.addItemToStash(sessionID, addItemToStashRequest, pmcData, output);
+            this.inventoryHelper.addItemsToStash(sessionID, addItemToStashRequest, pmcData, output);
         }
 
-        // set current sale sum
+        // Calcualte new total sale sum with trader item sold to
         const saleSum = pmcData.TradersInfo[request.tid].salesSum + amountToSend;
 
         pmcData.TradersInfo[request.tid].salesSum = saleSum;

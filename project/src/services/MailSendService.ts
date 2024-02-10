@@ -7,6 +7,7 @@ import { NotifierHelper } from "@spt-aki/helpers/NotifierHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { Dialogue, IUserDialogInfo, Message, MessageItems } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { ISendMessageDetails } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
@@ -434,7 +435,7 @@ export class MailSendService
             itemsToSendToPlayer = { stash: parentItem.parentId, data: [] };
 
             // Ensure Ids are unique and cont collide with items in player inventory later
-            messageDetails.items = this.itemHelper.replaceIDs(null, messageDetails.items);
+            messageDetails.items = this.itemHelper.replaceIDs(messageDetails.items);
 
             for (const reward of messageDetails.items)
             {
@@ -461,17 +462,24 @@ export class MailSendService
                     reward.slotId = "main";
                 }
 
-                // Item is sanitised and ready to be put into holding array
-                itemsToSendToPlayer.data.push(reward);
-
-                // Item can contain sub-items, add those to array e.g. ammo boxes
-                if (itemTemplate._props.StackSlots)
+                // Boxes can contain sub-items
+                if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.AMMO_BOX))
                 {
-                    const stackSlotItems = this.itemHelper.generateItemsFromStackSlot(itemTemplate, reward._id);
-                    for (const itemToAdd of stackSlotItems)
+                    const boxAndCartridges: Item[] = [reward];
+                    this.itemHelper.addCartridgesToAmmoBox(boxAndCartridges, itemTemplate);
+
+                    // Push box + cartridge children into array
+                    itemsToSendToPlayer.data.push(...boxAndCartridges);
+                }
+                else
+                {
+                    if ("StackSlots" in itemTemplate._props)
                     {
-                        itemsToSendToPlayer.data.push(itemToAdd);
+                        this.logger.error(`Reward: ${itemTemplate._id} not handled`);
                     }
+
+                    // Item is sanitised and ready to be pushed into holding array
+                    itemsToSendToPlayer.data.push(reward);
                 }
             }
 

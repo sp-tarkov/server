@@ -34,10 +34,8 @@ export class JsonUtil
         {
             return JSON.stringify(data, null, "\t");
         }
-        else
-        {
-            return JSON.stringify(data);
-        }
+
+        return JSON.stringify(data);
     }
 
     /**
@@ -85,10 +83,8 @@ export class JsonUtil
             {
                 return JSON5.stringify(data, null, "\t");
             }
-            else
-            {
-                return JSON5.stringify(data);
-            }
+
+            return JSON5.stringify(data);
         }
         catch (error)
         {

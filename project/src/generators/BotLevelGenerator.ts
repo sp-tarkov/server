@@ -43,7 +43,8 @@ export class BotLevelGenerator
             botGenerationDetails.playerLevel,
             botGenerationDetails.botRelativeLevelDeltaMin,
             levelDetails,
-            expTable);
+            expTable,
+        );
 
         // Get random level based on the exp table.
         let exp = 0;

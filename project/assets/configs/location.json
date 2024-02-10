@@ -302,7 +302,7 @@
             "laboratory": [{
                     "sptId": "sptBearLabsZoneFloor1NormalSpawn",
                     "BossName": "sptBear",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossZone": "BotZoneFloor1",
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
@@ -322,7 +322,7 @@
                     "ChanceGroup": 0
                 }, {
                     "sptId": "sptBearLabsZoneFloor2NormalSpawn",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossName": "sptBear",
                     "BossZone": "BotZoneFloor2",
                     "BossDifficult": "normal",
@@ -343,7 +343,7 @@
                     "ChanceGroup": 0
                 }, {
                     "sptId": "sptBearLabsZoneBasementNormalSpawn",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
                     "BossEscortDifficult": "normal",
@@ -364,7 +364,7 @@
                     "ChanceGroup": 0
                 }, {
                     "sptId": "sptUsecLabsZoneFloor1NormalSpawn",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -385,7 +385,7 @@
                     "ChanceGroup": 0
                 }, {
                     "sptId": "sptUsecLabsZoneFloor2NormalSpawn",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "1",
                     "BossEscortDifficult": "normal",
@@ -406,7 +406,7 @@
                     "ChanceGroup": 0
                 }, {
                     "sptId": "sptUsecLabsZoneBasementNormalSpawn",
-                    "BossChance": 15,
+                    "BossChance": 30,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
                     "BossEscortDifficult": "normal",
@@ -809,7 +809,8 @@
             "64f09c02b63b74469b6c149f",
             "64f07f7726cfa02c506f8ac0",
             "64f69b4267e11a7c6206e010",
-            "64f5b4f71a5f313cb144c06c"
+            "64f5b4f71a5f313cb144c06c",
+            "657acb2ac900be5902191ac9"
         ],
         "laboratory": [
             "6398a4cfb5992f573c6562b3",
@@ -833,7 +834,7 @@
         "enabled": true,
         "ignoreMaps": ["base", "develop", "hideout", "privatearea", "suburbs", "terminal", "town"]
     },
-    "fitLootIntoContainerAttempts": 2,
+    "fitLootIntoContainerAttempts": 3,
     "addOpenZonesToAllMaps": true,
     "addCustomBotWavesToMaps": true,
     "enableBotTypeLimits": true,
@@ -1102,12 +1103,15 @@
     "equipmentLootSettings": {
         "modSpawnChancePercent": {
             "mod_nvg": 5,
-            "front_plate": 50,
-            "back_plate": 50,
+            "front_plate": 100,
+            "back_plate": 100,
+			"left_side_plate": 25,
+			"right_side_plate": 25,
 			"mod_equipment_000": 5,
 			"mod_equipment_001": 5,
 			"mod_equipment_002": 5,
-			"mod_mount": 5
+			"mod_mount": 5,
+			"mod_equipment": 5
         }
     }
 }

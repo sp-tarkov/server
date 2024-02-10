@@ -16,8 +16,18 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 @injectable()
 export class RagfairAssortGenerator
 {
-    protected generatedAssortItems: Item[] = [];
+    protected generatedAssortItems: Item[][] = [];
     protected ragfairConfig: IRagfairConfig;
+
+    protected ragfairItemInvalidBaseTypes: string[] = [
+        BaseClasses.LOOT_CONTAINER, // Safe, barrel cache etc
+        BaseClasses.STASH, // Player inventory stash
+        BaseClasses.SORTING_TABLE,
+        BaseClasses.INVENTORY,
+        BaseClasses.STATIONARY_CONTAINER,
+        BaseClasses.POCKETS,
+        BaseClasses.BUILT_IN_INSERTS,
+    ];
 
     constructor(
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
@@ -33,10 +43,11 @@ export class RagfairAssortGenerator
     }
 
     /**
-     * Get an array of unique items that can be sold on the flea
-     * @returns array of unique items
+     * Get an array of arrays that can be sold on the flea
+     * Each sub array contains item + children (if any)
+     * @returns array of arrays
      */
-    public getAssortItems(): Item[]
+    public getAssortItems(): Item[][]
     {
         if (!this.assortsAreGenerated())
         {
@@ -56,40 +67,46 @@ export class RagfairAssortGenerator
     }
 
     /**
-     * Generate an array of items the flea can sell
-     * @returns array of unique items
+     * Generate an array of arrays (item + children) the flea can sell
+     * @returns array of arrays (item + children)
      */
-    protected generateRagfairAssortItems(): Item[]
+    protected generateRagfairAssortItems(): Item[][]
     {
-        const results: Item[] = [];
-        const items = this.itemHelper.getItems().filter(item => item._type !== "Node");
+        const results: Item[][] = [];
 
-        const presets = (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
-            ? Object.values(this.presetHelper.getDefaultPresets())
-            : this.presetHelper.getAllPresets()
+        /** Get cloned items from db */
+        const dbItemsClone = this.itemHelper.getItems().filter((item) => item._type !== "Node");
 
-        const ragfairItemInvalidBaseTypes: string[] = [
-            BaseClasses.LOOT_CONTAINER, // safe, barrel cache etc
-            BaseClasses.STASH, // player inventory stash
-            BaseClasses.SORTING_TABLE,
-            BaseClasses.INVENTORY,
-            BaseClasses.STATIONARY_CONTAINER,
-            BaseClasses.POCKETS,
-			BaseClasses.BUILT_IN_INSERTS,
-            BaseClasses.ARMOR, // Handled by presets
-            BaseClasses.VEST, // Handled by presets
-            BaseClasses.HEADWEAR, // Handled by presets
-        ];
-
+        /** Store processed preset tpls so we dont add them when procesing non-preset items */
+        const processedArmorItems: string[] = [];
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getInactiveSeasonalEventItems();
-        for (const item of items)
+
+        const presets = this.getPresetsToAdd();
+        for (const preset of presets)
         {
-            if (!this.itemHelper.isValidItem(item._id, ragfairItemInvalidBaseTypes))
+            // Update Ids and clone
+            const presetAndMods: Item[] = this.itemHelper.replaceIDs(preset._items);
+            this.itemHelper.remapRootItemId(presetAndMods);
+
+            // Add presets base item tpl to the processed list so its skipped later on when processing items
+            processedArmorItems.push(preset._items[0]._tpl);
+
+            presetAndMods[0].parentId = "hideout";
+            presetAndMods[0].slotId = "hideout";
+            presetAndMods[0].upd = { StackObjectsCount: 99999999, UnlimitedCount: true, sptPresetId: preset._id };
+
+            results.push(presetAndMods);
+        }
+
+        for (const item of dbItemsClone)
+        {
+            if (!this.itemHelper.isValidItem(item._id, this.ragfairItemInvalidBaseTypes))
             {
                 continue;
             }
 
+            // Skip seasonal items when not in-season
             if (
                 this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent && !seasonalEventActive
                 && seasonalItemTplBlacklist.includes(item._id)
@@ -98,24 +115,39 @@ export class RagfairAssortGenerator
                 continue;
             }
 
-            results.push(this.createRagfairAssortItem(item._id, item._id)); // tplid and id must be the same so hideout recipe reworks work
-        }
+            if (processedArmorItems.includes(item._id))
+            {
+                // Already processed
+                continue;
+            }
 
-        for (const weapon of presets)
-        {
-            results.push(this.createRagfairAssortItem(weapon._items[0]._tpl, weapon._id)); // Preset id must be passed through to ensure flea shows presets
+            const ragfairAssort = this.createRagfairAssortRootItem(item._id, item._id); // tplid and id must be the same so hideout recipe rewards work
+
+            results.push([ragfairAssort]);
         }
 
         return results;
     }
 
     /**
+     * Get presets from globals to add to flea
+     * ragfairConfig.dynamic.showDefaultPresetsOnly decides if its all presets or just defaults
+     * @returns IPreset array
+     */
+    protected getPresetsToAdd(): IPreset[]
+    {
+        return (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
+            ? Object.values(this.presetHelper.getDefaultPresets())
+            : this.presetHelper.getAllPresets();
+    }
+
+    /**
      * Create a base assort item and return it with populated values + 999999 stack count + unlimited count = true
      * @param tplId tplid to add to item
      * @param id id to add to item
-     * @returns hydrated Item object
+     * @returns Hydrated Item object
      */
-    protected createRagfairAssortItem(tplId: string, id = this.hashUtil.generate()): Item
+    protected createRagfairAssortRootItem(tplId: string, id = this.hashUtil.generate()): Item
     {
         return {
             _id: id,

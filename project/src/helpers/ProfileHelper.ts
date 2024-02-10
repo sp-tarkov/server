@@ -5,6 +5,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Common, CounterKeyValue, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
+import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -192,16 +193,16 @@ export class ProfileHelper
 
     public getExperience(level: number): number
     {
+        let playerLevel = level;
         const expTable = this.databaseServer.getTables().globals.config.exp.level.exp_table;
         let exp = 0;
 
-        if (level >= expTable.length)
+        if (playerLevel >= expTable.length)
         {
             // make sure to not go out of bounds
-            level = expTable.length - 1;
+            playerLevel = expTable.length - 1;
         }
 
-        // TODO: Replace with exp = expTable.slice(0, level).reduce((acc, curr) => acc + curr.exp, 0);
         for (let i = 0; i < level; i++)
         {
             exp += expTable[i].exp;
@@ -400,7 +401,9 @@ export class ProfileHelper
         useSkillProgressRateMultipler = false,
     ): void
     {
-        if (!pointsToAdd || pointsToAdd < 0)
+        let pointsToAddToSkill = pointsToAdd;
+
+        if (!pointsToAddToSkill || pointsToAddToSkill < 0)
         {
             this.logger.warning(
                 this.localisationService.getText("player-attempt_to_increment_skill_with_negative_value", skill),
@@ -411,8 +414,7 @@ export class ProfileHelper
         const profileSkills = pmcProfile?.Skills?.Common;
         if (!profileSkills)
         {
-            this.logger.warning(`Unable to add ${pointsToAdd} points to ${skill}, profile has no skills`);
-
+            this.logger.warning(`Unable to add ${pointsToAddToSkill} points to ${skill}, profile has no skills`);
             return;
         }
 
@@ -420,7 +422,6 @@ export class ProfileHelper
         if (!profileSkill)
         {
             this.logger.error(this.localisationService.getText("quest-no_skill_found", skill));
-
             return;
         }
 
@@ -428,10 +429,10 @@ export class ProfileHelper
         {
             const globals = this.databaseServer.getTables().globals;
             const skillProgressRate = globals.config.SkillsSettings.SkillProgressRate;
-            pointsToAdd = skillProgressRate * pointsToAdd;
+            pointsToAddToSkill *= skillProgressRate;
         }
 
-        profileSkill.Progress += pointsToAdd;
+        profileSkill.Progress += pointsToAddToSkill;
         profileSkill.Progress = Math.min(profileSkill.Progress, 5100); // Prevent skill from ever going above level 51 (5100)
         profileSkill.LastAccess = this.timeUtil.getTimestamp();
     }
@@ -446,5 +447,10 @@ export class ProfileHelper
         }
 
         return skillToReturn;
+    }
+
+    public isDeveloperAccount(sessionID: string): boolean
+    {
+        return this.getFullProfile(sessionID).info.edition.toLowerCase().startsWith(AccountTypes.SPT_DEVELOPER);
     }
 }

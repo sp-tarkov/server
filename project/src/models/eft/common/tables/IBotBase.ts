@@ -1,6 +1,8 @@
 import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { IPmcDataRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { BonusSkillType } from "@spt-aki/models/enums/BonusSkillType";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
@@ -27,7 +29,7 @@ export interface IBotBase
     UnlockedInfo: IUnlockedInfo;
     RagfairInfo: RagfairInfo;
     /** Achievement id and timestamp */
-    Achievements: Record<string, number>
+    Achievements: Record<string, number>;
     RepeatableQuests: IPmcDataRepeatableQuest[];
     Bonuses: Bonus[];
     Notes: Notes;
@@ -41,11 +43,11 @@ export interface IBotBase
 
 export interface ITaskConditionCounter
 {
-    id: string
-    type: string
-    value: number
+    id: string;
+    type: string;
+    value: number;
     /** Quest id */
-    sourceId: string
+    sourceId: string;
 }
 
 export interface IUnlockedInfo
@@ -163,7 +165,7 @@ export interface Inventory
     /** Key is hideout area enum numeric as string e.g. "24", value is area _id  */
     hideoutAreaStashes: Record<string, string>;
     fastPanel: Record<string, string>;
-    favoriteItems: string[]
+    favoriteItems: string[];
 }
 
 export interface IBaseJsonSkills
@@ -493,7 +495,7 @@ export interface RagfairInfo
 export interface Bonus
 {
     id?: string;
-    type: string;
+    type: BonusType;
     templateId?: string;
     passive?: boolean;
     production?: boolean;
@@ -501,7 +503,7 @@ export interface Bonus
     value?: number;
     icon?: string;
     filter?: string[];
-    skillType?: string;
+    skillType?: BonusSkillType;
 }
 
 export interface Note

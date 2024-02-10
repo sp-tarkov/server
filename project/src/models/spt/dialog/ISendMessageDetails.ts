@@ -33,8 +33,8 @@ export interface ISendMessageDetails
 
 export interface IProfileChangeEvent
 {
-    _id: string
-    Type: "TraderSalesSum" | "TraderStanding" | "ProfileLevel" | "SkillPoints" | "ExamineAllItems" | "UnlockTrader"
-    value: number
-    entity?: string
+    _id: string;
+    Type: "TraderSalesSum" | "TraderStanding" | "ProfileLevel" | "SkillPoints" | "ExamineAllItems" | "UnlockTrader";
+    value: number;
+    entity?: string;
 }

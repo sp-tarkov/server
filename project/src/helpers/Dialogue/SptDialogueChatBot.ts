@@ -22,7 +22,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("GiftService") protected giftService: GiftService,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
@@ -64,7 +64,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
                     "Hey! you got the right code!",
                     "A secret code, how exciting!",
                     "You found a gift code!",
-                ])
+                ]),
             );
 
             return;
@@ -75,7 +75,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"])
+                this.randomUtil.getArrayValue(["Looks like you already used that code", "You already have that!!"]),
             );
 
             return;
@@ -91,7 +91,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
                     "I love you too buddy :3!",
                     "uwu",
                     `love you too ${sender?.Info?.Nickname}`,
-                ])
+                ]),
             );
         }
 
@@ -100,7 +100,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"])
+                this.randomUtil.getArrayValue(["Its me!!", "spt? i've heard of that project"]),
             );
         }
 
@@ -120,7 +120,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
                     "Heyyyyy",
                     "Hey there",
                     `Hello ${sender?.Info?.Nickname}`,
-                ])
+                ]),
             );
         }
 
@@ -134,7 +134,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
                     "Cool guy, he made EFT!",
                     "Legend",
                     "Remember when he said webel-webel-webel-webel, classic nikita moment",
-                ])
+                ]),
             );
         }
 
@@ -143,7 +143,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 sptFriendUser,
-                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"])
+                this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"]),
             );
         }
 

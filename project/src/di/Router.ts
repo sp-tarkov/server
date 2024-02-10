@@ -31,10 +31,7 @@ export class Router
         {
             return this.getInternalHandledRoutes().filter((r) => r.dynamic).some((r) => url.includes(r.route));
         }
-        else
-        {
-            return this.getInternalHandledRoutes().filter((r) => !r.dynamic).some((r) => r.route === url);
-        }
+        return this.getInternalHandledRoutes().filter((r) => !r.dynamic).some((r) => r.route === url);
     }
 }
 

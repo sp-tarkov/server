@@ -14,6 +14,7 @@ import { RepairKitsInfo } from "@spt-aki/models/eft/repair/IRepairActionDataRequ
 import { RepairItem } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { BonusSettings, IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
@@ -123,7 +124,7 @@ export class RepairService
         const options: IProcessBuyTradeRequestData = {
             scheme_items: [{
                 id: "5449016a4bdc2d6f028b456f", // Rouble tpl
-                count: Math.round(repairCost)
+                count: Math.round(repairCost),
             }],
             tid: traderId,
             Action: "SptRepair",
@@ -210,14 +211,9 @@ export class RepairService
                 this.repairConfig.maxIntellectGainPerRepair.kit,
             );
         }
-        else
-        {
-            // Trader repair - Not as accurate as kit, needs data from live
-            return Math.min(
-                repairDetails.repairAmount / 10,
-                this.repairConfig.maxIntellectGainPerRepair.trader,
-            );
-        }
+
+        // Trader repair - Not as accurate as kit, needs data from live
+        return Math.min(repairDetails.repairAmount / 10, this.repairConfig.maxIntellectGainPerRepair.trader);
     }
 
     /**
@@ -342,7 +338,7 @@ export class RepairService
         if (isArmor)
         {
             const durabilityPointCostArmor = globalRepairSettings.durabilityPointCostArmor;
-            const repairArmorBonus = this.getBonusMultiplierValue("RepairArmorBonus", pmcData);
+            const repairArmorBonus = this.getBonusMultiplierValue(BonusType.REPAIR_ARMOR_BONUS, pmcData);
             const armorBonus = 1.0 - (repairArmorBonus - 1.0) - intellectPointReduction;
             const materialType = itemToRepairDetails._props.ArmorMaterial ?? "";
             const armorMaterial = globals.config.ArmorMaterials[materialType] as IArmorType;
@@ -353,25 +349,23 @@ export class RepairService
 
             return durabilityPointCostArmor * armorBonus * destructability * armorClassMultiplier;
         }
-        else
-        {
-            const repairWeaponBonus = this.getBonusMultiplierValue("RepairWeaponBonus", pmcData) - 1;
-            const repairPointMultiplier = 1.0 - repairWeaponBonus - intellectPointReduction;
-            const durabilityPointCostGuns = globals.config.RepairSettings.durabilityPointCostGuns;
 
-            return durabilityPointCostGuns * repairPointMultiplier;
-        }
+        const repairWeaponBonus = this.getBonusMultiplierValue(BonusType.REPAIR_WEAPON_BONUS, pmcData) - 1;
+        const repairPointMultiplier = 1.0 - repairWeaponBonus - intellectPointReduction;
+        const durabilityPointCostGuns = globals.config.RepairSettings.durabilityPointCostGuns;
+
+        return durabilityPointCostGuns * repairPointMultiplier;
     }
 
     /**
      * Get the bonus multiplier for a skill from a player profile
-     * @param skillBonusName Name of bonus to get multipler of
+     * @param skillBonus Bonus to get multipler of
      * @param pmcData Player profile to look in for skill
      * @returns Multiplier value
      */
-    protected getBonusMultiplierValue(skillBonusName: string, pmcData: IPmcData): number
+    protected getBonusMultiplierValue(skillBonus: BonusType, pmcData: IPmcData): number
     {
-        const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonusName);
+        const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonus);
         let value = 1;
         if (bonusesMatched != null)
         {
@@ -439,7 +433,13 @@ export class RepairService
 
         if (this.shouldBuffItem(repairDetails, pmcData))
         {
-            if (this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [BaseClasses.ARMOR, BaseClasses.VEST, BaseClasses.HEADWEAR]))
+            if (
+                this.itemHelper.isOfBaseclasses(repairDetails.repairedItem._tpl, [
+                    BaseClasses.ARMOR,
+                    BaseClasses.VEST,
+                    BaseClasses.HEADWEAR,
+                ])
+            )
             {
                 const armorConfig = this.repairConfig.repairKit.armor;
                 this.addBuff(armorConfig, repairDetails.repairedItem);
@@ -536,24 +536,34 @@ export class RepairService
      * @param itemTemplate Item to check for skill
      * @returns Skill name
      */
-    protected getItemSkillType(itemTemplate: ITemplateItem): SkillTypes
+    protected getItemSkillType(itemTemplate: ITemplateItem): SkillTypes | undefined
     {
-        if (this.itemHelper.isOfBaseclasses(itemTemplate._id, [BaseClasses.ARMOR, BaseClasses.VEST, BaseClasses.HEADWEAR]))
+        const isArmorRelated = this.itemHelper.isOfBaseclasses(itemTemplate._id, [
+            BaseClasses.ARMOR,
+            BaseClasses.VEST,
+            BaseClasses.HEADWEAR,
+        ]);
+
+        if (isArmorRelated)
         {
-            if (itemTemplate._props.ArmorType === "Light")
+            const armorType = itemTemplate._props.ArmorType;
+            if (armorType === "Light")
             {
                 return SkillTypes.LIGHT_VESTS;
             }
-            else if (itemTemplate._props.ArmorType === "Heavy")
+
+            if (armorType === "Heavy")
             {
                 return SkillTypes.HEAVY_VESTS;
             }
         }
-        else if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.WEAPON))
+
+        if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.WEAPON))
         {
             return SkillTypes.WEAPON_TREATMENT;
         }
-        else if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.KNIFE))
+
+        if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.KNIFE))
         {
             return SkillTypes.MELEE;
         }
@@ -563,24 +573,16 @@ export class RepairService
 
     /**
      * Ensure multiplier is between 1 and 0.01
-     * @param receiveDurabilityMaxPercent Max durabiltiy percent
+     * @param receiveDurabilityMaxPercent Max durability percent
      * @param receiveDurabilityPercent current durability percent
-     * @returns durability multipler value
+     * @returns durability multiplier value
      */
     protected getDurabilityMultiplier(receiveDurabilityMaxPercent: number, receiveDurabilityPercent: number): number
     {
-        receiveDurabilityMaxPercent = (receiveDurabilityMaxPercent > 0) ? receiveDurabilityMaxPercent : 0.01;
-        const num = receiveDurabilityPercent / receiveDurabilityMaxPercent;
-        if (num > 1)
-        {
-            return 1.0;
-        }
-        if (num < 0.01)
-        {
-            return 0.01;
-        }
-
-        return num;
+        // Ensure the max percent is at least 0.01
+        const validMaxPercent = Math.max(0.01, receiveDurabilityMaxPercent);
+        // Calculate the ratio and constrain it between 0.01 and 1
+        return Math.min(1, Math.max(0.01, receiveDurabilityPercent / validMaxPercent));
     }
 }
 

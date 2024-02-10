@@ -21718,7 +21718,88 @@
           "OcclusionIntensity": 1,
           "OverallVolume": 1
         }
+      ],
+      "EnvironmentSettings": {
+        "SnowStepsVolumeMultiplier": 0.35,
+        "SurfaceMultipliers": [
+          {
+            "SurfaceType": "Concrete",
+            "VolumeMult": 0
+          },
+          {
+            "SurfaceType": "Metal",
+            "VolumeMult": 0.4
+          },
+          {
+            "SurfaceType": "Wood",
+            "VolumeMult": 0.5
+          },
+          {
+            "SurfaceType": "Soil",
+            "VolumeMult": 1
+          },
+          {
+            "SurfaceType": "Grass",
+            "VolumeMult": 1
+          },
+          {
+            "SurfaceType": "Asphalt",
+            "VolumeMult": 0.8
+          },
+          {
+            "SurfaceType": "Glass",
+            "VolumeMult": 0.1
+          },
+          {
+            "SurfaceType": "Gravel",
+            "VolumeMult": 1
+          },
+          {
+            "SurfaceType": "MetalThin",
+            "VolumeMult": 0.4
+          },
+          {
+            "SurfaceType": "Puddle",
+            "VolumeMult": 0
+          },
+          {
+            "SurfaceType": "Slate",
+            "VolumeMult": 0.3
+          },
+          {
+            "SurfaceType": "Tile",
+            "VolumeMult": 0.1
+          },
+          {
+            "SurfaceType": "WoodThick",
+            "VolumeMult": 0.5
+          },
+          {
+            "SurfaceType": "Swamp",
+            "VolumeMult": 0
+          },
+          {
+            "SurfaceType": "Garbage",
+            "VolumeMult": 0.5
+          },
+          {
+            "SurfaceType": "GarbageMetal",
+            "VolumeMult": 0.4
+          },
+          {
+            "SurfaceType": "Plastic",
+            "VolumeMult": 0.3
+          },
+          {
+            "SurfaceType": "WholeGlass",
+            "VolumeMult": 0.1
+          },
+          {
+            "SurfaceType": "WoodThin",
+            "VolumeMult": 0.5
+          }
       ]
+      }
     },
     "AzimuthPanelShowsPlayerOrientation": false,
     "BTRSettings": {
@@ -21846,7 +21927,7 @@
           ]
         }
       },
-        "ModDeliveryCost": 0.05,
+      "ModDeliveryCost": 0.05,
       "ScavPriceMod": 0.8,
       "SnapToSurfaceWheelsSpeed": 0.2,
       "TaxiMinPrice": 4000,
@@ -22707,7 +22788,7 @@
       "WeatherChangeTime": 20
     },
     "EventType": [
-        "None"
+      "None"
     ],
     "FavoriteItemsSettings": {
       "PlaceOfFameMaxItemsCount": 7,
@@ -22915,7 +22996,7 @@
           "BotStopChance": 50,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 5,
+            "x": 5,
             "y": 2,
             "z": 0
           },
@@ -22942,7 +23023,7 @@
           "BotStopChance": 55,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 6,
+            "x": 6,
             "y": 2,
             "z": 0
           },
@@ -22969,8 +23050,8 @@
           "BotStopChance": 60,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 5,
-              "y": 3,
+            "x": 5,
+            "y": 3,
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.9,
@@ -22996,7 +23077,7 @@
           "BotStopChance": 70,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 6,
+            "x": 6,
             "y": 3,
             "z": 0
           },
@@ -23023,8 +23104,8 @@
           "BotStopChance": 80,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 5,
-              "y": 4,
+            "x": 5,
+            "y": 4,
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.5,
@@ -23050,7 +23131,7 @@
           "BotStopChance": 90,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 6,
+            "x": 6,
             "y": 4,
             "z": 0
           },
@@ -23077,7 +23158,7 @@
           "BotStopChance": 100,
           "CanInteractWithBtr": true,
           "DeliveryGridSize": {
-              "x": 7,
+            "x": 7,
             "y": 4,
             "z": 0
           },

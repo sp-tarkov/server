@@ -1,9 +1,18 @@
 {
-    "moveSpeed": 15,
+    "moveSpeed": 9,
     "coverFireTime": 90,
     "pointWaitTime": {
         "min": 60,
         "max": 90
     },
-    "taxiWaitTime": 15
+    "taxiWaitTime": 15,
+    "machineGunAimDelay": 0.4,
+    "machineGunBurstCount": {
+        "min": 3,
+        "max": 5
+    },
+    "machineGunRecoveryTime": {
+        "min": 1.2,
+        "max": 1.7
+    }
 }

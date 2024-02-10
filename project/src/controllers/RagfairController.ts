@@ -23,6 +23,7 @@ import { IGetMarketPriceRequestData } from "@spt-aki/models/eft/ragfair/IGetMark
 import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
 import { IGetRagfairOfferByIdRequest } from "@spt-aki/models/eft/ragfair/IGetRagfairOfferByIdRequest";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { IRemoveOfferRequestData } from "@spt-aki/models/eft/ragfair/IRemoveOfferRequestData";
 import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -96,16 +97,10 @@ export class RagfairController
         const pmcProfile = this.profileHelper.getPmcProfile(sessionID);
 
         result.offers = this.getOffersForSearchType(searchRequest, itemsToAdd, traderAssorts, pmcProfile);
-        
+
         if (searchRequest.updateOfferCount)
         {
             result.categories = this.getSpecificCategories(pmcProfile, searchRequest, result.offers);
-        }
-
-        // Client requested "required search"
-        if (searchRequest.neededSearchId)
-        {
-            this.addRequiredOffersToResult(searchRequest, traderAssorts, pmcProfile, result);
         }
 
         this.addIndexValueToOffers(result.offers);
@@ -157,7 +152,7 @@ export class RagfairController
     public getOfferById(sessionId: string, request: IGetRagfairOfferByIdRequest): IRagfairOffer
     {
         const offers = this.ragfairOfferService.getOffers();
-        const offerToReturn = offers.find(x => x.intId === request.id);
+        const offerToReturn = offers.find((x) => x.intId === request.id);
 
         return offerToReturn;
     }
@@ -183,6 +178,11 @@ export class RagfairController
             return this.ragfairOfferHelper.getOffersForBuild(searchRequest, itemsToAdd, traderAssorts, pmcProfile);
         }
 
+        if (searchRequest.neededSearchId?.length > 0)
+        {
+            return this.ragfairOfferHelper.getOffersThatRequireItem(searchRequest, pmcProfile);
+        }
+
         // Searching for general items
         return this.ragfairOfferHelper.getValidOffers(searchRequest, itemsToAdd, traderAssorts, pmcProfile);
     }
@@ -193,16 +193,21 @@ export class RagfairController
      * @param offers ragfair offers to get categories for
      * @returns record with templates + counts
      */
-    protected getSpecificCategories(pmcProfile: IPmcData, searchRequest: ISearchRequestData, offers: IRagfairOffer[]): Record<string, number>
+    protected getSpecificCategories(
+        pmcProfile: IPmcData,
+        searchRequest: ISearchRequestData,
+        offers: IRagfairOffer[],
+    ): Record<string, number>
     {
         // Linked/required search categories
-        const playerHasFleaUnlocked = pmcProfile.Info.Level >= this.databaseServer.getTables().globals.config.RagFair.minUserLevel;
+        const playerHasFleaUnlocked =
+            pmcProfile.Info.Level >= this.databaseServer.getTables().globals.config.RagFair.minUserLevel;
         let offerPool = [];
         if (this.isLinkedSearch(searchRequest) || this.isRequiredSearch(searchRequest))
         {
             offerPool = offers;
         }
-        else if ((searchRequest.linkedSearchId === "" && searchRequest.neededSearchId === ""))
+        else if ((!(this.isLinkedSearch(searchRequest) || this.isRequiredSearch(searchRequest))))
         {
             // Get all categories
             offerPool = this.ragfairOfferService.getOffers();
@@ -215,30 +220,6 @@ export class RagfairController
         }
 
         return this.ragfairServer.getAllActiveCategories(playerHasFleaUnlocked, searchRequest, offerPool);
-    }
-
-    /**
-     * Add Required offers to offers result
-     * @param searchRequest Client search request data
-     * @param assorts
-     * @param pmcProfile Player profile
-     * @param result Result object being sent back to client
-     */
-    protected addRequiredOffersToResult(
-        searchRequest: ISearchRequestData,
-        assorts: Record<string, ITraderAssort>,
-        pmcProfile: IPmcData,
-        result: IGetOffersResult,
-    ): void
-    {
-        const requiredOffers = this.ragfairRequiredItemsService.getRequiredItemsById(searchRequest.neededSearchId);
-        for (const requiredOffer of requiredOffers)
-        {
-            if (this.ragfairOfferHelper.isDisplayableOffer(searchRequest, null, assorts, requiredOffer, pmcProfile))
-            {
-                result.offers.push(requiredOffer);
-            }
-        }
     }
 
     /**
@@ -355,20 +336,18 @@ export class RagfairController
 
             return { avg: (min + max) / 2, min: min, max: max };
         }
+
         // No offers listed, get price from live ragfair price list prices.json
-        else
+        const templatesDb = this.databaseServer.getTables().templates;
+
+        let tplPrice = templatesDb.prices[getPriceRequest.templateId];
+        if (!tplPrice)
         {
-            const templatesDb = this.databaseServer.getTables().templates;
-
-            let tplPrice = templatesDb.prices[getPriceRequest.templateId];
-            if (!tplPrice)
-            {
-                // No flea price, get handbook price
-                tplPrice = this.handbookHelper.getTemplatePrice(getPriceRequest.templateId);
-            }
-
-            return { avg: tplPrice, min: tplPrice, max: tplPrice };
+            // No flea price, get handbook price
+            tplPrice = this.handbookHelper.getTemplatePrice(getPriceRequest.templateId);
         }
+
+        return { avg: tplPrice, min: tplPrice, max: tplPrice };
     }
 
     /**
@@ -393,15 +372,11 @@ export class RagfairController
         }
 
         // Get an array of items from player inventory to list on flea
-        const getItemsFromInventoryErrorMessage = "";
-        const itemsInInventoryToList = this.getItemsToListOnFleaFromInventory(
-            pmcData,
-            offerRequest.items,
-            getItemsFromInventoryErrorMessage,
-        );
-        if (!itemsInInventoryToList)
+        const { items: itemsInInventoryToList, errorMessage: itemsInInventoryError } = this
+            .getItemsToListOnFleaFromInventory(pmcData, offerRequest.items);
+        if (!itemsInInventoryToList || itemsInInventoryError)
         {
-            this.httpResponse.appendErrorToOutput(output, getItemsFromInventoryErrorMessage);
+            this.httpResponse.appendErrorToOutput(output, itemsInInventoryError);
         }
 
         // Checks are done, create the offer
@@ -415,8 +390,10 @@ export class RagfairController
             playerListedPriceInRub,
         );
         const rootItem = offer.items[0];
-        const qualityMultiplier = this.itemHelper.getItemQualityModifier(rootItem);
-        const averageOfferPrice = this.ragfairPriceService.getFleaPriceForItem(rootItem._tpl)
+
+        // Get average of items quality+children
+        const qualityMultiplier = this.itemHelper.getItemQualityModifierForOfferItems(offer.items);
+        const averageOfferPrice = this.ragfairPriceService.getFleaPriceForOfferItems(offer.items)
             * rootItem.upd.StackObjectsCount * qualityMultiplier;
         const itemStackCount = (offerRequest.sellInOnePiece) ? 1 : rootItem.upd.StackObjectsCount;
 
@@ -530,16 +507,14 @@ export class RagfairController
     {
         if (!offerRequest?.items || offerRequest.items.length === 0)
         {
-            errorMessage = this.localisationService.getText("ragfair-invalid_player_offer_request");
-            this.logger.error(errorMessage);
+            this.logger.error(this.localisationService.getText("ragfair-invalid_player_offer_request"));
 
             return false;
         }
 
         if (!offerRequest.requirements)
         {
-            errorMessage = this.localisationService.getText("ragfair-unable_to_place_offer_with_no_requirements");
-            this.logger.error(errorMessage);
+            this.logger.error(this.localisationService.getText("ragfair-unable_to_place_offer_with_no_requirements"));
 
             return false;
         }
@@ -577,16 +552,16 @@ export class RagfairController
      * Using item ids from flea offer request, find corresponding items from player inventory and return as array
      * @param pmcData Player profile
      * @param itemIdsFromFleaOfferRequest Ids from request
-     * @param errorMessage if item is not found, add error message to this parameter
      * @returns Array of items from player inventory
      */
     protected getItemsToListOnFleaFromInventory(
         pmcData: IPmcData,
         itemIdsFromFleaOfferRequest: string[],
-        errorMessage: string,
-    ): Item[]
+    ): { items: Item[] | null; errorMessage: string | null; }
     {
         const itemsToReturn = [];
+        let errorMessage: string | null = null;
+
         // Count how many items are being sold and multiply the requested amount accordingly
         for (const itemId of itemIdsFromFleaOfferRequest)
         {
@@ -598,7 +573,7 @@ export class RagfairController
                 });
                 this.logger.error(errorMessage);
 
-                return null;
+                return { items: null, errorMessage };
             }
 
             item = this.itemHelper.fixItemStackCount(item);
@@ -610,10 +585,10 @@ export class RagfairController
             errorMessage = this.localisationService.getText("ragfair-unable_to_find_requested_items_in_inventory");
             this.logger.error(errorMessage);
 
-            return null;
+            return { items: null, errorMessage };
         }
 
-        return itemsToReturn;
+        return { items: itemsToReturn, errorMessage };
     }
 
     public createPlayerOffer(
@@ -666,64 +641,77 @@ export class RagfairController
     /**
      * User requested removal of the offer, actually reduces the time to 71 seconds,
      * allowing for the possibility of extending the auction before it's end time
-     * @param offerId offer to 'remove'
-     * @param sessionID Players id
+     * @param removeRequest Remove offer request
+     * @param sessionId Players id
      * @returns IItemEventRouterResponse
      */
-    public removeOffer(offerId: string, sessionID: string): IItemEventRouterResponse
+    public removeOffer(removeRequest: IRemoveOfferRequestData, sessionId: string): IItemEventRouterResponse
     {
-        const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
-        const offers = pmcData.RagfairInfo.offers;
-        if (!offers)
+        const output = this.eventOutputHolder.getOutput(sessionId);
+
+        const pmcData = this.saveServer.getProfile(sessionId).characters.pmc;
+        const playerProfileOffers = pmcData.RagfairInfo.offers;
+        if (!playerProfileOffers)
         {
             this.logger.warning(
                 this.localisationService.getText("ragfair-unable_to_remove_offer_not_found_in_profile", {
-                    profileId: sessionID,
-                    offerId: offerId,
+                    profileId: sessionId,
+                    offerId: removeRequest.offerId,
                 }),
             );
 
             pmcData.RagfairInfo.offers = [];
         }
 
-        const index = offers.findIndex((offer) => offer._id === offerId);
-        if (index === -1)
+        const playerOfferIndex = playerProfileOffers.findIndex((offer) => offer._id === removeRequest.offerId);
+        if (playerOfferIndex === -1)
         {
             this.logger.error(
-                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: offerId }),
+                this.localisationService.getText("ragfair-offer_not_found_in_profile", {
+                    offerId: removeRequest.offerId,
+                }),
             );
             return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionID),
+                output,
                 this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
             );
         }
 
-        const differenceInSeconds = offers[index].endTime - this.timeUtil.getTimestamp();
+        const differenceInSeconds = playerProfileOffers[playerOfferIndex].endTime - this.timeUtil.getTimestamp();
         if (differenceInSeconds > this.ragfairConfig.sell.expireSeconds)
         {
-            // expireSeconds Default is 71 seconds
+            // `expireSeconds` Default is 71 seconds
             const newEndTime = this.ragfairConfig.sell.expireSeconds + this.timeUtil.getTimestamp();
-            offers[index].endTime = Math.round(newEndTime);
+            playerProfileOffers[playerOfferIndex].endTime = Math.round(newEndTime);
         }
 
-        return this.eventOutputHolder.getOutput(sessionID);
+        return output;
     }
 
-    public extendOffer(info: IExtendOfferRequestData, sessionID: string): IItemEventRouterResponse
+    /**
+     * Extend a ragfair offers listing time
+     * @param extendRequest Extend offer request
+     * @param sessionId Players id
+     * @returns IItemEventRouterResponse
+     */
+    public extendOffer(extendRequest: IExtendOfferRequestData, sessionId: string): IItemEventRouterResponse
     {
-        const output = this.eventOutputHolder.getOutput(sessionID);
-        const pmcData = this.saveServer.getProfile(sessionID).characters.pmc;
-        const offers = pmcData.RagfairInfo.offers;
-        const index = offers.findIndex((offer) => offer._id === info.offerId);
-        const secondsToAdd = info.renewalTime * TimeUtil.ONE_HOUR_AS_SECONDS;
+        const output = this.eventOutputHolder.getOutput(sessionId);
 
-        if (index === -1)
+        const pmcData = this.saveServer.getProfile(sessionId).characters.pmc;
+        const playerOffers = pmcData.RagfairInfo.offers;
+        const playerOfferIndex = playerOffers.findIndex((offer) => offer._id === extendRequest.offerId);
+        const secondsToAdd = extendRequest.renewalTime * TimeUtil.ONE_HOUR_AS_SECONDS;
+
+        if (playerOfferIndex === -1)
         {
             this.logger.warning(
-                this.localisationService.getText("ragfair-offer_not_found_in_profile", { offerId: info.offerId }),
+                this.localisationService.getText("ragfair-offer_not_found_in_profile", {
+                    offerId: extendRequest.offerId,
+                }),
             );
             return this.httpResponse.appendErrorToOutput(
-                this.eventOutputHolder.getOutput(sessionID),
+                output,
                 this.localisationService.getText("ragfair-offer_not_found_in_profile_short"),
             );
         }
@@ -731,19 +719,23 @@ export class RagfairController
         // MOD: Pay flea market fee
         if (this.ragfairConfig.sell.fees)
         {
-            const count = offers[index].sellInOnePiece
+            const count = playerOffers[playerOfferIndex].sellInOnePiece
                 ? 1
-                : offers[index].items.reduce((sum, item) => sum += item.upd.StackObjectsCount, 0);
+                : playerOffers[playerOfferIndex].items.reduce((sum, item) =>
+                {
+                    return sum + item.upd.StackObjectsCount;
+                }, 0);
+
             const tax = this.ragfairTaxService.calculateTax(
-                offers[index].items[0],
-                this.profileHelper.getPmcProfile(sessionID),
-                offers[index].requirementsCost,
+                playerOffers[playerOfferIndex].items[0],
+                this.profileHelper.getPmcProfile(sessionId),
+                playerOffers[playerOfferIndex].requirementsCost,
                 count,
-                offers[index].sellInOnePiece,
+                playerOffers[playerOfferIndex].sellInOnePiece,
             );
 
             const request = this.createBuyTradeRequestObject("RUB", tax);
-            this.paymentService.payMoney(pmcData, request, sessionID, output);
+            this.paymentService.payMoney(pmcData, request, sessionId, output);
             if (output.warnings.length > 0)
             {
                 return this.httpResponse.appendErrorToOutput(
@@ -753,9 +745,10 @@ export class RagfairController
             }
         }
 
-        offers[index].endTime += Math.round(secondsToAdd);
+        // Add extra time to offer
+        playerOffers[playerOfferIndex].endTime += Math.round(secondsToAdd);
 
-        return this.eventOutputHolder.getOutput(sessionID);
+        return output;
     }
 
     /**

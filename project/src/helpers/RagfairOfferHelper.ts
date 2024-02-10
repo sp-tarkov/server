@@ -31,6 +31,7 @@ import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
+import { RagfairRequiredItemsService } from "@spt-aki/services/RagfairRequiredItemsService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -57,6 +58,7 @@ export class RagfairOfferHelper
         @inject("RagfairSortHelper") protected ragfairSortHelper: RagfairSortHelper,
         @inject("RagfairHelper") protected ragfairHelper: RagfairHelper,
         @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
+        @inject("RagfairRequiredItemsService") protected ragfairRequiredItemsService: RagfairRequiredItemsService,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("MailSendService") protected mailSendService: MailSendService,
@@ -72,19 +74,46 @@ export class RagfairOfferHelper
      * @param searchRequest Data from client
      * @param itemsToAdd ragfairHelper.filterCategories()
      * @param traderAssorts Trader assorts
-     * @param pmcProfile Player profile
+     * @param pmcData Player profile
      * @returns Offers the player should see
      */
     public getValidOffers(
         searchRequest: ISearchRequestData,
         itemsToAdd: string[],
         traderAssorts: Record<string, ITraderAssort>,
-        pmcProfile: IPmcData,
+        pmcData: IPmcData,
     ): IRagfairOffer[]
     {
-        return this.ragfairOfferService.getOffers().filter((x) =>
-            this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, x, pmcProfile)
-        );
+        return this.ragfairOfferService.getOffers().filter((offer) =>
+        {
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData))
+            {
+                return false;
+            }
+
+            return this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcData);
+        });
+    }
+
+    /**
+     * Get matching offers that require the desired item and filter out offers from non traders if player is below ragfair unlock level
+     * @param searchRequest Search request from client
+     * @param pmcDataPlayer profile
+     * @returns Matching IRagfairOffer objects
+     */
+    public getOffersThatRequireItem(searchRequest: ISearchRequestData, pmcData: IPmcData): IRagfairOffer[]
+    {
+        // Get all offers that requre the desired item and filter out offers from non traders if player below ragifar unlock
+        const requiredOffers = this.ragfairRequiredItemsService.getRequiredItemsById(searchRequest.neededSearchId);
+        return requiredOffers.filter((offer: IRagfairOffer) =>
+        {
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData))
+            {
+                return false;
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -92,21 +121,26 @@ export class RagfairOfferHelper
      * @param searchRequest Search request data
      * @param itemsToAdd string array of item tpls to search for
      * @param traderAssorts All trader assorts player can access/buy
-     * @param pmcProfile Player profile
+     * @param pmcData Player profile
      * @returns IRagfairOffer array
      */
     public getOffersForBuild(
         searchRequest: ISearchRequestData,
         itemsToAdd: string[],
         traderAssorts: Record<string, ITraderAssort>,
-        pmcProfile: IPmcData,
+        pmcData: IPmcData,
     ): IRagfairOffer[]
     {
         const offersMap = new Map<string, IRagfairOffer[]>();
         const offers: IRagfairOffer[] = [];
         for (const offer of this.ragfairOfferService.getOffers())
         {
-            if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcProfile))
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData))
+            {
+                continue;
+            }
+
+            if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcData))
             {
                 const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
 
@@ -125,7 +159,7 @@ export class RagfairOfferHelper
                     continue;
                 }
 
-                if (isTraderOffer && this.traderOfferLockedBehindLoyaltyLevel(offer, pmcProfile))
+                if (isTraderOffer && this.traderOfferLockedBehindLoyaltyLevel(offer, pmcData))
                 {
                     continue;
                 }
@@ -148,7 +182,7 @@ export class RagfairOfferHelper
             // multiple offers for item = is greyed out
             if (possibleOffers.length > 1)
             {
-                const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcProfile);
+                const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcData);
 
                 // Exclude locked offers + above loyalty locked offers if at least 1 was found
                 const availableOffers = possibleOffers.filter((x) => !(x.locked || lockedOffers.includes(x._id)));
@@ -293,7 +327,7 @@ export class RagfairOfferHelper
 
                 if (!offer.sellInOnePiece)
                 {
-                    totalItemsCount = offer.items.reduce((sum: number, item) => sum += item.upd.StackObjectsCount, 0);
+                    totalItemsCount = offer.items.reduce((sum: number, item) => sum + item.upd.StackObjectsCount, 0);
                     boughtAmount = offer.sellResult[0].amount;
                 }
 
@@ -512,45 +546,29 @@ export class RagfairOfferHelper
     }
 
     /**
-     * Should a ragfair offer be visible to the player
-     * @param searchRequest Search request
-     * @param itemsToAdd ?
-     * @param traderAssorts Trader assort items
-     * @param offer The flea offer
-     * @param pmcProfile Player profile
-     * @returns True = should be shown to player
+     * Check an offer passes the various search criteria the player requested
+     * @param searchRequest
+     * @param offer
+     * @param pmcData
+     * @returns True
      */
-    public isDisplayableOffer(
+    protected passesSearchFilterCriteria(
         searchRequest: ISearchRequestData,
-        itemsToAdd: string[],
-        traderAssorts: Record<string, ITraderAssort>,
         offer: IRagfairOffer,
-        pmcProfile: IPmcData,
+        pmcData: IPmcData,
     ): boolean
     {
-        const item = offer.items[0];
-        const money = offer.requirements[0]._tpl;
-        const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
         const isDefaultUserOffer = offer.user.memberType === MemberCategory.DEFAULT;
+        const offerRootItem = offer.items[0];
+        const moneyTypeTpl = offer.requirements[0]._tpl;
+        const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
 
         if (
-            pmcProfile.Info.Level < this.databaseServer.getTables().globals.config.RagFair.minUserLevel
+            pmcData.Info.Level < this.databaseServer.getTables().globals.config.RagFair.minUserLevel
             && isDefaultUserOffer
         )
         {
             // Skip item if player is < global unlock level (default is 15) and item is from a dynamically generated source
-            return false;
-        }
-
-        if (!!itemsToAdd && !itemsToAdd.includes(item._tpl))
-        {
-            // skip items we shouldn't include
-            return false;
-        }
-
-        // Performing a required search and offer doesn't have requirement for item
-        if (searchRequest.neededSearchId && !offer.requirements.some((x) => x._tpl === searchRequest.neededSearchId))
-        {
             return false;
         }
 
@@ -575,50 +593,54 @@ export class RagfairOfferHelper
             return false;
         }
 
-        if (searchRequest.quantityFrom > 0 && searchRequest.quantityFrom >= item.upd.StackObjectsCount)
+        if (searchRequest.quantityFrom > 0 && searchRequest.quantityFrom >= offerRootItem.upd.StackObjectsCount)
         {
             // too little items to offer
             return false;
         }
 
-        if (searchRequest.quantityTo > 0 && searchRequest.quantityTo <= item.upd.StackObjectsCount)
+        if (searchRequest.quantityTo > 0 && searchRequest.quantityTo <= offerRootItem.upd.StackObjectsCount)
         {
             // too many items to offer
             return false;
         }
 
-        if (searchRequest.onlyFunctional && this.presetHelper.hasPreset(item._tpl) && offer.items.length === 1)
+        if (searchRequest.onlyFunctional && this.presetHelper.hasPreset(offerRootItem._tpl) && offer.items.length === 1)
         {
             // don't include non-functional items
             return false;
         }
 
-        if (searchRequest.buildCount && this.presetHelper.hasPreset(item._tpl) && offer.items.length > 1)
+        if (offer.items.length === 1)
         {
-            // don't include preset items
-            return false;
+            // Single item
+            if (
+                this.isConditionItem(offerRootItem)
+                && !this.itemQualityInRange(offerRootItem, searchRequest.conditionFrom, searchRequest.conditionTo)
+            )
+            {
+                return false;
+            }
+        }
+        else
+        {
+            const itemQualityPercent = this.itemHelper.getItemQualityModifierForOfferItems(offer.items) * 100;
+            if (itemQualityPercent < searchRequest.conditionFrom)
+            {
+                return false;
+            }
+
+            if (itemQualityPercent > searchRequest.conditionTo)
+            {
+                return false;
+            }
         }
 
-        if (this.isConditionItem(item)
-            && !this.itemQualityInRange(item, searchRequest.conditionFrom, searchRequest.conditionTo)
-        )
-        {
-            return false;
-        }
-
-        // commented out as required search "which is for checking offers that are barters"
-        // has info.removeBartering as true, this if statement removed barter items.
-        if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(money))
-        {
-            // don't include barter offers
-            return false;
-        }
-
-        if (searchRequest.currency > 0 && this.paymentHelper.isMoneyTpl(money))
+        if (searchRequest.currency > 0 && this.paymentHelper.isMoneyTpl(moneyTypeTpl))
         {
             const currencies = ["all", "RUB", "USD", "EUR"];
 
-            if (this.ragfairHelper.getCurrencyTag(money) !== currencies[searchRequest.currency])
+            if (this.ragfairHelper.getCurrencyTag(moneyTypeTpl) !== currencies[searchRequest.currency])
             {
                 // don't include item paid in wrong currency
                 return false;
@@ -634,6 +656,61 @@ export class RagfairOfferHelper
         if (searchRequest.priceTo > 0 && searchRequest.priceTo <= offer.requirementsCost)
         {
             // price is too high
+            return false;
+        }
+
+        // Passes above checks, search criteria filters have not filtered offer out
+        return true;
+    }
+
+    /**
+     * Should a ragfair offer be visible to the player
+     * @param searchRequest Search request
+     * @param itemsToAdd ?
+     * @param traderAssorts Trader assort items
+     * @param offer The flea offer
+     * @param pmcProfile Player profile
+     * @returns True = should be shown to player
+     */
+    public isDisplayableOffer(
+        searchRequest: ISearchRequestData,
+        itemsToAdd: string[],
+        traderAssorts: Record<string, ITraderAssort>,
+        offer: IRagfairOffer,
+        pmcProfile: IPmcData,
+    ): boolean
+    {
+        const offerRootItem = offer.items[0];
+        /** Currency offer is sold for */
+        const moneyTypeTpl = offer.requirements[0]._tpl;
+
+        // Offer root items tpl not in searched for array
+        if (!itemsToAdd?.includes(offerRootItem._tpl))
+        {
+            // skip items we shouldn't include
+            return false;
+        }
+
+        // Performing a required search and offer doesn't have requirement for item
+        if (
+            searchRequest.neededSearchId
+            && !offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId)
+        )
+        {
+            return false;
+        }
+
+        // weapon/equipment search + offer is preset
+        if (searchRequest.buildCount && this.presetHelper.hasPreset(offerRootItem._tpl))
+        {
+            return false;
+        }
+
+        // commented out as required search "which is for checking offers that are barters"
+        // has info.removeBartering as true, this if statement removed barter items.
+        if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(moneyTypeTpl))
+        {
+            // don't include barter offers
             return false;
         }
 
@@ -669,6 +746,16 @@ export class RagfairOfferHelper
         return true;
     }
 
+    public isDisplayableOfferThatNeedsItem(searchRequest: ISearchRequestData, offer: IRagfairOffer): boolean
+    {
+        if (offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Does the passed in item have a condition property
      * @param item Item to check
@@ -676,9 +763,10 @@ export class RagfairOfferHelper
      */
     protected isConditionItem(item: Item): boolean
     {
-        // thanks typescript, undefined assertion is not returnable since it 
+        // thanks typescript, undefined assertion is not returnable since it
         // tries to return a multitype object
-        return (item.upd.MedKit || item.upd.Repairable || item.upd.Resource || item.upd.FoodDrink || item.upd.Key || item.upd.RepairKit)
+        return (item.upd.MedKit || item.upd.Repairable || item.upd.Resource || item.upd.FoodDrink || item.upd.Key
+                || item.upd.RepairKit)
             ? true
             : false;
     }

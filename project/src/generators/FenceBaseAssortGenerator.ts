@@ -6,6 +6,7 @@ import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
 import { Traders } from "@spt-aki/models/enums/Traders";
@@ -64,7 +65,8 @@ export class FenceBaseAssortGenerator
             // Item base type blacklisted
             if (this.traderConfig.fence.blacklist.length > 0)
             {
-                if (this.traderConfig.fence.blacklist.includes(rootItemDb._id)
+                if (
+                    this.traderConfig.fence.blacklist.includes(rootItemDb._id)
                     || this.itemHelper.isOfBaseclasses(rootItemDb._id, this.traderConfig.fence.blacklist)
                 )
                 {
@@ -86,6 +88,11 @@ export class FenceBaseAssortGenerator
                 slotId: "hideout",
                 upd: { StackObjectsCount: 9999999 },
             }];
+
+            if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.AMMO_BOX))
+            {
+                this.itemHelper.addCartridgesToAmmoBox(itemWithChildrenToAdd, rootItemDb);
+            }
 
             // Ensure IDs are unique
             this.itemHelper.remapRootItemId(itemWithChildrenToAdd);
@@ -123,15 +130,12 @@ export class FenceBaseAssortGenerator
             }
 
             // Construct preset + mods
-            const presetAndMods: Item[] = this.itemHelper.replaceIDs(
-                null,
-                this.jsonUtil.clone(defaultPreset._items),
-            );
+            const itemAndChildren: Item[] = this.itemHelper.replaceIDs(defaultPreset._items);
 
             // Find root item and add some properties to it
-            for (let i = 0; i < presetAndMods.length; i++)
+            for (let i = 0; i < itemAndChildren.length; i++)
             {
-                const mod = presetAndMods[i];
+                const mod = itemAndChildren[i];
 
                 // Build root Item info
                 if (!("parentId" in mod))
@@ -149,16 +153,19 @@ export class FenceBaseAssortGenerator
             }
 
             // Add constructed preset to assorts
-            baseFenceAssort.items.push(...presetAndMods);
+            baseFenceAssort.items.push(...itemAndChildren);
 
-            // Calculate preset price
-            const price = this.getHandbookItemPriceWithChildren(presetAndMods);
+            // Calculate preset price (root item + child items)
+            const price = this.handbookHelper.getTemplatePriceForItems(itemAndChildren);
 
-            // Multiply weapon+mods rouble price by multipler in config
-            baseFenceAssort.barter_scheme[presetAndMods[0]._id] = [[]];
-            baseFenceAssort.barter_scheme[presetAndMods[0]._id][0][0] = { _tpl: Money.ROUBLES, count: Math.round(price) * this.traderConfig.fence.presetPriceMult };
+            // Multiply weapon+mods rouble price by quality modifier
+            baseFenceAssort.barter_scheme[itemAndChildren[0]._id] = [[]];
+            baseFenceAssort.barter_scheme[itemAndChildren[0]._id][0][0] = {
+                _tpl: Money.ROUBLES,
+                count: Math.round(price * this.itemHelper.getItemQualityModifierForOfferItems(itemAndChildren)),
+            };
 
-            baseFenceAssort.loyal_level_items[presetAndMods[0]._id] = 1;
+            baseFenceAssort.loyal_level_items[itemAndChildren[0]._id] = 1;
         }
     }
 
@@ -177,7 +184,7 @@ export class FenceBaseAssortGenerator
         }
 
         // Check for and add required soft inserts to armors
-        const requiredSlots = itemDbDetails._props.Slots.filter(slot => slot._required);
+        const requiredSlots = itemDbDetails._props.Slots.filter((slot) => slot._required);
         const hasRequiredSlots = requiredSlots.length > 0;
         if (hasRequiredSlots)
         {
@@ -199,9 +206,9 @@ export class FenceBaseAssortGenerator
                     upd: {
                         Repairable: {
                             Durability: modItemDbDetails._props.MaxDurability,
-                            MaxDurability: modItemDbDetails._props.MaxDurability
-                        }
-                    }
+                            MaxDurability: modItemDbDetails._props.MaxDurability,
+                        },
+                    },
                 };
 
                 armor.push(mod);
@@ -209,12 +216,14 @@ export class FenceBaseAssortGenerator
         }
 
         // Check for and add plate items
-        const plateSlots = itemDbDetails._props.Slots.filter(slot => this.itemHelper.isRemovablePlateSlot(slot._name));
+        const plateSlots = itemDbDetails._props.Slots.filter((slot) =>
+            this.itemHelper.isRemovablePlateSlot(slot._name)
+        );
         if (plateSlots.length > 0)
         {
             for (const plateSlot of plateSlots)
             {
-                const plateTpl = plateSlot._props.filters[0].Plate
+                const plateTpl = plateSlot._props.filters[0].Plate;
                 if (!plateTpl)
                 {
                     // Bsg data lacks a default plate, skip adding mod
@@ -229,28 +238,12 @@ export class FenceBaseAssortGenerator
                     upd: {
                         Repairable: {
                             Durability: modItemDbDetails._props.MaxDurability,
-                            MaxDurability: modItemDbDetails._props.MaxDurability
-                        }
-                    }
+                            MaxDurability: modItemDbDetails._props.MaxDurability,
+                        },
+                    },
                 });
             }
         }
-    }
-
-    /**
-     * Calculate and return the price of an item and its child mods
-     * @param itemWithChildren Item + mods to calcualte price of
-     * @returns price
-     */
-    protected getHandbookItemPriceWithChildren(itemWithChildren: Item[]): number
-    {
-        let price = 0;
-        for (const item of itemWithChildren)
-        {
-            price +=  this.handbookHelper.getTemplatePrice(item._tpl);
-        }
-
-        return price;
     }
 
     /**

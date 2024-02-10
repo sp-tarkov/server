@@ -136,7 +136,7 @@ export class TraderHelper
 
         pmcData.TradersInfo[traderID] = {
             disabled: false,
-            loyaltyLevel: rawProfileTemplate.initialLoyaltyLevel,
+            loyaltyLevel: rawProfileTemplate.initialLoyaltyLevel[traderID] ?? 1,
             salesSum: rawProfileTemplate.initialSalesSum,
             standing: this.getStartingStanding(traderID, rawProfileTemplate),
             nextResupply: this.databaseServer.getTables().traders[traderID].base.nextResupply,

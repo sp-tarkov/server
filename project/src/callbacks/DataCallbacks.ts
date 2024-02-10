@@ -157,7 +157,7 @@ export class DataCallbacks
 
         if (result === undefined)
         {
-            result = tables.locales.menu["en"];
+            result = tables.locales.menu.en;
         }
 
         return this.httpResponse.getBody(result);

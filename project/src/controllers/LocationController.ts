@@ -79,41 +79,43 @@ export class LocationController
     {
         const db = this.databaseServer.getTables();
         const location: ILocation = db.locations[name];
-        const output: ILocationBase = this.jsonUtil.clone(location.base);
+        const locationBaseClone: ILocationBase = this.jsonUtil.clone(location.base);
 
-        output.UnixDateTime = this.timeUtil.getTimestamp();
+        locationBaseClone.UnixDateTime = this.timeUtil.getTimestamp();
 
         // Don't generate loot for hideout
         if (name === "hideout")
         {
-            return output;
+            return locationBaseClone;
         }
 
         // Check for a loot multipler adjustment in app context and apply if one is found
         let locationConfigCopy: ILocationConfig;
-        const raidAdjustments = this.applicationContext.getLatestValue(ContextVariableType.RAID_ADJUSTMENTS)?.getValue<IRaidChanges>();
+        const raidAdjustments = this.applicationContext.getLatestValue(ContextVariableType.RAID_ADJUSTMENTS)?.getValue<
+            IRaidChanges
+        >();
         if (raidAdjustments)
         {
             locationConfigCopy = this.jsonUtil.clone(this.locationConfig); // Clone values so they can be used to reset originals later
-            this.raidTimeAdjustmentService.makeAdjustmentsToMap(raidAdjustments, output);
+            this.raidTimeAdjustmentService.makeAdjustmentsToMap(raidAdjustments, locationBaseClone);
         }
 
         const staticAmmoDist = this.jsonUtil.clone(db.loot.staticAmmo);
 
         // Create containers and add loot to them
-        const staticLoot = this.locationGenerator.generateStaticContainers(output, staticAmmoDist);
-        output.Loot.push(...staticLoot);
+        const staticLoot = this.locationGenerator.generateStaticContainers(locationBaseClone, staticAmmoDist);
+        locationBaseClone.Loot.push(...staticLoot);
 
         // Add dynamic loot to output loot
-        const dynamicLootDist: ILooseLoot = this.jsonUtil.clone(location.looseLoot);
+        const dynamicLootDistClone: ILooseLoot = this.jsonUtil.clone(location.looseLoot);
         const dynamicSpawnPoints: SpawnpointTemplate[] = this.locationGenerator.generateDynamicLoot(
-            dynamicLootDist,
+            dynamicLootDistClone,
             staticAmmoDist,
             name,
         );
         for (const spawnPoint of dynamicSpawnPoints)
         {
-            output.Loot.push(spawnPoint);
+            locationBaseClone.Loot.push(spawnPoint);
         }
 
         // Done generating, log results
@@ -132,7 +134,7 @@ export class LocationController
             this.applicationContext.clearValues(ContextVariableType.RAID_ADJUSTMENTS);
         }
 
-        return output;
+        return locationBaseClone;
     }
 
     /**

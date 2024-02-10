@@ -54,10 +54,10 @@ export interface IQuestCondition
 {
     id: string;
     index?: number;
-    compareMethod?: string
+    compareMethod?: string;
     dynamicLocale: boolean;
     visibilityConditions?: VisibilityCondition[];
-    globalQuestCounterId?: string
+    globalQuestCounterId?: string;
     parentId?: string;
     target: string[] | string;
     value?: string | number;
@@ -75,7 +75,7 @@ export interface IQuestCondition
     plantTime?: number;
     zoneId?: string;
     countInRaid?: boolean;
-    completeInSeconds?: number
+    completeInSeconds?: number;
     isEncoded?: boolean;
     conditionType?: string;
 }
@@ -89,48 +89,48 @@ export interface IQuestConditionCounter
 export interface IQuestConditionCounterCondition
 {
     id: string;
-    dynamicLocale: boolean
+    dynamicLocale: boolean;
     target?: string[] | string; // TODO: some objects have an array and some are just strings, thanks bsg very cool
-    completeInSeconds?: number
-    energy?: IValueCompare
+    completeInSeconds?: number;
+    energy?: IValueCompare;
     exitName?: string;
-    hydration?: IValueCompare
-    time?: IValueCompare
+    hydration?: IValueCompare;
+    time?: IValueCompare;
     compareMethod?: string;
     value?: number;
     weapon?: string[];
-    distance?: ICounterConditionDistance
+    distance?: ICounterConditionDistance;
     equipmentInclusive?: string[][];
     weaponModsInclusive?: string[][];
     weaponModsExclusive?: string[][];
     enemyEquipmentInclusive?: string[][];
     enemyEquipmentExclusive?: string[][];
-    weaponCaliber?: string[]
-    savageRole?: string[]
+    weaponCaliber?: string[];
+    savageRole?: string[];
     status?: string[];
     bodyPart?: string[];
     daytime?: IDaytimeCounter;
-    conditionType?: string
-    enemyHealthEffects?: IEnemyHealthEffect[]
-    resetOnSessionEnd?: boolean
+    conditionType?: string;
+    enemyHealthEffects?: IEnemyHealthEffect[];
+    resetOnSessionEnd?: boolean;
 }
 
 export interface IEnemyHealthEffect
 {
-    bodyParts: string[]
-    effects: string[]
+    bodyParts: string[];
+    effects: string[];
 }
 
 export interface IValueCompare
 {
-    compareMethod: string
-    value: number
+    compareMethod: string;
+    value: number;
 }
 
 export interface ICounterConditionDistance
 {
-    value: number
-    compareMethod: string
+    value: number;
+    compareMethod: string;
 }
 
 export interface IDaytimeCounter
@@ -142,7 +142,7 @@ export interface IDaytimeCounter
 export interface VisibilityCondition
 {
     id: string;
-    target: string
+    target: string;
     value?: number;
     dynamicLocale?: boolean;
     oneSessionOnly: boolean;

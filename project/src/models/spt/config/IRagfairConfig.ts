@@ -78,6 +78,8 @@ export interface Dynamic
     nonStackableCount: MinMax;
     /** Range of rating offers for items being listed */
     rating: MinMax;
+    /** A multipler to apply to individual tpls price just prior to item quality adjustment */
+    itemPriceMultiplier: Record<string, number>;
     /** Percentages to sell offers in each currency */
     currencies: Record<string, number>;
     /** Item tpls that should be forced to sell as a single item */
@@ -99,8 +101,6 @@ export interface IPriceRanges
 
 export interface IBarterDetails
 {
-    /** Should barter offers be generated */
-    enable: boolean;
     /** Percentage change an offer is listed as a barter */
     chancePercent: number;
     /** Min number of required items for a barter requirement */
@@ -117,8 +117,6 @@ export interface IBarterDetails
 
 export interface IPackDetails
 {
-    /** Should pack offers be generated */
-    enable: boolean;
     /** Percentage change an offer is listed as a pack */
     chancePercent: number;
     /** Min number of required items for a pack */
@@ -141,10 +139,12 @@ export interface OfferAdjustment
     priceThreshholdRub: number;
 }
 
-export interface Condition extends MinMax
+export interface Condition
 {
     /** Percentage change durability is altered */
     conditionChance: number;
+    current: MinMax;
+    max: MinMax;
 }
 
 export interface Blacklist
@@ -159,6 +159,16 @@ export interface Blacklist
     enableQuestList: boolean;
     /** Should trader items that are blacklisted by bsg be listed on flea */
     traderItems: boolean;
+    /** Maximum level an armor plate can be found in a flea-listed armor item */
+    armorPlate: IArmorPlateBlacklistSettings;
+}
+
+export interface IArmorPlateBlacklistSettings
+{
+    /** Max level of plates an armor can have without being removed */
+    maxProtectionLevel: number;
+    /** Item slots to NOT remove from items on flea */
+    ignoreSlots: string[];
 }
 
 export interface IUnreasonableModPrices
