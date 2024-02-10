@@ -19,6 +19,7 @@
             "commandoFeatures": {
                 "giveCommandEnabled": false
             }
-        }
+        },
+        "silenceProfileSavedLogging": false
     }
 }

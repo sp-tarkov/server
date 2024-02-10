@@ -219,7 +219,9 @@ export class SaveServer
             this.vfs.writeFile(filePath, jsonProfile);
             this.logger.debug(this.localisationService.getText("profile_saved", sessionID), true);
         }
-        this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to save.`);
+        if (!this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.silenceProfileSavedLogging) {
+            this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to save.`);
+        }
     }
 
     /**

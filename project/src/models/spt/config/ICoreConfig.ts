@@ -33,6 +33,8 @@ export interface IServerFeatures
     autoInstallModDependencies: boolean;
     compressProfile: boolean;
     chatbotFeatures: IChatbotFeatures;
+    /* Silences profile saved spam */
+    silenceProfileSavedLogging: boolean;
 }
 
 export interface IChatbotFeatures
