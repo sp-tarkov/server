@@ -1211,8 +1211,8 @@ export class RepeatableQuestGenerator
         if (preset)
         {
             const rootItem = preset.find((x) => x._tpl === tpl);
-            rewardItem.target = rootItem._id; // Target property and root items id must match
             rewardItem.items = this.itemHelper.reparentItemAndChildren(rootItem, preset);
+            rewardItem.target = rootItem._id; // Target property and root items id must match
         }
         else
         {
