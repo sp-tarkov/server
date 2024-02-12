@@ -3,6 +3,7 @@ import { TraderServiceType } from "@spt-aki/models/enums/TraderServiceType";
 export interface ITraderServiceModel
 {
     serviceType: TraderServiceType;
-    itemsToPay?: Record<string, number>[];
-    subServices?: Record<string, number>[];
+    itemsToPay?: {[key: string]: number};
+    itemsToReceive?: string[];
+    subServices?: {[key: string]: number};
 }
