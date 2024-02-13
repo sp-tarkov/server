@@ -21,7 +21,7 @@ export class HttpResponseUtil
         return s.replace(/[\b]/g, "").replace(/[\f]/g, "").replace(/[\n]/g, "").replace(/[\r]/g, "").replace(
             /[\t]/g,
             "",
-        ).replace(/[\\]/g, "");
+        );
     }
 
     /**
