@@ -119,7 +119,7 @@ export class PlayerScavGenerator
         scavData.TaskConditionCounters = existingScavDataClone.TaskConditionCounters ?? {};
         scavData.Notes = existingScavDataClone.Notes ?? { Notes: [] };
         scavData.WishList = existingScavDataClone.WishList ?? [];
-        scavData.Encyclopedia = existingScavDataClone.Encyclopedia ?? {};
+        scavData.Encyclopedia = null;
 
         // Add an extra labs card to pscav backpack based on config chance
         if (this.randomUtil.getChance100(playerScavKarmaSettings.labsAccessCardChancePercent))
