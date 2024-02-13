@@ -376,17 +376,16 @@ export class RagfairOfferGenerator
         const assortSingleOfferProcesses = [];
         for (let index = 0; index < offerCount; index++)
         {
-            if (!isPreset)
-            {
-                // Presets get unique id generated during getPresetItems() earlier + would require regenerating all children to match
-                assortItemWithChildren[0]._id = this.hashUtil.generate();
-            }
+            // Clone the item so we don't have shared references and generate new item IDs
+            const clonedAssort = this.jsonUtil.clone(assortItemWithChildren);
+            this.itemHelper.reparentItemAndChildren(clonedAssort[0], clonedAssort);
 
-            delete assortItemWithChildren[0].parentId;
-            delete assortItemWithChildren[0].slotId;
+            // Clear unnecessary properties
+            delete clonedAssort[0].parentId;
+            delete clonedAssort[0].slotId;
 
             assortSingleOfferProcesses.push(
-                this.createSingleOfferForItem(assortItemWithChildren, isPreset, itemDetails),
+                this.createSingleOfferForItem(clonedAssort, isPreset, itemDetails),
             );
         }
 
