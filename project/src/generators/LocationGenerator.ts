@@ -623,7 +623,7 @@ export class LocationGenerator
                 continue;
             }
 
-            if (spawnpoint.probability === 1)
+            if (spawnpoint.probability === 1 || spawnpoint.template.IsAlwaysSpawn)
             {
                 guaranteedLoosePoints.push(spawnpoint);
                 continue;
@@ -636,10 +636,15 @@ export class LocationGenerator
         // Add ALL loose loot with 100% chance to pool
         let chosenSpawnpoints: Spawnpoint[] = [...guaranteedLoosePoints];
 
-        // Add randomly chosen spawn points
-        for (const si of spawnpointArray.draw(desiredSpawnpointCount, false))
+        const randomSpawnpointCount = desiredSpawnpointCount - chosenSpawnpoints.length
+        // only draw random spawn points if needed
+        if (randomSpawnpointCount > 0)
         {
-            chosenSpawnpoints.push(spawnpointArray.data(si));
+            // Add randomly chosen spawn points
+            for (const si of spawnpointArray.draw(randomSpawnpointCount, false))
+            {
+                chosenSpawnpoints.push(spawnpointArray.data(si));
+            }
         }
 
         // Filter out duplicate locationIds
