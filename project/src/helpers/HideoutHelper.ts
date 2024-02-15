@@ -770,9 +770,6 @@ export class HideoutHelper
 
         if (this.isProduction(btcProd))
         {
-            const timeElapsedSeconds = this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
-            btcProd.Progress += timeElapsedSeconds;
-
             // The wiki has a wrong formula!
             // Do not change unless you validate it with the Client code files!
             // This formula was found on the client files:
@@ -808,16 +805,21 @@ export class HideoutHelper
                 }
             */
             // BSG finally fixed their settings, they now get loaded from the settings and used in the client
-            const coinCraftTimeSeconds =
+            const adjustedCraftTime =
                 ((this.profileHelper.isDeveloperAccount(pmcData.sessionId)) ? 40 : bitcoinProdData.productionTime)
                 / (1 + (btcFarmCGs - 1) * this.databaseServer.getTables().hideout.settings.gpuBoostRate);
 
-            while (btcProd.Progress >= coinCraftTimeSeconds)
+            // The progress should be adjusted based on the GPU boost rate, but the target is still the base productionTime
+            const timeMultiplier = bitcoinProdData.productionTime / adjustedCraftTime;
+            const timeElapsedSeconds = this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
+            btcProd.Progress += Math.floor(timeElapsedSeconds * timeMultiplier);
+
+            while (btcProd.Progress >= bitcoinProdData.productionTime)
             {
                 if (btcProd.Products.length < coinSlotCount)
                 {
                     // Has space to add a coin to production
-                    this.addBtcToProduction(btcProd, coinCraftTimeSeconds);
+                    this.addBtcToProduction(btcProd, bitcoinProdData.productionTime);
                 }
                 else
                 {
