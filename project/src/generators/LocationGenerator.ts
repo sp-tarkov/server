@@ -638,7 +638,7 @@ export class LocationGenerator
 
         const randomSpawnpointCount = desiredSpawnpointCount - chosenSpawnpoints.length
         // only draw random spawn points if needed
-        if (randomSpawnpointCount > 0)
+        if (randomSpawnpointCount > 0 && spawnpointArray.length > 0)
         {
             // Add randomly chosen spawn points
             for (const si of spawnpointArray.draw(randomSpawnpointCount, false))

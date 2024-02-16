@@ -136,6 +136,8 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     public draw(count = 1, replacement = true, locklist: Array<K> = []): K[]
     {
+        if (this.length === 0) return [];
+
         const { probArray, keyArray } = this.reduce((acc, x) =>
         {
             acc.probArray.push(x.relativeProbability);
