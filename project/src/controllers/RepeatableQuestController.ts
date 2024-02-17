@@ -32,6 +32,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 
 @injectable()
 export class RepeatableQuestController
@@ -301,12 +302,13 @@ export class RepeatableQuestController
     {
         const questPool = this.createBaseQuestPool(repeatableConfig);
 
-        for (const location in repeatableConfig.locations)
+        const locations = this.getAllowedLocations(repeatableConfig.locations, pmcLevel);
+        for (const location in locations)
         {
             if (location !== ELocationName.ANY)
             {
-                questPool.pool.Exploration.locations[location] = repeatableConfig.locations[location];
-                questPool.pool.Pickup.locations[location] = repeatableConfig.locations[location];
+                questPool.pool.Exploration.locations[location] = locations[location];
+                questPool.pool.Pickup.locations[location] = locations[location];
             }
         }
 
@@ -324,9 +326,9 @@ export class RepeatableQuestController
             }
             else
             {
-                const possibleLocations = Object.keys(repeatableConfig.locations);
+                const possibleLocations = Object.keys(locations);
 
-                // Set possible locations for elimination task, ift arget is savage, exclude labs from locations
+                // Set possible locations for elimination task, if target is savage, exclude labs from locations
                 questPool.pool.Elimination.targets[probabilityObject.key] = (probabilityObject.key === "Savage")
                     ? { locations: possibleLocations.filter((x) => x !== "laboratory") }
                     : { locations: possibleLocations };
@@ -342,6 +344,62 @@ export class RepeatableQuestController
             types: repeatableConfig.types.slice(),
             pool: { Exploration: { locations: {} }, Elimination: { targets: {} }, Pickup: { locations: {} } },
         };
+    }
+
+    /**
+     * Return the locations this PMC is allowed to get daily quests for based on their level
+     * @param locations The original list of locations
+     * @param pmcLevel The level of the player PMC
+     * @returns A filtered list of locations that allow the player PMC level to access it
+     */
+    protected getAllowedLocations(
+        locations: Record<ELocationName, string[]>, 
+        pmcLevel: number
+    ): Partial<Record<ELocationName, string[]>>
+    {
+        const allowedLocation: Partial<Record<ELocationName, string[]>> = {};
+
+        for (const location in locations)
+        {
+            const locationNames = [];
+            for (const locationName of locations[location])
+            {
+                if (this.isPmcLevelAllowedOnLocation(locationName, pmcLevel))
+                {
+                    locationNames.push(locationName);
+                }
+            }
+
+            if (locationNames.length > 0)
+            {
+                allowedLocation[location] = locationNames;
+            }
+        }
+
+        return allowedLocation;
+    }
+
+    /**
+     * Return true if the given pmcLevel is allowed on the given location
+     * @param location The location name to check
+     * @param pmcLevel The level of the pmc
+     * @returns True if the given pmc level is allowed to access the given location
+     */
+    protected isPmcLevelAllowedOnLocation(location: string, pmcLevel: number): boolean
+    {
+        if (location === ELocationName.ANY)
+        {
+            return true;
+        }
+
+        const locationBase: ILocationBase = this.databaseServer.getTables().locations[location.toLowerCase()]?.base;
+        if (!locationBase)
+        {
+            return true;
+        }
+
+        return (pmcLevel <= locationBase.RequiredPlayerLevelMax
+                && pmcLevel >= locationBase.RequiredPlayerLevelMin);
     }
 
     public debugLogRepeatableQuestIds(pmcData: IPmcData): void
