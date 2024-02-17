@@ -11,13 +11,14 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Inventory } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item, Location, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
-import { AddItem, IAddItemRequestData } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
+import { AddItem } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
 import { IAddItemTempObject } from "@spt-aki/models/eft/inventory/IAddItemTempObject";
 import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IInventoryMergeRequestData } from "@spt-aki/models/eft/inventory/IInventoryMergeRequestData";
 import { IInventoryMoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryMoveRequestData";
 import { IInventoryRemoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryRemoveRequestData";
 import { IInventorySplitRequestData } from "@spt-aki/models/eft/inventory/IInventorySplitRequestData";
+import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -840,7 +841,7 @@ export class InventoryHelper
      * @returns OwnerInventoryItems with inventory of player/scav to adjust
      */
     public getOwnerInventoryItems(
-        request: IInventoryMoveRequestData | IInventorySplitRequestData | IInventoryMergeRequestData,
+        request: IInventoryMoveRequestData | IInventorySplitRequestData | IInventoryMergeRequestData | IInventoryTransferRequestData,
         sessionId: string,
     ): IOwnerInventoryItems
     {

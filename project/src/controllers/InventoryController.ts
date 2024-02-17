@@ -324,7 +324,6 @@ export class InventoryController
 
     /**
      * TODO: Adds no data to output to send to client, is this by design?
-     * TODO: should make use of getOwnerInventoryItems(), stack being transferred may not always be on pmc
      * Transfer items from one stack into another while keeping original stack
      * Used to take items from scav inventory into stash or to insert ammo into mags (shotgun ones) and reloading weapon by clicking "Reload"
      * @param pmcData Player profile
@@ -340,28 +339,9 @@ export class InventoryController
         output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        let sourceItem: Item = null;
-        let destinationItem: Item = null;
-
-        for (const iterItem of pmcData.Inventory.items)
-        {
-            if (iterItem._id === body.item)
-            {
-                // Found source item
-                sourceItem = iterItem;
-            }
-            else if (iterItem._id === body.with)
-            {
-                // Found destination item
-                destinationItem = iterItem;
-            }
-
-            if (sourceItem !== null && destinationItem !== null)
-            {
-                // Both items found, exit loop
-                break;
-            }
-        }
+        const inventoryItems = this.inventoryHelper.getOwnerInventoryItems(body, sessionID);
+        const sourceItem = inventoryItems.from.find(item => item._id == body.item);
+        const destinationItem = inventoryItems.to.find(item => item._id == body.with);
 
         if (sourceItem === null)
         {
@@ -383,13 +363,12 @@ export class InventoryController
             return output;
         }
 
-        let sourceStackCount = 1;
         if (!sourceItem.upd)
         {
             sourceItem.upd = { StackObjectsCount: 1 };
         }
-        sourceStackCount = sourceItem.upd.StackObjectsCount;
 
+        const sourceStackCount = sourceItem.upd.StackObjectsCount;
         if (sourceStackCount > body.count)
         {
             // Source items stack count greater than new desired count
@@ -401,16 +380,11 @@ export class InventoryController
             sourceItem.upd.StackObjectsCount = sourceStackCount - 1;
         }
 
-        let destinationStackCount = 1;
-        if (destinationItem.upd)
+        if (!destinationItem.upd)
         {
-            destinationStackCount = destinationItem.upd.StackObjectsCount;
+            destinationItem.upd = { StackObjectsCount: 1 };
         }
-        else
-        {
-            Object.assign(destinationItem, { upd: { StackObjectsCount: 1 } });
-        }
-
+        const destinationStackCount = destinationItem.upd.StackObjectsCount;
         destinationItem.upd.StackObjectsCount = destinationStackCount + body.count;
 
         return output;
