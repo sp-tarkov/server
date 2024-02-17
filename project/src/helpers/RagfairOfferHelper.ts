@@ -606,7 +606,7 @@ export class RagfairOfferHelper
             return false;
         }
 
-        if (searchRequest.onlyFunctional && this.presetHelper.hasPreset(offerRootItem._tpl) && offer.items.length === 1)
+        if (searchRequest.onlyFunctional && !this.isItemFunctional(offerRootItem, offer))
         {
             // don't include non-functional items
             return false;
@@ -662,6 +662,36 @@ export class RagfairOfferHelper
 
         // Passes above checks, search criteria filters have not filtered offer out
         return true;
+    }
+
+    /**
+     * Check that the passed in offer item is functional
+     * @param offerRootItem The root item of the offer
+     * @param offer The flea offer
+     * @returns True if the given item is functional
+     */
+    public isItemFunctional(
+        offerRootItem: Item,
+        offer: IRagfairOffer
+    ): boolean
+    {
+        // Non-presets are always functional
+        if (!this.presetHelper.hasPreset(offerRootItem._tpl))
+        {
+            return true;
+        }
+
+        // For armor items that can hold mods, make sure the item count is atleast the amount of required plates
+        if (this.itemHelper.armorItemCanHoldMods(offerRootItem._tpl))
+        {
+            const offerRootTemplate = this.itemHelper.getItem(offerRootItem._tpl)[1];
+            const requiredPlateCount = offerRootTemplate._props.Slots?.filter(item => item._required)?.length;
+
+            return offer.items.length > requiredPlateCount;
+        }
+
+        // For other presets, make sure the offer has more than 1 item
+        return offer.items.length > 1;
     }
 
     /**
