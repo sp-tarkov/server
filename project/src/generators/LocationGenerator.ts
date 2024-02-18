@@ -593,9 +593,14 @@ export class LocationGenerator
     ): SpawnpointTemplate[]
     {
         const loot: SpawnpointTemplate[] = [];
+        const dynamicForcedSpawnPoints: SpawnpointsForced[] = [];
 
-        // Add all forced loot to return array
-        this.addForcedLoot(loot, dynamicLootDist.spawnpointsForced, locationName);
+        // Build the list of forced loot from both `spawnpointsForced` and any point marked `IsAlwaysSpawn`
+        dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpointsForced);
+        dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpoints.filter(point => point.template.IsAlwaysSpawn));
+
+        // Add forced loot
+        this.addForcedLoot(loot, dynamicForcedSpawnPoints, locationName);
 
         const allDynamicSpawnpoints = dynamicLootDist.spawnpoints;
 
@@ -623,7 +628,13 @@ export class LocationGenerator
                 continue;
             }
 
-            if (spawnpoint.probability === 1 || spawnpoint.template.IsAlwaysSpawn)
+            // We've handled IsAlwaysSpawn above, so skip them
+            if (spawnpoint.template.IsAlwaysSpawn)
+            {
+                continue;
+            }
+
+            if (spawnpoint.probability === 1)
             {
                 guaranteedLoosePoints.push(spawnpoint);
                 continue;
