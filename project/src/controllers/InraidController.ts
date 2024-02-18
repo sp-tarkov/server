@@ -412,6 +412,8 @@ export class InraidController
      */
     protected migrateScavQuestProgressToPmcProfile(scavProfile: IPmcData, pmcProfile: IPmcData): void
     {
+        const achievements = this.databaseServer.getTables().templates.achievements;
+
         for (const quest of scavProfile.Quests)
         {
             const pmcQuest = pmcProfile.Quests.find((x) => x.qid === quest.qid);
@@ -448,6 +450,13 @@ export class InraidController
         // Loop over all scav counters and add into pmc profile
         for (const scavCounter of Object.values(scavProfile.TaskConditionCounters))
         {
+            // If this is an achievement that isn't for the scav, don't process it
+            const achievement = achievements.find((achievement) => achievement.id === scavCounter.sourceId);
+            if (achievement && achievement.side !== "Savage")
+            {
+                continue;
+            }
+
             this.logger.debug(
                 `Processing counter: ${scavCounter.id} value: ${scavCounter.value} quest: ${scavCounter.sourceId}`,
             );
