@@ -2,12 +2,14 @@ import { inject, injectable } from "tsyringe";
 
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 
 @injectable()
 export class PresetController
 {
     constructor(
+        @inject("WinstonLogger") protected logger: ILogger,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
@@ -15,11 +17,17 @@ export class PresetController
 
     public initialize(): void
     {
-        const presets: IPreset[] = Object.values(this.databaseServer.getTables().globals.ItemPresets);
+        const presets: [string, IPreset][] = Object.entries(this.databaseServer.getTables().globals.ItemPresets);
         const reverse: Record<string, string[]> = {};
 
-        for (const preset of presets)
+        for (const [id, preset] of presets)
         {
+            if (id != preset._id)
+            {
+                this.logger.error(`Preset for template '${preset._items[0]._tpl}' has invalid id (${id} != ${preset._id}). Skipping`);
+                continue;
+            }
+
             const tpl = preset._items[0]._tpl;
 
             if (!(tpl in reverse))
