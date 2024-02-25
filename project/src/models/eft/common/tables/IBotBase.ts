@@ -393,6 +393,8 @@ export interface Productive
     sptIsComplete?: boolean;
     /** Is the craft a Continuous, e.g bitcoins/water collector */
     sptIsContinuous?: boolean;
+    /** Stores a list of tools used in this craft, to give back once the craft is done */
+    sptRequiredTools?: string[];
 }
 
 export interface Production extends Productive

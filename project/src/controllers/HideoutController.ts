@@ -592,23 +592,31 @@ export class HideoutController
         const recipe = this.databaseServer.getTables().hideout.production.find((p) => p._id === body.recipeId);
 
         // Find the actual amount of items we need to remove because body can send weird data
-        const recipeRequirementsClone = this.jsonUtil.clone(recipe.requirements.filter((i) => i.type === "Item"));
+        const recipeRequirementsClone = this.jsonUtil.clone(recipe.requirements.filter((i) => i.type === "Item" || i.type === "Tool"));
 
         const output = this.eventOutputHolder.getOutput(sessionID);
-
-        for (const itemToDelete of body.items)
+        const itemsToDelete = body.items.concat(body.tools);
+        for (const itemToDelete of itemsToDelete)
         {
             const itemToCheck = pmcData.Inventory.items.find((i) => i._id === itemToDelete.id);
             const requirement = recipeRequirementsClone.find((requirement) =>
                 requirement.templateId === itemToCheck._tpl
             );
-            if (requirement.count <= 0)
+
+            // Handle tools not having a `count`, but always only requiring 1
+            const requiredCount = requirement.count ?? 1;
+            if (requiredCount <= 0)
             {
                 continue;
             }
 
-            this.inventoryHelper.removeItemByCount(pmcData, itemToDelete.id, requirement.count, sessionID, output);
-            requirement.count -= itemToDelete.count;
+            this.inventoryHelper.removeItemByCount(pmcData, itemToDelete.id, requiredCount, sessionID, output);
+
+            // Tools don't have a count
+            if (requirement.type !== "Tool")
+            {
+                requirement.count -= itemToDelete.count;
+            }
         }
 
         return output;
@@ -793,6 +801,46 @@ export class HideoutController
         output: IItemEventRouterResponse,
     ): void
     {
+        // Validate that we have a matching production
+        const productionDict = Object.entries(pmcData.Hideout.Production);
+        let prodId: string;
+        for (const [productionId, production] of productionDict)
+        {
+            // Skip null production objects
+            if (!production)
+            {
+                continue;
+            }
+
+            if (this.hideoutHelper.isProductionType(production))
+            {
+                // Production or ScavCase
+                if (production.RecipeId === request.recipeId)
+                {
+                    prodId = productionId; // Set to objects key
+                    break;
+                }
+            }
+        }
+
+        // If we're unable to find the production, send an error to the client
+        if (prodId === undefined)
+        {
+            this.logger.error(
+                this.localisationService.getText(
+                    "hideout-unable_to_find_production_in_profile_by_recipie_id",
+                    request.recipeId,
+                ),
+            );
+
+            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText(
+                "hideout-unable_to_find_production_in_profile_by_recipie_id",
+                request.recipeId,
+            ));
+
+            return;
+        }
+
         // Variables for managemnet of skill
         let craftingExpAmount = 0;
 
@@ -865,40 +913,27 @@ export class HideoutController
             }
         }
 
-        // Loops over all current productions on profile - we want to find a matching production
-        const productionDict = Object.entries(pmcData.Hideout.Production);
-        let prodId: string;
-        for (const production of productionDict)
+        // Build an array of the tools that need to be returned to the player
+        const toolsToSendToPlayer: Item[][] = [];
+        const production = pmcData.Hideout.Production[prodId];
+        if (production.sptRequiredTools?.length > 0)
         {
-            // Skip null production objects
-            if (!production[1])
+            for (const tool of production.sptRequiredTools)
             {
-                continue;
-            }
+                const toolToAdd: Item = {
+                    _id: this.hashUtil.generate(),
+                    _tpl: tool,
+                };
 
-            if (this.hideoutHelper.isProductionType(production[1]))
-            {
-                // Production or ScavCase
-                if ((production[1] as Production).RecipeId === request.recipeId)
+                if (this.itemHelper.isItemTplStackable(tool))
                 {
-                    prodId = production[0]; // Set to objects key
-                    break;
+                    toolToAdd.upd = {
+                        StackObjectsCount: 1,
+                    }
                 }
+                
+                toolsToSendToPlayer.push([toolToAdd]);
             }
-        }
-
-        if (prodId === undefined)
-        {
-            this.logger.error(
-                this.localisationService.getText(
-                    "hideout-unable_to_find_production_in_profile_by_recipie_id",
-                    request.recipeId,
-                ),
-            );
-
-            this.httpResponse.appendErrorToOutput(output);
-
-            return;
         }
 
         // Check if the recipe is the same as the last one - get bonus when crafting same thing multiple times
@@ -920,15 +955,34 @@ export class HideoutController
             hoursCrafting -= this.hideoutConfig.hoursForSkillCrafting * multiplierCrafting;
         }
 
-        // Create request for what we want to add to stash
+        // Make sure we can fit both the craft result and tools in the stash
+        const totalResultItems = toolsToSendToPlayer.concat(itemAndChildrenToSendToPlayer);
+        if (!this.inventoryHelper.canPlaceItemsInInventory(sessionID, totalResultItems))
+        {
+            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            return;
+        }
+
+        // Add the used tools to the stash as non-FiR
+        const addToolsRequest: IAddItemsDirectRequest = {
+            itemsWithModsToAdd: toolsToSendToPlayer,
+            foundInRaid: false,
+            useSortingTable: false,
+            callback: null,
+        };
+        this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
+        if (output.warnings.length > 0)
+        {
+            return;
+        }
+
+        // Add the crafting result to the stash, marked as FiR
         const addItemsRequest: IAddItemsDirectRequest = {
             itemsWithModsToAdd: itemAndChildrenToSendToPlayer,
             foundInRaid: true,
             useSortingTable: false,
             callback: null,
         };
-
-        // Add FiR crafted items(s) to player inventory
         this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);
         if (output.warnings.length > 0)
         {

@@ -95,11 +95,20 @@ export class HideoutHelper
             modifiedProductionTime = 40;
         }
 
-        pmcData.Hideout.Production[body.recipeId] = this.initProduction(
+        const production = this.initProduction(
             body.recipeId,
             modifiedProductionTime,
             recipe.needFuelForAllProductionTime,
         );
+
+        // Store the tools used for this production, so we can return them later
+        const productionTools = recipe.requirements.filter(req => req.type === "Tool").map(req => req.templateId);
+        if (productionTools.length > 0)
+        {
+            production.sptRequiredTools = productionTools;
+        }
+
+        pmcData.Hideout.Production[body.recipeId] = production;
     }
 
     /**
@@ -539,6 +548,7 @@ export class HideoutHelper
                 recipeId: HideoutHelper.waterCollector,
                 Action: "HideoutSingleProductionStart",
                 items: [],
+                tools: [],
                 timestamp: this.timeUtil.getTimestamp(),
             };
 
