@@ -603,7 +603,7 @@ export class InraidController
      */
     public getTraderServices(sessionId: string, traderId: string): ITraderServiceModel[]
     {
-        return this.traderServicesService.getTraderServices(traderId);
+        return this.traderServicesService.getTraderServices(sessionId, traderId);
     }
 
     /**
