@@ -6,7 +6,9 @@
             "base": 50,
             "sellMultiplier": 1.24,
             "maxSellChancePercent": 100,
-            "minSellChancePercent": 0
+            "minSellChancePercent": 0,
+            "percentageDifferenceForQuickSell": 15,
+            "limitForQuickSellInRub": 200000
         },
         "time": {
             "base": 1.5,

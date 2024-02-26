@@ -37,6 +37,10 @@ export interface Chance
     maxSellChancePercent: number;
     /** Min possible sell chance % for a player listed offer */
     minSellChancePercent: number;
+    /** Percentage difference to average price that will trigger quick sell */
+    percentageDifferenceForQuickSell: number;
+    /** Maximum limit in roubles that quick sell functionality will work */
+    limitForQuickSellInRub: number;
 }
 
 export interface Time extends MinMax

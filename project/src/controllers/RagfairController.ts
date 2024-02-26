@@ -470,6 +470,12 @@ export class RagfairController
             this.inventoryHelper.removeItem(pmcData, itemToRemove, sessionID, output);
         }
 
+        if(sellChancePercent === 100) 
+        {
+            this.logger.debug('Sell chance is 100%, it will trigger manual update');
+            setTimeout(() => this.update(), 2000);
+        }
+
         return output;
     }
 

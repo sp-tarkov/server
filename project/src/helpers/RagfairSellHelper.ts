@@ -47,6 +47,16 @@ export class RagfairSellHelper
         const sellModifier = (averageOfferPriceRub / playerListedPriceRub) * sellConfig.sellMultiplier;
         let sellChance = Math.round((baseSellChancePercent * sellModifier) * sellModifier);
 
+        const playerListedWithQuickSellPercentage = playerListedPriceRub * (sellConfig.percentageDifferenceForQuickSell / 100);
+        const playerListedOfferIsBelowLimit = playerListedPriceRub < sellConfig.limitForQuickSellInRub;
+
+        // Check if player listed the offer below quick sell threshold based on average prices
+        if(playerListedOfferIsBelowLimit && playerListedPriceRub - playerListedWithQuickSellPercentage < averageOfferPriceRub) 
+        {
+            sellChance = sellConfig.maxSellChancePercent;
+            return sellChance;
+        }
+
         // Adjust sell chance if below config value
         if (sellChance < sellConfig.minSellChancePercent)
         {
