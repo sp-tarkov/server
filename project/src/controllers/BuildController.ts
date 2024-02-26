@@ -40,19 +40,19 @@ export class BuildController
         }
 
         // Ensure the secure container in the default presets match what the player has equipped
-        const defaultEquipmentPresets = this.jsonUtil.clone(
+        const defaultEquipmentPresetsClone = this.jsonUtil.clone(
             this.databaseServer.getTables().templates.defaultEquipmentPresets,
         );
         const playerSecureContainer = profile.characters.pmc.Inventory.items?.find((x) =>
             x.slotId === secureContainerSlotId
         );
-        const firstDefaultItemsSecureContainer = defaultEquipmentPresets[0]?.Items?.find((x) =>
+        const firstDefaultItemsSecureContainer = defaultEquipmentPresetsClone[0]?.Items?.find((x) =>
             x.slotId === secureContainerSlotId
         );
         if (playerSecureContainer && playerSecureContainer?._tpl !== firstDefaultItemsSecureContainer?._tpl)
         {
             // Default equipment presets' secure container tpl doesn't match players secure container tpl
-            for (const defaultPreset of defaultEquipmentPresets)
+            for (const defaultPreset of defaultEquipmentPresetsClone)
             {
                 // Find presets secure container
                 const secureContainer = defaultPreset.Items.find((item) => item.slotId === secureContainerSlotId);
@@ -64,32 +64,24 @@ export class BuildController
         }
 
         // Clone player build data from profile and append the above defaults onto end
-        const result = this.jsonUtil.clone(profile.userbuilds);
-        result.equipmentBuilds.push(...defaultEquipmentPresets);
+        const userBuildsClone = this.jsonUtil.clone(profile.userbuilds);
+        userBuildsClone.equipmentBuilds.push(...defaultEquipmentPresetsClone);
 
-        return result;
+        return userBuildsClone;
     }
 
     /** Handle client/builds/weapon/save */
-    public saveWeaponBuild(
-        sessionId: string,
-        body: IPresetBuildActionRequestData,
-    ): void
+    public saveWeaponBuild(sessionId: string, body: IPresetBuildActionRequestData): void
     {
         const pmcData = this.profileHelper.getPmcProfile(sessionId);
 
         // Replace duplicate Id's. The first item is the base item.
         // The root ID and the base item ID need to match.
-        body.Items = this.itemHelper.replaceIDs(pmcData, body.Items);
+        body.Items = this.itemHelper.replaceIDs(body.Items, pmcData);
         body.Root = body.Items[0]._id;
 
         // Create new object ready to save into profile userbuilds.weaponBuilds
-        const newBuild: IWeaponBuild = {
-            Id: body.Id,
-            Name: body.Name,
-            Root: body.Root,
-            Items: body.Items,
-        };
+        const newBuild: IWeaponBuild = { Id: body.Id, Name: body.Name, Root: body.Root, Items: body.Items };
 
         const savedWeaponBuilds = this.saveServer.getProfile(sessionId).userbuilds.weaponBuilds;
         const existingBuild = savedWeaponBuilds.find((x) => x.Id === body.Id);
@@ -110,19 +102,17 @@ export class BuildController
     }
 
     /** Handle client/builds/equipment/save event */
-    public saveEquipmentBuild(
-        sessionID: string,
-        request: IPresetBuildActionRequestData,
-    ): void
+    public saveEquipmentBuild(sessionID: string, request: IPresetBuildActionRequestData): void
     {
         const buildType = "equipmentBuilds";
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
 
-        const existingSavedEquipmentBuilds: IEquipmentBuild[] = this.saveServer.getProfile(sessionID).userbuilds[buildType];
+        const existingSavedEquipmentBuilds: IEquipmentBuild[] =
+            this.saveServer.getProfile(sessionID).userbuilds[buildType];
 
         // Replace duplicate ID's. The first item is the base item.
         // Root ID and the base item ID need to match.
-        request.Items = this.itemHelper.replaceIDs(pmcData, request.Items);
+        request.Items = this.itemHelper.replaceIDs(request.Items, pmcData);
 
         const newBuild: IEquipmentBuild = {
             Id: request.Id,
@@ -132,7 +122,9 @@ export class BuildController
             Items: request.Items,
         };
 
-        const existingBuild = existingSavedEquipmentBuilds.find((x) => x.Name === request.Name);
+        const existingBuild = existingSavedEquipmentBuilds.find((build) =>
+            build.Name === request.Name || build.Id === request.Id
+        );
         if (existingBuild)
         {
             // Already exists, replace
@@ -214,16 +206,15 @@ export class BuildController
             profile.userbuilds.magazineBuilds = [];
         }
 
-        const existingArrayId = profile.userbuilds.magazineBuilds.findIndex(item => item.Name === request.Name);
+        const existingArrayId = profile.userbuilds.magazineBuilds.findIndex((item) => item.Name === request.Name);
 
         if (existingArrayId === -1)
         {
-
             profile.userbuilds.magazineBuilds.push(result);
         }
         else
         {
-            profile.userbuilds.magazineBuilds.splice(existingArrayId, 1, result)
+            profile.userbuilds.magazineBuilds.splice(existingArrayId, 1, result);
         }
     }
 }

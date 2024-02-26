@@ -18,7 +18,7 @@ export class HttpFileUtil
             || this.httpServerHelper.getMimeText("txt");
         const fileStream = fs.createReadStream(file);
 
-        fileStream.on("open", function()
+        fileStream.on("open", () =>
         {
             resp.setHeader("Content-Type", type);
             fileStream.pipe(resp);

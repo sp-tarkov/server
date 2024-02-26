@@ -1,3 +1,4 @@
-export enum QteActivityType {
+export enum QteActivityType
+{
     GYM = 0,
 }

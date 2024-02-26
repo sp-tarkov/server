@@ -37,14 +37,15 @@ export class HideoutItemEventRouter extends ItemEventRouterDefinition
         pmcData: IPmcData,
         body: any,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
         switch (url)
         {
             case HideoutEventActions.HIDEOUT_UPGRADE:
-                return this.hideoutCallbacks.upgrade(pmcData, body, sessionID);
+                return this.hideoutCallbacks.upgrade(pmcData, body, sessionID, output);
             case HideoutEventActions.HIDEOUT_UPGRADE_COMPLETE:
-                return this.hideoutCallbacks.upgradeComplete(pmcData, body, sessionID);
+                return this.hideoutCallbacks.upgradeComplete(pmcData, body, sessionID, output);
             case HideoutEventActions.HIDEOUT_PUT_ITEMS_IN_AREA_SLOTS:
                 return this.hideoutCallbacks.putItemsInAreaSlots(pmcData, body, sessionID);
             case HideoutEventActions.HIDEOUT_TAKE_ITEMS_FROM_AREA_SLOTS:
@@ -60,11 +61,13 @@ export class HideoutItemEventRouter extends ItemEventRouterDefinition
             case HideoutEventActions.HIDEOUT_TAKE_PRODUCTION:
                 return this.hideoutCallbacks.takeProduction(pmcData, body, sessionID);
             case HideoutEventActions.HIDEOUT_RECORD_SHOOTING_RANGE_POINTS:
-                return this.hideoutCallbacks.recordShootingRangePoints(pmcData, body, sessionID);
+                return this.hideoutCallbacks.recordShootingRangePoints(pmcData, body, sessionID, output);
             case HideoutEventActions.HIDEOUT_IMPROVE_AREA:
                 return this.hideoutCallbacks.improveArea(pmcData, body, sessionID);
             case HideoutEventActions.HIDEOUT_CANCEL_PRODUCTION_COMMAND:
                 return this.hideoutCallbacks.cancelProduction(pmcData, body, sessionID);
+            default:
+                throw new Error(`Unhandled event ${url} request: ${JSON.stringify(body)}`);
         }
     }
 }

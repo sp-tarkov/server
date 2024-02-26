@@ -12,6 +12,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Common, IQuestStatus } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IQuest, IQuestCondition, IQuestReward } from "@spt-aki/models/eft/common/tables/IQuest";
+import { IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IAcceptQuestRequestData } from "@spt-aki/models/eft/quests/IAcceptQuestRequestData";
 import { IFailQuestRequestData } from "@spt-aki/models/eft/quests/IFailQuestRequestData";
@@ -265,28 +266,31 @@ export class QuestHelper
         let rewardItems: Item[] = [];
         let targets: Item[] = [];
         const mods: Item[] = [];
-        const rootItem = questReward.items[0];
 
         // Is armor item that may need inserts / plates
-        if (questReward.items.length === 1 && this.itemHelper.armorItemCanHoldMods(rootItem._tpl))
+        if (questReward.items.length === 1 && this.itemHelper.armorItemCanHoldMods(questReward.items[0]._tpl))
         {
-            // Attempt to pull default preset from globals and add child items to reward
-            this.generateArmorRewardChildSlots(rootItem, questReward);
+            // Only process items with slots
+            if (this.itemHelper.itemHasSlots(questReward.items[0]._tpl))
+            {
+                // Attempt to pull default preset from globals and add child items to reward (clones questReward.items)
+                this.generateArmorRewardChildSlots(questReward.items[0], questReward);
+            }
         }
 
         for (const item of questReward.items)
         {
-            // reward items are granted Found in Raid status
             if (!item.upd)
             {
                 item.upd = {};
             }
 
+            // Reward items are granted Found in Raid status
             item.upd.SpawnedInSession = true;
 
-            // Separate base item from mods, fix stacks
-            if (item._id === questReward.target) // Is base reward item
-            {
+            // Is root item, fix stacks
+            if (item._id === questReward.target)
+            { // Is base reward item
                 if (
                     (item.parentId !== undefined) && (item.parentId === "hideout") // Has parentId of hideout
                     && (item.upd !== undefined) && (item.upd.StackObjectsCount !== undefined) // Has upd with stackobject count
@@ -306,10 +310,10 @@ export class QuestHelper
             else
             {
                 // Is child mod
-                if (rootItem.upd.SpawnedInSession)
+                if (questReward.items[0].upd.SpawnedInSession)
                 {
                     // Propigate FiR status into child items
-                    item.upd.SpawnedInSession = rootItem.upd.SpawnedInSession;
+                    item.upd.SpawnedInSession = questReward.items[0].upd.SpawnedInSession;
                 }
 
                 mods.push(item);
@@ -320,16 +324,16 @@ export class QuestHelper
         for (const target of targets)
         {
             // This has all the original id relations since we reset the id to the original after the splitStack
-            const items = [this.jsonUtil.clone(target)];
+            const itemsClone = [this.jsonUtil.clone(target)];
             // Here we generate a new id for the root item
             target._id = this.hashUtil.generate();
 
             for (const mod of mods)
             {
-                items.push(this.jsonUtil.clone(mod));
+                itemsClone.push(this.jsonUtil.clone(mod));
             }
 
-            rewardItems = rewardItems.concat(this.itemHelper.reparentItemAndChildren(target, items));
+            rewardItems = rewardItems.concat(this.itemHelper.reparentItemAndChildren(target, itemsClone));
         }
 
         return rewardItems;
@@ -346,16 +350,31 @@ export class QuestHelper
         const defaultPreset = this.presetHelper.getDefaultPreset(originalRewardRootItem._tpl);
         if (defaultPreset)
         {
-            // Preset exists, use mods to hydrate reward item
-            questReward.items = this.jsonUtil.clone(defaultPreset._items);
+            // Found preset, use mods to hydrate reward item
+            const presetAndMods: Item[] = this.itemHelper.replaceIDs(defaultPreset._items);
+            const newRootId = this.itemHelper.remapRootItemId(presetAndMods);
 
-            // Remap target id to the new presets id
-            questReward.target = questReward.items.find(item => item._tpl === originalRewardRootItem._tpl)._id;
+            questReward.items = presetAndMods;
+
+            // Find root item and set its stack count
+            const rootItem = questReward.items.find((item) => item._id === newRootId);
+
+            // Remap target id to the new presets root id
+            questReward.target = rootItem._id;
+
+            // Copy over stack count otherwise reward shows as missing in client
+            if (!rootItem.upd)
+            {
+                rootItem.upd = {};
+            }
+            rootItem.upd.StackObjectsCount = originalRewardRootItem.upd.StackObjectsCount;
 
             return;
         }
 
-        this.logger.warning(`Unable to find default preset for armor ${originalRewardRootItem._tpl}, adding mods manually`);
+        this.logger.warning(
+            `Unable to find default preset for armor ${originalRewardRootItem._tpl}, adding mods manually`,
+        );
         const itemDbData = this.itemHelper.getItem(originalRewardRootItem._tpl)[1];
 
         // Hydrate reward with only 'required' mods - necessary for things like helmets otherwise you end up with nvgs/visors etc
@@ -372,9 +391,7 @@ export class QuestHelper
     {
         // Iterate over all rewards with the desired status, flatten out items that have a type of Item
         const questRewards = quest.rewards[QuestStatus[status]].flatMap((reward: IQuestReward) =>
-            reward.type === "Item"
-                ? this.processReward(reward)
-                : []
+            reward.type === "Item" ? this.processReward(reward) : []
         );
 
         return questRewards;
@@ -654,7 +671,9 @@ export class QuestHelper
     public getQuestWithOnlyLevelRequirementStartCondition(quest: IQuest): IQuest
     {
         quest = this.jsonUtil.clone(quest);
-        quest.conditions.AvailableForStart = quest.conditions.AvailableForStart.filter((q) => q.conditionType === "Level");
+        quest.conditions.AvailableForStart = quest.conditions.AvailableForStart.filter((q) =>
+            q.conditionType === "Level"
+        );
 
         return quest;
     }
@@ -686,12 +705,14 @@ export class QuestHelper
         // Create a dialog message for completing the quest.
         const quest = this.getQuestFromDb(failRequest.qid, pmcData);
 
-        const questIsRepeatable = pmcData.RepeatableQuests.some(quest => quest.id === failRequest.qid);
-        if (!questIsRepeatable)
+        const matchingRepeatable = pmcData.RepeatableQuests.flatMap((repeatableType) => repeatableType.activeQuests)
+            .find((activeQuest) => activeQuest._id === failRequest.qid);
+
+        if (!(matchingRepeatable || quest))
         {
             this.mailSendService.sendLocalisedNpcMessageToPlayer(
                 sessionID,
-                this.traderHelper.getTraderById(quest.traderId),
+                this.traderHelper.getTraderById(quest?.traderId ?? matchingRepeatable.traderId), // can be null when repeatable quest has been moved to inactiveQuests
                 MessageType.QUEST_FAIL,
                 quest.failMessageText,
                 questRewards,
@@ -1007,9 +1028,7 @@ export class QuestHelper
             const questInDb = allQuests.find((x) => x._id === questId);
             if (!questInDb)
             {
-                this.logger.debug(
-                    `Unable to find quest: ${questId} in db, cannot get 'FindItem' condition, skipping`,
-                );
+                this.logger.debug(`Unable to find quest: ${questId} in db, cannot get 'FindItem' condition, skipping`);
                 continue;
             }
 
@@ -1036,10 +1055,10 @@ export class QuestHelper
     {
         // Iterate over all quests in db
         const quests = this.databaseServer.getTables().templates.quests;
-        for (const questKey in quests)
+        for (const questIdKey in quests)
         {
             // Quest from db matches quests in profile, skip
-            const questData = quests[questKey];
+            const questData = quests[questIdKey];
             if (pmcProfile.Quests.find((x) => x.qid === questData._id))
             {
                 continue;
@@ -1052,7 +1071,7 @@ export class QuestHelper
             }
 
             const questRecordToAdd: IQuestStatus = {
-                qid: questKey,
+                qid: questIdKey,
                 startTime: this.timeUtil.getTimestamp(),
                 status: statuses[statuses.length - 1],
                 statusTimers: statusesDict,
@@ -1060,10 +1079,10 @@ export class QuestHelper
                 availableAfter: 0,
             };
 
-            if (pmcProfile.Quests.some((x) => x.qid === questKey))
+            if (pmcProfile.Quests.some((x) => x.qid === questIdKey))
             {
                 // Update existing
-                const existingQuest = pmcProfile.Quests.find((x) => x.qid === questKey);
+                const existingQuest = pmcProfile.Quests.find((x) => x.qid === questIdKey);
                 existingQuest.status = questRecordToAdd.status;
                 existingQuest.statusTimers = questRecordToAdd.statusTimers;
             }
@@ -1077,10 +1096,10 @@ export class QuestHelper
 
     public findAndRemoveQuestFromArrayIfExists(questId: string, quests: IQuestStatus[]): void
     {
-        const pmcQuestToReplaceStatus = quests.find((x) => x.qid === questId);
+        const pmcQuestToReplaceStatus = quests.find((quest) => quest.qid === questId);
         if (pmcQuestToReplaceStatus)
         {
-            quests.splice(quests.indexOf(pmcQuestToReplaceStatus, 1));
+            quests.splice(quests.indexOf(pmcQuestToReplaceStatus), 1);
         }
     }
 

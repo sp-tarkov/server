@@ -69,7 +69,7 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
 
             // Process all offers / expire offers
             await this.ragfairServer.update();
-            
+
             return true;
         }
         return false;
@@ -142,7 +142,11 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
     }
 
     /** Handle client/ragfair/offer/findbyid */
-    public getFleaOfferById(url: string, request: IGetRagfairOfferByIdRequest, sessionID: string): IGetBodyResponseData<IRagfairOffer>
+    public getFleaOfferById(
+        url: string,
+        request: IGetRagfairOfferByIdRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<IRagfairOffer>
     {
         return this.httpResponse.getBody(this.ragfairController.getOfferById(sessionID, request));
     }

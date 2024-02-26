@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
+import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
 
@@ -16,9 +17,9 @@ export class RagfairRequiredItemsService
     )
     {}
 
-    public getRequiredItemsById(searchId: string): any
+    public getRequiredItemsById(searchId: string): IRagfairOffer[]
     {
-        return this.requiredItemsCache[searchId] || [];
+        return Array.from(this.requiredItemsCache[searchId] ?? {}) || [];
     }
 
     public buildRequiredItemTable(): void

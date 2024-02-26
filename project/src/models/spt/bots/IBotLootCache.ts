@@ -2,17 +2,17 @@ import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 
 export interface IBotLootCache
 {
-    backpackLoot: ITemplateItem[];
-    pocketLoot: ITemplateItem[];
-    vestLoot: ITemplateItem[];
-    secureLoot: ITemplateItem[];
-    combinedPoolLoot: ITemplateItem[];
+    backpackLoot: Record<string, number>;
+    pocketLoot: Record<string, number>;
+    vestLoot: Record<string, number>;
+    secureLoot: Record<string, number>;
+    combinedPoolLoot: Record<string, number>;
 
-    specialItems: ITemplateItem[];
-    healingItems: ITemplateItem[];
-    drugItems: ITemplateItem[];
-    stimItems: ITemplateItem[];
-    grenadeItems: ITemplateItem[];
+    specialItems: Record<string, number>;
+    healingItems: Record<string, number>;
+    drugItems: Record<string, number>;
+    stimItems: Record<string, number>;
+    grenadeItems: Record<string, number>;
 }
 
 export enum LootCacheType

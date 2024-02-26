@@ -36,6 +36,7 @@ export interface Upd
     Foldable?: Foldable;
     SideEffect?: SideEffect;
     RepairKit?: RepairKit;
+    CultistAmulet?: ICultistAmulet;
 }
 
 export interface Buff
@@ -161,4 +162,9 @@ export interface SideEffect
 export interface RepairKit
 {
     Resource: number;
+}
+
+export interface ICultistAmulet
+{
+    NumberOfUsages: number;
 }

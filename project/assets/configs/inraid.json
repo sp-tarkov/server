@@ -36,5 +36,6 @@
     "coopExtractBaseStandingGain": 0.25,
     "scavExtractGain": 0.01,
     "pmcKillProbabilityForScavGain": 0.2,
-    "keepFiRSecureContainerOnDeath": false
+    "keepFiRSecureContainerOnDeath": false,
+	"playerScavHostileChancePercent": 15
 }

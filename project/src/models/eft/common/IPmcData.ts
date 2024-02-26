@@ -5,12 +5,12 @@ export interface IPmcData extends IBotBase
 
 export interface IPostRaidPmcData extends IBotBase
 {
-    Stats: IPostRaidStats
+    Stats: IPostRaidStats;
 }
 
 export interface IPostRaidStats
 {
-    Eft: IEftStats
+    Eft: IEftStats;
     /** Only found in profile we get from client post raid */
-    Arena: IEftStats
+    Arena: IEftStats;
 }

@@ -2,13 +2,17 @@ import { inject, injectable } from "tsyringe";
 
 import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
 import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
+import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
 import { DurabilityLimitsHelper } from "@spt-aki/helpers/DurabilityLimitsHelper";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
+import { Inventory } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item, Repairable, Upd } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { Grid, ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
 import { IChooseRandomCompatibleModResult } from "@spt-aki/models/spt/bots/IChooseRandomCompatibleModResult";
 import { EquipmentFilters, IBotConfig, IRandomisedResourceValues } from "@spt-aki/models/spt/config/IBotConfig";
 import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
@@ -16,7 +20,6 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -31,6 +34,8 @@ export class BotGeneratorHelper
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("DurabilityLimitsHelper") protected durabilityLimitsHelper: DurabilityLimitsHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
+        @inject("ContainerHelper") protected containerHelper: ContainerHelper,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -276,6 +281,71 @@ export class BotGeneratorHelper
         return { Durability: currentDurability, MaxDurability: maxDurability };
     }
 
+    public isWeaponModIncompatibleWithCurrentMods(
+        itemsEquipped: Item[],
+        tplToCheck: string,
+        modSlot: string,
+    ): IChooseRandomCompatibleModResult
+    {
+        // TODO: Can probably be optimized to cache itemTemplates as items are added to inventory
+        const equippedItemsDb = itemsEquipped.map((item) => this.databaseServer.getTables().templates.items[item._tpl]);
+        const itemToEquipDb = this.itemHelper.getItem(tplToCheck);
+        const itemToEquip = itemToEquipDb[1];
+
+        if (!itemToEquipDb[0])
+        {
+            this.logger.warning(
+                this.localisationService.getText("bot-invalid_item_compatibility_check", {
+                    itemTpl: tplToCheck,
+                    slot: modSlot,
+                }),
+            );
+
+            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not exist in the database` };
+        }
+
+        // No props property
+        if (!itemToEquip._props)
+        {
+            this.logger.warning(
+                this.localisationService.getText("bot-compatibility_check_missing_props", {
+                    id: itemToEquip._id,
+                    name: itemToEquip._name,
+                    slot: modSlot,
+                }),
+            );
+
+            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not have a _props field` };
+        }
+
+        // Check if any of the current weapon mod templates have the incoming item defined as incompatible
+        const blockingItem = equippedItemsDb.find((x) => x._props.ConflictingItems?.includes(tplToCheck));
+        if (blockingItem)
+        {
+            return {
+                incompatible: true,
+                found: false,
+                reason:
+                    `Cannot add: ${tplToCheck} ${itemToEquip._name} to slot: ${modSlot}. Blocked by: ${blockingItem._id} ${blockingItem._name}`,
+                slotBlocked: true,
+            };
+        }
+
+        // Check inverse to above, if the incoming item has any existing mods in its conflicting items array
+        const blockingModItem = itemsEquipped.find((item) => itemToEquip._props.ConflictingItems?.includes(item._tpl));
+        if (blockingModItem)
+        {
+            return {
+                incompatible: true,
+                found: false,
+                reason:
+                    ` Cannot add: ${tplToCheck} to slot: ${modSlot}. Would block existing item: ${blockingModItem._tpl} in slot: ${blockingModItem.slotId}`,
+            };
+        }
+
+        return { incompatible: false, reason: "" };
+    }
+
     /**
      * Can item be added to another item without conflict
      * @param itemsEquipped Items to check compatibilities with
@@ -309,7 +379,7 @@ export class BotGeneratorHelper
                 }),
             );
 
-            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not exist in the database` }; 
+            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not exist in the database` };
         }
 
         if (!itemToEquip._props)
@@ -322,11 +392,7 @@ export class BotGeneratorHelper
                 }),
             );
 
-            return {
-                incompatible: true,
-                found: false,
-                reason: `item: ${tplToCheck} does not have a _props field`
-            }; 
+            return { incompatible: true, found: false, reason: `item: ${tplToCheck} does not have a _props field` };
         }
 
         // Does an equipped item have a property that blocks the desired item - check for prop "BlocksX" .e.g BlocksEarpiece / BlocksFaceCover
@@ -360,7 +426,7 @@ export class BotGeneratorHelper
         // Does item being checked get blocked/block existing item
         if (itemToEquip._props.BlocksHeadwear)
         {
-            const existingHeadwear = itemsEquipped.find(x => x.slotId === "Headwear");
+            const existingHeadwear = itemsEquipped.find((x) => x.slotId === "Headwear");
             if (existingHeadwear)
             {
                 return {
@@ -372,11 +438,11 @@ export class BotGeneratorHelper
                 };
             }
         }
-        
+
         // Does item being checked get blocked/block existing item
         if (itemToEquip._props.BlocksFaceCover)
         {
-            const existingFaceCover = itemsEquipped.find(item => item.slotId === "FaceCover");
+            const existingFaceCover = itemsEquipped.find((item) => item.slotId === "FaceCover");
             if (existingFaceCover)
             {
                 return {
@@ -392,7 +458,7 @@ export class BotGeneratorHelper
         // Does item being checked get blocked/block existing item
         if (itemToEquip._props.BlocksEarpiece)
         {
-            const existingEarpiece = itemsEquipped.find(item => item.slotId === "Earpiece");
+            const existingEarpiece = itemsEquipped.find((item) => item.slotId === "Earpiece");
             if (existingEarpiece)
             {
                 return {
@@ -408,7 +474,7 @@ export class BotGeneratorHelper
         // Does item being checked get blocked/block existing item
         if (itemToEquip._props.BlocksArmorVest)
         {
-            const existingArmorVest = itemsEquipped.find(item => item.slotId === "ArmorVest");
+            const existingArmorVest = itemsEquipped.find((item) => item.slotId === "ArmorVest");
             if (existingArmorVest)
             {
                 return {
@@ -450,50 +516,196 @@ export class BotGeneratorHelper
             ? "pmc"
             : botRole;
     }
-}
 
-/** TODO - move into own class */
-export class ExhaustableArray<T>
-{
-    private pool: T[];
-
-    constructor(private itemPool: T[], private randomUtil: RandomUtil, private jsonUtil: JsonUtil)
+    /**
+     * Adds an item with all its children into specified equipmentSlots, wherever it fits.
+     * @param equipmentSlots Slot to add item+children into
+     * @param rootItemId Root item id to use as mod items parentid
+     * @param rootItemTplId Root itms tpl id
+     * @param itemWithChildren Item to add
+     * @param inventory Inventory to add item+children into
+     * @returns ItemAddedResult result object
+     */
+    public addItemWithChildrenToEquipmentSlot(
+        equipmentSlots: string[],
+        rootItemId: string,
+        rootItemTplId: string,
+        itemWithChildren: Item[],
+        inventory: Inventory,
+    ): ItemAddedResult
     {
-        this.pool = this.jsonUtil.clone(itemPool);
-    }
-
-    public getRandomValue(): T
-    {
-        if (!this.pool?.length)
+        /** Track how many containers are unable to be found */
+        let missingContainerCount = 0;
+        for (const equipmentSlotId of equipmentSlots)
         {
-            return null;
+            // Get container to put item into
+            const container = inventory.items.find((item) => item.slotId === equipmentSlotId);
+            if (!container)
+            {
+                missingContainerCount++;
+                if (missingContainerCount === equipmentSlots.length)
+                {
+                    // Bot doesnt have any containers we want to add item to
+                    this.logger.debug(
+                        `Unable to add item: ${itemWithChildren[0]._tpl} to bot as it lacks the following containers: ${
+                            equipmentSlots.join(",")
+                        }`,
+                    );
+
+                    return ItemAddedResult.NO_CONTAINERS;
+                }
+
+                // No container of desired type found, skip to next container type
+                continue;
+            }
+
+            // Get container details from db
+            const containerTemplate = this.itemHelper.getItem(container._tpl);
+            if (!containerTemplate[0])
+            {
+                this.logger.warning(this.localisationService.getText("bot-missing_container_with_tpl", container._tpl));
+
+                // Bad item, skip
+                continue;
+            }
+
+            if (!containerTemplate[1]._props.Grids?.length)
+            {
+                // Container has no slots to hold items
+                continue;
+            }
+
+            // Get x/y grid size of item
+            const itemSize = this.inventoryHelper.getItemSize(rootItemTplId, rootItemId, itemWithChildren);
+
+            // Iterate over each grid in the container and look for a big enough space for the item to be placed in
+            let currentGridCount = 1;
+            const totalSlotGridCount = containerTemplate[1]._props.Grids.length;
+            for (const slotGrid of containerTemplate[1]._props.Grids)
+            {
+                // Grid is empty, skip
+                if (slotGrid._props.cellsH === 0 || slotGrid._props.cellsV === 0)
+                {
+                    continue;
+                }
+
+                // Can't put item type in grid, skip all grids as we're assuming they have the same rules
+                if (!this.itemAllowedInContainer(slotGrid, rootItemTplId))
+                {
+                    // Only one possible slot and item is incompatible, exit function and inform caller
+                    if (equipmentSlots.length === 1)
+                    {
+                        return ItemAddedResult.INCOMPATIBLE_ITEM;
+                    }
+
+                    // Multiple containers, maybe next one allows item, only break out of loop for this containers grids
+                    break;
+                }
+
+                // Get all root items in found container
+                const existingContainerItems = inventory.items.filter((item) =>
+                    item.parentId === container._id && item.slotId === slotGrid._name
+                );
+
+                // Get root items in container we can iterate over to find out what space is free
+                const containerItemsToCheck = existingContainerItems.filter((x) => x.slotId === slotGrid._name);
+                for (const item of containerItemsToCheck)
+                {
+                    // Look for children on items, insert into array if found
+                    // (used later when figuring out how much space weapon takes up)
+                    const itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(inventory.items, item._id);
+                    if (itemWithChildren.length > 1)
+                    {
+                        existingContainerItems.splice(existingContainerItems.indexOf(item), 1, ...itemWithChildren);
+                    }
+                }
+
+                // Get rid of items free/used spots in current grid
+                const slotGridMap = this.inventoryHelper.getContainerMap(
+                    slotGrid._props.cellsH,
+                    slotGrid._props.cellsV,
+                    existingContainerItems,
+                    container._id,
+                );
+
+                // Try to fit item into grid
+                const findSlotResult = this.containerHelper.findSlotForItem(slotGridMap, itemSize[0], itemSize[1]);
+
+                // Open slot found, add item to inventory
+                if (findSlotResult.success)
+                {
+                    const parentItem = itemWithChildren.find((i) => i._id === rootItemId);
+
+                    // Set items parent to container id
+                    parentItem.parentId = container._id;
+                    parentItem.slotId = slotGrid._name;
+                    parentItem.location = {
+                        x: findSlotResult.x,
+                        y: findSlotResult.y,
+                        r: findSlotResult.rotation ? 1 : 0,
+                    };
+
+                    inventory.items.push(...itemWithChildren);
+
+                    return ItemAddedResult.SUCCESS;
+                }
+
+                // If we've checked all grids in container and reached this point, there's no space for item
+                if (currentGridCount >= totalSlotGridCount)
+                {
+                    return ItemAddedResult.NO_SPACE;
+                }
+                currentGridCount++;
+
+                // No space in this grid, move to next container grid and try again
+            }
         }
 
-        const index = this.randomUtil.getInt(0, this.pool.length - 1);
-        const toReturn = this.jsonUtil.clone(this.pool[index]);
-        this.pool.splice(index, 1);
-        return toReturn;
+        return ItemAddedResult.UNKNOWN;
     }
 
-    public getFirstValue(): T
+    /**
+     * Is the provided item allowed inside a container
+     * @param slotGrid Items sub-grid we want to place item inside
+     * @param itemTpl Item tpl being placed
+     * @returns True if allowed
+     */
+    protected itemAllowedInContainer(slotGrid: Grid, itemTpl: string): boolean
     {
-        if (!this.pool?.length)
-        {
-            return null;
-        }
+        const propFilters = slotGrid._props.filters;
+        const excludedFilter = propFilters[0]?.ExcludedFilter;
+        const filter = propFilters[0]?.Filter;
 
-        const toReturn = this.jsonUtil.clone(this.pool[0]);
-        this.pool.splice(0, 1);
-        return toReturn;
-    }
-
-    public hasValues(): boolean
-    {
-        if (this.pool?.length)
+        if (propFilters.length === 0)
         {
+            // no filters, item is fine to add
             return true;
         }
 
-        return false;
+        // Check if item base type is excluded
+        if (excludedFilter || filter)
+        {
+            const itemDetails = this.itemHelper.getItem(itemTpl)[1];
+
+            // if item to add is found in exclude filter, not allowed
+            if (excludedFilter.includes(itemDetails._parent))
+            {
+                return false;
+            }
+
+            // If Filter array only contains 1 filter and its for basetype 'item', allow it
+            if (filter.length === 1 && filter.includes(BaseClasses.ITEM))
+            {
+                return true;
+            }
+
+            // If allowed filter has something in it + filter doesnt have basetype 'item', not allowed
+            if (filter.length > 0 && !filter.includes(itemDetails._parent))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

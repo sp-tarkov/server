@@ -132,7 +132,7 @@ export class LauncherController
 
         return profileId;
     }
-    
+
     protected generateProfileId(): string
     {
         const timestamp = this.timeUtil.getTimestamp();
@@ -142,8 +142,8 @@ export class LauncherController
 
     protected formatID(timeStamp: number, counter: number): string
     {
-        const timeStampStr = timeStamp.toString(16).padStart(8, '0');
-        const counterStr = counter.toString(16).padStart(16, '0');
+        const timeStampStr = timeStamp.toString(16).padStart(8, "0");
+        const counterStr = counter.toString(16).padStart(16, "0");
 
         return timeStampStr.toLowerCase() + counterStr.toLowerCase();
     }

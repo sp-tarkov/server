@@ -1,30 +1,29 @@
-
-import { OverallCounters, Skills } from "@spt-aki/models/eft/common/tables/IBotBase"
-import { Item } from "../common/tables/IItem"
+import { OverallCounters, Skills } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { Item } from "../common/tables/IItem";
 
 export interface IGetOtherProfileResponse
 {
-    id: string
-    aid: number
-    info: IOtherProfileInfo
-    customization: IOtherProfileCustomization
-    skills: Skills
-    equipment: IOtherProfileEquipment
-    achievements: Record<string, number>
-    favoriteItems: string[]
-    pmcStats: IOtherProfileStats
-    scavStats: IOtherProfileStats
+    id: string;
+    aid: number;
+    info: IOtherProfileInfo;
+    customization: IOtherProfileCustomization;
+    skills: Skills;
+    equipment: IOtherProfileEquipment;
+    achievements: Record<string, number>;
+    favoriteItems: string[];
+    pmcStats: IOtherProfileStats;
+    scavStats: IOtherProfileStats;
 }
 
 export interface IOtherProfileInfo
 {
-    nickname: string
-    side: string
-    experience: number
-    memberCategory: number
-    bannedState: boolean
-    bannedUntil: number
-    registrationDate: number
+    nickname: string;
+    side: string;
+    experience: number;
+    memberCategory: number;
+    bannedState: boolean;
+    bannedUntil: number;
+    registrationDate: number;
 }
 
 export interface IOtherProfileCustomization
@@ -48,6 +47,6 @@ export interface IOtherProfileStats
 
 export interface IOtherProfileSubStats
 {
-    totalInGameTime: number
-    overAllCounters: OverallCounters
+    totalInGameTime: number;
+    overAllCounters: OverallCounters;
 }

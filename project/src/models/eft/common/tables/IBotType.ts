@@ -143,7 +143,7 @@ export interface GenerationData
     /** key: number of items, value: weighting */
     weights: Record<string, number>;
     /** Array of item tpls */
-    whitelist: string[];
+    whitelist: Record<string, number>;
 }
 
 export interface Health
@@ -193,11 +193,11 @@ export interface Equipment
 
 export interface Items
 {
-    Backpack: string[];
-    Pockets: string[];
-    SecuredContainer: string[];
-    SpecialLoot: string[];
-    TacticalVest: string[];
+    Backpack: Record<string, number>;
+    Pockets: Record<string, number>;
+    SecuredContainer: Record<string, number>;
+    SpecialLoot: Record<string, number>;
+    TacticalVest: Record<string, number>;
 }
 
 export type Mods = Record<string, Record<string, string[]>>;

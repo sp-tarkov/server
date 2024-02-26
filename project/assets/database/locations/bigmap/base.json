@@ -84,7 +84,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 15,
+      "BossChance": 20,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -124,7 +124,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 35,
+      "BossChance": 20,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -136,7 +136,7 @@
       "ForceSpawn": false,
       "IgnoreMaxBots": false,
       "RandomTimeSpawn": false,
-      "Supports": [],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -8148,7 +8148,7 @@
       ]
     }
   ],
-  "UnixDateTime": 1636382469,
+  "UnixDateTime": 1707142711,
   "_Id": "56f40101d2720b2a4d8b45d6",
   "doors": [],
   "exit_access_time": 60,

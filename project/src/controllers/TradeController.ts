@@ -11,34 +11,49 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { IProcessBaseTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBaseTradeRequestData";
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
-import { IOfferRequest, IProcessRagfairTradeRequestData } from "@spt-aki/models/eft/trade/IProcessRagfairTradeRequestData";
+import {
+    IOfferRequest,
+    IProcessRagfairTradeRequestData,
+} from "@spt-aki/models/eft/trade/IProcessRagfairTradeRequestData";
 import { IProcessSellTradeRequestData } from "@spt-aki/models/eft/trade/IProcessSellTradeRequestData";
 import { ISellScavItemsToFenceRequestData } from "@spt-aki/models/eft/trade/ISellScavItemsToFenceRequestData";
 import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
+import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RagfairServer } from "@spt-aki/servers/RagfairServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { MailSendService } from "@spt-aki/services/MailSendService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class TradeController
 {
+    protected roubleTpl = "5449016a4bdc2d6f028b456f";
+
     protected ragfairConfig: IRagfairConfig;
     protected traderConfig: ITraderConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("TradeHelper") protected tradeHelper: TradeHelper,
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("RandomUtil") protected randomUtil: RandomUtil,
+        @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
@@ -47,6 +62,7 @@ export class TradeController
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
+        @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -146,14 +162,20 @@ export class TradeController
      * @param requestOffer request data from client
      * @param output Output to send back to client
      */
-    protected buyTraderItemFromRagfair(sessionId: string, pmcData: IPmcData, fleaOffer: IRagfairOffer, requestOffer: IOfferRequest, output: IItemEventRouterResponse): void
+    protected buyTraderItemFromRagfair(
+        sessionId: string,
+        pmcData: IPmcData,
+        fleaOffer: IRagfairOffer,
+        requestOffer: IOfferRequest,
+        output: IItemEventRouterResponse,
+    ): void
     {
         // Skip buying items when player doesn't have needed loyalty
         if (this.playerLacksTraderLoyaltyLevelToBuyOffer(fleaOffer, pmcData))
         {
             const errorMessage = `Unable to buy item: ${
                 fleaOffer.items[0]._tpl
-            } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`
+            } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`;
             this.logger.debug(errorMessage);
 
             this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.RAGFAIRUNAVAILABLE);
@@ -182,7 +204,13 @@ export class TradeController
      * @param requestOffer Request data from client
      * @param output Output to send back to client
      */
-    protected buyPmcItemFromRagfair(sessionId: string, pmcData: IPmcData, fleaOffer: IRagfairOffer, requestOffer: IOfferRequest, output: IItemEventRouterResponse): void
+    protected buyPmcItemFromRagfair(
+        sessionId: string,
+        pmcData: IPmcData,
+        fleaOffer: IRagfairOffer,
+        requestOffer: IOfferRequest,
+        output: IItemEventRouterResponse,
+    ): void
     {
         const buyData: IProcessBuyTradeRequestData = {
             Action: "TradingConfirm",
@@ -198,7 +226,13 @@ export class TradeController
         };
 
         // buyItem() must occur prior to removing the offer stack, otherwise item inside offer doesn't exist for confirmTrading() to use
-        this.tradeHelper.buyItem(pmcData, buyData, sessionId, this.ragfairConfig.dynamic.purchasesAreFoundInRaid, output);
+        this.tradeHelper.buyItem(
+            pmcData,
+            buyData,
+            sessionId,
+            this.ragfairConfig.dynamic.purchasesAreFoundInRaid,
+            output,
+        );
         if (output.warnings.length > 0)
         {
             return;
@@ -228,75 +262,41 @@ export class TradeController
     ): IItemEventRouterResponse
     {
         const output = this.eventOutputHolder.getOutput(sessionId);
-        const scavProfile = this.profileHelper.getFullProfile(sessionId)?.characters?.scav;
-        if (!scavProfile)
-        {
-            return this.httpResponse.appendErrorToOutput(
-                output,
-                `Profile ${request.fromOwner.id} has no scav account`,
-            );
-        }
 
-        this.sellInventoryToTrader(sessionId, scavProfile, pmcData, Traders.FENCE, output);
+        this.mailMoneyToPlayer(sessionId, request.totalValue, Traders.FENCE);
 
         return output;
     }
 
     /**
-     * Sell all sellable items to a trader from inventory
-     * WILL DELETE ITEMS FROM INVENTORY + CHILDREN OF ITEMS SOLD
+     * Send the specified rouble total to player as mail
      * @param sessionId Session id
-     * @param profileWithItemsToSell Profile with items to be sold to trader
-     * @param profileThatGetsMoney Profile that gets the money after selling items
      * @param trader Trader to sell items to
      * @param output IItemEventRouterResponse
      */
-    protected sellInventoryToTrader(
-        sessionId: string,
-        profileWithItemsToSell: IPmcData,
-        profileThatGetsMoney: IPmcData,
-        trader: Traders,
-        output: IItemEventRouterResponse
-    ): void
+    protected mailMoneyToPlayer(sessionId: string, roublesToSend: number, trader: Traders): void
     {
-        const handbookPrices = this.ragfairPriceService.getAllStaticPrices();
-        // TODO, apply trader sell bonuses?
-        const traderDetails = this.traderHelper.getTrader(trader, sessionId);
+        this.logger.debug(`Selling scav items to fence for ${roublesToSend} roubles`);
 
-        // Prep request object
-        const sellRequest: IProcessSellTradeRequestData = {
-            Action: "sell_to_trader",
-            type: "sell_to_trader",
-            tid: trader,
-            price: 0,
-            items: [],
+        // Create single currency item with all currency on it
+        const rootCurrencyReward = {
+            _id: this.hashUtil.generate(),
+            _tpl: this.roubleTpl,
+            upd: { StackObjectsCount: roublesToSend },
         };
 
-        // Get all base items that scav has (primaryweapon/backpack/pockets etc)
-        // Add items that trader will buy (only sell items that have the container as parent) to request object
-        const containerAndEquipmentItems = profileWithItemsToSell.Inventory.items.filter((x) =>
-            x.parentId === profileWithItemsToSell.Inventory.equipment
-        );
-        for (const itemToSell of containerAndEquipmentItems)
-        {
-            // Increment sell price in request
-            sellRequest.price += this.getPriceOfItemAndChildren(
-                itemToSell._id,
-                profileWithItemsToSell.Inventory.items,
-                handbookPrices,
-                traderDetails,
-            );
+        // Ensure money is properly split to follow its max stack size limit
+        const curencyReward = this.itemHelper.splitStackIntoSeparateItems(rootCurrencyReward);
 
-            // Add item details to request
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            sellRequest.items.push({
-                id: itemToSell._id,
-                count: itemToSell?.upd?.StackObjectsCount ?? 1,
-                scheme_id: 0,
-            });
-        }
-        this.logger.debug(`Selling scav items to fence for ${sellRequest.price} roubles`);
-        this.tradeHelper.sellItem(profileWithItemsToSell, profileThatGetsMoney, sellRequest, sessionId, output);
+        // Send mail from trader
+        this.mailSendService.sendLocalisedNpcMessageToPlayer(
+            sessionId,
+            this.traderHelper.getTraderById(trader),
+            MessageType.MESSAGE_WITH_ITEMS,
+            this.randomUtil.getArrayValue(this.databaseServer.getTables().traders[trader].dialogue.soldItems),
+            curencyReward.flatMap((x) => x),
+            this.timeUtil.getHoursAsSeconds(72),
+        );
     }
 
     /**

@@ -1,4 +1,5 @@
-export enum ContextVariableType {
+export enum ContextVariableType
+{
     /** Logged in users session id */
     SESSION_ID = 0,
     /** Currently acive raid information */

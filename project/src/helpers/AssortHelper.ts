@@ -85,11 +85,13 @@ export class AssortHelper
                 status: [QuestStatus.Started, QuestStatus.AvailableForFinish, QuestStatus.Success],
             };
         }
-        else if (assortId in mergedQuestAssorts.success)
+
+        if (assortId in mergedQuestAssorts.success)
         {
             return { questId: mergedQuestAssorts.success[assortId], status: [QuestStatus.Success] };
         }
-        else if (assortId in mergedQuestAssorts.fail)
+
+        if (assortId in mergedQuestAssorts.fail)
         {
             return { questId: mergedQuestAssorts.fail[assortId], status: [QuestStatus.Fail] };
         }

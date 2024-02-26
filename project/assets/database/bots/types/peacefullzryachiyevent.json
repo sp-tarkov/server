@@ -2113,16 +2113,15 @@
       }
     },
     "items": {
-      "Backpack": [],
-      "Pockets": [
-        "590c678286f77426c9660122",
-        "60098ad7c2240c0fe85c570a"
-      ],
-      "SecuredContainer": [
-        "5e023d48186a883be655e551"
-      ],
-      "SpecialLoot": [],
-      "TacticalVest": []
+      "Backpack": {},
+      "Pockets": {
+        "590c678286f77426c9660122": 1
+      },
+      "SecuredContainer": {
+        "5e023d48186a883be655e551": 1
+      },
+      "SpecialLoot": {},
+      "TacticalVest": {}
     },
     "mods": {
       "57c69dd424597774c03b7bbc": {

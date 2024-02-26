@@ -3,11 +3,10 @@ import { inject, injectable } from "tsyringe";
 import { BotGenerator } from "@spt-aki/generators/BotGenerator";
 import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
 import { BotHelper } from "@spt-aki/helpers/BotHelper";
-import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Settings, Skills, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IBotBase, Settings, Skills, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
@@ -39,7 +38,6 @@ export class PlayerScavGenerator
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
-        @inject("BotWeaponGeneratorHelper") protected botWeaponGeneratorHelper: BotWeaponGeneratorHelper,
         @inject("BotGeneratorHelper") protected botGeneratorHelper: BotGeneratorHelper,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -64,11 +62,10 @@ export class PlayerScavGenerator
     {
         // get karma level from profile
         const profile = this.saveServer.getProfile(sessionID);
-        const pmcData = this.jsonUtil.clone(profile.characters.pmc);
-        const existingScavData = this.jsonUtil.clone(profile.characters.scav);
+        const pmcDataClone = this.jsonUtil.clone(profile.characters.pmc);
+        const existingScavDataClone = this.jsonUtil.clone(profile.characters.scav);
 
-        // scav profile can be empty on first profile creation
-        const scavKarmaLevel = (Object.keys(existingScavData).length === 0) ? 0 : this.getScavKarmaLevel(pmcData);
+        const scavKarmaLevel = this.getScavKarmaLevel(pmcDataClone);
 
         // use karma level to get correct karmaSettings
         const playerScavKarmaSettings = this.playerScavConfig.karmaLevel[scavKarmaLevel];
@@ -95,42 +92,87 @@ export class PlayerScavGenerator
 
         // Add scav metadata
         scavData.savage = null;
-        scavData.aid = pmcData.aid;
-        scavData.TradersInfo = pmcData.TradersInfo;
+        scavData.aid = pmcDataClone.aid;
+        scavData.TradersInfo = pmcDataClone.TradersInfo;
         scavData.Info.Settings = {} as Settings;
         scavData.Info.Bans = [];
-        scavData.Info.RegistrationDate = pmcData.Info.RegistrationDate;
-        scavData.Info.GameVersion = pmcData.Info.GameVersion;
+        scavData.Info.RegistrationDate = pmcDataClone.Info.RegistrationDate;
+        scavData.Info.GameVersion = pmcDataClone.Info.GameVersion;
         scavData.Info.MemberCategory = MemberCategory.UNIQUE_ID;
         scavData.Info.lockedMoveCommands = true;
-        scavData.RagfairInfo = pmcData.RagfairInfo;
-        scavData.UnlockedInfo = pmcData.UnlockedInfo;
+        scavData.RagfairInfo = pmcDataClone.RagfairInfo;
+        scavData.UnlockedInfo = pmcDataClone.UnlockedInfo;
 
         // Persist previous scav data into new scav
-        scavData._id = existingScavData._id ?? pmcData.savage;
-        scavData.sessionId = existingScavData.sessionId ?? pmcData.sessionId;
-        scavData.Skills = this.getScavSkills(existingScavData);
-        scavData.Stats = this.getScavStats(existingScavData);
-        scavData.Info.Level = this.getScavLevel(existingScavData);
-        scavData.Info.Experience = this.getScavExperience(existingScavData);
-        scavData.Quests = existingScavData.Quests ?? [];
-        scavData.TaskConditionCounters = existingScavData.TaskConditionCounters ?? { };
-        scavData.Notes = existingScavData.Notes ?? { Notes: [] };
-        scavData.WishList = existingScavData.WishList ?? [];
+        scavData._id = existingScavDataClone._id ?? pmcDataClone.savage;
+        scavData.sessionId = existingScavDataClone.sessionId ?? pmcDataClone.sessionId;
+        scavData.Skills = this.getScavSkills(existingScavDataClone);
+        scavData.Stats = this.getScavStats(existingScavDataClone);
+        scavData.Info.Level = this.getScavLevel(existingScavDataClone);
+        scavData.Info.Experience = this.getScavExperience(existingScavDataClone);
+        scavData.Quests = existingScavDataClone.Quests ?? [];
+        scavData.TaskConditionCounters = existingScavDataClone.TaskConditionCounters ?? {};
+        scavData.Notes = existingScavDataClone.Notes ?? { Notes: [] };
+        scavData.WishList = existingScavDataClone.WishList ?? [];
+        scavData.Encyclopedia = pmcDataClone.Encyclopedia;
 
-        // Add an extra labs card to pscav backpack based on config chance
-        if (this.randomUtil.getChance100(playerScavKarmaSettings.labsAccessCardChancePercent))
+        // Add additional items to player scav as loot
+        this.addAdditionalLootToPlayerScavContainers(playerScavKarmaSettings.lootItemsToAddChancePercent, scavData, [
+            "TacticalVest",
+            "Pockets",
+            "Backpack",
+        ]);
+
+        // Remove secure container
+        scavData = this.profileHelper.removeSecureContainer(scavData);
+
+        // Set cooldown timer
+        scavData = this.setScavCooldownTimer(scavData, pmcDataClone);
+
+        // Add scav to the profile
+        this.saveServer.getProfile(sessionID).characters.scav = scavData;
+
+        return scavData;
+    }
+
+    /**
+     * Add items picked from `playerscav.lootItemsToAddChancePercent`
+     * @param possibleItemsToAdd dict of tpl + % chance to be added
+     * @param scavData
+     * @param containersToAddTo Possible slotIds to add loot to
+     */
+    protected addAdditionalLootToPlayerScavContainers(
+        possibleItemsToAdd: Record<string, number>,
+        scavData: IBotBase,
+        containersToAddTo: string[],
+    ): void
+    {
+        for (const tpl in possibleItemsToAdd)
         {
-            const labsCard = this.itemHelper.getItem("5c94bbff86f7747ee735c08f")[1];
+            const shouldAdd = this.randomUtil.getChance100(possibleItemsToAdd[tpl]);
+            if (!shouldAdd)
+            {
+                continue;
+            }
+
+            const itemResult = this.itemHelper.getItem(tpl);
+            if (!itemResult[0])
+            {
+                this.logger.warning(`Unable to add ${tpl} to player scav, not an item`);
+                continue;
+            }
+
+            const itemTemplate = itemResult[1];
             const itemsToAdd: Item[] = [{
                 _id: this.hashUtil.generate(),
-                _tpl: labsCard._id,
-                ...this.botGeneratorHelper.generateExtraPropertiesForItem(labsCard),
+                _tpl: itemTemplate._id,
+                ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemTemplate),
             }];
-            const result = this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(
-                ["TacticalVest", "Pockets", "Backpack"],
+
+            const result = this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
+                containersToAddTo,
                 itemsToAdd[0]._id,
-                labsCard._id,
+                itemTemplate._id,
                 itemsToAdd,
                 scavData.Inventory,
             );
@@ -140,17 +182,6 @@ export class PlayerScavGenerator
                 this.logger.debug(`Unable to add keycard to bot. Reason: ${ItemAddedResult[result]}`);
             }
         }
-
-        // Remove secure container
-        scavData = this.profileHelper.removeSecureContainer(scavData);
-
-        // Set cooldown timer
-        scavData = this.setScavCooldownTimer(scavData, pmcData);
-
-        // Add scav to the profile
-        this.saveServer.getProfile(sessionID).characters.scav = scavData;
-
-        return scavData;
     }
 
     /**

@@ -1,0 +1,8 @@
+{
+	"bot-generation_failed": "tạo bot không thành công, kiểm tra log của server để biết thêm chi tiết",
+	"bot-no_ammo_found_in_bot_json": "Không tìm được đạn cho loại bot: %s",
+	"bot-no_bot_cap_found_for_location": "Không tìm thấy giới hạn bot của địa điểm này cho bot: %s, sử dụng giới hạn mặc định",
+	"bot-unable_to_find_ammo_item": "Không tìm được mẫu băng đạn với tpl: %s",
+	"bot-unable_to_find_default_magazine_item": "Không tìm được mẫu băng đạn: %s trong cơ sở dữ liệu",
+	"bot-unable_to_find_magazine_item": "Không tìm được mẫu băng đạn: %s trong cơ sở dữ liệu"
+}

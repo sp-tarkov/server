@@ -17,7 +17,8 @@ export class ObjectId
 
     public incGlobalCounter(): number
     {
-        return (this.globalCounter = (this.globalCounter + 1) % 0xffffff);
+        this.globalCounter = (this.globalCounter + 1) % 0xffffff;
+        return this.globalCounter;
     }
 
     public toHexString(byteArray: string | any[] | Buffer): string

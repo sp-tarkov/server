@@ -1,15 +1,15 @@
 export interface IGetRaidTimeResponse
 {
-    RaidTimeMinutes: number
-    NewSurviveTimeSeconds: number
-    OriginalSurvivalTimeSeconds: number
-    ExitChanges: ExtractChange[]
+    RaidTimeMinutes: number;
+    NewSurviveTimeSeconds: number;
+    OriginalSurvivalTimeSeconds: number;
+    ExitChanges: ExtractChange[];
 }
 
 export interface ExtractChange
 {
-    Name: string
-    MinTime?: number
-    MaxTime?: number
-    Chance?: number
+    Name: string;
+    MinTime?: number;
+    MaxTime?: number;
+    Chance?: number;
 }

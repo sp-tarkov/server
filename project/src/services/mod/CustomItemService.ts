@@ -211,7 +211,9 @@ export class CustomItemService
         const weapon = this.itemHelper.getItem(weaponTpl);
         if (!weapon[0])
         {
-            this.logger.warning(`Unable to add custom weapon ${weaponTpl} to PMCs as it cannot be found in the Item db`);
+            this.logger.warning(
+                `Unable to add custom weapon ${weaponTpl} to PMCs as it cannot be found in the Item db`,
+            );
 
             return;
         }

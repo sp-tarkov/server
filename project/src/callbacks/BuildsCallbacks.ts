@@ -33,7 +33,7 @@ export class BuildsCallbacks
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public createMagazineTemplate(url: string, request: ISetMagazineRequest, sessionID: string): INullResponseData
     {
-        this.buildController.createMagazineTemplate(sessionID, request)
+        this.buildController.createMagazineTemplate(sessionID, request);
 
         return this.httpResponse.nullResponse();
     }

@@ -31,7 +31,7 @@
         "sectantWarrior": 10,
         "gifter": 5,
         "test": 30,
-        "exUsec": 30,
+        "exUsec": 25,
         "arenaFighterEvent": 15,
         "arenaFighter": 15,
         "crazyAssaultEvent": 15,
@@ -41,7 +41,7 @@
         "followerBoarClose2": 10,
         "followerKolontayAssault": 10,
         "followerKolontaySecurity": 10,
-        "shooterBTR": 2,
+        "shooterBTR": 1,
         "peacefullZryachiyEvent": 5,
         "ravangeZryachiyEvent": 5,
         "sectactPriestEvent": 10,
@@ -94,9 +94,9 @@
         },
         "boss": {
             "armor": {
-                "maxDelta": 10,
+                "maxDelta": 0,
                 "minDelta": 0,
-                "minLimitPercent": 15
+                "minLimitPercent": 100
             },
             "weapon": {
                 "lowestMax": 80,
@@ -273,55 +273,6 @@
             }
         }
     },
-    "lootNValue": {
-        "scav": 4,
-        "pmc": 3,
-        "assault": 4,
-        "marksman": 4,
-        "arenafighterevent": 4,
-        "arenafighter": 4,
-        "crazyassaultevent": 4,
-        "bossbully": 4,
-        "sptbear": 3,
-        "sptusec": 3,
-        "bossgluhar": 3,
-        "bosskilla": 3,
-        "bossknight": 3,
-        "bosskojaniy": 3,
-        "bosssanitar": 3,
-        "bosstagilla": 3,
-        "bosstest": 4,
-        "bosszryachiy": 3,
-        "bossboar": 3,
-        "bossboarsniper": 3,
-        "bosskolontay": 3,
-        "cursedassault": 4,
-        "exusec": 4,
-        "followerbigpipe": 4,
-        "followerbirdeye": 4,
-        "followerbully": 4,
-        "followergluharassault": 4,
-        "followergluharscout": 4,
-        "followergluharsecurity": 4,
-        "followergluharsnipe": 4,
-        "followerkojaniy": 4,
-        "followersanitar": 4,
-        "followertagilla": 4,
-        "followertest": 4,
-        "followerzryachiy": 4,
-        "followerboar": 4,
-        "followerboarclose1": 4,
-        "followerboarclose2": 4,
-        "followerkolontayassault": 4,
-        "followerkolontaysecurity": 4,
-        "gifter": 4,
-        "pmcbot": 4,
-        "sectantpriest": 4,
-        "sectantwarrior": 4,
-        "shooterbtr": 1,
-        "test": 4,
-        "ravangezryachiyevent": 4
-    },
     "chanceAssaultScavHasPlayerScavName": 10,
     "secureContainerAmmoStackCount": 20,
     "botRolesWithDogTags": [
@@ -348,17 +299,22 @@
         "default": {},
         "assault": {
             "5a0c27731526d80618476ac4": 1,
-            "5c99f98d86f7745c314214b3": 1
+            "5c99f98d86f7745c314214b3": 1,
+			"5448f3a64bdc2d60728b456a": 2
         },
-        "marksman": {},
+        "marksman": {
+			"60b0f6c058e0b0481a09ad11": 1,
+			"5783c43d2459774bbe137486": 1
+		},
         "cursedassault": {},
         "exusec": {},
         "bossbully": {},
         "bossgluhar": {},
         "bosskilla": {},
         "bosskojaniy": {
-			"5d08d21286f774736e7c94c3": 1
-		},
+            "5d08d21286f774736e7c94c3": 1,
+            "5c94bbff86f7747ee735c08f": 1
+        },
         "bosssanitar": {},
         "bosstagilla": {},
         "bossknight": {},
@@ -408,12 +364,13 @@
             "5a341c4686f77469e155819e": 1,
             "55818b164bdc2ddc698b456c": 2,
             "5448bc234bdc2d3c308b4569": 2,
-            "543be5dd4bdc2deb348b4569": 2,
+            "543be5dd4bdc2deb348b4569": 1,
             "543be5cb4bdc2deb348b4568": 2,
             "5485a8684bdc2da71d8b4567": 2,
             "5d650c3e815116009f6201d2": 2,
             "5448f39d4bdc2d0a728b4568": 2,
-            "543be6564bdc2df4348b4568": 1
+            "543be6564bdc2df4348b4568": 1,
+			"5751a25924597722c463c472": 2
         },
         "shooterbtr": {}
     },
@@ -427,8 +384,7 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 85,
             "laserIsActiveChancePercent": 75,
-            "weightingAdjustmentsByPlayerLevel": [
-                {
+            "weightingAdjustmentsByPlayerLevel": [{
                     "levelRange": {
                         "min": 1,
                         "max": 6
@@ -458,7 +414,8 @@
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "cursedassault": {
             "faceShieldIsActiveChancePercent": 90,
@@ -472,7 +429,9 @@
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 90,
-            "laserIsActiveChancePercent": 85
+            "laserIsActiveChancePercent": 85,
+            "forceStock": true,
+            "weaponSlotIdsToMakeRequired": ["mod_reciever"]
         },
         "bossbully": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -507,13 +466,15 @@
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "bosssanitar": {
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 85
+            "laserIsActiveChancePercent": 85,
+            "forceStock": true
         },
         "bosstagilla": {
             "faceShieldIsActiveChancePercent": 100,
@@ -561,19 +522,22 @@
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
+            "laserIsActiveChancePercent": 75,
+            "forceStock": true
         },
         "followerkolontaysecurity": {
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
+            "laserIsActiveChancePercent": 75,
+            "forceStock": true
         },
         "followerbully": {
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
+            "laserIsActiveChancePercent": 75,
+            "forceStock": true
         },
         "followergluharassault": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -581,7 +545,8 @@
             "faceShieldIsActiveChancePercent": 100,
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
+            "laserIsActiveChancePercent": 75,
+            "forceStock": true
         },
         "followergluharscout": {
             "faceShieldIsActiveChancePercent": 100,
@@ -655,7 +620,8 @@
             "weaponModLimits": {
                 "scopeLimit": 2,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "followerboarclose1": {
             "nvgIsActiveChanceDayPercent": 20,
@@ -667,7 +633,8 @@
             "weaponModLimits": {
                 "scopeLimit": 2,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "followerboarclose2": {
             "nvgIsActiveChanceDayPercent": 20,
@@ -679,7 +646,8 @@
             "weaponModLimits": {
                 "scopeLimit": 2,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "bossboarsniper": {
             "nvgIsActiveChanceDayPercent": 20,
@@ -736,7 +704,8 @@
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
-            }
+            },
+            "weaponSlotIdsToMakeRequired": ["mod_reciever"]
         },
         "arenafighterevent": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -772,7 +741,8 @@
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
-            }
+            },
+            "forceStock": true
         },
         "assaultgroup": {},
         "gifter": {
@@ -852,10 +822,10 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 95,
             "laserIsActiveChancePercent": 85,
-			"forceOnlyArmoredRigWhenNoArmor": true,
+            "forceOnlyArmoredRigWhenNoArmor": true,
             "filterPlatesByLevel": true,
-            "randomisation": [
-                {
+            "weaponSlotIdsToMakeRequired": ["mod_reciever", "mod_stock", "mod_muzzle"],
+            "randomisation": [{
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -866,44 +836,46 @@
                                 "0": 1,
                                 "1": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "grenades": {
                             "weights": {
-                                "0": 2,
-                                "1": 1
+                                "0": 25,
+                                "1": 11
                             },
-                            "whitelist": [
-                                "5710c24ad2720bc3458b45a3",
-                                "58d3db5386f77426186285a0",
-                                "5448be9a4bdc2dfd2f8b456a"
-                            ]
+                            "whitelist": {
+                                "5710c24ad2720bc3458b45a3": 1,
+                                "58d3db5386f77426186285a0": 1,
+                                "5448be9a4bdc2dfd2f8b456a": 1
+                            }
                         },
                         "healing": {
                             "weights": {
                                 "0": 1,
-                                "1": 2
+                                "1": 4,
+                                "2": 3
                             },
-                            "whitelist": [
-                                "5e831507ea0a7c419c2f9bd9",
-                                "5755356824597772cb798962",
-                                "590c661e86f7741e566b646a",
-                                "590c657e86f77412b013051d",
-                                "544fb37f4bdc2dee738b4567",
-                                "544fb3364bdc2d34748b456a",
-                                "544fb25a4bdc2dfb738b4567"
-                            ]
+                            "whitelist": {
+                                "5e831507ea0a7c419c2f9bd9": 1,
+                                "5755356824597772cb798962": 1,
+                                "590c661e86f7741e566b646a": 1,
+                                "590c657e86f77412b013051d": 1,
+                                "544fb37f4bdc2dee738b4567": 1,
+                                "544fb3364bdc2d34748b456a": 1,
+                                "544fb25a4bdc2dfb738b4567": 1
+                            }
                         },
                         "backpackLoot": {
                             "weights": {
-                                "0": 1,
-                                "1": 2,
-                                "2": 4,
-                                "3": 2,
-                                "4": 1,
-                                "5": 1
+                                "0": 4,
+                                "1": 7,
+                                "2": 20,
+                                "3": 12,
+                                "4": 8,
+                                "5": 2,
+                                "10": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "pocketLoot": {
                             "weights": {
@@ -912,7 +884,7 @@
                                 "2": 1,
                                 "3": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "vestLoot": {
                             "weights": {
@@ -922,7 +894,7 @@
                                 "3": 1,
                                 "4": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "magazines": {
                             "weights": {
@@ -930,13 +902,13 @@
                                 "1": 2,
                                 "2": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "stims": {
                             "weights": {
                                 "0": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         }
                     },
                     "equipment": {
@@ -946,7 +918,7 @@
                         "Holster": 5,
                         "Earpiece": 35,
                         "Eyewear": 5,
-                        "Backpack": 35,
+                        "Backpack": 65,
                         "FaceCover": 5
                     },
                     "randomisedWeaponModSlots": [],
@@ -967,7 +939,7 @@
                         "mod_foregrip": 10,
                         "mod_handguard": 10,
                         "mod_launcher": 0,
-                        "mod_reciever": 15,
+                        "mod_reciever": 10,
                         "mod_magazine": 10,
                         "mod_mount": 15,
                         "mod_mount_000": 10,
@@ -1001,12 +973,60 @@
                         "mod_tactical_003": 10,
                         "mod_tactical_2": 10
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 15,
                         "max": 22
                     },
+					"generation": {
+						"backpackLoot": {
+                            "weights": {
+                                "0": 3,
+                                "1": 5,
+                                "2": 12,
+                                "3": 20,
+                                "4": 8,
+                                "5": 3,
+                                "10": 1
+                            },
+                            "whitelist": []
+                        },
+                        "pocketLoot": {
+                            "weights": {
+                                "0": 2,
+                                "1": 3,
+                                "2": 2,
+                                "3": 1
+                            },
+                            "whitelist": []
+                        },
+                        "vestLoot": {
+                            "weights": {
+                                "0": 1,
+                                "1": 4,
+                                "2": 2,
+                                "3": 1,
+                                "4": 1
+                            },
+                            "whitelist": []
+                        },
+                        "magazines": {
+                            "weights": {
+                                "0": 0,
+                                "1": 1,
+                                "2": 4,
+								"3": 3
+                            },
+                            "whitelist": []
+                        },
+                        "stims": {
+                            "weights": {
+                                "0": 10,
+								"1": 1
+                            },
+                            "whitelist": []
+                        }
+					},
                     "equipment": {
                         "ArmBand": 90,
                         "FirstPrimaryWeapon": 90,
@@ -1091,11 +1111,12 @@
                         "mod_mount_004": 35,
                         "mod_mount_005": 35,
                         "mod_mount_006": 35,
-                        "mod_muzzle": 25,
+                        "mod_muzzle": 20,
                         "mod_muzzle_000": 20,
                         "mod_muzzle_001": 20,
                         "mod_pistol_grip_akms": 35,
                         "mod_pistol_grip": 40,
+						"mod_reciever": 20,
                         "mod_scope": 15,
                         "mod_scope_000": 45,
                         "mod_scope_001": 35,
@@ -1110,14 +1131,13 @@
                         "mod_tactical_003": 30,
                         "mod_tactical_2": 15
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 23,
                         "max": 45
                     },
                     "equipment": {
-                        "SecondPrimaryWeapon": 20
+                        "SecondPrimaryWeapon": 10
                     },
                     "randomisedArmorSlots": [
                         "Headwear",
@@ -1165,14 +1185,13 @@
                         "mod_tactical_002",
                         "mod_tactical_003"
                     ]
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 46,
                         "max": 100
                     },
                     "equipment": {
-                        "SecondPrimaryWeapon": 20
+                        "SecondPrimaryWeapon": 10
                     },
                     "equipmentMods": {
                         "left_side_plate": 90,
@@ -1182,6 +1201,12 @@
                         "mod_equipment_001": 75,
                         "mod_equipment_002": 90,
                         "mod_nvg": 60
+                    },
+                    "weaponMods": {
+                        "mod_scope": 95,
+                        "mod_muzzle": 75,
+                        "mod_muzzle_000": 95,
+                        "mod_muzzle_001": 95
                     },
                     "randomisedArmorSlots": [
                         "Headwear",
@@ -1231,8 +1256,7 @@
                     ]
                 }
             ],
-            "blacklist": [
-                {
+            "blacklist": [{
                     "levelRange": {
                         "min": 1,
                         "max": 100
@@ -1255,7 +1279,9 @@
                             "5d1b5e94d7ad1a2b865a96b0",
                             "5a7c74b3e899ef0014332c29",
                             "618b9643526131765025ab35",
-                            "618bab21526131765025ab3f"
+                            "618bab21526131765025ab3f",
+                            "65392f611406374f82152ba5",
+                            "653931da5db71d30ab1d6296"
                         ],
                         "mod_nvg": [
                             "5c11046cd174af02a012e42b"
@@ -1284,8 +1310,7 @@
                     }
                 }
             ],
-            "weightingAdjustmentsByBotLevel": [
-                {
+            "weightingAdjustmentsByBotLevel": [{
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -1294,10 +1319,10 @@
                         "add": {},
                         "edit": {
                             "Caliber1143x23ACP": {
-                                "5e81f423763d9f754677bf2e": 6,
+                                "5e81f423763d9f754677bf2e": 36,
                                 "5ea2a8e200685063ec28c05a": 1,
                                 "5efb0cabfb3e451d70735af5": 1,
-                                "5efb0d4f4bc50b58e81710f3": 12,
+                                "5efb0d4f4bc50b58e81710f3": 72,
                                 "5efb0fc6aeb21837e749c801": 1
                             },
                             "Caliber556x45NATO": {
@@ -1310,7 +1335,11 @@
                             "Caliber545x39": {
                                 "56dff3afd2720bba668b4567": 20,
                                 "56dff421d2720b5f5a8b4567": 200,
-                                "56dff4ecd2720b5f5a8b4568": 200
+                                "56dff4ecd2720b5f5a8b4568": 200,
+                                "56dff4a2d2720bbd668b456a": 200,
+                                "56dfef82d2720bbd668b4567": 0,
+                                "56dff026d2720bb8668b4567": 0,
+                                "5c0d5e4486f77478390952fe": 0
                             },
                             "Caliber762x39": {
                                 "5656d7c34bdc2d9d198b4587": 20,
@@ -1324,35 +1353,37 @@
                                 "6196365d58ef8c428c287da1": 300
                             },
                             "Caliber366TKM": {
-                                "59e6542b86f77411dc52a77a": 20,
+                                "59e6542b86f77411dc52a77a": 70,
                                 "59e655cb86f77411dc52a77b": 5,
-                                "59e6658b86f77411d949b250": 10,
-                                "5f0596629e22f464da6bbdd9": 1
+                                "59e6658b86f77411d949b250": 100,
+                                "5f0596629e22f464da6bbdd9": 0
                             },
                             "Caliber762x51": {
                                 "58dd3ad986f77403051cba8f": 4,
                                 "5a608bf24f39f98ffc77720e": 4,
                                 "5a6086ea4f39f99cd479502f": 4,
-                                "5e023e6e34d52a55c3304f71": 100,
-                                "5e023e88277cce2b522ff2b1": 50
+                                "5e023e6e34d52a55c3304f71": 250,
+                                "5e023e88277cce2b522ff2b1": 140
                             },
                             "Caliber762x54R": {
                                 "5e023cf8186a883be655e54f": 5,
-                                "5887431f2459777e1612938f": 30,
+                                "5887431f2459777e1612938f": 10,
                                 "64b8f7c241772715af0f9c3d": 400,
-                                "64b8f7b5389d7ffd620ccba2": 600
+                                "64b8f7b5389d7ffd620ccba2": 100
                             },
                             "Caliber9x19PARA": {
                                 "58864a4f2459770fcc257101": 80,
-                                "5c3df7d588a4501f290594e5": 80
+                                "5c3df7d588a4501f290594e5": 80,
+                                "5efb0da7a29a85116f6ea05f": 0,
+                                "5c925fa22e221601da359b7b": 1
                             },
                             "Caliber9x39": {
                                 "57a0dfb82459774d3078b56c": 10,
-                                "6576f96220d53a5b8f3e395e": 14
+                                "6576f96220d53a5b8f3e395e": 200
                             },
                             "Caliber12g": {
-                                "5d6e68a8a4b9360b6c0d54e2": 5,
-                                "5d6e6911a4b9361bd5780d52": 5,
+                                "5d6e68a8a4b9360b6c0d54e2": 1,
+                                "5d6e6911a4b9361bd5780d52": 1,
                                 "5d6e6806a4b936088465b17e": 20,
                                 "58820d1224597753c90aeb13": 200,
                                 "5d6e67fba4b9361bc73bc779": 200,
@@ -1361,6 +1392,20 @@
                             },
                             "Caliber20g": {
                                 "5a38ebd9c4a282000d722a5b": 10
+                            },
+                            "Caliber23x75": {
+                                "5e85a9a6eacf8c039e4e2ac1": 50
+                            },
+                            "Caliber9x18PM": {
+                                "573719df2459775a626ccbc2": 0,
+                                "57371aab2459775a77142f22": 0
+                            },
+                            "Caliber9x21": {
+                                "6576f4708ca9c4381d16cd9d": 0,
+                                "5a26ac0ec4a28200741e1e18": 0
+                            },
+                            "Caliber46x30": {
+                                "5ba26835d4351e0035628ff5": 0
                             }
                         }
                     },
@@ -1389,15 +1434,15 @@
                                 "64be79c487d1510151095552": 270,
                                 "64be79e2bf8412471d0d9bcc": 270,
                                 "5c0e655586f774045612eeb2": 80,
-                                "5e4abb5086f77406975c9342": 4,
-                                "6038b4ca92ec1c3103795a0d": 4,
-                                "6038b4b292ec1c3103795a0b": 4,
-                                "5b44cd8b86f774503d30cba2": 4,
-                                "5ca21c6986f77479963115a7": 4,
+                                "5e4abb5086f77406975c9342": 1,
+                                "6038b4ca92ec1c3103795a0d": 1,
+                                "6038b4b292ec1c3103795a0b": 1,
+                                "5b44cd8b86f774503d30cba2": 1,
+                                "5ca21c6986f77479963115a7": 1,
                                 "5b44d0de86f774503d30cba8": 4,
                                 "5b44cf1486f77431723e3d05": 4,
                                 "60a283193cb70855c43a381d": 4,
-                                "5c0e541586f7747fa54205c9": 4,
+                                "5c0e541586f7747fa54205c9": 1,
                                 "545cdb794bdc2d3a198b456a": 4,
                                 "5ca2151486f774244a3b8d30": 1
                             },
@@ -1421,7 +1466,7 @@
                                 "572b7adb24597762ae139821": 250,
                                 "544a5caa4bdc2d1a388b4568": 50,
                                 "5929a2a086f7744f4b234d43": 150,
-                                "64be7110bf597ba84a0a41ea": 150
+                                "64be7110bf597ba84a0a41ea": 220
                             },
                             "Headwear": {
                                 "5c17a7ed2e2216152142459c": 1,
@@ -1441,8 +1486,8 @@
                             },
                             "FirstPrimaryWeapon": {
                                 "59e6152586f77473dc057aa1": 170,
-                                "57d14d2524597714373db789": 170,
-                                "5c07c60e0db834002330051f": 110,
+                                "57d14d2524597714373db789": 180,
+                                "5c07c60e0db834002330051f": 120,
                                 "5ac4cd105acfc40016339859": 110,
                                 "56dee2bdd2720bc8328b4567": 140,
                                 "574d967124597745970e7c94": 190,
@@ -1452,7 +1497,7 @@
                                 "5ae08f0a5acfc408fb1398a1": 110,
                                 "5bfd297f0db834001a669119": 110,
                                 "5447a9cd4bdc2dbd208b4567": 70,
-                                "5926bb2186f7744b1c6c6e60": 110,
+                                "5926bb2186f7744b1c6c6e60": 130,
                                 "58948c8e86f77409493f7266": 80,
                                 "5fc3e272f8b6a877a729eac5": 80,
                                 "5644bd2b4bdc2d3b4c8b4572": 100,
@@ -1463,18 +1508,21 @@
                                 "60db29ce99594040e04c4a27": 130,
                                 "5580223e4bdc2d1c128b457f": 120,
                                 "5e870397991fd70db46995c8": 90,
-                                "61f7c9e189e6fb1a5e3ea78d": 3,
+                                "61f7c9e189e6fb1a5e3ea78d": 40,
                                 "5a38e6bac4a2826c6e06d79b": 110,
                                 "5ea03f7400685063ec28bfa8": 65,
-                                "627e14b21713922ded6f2c15": 1,
+                                "627e14b21713922ded6f2c15": 0,
                                 "5bb2475ed4351e00853264e3": 1,
                                 "5d43021ca4b9362eab4b5e25": 1,
-                                "6275303a9f372d6ea97f9ec7": 1,
+                                "6275303a9f372d6ea97f9ec7": 0,
                                 "5fb64bc92b1b027b1f50bcf2": 1,
                                 "6499849fc93611967b034949": 140,
                                 "59984ab886f7743e98271174": 170,
                                 "57dc2fa62459775949412633": 170,
-                                "606dae0ab0e443224b421bb7": 110
+                                "606dae0ab0e443224b421bb7": 110,
+                                "64637076203536ad5600c990": 0,
+                                "6513ef33e06849f06c0957ca": 0,
+                                "64ca3d3954fc657e230529cc": 0
                             },
                             "SecondPrimaryWeapon": {
                                 "5e81ebcd8e146c7080625e15": 0
@@ -1522,11 +1570,107 @@
                             }
                         }
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 15,
                         "max": 22
+                    },
+					"ammo": {
+                        "add": {},
+                        "edit": {
+                            "Caliber1143x23ACP": {
+                                "5e81f423763d9f754677bf2e": 26,
+                                "5ea2a8e200685063ec28c05a": 1,
+                                "5efb0cabfb3e451d70735af5": 1,
+                                "5efb0d4f4bc50b58e81710f3": 62,
+                                "5efb0fc6aeb21837e749c801": 1
+                            },
+                            "Caliber556x45NATO": {
+                                "59e6920f86f77411d82aa167": 250,
+                                "59e6927d86f77411da468256": 250,
+                                "54527a984bdc2d4e668b4567": 250,
+                                "59e6918f86f7746c9f75e849": 150,
+                                "5c0d5ae286f7741e46554302": 150
+                            },
+                            "Caliber545x39": {
+                                "56dff3afd2720bba668b4567": 40,
+                                "56dff421d2720b5f5a8b4567": 180,
+                                "56dff4ecd2720b5f5a8b4568": 180,
+                                "56dff4a2d2720bbd668b456a": 180,
+                                "56dfef82d2720bbd668b4567": 1,
+                                "56dff026d2720bb8668b4567": 1,
+                                "5c0d5e4486f77478390952fe": 1
+                            },
+                            "Caliber762x39": {
+                                "5656d7c34bdc2d9d198b4587": 20,
+                                "64b7af734b75259c590fa895": 300,
+                                "59e4d3d286f774176a36250a": 100,
+                                "64b7af5a8532cf95ee0a0dbd": 100
+                            },
+                            "Caliber762x35": {
+                                "5fd20ff893a8961fc660a954": 2,
+                                "6196364158ef8c428c287d9f": 30,
+                                "6196365d58ef8c428c287da1": 300
+                            },
+                            "Caliber366TKM": {
+                                "59e6542b86f77411dc52a77a": 40,
+                                "59e655cb86f77411dc52a77b": 4,
+                                "59e6658b86f77411d949b250": 80,
+                                "5f0596629e22f464da6bbdd9": 1
+                            },
+                            "Caliber762x51": {
+                                "58dd3ad986f77403051cba8f": 4,
+                                "5a608bf24f39f98ffc77720e": 4,
+                                "5a6086ea4f39f99cd479502f": 4,
+                                "5e023e6e34d52a55c3304f71": 200,
+                                "5e023e88277cce2b522ff2b1": 100
+                            },
+                            "Caliber762x54R": {
+                                "5e023cf8186a883be655e54f": 5,
+                                "5887431f2459777e1612938f": 30,
+                                "64b8f7c241772715af0f9c3d": 400,
+                                "64b8f7b5389d7ffd620ccba2": 600
+                            },
+                            "Caliber9x19PARA": {
+                                "58864a4f2459770fcc257101": 80,
+                                "5c3df7d588a4501f290594e5": 80,
+                                "5efb0da7a29a85116f6ea05f": 0,
+                                "5c925fa22e221601da359b7b": 1
+                            },
+                            "Caliber9x39": {
+                                "57a0dfb82459774d3078b56c": 100,
+                                "6576f96220d53a5b8f3e395e": 150
+                            },
+                            "Caliber12g": {
+                                "5d6e68a8a4b9360b6c0d54e2": 1,
+                                "5d6e6911a4b9361bd5780d52": 1,
+                                "5d6e6806a4b936088465b17e": 20,
+                                "58820d1224597753c90aeb13": 200,
+                                "5d6e67fba4b9361bc73bc779": 200,
+                                "560d5e524bdc2d25448b4571": 200,
+                                "64b8ee384b75259c590fa89b": 60
+                            },
+                            "Caliber20g": {
+                                "5a38ebd9c4a282000d722a5b": 10
+                            },
+                            "Caliber23x75": {
+                                "5e85a9a6eacf8c039e4e2ac1": 50
+                            },
+                            "Caliber9x18PM": {
+                                "573719df2459775a626ccbc2": 0,
+                                "57371aab2459775a77142f22": 0
+                            },
+                            "Caliber9x21": {
+                                "6576f4708ca9c4381d16cd9d": 0,
+                                "5a26ac0ec4a28200741e1e18": 0
+                            },
+                            "Caliber57x28": {
+                                "5cc80f38e4a949001152b560": 0
+                            },
+                            "Caliber46x30": {
+                                "5ba26835d4351e0035628ff5": 0
+                            }
+                        }
                     },
                     "equipment": {
                         "edit": {
@@ -1534,7 +1678,8 @@
                                 "5c0e5bab86f77461f55ed1f3": 135,
                                 "5c0e5edb86f77461f55ed1f7": 135,
                                 "5648a7494bdc2d9d488b4583": 90,
-                                "5ab8e4ed86f7742d8e50c7fa": 135
+                                "5ab8e4ed86f7742d8e50c7fa": 135,
+                                "62a09d79de7ac81993580530": 25
                             },
                             "TacticalVest": {
                                 "5c0e3eb886f7742015526062": 40,
@@ -1570,21 +1715,24 @@
                                 "5645bcc04bdc2d363b8b4572": 7
                             },
                             "FirstPrimaryWeapon": {
-                                "627e14b21713922ded6f2c15": 1,
-                                "6275303a9f372d6ea97f9ec7": 1,
-                                "64ca3d3954fc657e230529cc": 1,
-                                "64637076203536ad5600c990": 1
+                                "627e14b21713922ded6f2c15": 0,
+                                "6275303a9f372d6ea97f9ec7": 0,
+                                "64ca3d3954fc657e230529cc": 0,
+                                "64637076203536ad5600c990": 0,
+                                "6513ef33e06849f06c0957ca": 0
                             }
                         }
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 30,
                         "max": 50
                     },
                     "equipment": {
                         "edit": {
+                            "FirstPrimaryWeapon": {
+                                "5c501a4d2e221602b412b540": 2
+                            },
                             "ArmorVest": {
                                 "5ab8e79e86f7742d8b372e78": 40,
                                 "5c0e541586f7747fa54205c9": 40,
@@ -1600,7 +1748,8 @@
                                 "545cdb794bdc2d3a198b456a": 30,
                                 "64be79c487d1510151095552": 1,
                                 "64be79e2bf8412471d0d9bcc": 1,
-                                "5648a7494bdc2d9d488b4583": 1
+                                "5648a7494bdc2d9d488b4583": 1,
+                                "62a09d79de7ac81993580530": 1
                             },
                             "TacticalVest": {
                                 "5b44cad286f77402a54ae7e5": 70,
@@ -1610,7 +1759,7 @@
                                 "628b9c7d45122232a872358f": 45,
                                 "609e860ebd219504d8507525": 25,
                                 "628cd624459354321c4b7fa2": 35,
-								"572b7adb24597762ae139821": 15,
+                                "572b7adb24597762ae139821": 15,
                                 "5e4abc1f86f774069619fbaa": 1,
                                 "6034d0230ca681766b6a0fb5": 1
                             },
@@ -1627,8 +1776,7 @@
                             }
                         }
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 51,
                         "max": 100
@@ -1688,23 +1836,23 @@
                     },
                     "equipment": {
                         "edit": {
-							"FirstPrimaryWeapon": {
-								"65290f395ae2ae97b80fdf2d": 8,
-								"5bb2475ed4351e00853264e3": 8,
-								"5c501a4d2e221602b412b540": 1,
-								"5d2f0d8048f0356c925bc3b0": 1,
-								"59984ab886f7743e98271174": 1,
-								"5ea03f7400685063ec28bfa8": 1,
-								"59f9cabd86f7743a10721f46": 1,
-								"60db29ce99594040e04c4a27": 1,
-								"61f7c9e189e6fb1a5e3ea78d": 1,
-								"5bfd297f0db834001a669119": 1,
-								"5ae08f0a5acfc408fb1398a1": 1,
-								"5de652c31b7e3716273428be": 1
-							},
-							"Holster": {
-								"5d3eb3b0a4b93615055e84d2": 25
-							},
+                            "FirstPrimaryWeapon": {
+                                "65290f395ae2ae97b80fdf2d": 8,
+                                "5bb2475ed4351e00853264e3": 8,
+                                "5c501a4d2e221602b412b540": 1,
+                                "5d2f0d8048f0356c925bc3b0": 0,
+                                "59984ab886f7743e98271174": 0,
+                                "5ea03f7400685063ec28bfa8": 0,
+                                "59f9cabd86f7743a10721f46": 0,
+                                "60db29ce99594040e04c4a27": 0,
+                                "61f7c9e189e6fb1a5e3ea78d": 0,
+                                "5bfd297f0db834001a669119": 0,
+                                "5ae08f0a5acfc408fb1398a1": 0,
+                                "5de652c31b7e3716273428be": 0
+                            },
+                            "Holster": {
+                                "5d3eb3b0a4b93615055e84d2": 25
+                            },
                             "ArmorVest": {
                                 "5ab8e79e86f7742d8b372e78": 60,
                                 "5c0e541586f7747fa54205c9": 60,
@@ -1728,8 +1876,8 @@
                                 "64abd93857958b4249003418": 10,
                                 "64be79c487d1510151095552": 1,
                                 "5648a7494bdc2d9d488b4583": 1,
-                                "572b7adb24597762ae139821": 1,
-                                "64be79e2bf8412471d0d9bcc": 1
+                                "64be79e2bf8412471d0d9bcc": 1,
+                                "62a09d79de7ac81993580530": 1
                             },
                             "TacticalVest": {
                                 "5b44cad286f77402a54ae7e5": 90,
@@ -1742,7 +1890,8 @@
                                 "628d0618d1ba6e4fa07ce5a4": 85,
                                 "5df8a42886f77412640e2e75": 60,
                                 "5648a69d4bdc2ded0b8b457b": 55,
-								"5e4abc1f86f774069619fbaa": 1,
+                                "5e4abc1f86f774069619fbaa": 1,
+                                "572b7adb24597762ae139821": 1,
                                 "6034d0230ca681766b6a0fb5": 1
                             },
                             "Headwear": {
@@ -1763,7 +1912,7 @@
                                 "5f5e46b96bdad616ad46d613": 15,
                                 "5ab8ebf186f7742d8b372e80": 15,
                                 "639346cc1c8f182ad90c8972": 15,
-								"59e763f286f7742ee57895da": 11
+                                "59e763f286f7742ee57895da": 11
                             },
                             "FaceCover": {
                                 "657089638db3adca1009f4ca": 22
@@ -1772,8 +1921,7 @@
                     }
                 }
             ],
-            "armorPlateWeighting": [
-                {
+            "armorPlateWeighting": [{
                     "levelRange": {
                         "min": 1,
                         "max": 10
@@ -1813,49 +1961,47 @@
                         "5": 1,
                         "6": 1
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 11,
                         "max": 14
                     },
                     "front_plate": {
                         "2": 30,
-                        "3": 15,
+                        "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
                     },
                     "back_plate": {
                         "2": 30,
-                        "3": 15,
+                        "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
                     },
                     "side_plate": {
                         "2": 30,
-                        "3": 15,
+                        "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
                     },
                     "left_side_plate": {
                         "2": 30,
-                        "3": 15,
+                        "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
                     },
                     "right_side_plate": {
                         "2": 30,
-                        "3": 15,
+                        "3": 20,
                         "4": 5,
                         "5": 1,
                         "6": 1
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 15,
                         "max": 24
@@ -1864,39 +2010,38 @@
                         "2": 10,
                         "3": 15,
                         "4": 20,
-                        "5": 8,
+                        "5": 5,
                         "6": 4
                     },
                     "back_plate": {
                         "2": 10,
                         "3": 15,
                         "4": 20,
-                        "5": 8,
+                        "5": 5,
                         "6": 4
                     },
                     "side_plate": {
                         "2": 10,
                         "3": 15,
                         "4": 20,
-                        "5": 8,
+                        "5": 5,
                         "6": 4
                     },
                     "left_side_plate": {
                         "2": 10,
                         "3": 15,
                         "4": 20,
-                        "5": 8,
+                        "5": 5,
                         "6": 4
                     },
                     "right_side_plate": {
                         "2": 10,
                         "3": 15,
                         "4": 20,
-                        "5": 8,
+                        "5": 5,
                         "6": 4
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 25,
                         "max": 35
@@ -1904,81 +2049,79 @@
                     "front_plate": {
                         "2": 3,
                         "3": 15,
-                        "4": 30,
-                        "5": 20,
-                        "6": 10
+                        "4": 35,
+                        "5": 15,
+                        "6": 5
                     },
                     "back_plate": {
                         "2": 3,
                         "3": 15,
-                        "4": 30,
-                        "5": 20,
-                        "6": 10
+                        "4": 35,
+                        "5": 15,
+                        "6": 5
                     },
                     "side_plate": {
                         "2": 3,
                         "3": 15,
-                        "4": 30,
-                        "5": 20,
-                        "6": 10
+                        "4": 35,
+                        "5": 15,
+                        "6": 5
                     },
                     "left_side_plate": {
                         "2": 3,
                         "3": 15,
-                        "4": 30,
-                        "5": 20,
-                        "6": 10
+                        "4": 35,
+                        "5": 15,
+                        "6": 5
                     },
                     "right_side_plate": {
                         "2": 3,
                         "3": 15,
-                        "4": 30,
-                        "5": 20,
-                        "6": 10
+                        "4": 35,
+                        "5": 15,
+                        "6": 5
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 36,
                         "max": 55
                     },
                     "front_plate": {
                         "2": 1,
-                        "3": 10,
+                        "3": 5,
                         "4": 30,
-                        "5": 40,
+                        "5": 45,
                         "6": 20
                     },
                     "back_plate": {
                         "2": 1,
-                        "3": 10,
+                        "3": 5,
                         "4": 30,
-                        "5": 40,
+                        "5": 45,
                         "6": 20
                     },
                     "side_plate": {
                         "2": 1,
-                        "3": 10,
+                        "3": 5,
                         "4": 30,
-                        "5": 40,
+                        "5": 45,
                         "6": 20
                     },
                     "left_side_plate": {
                         "2": 1,
-                        "3": 10,
+                        "3": 5,
                         "4": 30,
-                        "5": 40,
+                        "5": 45,
                         "6": 20
                     },
                     "right_side_plate": {
                         "2": 1,
-                        "3": 10,
+                        "3": 5,
                         "4": 30,
-                        "5": 40,
+                        "5": 45,
                         "6": 20
                     }
-                },
-                {
+                }, {
                     "levelRange": {
                         "min": 56,
                         "max": 90
@@ -2020,8 +2163,7 @@
                     }
                 }
             ],
-            "whitelist": [
-                {
+            "whitelist": [{
                     "levelRange": {
                         "min": 101,
                         "max": 101
@@ -2324,5 +2466,18 @@
         "tarkovstreets": 26,
         "sandbox": 16,
         "default": 16
-    }
+    },
+	"walletLoot": {
+		"itemCount": {
+			"min": 1,
+			"max": 3
+		},
+		"stackSizeWeight": {
+			"25000": 1,
+			"20000": 2,
+			"15000": 4,
+			"10000": 7,
+			"5000": 10
+		}
+	}
 }

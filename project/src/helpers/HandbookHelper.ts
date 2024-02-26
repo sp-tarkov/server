@@ -1,7 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
 import { Category } from "@spt-aki/models/eft/common/tables/IHandbookBase";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
+import { IItemConfig } from "@spt-aki/models/spt/config/IItemConfig";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
@@ -32,22 +36,47 @@ export class LookupCollection
 @injectable()
 export class HandbookHelper
 {
+    protected itemConfig: IItemConfig;
     protected lookupCacheGenerated = false;
     protected handbookPriceCache = new LookupCollection();
 
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
-    {}
+    {
+        this.itemConfig = this.configServer.getConfig(ConfigTypes.ITEM);
+    }
 
     /**
      * Create an in-memory cache of all items with associated handbook price in handbookPriceCache class
      */
     public hydrateLookup(): void
     {
-        const handbookDb = this.jsonUtil.clone(this.databaseServer.getTables().templates.handbook);
-        for (const handbookItem of handbookDb.Items)
+        // Add handbook overrides found in items.json config into db
+        for (const itemTpl in this.itemConfig.handbookPriceOverride)
+        {
+            let itemToUpdate = this.databaseServer.getTables().templates.handbook.Items.find((item) =>
+                item.Id === itemTpl
+            );
+            if (!itemToUpdate)
+            {
+                this.databaseServer.getTables().templates.handbook.Items.push({
+                    Id: itemTpl,
+                    ParentId: this.databaseServer.getTables().templates.items[itemTpl]._parent,
+                    Price: this.itemConfig.handbookPriceOverride[itemTpl],
+                });
+                itemToUpdate = this.databaseServer.getTables().templates.handbook.Items.find((item) =>
+                    item.Id === itemTpl
+                );
+            }
+
+            itemToUpdate.Price = this.itemConfig.handbookPriceOverride[itemTpl];
+        }
+
+        const handbookDbClone = this.jsonUtil.clone(this.databaseServer.getTables().templates.handbook);
+        for (const handbookItem of handbookDbClone.Items)
         {
             this.handbookPriceCache.items.byId.set(handbookItem.Id, handbookItem.Price);
             if (!this.handbookPriceCache.items.byParent.has(handbookItem.ParentId))
@@ -57,7 +86,7 @@ export class HandbookHelper
             this.handbookPriceCache.items.byParent.get(handbookItem.ParentId).push(handbookItem.Id);
         }
 
-        for (const handbookCategory of handbookDb.Categories)
+        for (const handbookCategory of handbookDbClone.Categories)
         {
             this.handbookPriceCache.categories.byId.set(handbookCategory.Id, handbookCategory.ParentId || null);
             if (handbookCategory.ParentId)
@@ -100,6 +129,17 @@ export class HandbookHelper
         }
 
         return handbookItem.Price;
+    }
+
+    public getTemplatePriceForItems(items: Item[]): number
+    {
+        let total = 0;
+        for (const item of items)
+        {
+            total += this.getTemplatePrice(item._tpl);
+        }
+
+        return total;
     }
 
     /**
@@ -168,6 +208,6 @@ export class HandbookHelper
 
     public getCategoryById(handbookId: string): Category
     {
-        return this.databaseServer.getTables().templates.handbook.Categories.find(x => x.Id === handbookId);
+        return this.databaseServer.getTables().templates.handbook.Categories.find((x) => x.Id === handbookId);
     }
 }

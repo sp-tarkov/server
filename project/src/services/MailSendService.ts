@@ -435,7 +435,7 @@ export class MailSendService
             itemsToSendToPlayer = { stash: parentItem.parentId, data: [] };
 
             // Ensure Ids are unique and cont collide with items in player inventory later
-            messageDetails.items = this.itemHelper.replaceIDs(null, messageDetails.items);
+            messageDetails.items = this.itemHelper.replaceIDs(messageDetails.items);
 
             for (const reward of messageDetails.items)
             {

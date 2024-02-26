@@ -1,4 +1,4 @@
 export interface IGetRagfairOfferByIdRequest
 {
-    id: number
+    id: number;
 }

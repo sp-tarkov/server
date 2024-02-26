@@ -1,7 +1,7 @@
 {
     "akiVersion": "3.8.0",
     "projectName": "SPT-AKI",
-    "compatibleTarkovVersion": "0.14.0.28476",
+    "compatibleTarkovVersion": "0.14.1.28875",
     "serverName": "SPT Server",
     "profileSaveIntervalSeconds": 15,
     "sptFriendNickname": "SPT",

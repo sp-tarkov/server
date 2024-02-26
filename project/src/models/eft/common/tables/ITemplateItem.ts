@@ -86,7 +86,7 @@ export interface Props
     EffectiveDistance?: number;
     Ergonomics?: number;
     Velocity?: number;
-    WithAnimatorAiming?: boolean
+    WithAnimatorAiming?: boolean;
     RaidModdable?: boolean;
     ToolModdable?: boolean;
     UniqueAnimationModID?: number;
@@ -179,6 +179,7 @@ export interface Props
     armorClass?: string | number;
     armorColliders?: string[];
     armorPlateColliders?: string[];
+    bluntDamageReduceFromSoftArmor?: boolean;
     mousePenalty?: number;
     weaponErgonomicPenalty?: number;
     BluntThroughput?: number;
@@ -188,9 +189,9 @@ export interface Props
     weapUseType?: string;
     ammoCaliber?: string;
     OperatingResource?: number;
-    PostRecoilHorizontalRangeHandRotation?: Ixyz
-    PostRecoilVerticalRangeHandRotation?: Ixyz
-    ProgressRecoilAngleOnStable?: Ixyz
+    PostRecoilHorizontalRangeHandRotation?: Ixyz;
+    PostRecoilVerticalRangeHandRotation?: Ixyz;
+    ProgressRecoilAngleOnStable?: Ixyz;
     RepairComplexity?: number;
     durabSpawnMin?: number;
     durabSpawnMax?: number;
@@ -198,7 +199,7 @@ export interface Props
     RecoilForceUp?: number;
     RecoilForceBack?: number;
     RecoilAngle?: number;
-    RecoilCamera?: number
+    RecoilCamera?: number;
     weapFireType?: string[];
     RecolDispersion?: number;
     SingleFireRate?: number;
@@ -206,7 +207,7 @@ export interface Props
     bFirerate?: number;
     bEffDist?: number;
     bHearDist?: number;
-    blockLeftStance?: boolean
+    blockLeftStance?: boolean;
     isChamberLoad?: boolean;
     chamberAmmoCount?: number;
     isBoltCatch?: boolean;
@@ -216,8 +217,8 @@ export interface Props
     shotgunDispersion?: number;
     Chambers?: Slot[];
     CameraSnap?: number;
-    CameraToWeaponAngleSpeedRange?: Ixyz
-    CameraToWeaponAngleStep?: number
+    CameraToWeaponAngleSpeedRange?: Ixyz;
+    CameraToWeaponAngleStep?: number;
     ReloadMode?: string;
     AimPlane?: number;
     TacticalReloadStiffnes?: Ixyz;
@@ -225,7 +226,7 @@ export interface Props
     RecoilCenter?: Ixyz;
     RotationCenter?: Ixyz;
     RotationCenterNoStock?: Ixyz;
-    ShotsGroupSettings?: IShotsGroupSettings[]
+    ShotsGroupSettings?: IShotsGroupSettings[];
     FoldedSlot?: string;
     CompactHandling?: boolean;
     MinRepairDegradation?: number;
@@ -257,11 +258,11 @@ export interface Props
     AllowOverheat?: boolean;
     DoubleActionAccuracyPenalty?: number;
     RecoilPosZMult?: number;
-    RecoilReturnPathDampingHandRotation?: number
-    RecoilReturnPathOffsetHandRotation?: number
-    RecoilReturnSpeedHandRotation?: number
-    RecoilStableAngleIncreaseStep?: number
-    RecoilStableIndexShot?: number
+    RecoilReturnPathDampingHandRotation?: number;
+    RecoilReturnPathOffsetHandRotation?: number;
+    RecoilReturnSpeedHandRotation?: number;
+    RecoilStableAngleIncreaseStep?: number;
+    RecoilStableIndexShot?: number;
     MinRepairKitDegradation?: number;
     MaxRepairKitDegradation?: number;
     BlocksEarpiece?: boolean;
@@ -560,9 +561,9 @@ export interface IColor
 
 export interface IShotsGroupSettings
 {
-    EndShotIndex: number
-    ShotRecoilPositionStrength: Ixyz
-    ShotRecoilRadianRange: Ixyz
-    ShotRecoilRotationStrength: Ixyz
-    StartShotIndex: number
+    EndShotIndex: number;
+    ShotRecoilPositionStrength: Ixyz;
+    ShotRecoilRadianRange: Ixyz;
+    ShotRecoilRotationStrength: Ixyz;
+    StartShotIndex: number;
 }

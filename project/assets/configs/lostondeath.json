@@ -13,7 +13,6 @@
         "FirstPrimaryWeapon": true,
         "SecondPrimaryWeapon": true,
         "Scabbard": false,
-        "Pockets": false,
         "SecuredContainer": false
     },
     "questItems": true,

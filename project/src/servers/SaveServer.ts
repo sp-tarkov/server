@@ -2,14 +2,14 @@ import { inject, injectAll, injectable } from "tsyringe";
 
 import { SaveLoadRouter } from "@spt-aki/di/Router";
 import { IAkiProfile, Info } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
 import { ConfigServer } from "./ConfigServer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 
 @injectable()
 export class SaveServer
@@ -27,7 +27,7 @@ export class SaveServer
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("ConfigServer") protected configServer: ConfigServer
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {}
 
@@ -79,10 +79,13 @@ export class SaveServer
     public save(): void
     {
         // Save every profile
+        let totalTime = 0;
         for (const sessionID in this.profiles)
         {
-            this.saveProfile(sessionID);
+            totalTime += this.saveProfile(sessionID);
         }
+
+        this.logger.debug(`Saved ${Object.keys(this.profiles).length} profiles, took: ${totalTime.toFixed(2)}ms`, true);
     }
 
     /**
@@ -172,7 +175,7 @@ export class SaveServer
             // File found, store in profiles[]
             const start = performance.now();
             this.profiles[sessionID] = this.jsonUtil.deserialize(this.vfs.readFile(filePath), filename);
-            this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to load.`);
+            this.logger.debug(`Profile: ${sessionID} took: ${performance.now() - start}ms to load.`, true);
         }
 
         // Run callbacks
@@ -186,8 +189,9 @@ export class SaveServer
      * Save changes from in-memory profile to user/profiles json
      * Execute onBeforeSaveCallbacks callbacks prior to being saved to json
      * @param sessionID profile id (user/profiles/id.json)
+     * @returns time taken to save in MS
      */
-    public saveProfile(sessionID: string): void
+    public saveProfile(sessionID: string): number
     {
         const filePath = `${this.profileFilepath}${sessionID}.json`;
 
@@ -207,16 +211,19 @@ export class SaveServer
         }
 
         const start = performance.now();
-        const jsonProfile = this.jsonUtil.serialize(this.profiles[sessionID], !this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.compressProfile);
+        const jsonProfile = this.jsonUtil.serialize(
+            this.profiles[sessionID],
+            !this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).features.compressProfile,
+        );
         const fmd5 = this.hashUtil.generateMd5ForData(jsonProfile);
         if (typeof (this.saveMd5[sessionID]) !== "string" || this.saveMd5[sessionID] !== fmd5)
         {
             this.saveMd5[sessionID] = String(fmd5);
             // save profile to disk
             this.vfs.writeFile(filePath, jsonProfile);
-            this.logger.debug(this.localisationService.getText("profile_saved", sessionID), true);
         }
-        this.logger.debug(`Profile ${sessionID} took ${performance.now() - start}ms to save.`);
+
+        return Number(performance.now() - start);
     }
 
     /**

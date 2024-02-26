@@ -37,9 +37,16 @@ export class HideoutCallbacks implements OnUpdate
     /**
      * Handle HideoutUpgrade event
      */
-    public upgrade(pmcData: IPmcData, body: IHideoutUpgradeRequestData, sessionID: string): IItemEventRouterResponse
+    public upgrade(
+        pmcData: IPmcData,
+        body: IHideoutUpgradeRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.hideoutController.startUpgrade(pmcData, body, sessionID);
+        this.hideoutController.startUpgrade(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     /**
@@ -49,9 +56,12 @@ export class HideoutCallbacks implements OnUpdate
         pmcData: IPmcData,
         body: IHideoutUpgradeCompleteRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.hideoutController.upgradeComplete(pmcData, body, sessionID);
+        this.hideoutController.upgradeComplete(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     /**
@@ -145,9 +155,12 @@ export class HideoutCallbacks implements OnUpdate
         pmcData: IPmcData,
         request: IHandleQTEEventRequestData,
         sessionId: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.hideoutController.handleQTEEventOutcome(sessionId, pmcData, request);
+        this.hideoutController.handleQTEEventOutcome(sessionId, pmcData, request, output);
+
+        return output;
     }
 
     /**
@@ -157,9 +170,12 @@ export class HideoutCallbacks implements OnUpdate
         pmcData: IPmcData,
         request: IRecordShootingRangePoints,
         sessionId: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.hideoutController.recordShootingRangePoints(sessionId, pmcData, request);
+        this.hideoutController.recordShootingRangePoints(sessionId, pmcData, request);
+
+        return output;
     }
 
     /**

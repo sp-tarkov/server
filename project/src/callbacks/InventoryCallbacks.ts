@@ -30,40 +30,65 @@ export class InventoryCallbacks
 {
     constructor(
         @inject("InventoryController") protected inventoryController: InventoryController,
-        @inject("QuestController") protected questController: QuestController
+        @inject("QuestController") protected questController: QuestController,
     )
     {}
 
     /** Handle client/game/profile/items/moving Move event */
-    public moveItem(pmcData: IPmcData, body: IInventoryMoveRequestData, sessionID: string): IItemEventRouterResponse
+    public moveItem(
+        pmcData: IPmcData,
+        body: IInventoryMoveRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.moveItem(pmcData, body, sessionID);
+        this.inventoryController.moveItem(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     /** Handle Remove event */
-    public removeItem(pmcData: IPmcData, body: IInventoryRemoveRequestData, sessionID: string): IItemEventRouterResponse
+    public removeItem(
+        pmcData: IPmcData,
+        body: IInventoryRemoveRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.discardItem(pmcData, body, sessionID);
+        this.inventoryController.discardItem(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     /** Handle Split event */
-    public splitItem(pmcData: IPmcData, body: IInventorySplitRequestData, sessionID: string): IItemEventRouterResponse
+    public splitItem(
+        pmcData: IPmcData,
+        body: IInventorySplitRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.splitItem(pmcData, body, sessionID);
+        return this.inventoryController.splitItem(pmcData, body, sessionID, output);
     }
 
-    public mergeItem(pmcData: IPmcData, body: IInventoryMergeRequestData, sessionID: string): IItemEventRouterResponse
+    public mergeItem(
+        pmcData: IPmcData,
+        body: IInventoryMergeRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.mergeItem(pmcData, body, sessionID);
+        return this.inventoryController.mergeItem(pmcData, body, sessionID, output);
     }
 
     public transferItem(
         pmcData: IPmcData,
-        body: IInventoryTransferRequestData,
+        request: IInventoryTransferRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.transferItem(pmcData, body, sessionID);
+        return this.inventoryController.transferItem(pmcData, request, sessionID, output);
     }
 
     /** Handle Swap */
@@ -88,23 +113,38 @@ export class InventoryCallbacks
         return this.inventoryController.tagItem(pmcData, body, sessionID);
     }
 
-    public bindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
+    public bindItem(
+        pmcData: IPmcData,
+        body: IInventoryBindRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.bindItem(pmcData, body, sessionID);
+        this.inventoryController.bindItem(pmcData, body, sessionID);
+
+        return output;
     }
 
-    public unbindItem(pmcData: IPmcData, body: IInventoryBindRequestData, sessionID: string): IItemEventRouterResponse
+    public unbindItem(
+        pmcData: IPmcData,
+        body: IInventoryBindRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.unbindItem(pmcData, body, sessionID);
+        this.inventoryController.unbindItem(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     public examineItem(
         pmcData: IPmcData,
         body: IInventoryExamineRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.examineItem(pmcData, body, sessionID);
+        return this.inventoryController.examineItem(pmcData, body, sessionID, output);
     }
 
     /** Handle ReadEncyclopedia */
@@ -122,36 +162,48 @@ export class InventoryCallbacks
         pmcData: IPmcData,
         body: IInventorySortRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.sortInventory(pmcData, body, sessionID);
+        this.inventoryController.sortInventory(pmcData, body, sessionID);
+
+        return output;
     }
 
     public createMapMarker(
         pmcData: IPmcData,
         body: IInventoryCreateMarkerRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.createMapMarker(pmcData, body, sessionID);
+        this.inventoryController.createMapMarker(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     public deleteMapMarker(
         pmcData: IPmcData,
         body: IInventoryDeleteMarkerRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.deleteMapMarker(pmcData, body, sessionID);
+        this.inventoryController.deleteMapMarker(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     public editMapMarker(
         pmcData: IPmcData,
         body: IInventoryEditMarkerRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.editMapMarker(pmcData, body, sessionID);
+        this.inventoryController.editMapMarker(pmcData, body, sessionID, output);
+
+        return output;
     }
 
     /** Handle OpenRandomLootContainer */
@@ -159,32 +211,49 @@ export class InventoryCallbacks
         pmcData: IPmcData,
         body: IOpenRandomLootContainerRequestData,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.openRandomLootContainer(pmcData, body, sessionID);
+        this.inventoryController.openRandomLootContainer(pmcData, body, sessionID, output);
+
+        return output;
     }
 
-    public redeemProfileReward(pmcData: IPmcData,
+    public redeemProfileReward(
+        pmcData: IPmcData,
         body: IRedeemProfileRequestData,
-        sessionId: string
+        sessionId: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.inventoryController.redeemProfileReward(pmcData, body, sessionId)
+        this.inventoryController.redeemProfileReward(pmcData, body, sessionId);
+
+        return output;
     }
 
-    public setFavoriteItem(pmcData: IPmcData,
+    public setFavoriteItem(
+        pmcData: IPmcData,
         body: ISetFavoriteItems,
-        sessionId: string): IItemEventRouterResponse
+        sessionId: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.inventoryController.setFavoriteItem(pmcData, body, sessionId);
+        this.inventoryController.setFavoriteItem(pmcData, body, sessionId);
+
+        return output;
     }
 
     /**
      * TODO - MOVE INTO QUEST CODE
      * Handle game/profile/items/moving - QuestFail
      */
-    public failQuest(pmcData: IPmcData, request: IFailQuestRequestData, sessionID: string): IItemEventRouterResponse
+    public failQuest(
+        pmcData: IPmcData,
+        request: IFailQuestRequestData,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): IItemEventRouterResponse
     {
-        return this.questController.failQuest(pmcData, request, sessionID);
+        return this.questController.failQuest(pmcData, request, sessionID, output);
     }
 }

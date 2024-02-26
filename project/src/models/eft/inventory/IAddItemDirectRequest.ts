@@ -1,4 +1,4 @@
-import { Item } from "../common/tables/IItem"
+import { Item } from "../common/tables/IItem";
 
 export interface IAddItemDirectRequest
 {

@@ -401,6 +401,10 @@
                                 "relativeProbability": 3,
                                 "data": ["5b5f791486f774093f2ed3be"]
                             }, {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            }, {
                                 "key": "BoltAction",
                                 "relativeProbability": 10,
                                 "data": ["5b5f798886f77447ed5636b5"]

@@ -160,7 +160,11 @@ export class MatchCallbacks
      * @returns
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getGroupStatus(url: string, info: IGetGroupStatusRequestData, sessionID: string): IGetBodyResponseData<IGetGroupStatusResponse>
+    public getGroupStatus(
+        url: string,
+        info: IGetGroupStatusRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetGroupStatusResponse>
     {
         return this.httpResponse.getBody(this.matchController.getGroupStatus(info));
     }

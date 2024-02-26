@@ -41,7 +41,11 @@
     "Health": {
         "UpdateTime": 0
     },
-    "Inventory": {},
+    "Inventory": {
+        "fastPanel": {},
+        "hideoutAreaStashes": {},
+        "favoriteItems": []
+    },
     "Skills": {
         "Common": [],
         "Mastering": [],
@@ -75,10 +79,7 @@
         }
     },
     "Encyclopedia": null,
-    "ConditionCounters": {
-        "Counters": []
-    },
-    "BackendCounters": {},
+    "TaskConditionCounters": {},
     "InsuredItems": [],
     "Hideout": null,
     "Bonuses": []

@@ -2,9 +2,9 @@ import { IQuest, IQuestConditionTypes, IQuestRewards } from "./IQuest";
 
 export interface IRepeatableQuest extends IQuest
 {
-    changeCost: IChangeCost[]
+    changeCost: IChangeCost[];
     changeStandingCost: number;
-    sptRepatableGroupName: string
+    sptRepatableGroupName: string;
 }
 
 export interface IRepeatableQuestDatabase

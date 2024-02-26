@@ -9,7 +9,7 @@ export interface IBTRConfig extends IBaseConfig
     /** How long the cover fire service lasts for */
     coverFireTime: number;
     /** How long the BTR waits at every point in its path */
-    pointWaitTime: MinMax,
+    pointWaitTime: MinMax;
     /** How long after purchasing the taxi service before the BTR leaves */
     taxiWaitTime: number;
 }

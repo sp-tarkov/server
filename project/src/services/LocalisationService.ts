@@ -23,7 +23,6 @@ export class LocalisationService
         @inject("LocaleService") protected localeService: LocaleService,
     )
     {
-
         const localeFileDirectory = path.join(
             process.cwd(),
             globalThis.G_RELEASE_CONFIGURATION

@@ -7,7 +7,6 @@ import { IProfileChangeEvent } from "@spt-aki/models/spt/dialog/ISendMessageDeta
 
 export interface IAkiProfile
 {
-    
     info: Info;
     characters: Characters;
     /** Clothing purchases */
@@ -53,7 +52,7 @@ export interface IUserBuilds
 {
     weaponBuilds: IWeaponBuild[];
     equipmentBuilds: IEquipmentBuild[];
-    magazineBuilds: IMagazineBuild[]
+    magazineBuilds: IMagazineBuild[];
 }
 
 export interface IUserBuild
@@ -64,7 +63,6 @@ export interface IUserBuild
 
 export interface IWeaponBuild extends IUserBuild
 {
-
     Root: string;
     Items: Item[]; // Same as PMC inventory items
 }
@@ -78,25 +76,25 @@ export interface IEquipmentBuild extends IUserBuild
 
 export interface IMagazineBuild extends IUserBuild
 {
-    Caliber: string
-    TopCount: number
-    BottomCount: number
-    Items: IMagazineTemplateAmmoItem[]
+    Caliber: string;
+    TopCount: number;
+    BottomCount: number;
+    Items: IMagazineTemplateAmmoItem[];
 }
 
 export interface IMagazineTemplateAmmoItem
 {
-    TemplateId: string
-    Count: number
+    TemplateId: string;
+    Count: number;
 }
 
 /** Used by defaultEquipmentPresets.json */
 export interface IDefaultEquipmentPreset extends IUserBuild
 {
-    Items: Item[]
-    Root: string
-    BuildType: EquipmentBuildType
-    type: string
+    Items: Item[];
+    Root: string;
+    BuildType: EquipmentBuildType;
+    type: string;
 }
 
 export interface Dialogue
@@ -289,19 +287,11 @@ export interface Insurance
 {
     scheduledTime: number;
     traderId: string;
-    messageContent: MessageContent;
+    maxStorageTime: number;
+    systemData: ISystemData;
+    messageType: MessageType;
+    messageTemplateId: string;
     items: Item[];
-}
-
-export interface MessageContent
-{
-    ragfair?: MessageContentRagfair;
-    text?: string;
-    templateId: string;
-    type: MessageType;
-    maxStorageTime?: number;
-    profileChangeEvents?: any[];
-    systemData?: ISystemData;
 }
 
 export interface MessageContentRagfair

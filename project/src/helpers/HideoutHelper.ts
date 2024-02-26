@@ -11,7 +11,7 @@ import { IHideoutContinuousProductionStartRequestData } from "@spt-aki/models/ef
 import { IHideoutProduction } from "@spt-aki/models/eft/hideout/IHideoutProduction";
 import { IHideoutSingleProductionStartRequestData } from "@spt-aki/models/eft/hideout/IHideoutSingleProductionStartRequestData";
 import { IHideoutTakeProductionRequestData } from "@spt-aki/models/eft/hideout/IHideoutTakeProductionRequestData";
-import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
+import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -34,7 +34,7 @@ export class HideoutHelper
     public static bitcoinFarm = "5d5c205bd582a50d042a3c0e";
     public static bitcoinProductionId = "5d5c205bd582a50d042a3c0e";
     public static waterCollector = "5d5589c1f934db045e6c5492";
-    public static bitcoin = "59faff1d86f7746c51718c9c";
+    public static bitcoinTpl = "59faff1d86f7746c51718c9c";
     public static expeditionaryFuelTank = "5d1b371186f774253763a656";
     public static maxSkillPoint = 5000;
 
@@ -79,7 +79,7 @@ export class HideoutHelper
             return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionID));
         }
 
-        const modifiedProductionTime = recipe.productionTime
+        let modifiedProductionTime = recipe.productionTime
             - this.getCraftingSkillProductionTimeReduction(pmcData, recipe.productionTime);
 
         // @Important: Here we need to be very exact:
@@ -89,11 +89,26 @@ export class HideoutHelper
         {
             pmcData.Hideout.Production = {};
         }
-        pmcData.Hideout.Production[body.recipeId] = this.initProduction(
+
+        if (modifiedProductionTime > 0 && this.profileHelper.isDeveloperAccount(sessionID))
+        {
+            modifiedProductionTime = 40;
+        }
+
+        const production = this.initProduction(
             body.recipeId,
             modifiedProductionTime,
             recipe.needFuelForAllProductionTime,
         );
+
+        // Store the tools used for this production, so we can return them later
+        const productionTools = recipe.requirements.filter(req => req.type === "Tool").map(req => req.templateId);
+        if (productionTools.length > 0)
+        {
+            production.sptRequiredTools = productionTools;
+        }
+
+        pmcData.Hideout.Production[body.recipeId] = production;
     }
 
     /**
@@ -157,7 +172,6 @@ export class HideoutHelper
                 break;
             case BonusType.TEXT_BONUS:
                 // Delete values before they're added to profile
-                delete bonus.value;
                 delete bonus.passive;
                 delete bonus.production;
                 delete bonus.visible;
@@ -418,28 +432,30 @@ export class HideoutHelper
     {
         // 1 resource last 14 min 27 sec, 1/14.45/60 = 0.00115
         // 10-10-2021 From wiki, 1 resource last 12 minutes 38 seconds, 1/12.63333/60 = 0.00131
-        let fuelDrainRate = this.databaseServer.getTables().hideout.settings.generatorFuelFlowRate
+        let fuelUsedSinceLastTick = this.databaseServer.getTables().hideout.settings.generatorFuelFlowRate
             * this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
-        
-        const fuelBonus = pmcData.Bonuses.find((bonus) => bonus.type === BonusType.FUEL_CONSUMPTION);
-        const fuelBonusPercent = 1.0 - (fuelBonus ? Math.abs(fuelBonus.value) : 0) / 100;
-        fuelDrainRate *= fuelBonusPercent;
-        
+
+        const fuelConsumptionBonus = pmcData.Bonuses.find((bonus) => bonus.type === BonusType.FUEL_CONSUMPTION);
+        const fuelConsumptionBonusPercent = 1.0
+            - (fuelConsumptionBonus ? Math.abs(fuelConsumptionBonus.value) : 0) / 100;
+        fuelUsedSinceLastTick *= fuelConsumptionBonusPercent;
+
         // Hideout management resource consumption bonus:
         const hideoutManagementConsumptionBonus = 1.0 - this.getHideoutManagementConsumptionBonus(pmcData);
-        fuelDrainRate *= hideoutManagementConsumptionBonus;
+        fuelUsedSinceLastTick *= hideoutManagementConsumptionBonus;
+
         let hasFuelRemaining = false;
         let pointsConsumed = 0;
-
         for (let i = 0; i < generatorArea.slots.length; i++)
         {
-            if (!generatorArea.slots[i]?.item)
+            const generatorSlot = generatorArea.slots[i];
+            if (!generatorSlot?.item)
             {
                 // No item in slot, skip
                 continue;
             }
 
-            const fuelItemInSlot = generatorArea.slots[i]?.item[0];
+            const fuelItemInSlot = generatorSlot?.item[0];
             if (!fuelItemInSlot)
             {
                 // No item in slot, skip
@@ -452,19 +468,19 @@ export class HideoutHelper
                 // No fuel left, skip
                 continue;
             }
-            
+
             // Undefined fuel, fresh fuel item and needs its max fuel amount looked up
             if (!fuelRemaining)
             {
                 const fuelItemTemplate = this.itemHelper.getItem(fuelItemInSlot._tpl)[1];
-                pointsConsumed = fuelDrainRate;
-                fuelRemaining =  fuelItemTemplate._props.MaxResource - fuelDrainRate;
+                pointsConsumed = fuelUsedSinceLastTick;
+                fuelRemaining = fuelItemTemplate._props.MaxResource - fuelUsedSinceLastTick;
             }
             else
             {
                 // Fuel exists already, deduct fuel from item remaining value
-                pointsConsumed = (fuelItemInSlot.upd.Resource.UnitsConsumed || 0) + fuelDrainRate;
-                fuelRemaining -= fuelDrainRate;
+                pointsConsumed = (fuelItemInSlot.upd.Resource.UnitsConsumed || 0) + fuelUsedSinceLastTick;
+                fuelRemaining -= fuelUsedSinceLastTick;
             }
 
             fuelRemaining = Math.round(fuelRemaining * 10000) / 10000;
@@ -479,18 +495,23 @@ export class HideoutHelper
 
             if (fuelRemaining > 0)
             {
+                // Deducted all used fuel from this container, clean up and exit loop
                 fuelItemInSlot.upd = this.getAreaUpdObject(1, fuelRemaining, pointsConsumed);
 
-                this.logger.debug(`$Profile: ${pmcData._id} Generator has: ${fuelRemaining} fuel left in slot ${i + 1}`);
+                this.logger.debug(
+                    `Profile: ${pmcData._id} Generator has: ${fuelRemaining} fuel left in slot ${i + 1}`,
+                    true,
+                );
                 hasFuelRemaining = true;
 
-                break; // Break here to avoid updating all the fuel tanks
+                break; // Break to avoid updating all the fuel tanks
             }
 
             fuelItemInSlot.upd = this.getAreaUpdObject(1, 0, 0);
 
-            // Update remaining resources to be subtracted
-            fuelDrainRate = Math.abs(fuelRemaining);
+            // Ran out of fuel items to deduct fuel from
+            fuelUsedSinceLastTick = Math.abs(fuelRemaining);
+            this.logger.debug(`Profile: ${pmcData._id} Generator ran out of fuel`, true);
         }
 
         // Out of fuel, flag generator as offline
@@ -527,6 +548,7 @@ export class HideoutHelper
                 recipeId: HideoutHelper.waterCollector,
                 Action: "HideoutSingleProductionStart",
                 items: [],
+                tools: [],
                 timestamp: this.timeUtil.getTimestamp(),
             };
 
@@ -746,8 +768,8 @@ export class HideoutHelper
     protected updateBitcoinFarm(pmcData: IPmcData, btcFarmCGs: number, isGeneratorOn: boolean): Production
     {
         const btcProd = pmcData.Hideout.Production[HideoutHelper.bitcoinFarm];
-        const bitcoinProdData = this.databaseServer.getTables().hideout.production.find((p) =>
-            p._id === HideoutHelper.bitcoinProductionId
+        const bitcoinProdData = this.databaseServer.getTables().hideout.production.find((production) =>
+            production._id === HideoutHelper.bitcoinProductionId
         );
         const coinSlotCount = this.getBTCSlots(pmcData);
 
@@ -762,9 +784,6 @@ export class HideoutHelper
 
         if (this.isProduction(btcProd))
         {
-            const timeElapsedSeconds = this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
-            btcProd.Progress += timeElapsedSeconds;
-
             // The wiki has a wrong formula!
             // Do not change unless you validate it with the Client code files!
             // This formula was found on the client files:
@@ -800,17 +819,25 @@ export class HideoutHelper
                 }
             */
             // BSG finally fixed their settings, they now get loaded from the settings and used in the client
-            const coinCraftTimeSeconds = bitcoinProdData.productionTime
+            const adjustedCraftTime =
+                ((this.profileHelper.isDeveloperAccount(pmcData.sessionId)) ? 40 : bitcoinProdData.productionTime)
                 / (1 + (btcFarmCGs - 1) * this.databaseServer.getTables().hideout.settings.gpuBoostRate);
-            while (btcProd.Progress > coinCraftTimeSeconds)
+
+            // The progress should be adjusted based on the GPU boost rate, but the target is still the base productionTime
+            const timeMultiplier = bitcoinProdData.productionTime / adjustedCraftTime;
+            const timeElapsedSeconds = this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
+            btcProd.Progress += Math.floor(timeElapsedSeconds * timeMultiplier);
+
+            while (btcProd.Progress >= bitcoinProdData.productionTime)
             {
                 if (btcProd.Products.length < coinSlotCount)
                 {
                     // Has space to add a coin to production
-                    this.addBtcToProduction(btcProd, coinCraftTimeSeconds);
+                    this.addBtcToProduction(btcProd, bitcoinProdData.productionTime);
                 }
                 else
                 {
+                    // Filled up bitcoin storage
                     btcProd.Progress = 0;
                 }
             }
@@ -832,10 +859,11 @@ export class HideoutHelper
     {
         btcProd.Products.push({
             _id: this.hashUtil.generate(),
-            _tpl: "59faff1d86f7746c51718c9c",
+            _tpl: HideoutHelper.bitcoinTpl,
             upd: { StackObjectsCount: 1 },
         });
 
+        // Deduct time spent crafting from progress
         btcProd.Progress -= coinCraftTimeSeconds;
     }
 
@@ -856,7 +884,8 @@ export class HideoutHelper
         let timeElapsed = this.timeUtil.getTimestamp() - pmcData.Hideout.sptUpdateLastRunTimestamp;
 
         if (recipe?.areaType === HideoutAreas.LAVATORY)
-        { // Lavatory works at 100% when power is on / off
+        {
+            // Lavatory works at 100% when power is on / off
             return timeElapsed;
         }
 
@@ -869,26 +898,26 @@ export class HideoutHelper
     }
 
     /**
-     * Get a count of how many BTC can be gathered by the profile
+     * Get a count of how many possible BTC can be gathered by the profile
      * @param pmcData Profile to look up
-     * @returns coin slot count
+     * @returns Coin slot count
      */
     protected getBTCSlots(pmcData: IPmcData): number
     {
-        const bitcoinProduction = this.databaseServer.getTables().hideout.production.find((p) =>
-            p._id === HideoutHelper.bitcoinFarm
+        const bitcoinProductions = this.databaseServer.getTables().hideout.production.find((production) =>
+            production._id === HideoutHelper.bitcoinFarm
         );
-        const productionSlots = bitcoinProduction?.productionLimitCount || 3;
+        const productionSlots = bitcoinProductions?.productionLimitCount || 3; // Default to 3 if none found
         const hasManagementSkillSlots = this.profileHelper.hasEliteSkillLevel(SkillTypes.HIDEOUT_MANAGEMENT, pmcData);
-        const managementSlotsCount = this.getBitcoinMinerContainerSlotSize() || 2;
+        const managementSlotsCount = this.getEliteSkillAdditionalBitcoinSlotCount() || 2;
 
         return productionSlots + (hasManagementSkillSlots ? managementSlotsCount : 0);
     }
 
     /**
-     * Get a count of bitcoins player miner can hold
+     * Get a count of how many additional bitcoins player hideout can hold with elite skill
      */
-    protected getBitcoinMinerContainerSlotSize(): number
+    protected getEliteSkillAdditionalBitcoinSlotCount(): number
     {
         return this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots.BitcoinFarm
             .Container;
@@ -949,16 +978,15 @@ export class HideoutHelper
      * @param pmcData Player profile
      * @param request Take production request
      * @param sessionId Session id
-     * @returns IItemEventRouterResponse
+     * @param output Output object to update
      */
     public getBTC(
         pmcData: IPmcData,
         request: IHideoutTakeProductionRequestData,
         sessionId: string,
-    ): IItemEventRouterResponse
+        output: IItemEventRouterResponse,
+    ): void
     {
-        const output = this.eventOutputHolder.getOutput(sessionId);
-
         // Get how many coins were crafted and ready to pick up
         const craftedCoinCount = pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products.length;
         if (!craftedCoinCount)
@@ -966,48 +994,47 @@ export class HideoutHelper
             const errorMsg = this.localisationService.getText("hideout-no_bitcoins_to_collect");
             this.logger.error(errorMsg);
 
-            return this.httpResponse.appendErrorToOutput(output, errorMsg);
+            this.httpResponse.appendErrorToOutput(output, errorMsg);
+
+            return;
         }
 
-        const coinSlotCount = this.getBTCSlots(pmcData);
-        const btcCoinCreationRequest = this.createBitcoinRequest(pmcData, coinSlotCount);
+        const itemsToAdd: Item[][] = [];
+        for (let index = 0; index < craftedCoinCount; index++)
+        {
+            itemsToAdd.push([{
+                _id: this.hashUtil.generate(),
+                _tpl: HideoutHelper.bitcoinTpl,
+                upd: { StackObjectsCount: 1 },
+            }]);
+        }
+
+        // Create request for what we want to add to stash
+        const addItemsRequest: IAddItemsDirectRequest = {
+            itemsWithModsToAdd: itemsToAdd,
+            foundInRaid: true,
+            useSortingTable: false,
+            callback: null,
+        };
 
         // Add FiR coins to player inventory
-        this.inventoryHelper.addItemToStash(sessionId, btcCoinCreationRequest, pmcData, output);
-    }
+        this.inventoryHelper.addItemsToStash(sessionId, addItemsRequest, pmcData, output);
+        if (output.warnings.length > 0)
+        {
+            return;
+        }
 
-    /**
-     * Create a bitcoin request object
-     * @param pmcData Player profile
-     * @returns IAddItemRequestData
-     */
-    protected createBitcoinRequest(pmcData: IPmcData, coinSlotCount: number): IAddItemDirectRequest
-    {
-        return {
-            itemWithModsToAdd: [
-                {
-                    _id: this.hashUtil.generate(),
-                    _tpl: HideoutHelper.bitcoin,
-                    upd: {
-                        StackObjectsCount: pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products.length
-                    }
-                }
-            ],
-            foundInRaid: true,
-            useSortingTable: true,
-            callback: () =>
-            {
-                // Is at max capacity
-                if (pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products.length >= coinSlotCount)
-                {
-                    // Set start to now
-                    pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].StartTimestamp = this.timeUtil.getTimestamp();
-                }
-    
-                // Remove crafted coins from production in profile now they've been collected
-                pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products = [];
-            }
-        };
+        // Is at max capacity + we collected all coins - reset production start time
+        const coinSlotCount = this.getBTCSlots(pmcData);
+        if (pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products.length >= coinSlotCount)
+        {
+            // Set start to now
+            pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].StartTimestamp = this.timeUtil.getTimestamp();
+        }
+
+        // Remove crafted coins from production in profile now they've been collected
+        // Can only collect all coins, not individially
+        pmcData.Hideout.Production[HideoutHelper.bitcoinFarm].Products = [];
     }
 
     /**
@@ -1068,24 +1095,29 @@ export class HideoutHelper
      */
     public applyPlaceOfFameDogtagBonus(pmcData: IPmcData): void
     {
-        const fameAreaProfile = pmcData.Hideout.Areas.find(area => area.type === HideoutAreas.PLACE_OF_FAME);
+        const fameAreaProfile = pmcData.Hideout.Areas.find((area) => area.type === HideoutAreas.PLACE_OF_FAME);
 
         // Get hideout area 16 bonus array
-        const fameAreaDb = this.databaseServer.getTables().hideout.areas.find((area) => area.type === HideoutAreas.PLACE_OF_FAME);
+        const fameAreaDb = this.databaseServer.getTables().hideout.areas.find((area) =>
+            area.type === HideoutAreas.PLACE_OF_FAME
+        );
 
         // Get SkillGroupLevelingBoost object
-        const combatBoostBonusDb = fameAreaDb.stages[fameAreaProfile.level].bonuses.find(bonus => bonus.type === "SkillGroupLevelingBoost");
+        const combatBoostBonusDb = fameAreaDb.stages[fameAreaProfile.level].bonuses.find((bonus) =>
+            bonus.type === "SkillGroupLevelingBoost"
+        );
 
         // Get SkillGroupLevelingBoost object in profile
-        const combatBonusProfile = pmcData.Bonuses.find(bonus => bonus.id === combatBoostBonusDb.id);
+        const combatBonusProfile = pmcData.Bonuses.find((bonus) => bonus.id === combatBoostBonusDb.id);
 
         // Get all slotted dogtag items
-        const activeDogtags = pmcData.Inventory.items.filter(item => item?.slotId?.startsWith("dogtag"));
+        const activeDogtags = pmcData.Inventory.items.filter((item) => item?.slotId?.startsWith("dogtag"));
 
         // Calculate bonus percent (apply hideoutManagement bonus)
         const hideoutManagementSkill = this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.HIDEOUT_MANAGEMENT);
         const hideoutManagementSkillBonusPercent = 1 + (hideoutManagementSkill.Progress / 10000); // 5100 becomes 0.51, add 1 to it, 1.51
-        const bonus = this.getDogtagCombatSkillBonusPercent(pmcData, activeDogtags) * hideoutManagementSkillBonusPercent; 
+        const bonus = this.getDogtagCombatSkillBonusPercent(pmcData, activeDogtags)
+            * hideoutManagementSkillBonusPercent;
 
         // Update bonus value to above calcualted value
         combatBonusProfile.value = Number.parseFloat(bonus.toFixed(2));
@@ -1110,8 +1142,7 @@ export class HideoutHelper
                 continue;
             }
 
-            if (Number.parseInt(dogtag.upd.Dogtag?.AccountId) === pmcData.aid
-            )
+            if (Number.parseInt(dogtag.upd.Dogtag?.AccountId) === pmcData.aid)
             {
                 continue;
             }

@@ -7,12 +7,14 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class ItemEventRouter
 {
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @injectAll("IERouters") protected itemEventRouters: ItemEventRouterDefinition[],
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -27,9 +29,7 @@ export class ItemEventRouter
      */
     public handleEvents(info: IItemEventRouterRequest, sessionID: string): IItemEventRouterResponse
     {
-        this.eventOutputHolder.resetOutput(sessionID);
-
-        let result = this.eventOutputHolder.getOutput(sessionID);
+        const output = this.eventOutputHolder.getOutput(sessionID);
 
         for (const body of info.data)
         {
@@ -39,7 +39,11 @@ export class ItemEventRouter
             if (eventRouter)
             {
                 this.logger.debug(`event: ${body.Action}`);
-                result = eventRouter.handleItemEvent(body.Action, pmcData, body, sessionID);
+                eventRouter.handleItemEvent(body.Action, pmcData, body, sessionID, output);
+                if (output.warnings.length > 0)
+                {
+                    break;
+                }
             }
             else
             {
@@ -50,6 +54,10 @@ export class ItemEventRouter
 
         this.eventOutputHolder.updateOutputProperties(sessionID);
 
-        return result;
+        // Clone output before resetting the output object ready for use next time
+        const outputClone = this.jsonUtil.clone(output);
+        this.eventOutputHolder.resetOutput(sessionID);
+
+        return outputClone;
     }
 }

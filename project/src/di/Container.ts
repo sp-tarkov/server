@@ -226,6 +226,7 @@ import { RepairService } from "@spt-aki/services/RepairService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
 import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
+import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
 import { CustomItemService } from "@spt-aki/services/mod/CustomItemService";
 import { DynamicRouterModService } from "@spt-aki/services/mod/dynamicRouter/DynamicRouterModService";
 import { HttpListenerModService } from "@spt-aki/services/mod/httpListener/HttpListenerModService";
@@ -250,7 +251,6 @@ import { VFS } from "@spt-aki/utils/VFS";
 import { Watermark, WatermarkLocale } from "@spt-aki/utils/Watermark";
 import { WinstonMainLogger } from "@spt-aki/utils/logging/WinstonMainLogger";
 import { WinstonRequestLogger } from "@spt-aki/utils/logging/WinstonRequestLogger";
-import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
 
 /**
  * Handle the registration of classes to be used by the Dependency Injection code
@@ -485,7 +485,9 @@ export class Container
         depContainer.register<RagfairStaticRouter>("RagfairStaticRouter", { useClass: RagfairStaticRouter });
         depContainer.register<TraderStaticRouter>("TraderStaticRouter", { useClass: TraderStaticRouter });
         depContainer.register<WeatherStaticRouter>("WeatherStaticRouter", { useClass: WeatherStaticRouter });
-        depContainer.register<AchievementStaticRouter>("AchievementStaticRouter", { useClass: AchievementStaticRouter });
+        depContainer.register<AchievementStaticRouter>("AchievementStaticRouter", {
+            useClass: AchievementStaticRouter,
+        });
         depContainer.register<BuildsStaticRouter>("BuildsStaticRouter", { useClass: BuildsStaticRouter });
     }
 

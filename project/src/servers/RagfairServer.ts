@@ -83,7 +83,11 @@ export class RagfairServer
         return Object.keys(this.ragfairConfig.traders).filter((x) => this.ragfairConfig.traders[x]);
     }
 
-    public getAllActiveCategories(fleaUnlocked: boolean, searchRequestData: ISearchRequestData, offers: IRagfairOffer[]): Record<string, number>
+    public getAllActiveCategories(
+        fleaUnlocked: boolean,
+        searchRequestData: ISearchRequestData,
+        offers: IRagfairOffer[],
+    ): Record<string, number>
     {
         return this.ragfairCategoriesService.getCategoriesFromOffers(offers, searchRequestData, fleaUnlocked);
     }

@@ -397,7 +397,10 @@ describe("InsuranceController", () =>
             // Add all items to the toDelete set. Not realistic, but it's fine for this test.
             const mockProcessRegularItems = vi.fn((insured, toDelete) =>
             {
-                insured.items.forEach((item) => toDelete.add(item._id));
+                for (const item of insured.items)
+                {
+                    toDelete.add(item._id);
+                }
             });
             vi.spyOn(insuranceController, "processRegularItems").mockImplementation(mockProcessRegularItems);
 
@@ -462,12 +465,18 @@ describe("InsuranceController", () =>
             // Add all items to the toDelete set. Not realistic, but it's fine for this test.
             const mockProcessRegularItems = vi.fn((insured, toDelete) =>
             {
-                insured.items.forEach((item) => toDelete.add(item._id));
+                for (const item of insured.items)
+                {
+                    toDelete.add(item._id);
+                }
             });
             vi.spyOn(insuranceController, "processRegularItems").mockImplementation(mockProcessRegularItems);
             const mockProcessAttachments = vi.fn((parentAttachmentsMap, itemsMap, traderId, toDelete) =>
             {
-                insured.items.forEach((item) => toDelete.add(item._id));
+                for (const item of insured.items)
+                {
+                    toDelete.add(item._id);
+                }
             });
             vi.spyOn(insuranceController, "processAttachments").mockImplementation(mockProcessAttachments);
 
@@ -526,12 +535,18 @@ describe("InsuranceController", () =>
             // Add all items to the toDelete set. Not realistic, but it's fine for this test.
             const mockProcessRegularItems = vi.fn((insured, toDelete) =>
             {
-                insured.items.forEach((item) => toDelete.add(item._id));
+                for (const item of insured.items)
+                {
+                    toDelete.add(item._id);
+                }
             });
             vi.spyOn(insuranceController, "processRegularItems").mockImplementation(mockProcessRegularItems);
             const mockProcessAttachments = vi.fn((parentAttachmentsMap, itemsMap, traderId, toDelete) =>
             {
-                insured.items.forEach((item) => toDelete.add(item._id));
+                for (const item of insured.items)
+                {
+                    toDelete.add(item._id);
+                }
             });
             vi.spyOn(insuranceController, "processAttachments").mockImplementation(mockProcessAttachments);
 
@@ -572,11 +587,11 @@ describe("InsuranceController", () =>
                 "9f8d7880a6e0a47a211ec5d3",
                 "db2ef9442178910eba985b51",
             ];
-            validAttachmentTemplates.forEach((value) =>
+            for (const value of validAttachmentTemplates)
             {
                 // Verify that each template is present in the array of attachments.
                 expect(gun.some((item) => item._id === value)).toBe(true);
-            });
+            }
         });
 
         it("should ignore gun accessories that cannot be modified in-raid", () =>
@@ -602,10 +617,11 @@ describe("InsuranceController", () =>
                 "402b4086535a50ef7d9cef88",
                 "566335b3df586f34b47f5e35",
             ];
-            invalidAttachmentTemplates.forEach((value) =>
+            for (const value of invalidAttachmentTemplates)
             {
+                // Verify that each template is not present in the array of attachments.
                 expect(gun.every((item) => item._id !== value)).toBe(true);
-            });
+            }
         });
 
         it("should correctly map helmet to all of its attachments", () =>
@@ -632,11 +648,11 @@ describe("InsuranceController", () =>
                 "ac134d7cf6c9d8e25edd0015",
                 "22274b895ecc80d51c3cba1c",
             ];
-            validAttachmentTemplates.forEach((value) =>
+            for (const value of validAttachmentTemplates)
             {
                 // Verify that each template is present in the array of attachments.
                 expect(gun.some((item) => item._id === value)).toBe(true);
-            });
+            }
         });
 
         it("should correctly map gun to all of its attachments when gun is within a container", () =>
@@ -900,10 +916,10 @@ describe("InsuranceController", () =>
 
             // Verify that the attachments with null maxPrice are at the bottom of the list
             const nullPriceAttachments = sortedAttachments.slice(-2);
-            nullPriceAttachments.forEach((attachment) =>
+            for (const attachment of nullPriceAttachments)
             {
                 expect(attachment.maxPrice).toBeNull();
-            });
+            }
 
             // Verify that the rest of the attachments are sorted by maxPrice in descending order
             for (let i = 1; i < sortedAttachments.length - 2; i++)
@@ -1078,10 +1094,10 @@ describe("InsuranceController", () =>
             insuranceController.removeItemsFromInsurance(insured, toDelete);
 
             // Ensure that the items in the toDelete set are not present in the insured items array.
-            toDelete.forEach((toDeleteId) =>
+            for (const toDeleteId of toDelete)
             {
                 expect(insured.items.some((item) => item._id === toDeleteId)).toBe(false);
-            });
+            }
         });
 
         it("should not remove any items if toDelete set is empty", () =>
@@ -1102,7 +1118,10 @@ describe("InsuranceController", () =>
             const insured = insuranceFixture[0];
             const originalCount = insured.items.length;
             const toDelete = new Set<string>();
-            insured.items.forEach((item) => toDelete.add(item._id));
+            for (const item of insured.items)
+            {
+                toDelete.add(item._id);
+            }
 
             // All of the items should be added to the toDelete set.
             expect(originalCount).toBe(toDelete.size);

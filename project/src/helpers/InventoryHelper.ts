@@ -11,12 +11,14 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Inventory } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item, Location, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
-import { AddItem, IAddItemRequestData } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
+import { AddItem } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
 import { IAddItemTempObject } from "@spt-aki/models/eft/inventory/IAddItemTempObject";
+import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IInventoryMergeRequestData } from "@spt-aki/models/eft/inventory/IInventoryMergeRequestData";
 import { IInventoryMoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryMoveRequestData";
 import { IInventoryRemoveRequestData } from "@spt-aki/models/eft/inventory/IInventoryRemoveRequestData";
 import { IInventorySplitRequestData } from "@spt-aki/models/eft/inventory/IInventorySplitRequestData";
+import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -31,7 +33,7 @@ import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
-export interface OwnerInventoryItems
+export interface IOwnerInventoryItems
 {
     /** Inventory items from source */
     from: Item[];
@@ -68,13 +70,59 @@ export class InventoryHelper
     }
 
     /**
+     * Add multiple items to player stash (assuming they all fit)
+     * @param sessionId Session id
+     * @param request IAddItemsDirectRequest request
+     * @param pmcData Player profile
+     * @param output Client response object
+     */
+    public addItemsToStash(
+        sessionId: string,
+        request: IAddItemsDirectRequest,
+        pmcData: IPmcData,
+        output: IItemEventRouterResponse,
+    ): void
+    {
+        // Check all items fit into inventory before adding
+        if (!this.canPlaceItemsInInventory(sessionId, request.itemsWithModsToAdd))
+        {
+            // No space, exit
+            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+
+            return;
+        }
+
+        for (const itemToAdd of request.itemsWithModsToAdd)
+        {
+            const addItemRequest: IAddItemDirectRequest = {
+                itemWithModsToAdd: itemToAdd,
+                foundInRaid: request.foundInRaid,
+                useSortingTable: request.useSortingTable,
+                callback: request.callback,
+            };
+
+            // Add to player inventory
+            this.addItemToStash(sessionId, addItemRequest, pmcData, output);
+            if (output.warnings.length > 0)
+            {
+                return;
+            }
+        }
+    }
+
+    /**
      * Add whatever is passed in `request.itemWithModsToAdd` into player inventory (if it fits)
      * @param sessionId Session id
      * @param request addItemDirect request
      * @param pmcData Player profile
      * @param output Client response object
      */
-    public addItemToStash(sessionId: string, request: IAddItemDirectRequest, pmcData: IPmcData, output: IItemEventRouterResponse): void
+    public addItemToStash(
+        sessionId: string,
+        request: IAddItemDirectRequest,
+        pmcData: IPmcData,
+        output: IItemEventRouterResponse,
+    ): void
     {
         const itemWithModsToAddClone = this.jsonUtil.clone(request.itemWithModsToAdd);
 
@@ -127,7 +175,11 @@ export class InventoryHelper
         output.profileChanges[sessionId].items.new.push(...itemWithModsToAddClone);
         pmcData.Inventory.items.push(...itemWithModsToAddClone);
 
-        this.logger.debug(`Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount ?? 1} item: ${itemWithModsToAddClone[0]._tpl} with: ${itemWithModsToAddClone.length - 1} mods to inventory`);
+        this.logger.debug(
+            `Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount ?? 1} item: ${
+                itemWithModsToAddClone[0]._tpl
+            } with: ${itemWithModsToAddClone.length - 1} mods to inventory`,
+        );
     }
 
     /**
@@ -149,7 +201,6 @@ export class InventoryHelper
             {
                 item.upd.SpawnedInSession = foundInRaid;
             }
-
             else
             {
                 if (delete item.upd.SpawnedInSession)
@@ -158,322 +209,6 @@ export class InventoryHelper
                 }
             }
         }
-    }
-
-    /**
-     * @deprecated - use addItemToStash()
-     * 
-     * BUG: Passing the same item multiple times with a count of 1 will cause multiples of that item to be added (e.g. x3 separate objects of tar cola with count of 1 = 9 tarcolas being added to inventory)
-     * @param pmcData Profile to add items to
-     * @param request request data to add items
-     * @param output response to send back to client
-     * @param sessionID Session id
-     * @param callback Code to execute later (function)
-     * @param foundInRaid Item added will be flagged as found in raid
-     * @param addUpd Additional upd properties for items being added to inventory
-     * @param useSortingTable Allow items to go into sorting table when stash has no space
-     * @returns IItemEventRouterResponse
-     */
-    public addItem(
-        pmcData: IPmcData,
-        request: IAddItemRequestData,
-        output: IItemEventRouterResponse,
-        sessionID: string,
-        callback: () => void,
-        foundInRaid = false,
-        addUpd = null,
-        useSortingTable = false,
-    ): IItemEventRouterResponse
-    {
-        /** All items to add + their children */ 
-        const itemsToAddPool: Item[] = [];
-
-        /** Root items to add to inventory */
-        const rootItemsToAdd: IAddItemTempObject[] = [];
-
-        for (const requestItem of request.items)
-        {
-            if (this.presetHelper.isPreset(requestItem.item_id))
-            {
-                const preset = this.jsonUtil.clone(this.presetHelper.getPreset(requestItem.item_id));
-                const presetItems = preset._items;
-
-                // Add FiR status to preset if needed
-                if (foundInRaid || this.inventoryConfig.newItemsMarkedFound)
-                {
-                    for (const item of presetItems)
-                    {
-                        if (!item.upd)
-                        {
-                            item.upd = {};
-                        }
-                        if (foundInRaid)
-                        {
-                            item.upd.SpawnedInSession = true;
-                        }
-                    }
-                }
-
-                // Push preset data into pool array
-                itemsToAddPool.push(...presetItems);
-                requestItem.sptIsPreset = true;
-
-                // Remap requests item id to preset root items id
-                requestItem.item_id = presetItems[0]._id;
-            }
-            else if (this.paymentHelper.isMoneyTpl(requestItem.item_id))
-            {
-                itemsToAddPool.push({ _id: requestItem.item_id, _tpl: requestItem.item_id });
-            }
-            else if (request.tid === Traders.FENCE)
-            {
-                const fenceItems = this.fenceService.getRawFenceAssorts().items;
-                const itemIndex = fenceItems.findIndex((i) => i._id === requestItem.item_id);
-                if (itemIndex === -1)
-                {
-                    this.logger.debug(`Tried to buy item ${requestItem.item_id} from fence that no longer exists`);
-                    const message = this.localisationService.getText("ragfair-offer_no_longer_exists");
-                    return this.httpResponse.appendErrorToOutput(output, message);
-                }
-
-                const purchasedItemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(
-                    fenceItems,
-                    requestItem.item_id,
-                );
-                addUpd = purchasedItemWithChildren[0].upd; // Must persist the fence upd properties (e.g. durability/currentHp)
-                itemsToAddPool.push(...purchasedItemWithChildren);
-            }
-            else if (request.tid === "RandomLootContainer")
-            {
-                itemsToAddPool.push({ _id: requestItem.item_id, _tpl: requestItem.item_id });
-            }
-            else
-            {
-                // Only grab the relevant trader items and add unique values
-                const traderItems = this.traderAssortHelper.getAssort(sessionID, request.tid).items;
-                const relevantItems = this.itemHelper.findAndReturnChildrenAsItems(traderItems, requestItem.item_id);
-                const toAdd = relevantItems.filter((traderItem) =>
-                    !itemsToAddPool.some((item) => traderItem._id === item._id)
-                ); // what's this
-                itemsToAddPool.push(...toAdd);
-            }
-
-            // Split stacks into allowed sizes if needed
-            // e.g. when buying 300 ammo from flea but max stack size is 50
-            this.splitStackIntoSmallerStacks(itemsToAddPool, requestItem, rootItemsToAdd);
-        }
-
-        // Find an empty slot in stash for each of the items being added
-        const stashFS2D = this.getStashSlotMap(pmcData, sessionID);
-        const sortingTableFS2D = this.getSortingTableSlotMap(pmcData);
-
-        for (const itemToAdd of rootItemsToAdd)
-        {
-            // Update Items `location` properties
-            const itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(itemsToAddPool, itemToAdd.itemRef._id);
-            const errorOutput = this.placeItemInInventoryLegacy(
-                itemToAdd,
-                stashFS2D,
-                sortingTableFS2D,
-                itemWithChildren,
-                pmcData.Inventory,
-                useSortingTable,
-                output,
-            );
-            if (errorOutput)
-            {
-                return errorOutput;
-            }
-        }
-
-        // Found slot for every item (stash or sorting table), run callback and catch failure (e.g. payMoney() as player doesnt have enough)
-        try
-        {
-            if (typeof callback === "function")
-            {
-                callback();
-            }
-        }
-        catch (err)
-        {
-            // Callback failed
-            const message = typeof err === "string" ? err : this.localisationService.getText("http-unknown_error");
-
-            return this.httpResponse.appendErrorToOutput(output, message);
-        }
-
-        // Update UPD properties and add to output.profileChanges/pmcData.Inventory.items arrays
-        for (const rootItemToAdd of rootItemsToAdd)
-        {
-            let newIdForItem = this.hashUtil.generate();
-            const originalKeyToNewKeyMap: string[][] = [[rootItemToAdd.itemRef._id, newIdForItem]]; // Every item id + randomly generated id
-            let rootItemUpd: Upd = { StackObjectsCount: rootItemToAdd.count };
-
-            // If item being added is preset, load preset's upd data too.
-            if (rootItemToAdd.isPreset)
-            {
-                // Iterate over properties in upd and add them
-                for (const updID in rootItemToAdd.itemRef.upd)
-                {
-                    rootItemUpd[updID] = rootItemToAdd.itemRef.upd[updID];
-                }
-
-                if (addUpd)
-                {
-                    // Iterate over properties in addUpd and add them
-                    for (const updID in addUpd)
-                    {
-                        rootItemUpd[updID] = addUpd[updID];
-                    }
-                }
-            }
-
-            // Item has buff, add to item being sent to player
-            if (rootItemToAdd.itemRef.upd?.Buff)
-            {
-                rootItemUpd.Buff = this.jsonUtil.clone(rootItemToAdd.itemRef.upd.Buff);
-            }
-
-            // Add ragfair upd properties
-            if (addUpd)
-            {
-                rootItemUpd = { ...addUpd, ...rootItemUpd };
-            }
-
-            // Hideout items need to be marked as found in raid
-            // Or in case people want all items to be marked as found in raid
-            if (foundInRaid || this.inventoryConfig.newItemsMarkedFound)
-            {
-                rootItemUpd.SpawnedInSession = true;
-            }
-
-            // Remove invalid properties prior to adding to inventory
-            this.removeTraderRagfairRelatedUpdProperties(rootItemUpd);
-
-            // Add root item to client return object
-            output.profileChanges[sessionID].items.new.push({
-                _id: newIdForItem,
-                _tpl: rootItemToAdd.itemRef._tpl,
-                parentId: rootItemToAdd.containerId,
-                slotId: "hideout",
-                location: { x: rootItemToAdd.location.x, y: rootItemToAdd.location.y, r: rootItemToAdd.location.rotation ? 1 : 0 },
-                upd: this.jsonUtil.clone(rootItemUpd),
-            });
-
-            // Add root item to player inventory
-            pmcData.Inventory.items.push({
-                _id: newIdForItem,
-                _tpl: rootItemToAdd.itemRef._tpl,
-                parentId: rootItemToAdd.containerId,
-                slotId: "hideout",
-                location: { x: rootItemToAdd.location.x, y: rootItemToAdd.location.y, r: rootItemToAdd.location.rotation ? 1 : 0 },
-                upd: this.jsonUtil.clone(rootItemUpd), // Clone upd to prevent multi-purchases of same item referencing same upd object in memory
-            });
-
-            // Edge case - ammo boxes need cartridges added to result
-            if (this.itemHelper.isOfBaseclass(rootItemToAdd.itemRef._tpl, BaseClasses.AMMO_BOX))
-            {
-                this.hydrateAmmoBoxWithAmmo(pmcData, rootItemToAdd, originalKeyToNewKeyMap[0][1], sessionID, output, foundInRaid);
-            }
-
-            // Loop over item + children
-            while (originalKeyToNewKeyMap.length > 0)
-            {
-                // Iterate item + children being added
-                for (const arrayIndex in itemsToAddPool)
-                {
-                    const itemDetails = itemsToAddPool[arrayIndex];
-                    // Does parent match original key
-                    if (itemDetails?.parentId !== originalKeyToNewKeyMap[0][0])
-                    {
-                        // Skip when items parent isnt on remap (root item)
-                        continue;
-                    }
-
-                    // Create new id for child item
-                    newIdForItem = this.hashUtil.generate();
-                    const itemSlotId = itemDetails.slotId;
-
-                    // If its from ItemPreset, load presets upd data too.
-                    if (rootItemToAdd.isPreset)
-                    {
-                        rootItemUpd = { StackObjectsCount: rootItemToAdd.count };
-
-                        for (const updID in itemDetails.upd)
-                        {
-                            rootItemUpd[updID] = itemDetails.upd[updID];
-                        }
-
-                        if (foundInRaid || this.inventoryConfig.newItemsMarkedFound)
-                        {
-                            rootItemUpd.SpawnedInSession = true;
-                        }
-                    }
-                    // Is root item
-                    if (itemSlotId === "hideout")
-                    {
-                        // Add child item to client return object
-                        output.profileChanges[sessionID].items.new.push({
-                            _id: newIdForItem,
-                            _tpl: itemDetails._tpl,
-                            parentId: originalKeyToNewKeyMap[0][1],
-                            slotId: itemSlotId,
-                            location: { x: rootItemToAdd.location.x, y: rootItemToAdd.location.y, r: "Horizontal" },
-                            upd: this.jsonUtil.clone(rootItemUpd),
-                        });
-
-                        // Add child item to player inventory
-                        pmcData.Inventory.items.push({
-                            _id: newIdForItem,
-                            _tpl: itemDetails._tpl,
-                            parentId: originalKeyToNewKeyMap[0][1],
-                            slotId: itemDetails.slotId,
-                            location: { x: rootItemToAdd.location.x, y: rootItemToAdd.location.y, r: "Horizontal" },
-                            upd: this.jsonUtil.clone(rootItemUpd),
-                        });
-                    }
-                    else
-                    {
-                        // Child of item being added
-                        
-                        // Item already has location property, use it
-                        const itemLocation = {};
-                        if (itemDetails.location !== undefined)
-                        {
-                            itemLocation["location"] = itemDetails.location;
-                        }
-                        // Clone upd so we dont adjust the underlying data
-                        const upd = this.jsonUtil.clone(itemDetails.upd);
-                        output.profileChanges[sessionID].items.new.push({
-                            _id: newIdForItem,
-                            _tpl: itemDetails._tpl,
-                            parentId: originalKeyToNewKeyMap[0][1],
-                            slotId: itemSlotId,
-                            ...itemLocation,
-                            upd: upd,
-                        });
-
-                        pmcData.Inventory.items.push({
-                            _id: newIdForItem,
-                            _tpl: itemDetails._tpl,
-                            parentId: originalKeyToNewKeyMap[0][1],
-                            slotId: itemDetails.slotId,
-                            ...itemLocation,
-                            upd: upd,
-                        });
-                        this.logger.debug(`Added: ${itemDetails._tpl} with id: ${newIdForItem} to inventory`);
-                    }
-
-                    // Add mapping of child item to new id
-                    originalKeyToNewKeyMap.push([itemDetails._id, newIdForItem]);
-                }
-
-                // Remove mapping now we're done with it
-                originalKeyToNewKeyMap.splice(0, 1);
-            }
-        }
-
-        return output;
     }
 
     /**
@@ -498,13 +233,155 @@ export class InventoryHelper
         }
     }
 
+    /**
+     * Can all probided items be added into player inventory
+     * @param sessionId Player id
+     * @param itemsWithChildren array of items with children to try and fit
+     * @returns True all items fit
+     */
+    public canPlaceItemsInInventory(sessionId: string, itemsWithChildren: Item[][]): boolean
+    {
+        const pmcData = this.profileHelper.getPmcProfile(sessionId);
+
+        const stashFS2D = this.jsonUtil.clone(this.getStashSlotMap(pmcData, sessionId));
+        for (const itemWithChildren of itemsWithChildren)
+        {
+            if (this.canPlaceItemInContainer(stashFS2D, itemWithChildren))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Do the provided items all fit into the grid
+     * @param containerFS2D Container grid to fit items into
+     * @param itemsWithChildren items to try and fit into grid
+     * @returns True all fit
+     */
+    public canPlaceItemsInContainer(containerFS2D: number[][], itemsWithChildren: Item[][]): boolean
+    {
+        for (const itemWithChildren of itemsWithChildren)
+        {
+            if (this.canPlaceItemInContainer(containerFS2D, itemWithChildren))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Does an item fit into a container grid
+     * @param containerFS2D Container grid
+     * @param itemWithChildren item to check fits
+     * @returns True it fits
+     */
+    public canPlaceItemInContainer(containerFS2D: number[][], itemWithChildren: Item[]): boolean
+    {
+        // Get x/y size of item
+        const rootItem = itemWithChildren[0];
+        const itemSize = this.getItemSize(rootItem._tpl, rootItem._id, itemWithChildren);
+
+        // Look for a place to slot item into
+        const findSlotResult = this.containerHelper.findSlotForItem(containerFS2D, itemSize[0], itemSize[1]);
+        if (findSlotResult.success)
+        {
+            try
+            {
+                this.containerHelper.fillContainerMapWithItem(
+                    containerFS2D,
+                    findSlotResult.x,
+                    findSlotResult.y,
+                    itemSize[0],
+                    itemSize[1],
+                    findSlotResult.rotation,
+                );
+            }
+            catch (err)
+            {
+                const errorText = (typeof err === "string") ? ` -> ${err}` : err.message;
+                this.logger.error(`Unable to fit item into inventory: ${errorText}`);
+
+                return false;
+            }
+
+            // Success! exit
+            return;
+        }
+
+        return true;
+    }
+
+    /**
+     * Find a free location inside a container to fit the item
+     * @param containerFS2D Container grid to add item to
+     * @param itemWithChildren Item to add to grid
+     * @param containerId Id of the container we're fitting item into
+     */
+    public placeItemInContainer(containerFS2D: number[][], itemWithChildren: Item[], containerId: string): void
+    {
+        // Get x/y size of item
+        const rootItemAdded = itemWithChildren[0];
+        const itemSize = this.getItemSize(rootItemAdded._tpl, rootItemAdded._id, itemWithChildren);
+
+        // Look for a place to slot item into
+        const findSlotResult = this.containerHelper.findSlotForItem(containerFS2D, itemSize[0], itemSize[1]);
+        if (findSlotResult.success)
+        {
+            try
+            {
+                this.containerHelper.fillContainerMapWithItem(
+                    containerFS2D,
+                    findSlotResult.x,
+                    findSlotResult.y,
+                    itemSize[0],
+                    itemSize[1],
+                    findSlotResult.rotation,
+                );
+            }
+            catch (err)
+            {
+                const errorText = (typeof err === "string") ? ` -> ${err}` : err.message;
+                this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
+
+                return;
+            }
+            // Store details for object, incuding container item will be placed in
+            rootItemAdded.parentId = containerId;
+            rootItemAdded.slotId = "hideout";
+            rootItemAdded.location = {
+                x: findSlotResult.x,
+                y: findSlotResult.y,
+                r: findSlotResult.rotation ? 1 : 0,
+                rotation: findSlotResult.rotation,
+            };
+
+            // Success! exit
+            return;
+        }
+    }
+
+    /**
+     * Find a location to place an item into inventory and place it
+     * @param stashFS2D 2-dimensional representation of the container slots
+     * @param sortingTableFS2D 2-dimensional representation of the sorting table slots
+     * @param itemWithChildren Item to place
+     * @param playerInventory
+     * @param useSortingTable Should sorting table to be used if main stash has no space
+     * @param output output to send back to client
+     */
     protected placeItemInInventory(
         stashFS2D: number[][],
         sortingTableFS2D: number[][],
         itemWithChildren: Item[],
         playerInventory: Inventory,
         useSortingTable: boolean,
-        output: IItemEventRouterResponse): void
+        output: IItemEventRouterResponse,
+    ): void
     {
         // Get x/y size of item
         const rootItem = itemWithChildren[0];
@@ -512,30 +389,22 @@ export class InventoryHelper
 
         // Look for a place to slot item into
         const findSlotResult = this.containerHelper.findSlotForItem(stashFS2D, itemSize[0], itemSize[1]);
-
         if (findSlotResult.success)
         {
-            /* Fill in the StashFS_2D with an imaginary item, to simulate it already being added
-            * so the next item to search for a free slot won't find the same one */
-            const itemSizeX = findSlotResult.rotation ? itemSize[1] : itemSize[0];
-            const itemSizeY = findSlotResult.rotation ? itemSize[0] : itemSize[1];
-
             try
             {
-                stashFS2D = this.containerHelper.fillContainerMapWithItem(
+                this.containerHelper.fillContainerMapWithItem(
                     stashFS2D,
                     findSlotResult.x,
                     findSlotResult.y,
-                    itemSizeX,
-                    itemSizeY,
-                    false,
-                ); // TODO: rotation not passed in, bad?
+                    itemSize[0],
+                    itemSize[1],
+                    findSlotResult.rotation,
+                );
             }
             catch (err)
             {
-                const errorText = (typeof err === "string")
-                    ? ` -> ${err}`
-                    : "";
+                const errorText = (typeof err === "string") ? ` -> ${err}` : err.message;
                 this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
 
                 this.httpResponse.appendErrorToOutput(
@@ -567,18 +436,17 @@ export class InventoryHelper
                 itemSize[0],
                 itemSize[1],
             );
-            const itemSizeX = findSortingSlotResult.rotation ? itemSize[1] : itemSize[0];
-            const itemSizeY = findSortingSlotResult.rotation ? itemSize[0] : itemSize[1];
+
             try
             {
-                sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(
+                this.containerHelper.fillContainerMapWithItem(
                     sortingTableFS2D,
                     findSortingSlotResult.x,
                     findSortingSlotResult.y,
-                    itemSizeX,
-                    itemSizeY,
-                    false,
-                ); // TODO: rotation not passed in, bad?
+                    itemSize[0],
+                    itemSize[1],
+                    findSortingSlotResult.rotation,
+                );
             }
             catch (err)
             {
@@ -604,189 +472,9 @@ export class InventoryHelper
         }
         else
         {
-            this.httpResponse.appendErrorToOutput(
-                output,
-                this.localisationService.getText("inventory-no_stash_space"),
-            );
+            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
 
-            return
-        }
-    }
-
-    /**
-     * Take the given item, find a free slot in passed in inventory and place it there
-     * If no space in inventory, place in sorting table
-     * @param itemToAdd Item to add to inventory
-     * @param stashFS2D Two dimentional stash map
-     * @param sortingTableFS2D Two dimentional sorting table stash map
-     * @param itemLib
-     * @param pmcData Player profile
-     * @param useSortingTable Should sorting table be used for overflow items when no inventory space for item
-     * @param output Client output object
-     * @returns Client error output if placing item failed
-     */
-    protected placeItemInInventoryLegacy(
-        itemToAdd: IAddItemTempObject,
-        stashFS2D: number[][],
-        sortingTableFS2D: number[][],
-        itemLib: Item[],
-        playerInventory: Inventory,
-        useSortingTable: boolean,
-        output: IItemEventRouterResponse,
-    ): IItemEventRouterResponse
-    {
-        const itemSize = this.getItemSize(itemToAdd.itemRef._tpl, itemToAdd.itemRef._id, itemLib);
-
-        const findSlotResult = this.containerHelper.findSlotForItem(stashFS2D, itemSize[0], itemSize[1]);
-        if (findSlotResult.success)
-        {
-            /* Fill in the StashFS_2D with an imaginary item, to simulate it already being added
-            * so the next item to search for a free slot won't find the same one */
-            const itemSizeX = findSlotResult.rotation ? itemSize[1] : itemSize[0];
-            const itemSizeY = findSlotResult.rotation ? itemSize[0] : itemSize[1];
-
-            try
-            {
-                stashFS2D = this.containerHelper.fillContainerMapWithItem(
-                    stashFS2D,
-                    findSlotResult.x,
-                    findSlotResult.y,
-                    itemSizeX,
-                    itemSizeY,
-                    false,
-                ); // TODO: rotation not passed in, bad?
-            }
-            catch (err)
-            {
-                const errorText = typeof err === "string" ? ` -> ${err}` : "";
-                this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
-
-                return this.httpResponse.appendErrorToOutput(
-                    output,
-                    this.localisationService.getText("inventory-no_stash_space"),
-                );
-            }
-            // Store details for object, incuding container item will be placed in
-            itemToAdd.containerId = playerInventory.stash;
-            itemToAdd.location = {
-                x: findSlotResult.x,
-                y: findSlotResult.y,
-                r: findSlotResult.rotation ? 1 : 0,
-                rotation: findSlotResult.rotation,
-            };
-
-            // Success! exit
             return;
-        }
-
-        // Space not found in main stash, use sorting table
-        if (useSortingTable)
-        {
-            const findSortingSlotResult = this.containerHelper.findSlotForItem(
-                sortingTableFS2D,
-                itemSize[0],
-                itemSize[1],
-            );
-            const itemSizeX = findSortingSlotResult.rotation ? itemSize[1] : itemSize[0];
-            const itemSizeY = findSortingSlotResult.rotation ? itemSize[0] : itemSize[1];
-            try
-            {
-                sortingTableFS2D = this.containerHelper.fillContainerMapWithItem(
-                    sortingTableFS2D,
-                    findSortingSlotResult.x,
-                    findSortingSlotResult.y,
-                    itemSizeX,
-                    itemSizeY,
-                    false,
-                ); // TODO: rotation not passed in, bad?
-            }
-            catch (err)
-            {
-                const errorText = typeof err === "string" ? ` -> ${err}` : "";
-                this.logger.error(this.localisationService.getText("inventory-fill_container_failed", errorText));
-
-                return this.httpResponse.appendErrorToOutput(
-                    output,
-                    this.localisationService.getText("inventory-no_stash_space"),
-                );
-            }
-
-            // Store details for object, incuding container item will be placed in
-            itemToAdd.containerId = playerInventory.sortingTable;
-            itemToAdd.location = {
-                x: findSortingSlotResult.x,
-                y: findSortingSlotResult.y,
-                r: findSortingSlotResult.rotation ? 1 : 0,
-                rotation: findSortingSlotResult.rotation,
-            };
-        }
-        else
-        {
-            return this.httpResponse.appendErrorToOutput(
-                output,
-                this.localisationService.getText("inventory-no_stash_space"),
-            );
-        }
-    }
-
-    /**
-     * Add ammo to ammo boxes
-     * @param itemToAdd Item to check is ammo box
-     * @param parentId Ammo box parent id
-     * @param output IItemEventRouterResponse object
-     * @param sessionID Session id
-     * @param pmcData Profile to add ammobox to
-     * @param output object to send to client
-     * @param foundInRaid should ammo be FiR
-     */
-    protected hydrateAmmoBoxWithAmmo(
-        pmcData: IPmcData,
-        itemToAdd: IAddItemTempObject,
-        parentId: string,
-        sessionID: string,
-        output: IItemEventRouterResponse,
-        foundInRaid: boolean,
-    ): void
-    {
-        const itemInfo = this.itemHelper.getItem(itemToAdd.itemRef._tpl)[1];
-        const stackSlots = itemInfo._props.StackSlots;
-        if (stackSlots !== undefined)
-        {
-            // Cartridge info seems to be an array of size 1 for some reason... (See AmmoBox constructor in client code)
-            let maxCount = stackSlots[0]._max_count;
-            const ammoTpl = stackSlots[0]._props.filters[0].Filter[0];
-            const ammoStackMaxSize = this.itemHelper.getItem(ammoTpl)[1]._props.StackMaxSize;
-            const ammos = [];
-            let location = 0;
-
-            // Place stacks in ammo box no larger than StackMaxSize, prevents player when opening item getting stack of ammo > StackMaxSize
-            while (maxCount > 0)
-            {
-                const ammoStackSize = maxCount <= ammoStackMaxSize ? maxCount : ammoStackMaxSize;
-                const ammoItem: Item = {
-                    _id: this.hashUtil.generate(),
-                    _tpl: ammoTpl,
-                    parentId: parentId,
-                    slotId: "cartridges",
-                    location: location,
-                    upd: { StackObjectsCount: ammoStackSize },
-                };
-
-                if (foundInRaid)
-                {
-                    ammoItem.upd.SpawnedInSession = true;
-                }
-
-                ammos.push(ammoItem);
-
-                location++;
-                maxCount -= ammoStackMaxSize;
-            }
-
-            for (const item of [output.profileChanges[sessionID].items.new, pmcData.Inventory.items])
-            {
-                item.push(...ammos);
-            }
         }
     }
 
@@ -795,7 +483,11 @@ export class InventoryHelper
      * @param requestItem Details of purchased item to add to inventory
      * @param result Array split stacks are added to
      */
-    protected splitStackIntoSmallerStacks(assortItems: Item[], requestItem: AddItem, result: IAddItemTempObject[]): void
+    protected splitStackIntoSmallerChildStacks(
+        assortItems: Item[],
+        requestItem: AddItem,
+        result: IAddItemTempObject[],
+    ): void
     {
         for (const item of assortItems)
         {
@@ -861,21 +553,20 @@ export class InventoryHelper
      * @param profile Profile to remove item from (pmc or scav)
      * @param itemId Items id to remove
      * @param sessionID Session id
-     * @param output Existing IItemEventRouterResponse object to append data to, creates new one by default if not supplied
-     * @returns IItemEventRouterResponse
+     * @param output OPTIONAL - IItemEventRouterResponse
      */
     public removeItem(
         profile: IPmcData,
         itemId: string,
         sessionID: string,
         output: IItemEventRouterResponse = undefined,
-    ): IItemEventRouterResponse
+    ): void
     {
         if (!itemId)
         {
             this.logger.warning("No itemId supplied, unable to remove item from inventory");
 
-            return output;
+            return;
         }
 
         // Get children of item, they get deleted too
@@ -912,8 +603,6 @@ export class InventoryHelper
                 insuredItems.splice(insuredIndex, 1);
             }
         }
-
-        return output;
     }
 
     public removeItemAndChildrenFromMailRewards(
@@ -1112,7 +801,7 @@ export class InventoryHelper
                         {
                             continue;
                         }
-                        
+
                         if (childFoldable && rootFolded && childFolded)
                         {
                             continue;
@@ -1168,9 +857,14 @@ export class InventoryHelper
         return inventoryItemHash;
     }
 
-    public getContainerMap(containerW: number, containerH: number, itemList: Item[], containerId: string): number[][]
+    protected getBlankContainerMap(containerH: number, containerY: number): number[][]
     {
-        const container2D: number[][] = Array(containerH).fill(0).map(() => Array(containerW).fill(0));
+        return Array(containerY).fill(0).map(() => Array(containerH).fill(0));
+    }
+
+    public getContainerMap(containerH: number, containerV: number, itemList: Item[], containerId: string): number[][]
+    {
+        const container2D: number[][] = this.getBlankContainerMap(containerH, containerV);
         const inventoryItemHash = this.getInventoryItemHash(itemList);
         const containerItemHash = inventoryItemHash.byParentId[containerId];
 
@@ -1232,9 +926,13 @@ export class InventoryHelper
      * @returns OwnerInventoryItems with inventory of player/scav to adjust
      */
     public getOwnerInventoryItems(
-        request: IInventoryMoveRequestData | IInventorySplitRequestData | IInventoryMergeRequestData,
+        request:
+            | IInventoryMoveRequestData
+            | IInventorySplitRequestData
+            | IInventoryMergeRequestData
+            | IInventoryTransferRequestData,
         sessionId: string,
-    ): OwnerInventoryItems
+    ): IOwnerInventoryItems
     {
         let isSameInventory = false;
         const pmcItems = this.profileHelper.getPmcProfile(sessionId).Inventory.items;
@@ -1301,6 +999,16 @@ export class InventoryHelper
         );
     }
 
+    public getContainerSlotMap(containerTpl: string): number[][]
+    {
+        const containerTemplate = this.itemHelper.getItem(containerTpl)[1];
+
+        const containerH = containerTemplate._props.Grids[0]._props.cellsH;
+        const containerV = containerTemplate._props.Grids[0]._props.cellsV;
+
+        return this.getBlankContainerMap(containerH, containerV);
+    }
+
     protected getSortingTableSlotMap(pmcData: IPmcData): number[][]
     {
         return this.getContainerMap(10, 45, pmcData.Inventory.items, pmcData.Inventory.sortingTable);
@@ -1325,13 +1033,13 @@ export class InventoryHelper
             this.logger.error(this.localisationService.getText("inventory-stash_not_found", stashTPL));
         }
 
-        const stashX = stashItemDetails[1]._props.Grids[0]._props.cellsH !== 0
+        const stashH = stashItemDetails[1]._props.Grids[0]._props.cellsH !== 0
             ? stashItemDetails[1]._props.Grids[0]._props.cellsH
             : 10;
         const stashY = stashItemDetails[1]._props.Grids[0]._props.cellsV !== 0
             ? stashItemDetails[1]._props.Grids[0]._props.cellsV
             : 66;
-        return [stashX, stashY];
+        return [stashH, stashY];
     }
 
     /**

@@ -23,7 +23,7 @@ export class AchievementController
      */
     public getAchievements(sessionID: string): IGetAchievementsResponse
     {
-        return {elements: this.databaseServer.getTables().templates.achievements };
+        return { elements: this.databaseServer.getTables().templates.achievements };
     }
 
     /**
@@ -34,13 +34,13 @@ export class AchievementController
     public getAchievementStatistics(sessionId: string): ICompletedAchievementsResponse
     {
         const achievements = this.databaseServer.getTables().templates.achievements;
-        const stats = {}
+        const stats = {};
 
         for (const achievement of achievements)
         {
             stats[achievement.id] = 0;
         }
 
-        return {elements: stats};
+        return { elements: stats };
     }
 }

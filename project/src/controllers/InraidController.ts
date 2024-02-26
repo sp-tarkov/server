@@ -23,6 +23,7 @@ import { Traders } from "@spt-aki/models/enums/Traders";
 import { IAirdropConfig } from "@spt-aki/models/spt/config/IAirdropConfig";
 import { IBTRConfig } from "@spt-aki/models/spt/config/IBTRConfig";
 import { IInRaidConfig } from "@spt-aki/models/spt/config/IInRaidConfig";
+import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
 import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -48,6 +49,7 @@ export class InraidController
     protected btrConfig: IBTRConfig;
     protected inRaidConfig: IInRaidConfig;
     protected traderConfig: ITraderConfig;
+    protected locationConfig: ILocationConfig;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -76,6 +78,7 @@ export class InraidController
         this.btrConfig = this.configServer.getConfig(ConfigTypes.BTR);
         this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
+        this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
 
     /**
@@ -123,12 +126,15 @@ export class InraidController
     protected savePmcProgress(sessionID: string, postRaidRequest: ISaveProgressRequestData): void
     {
         const serverProfile = this.saveServer.getProfile(sessionID);
+
         const locationName = serverProfile.inraid.location.toLowerCase();
 
         const map: ILocationBase = this.databaseServer.getTables().locations[locationName].base;
         const mapHasInsuranceEnabled = map.Insurance;
 
-        let serverPmcProfile = serverProfile.characters.pmc;
+        const serverPmcProfile = serverProfile.characters.pmc;
+        const serverScavProfile = serverProfile.characters.scav;
+
         const isDead = this.isPlayerDead(postRaidRequest.exit);
         const preRaidGear = this.inRaidHelper.getPlayerGear(serverPmcProfile.Inventory.items);
 
@@ -137,30 +143,38 @@ export class InraidController
         this.inRaidHelper.updateProfileBaseStats(serverPmcProfile, postRaidRequest, sessionID);
         this.inRaidHelper.updatePmcProfileDataPostRaid(serverPmcProfile, postRaidRequest, sessionID);
 
+        this.mergePmcAndScavEncyclopedias(serverPmcProfile, serverScavProfile);
+
         // Check for exit status
         this.markOrRemoveFoundInRaidItems(postRaidRequest);
 
         postRaidRequest.profile.Inventory.items = this.itemHelper.replaceIDs(
-            postRaidRequest.profile,
             postRaidRequest.profile.Inventory.items,
+            postRaidRequest.profile,
             serverPmcProfile.InsuredItems,
             postRaidRequest.profile.Inventory.fastPanel,
         );
         this.inRaidHelper.addUpdToMoneyFromRaid(postRaidRequest.profile.Inventory.items);
 
         // Purge profile of equipment/container items
-        serverPmcProfile = this.inRaidHelper.setInventory(sessionID, serverPmcProfile, postRaidRequest.profile);
+        this.inRaidHelper.setInventory(sessionID, serverPmcProfile, postRaidRequest.profile);
 
         this.healthHelper.saveVitality(serverPmcProfile, postRaidRequest.health, sessionID);
 
-        // Remove inventory if player died and send insurance items
-        if (mapHasInsuranceEnabled)
+        // Get array of insured items+child that were lost in raid
+        const gearToStore = this.insuranceService.getGearLostInRaid(
+            serverPmcProfile,
+            postRaidRequest,
+            preRaidGear,
+            sessionID,
+            isDead,
+        );
+
+        if (gearToStore.length > 0)
         {
-            this.insuranceService.storeLostGear(serverPmcProfile, postRaidRequest, preRaidGear, sessionID, isDead);
-        }
-        else
-        {
-            this.insuranceService.sendLostInsuranceMessage(sessionID, locationName);
+            mapHasInsuranceEnabled
+                ? this.insuranceService.storeGearLostInRaidToSendLater(sessionID, gearToStore)
+                : this.insuranceService.sendLostInsuranceMessage(sessionID, locationName);
         }
 
         // Edge case - Handle usec players leaving lighthouse with Rogues angry at them
@@ -185,7 +199,32 @@ export class InraidController
             );
             this.matchBotDetailsCacheService.clearCache();
 
-            serverPmcProfile = this.performPostRaidActionsWhenDead(postRaidRequest, serverPmcProfile, sessionID);
+            this.performPostRaidActionsWhenDead(postRaidRequest, serverPmcProfile, sessionID);
+        }
+        else
+        {
+            // Not dead
+
+            // Check for cultist amulets in special slot (only slot it can fit)
+            const amuletOnPlayer = serverPmcProfile.Inventory.items.filter((item) =>
+                item.slotId?.startsWith("SpecialSlot")
+            ).find((item) => item._tpl === "64d0b40fbe2eed70e254e2d4");
+            if (amuletOnPlayer)
+            {
+                // No charges left, delete it
+                if (amuletOnPlayer.upd.CultistAmulet.NumberOfUsages <= 0)
+                {
+                    serverPmcProfile.Inventory.items.splice(
+                        serverPmcProfile.Inventory.items.indexOf(amuletOnPlayer),
+                        1,
+                    );
+                }
+                else if (amuletOnPlayer.upd.CultistAmulet.NumberOfUsages > 0)
+                {
+                    // Charges left, reduce by 1
+                    amuletOnPlayer.upd.CultistAmulet.NumberOfUsages--;
+                }
+            }
         }
 
         const victims = postRaidRequest.profile.Stats.Eft.Victims.filter((x) =>
@@ -203,7 +242,7 @@ export class InraidController
     }
 
     /**
-     * Make changes to pmc profile after they've died in raid,
+     * Make changes to PMC profile after they've died in raid,
      * Alter body part hp, handle insurance, delete inventory items, remove carried quest items
      * @param postRaidSaveRequest Post-raid save request
      * @param pmcData Pmc profile
@@ -224,8 +263,8 @@ export class InraidController
             // Find and remove the completed condition from profile if player died, otherwise quest is stuck in limbo
             // and quest items cannot be picked up again
             const allQuests = this.questHelper.getQuestsFromDb();
-            const activeQuestIdsInProfile = pmcData.Quests.filter((x) =>
-                ![QuestStatus.AvailableForStart, QuestStatus.Success, QuestStatus.Expired].includes(x.status)
+            const activeQuestIdsInProfile = pmcData.Quests.filter((profileQuest) =>
+                ![QuestStatus.AvailableForStart, QuestStatus.Success, QuestStatus.Expired].includes(profileQuest.status)
             ).map((x) => x.qid);
             for (const questItem of postRaidSaveRequest.profile.Stats.Eft.CarriedQuestItems)
             {
@@ -300,6 +339,8 @@ export class InraidController
         this.inRaidHelper.updateProfileBaseStats(serverScavProfile, postRaidRequest, sessionID);
         this.inRaidHelper.updateScavProfileDataPostRaid(serverScavProfile, postRaidRequest, sessionID);
 
+        this.mergePmcAndScavEncyclopedias(serverScavProfile, serverPmcProfile);
+
         // Completing scav quests create ConditionCounters, these values need to be transported to the PMC profile
         if (this.profileHasConditionCounters(serverScavProfile))
         {
@@ -311,8 +352,8 @@ export class InraidController
         this.markOrRemoveFoundInRaidItems(postRaidRequest);
 
         postRaidRequest.profile.Inventory.items = this.itemHelper.replaceIDs(
-            postRaidRequest.profile,
             postRaidRequest.profile.Inventory.items,
+            postRaidRequest.profile,
             serverPmcProfile.InsuredItems,
             postRaidRequest.profile.Inventory.fastPanel,
         );
@@ -325,13 +366,38 @@ export class InraidController
     }
 
     /**
+     * merge two dictionaries together
+     * Prioritise pair that has true as a value
+     * @param primary main dictionary
+     * @param secondary Secondary dictionary
+     */
+    protected mergePmcAndScavEncyclopedias(primary: IPmcData, secondary: IPmcData): void
+    {
+        function extend(target: { [key: string]: boolean; }, source: Record<string, boolean>)
+        {
+            for (const key in source)
+            {
+                if (Object.hasOwn(source, key))
+                {
+                    target[key] = source[key];
+                }
+            }
+            return target;
+        }
+
+        const merged = extend(extend({}, primary.Encyclopedia), secondary.Encyclopedia);
+        primary.Encyclopedia = merged;
+        secondary.Encyclopedia = merged;
+    }
+
+    /**
      * Does provided profile contain any condition counters
      * @param profile Profile to check for condition counters
      * @returns Profile has condition counters
      */
     protected profileHasConditionCounters(profile: IPmcData): boolean
     {
-        if (!profile.TaskConditionCounters?.Counters)
+        if (!profile.TaskConditionCounters)
         {
             return false;
         }
@@ -346,9 +412,11 @@ export class InraidController
      */
     protected migrateScavQuestProgressToPmcProfile(scavProfile: IPmcData, pmcProfile: IPmcData): void
     {
+        const achievements = this.databaseServer.getTables().templates.achievements;
+
         for (const quest of scavProfile.Quests)
         {
-            const pmcQuest = pmcProfile.Quests.find(x => x.qid === quest.qid);
+            const pmcQuest = pmcProfile.Quests.find((x) => x.qid === quest.qid);
             if (!pmcQuest)
             {
                 this.logger.warning(`No PMC quest found for ID: ${quest.qid}`);
@@ -382,10 +450,17 @@ export class InraidController
         // Loop over all scav counters and add into pmc profile
         for (const scavCounter of Object.values(scavProfile.TaskConditionCounters))
         {
+            // If this is an achievement that isn't for the scav, don't process it
+            const achievement = achievements.find((achievement) => achievement.id === scavCounter.sourceId);
+            if (achievement && achievement.side !== "Savage")
+            {
+                continue;
+            }
+
             this.logger.debug(
                 `Processing counter: ${scavCounter.id} value: ${scavCounter.value} quest: ${scavCounter.sourceId}`,
             );
-            const counterInPmcProfile = pmcProfile.TaskConditionCounters.Counters[scavCounter.id];
+            const counterInPmcProfile = pmcProfile.TaskConditionCounters[scavCounter.id];
             if (!counterInPmcProfile)
             {
                 // Doesn't exist yet, push it straight in
@@ -394,7 +469,7 @@ export class InraidController
             }
 
             this.logger.debug(
-                `Counter id: ${scavCounter.id} already exists in pmc profile! with value: ${counterInPmcProfile.value} for quest: ${counterInPmcProfile.qid}`,
+                `Counter id: ${scavCounter.id} already exists in pmc profile! with value: ${counterInPmcProfile.value} for quest: ${counterInPmcProfile.id}`,
             );
 
             // Only adjust counter value if its changed
@@ -446,7 +521,7 @@ export class InraidController
     ): void
     {
         // Update scav profile inventory
-        scavData = this.inRaidHelper.setInventory(sessionID, scavData, offraidData.profile);
+        this.inRaidHelper.setInventory(sessionID, scavData, offraidData.profile);
 
         // Reset scav hp and save to json
         this.healthHelper.resetVitality(sessionID);
@@ -477,8 +552,7 @@ export class InraidController
         const fenceId = Traders.FENCE;
 
         let fenceStanding = Number(pmcData.TradersInfo[fenceId].standing);
-        this.logger.debug(`Old fence standing: ${fenceStanding}`);
-        fenceStanding = this.inRaidHelper.calculateFenceStandingChangeFromKills(
+        fenceStanding = this.inRaidHelper.calculateFenceStandingChangeFromKillsAsScav(
             fenceStanding,
             offraidData.profile.Stats.Eft.Victims,
         );
@@ -529,7 +603,7 @@ export class InraidController
      */
     public getTraderServices(sessionId: string, traderId: string): ITraderServiceModel[]
     {
-        return this.traderServicesService.getTraderServices(traderId);
+        return this.traderServicesService.getTraderServices(sessionId, traderId);
     }
 
     /**
@@ -546,9 +620,9 @@ export class InraidController
 
         // Remove any items that were returned by the item delivery, but also insured, from the player's insurance list
         // This is to stop items being duplicated by being returned from both the item delivery, and insurance
-        const deliveredItemIds = items.map(x => x._id);
-        pmcData.InsuredItems = pmcData.InsuredItems.filter(x => !deliveredItemIds.includes(x.itemId));
-        
+        const deliveredItemIds = items.map((x) => x._id);
+        pmcData.InsuredItems = pmcData.InsuredItems.filter((x) => !deliveredItemIds.includes(x.itemId));
+
         // Send the items to the player
         this.mailSendService.sendLocalisedNpcMessageToPlayer(
             sessionId,
@@ -558,5 +632,15 @@ export class InraidController
             items,
             messageStoreTime,
         );
+    }
+
+    public getTraitorScavHostileChance(url: string, sessionID: string): number
+    {
+        return this.inRaidConfig.playerScavHostileChancePercent;
+    }
+
+    public getSandboxMaxPatrolValue(url: string, sessionID: string): number
+    {
+        return this.locationConfig.sandboxMaxPatrolvalue;
     }
 }

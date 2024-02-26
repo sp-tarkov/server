@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import WebSocket from "ws";
 
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { INotification, NotificationType } from "@spt-aki/models/eft/notifier/INotifier";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
@@ -11,7 +12,6 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 
 @injectable()
 export class WebSocketServer

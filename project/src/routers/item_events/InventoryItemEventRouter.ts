@@ -51,20 +51,21 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
         pmcData: IPmcData,
         body: any,
         sessionID: string,
+        output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
         switch (url)
         {
             case ItemEventActions.MOVE:
-                return this.inventoryCallbacks.moveItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.moveItem(pmcData, body, sessionID, output);
             case ItemEventActions.REMOVE:
-                return this.inventoryCallbacks.removeItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.removeItem(pmcData, body, sessionID, output);
             case ItemEventActions.SPLIT:
-                return this.inventoryCallbacks.splitItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.splitItem(pmcData, body, sessionID, output);
             case ItemEventActions.MERGE:
-                return this.inventoryCallbacks.mergeItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.mergeItem(pmcData, body, sessionID, output);
             case ItemEventActions.TRANSFER:
-                return this.inventoryCallbacks.transferItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.transferItem(pmcData, body, sessionID, output);
             case ItemEventActions.SWAP:
                 return this.inventoryCallbacks.swapItem(pmcData, body, sessionID);
             case ItemEventActions.FOLD:
@@ -74,31 +75,31 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
             case ItemEventActions.TAG:
                 return this.inventoryCallbacks.tagItem(pmcData, body, sessionID);
             case ItemEventActions.BIND:
-                return this.inventoryCallbacks.bindItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.bindItem(pmcData, body, sessionID, output);
             case ItemEventActions.UNBIND:
-                return this.inventoryCallbacks.unbindItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.unbindItem(pmcData, body, sessionID, output);
             case ItemEventActions.EXAMINE:
-                return this.inventoryCallbacks.examineItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.examineItem(pmcData, body, sessionID, output);
             case ItemEventActions.READ_ENCYCLOPEDIA:
                 return this.inventoryCallbacks.readEncyclopedia(pmcData, body, sessionID);
             case ItemEventActions.APPLY_INVENTORY_CHANGES:
-                return this.inventoryCallbacks.sortInventory(pmcData, body, sessionID);
+                return this.inventoryCallbacks.sortInventory(pmcData, body, sessionID, output);
             case ItemEventActions.CREATE_MAP_MARKER:
-                return this.inventoryCallbacks.createMapMarker(pmcData, body, sessionID);
+                return this.inventoryCallbacks.createMapMarker(pmcData, body, sessionID, output);
             case ItemEventActions.DELETE_MAP_MARKER:
-                return this.inventoryCallbacks.deleteMapMarker(pmcData, body, sessionID);
+                return this.inventoryCallbacks.deleteMapMarker(pmcData, body, sessionID, output);
             case ItemEventActions.EDIT_MAP_MARKER:
-                return this.inventoryCallbacks.editMapMarker(pmcData, body, sessionID);
+                return this.inventoryCallbacks.editMapMarker(pmcData, body, sessionID, output);
             case ItemEventActions.OPEN_RANDOM_LOOT_CONTAINER:
-                return this.inventoryCallbacks.openRandomLootContainer(pmcData, body, sessionID);
+                return this.inventoryCallbacks.openRandomLootContainer(pmcData, body, sessionID, output);
             case ItemEventActions.HIDEOUT_QTE_EVENT:
-                return this.hideoutCallbacks.handleQTEEvent(pmcData, body, sessionID);
+                return this.hideoutCallbacks.handleQTEEvent(pmcData, body, sessionID, output);
             case ItemEventActions.REDEEM_PROFILE_REWARD:
-                return this.inventoryCallbacks.redeemProfileReward(pmcData, body, sessionID);
+                return this.inventoryCallbacks.redeemProfileReward(pmcData, body, sessionID, output);
             case ItemEventActions.SET_FAVORITE_ITEMS:
-                return this.inventoryCallbacks.setFavoriteItem(pmcData, body, sessionID);
+                return this.inventoryCallbacks.setFavoriteItem(pmcData, body, sessionID, output);
             case ItemEventActions.QUEST_FAIL:
-                return this.inventoryCallbacks.failQuest(pmcData, body, sessionID);
+                return this.inventoryCallbacks.failQuest(pmcData, body, sessionID, output);
             default:
                 throw new Error(`Unhandled event ${url} request: ${JSON.stringify(body)}`);
         }

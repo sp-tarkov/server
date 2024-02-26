@@ -4,5 +4,5 @@ export interface ISetFavoriteItems extends IInventoryBaseActionRequestData
 {
     Action: "SetFavoriteItems";
     items: any[];
-    timestamp: number
+    timestamp: number;
 }

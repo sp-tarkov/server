@@ -617,7 +617,7 @@
     "gifterSettings": [{
             "map": "bigmap",
             "zones": "ZoneDormitory,ZoneGasStation,ZoneScavBase",
-            "spawnChance": 45
+            "spawnChance": 75
         }, {
             "map": "factory4_day",
             "zones": "BotZone",
@@ -625,31 +625,35 @@
         }, {
             "map": "laboratory",
             "zones": "BotZoneFloor1,BotZoneFloor2",
-            "spawnChance": 35
+            "spawnChance": 75
         }, {
             "map": "interchange",
             "zones": "ZoneCenterBot,ZoneCenter,ZoneOLI,ZoneIDEA,ZoneGoshan,ZoneIDEAPark,ZoneOLIPark",
-            "spawnChance": 45
+            "spawnChance": 75
         }, {
             "map": "lighthouse",
             "zones": "Zone_TreatmentContainers,Zone_Chalet,Zone_RoofContainers,Zone_RoofBeach,Zone_Hellicopter",
-            "spawnChance": 45
+            "spawnChance": 75
         }, {
             "map": "rezervbase",
             "zones": "ZoneRailStrorage,ZoneRailStrorage,ZoneRailStrorage,ZonePTOR1,ZonePTOR2,ZoneBarrack,ZoneBarrack,ZoneBarrack,ZoneSubStorage",
-            "spawnChance": 45
+            "spawnChance": 75
         }, {
             "map": "shoreline",
             "zones": "ZonePort,ZoneGreenHouses,ZoneSanatorium1,ZoneGreenHouses,ZoneSanatorium2,ZoneMeteoStation,ZoneSanatorium1,ZoneSanatorium2",
-            "spawnChance": 45
+            "spawnChance": 75
         }, {
             "map": "tarkovstreets",
             "zones": "ZoneColumn",
-            "spawnChance": 40
+            "spawnChance": 75
         }, {
             "map": "woods",
             "zones": "ZoneScavBase2,ZoneWoodCutter",
-            "spawnChance": 45
+            "spawnChance": 75
+        }, {
+            "map": "sandbox",
+            "zones": "ZoneSandbox",
+            "spawnChance": 75
         }
     ],
     "events": [{
@@ -678,7 +682,7 @@
             "type": "SNOW",
             "startDay": "8",
             "startMonth": "1",
-            "endDay": "5",
+            "endDay": "12",
             "endMonth": "2"
         }
     ]

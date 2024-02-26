@@ -32,6 +32,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 
 @injectable()
 export class RepeatableQuestController
@@ -82,9 +83,9 @@ export class RepeatableQuestController
      * The new quests generated are again persisted in profile.RepeatableQuests
      *
      * @param   {string}    _info       Request from client
-     * @param   {string}    sessionID       Player's session id
-     * 
-     * @returns  {array}                    array of "repeatableQuestObjects" as descibed above
+     * @param   {string}    sessionID   Player's session id
+     *
+     * @returns  {array}                Array of "repeatableQuestObjects" as descibed above
      */
     public getClientRepeatableQuests(_info: IEmptyRequestData, sessionID: string): IPmcDataRepeatableQuest[]
     {
@@ -120,7 +121,7 @@ export class RepeatableQuestController
                     for (const activeQuest of currentRepeatableQuestType.activeQuests)
                     {
                         // Keep finished quests in list so player can hand in
-                        const quest = pmcData.Quests.find(quest => quest.qid === activeQuest._id);
+                        const quest = pmcData.Quests.find((quest) => quest.qid === activeQuest._id);
                         if (quest)
                         {
                             if (quest.status === QuestStatus.AvailableForFinish)
@@ -136,7 +137,7 @@ export class RepeatableQuestController
                         this.profileFixerService.removeDanglingConditionCounters(pmcData);
 
                         // Remove expired quest from pmc.quest array
-                        pmcData.Quests = pmcData.Quests.filter(quest => quest.qid !== activeQuest._id);
+                        pmcData.Quests = pmcData.Quests.filter((quest) => quest.qid !== activeQuest._id);
                         currentRepeatableQuestType.inactiveQuests.push(activeQuest);
                     }
                     currentRepeatableQuestType.activeQuests = questsToKeep;
@@ -263,24 +264,26 @@ export class RepeatableQuestController
     public generateDebugDailies(dailiesPool: any, factory: any, number: number): any
     {
         let randomQuests = [];
+        let numberOfQuests = number;
+
         if (factory)
         {
             // First is factory extract always add for debugging
             randomQuests.push(dailiesPool[0]);
-            number -= 1;
+            numberOfQuests -= 1;
         }
 
-        randomQuests = randomQuests.concat(this.randomUtil.drawRandomFromList(dailiesPool, number, false));
+        randomQuests = randomQuests.concat(this.randomUtil.drawRandomFromList(dailiesPool, numberOfQuests, false));
 
         for (const element of randomQuests)
         {
             element._id = this.objectId.generate();
             const conditions = element.conditions.AvailableForFinish;
-            for (const element of conditions)
+            for (const condition of conditions)
             {
-                if ("counter" in element._props)
+                if ("counter" in condition._props)
                 {
-                    element._props.counter.id = this.objectId.generate();
+                    condition._props.counter.id = this.objectId.generate();
                 }
             }
         }
@@ -299,12 +302,13 @@ export class RepeatableQuestController
     {
         const questPool = this.createBaseQuestPool(repeatableConfig);
 
-        for (const location in repeatableConfig.locations)
+        const locations = this.getAllowedLocations(repeatableConfig.locations, pmcLevel);
+        for (const location in locations)
         {
             if (location !== ELocationName.ANY)
             {
-                questPool.pool.Exploration.locations[location] = repeatableConfig.locations[location];
-                questPool.pool.Pickup.locations[location] = repeatableConfig.locations[location];
+                questPool.pool.Exploration.locations[location] = locations[location];
+                questPool.pool.Pickup.locations[location] = locations[location];
             }
         }
 
@@ -322,9 +326,9 @@ export class RepeatableQuestController
             }
             else
             {
-                const possibleLocations = Object.keys(repeatableConfig.locations);
+                const possibleLocations = Object.keys(locations);
 
-                // Set possible locations for elimination task, ift arget is savage, exclude labs from locations
+                // Set possible locations for elimination task, if target is savage, exclude labs from locations
                 questPool.pool.Elimination.targets[probabilityObject.key] = (probabilityObject.key === "Savage")
                     ? { locations: possibleLocations.filter((x) => x !== "laboratory") }
                     : { locations: possibleLocations };
@@ -340,6 +344,62 @@ export class RepeatableQuestController
             types: repeatableConfig.types.slice(),
             pool: { Exploration: { locations: {} }, Elimination: { targets: {} }, Pickup: { locations: {} } },
         };
+    }
+
+    /**
+     * Return the locations this PMC is allowed to get daily quests for based on their level
+     * @param locations The original list of locations
+     * @param pmcLevel The level of the player PMC
+     * @returns A filtered list of locations that allow the player PMC level to access it
+     */
+    protected getAllowedLocations(
+        locations: Record<ELocationName, string[]>, 
+        pmcLevel: number
+    ): Partial<Record<ELocationName, string[]>>
+    {
+        const allowedLocation: Partial<Record<ELocationName, string[]>> = {};
+
+        for (const location in locations)
+        {
+            const locationNames = [];
+            for (const locationName of locations[location])
+            {
+                if (this.isPmcLevelAllowedOnLocation(locationName, pmcLevel))
+                {
+                    locationNames.push(locationName);
+                }
+            }
+
+            if (locationNames.length > 0)
+            {
+                allowedLocation[location] = locationNames;
+            }
+        }
+
+        return allowedLocation;
+    }
+
+    /**
+     * Return true if the given pmcLevel is allowed on the given location
+     * @param location The location name to check
+     * @param pmcLevel The level of the pmc
+     * @returns True if the given pmc level is allowed to access the given location
+     */
+    protected isPmcLevelAllowedOnLocation(location: string, pmcLevel: number): boolean
+    {
+        if (location === ELocationName.ANY)
+        {
+            return true;
+        }
+
+        const locationBase: ILocationBase = this.databaseServer.getTables().locations[location.toLowerCase()]?.base;
+        if (!locationBase)
+        {
+            return true;
+        }
+
+        return (pmcLevel <= locationBase.RequiredPlayerLevelMax
+                && pmcLevel >= locationBase.RequiredPlayerLevelMin);
     }
 
     public debugLogRepeatableQuestIds(pmcData: IPmcData): void

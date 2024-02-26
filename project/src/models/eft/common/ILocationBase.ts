@@ -229,7 +229,7 @@ export interface Exit
     Chance: number;
     Count: number;
     EntryPoints: string;
-    EventAvailable: boolean
+    EventAvailable: boolean;
     ExfiltrationTime: number;
     ExfiltrationType: string;
     RequiredSlot?: string;

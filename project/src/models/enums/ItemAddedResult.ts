@@ -1,4 +1,5 @@
-export enum ItemAddedResult {
+export enum ItemAddedResult
+{
     UNKNOWN = -1,
     SUCCESS = 1,
     NO_SPACE = 2,

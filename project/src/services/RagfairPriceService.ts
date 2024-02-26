@@ -7,11 +7,13 @@ import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { MinMax } from "@spt-aki/models/common/MinMax";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
+import { HandbookItem } from "@spt-aki/models/eft/common/tables/IHandbookBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
+import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Money } from "@spt-aki/models/enums/Money";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
+import { IRagfairConfig, IUnreasonableModPrices } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { IRagfairServerPrices } from "@spt-aki/models/spt/ragfair/IRagfairServerPrices";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -116,6 +118,28 @@ export class RagfairPriceService implements OnLoad
     }
 
     /**
+     * Get the flea price for an offers items + children
+     * @param offerItems offer item + children to process
+     * @returns Rouble price
+     */
+    public getFleaPriceForOfferItems(offerItems: Item[]): number
+    {
+        // Preset weapons take the direct prices.json value, otherwise they're massivly inflated
+        if (this.itemHelper.isOfBaseclass(offerItems[0]._tpl, BaseClasses.WEAPON))
+        {
+            return this.getFleaPriceForItem(offerItems[0]._tpl);
+        }
+
+        let totalPrice = 0;
+        for (const item of offerItems)
+        {
+            totalPrice += this.getFleaPriceForItem(item._tpl);
+        }
+
+        return totalPrice;
+    }
+
+    /**
      * get the dynamic (flea) price for an item
      * Grabs prices from prices.json and stores in class if none currently exist
      * @param itemTpl item template id to look up
@@ -198,13 +222,21 @@ export class RagfairPriceService implements OnLoad
      */
     public getDynamicOfferPriceForOffer(items: Item[], desiredCurrency: string, isPackOffer: boolean): number
     {
+        const rootItem = items[0];
+
         // Price to return
         let price = 0;
 
         let endLoop = false;
         let isPreset = false;
+        let manuallyAdjusted = false;
         for (const item of items)
         {
+            if (this.itemHelper.isOfBaseclass(item._tpl, BaseClasses.BUILT_IN_INSERTS))
+            {
+                continue;
+            }
+
             // Get dynamic price, fallback to handbook price if value of 1 found
             let itemPrice = this.getFleaPriceForItem(item._tpl);
 
@@ -232,6 +264,13 @@ export class RagfairPriceService implements OnLoad
                 isPreset = true;
             }
 
+            const manualPriceMultipler = this.ragfairConfig.dynamic.itemPriceMultiplier[item._tpl];
+            if (manualPriceMultipler)
+            {
+                manuallyAdjusted = true;
+                itemPrice *= manualPriceMultipler;
+            }
+
             // Convert to different currency if desiredCurrency param is not roubles
             if (desiredCurrency !== Money.ROUBLES)
             {
@@ -249,12 +288,74 @@ export class RagfairPriceService implements OnLoad
             }
         }
 
+        // Skip items with children
+        if (items.length === 1 && !manuallyAdjusted)
+        {
+            const rootItemDb = this.itemHelper.getItem(rootItem._tpl)[1];
+            let unreasonableItemPriceChange: IUnreasonableModPrices;
+            for (const key of Object.keys(this.ragfairConfig.dynamic.unreasonableModPrices))
+            {
+                if (this.itemHelper.isOfBaseclass(rootItemDb._id, key))
+                {
+                    unreasonableItemPriceChange = this.ragfairConfig.dynamic.unreasonableModPrices[key];
+
+                    break;
+                }
+            }
+            if (unreasonableItemPriceChange?.enabled)
+            {
+                price = this.adjustUnreasonablePrice(
+                    this.databaseServer.getTables().templates.handbook.Items,
+                    unreasonableItemPriceChange,
+                    rootItem._tpl,
+                    price,
+                );
+            }
+        }
+
         const rangeValues = this.getOfferTypeRangeValues(isPreset, isPackOffer);
         price = this.randomiseOfferPrice(price, rangeValues);
 
         if (price < 1)
         {
             price = 1;
+        }
+
+        return price;
+    }
+
+    /**
+     * using data from config, adjust an items price to be relative to its handbook price
+     * @param handbookPrices Prices of items in handbook
+     * @param unreasonableItemChange Change object from config
+     * @param itemTpl Item being adjusted
+     * @param price Current price of item
+     * @returns Adjusted price of item
+     */
+    protected adjustUnreasonablePrice(
+        handbookPrices: HandbookItem[],
+        unreasonableItemChange: IUnreasonableModPrices,
+        itemTpl: string,
+        price: number,
+    ): number
+    {
+        const itemHandbookPrice = handbookPrices.find((handbookItem) => handbookItem.Id === itemTpl);
+        if (!itemHandbookPrice)
+        {
+            return price;
+        }
+
+        // Flea price is over handbook price
+        if (price > (itemHandbookPrice.Price * unreasonableItemChange.handbookPriceOverMultiplier))
+        {
+            // Skip extreme values
+            if (price <= 1)
+            {
+                return price;
+            }
+
+            // Price is over limit, adjust
+            return itemHandbookPrice.Price * unreasonableItemChange.newPriceHandbookMultiplier;
         }
 
         return price;
@@ -274,7 +375,8 @@ export class RagfairPriceService implements OnLoad
         {
             return priceRanges.preset;
         }
-        else if (isPack)
+
+        if (isPack)
         {
             return priceRanges.pack;
         }
@@ -283,7 +385,7 @@ export class RagfairPriceService implements OnLoad
     }
 
     /**
-     * Check to see if an items price is below its handbook price and adjust accoring to values set to config/ragfair.json
+     * Check to see if an items price is below its handbook price and adjust according to values set to config/ragfair.json
      * @param itemPrice price of item
      * @param itemTpl item template Id being checked
      * @returns adjusted price value in roubles
@@ -401,12 +503,12 @@ export class RagfairPriceService implements OnLoad
      */
     protected getWeaponPreset(weapon: Item): { isDefault: boolean; preset: IPreset; }
     {
-        const defaultPreset = this.presetHelper.getDefaultPreset(weapon._tpl)
+        const defaultPreset = this.presetHelper.getDefaultPreset(weapon._tpl);
         if (defaultPreset)
         {
             return { isDefault: true, preset: defaultPreset };
         }
-        const nonDefaultPresets = this.presetHelper.getPresets(weapon._tpl)
+        const nonDefaultPresets = this.presetHelper.getPresets(weapon._tpl);
         if (nonDefaultPresets.length === 1)
         {
             this.logger.debug(

@@ -85,11 +85,13 @@ export class BotController
      * Get bot difficulty settings
      * adjust PMC settings to ensure they engage the correct bot types
      * @param type what bot the server is requesting settings for
-     * @param difficulty difficulty level server requested settings for
+     * @param diffLevel difficulty level server requested settings for
      * @returns Difficulty object
      */
-    public getBotDifficulty(type: string, difficulty: string): Difficulty
+    public getBotDifficulty(type: string, diffLevel: string): Difficulty
     {
+        let difficulty = diffLevel.toLowerCase();
+
         const raidConfig = this.applicationContext.getLatestValue(ContextVariableType.RAID_CONFIGURATION)?.getValue<
             IGetRaidConfigurationRequestData
         >();
@@ -153,7 +155,7 @@ export class BotController
         {
             return this.generateBotsFirstTime(info, pmcProfile, sessionId);
         }
-        
+
         return this.returnSingleBotFromCache(sessionId, info);
     }
 
@@ -162,11 +164,20 @@ export class BotController
      * @param request Bot generation request object
      * @param pmcProfile Player profile
      * @param sessionId Session id
-     * @returns 
+     * @returns
      */
-    protected generateBotsFirstTime(request: IGenerateBotsRequestData, pmcProfile: IPmcData, sessionId: string): IBotBase[]
+    protected generateBotsFirstTime(
+        request: IGenerateBotsRequestData,
+        pmcProfile: IPmcData,
+        sessionId: string,
+    ): IBotBase[]
     {
-        const allPmcsHaveSameNameAsPlayer = this.randomUtil.getChance100(this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance);
+        // Clear bot cache before any work starts
+        this.botGenerationCacheService.clearStoredBots();
+
+        const allPmcsHaveSameNameAsPlayer = this.randomUtil.getChance100(
+            this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance,
+        );
         for (const condition of request.conditions)
         {
             const botGenerationDetails: BotGenerationDetails = {
@@ -180,7 +191,7 @@ export class BotController
                 botCountToGenerate: this.botConfig.presetBatch[condition.Role],
                 botDifficulty: condition.Difficulty,
                 isPlayerScav: false,
-                allPmcsHaveSameNameAsPlayer: allPmcsHaveSameNameAsPlayer
+                allPmcsHaveSameNameAsPlayer: allPmcsHaveSameNameAsPlayer,
             };
 
             // Event bots need special actions to occur, set data up for them
@@ -190,7 +201,7 @@ export class BotController
                 // Add eventRole data + reassign role property to be base type
                 botGenerationDetails.eventRole = condition.Role;
                 botGenerationDetails.role = this.seasonalEventService.getBaseRoleForEventBot(
-                    botGenerationDetails.eventRole
+                    botGenerationDetails.eventRole,
                 );
             }
 
@@ -206,12 +217,12 @@ export class BotController
             let cacheKey = "";
             for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
             {
-                const details = this.jsonUtil.clone(botGenerationDetails);
+                const detailsClone = this.jsonUtil.clone(botGenerationDetails);
 
-                cacheKey = `${details.role}${details.botDifficulty}`;
+                cacheKey = `${detailsClone.role}${detailsClone.botDifficulty}`;
 
                 // Generate and add bot to cache
-                const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, details);
+                const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, detailsClone);
                 this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
             }
 
@@ -306,7 +317,10 @@ export class BotController
             );
         }
 
-        return [this.botGenerationCacheService.getBot(cacheKey)];
+        const desiredBot = this.botGenerationCacheService.getBot(cacheKey);
+        this.botGenerationCacheService.storeUsedBot(desiredBot);
+
+        return [desiredBot];
     }
 
     /**
@@ -338,9 +352,9 @@ export class BotController
     public getBotCap(): number
     {
         const defaultMapCapId = "default";
-        const raidConfig = this.applicationContext
-            .getLatestValue(ContextVariableType.RAID_CONFIGURATION)
-            .getValue<IGetRaidConfigurationRequestData>();
+        const raidConfig = this.applicationContext.getLatestValue(ContextVariableType.RAID_CONFIGURATION).getValue<
+            IGetRaidConfigurationRequestData
+        >();
 
         if (!raidConfig)
         {
@@ -366,9 +380,10 @@ export class BotController
 
     public getAiBotBrainTypes(): any
     {
-        return { 
+        return {
             pmc: this.pmcConfig.pmcType,
             assault: this.botConfig.assaultBrainType,
-            playerScav: this.botConfig.playerScavBrainType};
+            playerScav: this.botConfig.playerScavBrainType,
+        };
     }
 }

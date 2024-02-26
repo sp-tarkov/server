@@ -69,7 +69,7 @@ export class TraderAssortHelper
             return this.getRagfairDataAsTraderAssort();
         }
 
-        const trader = this.jsonUtil.clone(this.databaseServer.getTables().traders[traderId]);
+        const traderClone = this.jsonUtil.clone(this.databaseServer.getTables().traders[traderId]);
         const pmcProfile = this.profileHelper.getPmcProfile(sessionId);
 
         if (traderId === Traders.FENCE)
@@ -80,13 +80,13 @@ export class TraderAssortHelper
         // Strip assorts player should not see yet
         if (!flea)
         {
-            trader.assort = this.assortHelper.stripLockedLoyaltyAssort(pmcProfile, traderId, trader.assort);
+            traderClone.assort = this.assortHelper.stripLockedLoyaltyAssort(pmcProfile, traderId, traderClone.assort);
         }
 
-        this.resetBuyRestrictionCurrentValue(trader.assort.items);
+        this.resetBuyRestrictionCurrentValue(traderClone.assort.items);
 
         // Append nextResupply value to assorts so client knows when refresh is occuring
-        trader.assort.nextResupply = trader.base.nextResupply;
+        traderClone.assort.nextResupply = traderClone.base.nextResupply;
 
         // Adjust displayed assort counts based on values stored in profile
         const assortPurchasesfromTrader = this.traderPurchasePersisterService.getProfileTraderPurchases(
@@ -96,11 +96,11 @@ export class TraderAssortHelper
         for (const assortId in assortPurchasesfromTrader)
         {
             // Find assort we want to update current buy count of
-            const assortToAdjust = trader.assort.items.find((x) => x._id === assortId);
+            const assortToAdjust = traderClone.assort.items.find((x) => x._id === assortId);
             if (!assortToAdjust)
             {
                 this.logger.debug(
-                    `Cannot find trader: ${trader.base.nickname} assort: ${assortId} to adjust BuyRestrictionCurrent value, skipping`,
+                    `Cannot find trader: ${traderClone.base.nickname} assort: ${assortId} to adjust BuyRestrictionCurrent value, skipping`,
                 );
 
                 continue;
@@ -124,10 +124,10 @@ export class TraderAssortHelper
             this.hydrateMergedQuestAssorts();
             this.createdMergedQuestAssorts = true;
         }
-        trader.assort = this.assortHelper.stripLockedQuestAssort(
+        traderClone.assort = this.assortHelper.stripLockedQuestAssort(
             pmcProfile,
             traderId,
-            trader.assort,
+            traderClone.assort,
             this.mergedQuestAssorts,
             flea,
         );
@@ -135,10 +135,10 @@ export class TraderAssortHelper
         // Multiply price if multiplier is other than 1
         if (this.traderConfig.traderPriceMultipler !== 1)
         {
-            this.multiplyItemPricesByConfigMultiplier(trader.assort);
+            this.multiplyItemPricesByConfigMultiplier(traderClone.assort);
         }
 
-        return trader.assort;
+        return traderClone.assort;
     }
 
     /**
@@ -148,7 +148,7 @@ export class TraderAssortHelper
     protected resetBuyRestrictionCurrentValue(assortItems: Item[]): void
     {
         // iterate over root items
-        for (const assort of assortItems.filter(item => item.slotId === "hideout"))
+        for (const assort of assortItems.filter((item) => item.slotId === "hideout"))
         {
             // no value to adjust
             if (!assort.upd.BuyRestrictionCurrent)

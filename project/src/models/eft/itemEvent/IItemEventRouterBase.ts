@@ -71,7 +71,7 @@ export interface ItemChanges
 {
     new: Product[];
     change: Product[];
-    del: Product[];
+    del: Product[]; // Only needs _id property
 }
 
 export interface Improvement

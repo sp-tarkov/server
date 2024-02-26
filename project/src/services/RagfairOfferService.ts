@@ -243,7 +243,9 @@ export class RagfairOfferService
         const offerinProfileIndex = profile.RagfairInfo.offers.findIndex((o) => o._id === playerOffer._id);
         if (offerinProfileIndex === -1)
         {
-            this.logger.warning(this.localisationService.getText("ragfair-unable_to_find_offer_to_remove", playerOffer._id));
+            this.logger.warning(
+                this.localisationService.getText("ragfair-unable_to_find_offer_to_remove", playerOffer._id),
+            );
             return;
         }
 

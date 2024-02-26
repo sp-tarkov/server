@@ -2131,8 +2131,8 @@
         "56dff4a2d2720bbd668b456a": 1
       },
       "Caliber762x54R": {
-        "560d61e84bdc2da74d8b4571": 749,
-        "5887431f2459777e1612938f": 1089
+        "560d61e84bdc2da74d8b4571": 823,
+        "5887431f2459777e1612938f": 1228
       },
       "Caliber9x19PARA": {
         "56d59d3ad2720bdb418b4577": 1
@@ -2171,23 +2171,23 @@
       }
     },
     "items": {
-      "Backpack": [],
-      "Pockets": [
-        "559ba5b34bdc2d1f1a8b4582",
-        "590c678286f77426c9660122"
-      ],
-      "SecuredContainer": [
-        "5887431f2459777e1612938f",
-        "560d61e84bdc2da74d8b4571",
-        "56d59d3ad2720bdb418b4577",
-        "56dff4a2d2720bbd668b456a"
-      ],
-      "SpecialLoot": [],
-      "TacticalVest": [
-        "5c88f24b2e22160bc12c69a6",
-        "599860ac86f77436b225ed1a",
-        "55d482194bdc2d1d4e8b456b"
-      ]
+      "Backpack": {},
+      "Pockets": {
+        "559ba5b34bdc2d1f1a8b4582": 2455,
+        "590c678286f77426c9660122": 2050
+      },
+      "SecuredContainer": {
+        "560d61e84bdc2da74d8b4571": 24661,
+        "56d59d3ad2720bdb418b4577": 6121,
+        "56dff4a2d2720bbd668b456a": 9671,
+        "5887431f2459777e1612938f": 36811
+      },
+      "SpecialLoot": {},
+      "TacticalVest": {
+        "55d482194bdc2d1d4e8b456b": 1935,
+        "599860ac86f77436b225ed1a": 1225,
+        "5c88f24b2e22160bc12c69a6": 1645
+      }
     },
     "mods": {
       "55801eed4bdc2d89578b4588": {

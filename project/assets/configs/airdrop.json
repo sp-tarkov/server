@@ -7,7 +7,7 @@
         "interchange": 20,
         "reserve": 20,
         "tarkovStreets": 20,
-		"sandbox": 20
+        "sandbox": 20
     },
     "airdropTypeWeightings": {
         "mixed": 2,
@@ -34,7 +34,7 @@
                 "min": 3,
                 "max": 5
             },
-			"armorPresetCount": {
+            "armorPresetCount": {
                 "min": 1,
                 "max": 5
             },
@@ -44,7 +44,7 @@
             },
             "weaponCrateCount": {
                 "min": 1,
-                "max": 4
+                "max": 2
             },
             "itemBlacklist": [
                 "5e997f0b86f7741ac73993e2",
@@ -77,7 +77,8 @@
                 "609e860ebd219504d8507525",
                 "6275303a9f372d6ea97f9ec7",
                 "628bc7fb408e2b2e9c0801b1",
-                "6389c7f115805221fb410466"
+                "6389c7f115805221fb410466",
+                "64d0b40fbe2eed70e254e2d4"
             ],
             "itemTypeWhitelist": [
                 "543be5dd4bdc2deb348b4569",
@@ -155,7 +156,12 @@
                     "max": 500
                 }
             },
-            "armorLevelWhitelist": [0, 4, 5, 6],
+            "armorLevelWhitelist": [
+                0,
+                4,
+                5,
+                6
+            ],
             "allowBossItems": false
         },
         "weaponArmor": {
@@ -163,7 +169,7 @@
                 "min": 6,
                 "max": 8
             },
-			"armorPresetCount": {
+            "armorPresetCount": {
                 "min": 3,
                 "max": 6
             },
@@ -205,7 +211,8 @@
                 "60a7acf20c5cb24b01346648",
                 "609e860ebd219504d8507525",
                 "6275303a9f372d6ea97f9ec7",
-                "628bc7fb408e2b2e9c0801b1"
+                "628bc7fb408e2b2e9c0801b1",
+                "64d0b40fbe2eed70e254e2d4"
             ],
             "itemTypeWhitelist": [
                 "5485a8684bdc2da71d8b4567",
@@ -226,7 +233,6 @@
                 "550aa4cd4bdc2dd8348b456c",
                 "55818b164bdc2ddc698b456c",
                 "55818ae44bdc2dde698b456c"
-
             ],
             "itemLimits": {
                 "5448e8d04bdc2ddf718b4569": 3,
@@ -255,7 +261,13 @@
                     "max": 25
                 }
             },
-            "armorLevelWhitelist": [0, 3, 4, 5, 6],
+            "armorLevelWhitelist": [
+                0,
+                3,
+                4,
+                5,
+                6
+            ],
             "allowBossItems": false
         },
         "foodMedical": {
@@ -263,7 +275,7 @@
                 "min": 0,
                 "max": 0
             },
-			"armorPresetCount": {
+            "armorPresetCount": {
                 "min": 0,
                 "max": 0
             },
@@ -286,7 +298,8 @@
                 "63495c500c297e20065a08b1",
                 "5cde8864d7f00c0010373be1",
                 "5b3b713c5acfc4330140bd8d",
-                "60c080eb991ac167ad1c3ad4"
+                "60c080eb991ac167ad1c3ad4",
+                "64d0b40fbe2eed70e254e2d4"
             ],
             "itemTypeWhitelist": [
                 "543be5dd4bdc2deb348b4569",
@@ -343,7 +356,9 @@
                     "max": 500
                 }
             },
-			"armorLevelWhitelist": [0],
+            "armorLevelWhitelist": [
+                0
+            ],
             "allowBossItems": false
         },
         "barter": {
@@ -351,7 +366,7 @@
                 "min": 0,
                 "max": 0
             },
-			"armorPresetCount": {
+            "armorPresetCount": {
                 "min": 0,
                 "max": 0
             },
@@ -375,7 +390,9 @@
                 "5cde8864d7f00c0010373be1",
                 "5b3b713c5acfc4330140bd8d",
                 "60c080eb991ac167ad1c3ad4",
-                "6389c7f115805221fb410466"
+                "6389c7f115805221fb410466",
+                "64d0b40fbe2eed70e254e2d4",
+				"6389c88b33a719183c7f63b6"
             ],
             "itemTypeWhitelist": [
                 "5d650c3e815116009f6201d2",
@@ -433,7 +450,9 @@
                     "max": 500
                 }
             },
-			"armorLevelWhitelist": [0],
+            "armorLevelWhitelist": [
+                0
+            ],
             "allowBossItems": false
         }
     }

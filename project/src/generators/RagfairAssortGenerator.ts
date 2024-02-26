@@ -75,21 +75,18 @@ export class RagfairAssortGenerator
         const results: Item[][] = [];
 
         /** Get cloned items from db */
-        const dbItemsClone = this.itemHelper.getItems().filter(item => item._type !== "Node");
+        const dbItemsClone = this.itemHelper.getItems().filter((item) => item._type !== "Node");
 
         /** Store processed preset tpls so we dont add them when procesing non-preset items */
         const processedArmorItems: string[] = [];
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getInactiveSeasonalEventItems();
-        
+
         const presets = this.getPresetsToAdd();
         for (const preset of presets)
         {
             // Update Ids and clone
-            const presetAndMods: Item[] = this.itemHelper.replaceIDs(
-                null,
-                this.jsonUtil.clone(preset._items),
-            );
+            const presetAndMods: Item[] = this.itemHelper.replaceIDs(preset._items);
             this.itemHelper.remapRootItemId(presetAndMods);
 
             // Add presets base item tpl to the processed list so its skipped later on when processing items
@@ -97,9 +94,9 @@ export class RagfairAssortGenerator
 
             presetAndMods[0].parentId = "hideout";
             presetAndMods[0].slotId = "hideout";
-            presetAndMods[0].upd = { StackObjectsCount: 99999999, UnlimitedCount: true, sptPresetId:  preset._id};
+            presetAndMods[0].upd = { StackObjectsCount: 99999999, UnlimitedCount: true, sptPresetId: preset._id };
 
-            results.push(presetAndMods); 
+            results.push(presetAndMods);
         }
 
         for (const item of dbItemsClone)
@@ -126,7 +123,7 @@ export class RagfairAssortGenerator
 
             const ragfairAssort = this.createRagfairAssortRootItem(item._id, item._id); // tplid and id must be the same so hideout recipe rewards work
 
-            results.push([ragfairAssort]); 
+            results.push([ragfairAssort]);
         }
 
         return results;
@@ -140,8 +137,8 @@ export class RagfairAssortGenerator
     protected getPresetsToAdd(): IPreset[]
     {
         return (this.ragfairConfig.dynamic.showDefaultPresetsOnly)
-        ? Object.values(this.presetHelper.getDefaultPresets())
-        : this.presetHelper.getAllPresets()
+            ? Object.values(this.presetHelper.getDefaultPresets())
+            : this.presetHelper.getAllPresets();
     }
 
     /**

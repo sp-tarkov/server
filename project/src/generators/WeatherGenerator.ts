@@ -44,7 +44,7 @@ export class WeatherGenerator
         const formattedDate = this.timeUtil.formatDate(computedDate);
 
         data.date = formattedDate;
-        data.time = this.getBsgFormattedInRaidTime(computedDate);
+        data.time = this.getBsgFormattedInRaidTime();
         data.acceleration = this.weatherConfig.acceleration;
         data.winterEventEnabled = this.weatherConfig.forceWinterEvent;
 
@@ -57,9 +57,9 @@ export class WeatherGenerator
      * @param currentDate current date
      * @returns formatted time
      */
-    protected getBsgFormattedInRaidTime(currentDate: Date): string
+    protected getBsgFormattedInRaidTime(): string
     {
-        const clientAcceleratedDate = this.getInRaidTime(currentDate);
+        const clientAcceleratedDate = this.getInRaidTime();
 
         return this.getBSGFormattedTime(clientAcceleratedDate);
     }
@@ -69,11 +69,14 @@ export class WeatherGenerator
      * @param currentDate (new Date())
      * @returns Date object of current in-raid time
      */
-    public getInRaidTime(currentDate: Date): Date
+    public getInRaidTime(): Date
     {
-        const timeSinceServerStartMS = currentDate.getTime() - this.serverStartTimestampMS;
-        const acceleratedMS = timeSinceServerStartMS * (this.weatherConfig.acceleration);
-        return new Date(this.serverStartTimestampMS + acceleratedMS);
+        // tarkov time = (real time * 7 % 24 hr) + 3 hour
+        const russiaOffset = (this.timeUtil.getHoursAsSeconds(3)) * 1000;
+        return new Date(
+            (russiaOffset + (new Date().getTime() * this.weatherConfig.acceleration))
+                % (this.timeUtil.getHoursAsSeconds(24) * 1000),
+        );
     }
 
     /**
@@ -120,7 +123,7 @@ export class WeatherGenerator
      */
     protected setCurrentDateTime(weather: IWeather): void
     {
-        const currentDate = this.getInRaidTime(new Date());
+        const currentDate = this.getInRaidTime();
         const normalTime = this.getBSGFormattedTime(currentDate);
         const formattedDate = this.timeUtil.formatDate(currentDate);
         const datetime = `${formattedDate} ${normalTime}`;

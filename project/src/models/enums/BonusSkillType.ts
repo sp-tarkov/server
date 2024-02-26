@@ -4,5 +4,5 @@ export enum BonusSkillType
     COMBAT = "Combat",
     SPECIAL = "Special",
     PRACTICAL = "Practical",
-    MENTAL = "Mental"
+    MENTAL = "Mental",
 }

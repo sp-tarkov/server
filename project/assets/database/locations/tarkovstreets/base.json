@@ -42,7 +42,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 11,
+      "BossChance": 26,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -82,7 +82,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 11,
+      "BossChance": 26,
       "BossDifficult": "normal",
       "BossEscortAmount": "6",
       "BossEscortDifficult": "normal",
@@ -160,11 +160,11 @@
   "BotSpawnPeriodCheck": 14,
   "BotSpawnTimeOffMax": 25,
   "BotSpawnTimeOffMin": 20,
-  "BotSpawnTimeOnMax": 380,
+  "BotSpawnTimeOnMax": 360,
   "BotSpawnTimeOnMin": 290,
-  "BotStart": 3020,
-  "BotStartPlayer": 126,
-  "BotStop": 1800,
+  "BotStart": 122,
+  "BotStartPlayer": 186,
+  "BotStop": 2200,
   "Description": "The downtown Tarkov with banks, malls, hotels and all the other things a striving modern city could have needed.",
   "DisabledForScav": false,
   "DisabledScavExits": "",
@@ -177,7 +177,7 @@
   },
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.35,
+  "GlobalLootChanceModifier": 0.27,
   "IconX": 670,
   "IconY": 620,
   "Id": "TarkovStreets",

@@ -2,8 +2,9 @@ import { inject, injectable } from "tsyringe";
 
 import { BotWeaponGenerator } from "@spt-aki/generators/BotWeaponGenerator";
 import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
-import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
+import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
+import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import { Inventory as PmcInventory } from "@spt-aki/models/eft/common/tables/IBotBase";
@@ -15,6 +16,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
 import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
 import { LootCacheType } from "@spt-aki/models/spt/bots/IBotLootCache";
+import { IItemSpawnLimitSettings } from "@spt-aki/models/spt/bots/IItemSpawnLimitSettings";
 import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
 import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -23,6 +25,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -36,12 +39,14 @@ export class BotLootGenerator
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
         @inject("BotGeneratorHelper") protected botGeneratorHelper: BotGeneratorHelper,
         @inject("BotWeaponGenerator") protected botWeaponGenerator: BotWeaponGenerator,
-        @inject("BotWeaponGeneratorHelper") protected botWeaponGeneratorHelper: BotWeaponGeneratorHelper,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
+        @inject("BotHelper") protected botHelper: BotHelper,
         @inject("BotLootCacheService") protected botLootCacheService: BotLootCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -49,6 +54,15 @@ export class BotLootGenerator
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
         this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
+    }
+
+    protected getItemSpawnLimitsForBot(botRole: string): IItemSpawnLimitSettings
+    {
+        // Init item limits
+        const limitsForBotDict: Record<string, number> = {};
+        this.initItemLimitArray(botRole, limitsForBotDict);
+
+        return { currentLimits: limitsForBotDict, globalLimits: this.getItemSpawnLimitsForBotType(botRole) };
     }
 
     /**
@@ -72,22 +86,28 @@ export class BotLootGenerator
         // Limits on item types to be added as loot
         const itemCounts = botJsonTemplate.generation.items;
 
-        const backpackLootCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.backpackLoot.weights);
-        const pocketLootCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.pocketLoot.weights);
-        const vestLootCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.vestLoot.weights);
-        const specialLootItemCount = this.weightedRandomHelper.getWeightedValue<number>(
-            itemCounts.specialItems.weights,
+        const backpackLootCount = Number(
+            this.weightedRandomHelper.getWeightedValue<number>(itemCounts.backpackLoot.weights),
         );
-        const healingItemCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.healing.weights);
-        const drugItemCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.drugs.weights);
-        const stimItemCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.stims.weights);
-        const grenadeCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.grenades.weights);
+        const pocketLootCount = Number(
+            this.weightedRandomHelper.getWeightedValue<number>(itemCounts.pocketLoot.weights),
+        );
+        const vestLootCount = this.weightedRandomHelper.getWeightedValue<number>(itemCounts.vestLoot.weights);
+        const specialLootItemCount = Number(
+            this.weightedRandomHelper.getWeightedValue<number>(itemCounts.specialItems.weights),
+        );
+        const healingItemCount = Number(this.weightedRandomHelper.getWeightedValue<number>(itemCounts.healing.weights));
+        const drugItemCount = Number(this.weightedRandomHelper.getWeightedValue<number>(itemCounts.drugs.weights));
+        const stimItemCount = Number(this.weightedRandomHelper.getWeightedValue<number>(itemCounts.stims.weights));
+        const grenadeCount = Number(this.weightedRandomHelper.getWeightedValue<number>(itemCounts.grenades.weights));
 
         // Forced pmc healing loot
         if (isPmc && this.pmcConfig.forceHealingItemsIntoSecure)
         {
             this.addForcedMedicalItemsToPmcSecure(botInventory, botRole);
         }
+
+        const botItemLimits = this.getItemSpawnLimitsForBot(botRole);
 
         const containersBotHasAvailable = this.getAvailableContainersBotCanStoreItemsIn(botInventory);
 
@@ -98,6 +118,7 @@ export class BotLootGenerator
             specialLootItemCount,
             botInventory,
             botRole,
+            botItemLimits,
         );
 
         // Healing items / Meds
@@ -107,7 +128,7 @@ export class BotLootGenerator
             healingItemCount,
             botInventory,
             botRole,
-            false,
+            null,
             0,
             isPmc,
         );
@@ -119,7 +140,7 @@ export class BotLootGenerator
             drugItemCount,
             botInventory,
             botRole,
-            false,
+            null,
             0,
             isPmc,
         );
@@ -131,7 +152,7 @@ export class BotLootGenerator
             stimItemCount,
             botInventory,
             botRole,
-            true,
+            botItemLimits,
             0,
             isPmc,
         );
@@ -143,7 +164,7 @@ export class BotLootGenerator
             grenadeCount,
             botInventory,
             botRole,
-            false,
+            null,
             0,
             isPmc,
         );
@@ -172,7 +193,7 @@ export class BotLootGenerator
                 backpackLootCount,
                 botInventory,
                 botRole,
-                true,
+                botItemLimits,
                 this.pmcConfig.maxBackpackLootTotalRub,
                 isPmc,
             );
@@ -188,7 +209,7 @@ export class BotLootGenerator
                 vestLootCount,
                 botInventory,
                 botRole,
-                true,
+                botItemLimits,
                 this.pmcConfig.maxVestLootTotalRub,
                 isPmc,
             );
@@ -201,7 +222,7 @@ export class BotLootGenerator
             pocketLootCount,
             botInventory,
             botRole,
-            true,
+            botItemLimits,
             this.pmcConfig.maxPocketLootTotalRub,
             isPmc,
         );
@@ -213,7 +234,7 @@ export class BotLootGenerator
             50,
             botInventory,
             botRole,
-            false,
+            null,
             -1,
             isPmc,
         );
@@ -228,12 +249,12 @@ export class BotLootGenerator
     {
         const result = [EquipmentSlots.POCKETS];
 
-        if (botInventory.items.find((x) => x.slotId === EquipmentSlots.TACTICAL_VEST))
+        if (botInventory.items.find((item) => item.slotId === EquipmentSlots.TACTICAL_VEST))
         {
             result.push(EquipmentSlots.TACTICAL_VEST);
         }
 
-        if (botInventory.items.find((x) => x.slotId === EquipmentSlots.BACKPACK))
+        if (botInventory.items.find((item) => item.slotId === EquipmentSlots.BACKPACK))
         {
             result.push(EquipmentSlots.BACKPACK);
         }
@@ -248,17 +269,57 @@ export class BotLootGenerator
      */
     protected addForcedMedicalItemsToPmcSecure(botInventory: PmcInventory, botRole: string): void
     {
-        const grizzly = this.itemHelper.getItem("590c657e86f77412b013051d")[1];
-        this.addLootFromPool([grizzly], [EquipmentSlots.SECURED_CONTAINER], 2, botInventory, botRole, false, 0, true);
+        // Grizzly
+        this.addLootFromPool(
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { "590c657e86f77412b013051d": 1 },
+            [EquipmentSlots.SECURED_CONTAINER],
+            1,
+            botInventory,
+            botRole,
+            null,
+            0,
+            true,
+        );
 
-        const surv12 = this.itemHelper.getItem("5d02797c86f774203f38e30a")[1];
-        this.addLootFromPool([surv12], [EquipmentSlots.SECURED_CONTAINER], 1, botInventory, botRole, false, 0, true);
+        // surv12
+        this.addLootFromPool(
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { "5d02797c86f774203f38e30a": 1 },
+            [EquipmentSlots.SECURED_CONTAINER],
+            1,
+            botInventory,
+            botRole,
+            null,
+            0,
+            true,
+        );
 
-        const morphine = this.itemHelper.getItem("544fb3f34bdc2d03748b456a")[1];
-        this.addLootFromPool([morphine], [EquipmentSlots.SECURED_CONTAINER], 3, botInventory, botRole, false, 0, true);
+        // Morphine
+        this.addLootFromPool(
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { "544fb3f34bdc2d03748b456a": 1 },
+            [EquipmentSlots.SECURED_CONTAINER],
+            2,
+            botInventory,
+            botRole,
+            null,
+            0,
+            true,
+        );
 
-        const afak = this.itemHelper.getItem("60098ad7c2240c0fe85c570a")[1];
-        this.addLootFromPool([afak], [EquipmentSlots.SECURED_CONTAINER], 2, botInventory, botRole, false, 0, true);
+        // AFAK
+        this.addLootFromPool(
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            { "60098ad7c2240c0fe85c570a": 1 },
+            [EquipmentSlots.SECURED_CONTAINER],
+            2,
+            botInventory,
+            botRole,
+            null,
+            0,
+            true,
+        );
     }
 
     /**
@@ -276,37 +337,65 @@ export class BotLootGenerator
 
     /**
      * Take random items from a pool and add to an inventory until totalItemCount or totalValueLimit or space limit is reached
-     * @param pool Pool of items to pick from
+     * @param pool Pool of items to pick from with weight
      * @param equipmentSlots What equipment slot will the loot items be added to
      * @param totalItemCount Max count of items to add
      * @param inventoryToAddItemsTo Bot inventory loot will be added to
      * @param botRole Role of the bot loot is being generated for (assault/pmcbot)
-     * @param useLimits Should item limit counts be used as defined in config/bot.json
+     * @param itemSpawnLimits Item spawn limits the bot must adhere to
      * @param totalValueLimitRub Total value of loot allowed in roubles
      * @param isPmc Is bot being generated for a pmc
      */
     protected addLootFromPool(
-        pool: ITemplateItem[],
+        pool: Record<string, number>,
         equipmentSlots: string[],
         totalItemCount: number,
         inventoryToAddItemsTo: PmcInventory,
         botRole: string,
-        useLimits = false,
+        itemSpawnLimits: IItemSpawnLimitSettings = null,
         totalValueLimitRub = 0,
         isPmc = false,
     ): void
     {
         // Loot pool has items
-        if (pool.length)
+        const poolSize = Object.keys(pool).length;
+        if (poolSize > 0)
         {
             let currentTotalRub = 0;
-            const itemLimits: Record<string, number> = {};
-            /** Prep limits for items added to the container */
-            const itemSpawnLimits: Record<string, Record<string, number>> = {};
+
             let fitItemIntoContainerAttempts = 0;
             for (let i = 0; i < totalItemCount; i++)
             {
-                const itemToAddTemplate = this.getRandomItemFromPoolByBotRole(pool, botRole);
+                // Pool can become empty if item spawn limits keep removing items
+                if (Object.keys(pool).length === 0)
+                {
+                    return;
+                }
+
+                const weightedItemTpl = this.weightedRandomHelper.getWeightedValue<string>(pool);
+                const itemResult = this.itemHelper.getItem(weightedItemTpl);
+                const itemToAddTemplate = itemResult[1];
+                if (!itemResult[0])
+                {
+                    this.logger.warning(
+                        `Unable to process item tpl: ${weightedItemTpl} for slots: ${equipmentSlots} on bot: ${botRole}`,
+                    );
+
+                    continue;
+                }
+
+                if (itemSpawnLimits)
+                {
+                    if (this.itemHasReachedSpawnLimit(itemToAddTemplate, botRole, itemSpawnLimits))
+                    {
+                        // Remove item from pool to prevent it being picked again
+                        delete pool[weightedItemTpl];
+
+                        i--;
+                        continue;
+                    }
+                }
+
                 const newRootItemId = this.hashUtil.generate();
                 const itemWithChildrenToAdd: Item[] = [{
                     _id: newRootItemId,
@@ -314,38 +403,44 @@ export class BotLootGenerator
                     ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemToAddTemplate, botRole),
                 }];
 
-                if (useLimits)
+                // Is Simple-Wallet
+                if (weightedItemTpl === "5783c43d2459774bbe137486")
                 {
-                    if (Object.keys(itemLimits).length === 0)
+                    const addCurrency = this.randomUtil.getChance100(25);
+                    if (addCurrency)
                     {
-                        this.initItemLimitArray(isPmc, botRole, itemLimits);
-                    }
+                        // Create the currency items we want to add to wallet
+                        const itemsToAdd = this.createWalletLoot(newRootItemId);
 
-                    if (!itemSpawnLimits[botRole])
-                    {
-                        itemSpawnLimits[botRole] = this.getItemSpawnLimitsForBotType(isPmc, botRole);
-                    }
+                        // Get the container grid for the wallet
+                        const containerGrid = this.inventoryHelper.getContainerSlotMap(weightedItemTpl);
 
-                    if (
-                        this.itemHasReachedSpawnLimit(
-                            itemToAddTemplate,
-                            botRole,
-                            isPmc,
-                            itemLimits,
-                            itemSpawnLimits[botRole],
-                        )
-                    )
-                    {
-                        i--;
-                        continue;
+                        // Check if all the chosen currency items fit into wallet
+                        const canAddToContainer = this.inventoryHelper.canPlaceItemsInContainer(
+                            this.jsonUtil.clone(containerGrid), // MUST clone grid before passing in as function modifies grid
+                            itemsToAdd,
+                        );
+                        if (canAddToContainer)
+                        {
+                            // Add each currency to wallet
+                            for (const itemToAdd of itemsToAdd)
+                            {
+                                this.inventoryHelper.placeItemInContainer(
+                                    containerGrid,
+                                    itemToAdd,
+                                    itemWithChildrenToAdd[0]._id,
+                                );
+                            }
+
+                            itemWithChildrenToAdd.push(...itemsToAdd.flatMap((x) => x));
+                        }
                     }
                 }
-
 
                 this.addRequiredChildItemsToParent(itemToAddTemplate, itemWithChildrenToAdd, isPmc);
 
                 // Attempt to add item to container(s)
-                const itemAddedResult = this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(
+                const itemAddedResult = this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
                     equipmentSlots,
                     newRootItemId,
                     itemToAddTemplate._id,
@@ -359,7 +454,9 @@ export class BotLootGenerator
                     if (itemAddedResult === ItemAddedResult.NO_CONTAINERS)
                     {
                         // Bot has no container to put item in, exit
-                        this.logger.debug(`Unable to add: ${totalItemCount} items to bot as it lacks a container to include them`);
+                        this.logger.debug(
+                            `Unable to add: ${totalItemCount} items to bot as it lacks a container to include them`,
+                        );
                         break;
                     }
 
@@ -367,7 +464,11 @@ export class BotLootGenerator
                     if (fitItemIntoContainerAttempts >= 4)
                     {
                         this.logger.debug(
-                            `Failed to place item ${i} of ${totalItemCount} items into ${botRole} containers: ${equipmentSlots.join(",")}. Tried ${fitItemIntoContainerAttempts} times, reason: ${ItemAddedResult[itemAddedResult]}, skipping`,
+                            `Failed to place item ${i} of ${totalItemCount} items into ${botRole} containers: ${
+                                equipmentSlots.join(",")
+                            }. Tried ${fitItemIntoContainerAttempts} times, reason: ${
+                                ItemAddedResult[itemAddedResult]
+                            }, skipping`,
                         );
 
                         break;
@@ -393,13 +494,40 @@ export class BotLootGenerator
         }
     }
 
+    protected createWalletLoot(walletId: string): Item[][]
+    {
+        const result: Item[][] = [];
+
+        // Choose how many stacks of currency will be added to wallet
+        const itemCount = this.randomUtil.getInt(1, this.botConfig.walletLoot.itemCount);
+        for (let index = 0; index < itemCount; index++)
+        {
+            // Choose the size of the currency stack
+            const chosenStackCount = Number(
+                this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.stackSizeWeight),
+            );
+            result.push([{
+                _id: this.hashUtil.generate(),
+                _tpl: "5449016a4bdc2d6f028b456f", // TODO - extend to be more than just roubles
+                parentId: walletId,
+                upd: { StackObjectsCount: chosenStackCount },
+            }]);
+        }
+
+        return result;
+    }
+
     /**
      * Some items need child items to function, add them to the itemToAddChildrenTo array
      * @param itemToAddTemplate Db template of item to check
      * @param itemToAddChildrenTo Item to add children to
      * @param isPmc Is the item being generated for a pmc (affects money/ammo stack sizes)
      */
-    protected addRequiredChildItemsToParent(itemToAddTemplate: ITemplateItem, itemToAddChildrenTo: Item[], isPmc: boolean): void
+    protected addRequiredChildItemsToParent(
+        itemToAddTemplate: ITemplateItem,
+        itemToAddChildrenTo: Item[],
+        isPmc: boolean,
+    ): void
     {
         // Fill ammo box
         if (this.itemHelper.isOfBaseclass(itemToAddTemplate._id, BaseClasses.AMMO_BOX))
@@ -419,7 +547,7 @@ export class BotLootGenerator
         // Must add soft inserts/plates
         else if (this.itemHelper.itemRequiresSoftInserts(itemToAddTemplate._id))
         {
-            itemToAddChildrenTo = this.itemHelper.addChildSlotItems(itemToAddChildrenTo, itemToAddTemplate, null, true);
+            this.itemHelper.addChildSlotItems(itemToAddChildrenTo, itemToAddTemplate, null, false);
         }
     }
 
@@ -467,7 +595,7 @@ export class BotLootGenerator
                     isPmc,
                     botLevel,
                 );
-                const result = this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(
+                const result = this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
                     [equipmentSlot],
                     generatedWeapon.weapon[0]._id,
                     generatedWeapon.weapon[0]._tpl,
@@ -477,58 +605,26 @@ export class BotLootGenerator
 
                 if (result !== ItemAddedResult.SUCCESS)
                 {
-                    this.logger.debug(`Failed to add additional weapon ${generatedWeapon.weapon[0]._id} to bot backpack, reason: ${ItemAddedResult[result]}`);
+                    this.logger.debug(
+                        `Failed to add additional weapon ${generatedWeapon.weapon[0]._id} to bot backpack, reason: ${
+                            ItemAddedResult[result]
+                        }`,
+                    );
                 }
             }
         }
     }
 
     /**
-     * Get a random item from the pool parameter using the biasedRandomNumber system
-     * @param pool Pool of items to pick an item from
-     * @param isPmc Is the bot being created a pmc
-     * @returns ITemplateItem object
-     */
-    protected getRandomItemFromPoolByBotRole(pool: ITemplateItem[], botRole: string): ITemplateItem
-    {
-        const itemIndex = this.randomUtil.getBiasedRandomNumber(
-            0,
-            pool.length - 1,
-            pool.length - 1,
-            this.getBotLootNValueByRole(botRole),
-        );
-        return pool[itemIndex];
-    }
-
-    /**
-     * Get the loot nvalue from botconfig
-     * @param botRole Role of bot e.g. assault/bosstagilla/sptBear
-     * @returns nvalue as number
-     */
-    protected getBotLootNValueByRole(botRole: string): number
-    {
-        const result = this.botConfig.lootNValue[botRole];
-        if (!result)
-        {
-            this.logger.warning(this.localisationService.getText("bot-unable_to_find_loot_n_value_for_bot", botRole));
-
-            return this.botConfig.lootNValue.scav;
-        }
-
-        return result;
-    }
-
-    /**
      * Hydrate item limit array to contain items that have a limit for a specific bot type
      * All values are set to 0
-     * @param isPmc Is the bot a pmc
      * @param botRole Role the bot has
      * @param limitCount
      */
-    protected initItemLimitArray(isPmc: boolean, botRole: string, limitCount: Record<string, number>): void
+    protected initItemLimitArray(botRole: string, limitCount: Record<string, number>): void
     {
         // Init current count of items we want to limit
-        const spawnLimits = this.getItemSpawnLimitsForBotType(isPmc, botRole);
+        const spawnLimits = this.getItemSpawnLimitsForBotType(botRole);
         for (const limit in spawnLimits)
         {
             limitCount[limit] = 0;
@@ -539,21 +635,17 @@ export class BotLootGenerator
      * Check if an item has reached its bot-specific spawn limit
      * @param itemTemplate Item we check to see if its reached spawn limit
      * @param botRole Bot type
-     * @param isPmc Is bot we're working with a pmc
-     * @param limitCount Spawn limits for items on bot
-     * @param itemSpawnLimits The limits this bot is allowed to have
+     * @param itemSpawnLimits
      * @returns true if item has reached spawn limit
      */
     protected itemHasReachedSpawnLimit(
         itemTemplate: ITemplateItem,
         botRole: string,
-        isPmc: boolean,
-        limitCount: Record<string, number>,
-        itemSpawnLimits: Record<string, number>,
+        itemSpawnLimits: IItemSpawnLimitSettings,
     ): boolean
     {
         // PMCs and scavs have different sections of bot config for spawn limits
-        if (!!itemSpawnLimits && itemSpawnLimits.length === 0)
+        if (!!itemSpawnLimits && Object.keys(itemSpawnLimits.globalLimits).length === 0)
         {
             // No items found in spawn limit, drop out
             return false;
@@ -565,7 +657,7 @@ export class BotLootGenerator
             return false;
         }
 
-        const idToCheckFor = this.getMatchingIdFromSpawnLimits(itemTemplate, itemSpawnLimits);
+        const idToCheckFor = this.getMatchingIdFromSpawnLimits(itemTemplate, itemSpawnLimits.globalLimits);
         if (!idToCheckFor)
         {
             // ParentId or tplid not found in spawnLimits, not a spawn limited item, skip
@@ -573,19 +665,19 @@ export class BotLootGenerator
         }
 
         // Increment item count with this bot type
-        limitCount[idToCheckFor]++;
+        itemSpawnLimits.currentLimits[idToCheckFor]++;
 
-        // return true, we are over limit
-        if (limitCount[idToCheckFor] > itemSpawnLimits[idToCheckFor])
+        // Check if over limit
+        if (itemSpawnLimits.currentLimits[idToCheckFor] > itemSpawnLimits.globalLimits[idToCheckFor])
         {
             // Prevent edge-case of small loot pools + code trying to add limited item over and over infinitely
-            if (limitCount[idToCheckFor] > itemSpawnLimits[idToCheckFor] * 10)
+            if (itemSpawnLimits.currentLimits[idToCheckFor] > itemSpawnLimits[idToCheckFor] * 10)
             {
                 this.logger.debug(
                     this.localisationService.getText("bot-item_spawn_limit_reached_skipping_item", {
                         botRole: botRole,
                         itemName: itemTemplate._name,
-                        attempts: limitCount[idToCheckFor],
+                        attempts: itemSpawnLimits.currentLimits[idToCheckFor],
                     }),
                 );
 
@@ -631,7 +723,10 @@ export class BotLootGenerator
     {
         const randomSize = itemTemplate._props.StackMaxSize === 1
             ? 1
-            : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, Math.min(itemTemplate._props.StackMaxRandom, 60));
+            : this.randomUtil.getInt(
+                itemTemplate._props.StackMinRandom,
+                Math.min(itemTemplate._props.StackMaxRandom, 60),
+            );
 
         if (!ammoItem.upd)
         {
@@ -644,13 +739,12 @@ export class BotLootGenerator
     /**
      * Get spawn limits for a specific bot type from bot.json config
      * If no limit found for a non pmc bot, fall back to defaults
-     * @param isPmc is the bot we want limits for a pmc
      * @param botRole what role does the bot have
      * @returns Dictionary of tplIds and limit
      */
-    protected getItemSpawnLimitsForBotType(isPmc: boolean, botRole: string): Record<string, number>
+    protected getItemSpawnLimitsForBotType(botRole: string): Record<string, number>
     {
-        if (isPmc)
+        if (this.botHelper.isBotPmc(botRole))
         {
             return this.botConfig.itemSpawnLimits.pmc;
         }

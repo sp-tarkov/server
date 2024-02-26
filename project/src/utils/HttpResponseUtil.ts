@@ -21,7 +21,7 @@ export class HttpResponseUtil
         return s.replace(/[\b]/g, "").replace(/[\f]/g, "").replace(/[\n]/g, "").replace(/[\r]/g, "").replace(
             /[\t]/g,
             "",
-        ).replace(/[\\]/g, "");
+        );
     }
 
     /**
@@ -83,11 +83,7 @@ export class HttpResponseUtil
     {
         if (output.warnings?.length > 0)
         {
-            output.warnings.push({
-                index: output.warnings?.length - 1,
-                errmsg: message,
-                code: errorCode.toString()
-            })
+            output.warnings.push({ index: output.warnings?.length - 1, errmsg: message, code: errorCode.toString() });
         }
         else
         {

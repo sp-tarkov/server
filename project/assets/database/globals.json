@@ -18716,24 +18716,36 @@
       "_id": "6576683d303700411c0242d2",
       "_items": [
         {
-          "_id": "6576e4c9424f2c87d30c75ba",
+          "_id": "65cf51c6a644dd466f01fde7",
           "_tpl": "628b9784bcf6e2659e09b8a2"
         },
         {
-          "_id": "6576e4c9424f2c87d30c75bb",
+          "_id": "65cf51c6a644dd466f01fde8",
           "_tpl": "656fae5f7c2d57afe200c0d7",
-          "parentId": "6576e4c9424f2c87d30c75ba",
+          "parentId": "65cf51c6a644dd466f01fde7",
           "slotId": "Front_plate"
         },
         {
-          "_id": "6576e4c9424f2c87d30c75bc",
+          "_id": "65cf51c6a644dd466f01fde9",
           "_tpl": "656fae5f7c2d57afe200c0d7",
-          "parentId": "6576e4c9424f2c87d30c75ba",
+          "parentId": "65cf51c6a644dd466f01fde7",
           "slotId": "Back_plate"
+        },
+        {
+          "_id": "65cf51c6a644dd466f01fdea",
+          "_tpl": "6557458f83942d705f0c4962",
+          "parentId": "65cf51c6a644dd466f01fde7",
+          "slotId": "Left_side_plate"
+        },
+        {
+          "_id": "65cf51c6a644dd466f01fdeb",
+          "_tpl": "6557458f83942d705f0c4962",
+          "parentId": "65cf51c6a644dd466f01fde7",
+          "slotId": "Right_side_plate"
         }
       ],
       "_name": "Vest Precision PlateFrame Standard",
-      "_parent": "6576e4c9424f2c87d30c75ba",
+      "_parent": "65cf51c6a644dd466f01fde7",
       "_type": "Preset"
     },
     "657668ad86f11bca4106d38b": {
@@ -21798,7 +21810,7 @@
             "SurfaceType": "WoodThin",
             "VolumeMult": 0.5
           }
-      ]
+        ]
       }
     },
     "AzimuthPanelShowsPlayerOrientation": false,
@@ -21939,6 +21951,7 @@
     "BaseCheckTime": 3,
     "BaseLoadTime": 0.85,
     "BaseUnloadTime": 0.3,
+    "BluntDamageReduceFromSoftArmorMod": 0.6,
     "BotsEnabled": true,
     "BufferZone": {
       "CustomerAccessTime": 600,
@@ -23176,7 +23189,7 @@
           "ScavEquipmentSpawnChanceModifier": 17
         }
       },
-      "paidExitStandingNumerator": 0.4
+      "paidExitStandingNumerator": 0.2
     },
     "FractureCausedByBulletHit": {
       "B": 0.05,
@@ -25370,42 +25383,49 @@
         "BodyPartsSettings": {
           "Chest": {
             "Default": 85,
+            "EnvironmentDamageMultiplier": 0.25,
             "Maximum": 85,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "Head": {
             "Default": 35,
+            "EnvironmentDamageMultiplier": 0.125,
             "Maximum": 35,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "LeftArm": {
             "Default": 60,
+            "EnvironmentDamageMultiplier": 0.5,
             "Maximum": 60,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "LeftLeg": {
             "Default": 65,
+            "EnvironmentDamageMultiplier": 0.5,
             "Maximum": 65,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "RightArm": {
             "Default": 60,
+            "EnvironmentDamageMultiplier": 0.5,
             "Maximum": 60,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "RightLeg": {
             "Default": 65,
+            "EnvironmentDamageMultiplier": 0.5,
             "Maximum": 65,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7
           },
           "Stomach": {
             "Default": 70,
+            "EnvironmentDamageMultiplier": 0.17,
             "Maximum": 70,
             "Minimum": 0,
             "OverDamageReceivedMultiplier": 0.7

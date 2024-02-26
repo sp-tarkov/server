@@ -434,6 +434,11 @@
         "TIME_TO_FIND_ENEMY": 22,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "USE_ADD_TO_ENEMY_VALIDATION": true,
+        "VALID_REASONS_TO_ADD_ENEMY": [
+          "attackBTR",
+          "serviceBTR"
+        ],
         "WARN_BOT_TYPES": [],
         "WILL_PERSUE_AXEMAN": false
       },
@@ -945,6 +950,11 @@
         "TIME_TO_FIND_ENEMY": 22,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "USE_ADD_TO_ENEMY_VALIDATION": true,
+        "VALID_REASONS_TO_ADD_ENEMY": [
+          "attackBTR",
+          "serviceBTR"
+        ],
         "WARN_BOT_TYPES": [],
         "WILL_PERSUE_AXEMAN": false
       },
@@ -1456,6 +1466,11 @@
         "TIME_TO_FIND_ENEMY": 22,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "USE_ADD_TO_ENEMY_VALIDATION": true,
+        "VALID_REASONS_TO_ADD_ENEMY": [
+          "attackBTR",
+          "serviceBTR"
+        ],
         "WARN_BOT_TYPES": [],
         "WILL_PERSUE_AXEMAN": false
       },
@@ -1967,6 +1982,11 @@
         "TIME_TO_FIND_ENEMY": 22,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "USE_ADD_TO_ENEMY_VALIDATION": true,
+        "VALID_REASONS_TO_ADD_ENEMY": [
+          "attackBTR",
+          "serviceBTR"
+        ],
         "WARN_BOT_TYPES": [],
         "WILL_PERSUE_AXEMAN": false
       },
@@ -2285,16 +2305,15 @@
       }
     },
     "items": {
-      "Backpack": [],
-      "Pockets": [],
-      "SecuredContainer": [
-        "560d5e524bdc2d25448b4571"
-      ],
-      "SpecialLoot": [],
-      "TacticalVest": [
-        "560d5e524bdc2d25448b4571",
-        "5bc9c29cd4351e003562b8a3"
-      ]
+      "Backpack": {},
+      "Pockets": {},
+      "SecuredContainer": {
+        "560d5e524bdc2d25448b4571": 1
+      },
+      "SpecialLoot": {},
+      "TacticalVest": {
+        "560d5e524bdc2d25448b4571": 1
+      }
     },
     "mods": {
       "56dee2bdd2720bc8328b4567": {

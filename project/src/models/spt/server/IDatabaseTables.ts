@@ -55,7 +55,7 @@ export interface IDatabaseTables
         defaultEquipmentPresets: IDefaultEquipmentPreset[];
 
         /** Achievements */
-        achievements: IAchievement[]
+        achievements: IAchievement[];
     };
     traders?: Record<string, ITrader>;
 

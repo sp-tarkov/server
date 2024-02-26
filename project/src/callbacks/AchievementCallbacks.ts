@@ -20,21 +20,26 @@ export class AchievementCallbacks
 
     /**
      * Handle client/achievement/list
-     * 
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getAchievements(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetAchievementsResponse>
+    public getAchievements(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetAchievementsResponse>
     {
-
         return this.httpResponse.getBody(this.achievementController.getAchievements(sessionID));
     }
 
     /**
      * Handle client/achievement/statistic
-     * 
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public statistic(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ICompletedAchievementsResponse>
+    public statistic(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ICompletedAchievementsResponse>
     {
         return this.httpResponse.getBody(this.achievementController.getAchievementStatistics(sessionID));
     }

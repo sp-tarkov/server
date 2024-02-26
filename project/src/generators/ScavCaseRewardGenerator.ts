@@ -109,6 +109,11 @@ export class ScavCaseRewardGenerator
                     return false;
                 }
 
+                if (item._props.QuestItem)
+                {
+                    return false;
+                }
+
                 // Skip item if item id is on blacklist
                 if (
                     (item._type !== "Item")
@@ -284,13 +289,7 @@ export class ScavCaseRewardGenerator
         const result: Item[][] = [];
         for (const rewardItemDb of rewardItems)
         {
-            let resultItem: Item[] = [
-                {
-                    _id: this.hashUtil.generate(),
-                    _tpl: rewardItemDb._id,
-                    upd: undefined 
-                }
-            ];
+            let resultItem: Item[] = [{ _id: this.hashUtil.generate(), _tpl: rewardItemDb._id, upd: undefined }];
             const rootItem = resultItem[0];
 
             if (this.itemHelper.isOfBaseclass(rewardItemDb._id, BaseClasses.AMMO_BOX))
@@ -298,8 +297,10 @@ export class ScavCaseRewardGenerator
                 this.itemHelper.addCartridgesToAmmoBox(resultItem, rewardItemDb);
             }
             // Armor or weapon = use default preset from globals.json
-            else if (this.itemHelper.armorItemCanHoldMods(rewardItemDb._id)
-            || this.itemHelper.isOfBaseclass(rewardItemDb._id, BaseClasses.WEAPON))
+            else if (
+                this.itemHelper.armorItemCanHoldMods(rewardItemDb._id)
+                || this.itemHelper.isOfBaseclass(rewardItemDb._id, BaseClasses.WEAPON)
+            )
             {
                 const preset = this.presetHelper.getDefaultPreset(rewardItemDb._id);
                 if (!preset)
@@ -308,12 +309,9 @@ export class ScavCaseRewardGenerator
 
                     continue;
                 }
-                
+
                 // Ensure preset has unique ids and is cloned so we don't alter the preset data stored in memory
-                const presetAndMods: Item[] = this.itemHelper.replaceIDs(
-                    null,
-                    this.jsonUtil.clone(preset._items),
-                );
+                const presetAndMods: Item[] = this.itemHelper.replaceIDs(preset._items);
                 this.itemHelper.remapRootItemId(presetAndMods);
 
                 resultItem = presetAndMods;
@@ -329,7 +327,7 @@ export class ScavCaseRewardGenerator
                 delete rootItem.upd;
             }
 
-            result.push(resultItem)
+            result.push(resultItem);
         }
 
         return result;

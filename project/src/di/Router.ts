@@ -31,10 +31,7 @@ export class Router
         {
             return this.getInternalHandledRoutes().filter((r) => r.dynamic).some((r) => url.includes(r.route));
         }
-        else
-        {
-            return this.getInternalHandledRoutes().filter((r) => !r.dynamic).some((r) => r.route === url);
-        }
+        return this.getInternalHandledRoutes().filter((r) => !r.dynamic).some((r) => r.route === url);
     }
 }
 
@@ -78,7 +75,13 @@ export class DynamicRouter extends Router
 // So instead I added the definition
 export class ItemEventRouterDefinition extends Router
 {
-    public handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse
+    public handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string,
+        output: IItemEventRouterResponse,
+    ): void
     {
         throw new Error("This method needs to be overrode by the router classes");
     }

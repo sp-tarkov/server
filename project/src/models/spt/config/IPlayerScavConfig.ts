@@ -13,7 +13,7 @@ export interface KarmaLevel
     modifiers: Modifiers;
     itemLimits: ItemLimits;
     equipmentBlacklist: Record<string, string[]>;
-    labsAccessCardChancePercent: number;
+    lootItemsToAddChancePercent: Record<string, number>;
 }
 
 export interface Modifiers

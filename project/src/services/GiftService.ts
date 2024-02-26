@@ -137,7 +137,8 @@ export class GiftService
                 senderDetails: {
                     _id: this.getSenderId(giftData),
                     aid: 1234567, // TODO - pass proper aid value
-                    Info: null },
+                    Info: null,
+                },
                 messageText: giftData.messageText,
                 items: giftData.items,
                 itemsMaxStorageLifetimeSeconds: this.timeUtil.getHoursAsSeconds(giftData.collectionTimeHours),

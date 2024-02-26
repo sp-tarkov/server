@@ -77,7 +77,9 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "labsAccessCardChancePercent": 0,
+			"lootItemsToAddChancePercent": {
+			}
         },
         "-6": {
             "botTypeForLoot": "assault",
@@ -162,7 +164,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "-5": {
             "botTypeForLoot": "assault",
@@ -247,7 +250,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "-4": {
             "botTypeForLoot": "assault",
@@ -332,7 +336,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "-3": {
             "botTypeForLoot": "assault",
@@ -417,7 +422,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "-2": {
             "botTypeForLoot": "assault",
@@ -502,7 +508,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "-1": {
             "botTypeForLoot": "assault",
@@ -587,7 +594,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "0": {
             "botTypeForLoot": "assault",
@@ -659,7 +667,7 @@
                 },
                 "magazines": {
                     "weights": {
-                        "1": 2,
+                        "1": 1,
                         "2": 1
                     },
                     "whitelist": []
@@ -672,7 +680,8 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {
+			}
         },
         "1": {
             "botTypeForLoot": "assault",
@@ -689,7 +698,7 @@
                 "equipment": {
                     "Headwear": 4,
                     "ArmorVest": 10,
-                    "Backpack": 8,
+                    "Backpack": 15,
                     "FirstPrimaryWeapon": 2,
                     "Holster": 5,
                     "Scabbard": 3
@@ -759,7 +768,10 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 3
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 3,
+				"64d4b23dc1b37504b41ac2b6": 10
+			}
         },
         "2": {
             "botTypeForLoot": "assault",
@@ -776,7 +788,7 @@
                 "equipment": {
                     "Headwear": 8,
                     "ArmorVest": 20,
-                    "Backpack": 15,
+                    "Backpack": 25,
                     "FirstPrimaryWeapon": 4,
                     "Holster": 15,
                     "Scabbard": 6
@@ -842,7 +854,11 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 6
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 6,
+				"62178c4d4ecf221597654e3d": 3,
+				"64d4b23dc1b37504b41ac2b6": 10
+			}
         },
         "3": {
             "botTypeForLoot": "assault",
@@ -859,7 +875,7 @@
                 "equipment": {
                     "Headwear": 12,
                     "ArmorVest": 30,
-                    "Backpack": 22,
+                    "Backpack": 35,
                     "FirstPrimaryWeapon": 6,
                     "Holster": 25,
                     "Scabbard": 9
@@ -928,7 +944,11 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 11
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 11,
+				"62178c4d4ecf221597654e3d": 8,
+				"64d4b23dc1b37504b41ac2b6": 10
+			}
         },
         "4": {
             "botTypeForLoot": "assault",
@@ -945,7 +965,7 @@
                 "equipment": {
                     "Headwear": 16,
                     "ArmorVest": 40,
-                    "Backpack": 30,
+                    "Backpack": 40,
                     "FirstPrimaryWeapon": 8,
                     "Holster": 35,
                     "Scabbard": 12
@@ -1013,7 +1033,12 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 17
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 17,
+				"62178c4d4ecf221597654e3d": 13,
+				"64d4b23dc1b37504b41ac2b6": 10
+				
+			}
         },
         "5": {
             "botTypeForLoot": "assault",
@@ -1030,7 +1055,7 @@
                 "equipment": {
                     "Headwear": 20,
                     "ArmorVest": 50,
-                    "Backpack": 39,
+                    "Backpack": 48,
                     "FirstPrimaryWeapon": 8,
                     "Holster": 45,
                     "Scabbard": 15
@@ -1098,7 +1123,11 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 22
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 22,
+				"62178c4d4ecf221597654e3d": 18,
+				"64d4b23dc1b37504b41ac2b6": 10
+			}
         },
         "6": {
             "botTypeForLoot": "assault",
@@ -1182,7 +1211,11 @@
                     "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 27
+            "lootItemsToAddChancePercent": {
+				"5c94bbff86f7747ee735c08f": 27,
+				"62178c4d4ecf221597654e3d": 23,
+				"64d4b23dc1b37504b41ac2b6": 10
+			}
         }
     }
 }

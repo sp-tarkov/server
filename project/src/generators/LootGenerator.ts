@@ -112,30 +112,50 @@ export class LootGenerator
         const itemBlacklistArray = Array.from(itemBlacklist);
 
         // Filter default presets to just weapons
-        const randomisedWeaponPresetCount = this.randomUtil.getInt(options.weaponPresetCount.min, options.weaponPresetCount.max);
+        const randomisedWeaponPresetCount = this.randomUtil.getInt(
+            options.weaponPresetCount.min,
+            options.weaponPresetCount.max,
+        );
         if (randomisedWeaponPresetCount > 0)
         {
-            const weaponDefaultPresets = globalDefaultPresets.filter(preset => this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON));
-        
+            const weaponDefaultPresets = globalDefaultPresets.filter((preset) =>
+                this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON)
+            );
+
             for (let index = 0; index < randomisedWeaponPresetCount; index++)
             {
-                if (!this.findAndAddRandomPresetToLoot(weaponDefaultPresets, itemTypeCounts, itemBlacklistArray, result))
+                if (
+                    !this.findAndAddRandomPresetToLoot(weaponDefaultPresets, itemTypeCounts, itemBlacklistArray, result)
+                )
                 {
                     index--;
                 }
             }
         }
 
-
         // Filter default presets to just armors and then filter again by protection level
-        const randomisedArmorPresetCount = this.randomUtil.getInt(options.armorPresetCount.min, options.armorPresetCount.max);
+        const randomisedArmorPresetCount = this.randomUtil.getInt(
+            options.armorPresetCount.min,
+            options.armorPresetCount.max,
+        );
         if (randomisedArmorPresetCount > 0)
         {
-            const armorDefaultPresets = globalDefaultPresets.filter(preset => this.itemHelper.armorItemCanHoldMods(preset._encyclopedia));
-            const levelFilteredArmorPresets = armorDefaultPresets.filter(armor => this.armorIsDesiredProtectionLevel(armor, options));
+            const armorDefaultPresets = globalDefaultPresets.filter((preset) =>
+                this.itemHelper.armorItemCanHoldMods(preset._encyclopedia)
+            );
+            const levelFilteredArmorPresets = armorDefaultPresets.filter((armor) =>
+                this.armorIsDesiredProtectionLevel(armor, options)
+            );
             for (let index = 0; index < randomisedArmorPresetCount; index++)
             {
-                if (!this.findAndAddRandomPresetToLoot(levelFilteredArmorPresets, itemTypeCounts, itemBlacklistArray, result))
+                if (
+                    !this.findAndAddRandomPresetToLoot(
+                        levelFilteredArmorPresets,
+                        itemTypeCounts,
+                        itemBlacklistArray,
+                        result,
+                    )
+                )
                 {
                     index--;
                 }
@@ -153,21 +173,21 @@ export class LootGenerator
      */
     protected armorIsDesiredProtectionLevel(armor: IPreset, options: LootRequest): boolean
     {
-        const frontPlate = armor._items.find(mod => mod?.slotId?.toLowerCase() === "front_plate");
+        const frontPlate = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "front_plate");
         if (frontPlate)
         {
             const plateDb = this.itemHelper.getItem(frontPlate._tpl);
             return options.armorLevelWhitelist.includes(Number.parseInt(plateDb[1]._props.armorClass as any));
         }
 
-        const helmetTop = armor._items.find(mod => mod?.slotId?.toLowerCase() === "helmet_top");
+        const helmetTop = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "helmet_top");
         if (helmetTop)
         {
             const plateDb = this.itemHelper.getItem(helmetTop._tpl);
             return options.armorLevelWhitelist.includes(Number.parseInt(plateDb[1]._props.armorClass as any));
         }
 
-        const softArmorFront = armor._items.find(mod => mod?.slotId?.toLowerCase() === "soft_armor_front");
+        const softArmorFront = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "soft_armor_front");
         if (softArmorFront)
         {
             const plateDb = this.itemHelper.getItem(softArmorFront._tpl);
@@ -369,10 +389,7 @@ export class LootGenerator
             chosenWeaponPreset = this.randomUtil.getArrayValue(this.presetHelper.getPresets(chosenWeaponTpl));
         }
 
-        const presetAndMods: Item[] = this.itemHelper.replaceIDs(
-            null,
-            this.jsonUtil.clone(chosenWeaponPreset._items),
-        );
+        const presetAndMods: Item[] = this.itemHelper.replaceIDs(chosenWeaponPreset._items);
         this.itemHelper.remapRootItemId(presetAndMods);
 
         // Add preset to return object
@@ -436,12 +453,7 @@ export class LootGenerator
                 for (let index = 0; index < rewardCount; index++)
                 {
                     const chosenAmmoBox = this.randomUtil.getArrayValue(ammoBoxesMatchingCaliber);
-                    const ammoBoxItem: Item[] = [
-                        {
-                            _id: this.hashUtil.generate(),
-                            _tpl: chosenAmmoBox._id
-                        }
-                    ]
+                    const ammoBoxItem: Item[] = [{ _id: this.hashUtil.generate(), _tpl: chosenAmmoBox._id }];
                     this.itemHelper.addCartridgesToAmmoBox(ammoBoxItem, chosenAmmoBox);
                     rewards.push(ammoBoxItem);
                 }
@@ -469,14 +481,9 @@ export class LootGenerator
             {
                 // Choose a random item from pool
                 const chosenRewardItem = this.randomUtil.getArrayValue(rewardItemPool);
-                const rewardItem: Item[] = [
-                    {
-                        _id: this.hashUtil.generate(),
-                        _tpl: chosenRewardItem._id
-                    }
-                ]
+                const rewardItem: Item[] = [{ _id: this.hashUtil.generate(), _tpl: chosenRewardItem._id }];
 
-                rewards.push(rewardItem)
+                rewards.push(rewardItem);
             }
         }
 
@@ -524,12 +531,9 @@ export class LootGenerator
             for (let index = 0; index < rewardCount; index++)
             {
                 const chosenItem = this.randomUtil.drawRandomFromList(relatedItems);
-                const item: Item[] = [{
-                    _id: this.hashUtil.generate(),
-                    _tpl: chosenItem[0]._id
-                }];
+                const item: Item[] = [{ _id: this.hashUtil.generate(), _tpl: chosenItem[0]._id }];
 
-                modRewards.push(item)
+                modRewards.push(item);
             }
         }
 
@@ -552,13 +556,8 @@ export class LootGenerator
             const chosenRewardItemTpl = this.weightedRandomHelper.getWeightedValue<string>(
                 rewardContainerDetails.rewardTplPool,
             );
-            const rewardItem: Item[] = [
-                {
-                    _id: this.hashUtil.generate(),
-                    _tpl: chosenRewardItemTpl
-                }
-            ]
-            itemsToReturn.push(rewardItem)
+            const rewardItem: Item[] = [{ _id: this.hashUtil.generate(), _tpl: chosenRewardItemTpl }];
+            itemsToReturn.push(rewardItem);
         }
 
         return itemsToReturn;

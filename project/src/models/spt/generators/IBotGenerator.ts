@@ -11,10 +11,3 @@ export interface IBotGenerator
         isPmc: boolean,
     ): PmcInventory;
 }
-
-export interface IExhaustableArray<T>
-{
-    getRandomValue(): T;
-    getFirstValue(): T;
-    hasValues(): boolean;
-}

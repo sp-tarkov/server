@@ -53,7 +53,21 @@ export class InraidStaticRouter extends StaticRouter
                 (url: string, info: any, sessionID: string, output: string): any =>
                 {
                     return this.inraidCallbacks.itemDelivery(url, info, sessionID);
-                }
+                },
+            ),
+            new RouteAction(
+                "/singleplayer/scav/traitorscavhostile",
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.inraidCallbacks.getTraitorScavHostileChance(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/singleplayer/sandbox/maxpatrol",
+                (url: string, info: any, sessionID: string, output: string): any =>
+                {
+                    return this.inraidCallbacks.getSandboxMaxPatrolValue(url, info, sessionID);
+                },
             ),
         ]);
     }

@@ -113,9 +113,7 @@ export class LocaleService
                 return platformLocale.language;
             }
 
-            this.logger.warning(
-                `Unsupported system langauge found: ${localeCode}, falling back to english`,
-            );
+            this.logger.warning(`Unsupported system langauge found: ${localeCode}, falling back to english`);
 
             return "en";
         }
@@ -140,9 +138,7 @@ export class LocaleService
         const langaugeCode = platformLocale.language.toLowerCase();
         if (!this.localeConfig.serverSupportedLocales.includes(langaugeCode))
         {
-            this.logger.warning(
-                `Unsupported system langauge found: ${langaugeCode}, falling back to english`,
-            );
+            this.logger.warning(`Unsupported system langauge found: ${langaugeCode}, falling back to english`);
 
             return "en";
         }

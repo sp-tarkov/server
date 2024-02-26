@@ -200,7 +200,7 @@ export class BotWeaponGenerator
         }
 
         // Fill existing magazines to full and sync ammo type
-        for (const magazine of weaponWithModsArray.filter((x) => x.slotId === this.modMagazineSlotId))
+        for (const magazine of weaponWithModsArray.filter((item) => item.slotId === this.modMagazineSlotId))
         {
             this.fillExistingMagazines(weaponWithModsArray, magazine, ammoTpl);
         }
@@ -212,7 +212,7 @@ export class BotWeaponGenerator
         )
         {
             // Guns have variety of possible Chamber ids, patron_in_weapon/patron_in_weapon_000/patron_in_weapon_001
-            const chamberSlotNames = weaponItemTemplate._props.Chambers.map(x => x._name);
+            const chamberSlotNames = weaponItemTemplate._props.Chambers.map((x) => x._name);
             this.addCartridgeToChamber(weaponWithModsArray, ammoTpl, chamberSlotNames);
         }
 
@@ -311,7 +311,10 @@ export class BotWeaponGenerator
     {
         // Invalid weapon generated, fallback to preset
         this.logger.warning(
-            this.localisationService.getText("bot-weapon_generated_incorrect_using_default", weaponTpl),
+            this.localisationService.getText(
+                "bot-weapon_generated_incorrect_using_default",
+                `${weaponTpl} ${itemTemplate._name}`,
+            ),
         );
         const weaponMods = [];
 
@@ -363,19 +366,13 @@ export class BotWeaponGenerator
                 continue;
             }
 
-            // Iterate over slots in db item, if required, check tpl in that slot matches the filter list
-            for (const modSlotTemplate of modTemplate._props.Slots)
+            // Iterate over required slots in db item, check mod exists for that slot
+            for (const modSlotTemplate of modTemplate._props.Slots.filter((slot) => slot._required))
             {
-                // Ignore optional mods
-                if (!modSlotTemplate._required)
-                {
-                    continue;
-                }
-
-                const allowedTplsOnSlot = modSlotTemplate._props.filters[0].Filter;
                 const slotName = modSlotTemplate._name;
-
-                const weaponSlotItem = weaponItemArray.find((weaponItem) => weaponItem.parentId === mod._id && weaponItem.slotId === slotName);
+                const weaponSlotItem = weaponItemArray.find((weaponItem) =>
+                    weaponItem.parentId === mod._id && weaponItem.slotId === slotName
+                );
                 if (!weaponSlotItem)
                 {
                     this.logger.warning(
@@ -478,7 +475,7 @@ export class BotWeaponGenerator
         const ubglMinMax: GenerationData = {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             weights: { "1": 1, "2": 1 },
-            whitelist: [],
+            whitelist: {},
         };
 
         // get ammo template from db
@@ -517,7 +514,7 @@ export class BotWeaponGenerator
         for (let i = 0; i < stackCount; i++)
         {
             const id = this.hashUtil.generate();
-            this.botWeaponGeneratorHelper.addItemWithChildrenToEquipmentSlot(
+            this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
                 [EquipmentSlots.SECURED_CONTAINER],
                 id,
                 ammoTpl,
@@ -555,7 +552,10 @@ export class BotWeaponGenerator
             {
                 // Shouldn't happen
                 this.logger.warning(
-                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", {weaponId: weaponTemplate._id, botRole: botRole}),
+                    this.localisationService.getText("bot-weapon_missing_magazine_or_chamber", {
+                        weaponId: weaponTemplate._id,
+                        botRole: botRole,
+                    }),
                 );
             }
 
@@ -602,9 +602,10 @@ export class BotWeaponGenerator
         while (!chosenAmmoTpl)
         {
             const possibleAmmo = this.weightedRandomHelper.getWeightedValue<string>(compatibleCartridges);
-            
+
             // Weapon has chamber but does not support cartridge
-            if (weaponTemplate._props.Chambers[0]
+            if (
+                weaponTemplate._props.Chambers[0]
                 && !weaponTemplate._props.Chambers[0]._props.filters[0].Filter.includes(possibleAmmo)
             )
             {

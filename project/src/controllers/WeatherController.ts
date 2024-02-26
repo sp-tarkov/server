@@ -29,7 +29,8 @@ export class WeatherController
             time: "",
             date: "",
             weather: null,
-            winterEventEnabled: this.weatherConfig.forceWinterEvent };
+            winterEventEnabled: this.weatherConfig.forceWinterEvent,
+        };
 
         result = this.weatherGenerator.calculateGameTime(result);
         result.weather = this.weatherGenerator.generateWeather();
@@ -43,6 +44,6 @@ export class WeatherController
      */
     public getCurrentInRaidTime(): Date
     {
-        return this.weatherGenerator.getInRaidTime(new Date());
+        return this.weatherGenerator.getInRaidTime();
     }
 }

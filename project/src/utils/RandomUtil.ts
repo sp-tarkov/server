@@ -136,6 +136,11 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     public draw(count = 1, replacement = true, locklist: Array<K> = []): K[]
     {
+        if (this.length === 0)
+        {
+            return [];
+        }
+
         const { probArray, keyArray } = this.reduce((acc, x) =>
         {
             acc.probArray.push(x.relativeProbability);
@@ -200,17 +205,15 @@ export class ProbabilityObject<K, V = undefined>
 @injectable()
 export class RandomUtil
 {
-    constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("WinstonLogger") protected logger: ILogger)
+    constructor(@inject("JsonUtil") protected jsonUtil: JsonUtil, @inject("WinstonLogger") protected logger: ILogger)
     {
     }
 
     public getInt(min: number, max: number): number
     {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return (max > min) ? Math.floor(Math.random() * (max - min + 1) + min) : min;
+        const minimum = Math.ceil(min);
+        const maximum = Math.floor(max);
+        return (maximum > minimum) ? Math.floor(Math.random() * (maximum - minimum + 1) + minimum) : minimum;
     }
 
     public getIntEx(max: number): number
@@ -296,15 +299,15 @@ export class RandomUtil
             v = Math.random();
         }
         const w = Math.sqrt(-2.0 * Math.log(u)) * Math.cos((2.0 * Math.PI) * v);
-        const valueDrawn =  mean + w * sigma;
+        const valueDrawn = mean + w * sigma;
         if (valueDrawn < 0)
         {
-          if (attempt > 100)
-          {
-              return this.getFloat(0.01, mean * 2);
-          }
+            if (attempt > 100)
+            {
+                return this.getFloat(0.01, mean * 2);
+            }
 
-          return this.getNormallyDistributedRandomNumber(mean, sigma, attempt++);
+            return this.getNormallyDistributedRandomNumber(mean, sigma, attempt + 1);
         }
 
         return valueDrawn;
@@ -331,15 +334,16 @@ export class RandomUtil
      * Draw a random element of the provided list N times to return an array of N random elements
      * Drawing can be with or without replacement
      * @param   {array}     list            The array we want to draw randomly from
-     * @param   {integer}   count               The number of times we want to draw
-     * @param   {boolean}   replacement     Draw with or without replacement from the input array(defult true)
+     * @param   {integer}   count           The number of times we want to draw
+     * @param   {boolean}   replacement     Draw with or without replacement from the input array(default true)
      * @return  {array}                     Array consisting of N random elements
      */
-    public drawRandomFromList<T>(list: Array<T>, count = 1, replacement = true): Array<T>
+    public drawRandomFromList<T>(originalList: Array<T>, count = 1, replacement = true): Array<T>
     {
+        let list = originalList;
         if (!replacement)
         {
-            list = this.jsonUtil.clone(list);
+            list = this.jsonUtil.clone(originalList);
         }
 
         const results = [];
@@ -486,7 +490,7 @@ export class RandomUtil
 
         // Roll a number between 0 and 1
         const rolledChance = this.getInt(0, maxRoll) / 10000;
-        
+
         return rolledChance <= probabilityChance;
     }
 }

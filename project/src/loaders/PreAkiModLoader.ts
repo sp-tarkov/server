@@ -146,10 +146,11 @@ export class PreAkiModLoader implements IModLoader
             const modOrder = this.vfs.readFile(this.modOrderPath, { encoding: "utf8" });
             try
             {
-                this.jsonUtil.deserialize<any>(modOrder, this.modOrderPath).order.forEach((mod: string, index: number) =>
+                const modOrderArray = this.jsonUtil.deserialize<any>(modOrder, this.modOrderPath).order;
+                for (const [index, mod] of modOrderArray.entries())
                 {
                     this.order[mod] = index;
-                });
+                }
             }
             catch (error)
             {
@@ -213,11 +214,10 @@ export class PreAkiModLoader implements IModLoader
         validMods.sort((prev, next) => this.sortMods(prev, next, missingFromOrderJSON));
 
         // log the missing mods from order.json
-        Object.keys(missingFromOrderJSON).forEach((
-            missingMod,
-        ) => (this.logger.debug(
-            this.localisationService.getText("modloader-mod_order_missing_from_json", missingMod),
-        )));
+        for (const missingMod of Object.keys(missingFromOrderJSON))
+        {
+            this.logger.debug(this.localisationService.getText("modloader-mod_order_missing_from_json", missingMod));
+        }
 
         // add mods
         for (const mod of validMods)
@@ -248,7 +248,8 @@ export class PreAkiModLoader implements IModLoader
 
             return 1;
         }
-        else if (nextindex === undefined)
+
+        if (nextindex === undefined)
         {
             missingFromOrderJSON[next] = true;
 
@@ -429,15 +430,13 @@ export class PreAkiModLoader implements IModLoader
     public sortModsLoadOrder(): string[]
     {
         // if loadorder.json exists: load it, otherwise generate load order
-        const loadOrderPath = `${this.basepath}loadorder.json`
+        const loadOrderPath = `${this.basepath}loadorder.json`;
         if (this.vfs.exists(loadOrderPath))
         {
             return this.jsonUtil.deserialize(this.vfs.readFile(loadOrderPath), loadOrderPath);
         }
-        else
-        {
-            return this.modLoadOrder.getLoadOrder();
-        }
+
+        return this.modLoadOrder.getLoadOrder();
     }
 
     /**
@@ -735,9 +734,7 @@ export class PreAkiModLoader implements IModLoader
         {
             return PreAkiModLoader.container;
         }
-        else
-        {
-            throw new Error(this.localisationService.getText("modloader-dependency_container_not_initalized"));
-        }
+
+        throw new Error(this.localisationService.getText("modloader-dependency_container_not_initalized"));
     }
 }

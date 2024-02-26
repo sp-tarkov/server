@@ -70,7 +70,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 30,
+      "BossChance": 24,
       "BossDifficult": "normal",
       "BossEscortAmount": "0",
       "BossEscortDifficult": "normal",

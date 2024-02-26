@@ -61,6 +61,7 @@ export class SeasonalEventService
             "5df8a72c86f77412640e2e83", // Silver bauble
             "5a43943586f77416ad2f06e2", // Ded moroz hat
             "5a43957686f7742a2c2f11b0", // Santa hat
+            "61b9e1aaef9a1b5d6a79899a", // Santas's bag
         ];
     }
 
@@ -300,9 +301,32 @@ export class SeasonalEventService
                 );
             }
 
-            botInventory.items[lootContainerKey] = botInventory.items[lootContainerKey].filter((x: string) =>
-                !christmasItems.includes(x)
-            );
+            const tplsToRemove: string[] = [];
+            const containerItems = botInventory.items[lootContainerKey];
+            for (const tplKey of Object.keys(containerItems))
+            {
+                if (christmasItems.includes(tplKey))
+                {
+                    tplsToRemove.push(tplKey);
+                }
+            }
+
+            for (const tplToRemove of tplsToRemove)
+            {
+                delete containerItems[tplToRemove];
+            }
+
+            // Get non-christmas items
+            const nonChristmasTpls = Object.keys(containerItems).filter((tpl) => !christmasItems.includes(tpl));
+            const intermediaryDict = {};
+
+            for (const tpl of nonChristmasTpls)
+            {
+                intermediaryDict[tpl] = containerItems[tpl];
+            }
+
+            // Replace the original containerItems with the updated one
+            botInventory.items[lootContainerKey] = intermediaryDict;
         }
     }
 
@@ -438,7 +462,8 @@ export class SeasonalEventService
         const gifterBot = this.databaseServer.getTables().bots.types.gifter;
         for (const difficulty in gifterBot.difficulty)
         {
-            gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = gifterBot.inventory.items.Backpack.join(", ");
+            gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = Object.keys(gifterBot.inventory.items.Backpack)
+                .join(", ");
         }
     }
 
@@ -488,12 +513,7 @@ export class SeasonalEventService
 
     protected addPumpkinsToScavBackpacks(): void
     {
-        const assaultBackpack = this.databaseServer.getTables().bots.types.assault.inventory.items.Backpack;
-        assaultBackpack.push("634959225289190e5e773b3b");
-        assaultBackpack.push("634959225289190e5e773b3b");
-        assaultBackpack.push("634959225289190e5e773b3b");
-        assaultBackpack.push("634959225289190e5e773b3b");
-        assaultBackpack.push("634959225289190e5e773b3b");
+        this.databaseServer.getTables().bots.types.assault.inventory.items.Backpack["634959225289190e5e773b3b"] = 400;
     }
 
     /**
@@ -529,7 +549,7 @@ export class SeasonalEventService
         {
             const mapData: ILocationData = maps[gifterMapSettings.map];
             // Dont add gifter to map twice
-            if (mapData.base.BossLocationSpawn.some(boss => boss.BossName === "gifter"))
+            if (mapData.base.BossLocationSpawn.some((boss) => boss.BossName === "gifter"))
             {
                 continue;
             }
