@@ -27,6 +27,7 @@ import { PlayerService } from "@spt-aki/services/PlayerService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class HideoutHelper
@@ -53,6 +54,7 @@ export class HideoutHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
     )
     {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
@@ -102,10 +104,28 @@ export class HideoutHelper
         );
 
         // Store the tools used for this production, so we can return them later
-        const productionTools = recipe.requirements.filter(req => req.type === "Tool").map(req => req.templateId);
-        if (productionTools.length > 0)
+        const bodyAsSingle = body as IHideoutSingleProductionStartRequestData;
+        if (bodyAsSingle && bodyAsSingle.tools.length > 0)
         {
-            production.sptRequiredTools = productionTools;
+            production.sptRequiredTools = [];
+
+            for (const tool of bodyAsSingle.tools)
+            {
+                const toolItem = this.jsonUtil.clone(pmcData.Inventory.items.find(x => x._id === tool.id));
+
+                // Make sure we only return as many as we took
+                if (!toolItem.upd)
+                {
+                    toolItem.upd = {};
+                }
+                toolItem.upd.StackObjectsCount = tool.count;
+
+                production.sptRequiredTools.push({
+                    _id: this.hashUtil.generate(),
+                    _tpl: toolItem._tpl,
+                    upd: toolItem.upd
+                });
+            }
         }
 
         pmcData.Hideout.Production[body.recipeId] = production;

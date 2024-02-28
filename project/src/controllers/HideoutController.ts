@@ -920,19 +920,7 @@ export class HideoutController
         {
             for (const tool of production.sptRequiredTools)
             {
-                const toolToAdd: Item = {
-                    _id: this.hashUtil.generate(),
-                    _tpl: tool,
-                };
-
-                if (this.itemHelper.isItemTplStackable(tool))
-                {
-                    toolToAdd.upd = {
-                        StackObjectsCount: 1,
-                    }
-                }
-                
-                toolsToSendToPlayer.push([toolToAdd]);
+                toolsToSendToPlayer.push([tool]);
             }
         }
 
@@ -963,17 +951,22 @@ export class HideoutController
             return;
         }
 
-        // Add the used tools to the stash as non-FiR
-        const addToolsRequest: IAddItemsDirectRequest = {
-            itemsWithModsToAdd: toolsToSendToPlayer,
-            foundInRaid: false,
-            useSortingTable: false,
-            callback: null,
-        };
-        this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
-        if (output.warnings.length > 0)
+        // Add the tools to the stash, we have to do this individually due to FiR state potentially being different
+        for (const toolItem of toolsToSendToPlayer)
         {
-            return;
+            // Note: FIR state will be based on the first item's SpawnedInSession property per item group
+            const addToolsRequest: IAddItemsDirectRequest = {
+                itemsWithModsToAdd: [toolItem],
+                foundInRaid: toolItem[0].upd?.SpawnedInSession ?? false,
+                useSortingTable: false,
+                callback: null,
+            };
+
+            this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
+            if (output.warnings.length > 0)
+            {
+                return;
+            }
         }
 
         // Add the crafting result to the stash, marked as FiR
