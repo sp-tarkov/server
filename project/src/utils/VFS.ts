@@ -175,7 +175,7 @@ export class VFS
             fs.writeFileSync(filepath, "");
         }
 
-        this.lockFileSync(filepath);
+        const releaseCallback = this.lockFileSync(filepath);
 
         if (!append && atomic)
         {
@@ -186,10 +186,7 @@ export class VFS
             fs.writeFileSync(filepath, data, options);
         }
 
-        if (this.checkFileSync(filepath))
-        {
-            this.unlockFileSync(filepath);
-        }
+        releaseCallback();
     }
 
     public async writeFileAsync(filepath: any, data = "", append = false, atomic = true): Promise<void>
@@ -307,12 +304,12 @@ export class VFS
         await this.renamePromisify(oldPath, newPath);
     }
 
-    protected lockFileSync(filepath: any): void
+    protected lockFileSync(filepath: any): () => void
     {
-        lockfile.lockSync(filepath);
+        return lockfile.lockSync(filepath);
     }
 
-    protected checkFileSync(filepath: any): any
+    protected checkFileSync(filepath: any): boolean
     {
         return lockfile.checkSync(filepath);
     }
