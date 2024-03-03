@@ -172,9 +172,7 @@ export class InraidController
 
         if (gearToStore.length > 0)
         {
-            mapHasInsuranceEnabled
-                ? this.insuranceService.storeGearLostInRaidToSendLater(sessionID, gearToStore)
-                : this.insuranceService.sendLostInsuranceMessage(sessionID, locationName);
+            this.insuranceService.storeGearLostInRaidToSendLater(sessionID, gearToStore);
         }
 
         // Edge case - Handle usec players leaving lighthouse with Rogues angry at them
@@ -235,10 +233,7 @@ export class InraidController
             this.pmcChatResponseService.sendVictimResponse(sessionID, victims, serverPmcProfile);
         }
 
-        if (mapHasInsuranceEnabled)
-        {
-            this.insuranceService.sendInsuredItems(serverPmcProfile, sessionID, map.Id);
-        }
+        this.insuranceService.sendInsuredItems(serverPmcProfile, sessionID, map.Id);
     }
 
     /**
