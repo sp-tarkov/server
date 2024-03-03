@@ -143,29 +143,6 @@ export class InsuranceService
     }
 
     /**
-     * Send a message to player informing them gear was completely lost
-     * @param sessionId Session id
-     * @param locationName name of map insurance was lost on
-     */
-    public sendLostInsuranceMessage(sessionId: string, locationName = ""): void
-    {
-        const dialogueTemplates = this.databaseServer.getTables().traders[Traders.PRAPOR].dialogue; // todo: get trader id instead of hard coded prapor
-        const randomResponseId = locationName?.toLowerCase() === "laboratory"
-            ? this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailedLabs)
-            : this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailed);
-
-        this.mailSendService.sendLocalisedNpcMessageToPlayer(
-            sessionId,
-            this.traderHelper.getTraderById(Traders.PRAPOR),
-            MessageType.NPC_TRADER,
-            randomResponseId,
-            [],
-            null,
-            { location: locationName },
-        );
-    }
-
-    /**
      * Check all root insured items and remove location property + set slotId to 'hideout'
      * @param sessionId Session id
      * @param traderId Trader id
