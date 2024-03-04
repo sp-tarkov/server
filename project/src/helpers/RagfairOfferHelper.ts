@@ -352,6 +352,8 @@ export class RagfairOfferHelper
      */
     public increaseProfileRagfairRating(profile: IAkiProfile, amountToIncrementBy: number): void
     {
+        const ragfairConfig = this.databaseServer.getTables().globals.config.RagFair;
+
         profile.characters.pmc.RagfairInfo.isRatingGrowing = true;
         if (Number.isNaN(amountToIncrementBy))
         {
@@ -360,7 +362,7 @@ export class RagfairOfferHelper
             return;
         }
         profile.characters.pmc.RagfairInfo.rating +=
-            (this.databaseServer.getTables().globals.config.RagFair.ratingIncreaseCount / 100000) * amountToIncrementBy;
+            (ragfairConfig.ratingIncreaseCount / ragfairConfig.ratingSumForIncrease) * amountToIncrementBy;
     }
 
     /**
