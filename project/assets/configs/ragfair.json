@@ -297,7 +297,9 @@
 			"armorPlate": {
 				"maxProtectionLevel": 4,
 				"ignoreSlots": ["right_side_plate", "left_side_plate"]
-			}
+			},
+            "enableCustomItemCategoryList": false,
+            "customItemCategoryList": []
         },
         "unreasonableModPrices": {
             "5448fe124bdc2da5018b4567": {

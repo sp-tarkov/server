@@ -150,6 +150,10 @@ export interface Blacklist
     traderItems: boolean;
     /** Maximum level an armor plate can be found in a flea-listed armor item */
     armorPlate: IArmorPlateBlacklistSettings;
+    /** Should specific categories be blacklisted from the flea, true = use blacklist */
+    enableCustomItemCategoryList: boolean;
+    /** Custom category blacklist for parent Ids */
+    customItemCategoryList: string[];
 }
 
 export interface IArmorPlateBlacklistSettings

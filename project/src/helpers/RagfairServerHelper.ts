@@ -90,6 +90,15 @@ export class RagfairServerHelper
             return false;
         }
 
+        // Skip custom category blacklisted items
+        if (
+            blacklistConfig.enableCustomItemCategoryList
+            && this.isItemCategoryOnCustomFleaBlacklist(itemDetails[1]._parent)
+        )
+        {
+            return false;
+        }
+
         // Skip quest items
         if (blacklistConfig.enableQuestList && this.itemHelper.isQuestItem(itemDetails[1]._id))
         {
@@ -121,6 +130,16 @@ export class RagfairServerHelper
         }
 
         return this.ragfairConfig.dynamic.blacklist.custom.includes(itemTemplateId);
+    }
+
+    /**
+     * Is supplied parent id on the ragfair custom item category blacklist
+     * @param parentId Parent Id to check is blacklisted
+     * @returns true if blacklisted
+     */
+    protected isItemCategoryOnCustomFleaBlacklist(itemParentId: string): boolean
+    {
+        return this.ragfairConfig.dynamic.blacklist.customItemCategoryList.includes(itemParentId);
     }
 
     /**
