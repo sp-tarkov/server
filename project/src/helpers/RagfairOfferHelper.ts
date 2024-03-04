@@ -360,7 +360,7 @@ export class RagfairOfferHelper
             return;
         }
         profile.characters.pmc.RagfairInfo.rating +=
-            this.databaseServer.getTables().globals.config.RagFair.ratingIncreaseCount * amountToIncrementBy;
+            (this.databaseServer.getTables().globals.config.RagFair.ratingIncreaseCount / 100000) * amountToIncrementBy;
     }
 
     /**
