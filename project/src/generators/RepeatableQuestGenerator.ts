@@ -40,6 +40,7 @@ import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PaymentService } from "@spt-aki/services/PaymentService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
@@ -72,6 +73,7 @@ export class RepeatableQuestGenerator
         @inject("ObjectId") protected objectId: ObjectId,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("RepeatableQuestHelper") protected repeatableQuestHelper: RepeatableQuestHelper,
+        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -1252,6 +1254,9 @@ export class RepeatableQuestGenerator
         traderId: string,
     ): [string, ITemplateItem][]
     {
+        // Get an array of seasonal items that should not be shown right now as seasonal event is not active
+        const seasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
+
         // check for specific baseclasses which don't make sense as reward item
         // also check if the price is greater than 0; there are some items whose price can not be found
         // those are not in the game yet (e.g. AGS grenade launcher)
@@ -1265,7 +1270,14 @@ export class RepeatableQuestGenerator
                     return false;
                 }
 
-                const traderWhitelist = repeatableQuestConfig.traderWhitelist.find((x) => x.traderId === traderId);
+                if (seasonalItems.includes(tpl))
+                {
+                    return false;
+                }
+
+                const traderWhitelist = repeatableQuestConfig.traderWhitelist.find((trader) =>
+                    trader.traderId === traderId
+                );
                 return this.isValidRewardItem(tpl, repeatableQuestConfig, traderWhitelist?.rewardBaseWhitelist);
             },
         );
