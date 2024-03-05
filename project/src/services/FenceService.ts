@@ -613,6 +613,7 @@ export class FenceService
             // rootItemBeingAdded.upd.BuyRestrictionCurrent = 0;
             // rootItemBeingAdded.upd.UnlimitedCount = false;
 
+            // Skip items already in the assort if it exists in the prevent duplicate list
             if (
                 assorts.items.some((item) => item._tpl === rootItemBeingAdded._tpl)
                 && this.traderConfig.fence.preventDuplicateOffersOfCategory.includes(
