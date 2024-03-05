@@ -620,7 +620,6 @@ export class FenceService
                 )
             )
             {
-                this.logger.debug(`Skipping adding ${rootItemBeingAdded._tpl} to fence assort`);
                 i--;
                 continue;
             }
