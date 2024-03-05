@@ -123,6 +123,10 @@
             "5671435f4bdc2d96058b4569": 0,
             "543be5cb4bdc2deb348b4568": 3
         },
+        "preventDuplicateOffersOfCategory": [
+            "543be5cb4bdc2deb348b4568",
+            "5485a8684bdc2da71d8b4567"
+        ],
         "weaponDurabilityPercentMinMax": {
             "current": {
                 "min": 40,

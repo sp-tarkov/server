@@ -613,6 +613,18 @@ export class FenceService
             // rootItemBeingAdded.upd.BuyRestrictionCurrent = 0;
             // rootItemBeingAdded.upd.UnlimitedCount = false;
 
+            if (
+                assorts.items.some((item) => item._tpl === rootItemBeingAdded._tpl)
+                && this.traderConfig.fence.preventDuplicateOffersOfCategory.includes(
+                    this.itemHelper.getItem(rootItemBeingAdded._tpl)[1]._parent,
+                )
+            )
+            {
+                this.logger.debug(`Skipping adding ${rootItemBeingAdded._tpl} to fence assort`);
+                i--;
+                continue;
+            }
+
             // Only randomise single items
             const isSingleStack = rootItemBeingAdded.upd.StackObjectsCount === 1;
             if (isSingleStack)
