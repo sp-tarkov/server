@@ -707,6 +707,9 @@ export class InRaidHelper
      */
     protected isItemKeptAfterDeath(pmcData: IPmcData, itemToCheck: Item): boolean
     {
+        // Use pocket slotId's otherwise it deletes the root pocket item.
+        const pocketSlots = ["pocket1", "pocket2", "pocket3", "pocket4"];
+
         // No parentId = base inventory item, always keep
         if (!itemToCheck.parentId)
         {
@@ -724,6 +727,12 @@ export class InRaidHelper
                 return false;
             }
 
+            return true;
+        }
+
+        // Should we keep items in pockets on death
+        if (!this.lostOnDeathConfig.equipment.PocketItems && pocketSlots.includes(itemToCheck.slotId))
+        {
             return true;
         }
 
