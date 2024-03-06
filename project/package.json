@@ -70,6 +70,7 @@
         "gulp-execa": "6.0.0",
         "gulp-rename": "2.0.0",
         "madge": "6.1.0",
+        "minimist": "1.2.8",
         "resedit": "2.0.0",
         "ts-node-dev": "2.0.0",
         "tsconfig-paths": "4.2.0",
