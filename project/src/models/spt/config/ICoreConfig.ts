@@ -9,12 +9,25 @@ export interface ICoreConfig extends IBaseConfig
     serverName: string;
     profileSaveIntervalSeconds: number;
     sptFriendNickname: string;
+    release: IRelease;
     fixes: IGameFixes;
     features: IServerFeatures;
     /** Commit hash build server was created from */
     commit?: string;
     /** Timestamp of server build */
     buildTime?: string;
+}
+
+export interface IRelease
+{
+    // Enables the cool watermark in-game
+    isBeta: boolean;
+    // Disclaimer outlining the intended usage of bleeding edge
+    betaDisclaimer: string;
+    // How long before the messagebox times out and closes the game
+    betaDisclaimerTimeoutDelay: number;
+    // Summary of release changes
+    releaseSummary: string;
 }
 
 export interface IGameFixes
