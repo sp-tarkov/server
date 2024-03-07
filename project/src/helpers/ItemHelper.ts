@@ -810,6 +810,24 @@ export class ItemHelper
     }
 
     /**
+     * Mark the passed in array of items as found in raid.
+     * Modifies passed in items
+     * @param items The list of items to mark as FiR
+     */
+    public setFoundInRaid(items: Item[]): void
+    {
+        for (const item of items)
+        {
+            if (!item.upd)
+            {
+                item.upd = {};
+            }
+
+            item.upd.SpawnedInSession = true;
+        }
+    }
+
+    /**
      * WARNING, SLOW. Recursively loop down through an items hierarchy to see if any of the ids match the supplied list, return true if any do
      * @param {string} tpl Items tpl to check parents of
      * @param {Array} tplsToCheck Tpl values to check if parents of item match

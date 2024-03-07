@@ -88,19 +88,9 @@ export class GiveSptCommand implements ISptCommand
         }
 
         const itemsToSend: Item[] = [];
-        if (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.WEAPON))
+        const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
+        if (preset)
         {
-            const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
-            if (!preset)
-            {
-                this.mailSendService.sendUserMessageToPlayer(
-                    sessionId,
-                    commandHandler,
-                    "Invalid weapon template ID requested. There are no default presets for this weapon.",
-                );
-                return request.dialogId;
-            }
-
             for (let i = 0; i < +quantity; i++)
             {
                 // Make sure IDs are unique before adding to array - prevent collisions
@@ -127,6 +117,9 @@ export class GiveSptCommand implements ISptCommand
             };
             itemsToSend.push(...this.itemHelper.splitStack(item));
         }
+
+        // Flag the items as FiR
+        this.itemHelper.setFoundInRaid(itemsToSend);
 
         this.mailSendService.sendSystemMessageToPlayer(sessionId, "Give command!", itemsToSend);
         return request.dialogId;
