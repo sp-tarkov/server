@@ -67,6 +67,8 @@
         "dprint": "0.44.0",
         "eslint": "8.56.0",
         "gulp": "4.0.2",
+        "gulp-decompress": "3.0.0",
+        "gulp-download": "0.0.1",
         "gulp-execa": "6.0.0",
         "gulp-rename": "2.0.0",
         "madge": "6.1.0",

@@ -7,6 +7,8 @@ import pkgfetch from "@yao-pkg/pkg-fetch";
 import gulp from "gulp";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
+import download from "gulp-download";
+import decompress from "gulp-decompress";
 import minimist from "minimist";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import * as ResEdit from "resedit";
@@ -116,10 +118,16 @@ const copyAssets = () =>
     );
 
 /**
- * Copy executables from node_modules
+ * Download pnpm executable
  */
-const copyExecutables = () =>
-    gulp.src(["node_modules/@pnpm/exe/**/*"]).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
+const downloadPnpm = async () => {
+    const pnpmVersion = manifest.devDependencies["@pnpm/exe"];
+    const pnpmPackageName = `@pnpm/${targetPlatform === "win32" ? "win" : targetPlatform}-${targetArch}`;
+    const npmResult = await exec(`npm view ${pnpmPackageName}@${pnpmVersion} dist.tarball`, {stdout: "pipe"});
+    const pnpmLink = npmResult.stdout.trim()
+    console.log(`Downloading pnpm binary from ${pnpmLink}`)
+    download(pnpmLink).pipe(decompress({strip: 1})).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
+}
 
 /**
  * Rename and copy the license file
@@ -167,7 +175,7 @@ const createHashFile = async () =>
 };
 
 // Combine all tasks into addAssets
-const addAssets = gulp.series(copyAssets, copyExecutables, copyLicense, writeCommitHashToCoreJSON, createHashFile);
+const addAssets = gulp.series(copyAssets, downloadPnpm, copyLicense, writeCommitHashToCoreJSON, createHashFile);
 
 /**
  * Cleans the build directory.
