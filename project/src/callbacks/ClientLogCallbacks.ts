@@ -4,6 +4,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ICoreConfig, IRelease } from "@spt-aki/models/spt/config/ICoreConfig";
 import { IClientLogRequest } from "@spt-aki/models/spt/logging/IClientLogRequest";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
 
@@ -15,6 +16,7 @@ export class ClientLogCallbacks
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("ClientLogController") protected clientLogController: ClientLogController,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("LocalisationService") protected localisationService: LocalisationService,
     )
     {}
 
@@ -33,6 +35,8 @@ export class ClientLogCallbacks
     public releaseNotes(): string
     {
         const data: IRelease = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).release;
+        data.betaDisclaimer = this.localisationService.getText("beta-disclaimer");
+        data.releaseSummary = this.localisationService.getText("release-summary");
         return this.httpResponse.noBody(data);
     }
 }

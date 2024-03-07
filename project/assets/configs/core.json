@@ -7,9 +7,7 @@
     "sptFriendNickname": "SPT",
     "release": {
         "isBeta": true,
-        "betaDisclaimer": "By pressing OK you agree that no support is offered and that this is for bug testing only. NOT actual gameplay. Mods are disabled. New profiles may be required frequently. Report all bugs in the reports channel in discord, or on the issues page on the website. If you don't press OK by the time specified, the game will close.",
-        "betaDisclaimerTimeoutDelay": 30,
-        "releaseSummary": ""
+        "betaDisclaimerTimeoutDelay": 30
     },
     "fixes": {
         "fixShotgunDispersion": true,

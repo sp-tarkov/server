@@ -23,11 +23,11 @@ export interface IRelease
     // Enables the cool watermark in-game
     isBeta: boolean;
     // Disclaimer outlining the intended usage of bleeding edge
-    betaDisclaimer: string;
+    betaDisclaimer?: string;
     // How long before the messagebox times out and closes the game
     betaDisclaimerTimeoutDelay: number;
     // Summary of release changes
-    releaseSummary: string;
+    releaseSummary?: string;
 }
 
 export interface IGameFixes
