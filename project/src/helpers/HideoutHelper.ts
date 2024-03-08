@@ -999,7 +999,7 @@ export class HideoutHelper
      * @param productionTime Time to complete hideout craft in seconds
      * @returns Adjusted craft time in seconds
      */
-    protected getCraftingSkillProductionTimeReduction(pmcData: IPmcData, productionTime: number): number
+    public getCraftingSkillProductionTimeReduction(pmcData: IPmcData, productionTime: number): number
     {
         const craftingSkill = pmcData.Skills.Common.find((skill) => skill.Id === SkillTypes.CRAFTING);
         if (!craftingSkill)
