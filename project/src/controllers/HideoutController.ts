@@ -35,6 +35,7 @@ import { IRecordShootingRangePoints } from "@spt-aki/models/eft/hideout/IRecordS
 import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
 import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
@@ -949,7 +950,11 @@ export class HideoutController
         const totalResultItems = toolsToSendToPlayer.concat(itemAndChildrenToSendToPlayer);
         if (!this.inventoryHelper.canPlaceItemsInInventory(sessionID, totalResultItems))
         {
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
             return;
         }
 

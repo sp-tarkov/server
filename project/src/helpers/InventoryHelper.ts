@@ -20,6 +20,7 @@ import { IInventoryRemoveRequestData } from "@spt-aki/models/eft/inventory/IInve
 import { IInventorySplitRequestData } from "@spt-aki/models/eft/inventory/IInventorySplitRequestData";
 import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -88,7 +89,11 @@ export class InventoryHelper
         if (!this.canPlaceItemsInInventory(sessionId, request.itemsWithModsToAdd))
         {
             // No space, exit
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
 
             return;
         }
@@ -470,7 +475,11 @@ export class InventoryHelper
         }
         else
         {
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
 
             return;
         }
