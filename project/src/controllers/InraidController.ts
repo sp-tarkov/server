@@ -433,7 +433,7 @@ export class InraidController
                 pmcQuest.statusTimers = quest.statusTimers;
                 for (const statusTimerKey in quest.statusTimers)
                 {
-                    if (!Number(statusTimerKey))
+                    if (Number.isNaN(parseInt(statusTimerKey)))
                     {
                         quest.statusTimers[QuestStatus[statusTimerKey]] = quest.statusTimers[statusTimerKey];
                         delete quest.statusTimers[statusTimerKey];

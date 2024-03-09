@@ -467,8 +467,8 @@ export class InRaidHelper
                     // Set quest as AvailableAfter and set timer
                     const timestamp = this.timeUtil.getTimestamp() + afsRequirement.availableAfter;
                     lockedQuest.availableAfter = timestamp;
-                    lockedQuest.statusTimers.AvailableAfter = timestamp;
-                    lockedQuest.status = 9;
+                    lockedQuest.statusTimers[QuestStatus.AvailableAfter] = this.timeUtil.getTimestamp();
+                    lockedQuest.status = QuestStatus.AvailableAfter;
                 }
             }
         }

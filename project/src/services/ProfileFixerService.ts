@@ -544,7 +544,8 @@ export class ProfileFixerService
             return;
         }
 
-        const fixes = new Map<any, number>();
+        const fixes: Record<any, number> = {};
+        const timerFixes: Record<string, number> = {};
         const questsToDelete: IQuestStatus[] = [];
         const fullProfile = this.profileHelper.getFullProfile(profile.sessionId);
         const isDevProfile = fullProfile?.info.edition.toLowerCase() === "spt developer";
@@ -559,28 +560,23 @@ export class ProfileFixerService
                 continue;
             }
 
-            if (quest.status && !Number(quest.status))
+            if (quest.status && Number.isNaN(parseInt(<string><unknown>quest.status)))
             {
-                if (fixes.has(quest.status))
-                {
-                    fixes.set(quest.status, fixes.get(quest.status) + 1);
-                }
-                else
-                {
-                    fixes.set(quest.status, 1);
-                }
+                fixes[quest.status] = (fixes[quest.status] ?? 0) + 1;
 
                 const newQuestStatus = QuestStatus[quest.status];
                 quest.status = <QuestStatus><unknown>newQuestStatus;
+            }
 
-                for (const statusTimer in quest.statusTimers)
+            for (const statusTimer in quest.statusTimers)
+            {
+                if (Number.isNaN(parseInt(statusTimer)))
                 {
-                    if (!Number(statusTimer))
-                    {
-                        const newKey = QuestStatus[statusTimer];
-                        quest.statusTimers[newKey] = quest.statusTimers[statusTimer];
-                        delete quest.statusTimers[statusTimer];
-                    }
+                    timerFixes[statusTimer] = (timerFixes[statusTimer] ?? 0) + 1;
+
+                    const newKey = QuestStatus[statusTimer];
+                    quest.statusTimers[newKey] = quest.statusTimers[statusTimer];
+                    delete quest.statusTimers[statusTimer];
                 }
             }
         }
@@ -590,11 +586,18 @@ export class ProfileFixerService
             profile.Quests.splice(profile.Quests.indexOf(questToDelete), 1);
         }
 
-        if (fixes.size > 0)
+        if (Object.keys(fixes).length > 0)
         {
             this.logger.debug(
-                `Updated quests values: ${
-                    Array.from(fixes.entries()).map(([k, v]) => `(${k}: ${v} times)`).join(", ")
+                `Updated quests values: ${Object.entries(fixes).map(([k, v]) => `(${k}: ${v} times)`).join(", ")}`,
+            );
+        }
+
+        if (Object.keys(timerFixes).length > 0)
+        {
+            this.logger.debug(
+                `Updated statusTimers values: ${
+                    Object.entries(timerFixes).map(([k, v]) => `(${k}: ${v} times)`).join(", ")
                 }`,
             );
         }
