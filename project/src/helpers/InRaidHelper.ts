@@ -335,17 +335,10 @@ export class InRaidHelper
             // postRaidQuest.status has a weird value, need to do some nasty casting to compare it
             const postRaidQuestStatus = <string><unknown>postRaidQuest.status;
 
-            // Find matching pre-raid quest
+            // Find matching pre-raid quest, skip if we can't
             const preRaidQuest = preRaidQuests?.find((preRaidQuest) => preRaidQuest.qid === postRaidQuest.qid);
             if (!preRaidQuest)
             {
-                // Some traders gives locked quests (LightKeeper) due to time-gating
-                if (postRaidQuestStatus === "Locked")
-                {
-                    // Store new locked quest for future processing
-                    newLockedQuests.push(postRaidQuest);
-                }
-
                 continue;
             }
 
@@ -372,7 +365,7 @@ export class InRaidHelper
                 postRaidQuestStatus === "AvailableAfter" && postRaidQuest.availableAfter <= this.timeUtil.getTimestamp()
             )
             {
-                // Flag as ready to complete
+                // Flag as ready to start
                 postRaidQuest.status = QuestStatus.AvailableForStart;
                 postRaidQuest.statusTimers[QuestStatus.AvailableForStart] = this.timeUtil.getTimestamp();
 
@@ -440,36 +433,6 @@ export class InRaidHelper
 
                 // Clear out any completed conditions
                 postRaidQuest.completedConditions = [];
-            }
-        }
-
-        // Reclassify time-gated quests as time gated until a specific date
-        if (newLockedQuests.length > 0)
-        {
-            for (const lockedQuest of newLockedQuests)
-            {
-                // Get the quest from Db
-                const dbQuest = this.questHelper.getQuestFromDb(lockedQuest.qid, null);
-                if (!dbQuest)
-                {
-                    this.logger.warning(
-                        `Unable to adjust locked quest: ${lockedQuest.qid} as it wasnt found in db. It may not become available later on`,
-                    );
-
-                    continue;
-                }
-
-                // Find the time requirement in AvailableForStart array (assuming there is one as quest in locked state === its time-gated)
-                const afsRequirement = dbQuest.conditions.AvailableForStart.find((x) => x.conditionType === "Quest");
-                if (afsRequirement && afsRequirement.availableAfter > 0)
-                {
-                    // Prereq quest has a wait
-                    // Set quest as AvailableAfter and set timer
-                    const timestamp = this.timeUtil.getTimestamp() + afsRequirement.availableAfter;
-                    lockedQuest.availableAfter = timestamp;
-                    lockedQuest.statusTimers[QuestStatus.AvailableAfter] = this.timeUtil.getTimestamp();
-                    lockedQuest.status = QuestStatus.AvailableAfter;
-                }
             }
         }
     }
