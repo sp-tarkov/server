@@ -24,6 +24,8 @@ export interface IRelease
     isBeta?: boolean;
     // Whether mods are enabled
     isModdable?: boolean;
+    // Are mods loaded on the server?
+    isModded: boolean;
     // Disclaimer outlining the intended usage of bleeding edge
     betaDisclaimer?: string;
     // How long before the messagebox times out and closes the game

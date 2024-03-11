@@ -1,4 +1,5 @@
 import { ClientLogController } from "@spt-aki/controllers/ClientLogController";
+import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ICoreConfig, IRelease } from "@spt-aki/models/spt/config/ICoreConfig";
@@ -17,6 +18,7 @@ export class ClientLogCallbacks
         @inject("ClientLogController") protected clientLogController: ClientLogController,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
+        @inject("ModLoadOrder") protected modLoadOrder: ModLoadOrder,
     )
     {}
 
@@ -39,6 +41,7 @@ export class ClientLogCallbacks
         data.releaseSummary = this.localisationService.getText("release-summary");
         data.isBeta = globalThis.G_WATERMARK_ENABLED;
         data.isModdable = globalThis.G_MODS_ENABLED;
+        data.isModded = this.modLoadOrder.getLoadOrder().length > 0 ? true : false;
 
         return this.httpResponse.noBody(data);
     }
