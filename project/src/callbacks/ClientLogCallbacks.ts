@@ -37,6 +37,9 @@ export class ClientLogCallbacks
         const data: IRelease = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).release;
         data.betaDisclaimer = this.localisationService.getText("beta-disclaimer");
         data.releaseSummary = this.localisationService.getText("release-summary");
+        data.isBeta = globalThis.G_WATERMARK_ENABLED;
+        data.isModdable = globalThis.G_MODS_ENABLED;
+
         return this.httpResponse.noBody(data);
     }
 }

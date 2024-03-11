@@ -21,7 +21,9 @@ export interface ICoreConfig extends IBaseConfig
 export interface IRelease
 {
     // Enables the cool watermark in-game
-    isBeta: boolean;
+    isBeta?: boolean;
+    // Whether mods are enabled
+    isModdable?: boolean;
     // Disclaimer outlining the intended usage of bleeding edge
     betaDisclaimer?: string;
     // How long before the messagebox times out and closes the game

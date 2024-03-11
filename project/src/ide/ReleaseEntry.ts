@@ -8,6 +8,7 @@ globalThis.G_RELEASE_CONFIGURATION = true;
 globalThis.G_MODS_ENABLED = true;
 globalThis.G_MODS_TRANSPILE_TS = true;
 globalThis.G_LOG_REQUESTS = false;
+globalThis.G_WATERMARK_ENABLED = false;
 
 const program = new Program();
 program.start();

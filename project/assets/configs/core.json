@@ -6,7 +6,6 @@
     "profileSaveIntervalSeconds": 15,
     "sptFriendNickname": "SPT",
     "release": {
-        "isBeta": true,
         "betaDisclaimerTimeoutDelay": 30
     },
     "fixes": {
