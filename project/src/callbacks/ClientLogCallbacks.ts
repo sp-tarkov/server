@@ -37,8 +37,17 @@ export class ClientLogCallbacks
     public releaseNotes(): string
     {
         const data: IRelease = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).release;
-        data.betaDisclaimer = this.localisationService.getText("beta-disclaimer");
-        data.releaseSummary = this.localisationService.getText("release-summary");
+
+        data.betaDisclaimerText = this.localisationService.getText("release-beta-disclaimer");
+        data.betaDisclaimerAcceptText = this.localisationService.getText("release-beta-disclaimer-accept");
+        data.serverModsLoadedText = this.localisationService.getText("release-server-mods-loaded");
+        data.serverModsLoadedDebugText = this.localisationService.getText("release-server-mods-debug-message");
+        data.clientModsLoadedText = this.localisationService.getText("release-plugins-loaded");
+        data.clientModsLoadedDebugText = this.localisationService.getText("release-plugins-loaded-debug-message");
+        data.illegalPluginsLoadedText = this.localisationService.getText("release-illegal-plugins-loaded");
+        data.illegalPluginsExceptionText = this.localisationService.getText("release-illegal-plugins-exception");
+        data.releaseSummaryText = this.localisationService.getText("release-summary");
+
         data.isBeta = globalThis.G_WATERMARK_ENABLED;
         data.isModdable = globalThis.G_MODS_ENABLED;
         data.isModded = this.modLoadOrder.getLoadOrder().length > 0 ? true : false;
