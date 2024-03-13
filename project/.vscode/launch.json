@@ -4,7 +4,7 @@
         {
             "name": "Debug",
             "type": "node",
-            "runtimeVersion": "20.10.0",
+            "runtimeVersion": "20.11.1",
             "runtimeExecutable": "npm",
             "request": "launch",
             "sourceMaps": true,
@@ -21,7 +21,7 @@
         {
             "name": "Run Vitest Tests",
             "type": "node",
-            "runtimeVersion": "20.10.0",
+            "runtimeVersion": "20.11.1",
             "runtimeExecutable": "npm",
             "request": "launch",
             "runtimeArgs": [

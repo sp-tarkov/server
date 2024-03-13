@@ -22,7 +22,7 @@ const targetPlatform = options.platform;
 
 console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`);
 
-const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.7, it's v20.10.0
+const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.9, it's v20.11.1
 const stdio = "inherit";
 const buildDir = "build/";
 const dataDir = path.join(buildDir, "Aki_Data", "Server");
