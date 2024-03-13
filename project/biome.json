@@ -13,6 +13,7 @@
         "rules": {
             "recommended": true,
             "style": {
+                "useImportType": "off",
                 "noImplicitBoolean": "off",
                 "noParameterAssign": "warn",
                 "useTemplate": "warn",
