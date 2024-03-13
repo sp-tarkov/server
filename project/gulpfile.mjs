@@ -1,33 +1,26 @@
 import crypto from "node:crypto";
-import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
 import pkg from "@yao-pkg/pkg";
 import pkgfetch from "@yao-pkg/pkg-fetch";
+import fs from "fs-extra";
 import gulp from "gulp";
+import decompress from "gulp-decompress";
+import download from "gulp-download";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
-import download from "gulp-download";
-import decompress from "gulp-decompress";
 import minimist from "minimist";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 
-const knownOptions = {
-    string: ["arch", "platform"],
-    default: {
-        arch: process.arch,
-        platform: process.platform
-    }
-}
+const knownOptions = { string: ["arch", "platform"], default: { arch: process.arch, platform: process.platform } };
 
-const options = minimist(process.argv.slice(2), knownOptions)
+const options = minimist(process.argv.slice(2), knownOptions);
 
 const targetArch = options.arch;
 const targetPlatform = options.platform;
 
-console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`)
+console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`);
 
 const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.7, it's v20.10.0
 const stdio = "inherit";
@@ -46,7 +39,32 @@ const licenseFile = "../LICENSE.md";
 /**
  * Transpile src files into Javascript with SWC
  */
-const compile = async () => await exec("swc src -d obj", { stdio });
+const compile = async () =>
+{
+    // Compile TypeScript files using SWC
+    await exec("swc src -d obj", { stdio: "inherit" });
+
+    // Merge the contents from the /obj/src directory into /obj
+    const srcDir = path.join("obj", "src");
+    const destDir = path.join("obj");
+
+    try
+    {
+        const entities = await fs.readdir(srcDir);
+        for (const entity of entities)
+        {
+            const srcPath = path.join(srcDir, entity);
+            const destPath = path.join(destDir, entity);
+            await fs.move(srcPath, destPath, { overwrite: true });
+        }
+        // After moving all contents, remove the now-empty /obj/src directory
+        await fs.remove(srcDir);
+    }
+    catch (error)
+    {
+        console.error("An error occurred during the merge operation:", error);
+    }
+};
 
 // Packaging
 const fetchPackageImage = async () =>
@@ -76,7 +94,7 @@ const updateBuildProperties = async () =>
     if (targetPlatform !== "win32")
     {
         // can't modify executable's resource on non-windows build
-        return
+        return;
     }
 
     const exe = ResEdit.NtExecutable.from(await fs.readFile(serverExe));
