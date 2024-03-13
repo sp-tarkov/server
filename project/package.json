@@ -65,7 +65,7 @@
         "@yao-pkg/pkg-fetch": "3.5.7",
         "cross-env": "7.0.3",
         "dprint": "^0.45.0",
-        "eslint": "8.56.0",
+        "eslint": "~8.57",
         "fs-extra": "~11.2",
         "gulp": "4.0.2",
         "gulp-decompress": "3.0.0",
