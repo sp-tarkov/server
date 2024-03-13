@@ -120,14 +120,17 @@ const copyAssets = () =>
 /**
  * Download pnpm executable
  */
-const downloadPnpm = async () => {
+const downloadPnpm = async () =>
+{
+    // Please ensure that the @pnpm/exe version in devDependencies is pinned to a specific version. If it's not, the
+    // following task will download *all* versions that are compatible with the semver range specified.
     const pnpmVersion = manifest.devDependencies["@pnpm/exe"];
     const pnpmPackageName = `@pnpm/${targetPlatform === "win32" ? "win" : targetPlatform}-${targetArch}`;
-    const npmResult = await exec(`npm view ${pnpmPackageName}@${pnpmVersion} dist.tarball`, {stdout: "pipe"});
-    const pnpmLink = npmResult.stdout.trim()
-    console.log(`Downloading pnpm binary from ${pnpmLink}`)
-    download(pnpmLink).pipe(decompress({strip: 1})).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
-}
+    const npmResult = await exec(`npm view ${pnpmPackageName}@${pnpmVersion} dist.tarball`, { stdout: "pipe" });
+    const pnpmLink = npmResult.stdout.trim();
+    console.log(`Downloading pnpm binary from ${pnpmLink}`);
+    download(pnpmLink).pipe(decompress({ strip: 1 })).pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
+};
 
 /**
  * Rename and copy the license file
