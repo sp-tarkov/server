@@ -44,7 +44,7 @@
         "tsyringe": "4.8.0",
         "typescript": "~5.4",
         "winston": "~3.12",
-        "winston-daily-rotate-file": "4.7.1",
+        "winston-daily-rotate-file": "~5.0",
         "ws": "8.15.1"
     },
     "devDependencies": {

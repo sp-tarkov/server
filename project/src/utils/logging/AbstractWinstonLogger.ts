@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import { promisify } from "node:util";
 import winston, { createLogger, format, transports } from "winston";
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import DailyRotateFile from "winston-daily-rotate-file";
 
 import { Daum } from "@spt-aki/models/eft/itemEvent/IItemEventRouterRequest";
