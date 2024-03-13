@@ -77,7 +77,7 @@
         "resedit": "2.0.0",
         "ts-node-dev": "2.0.0",
         "tsconfig-paths": "4.2.0",
-        "typedoc": "0.25.4",
+        "typedoc": "~0.25",
         "typemoq": "2.1.0",
         "vitest": "~1.3"
     },
