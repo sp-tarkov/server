@@ -13,13 +13,11 @@ import minimist from "minimist";
 import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 
+// Accept command line arguments for arch and platform
 const knownOptions = { string: ["arch", "platform"], default: { arch: process.arch, platform: process.platform } };
-
 const options = minimist(process.argv.slice(2), knownOptions);
-
 const targetArch = options.arch;
 const targetPlatform = options.platform;
-
 console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`);
 
 const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.9, it's v20.11.1
