@@ -507,10 +507,12 @@ export class HideoutHelper
                 pointsConsumed -= 10;
             }
 
+            const isFuelItemFoundInRaid = fuelItemInSlot.upd.SpawnedInSession ?? false;
+
             if (fuelRemaining > 0)
             {
                 // Deducted all used fuel from this container, clean up and exit loop
-                fuelItemInSlot.upd = this.getAreaUpdObject(1, fuelRemaining, pointsConsumed);
+                fuelItemInSlot.upd = this.getAreaUpdObject(1, fuelRemaining, pointsConsumed, isFuelItemFoundInRaid);
 
                 this.logger.debug(
                     `Profile: ${pmcData._id} Generator has: ${fuelRemaining} fuel left in slot ${i + 1}`,
@@ -521,7 +523,7 @@ export class HideoutHelper
                 break; // Break to avoid updating all the fuel tanks
             }
 
-            fuelItemInSlot.upd = this.getAreaUpdObject(1, 0, 0);
+            fuelItemInSlot.upd = this.getAreaUpdObject(1, 0, 0, isFuelItemFoundInRaid);
 
             // Ran out of fuel items to deduct fuel from
             fuelUsedSinceLastTick = Math.abs(fuelRemaining);
@@ -640,9 +642,11 @@ export class HideoutHelper
                     continue;
                 }
 
+                const waterFilterItemInSlot = waterFilterArea.slots[i].item[0];
+
                 // How many units of filter are left
-                let resourceValue = (waterFilterArea.slots[i].item[0].upd?.Resource)
-                    ? waterFilterArea.slots[i].item[0].upd.Resource.Value
+                let resourceValue = (waterFilterItemInSlot.upd?.Resource)
+                    ? waterFilterItemInSlot.upd.Resource.Value
                     : null;
                 if (!resourceValue)
                 {
@@ -652,7 +656,7 @@ export class HideoutHelper
                 }
                 else
                 {
-                    pointsConsumed = (waterFilterArea.slots[i].item[0].upd.Resource.UnitsConsumed || 0)
+                    pointsConsumed = (waterFilterItemInSlot.upd.Resource.UnitsConsumed || 0)
                         + filterDrainRate;
                     resourceValue -= filterDrainRate;
                 }
@@ -671,8 +675,10 @@ export class HideoutHelper
                 // Filter has some fuel left in it after our adjustment
                 if (resourceValue > 0)
                 {
+                    const isWaterFilterFoundInRaid = waterFilterItemInSlot.upd.SpawnedInSession ?? false;
+
                     // Set filters consumed amount
-                    waterFilterArea.slots[i].item[0].upd = this.getAreaUpdObject(1, resourceValue, pointsConsumed);
+                    waterFilterItemInSlot.upd = this.getAreaUpdObject(1, resourceValue, pointsConsumed, isWaterFilterFoundInRaid);
                     this.logger.debug(`Water filter has: ${resourceValue} units left in slot ${i + 1}`);
 
                     break; // Break here to avoid iterating other filters now w're done
@@ -743,11 +749,12 @@ export class HideoutHelper
      * @param resourceUnitsConsumed
      * @returns Upd
      */
-    protected getAreaUpdObject(stackCount: number, resourceValue: number, resourceUnitsConsumed: number): Upd
+    protected getAreaUpdObject(stackCount: number, resourceValue: number, resourceUnitsConsumed: number, isFoundInRaid: boolean): Upd
     {
         return {
             StackObjectsCount: stackCount,
             Resource: { Value: resourceValue, UnitsConsumed: resourceUnitsConsumed },
+            SpawnedInSession: isFoundInRaid,
         };
     }
 
