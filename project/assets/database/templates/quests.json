@@ -55484,8 +55484,7 @@
                 "dynamicLocale": false,
                 "id": "60ec224ead25e3185465bbd2",
                 "zoneIds": [
-                  "prapor_27_3",
-                  "prapor_27_4"
+                  "prapor_27_3"
                 ]
               },
               {
@@ -69890,32 +69889,6 @@
               {
                 "conditionType": "VisitPlace",
                 "dynamicLocale": false,
-                "id": "63a7ce66cc389e31a64596da",
-                "target": "quest_zone_keeper00",
-                "value": 1
-              }
-            ],
-            "id": "63a7ce31cc389e31a64596d9"
-          },
-          "doNotResetIfCounterCompleted": false,
-          "dynamicLocale": false,
-          "globalQuestCounterId": "",
-          "id": "63a7ce31cc389e31a64596d8",
-          "index": 0,
-          "oneSessionOnly": false,
-          "parentId": "",
-          "type": "Discover",
-          "value": 1,
-          "visibilityConditions": []
-        },
-        {
-          "completeInSeconds": 0,
-          "conditionType": "CounterCreator",
-          "counter": {
-            "conditions": [
-              {
-                "conditionType": "VisitPlace",
-                "dynamicLocale": false,
                 "id": "63a7cf0510b7a13eb015961c",
                 "target": "quest_zone_keeper99",
                 "value": 1
@@ -69932,13 +69905,7 @@
           "parentId": "",
           "type": "Discover",
           "value": 1,
-          "visibilityConditions": [
-            {
-              "conditionType": "CompleteCondition",
-              "id": "63abf22761d7b024e808d60b",
-              "target": "63a7ce31cc389e31a64596d8"
-            }
-          ]
+          "visibilityConditions": []
         },
         {
           "conditionType": "FindItem",
@@ -69988,25 +69955,6 @@
               "target": "63a7cee004d3dc28a52a20f8"
             }
           ]
-        },
-        {
-          "conditionType": "FindItem",
-          "countInRaid": false,
-          "dogtagLevel": 0,
-          "dynamicLocale": false,
-          "globalQuestCounterId": "",
-          "id": "63abf37987413d64ae0ac215",
-          "index": 6,
-          "isEncoded": false,
-          "maxDurability": 100,
-          "minDurability": 0,
-          "onlyFoundInRaid": false,
-          "parentId": "63a7ce31cc389e31a64596d8",
-          "target": [
-            "6398fd8ad3de3849057f5128"
-          ],
-          "value": 1,
-          "visibilityConditions": []
         }
       ],
       "AvailableForStart": [

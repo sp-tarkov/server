@@ -278,33 +278,30 @@ export class QuestHelper
             }
         }
 
-        for (const item of questReward.items)
+        for (const rewardItem of questReward.items)
         {
-            if (!item.upd)
-            {
-                item.upd = {};
-            }
+            this.itemHelper.addUpdObjectToItem(rewardItem);
 
             // Reward items are granted Found in Raid status
-            item.upd.SpawnedInSession = true;
+            rewardItem.upd.SpawnedInSession = true;
 
             // Is root item, fix stacks
-            if (item._id === questReward.target)
+            if (rewardItem._id === questReward.target)
             { // Is base reward item
                 if (
-                    (item.parentId !== undefined) && (item.parentId === "hideout") // Has parentId of hideout
-                    && (item.upd !== undefined) && (item.upd.StackObjectsCount !== undefined) // Has upd with stackobject count
-                    && (item.upd.StackObjectsCount > 1) // More than 1 item in stack
+                    (rewardItem.parentId !== undefined) && (rewardItem.parentId === "hideout") // Has parentId of hideout
+                    && (rewardItem.upd !== undefined) && (rewardItem.upd.StackObjectsCount !== undefined) // Has upd with stackobject count
+                    && (rewardItem.upd.StackObjectsCount > 1) // More than 1 item in stack
                 )
                 {
-                    item.upd.StackObjectsCount = 1;
+                    rewardItem.upd.StackObjectsCount = 1;
                 }
-                targets = this.itemHelper.splitStack(item);
+                targets = this.itemHelper.splitStack(rewardItem);
                 // splitStack created new ids for the new stacks. This would destroy the relation to possible children.
                 // Instead, we reset the id to preserve relations and generate a new id in the downstream loop, where we are also reparenting if required
                 for (const target of targets)
                 {
-                    target._id = item._id;
+                    target._id = rewardItem._id;
                 }
             }
             else
@@ -313,10 +310,10 @@ export class QuestHelper
                 if (questReward.items[0].upd.SpawnedInSession)
                 {
                     // Propigate FiR status into child items
-                    item.upd.SpawnedInSession = questReward.items[0].upd.SpawnedInSession;
+                    rewardItem.upd.SpawnedInSession = questReward.items[0].upd.SpawnedInSession;
                 }
 
-                mods.push(item);
+                mods.push(rewardItem);
             }
         }
 
@@ -363,10 +360,8 @@ export class QuestHelper
             questReward.target = rootItem._id;
 
             // Copy over stack count otherwise reward shows as missing in client
-            if (!rootItem.upd)
-            {
-                rootItem.upd = {};
-            }
+            this.itemHelper.addUpdObjectToItem(rootItem);
+
             rootItem.upd.StackObjectsCount = originalRewardRootItem.upd.StackObjectsCount;
 
             return;
@@ -609,10 +604,8 @@ export class QuestHelper
         if (newStackSize > 0)
         {
             const item = pmcData.Inventory.items[inventoryItemIndex];
-            if (!item.upd)
-            {
-                item.upd = {};
-            }
+            this.itemHelper.addUpdObjectToItem(item);
+
             item.upd.StackObjectsCount = newStackSize;
 
             this.addItemStackSizeChangeIntoEventResponse(output, sessionID, item);
@@ -684,16 +677,15 @@ export class QuestHelper
      * @param failRequest Fail quest request data
      * @param sessionID Session id
      * @param output Client output
-     * @returns Item event router response
      */
     public failQuest(
         pmcData: IPmcData,
         failRequest: IFailQuestRequestData,
         sessionID: string,
         output: IItemEventRouterResponse = null,
-    ): IItemEventRouterResponse
+    ): void
     {
-        // Prepare response to send back client
+        // Prepare response to send back to client
         if (!output)
         {
             output = this.eventOutputHolder.getOutput(sessionID);
@@ -705,14 +697,16 @@ export class QuestHelper
         // Create a dialog message for completing the quest.
         const quest = this.getQuestFromDb(failRequest.qid, pmcData);
 
-        const matchingRepeatable = pmcData.RepeatableQuests.flatMap((repeatableType) => repeatableType.activeQuests)
-            .find((activeQuest) => activeQuest._id === failRequest.qid);
+        // Merge all daily/weekly/scav daily quests into one array and look for the matching quest by id
+        const matchingRepeatableQuest = pmcData.RepeatableQuests.flatMap((repeatableType) =>
+            repeatableType.activeQuests
+        ).find((activeQuest) => activeQuest._id === failRequest.qid);
 
-        if (!(matchingRepeatable || quest))
+        if (matchingRepeatableQuest || quest)
         {
             this.mailSendService.sendLocalisedNpcMessageToPlayer(
                 sessionID,
-                this.traderHelper.getTraderById(quest?.traderId ?? matchingRepeatable.traderId), // can be null when repeatable quest has been moved to inactiveQuests
+                this.traderHelper.getTraderById(quest?.traderId ?? matchingRepeatableQuest?.traderId), // Can be null when repeatable quest has been moved to inactiveQuests
                 MessageType.QUEST_FAIL,
                 quest.failMessageText,
                 questRewards,
@@ -721,8 +715,6 @@ export class QuestHelper
         }
 
         output.profileChanges[sessionID].quests.push(...this.failedUnlocked(failRequest.qid, sessionID));
-
-        return output;
     }
 
     /**

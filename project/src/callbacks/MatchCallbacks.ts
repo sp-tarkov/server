@@ -9,6 +9,7 @@ import { IAcceptGroupInviteRequest } from "@spt-aki/models/eft/match/IAcceptGrou
 import { IAcceptGroupInviteResponse } from "@spt-aki/models/eft/match/IAcceptGroupInviteResponse";
 import { ICancelGroupInviteRequest } from "@spt-aki/models/eft/match/ICancelGroupInviteRequest";
 import { ICreateGroupRequestData } from "@spt-aki/models/eft/match/ICreateGroupRequestData";
+import { IDeclineGroupInviteRequest } from "@spt-aki/models/eft/match/IDeclineGroupInviteRequest";
 import { IEndOfflineRaidRequestData } from "@spt-aki/models/eft/match/IEndOfflineRaidRequestData";
 import { IGetGroupStatusRequestData } from "@spt-aki/models/eft/match/IGetGroupStatusRequestData";
 import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
@@ -90,6 +91,17 @@ export class MatchCallbacks
         return this.httpResponse.getBody(result);
     }
 
+    /** Handle client/match/group/invite/decline */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public declineGroupInvite(
+        url: string,
+        info: IDeclineGroupInviteRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<any>
+    {
+        return null;
+    }
+
     /** Handle client/match/group/invite/cancel */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public cancelGroupInvite(
@@ -119,13 +131,6 @@ export class MatchCallbacks
     public putMetrics(url: string, info: IPutMetricsRequestData, sessionID: string): INullResponseData
     {
         return this.httpResponse.nullResponse();
-    }
-
-    /** Handle raid/profile/list */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getProfile(url: string, info: IGetProfileRequestData, sessionID: string): IGetBodyResponseData<IPmcData[]>
-    {
-        return this.httpResponse.getBody(this.matchController.getProfile(info));
     }
 
     // Handle client/match/available
@@ -167,13 +172,6 @@ export class MatchCallbacks
     ): IGetBodyResponseData<IGetGroupStatusResponse>
     {
         return this.httpResponse.getBody(this.matchController.getGroupStatus(info));
-    }
-
-    /** Handle client/match/group/create */
-    // TODO: may have been removed from client
-    public createGroup(url: string, info: ICreateGroupRequestData, sessionID: string): IGetBodyResponseData<any>
-    {
-        return this.httpResponse.getBody(this.matchController.createGroup(sessionID, info));
     }
 
     /** Handle client/match/group/delete */

@@ -40,7 +40,7 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Αδύνατη η εύρεση ορίων γένεσης για το ρόλο: %s, επαναφορά στις προεπιλογές",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Αδύνατη η εύρεση του bot: {{botType}} βαθμός δυσκολίας {{difficulty}}, χρήση της δυσκολίας assault ως εφεδρική",
 	"bot-unable_to_get_bot_fallback_to_assault": "Αδύνατη η εύρεση του bot: %s JSON, χρήση του assault bot ως εφεδρικό",
-	"bot-weapon_contains_invalid_item": "Η απαιτούμενη υποδοχή '{{modSlot}}' στο {{weaponTpl}} έχει ένα μη έγκυρο αντικείμενο: {{modName}}",
+	"bot-weapon_contains_invalid_item": "Η απαιτούμενη υποδοχή '{{modSlot}}' στο όπλο {{weaponTpl}} έχει ένα μη έγκυρο αντικείμενο: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Το όπλο %s δημιουργήθηκε λανθασμένα, επιστροφή πίσω στο προεπιλεγμένο όπλο δείτε το σφάλμα παραπάνω",
 	"bot-weapon_missing_magazine_or_chamber": "Όπλο με tpl: {{weaponId}} δεν έχει γεμιστήρα ή θάλαμο - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Η υποδοχή '{{modSlot}}' δεν υπάρχει για το όπλο: {{weaponId}} {{weaponName}} στο {{botRole}}",
@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Έλεγχος διαθεσιμότητας παίκτη: %s",
 	"websocket-player_connected": "[WS] Παίκτης: Το %s έχει συνδεθεί",
 	"websocket-received_message": "[WS] Ελήφθη μήνυμα από τον χρήστη %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Η υποδοχή χάθηκε, διαγραφή της λαβής",
+	"websocket-socket_lost_deleting_handle": "[WS] Απώλεια υποδοχής, διαγραφή λαβής",
 	"websocket-started": "Ξεκίνησε ο διακομιστής ιστού στο %s",
 	"pmcresponse-victim_positive_1": "Ωραία βολή",
 	"pmcresponse-victim_positive_2": "Εξαιρετική βολή",
@@ -594,8 +594,9 @@
 	"launcher-profile_leftbehind": "Ίδιο με το πρότυπο συν; μεγαλύτερο μέγεθος αποθέματος (10x38), έξτρα εξοπλισμός/αντικείμενα, 500 δολάρια",
 	"launcher-profile_preparetoescape": "Ίδιο με το Left Behind συν; μεγαλύτερο μέγεθος αποθέματος (10x48), έξτρα εξοπλισμός/αντικείμενα, υψηλότερη φήμη εκκίνησης με τους εμπόρους, 250 ευρώ",
 	"launcher-profile-edgeofdarkness": "Ίδιο με το Prepare To Escape συν; μεγαλύτερο μέγεθος αποθέματος (10x68), έξτρα εξοπλισμός/αντικείμενα, υψηλότερη αρχική φήμη με τους εμπόρους, 1000 δολάρια, 500 ευρώ",
-	"launcher-profile_spteasystart": "Πολλά ρούβλια / δολάρια / ευρώ, Μερικές δεξιότητες QoL είναι επίπεδο 20, μέγιστο rep εμπόρων, αρχικό επίπεδο είναι 15, αποστολές μη ολοκληρωμένες",
+	"launcher-profile_spteasystart": "Αρκετά Ρούβλια / Δολάρια / Ευρώ, Με μερικές δεξιότητες για τη βελτίωση της ποιότητας ζωής (QoL) είναι στο επίπεδο 20, με τη μέγιστη φήμη (rep) εμπόρων, το αρχικό επίπεδο είναι 15, οι αποστολές δεν είναι ολοκληρωμένες",
 	"launcher-profile_sptzerotohero": "Εκκίνηση με σχεδόν τίποτα, χωρίς Ρούβλια / Δολάρια / Ευρώ, χωρίς φήμη με εμπόρους, 1 μαχαίρι, χωρίς ολοκληρωμένες αποστολές",
 	"launcher-profile_sptdeveloper": "Προφίλ δοκιμής, το επίπεδο εκκίνησης είναι το 69, με πολλά Ρούβλια/Δολάρια / Ευρώ, οι USEC ξεκινούν με όλες τις αποστολές έτοιμες να παραδοθούν, οι BEAR ξεκινούν με όλες τις αποστολές έτοιμες να παραδοθούν, με άτρωτη μπαλακλάβα",
-	"launcher-missing_property": "Το προφίλ: %s δεν έχει μια descriptionLocaleKey ιδιότητα"
+	"launcher-missing_property": "Το προφίλ: %s δεν έχει μια descriptionLocaleKey ιδιότητα",
+	"beta-disclaimer": "Πατώντας OK συμφωνείτε ότι δεν παρέχεται υποστήριξη και ότι αυτό είναι μόνο για δοκιμές σφαλμάτων. Αυτή ΔΕΝ είναι η τελική εμπειρία του παιχιδιού. Τα πρόσθετα (mods) είναι απενεργοποιημένα. Η δημιουργία νέων προφίλ μπορεί να απαιτείται πιο συχνά. Αναφέρετε όλα τα σφάλματα στο κανάλι αναφορών στο discord, ή στη σελίδα ζητημάτων στην ιστοσελίδα. Αν δεν πατήσετε OK μέχρι το προκαθορισμένο χρονικό διάστημα, το παιχνίδι θα κλείσει."
 }

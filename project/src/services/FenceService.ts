@@ -6,7 +6,7 @@ import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { MinMax } from "@spt-aki/models/common/MinMax";
 import { IFenceLevel } from "@spt-aki/models/eft/common/IGlobals";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
+import { Item, Repairable, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IBarterScheme, ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
@@ -45,9 +45,6 @@ export class FenceService
 
     /** Hydrated on initial assort generation as part of generateFenceAssorts() */
     protected desiredAssortCounts: IFenceAssortGenerationValues;
-
-    /** Items that have a multi-stack */
-    protected multiStackItems: Record<string, boolean> = {};
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -553,9 +550,6 @@ export class FenceService
             x.parentId === "hideout" && !x.upd?.sptPresetId
         );
 
-        // Clear cache of multi-stack items
-        this.multiStackItems = {};
-
         for (let i = 0; i < assortCount; i++)
         {
             const chosenBaseAssortRoot = this.randomUtil.getArrayValue(assortRootItems);
@@ -609,30 +603,28 @@ export class FenceService
 
             const rootItemBeingAdded = desiredAssortItemAndChildrenClone[0];
 
+            // Set stack size based on possible overrides, e.g. ammos, otherwise set to 1
             rootItemBeingAdded.upd.StackObjectsCount = this.getSingleItemStackCount(itemDbDetails);
-            // rootItemBeingAdded.upd.BuyRestrictionCurrent = 0;
-            // rootItemBeingAdded.upd.UnlimitedCount = false;
 
-            // Only randomise single items
+            // Only randomise upd values for single
             const isSingleStack = rootItemBeingAdded.upd.StackObjectsCount === 1;
             if (isSingleStack)
             {
                 this.randomiseItemUpdProperties(itemDbDetails, rootItemBeingAdded);
             }
-            else
-            {
-                // Already have multi-stack, skip
-                if (this.multiStackItems[itemDbDetails._id])
-                {
-                    i--;
-                    continue;
-                }
 
-                // Flag item as added as multi-stack
-                this.multiStackItems[itemDbDetails._id] = true;
+            // Skip items already in the assort if it exists in the prevent duplicate list
+            const existingItemThatMatches = this.getMatchingItem(rootItemBeingAdded, itemDbDetails, assorts.items);
+            const shouldBeStacked = this.itemShouldBeForceStacked(existingItemThatMatches, itemDbDetails);
+            if (shouldBeStacked && existingItemThatMatches)
+            { // Decrement loop counter so another items gets added
+                i--;
+                existingItemThatMatches.upd.StackObjectsCount++;
+
+                continue;
             }
 
-            // Need to add mods to armors so they dont show as red in the trade screen
+            // Add mods to armors so they dont show as red in the trade screen
             if (this.itemHelper.itemRequiresSoftInserts(rootItemBeingAdded._tpl))
             {
                 this.randomiseArmorModDurability(desiredAssortItemAndChildrenClone, itemDbDetails);
@@ -652,6 +644,84 @@ export class FenceService
 
             assorts.loyal_level_items[rootItemBeingAdded._id] = loyaltyLevel;
         }
+    }
+
+    /**
+     * Find an assort item that matches the first parameter, also matches based on upd properties
+     * e.g. salewa hp resource units left
+     * @param rootItemBeingAdded item to look for a match against
+     * @param itemDbDetails Db details of matching item
+     * @param fenceItemAssorts Items to search through
+     * @returns Matching assort item
+     */
+    protected getMatchingItem(rootItemBeingAdded: Item, itemDbDetails: ITemplateItem, fenceItemAssorts: Item[]): Item
+    {
+        const matchingItems = fenceItemAssorts.filter((item) => item._tpl === rootItemBeingAdded._tpl);
+        if (matchingItems.length === 0)
+        {
+            // Nothing matches by tpl, exit early
+            return null;
+        }
+
+        const isMedical = this.itemHelper.isOfBaseclasses(rootItemBeingAdded._tpl, [
+            BaseClasses.MEDICAL,
+            BaseClasses.MEDKIT,
+        ]);
+        const isGearAndHasSlots =
+            this.itemHelper.isOfBaseclasses(rootItemBeingAdded._tpl, [
+                BaseClasses.ARMORED_EQUIPMENT,
+                BaseClasses.SEARCHABLE_ITEM,
+            ]) && itemDbDetails._props.Slots.length > 0;
+
+        // Only one match and its not medical or armored gear
+        if (matchingItems.length === 1 && (!(isMedical || isGearAndHasSlots)))
+        {
+            return matchingItems[0];
+        }
+
+        // Items have sub properties that need to be checked against
+        for (const item of matchingItems)
+        {
+            if (isMedical && rootItemBeingAdded.upd.MedKit?.HpResource === item.upd.MedKit?.HpResource)
+            {
+                // e.g. bandages with multiple use
+                // Both null === both max resoruce left
+                return item;
+            }
+
+            // Armors/helmets etc
+            if (
+                isGearAndHasSlots
+                && rootItemBeingAdded.upd.Repairable?.Durability === item.upd.Repairable?.Durability
+                && rootItemBeingAdded.upd.Repairable?.MaxDurability === item.upd.Repairable?.MaxDurability
+            )
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Should this item be forced into only 1 stack on fence
+     * @param existingItem Existing item from fence assort
+     * @param itemDbDetails Item we want to add db details
+     * @returns True item should be force stacked
+     */
+    protected itemShouldBeForceStacked(existingItem: Item, itemDbDetails: ITemplateItem): boolean
+    {
+        // No existing item in assort
+        if (!existingItem)
+        {
+            return false;
+        }
+
+        // Item type in config list
+        return this.itemHelper.isOfBaseclasses(
+            itemDbDetails._id,
+            this.traderConfig.fence.preventDuplicateOffersOfCategory,
+        );
     }
 
     /**
@@ -880,10 +950,8 @@ export class FenceService
                 const modItemToAdjust = armor.find((mod) =>
                     mod.slotId.toLowerCase() === requiredSlot._name.toLowerCase()
                 );
-                if (!modItemToAdjust.upd)
-                {
-                    modItemToAdjust.upd = {};
-                }
+
+                this.itemHelper.addUpdObjectToItem(modItemToAdjust);
 
                 if (!modItemToAdjust.upd.Repairable)
                 {
@@ -936,10 +1004,7 @@ export class FenceService
 
                 // Find items mod to apply dura changes to
                 const modItemToAdjust = armor.find((mod) => mod.slotId.toLowerCase() === plateSlot._name.toLowerCase());
-                if (!modItemToAdjust.upd)
-                {
-                    modItemToAdjust.upd = {};
-                }
+                this.itemHelper.addUpdObjectToItem(modItemToAdjust);
 
                 if (!modItemToAdjust.upd.Repairable)
                 {
@@ -977,7 +1042,14 @@ export class FenceService
         }
 
         // Check for override in config, use values if exists
-        const overrideValues = this.traderConfig.fence.itemStackSizeOverrideMinMax[itemDbDetails._id];
+        let overrideValues = this.traderConfig.fence.itemStackSizeOverrideMinMax[itemDbDetails._id];
+        if (overrideValues)
+        {
+            return this.randomUtil.getInt(overrideValues.min, overrideValues.max);
+        }
+
+        // Check for parent override
+        overrideValues = this.traderConfig.fence.itemStackSizeOverrideMinMax[itemDbDetails._parent];
         if (overrideValues)
         {
             return this.randomUtil.getInt(overrideValues.min, overrideValues.max);

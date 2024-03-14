@@ -3217,9 +3217,256 @@
                 }
             ],
             "sender": "System",
-            "collectionTimeHours": 72,
             "associatedEvent": "Promo",
+            "collectionTimeHours": 72,
             "messageText": "<ch>Thank you for activating the code.</ch><cz>Thank you for activating the code.</cz><en>Thank you for activating the code.</en><fr>Thank you for activating the code.</fr><ge>Thank you for activating the code.</ge><hu>Thank you for activating the code.</hu><it>Thank you for activating the code.</it><jp>Thank you for activating the code.</jp><kr>Thank you for activating the code.</kr><pl>Thank you for activating the code.</pl><po>Thank you for activating the code.</po><sk>Thank you for activating the code.</sk><es>Thank you for activating the code.</es><es-mx>Thank you for activating the code.</es-mx><tu>Thank you for activating the code.</tu><ru>Thank you for activating the code.</ru><ro>Thank you for activating the code.</ro>"
+        },
+        "ETSREWARD": {
+            "items": [
+                {
+                    "_id": "65dca20340be34cc3e0e3821",
+                    "_tpl": "618428466ef05c2ce828f218",
+                    "upd": {
+                        "Foldable": {
+                            "Folded": false
+                        },
+                        "FireMode": {
+                            "FireMode": "single"
+                        }
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3822",
+                    "_tpl": "55802f5d4bdc2dac148b458f",
+                    "parentId": "65dca20340be34cc3e0e3821",
+                    "slotId": "mod_pistol_grip"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3823",
+                    "_tpl": "5aaa5dfee5b5b000140293d3",
+                    "parentId": "65dca20340be34cc3e0e3821",
+                    "slotId": "mod_magazine"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3824",
+                    "_tpl": "618405198004cc50514c3594",
+                    "parentId": "65dca20340be34cc3e0e3821",
+                    "slotId": "mod_reciever"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3825",
+                    "_tpl": "544a3a774bdc2d3a388b4567",
+                    "parentId": "65dca20340be34cc3e0e3824",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3826",
+                    "_tpl": "58d268fc86f774111273f8c2",
+                    "parentId": "65dca20340be34cc3e0e3825",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3827",
+                    "_tpl": "6183fd911cb55961fa0fdce9",
+                    "parentId": "65dca20340be34cc3e0e3824",
+                    "slotId": "mod_barrel"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3828",
+                    "_tpl": "56ea6fafd2720b844b8b4593",
+                    "parentId": "65dca20340be34cc3e0e3827",
+                    "slotId": "mod_muzzle"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3829",
+                    "_tpl": "61816fcad92c473c770215cc",
+                    "parentId": "65dca20340be34cc3e0e3827",
+                    "slotId": "mod_sight_front"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382a",
+                    "_tpl": "61817865d3a39d50044c13a4",
+                    "parentId": "65dca20340be34cc3e0e3824",
+                    "slotId": "mod_sight_rear"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382b",
+                    "_tpl": "61816df1d3a39d50044c139e",
+                    "parentId": "65dca20340be34cc3e0e3824",
+                    "slotId": "mod_mount_000"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382c",
+                    "_tpl": "5c1bc5612e221602b5429350",
+                    "parentId": "65dca20340be34cc3e0e382b",
+                    "slotId": "mod_foregrip"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382d",
+                    "_tpl": "61965d9058ef8c428c287e0d",
+                    "parentId": "65dca20340be34cc3e0e382b",
+                    "slotId": "mod_mount"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382e",
+                    "_tpl": "61816dfa6ef05c2ce828f1ad",
+                    "parentId": "65dca20340be34cc3e0e3824",
+                    "slotId": "mod_mount_001"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e382f",
+                    "_tpl": "61825d06d92c473c770215de",
+                    "parentId": "65dca20340be34cc3e0e3821",
+                    "slotId": "mod_stock"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3830",
+                    "_tpl": "61825d136ef05c2ce828f1cc",
+                    "parentId": "65dca20340be34cc3e0e382f",
+                    "slotId": "mod_stock_001"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3831",
+                    "_tpl": "618167616ef05c2ce828f1a8",
+                    "parentId": "65dca20340be34cc3e0e3830",
+                    "slotId": "mod_stock"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3832",
+                    "_tpl": "618167441cb55961fa0fdc71",
+                    "parentId": "65dca20340be34cc3e0e382f",
+                    "slotId": "mod_stock_002"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3833",
+                    "_tpl": "6181688c6c780c1e710c9b04",
+                    "parentId": "65dca20340be34cc3e0e3821",
+                    "slotId": "mod_charge"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3835",
+                    "_tpl": "619cbf9e0a7c3a1a2731940a",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3837",
+                    "_tpl": "54527ac44bdc2d36668b4567",
+                    "upd": {
+                        "StackObjectsCount": 60
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3839",
+                    "_tpl": "54527ac44bdc2d36668b4567",
+                    "upd": {
+                        "StackObjectsCount": 60
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e383b",
+                    "_tpl": "54527ac44bdc2d36668b4567",
+                    "upd": {
+                        "StackObjectsCount": 60
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e383d",
+                    "_tpl": "54527ac44bdc2d36668b4567",
+                    "upd": {
+                        "StackObjectsCount": 60
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e383f",
+                    "_tpl": "54527ac44bdc2d36668b4567",
+                    "upd": {
+                        "StackObjectsCount": 60
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3841",
+                    "_tpl": "59fb023c86f7746d0d4b423c",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3843",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3845",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3847",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e3849",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e384b",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "65dca20340be34cc3e0e384d",
+                    "_tpl": "61840bedd92c473c77021635",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "65dca20340be34cc3e0e3820",
+                    "slotId": "main"
+                }
+            ],
+            "sender": "System",
+            "associatedEvent": "Promo",
+            "collectionTimeHours": 72,
+            "messageText": "<ch>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</ch><cz>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</cz><en>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</en><fr>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</fr><ge>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</ge><hu>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</hu><it>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</it><jp>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</jp><kr>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</kr><pl>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</pl><po>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</po><sk>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</sk><es>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</es><es-mx>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</es-mx><tu>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</tu><ru>Привет, боец. Слыхал, ты местным работягам активно помогал, проверял всё на прочность, так сказать. Это дело правильное, молодец, вояка. Ребята сверху тебе за это подарочек передали в знак благодарности. Продолжай в том же духе!</ru><ro>Promo code is activated</ro>"
         }
     }
 }

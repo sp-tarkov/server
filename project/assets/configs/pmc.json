@@ -165,13 +165,6 @@
 			"6540d2162ae6d96b540afcaf"
         ]
     },
-    "dynamicLoot": {
-        "moneyStackLimits": {
-            "5449016a4bdc2d6f028b456f": 12000,
-            "5696686a4bdc2da3298b456a": 120,
-            "569668774bdc2da2298b4568": 120
-        }
-    },
     "useDifficultyOverride": false,
     "difficulty": "AsOnline",
     "botRelativeLevelDeltaMax": 10,

@@ -39,6 +39,8 @@ export interface IBotConfig extends IBaseConfig
     botRolesWithDogTags: string[];
     /** Settings to control the items that get added into wallets on bots */
     walletLoot: IWalletLootSettings;
+    /** Currency weights, Keyed by botrole / currency */
+    currencyStackSize: Record<string, Record<string, Record<string, number>>>;
 }
 
 /** Number of bots to generate and store in cache on raid start per bot type */
@@ -84,8 +86,13 @@ export interface PresetBatch
 
 export interface IWalletLootSettings
 {
-    itemCount: number;
+    /** Chance wallets have loot in them */
+    chancePercent: number;
+    itemCount: MinMax;
     stackSizeWeight: Record<string, number>;
+    currencyWeight: Record<string, number>;
+    /** What wallets will have money in them */
+    walletTplPool: string[];
 }
 
 export interface EquipmentFilters

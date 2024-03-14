@@ -26,6 +26,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PlayerService } from "@spt-aki/services/PlayerService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -53,6 +54,7 @@ export class HideoutHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
     )
     {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
@@ -71,16 +73,15 @@ export class HideoutHelper
         sessionID: string,
     ): IItemEventRouterResponse
     {
-        const recipe = this.databaseServer.getTables().hideout.production.find((p) => p._id === body.recipeId);
+        const recipe = this.databaseServer.getTables().hideout.production.find((production) =>
+            production._id === body.recipeId
+        );
         if (!recipe)
         {
             this.logger.error(this.localisationService.getText("hideout-missing_recipe_in_db", body.recipeId));
 
             return this.httpResponse.appendErrorToOutput(this.eventOutputHolder.getOutput(sessionID));
         }
-
-        let modifiedProductionTime = recipe.productionTime
-            - this.getCraftingSkillProductionTimeReduction(pmcData, recipe.productionTime);
 
         // @Important: Here we need to be very exact:
         // - normal recipe: Production time value is stored in attribute "productionType" with small "p"
@@ -90,10 +91,7 @@ export class HideoutHelper
             pmcData.Hideout.Production = {};
         }
 
-        if (modifiedProductionTime > 0 && this.profileHelper.isDeveloperAccount(sessionID))
-        {
-            modifiedProductionTime = 40;
-        }
+        const modifiedProductionTime = this.getAdjustedCraftTimeWithSkills(pmcData, body.recipeId);
 
         const production = this.initProduction(
             body.recipeId,
@@ -102,10 +100,26 @@ export class HideoutHelper
         );
 
         // Store the tools used for this production, so we can return them later
-        const productionTools = recipe.requirements.filter(req => req.type === "Tool").map(req => req.templateId);
-        if (productionTools.length > 0)
+        const bodyAsSingle = body as IHideoutSingleProductionStartRequestData;
+        if (bodyAsSingle && bodyAsSingle.tools?.length > 0)
         {
-            production.sptRequiredTools = productionTools;
+            production.sptRequiredTools = [];
+
+            for (const tool of bodyAsSingle.tools)
+            {
+                const toolItem = this.jsonUtil.clone(pmcData.Inventory.items.find((x) => x._id === tool.id));
+
+                // Make sure we only return as many as we took
+                this.itemHelper.addUpdObjectToItem(toolItem);
+
+                toolItem.upd.StackObjectsCount = tool.count;
+
+                production.sptRequiredTools.push({
+                    _id: this.hashUtil.generate(),
+                    _tpl: toolItem._tpl,
+                    upd: toolItem.upd,
+                });
+            }
         }
 
         pmcData.Hideout.Production[body.recipeId] = production;
@@ -234,25 +248,6 @@ export class HideoutHelper
     }
 
     /**
-     * Update progress timer for water collector
-     * @param pmcData profile to update
-     * @param productionId id of water collection production to update
-     * @param hideoutProperties Hideout properties
-     */
-    protected updateWaterCollectorProductionTimer(
-        pmcData: IPmcData,
-        productionId: string,
-        hideoutProperties: { btcFarmCGs?: number; isGeneratorOn: boolean; waterCollectorHasFilter: boolean; },
-    ): void
-    {
-        const timeElapsed = this.getTimeElapsedSinceLastServerTick(pmcData, hideoutProperties.isGeneratorOn);
-        if (hideoutProperties.waterCollectorHasFilter)
-        {
-            pmcData.Hideout.Production[productionId].Progress += timeElapsed;
-        }
-    }
-
-    /**
      * Iterate over productions and update their progress timers
      * @param pmcData Profile to check for productions and update
      * @param hideoutProperties Hideout properties
@@ -322,6 +317,25 @@ export class HideoutHelper
             }
 
             this.updateProductionProgress(pmcData, prodId, recipe, hideoutProperties);
+        }
+    }
+
+    /**
+     * Update progress timer for water collector
+     * @param pmcData profile to update
+     * @param productionId id of water collection production to update
+     * @param hideoutProperties Hideout properties
+     */
+    protected updateWaterCollectorProductionTimer(
+        pmcData: IPmcData,
+        productionId: string,
+        hideoutProperties: { btcFarmCGs?: number; isGeneratorOn: boolean; waterCollectorHasFilter: boolean; },
+    ): void
+    {
+        const timeElapsed = this.getTimeElapsedSinceLastServerTick(pmcData, hideoutProperties.isGeneratorOn);
+        if (hideoutProperties.waterCollectorHasFilter)
+        {
+            pmcData.Hideout.Production[productionId].Progress += timeElapsed;
         }
     }
 
@@ -538,6 +552,9 @@ export class HideoutHelper
         const prod = pmcData.Hideout.Production[HideoutHelper.waterCollector];
         if (prod && this.isProduction(prod))
         {
+            // Update craft time to account for increases in players craft time skill
+            prod.ProductionTime = this.getAdjustedCraftTimeWithSkills(pmcData, prod.RecipeId);
+
             this.updateWaterFilters(area, prod, isGeneratorOn, pmcData);
         }
         else
@@ -554,6 +571,35 @@ export class HideoutHelper
 
             this.registerProduction(pmcData, recipe, sessionId);
         }
+    }
+
+    /**
+     * Get craft time and make adjustments to account for dev profile + crafting skill level
+     * @param pmcData Player profile making craft
+     * @param recipeId Recipe being crafted
+     * @returns
+     */
+    protected getAdjustedCraftTimeWithSkills(pmcData: IPmcData, recipeId: string): number
+    {
+        const recipe = this.databaseServer.getTables().hideout.production.find((production) =>
+            production._id === recipeId
+        );
+        if (!recipe)
+        {
+            this.logger.error(this.localisationService.getText("hideout-missing_recipe_in_db", recipeId));
+
+            return undefined;
+        }
+
+        let modifiedProductionTime = recipe.productionTime
+            - this.getCraftingSkillProductionTimeReduction(pmcData, recipe.productionTime);
+
+        if (modifiedProductionTime > 0 && this.profileHelper.isDeveloperAccount(pmcData._id))
+        {
+            modifiedProductionTime = 40;
+        }
+
+        return modifiedProductionTime;
     }
 
     /**
@@ -574,7 +620,7 @@ export class HideoutHelper
         const productionTime = this.getTotalProductionTimeSeconds(HideoutHelper.waterCollector);
         const secondsSinceServerTick = this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
 
-        filterDrainRate = this.adjustWaterFilterDrainRate(
+        filterDrainRate = this.getAdjustWaterFilterDrainRate(
             secondsSinceServerTick,
             productionTime,
             production.Progress,
@@ -585,56 +631,57 @@ export class HideoutHelper
         let pointsConsumed = 0;
         if (production.Progress < productionTime)
         {
-            // Check all slots that take water filters
-            // Must loop to find first water filter and use that
+            // Check all slots that take water filters until we find one with filter in it
             for (let i = 0; i < waterFilterArea.slots.length; i++)
             {
-                // Has a water filter installed into slot
-                if (waterFilterArea.slots[i].item)
+                // No water filter, skip
+                if (!waterFilterArea.slots[i].item)
                 {
-                    // How many units of filter are left
-                    let resourceValue = (waterFilterArea.slots[i].item[0].upd?.Resource)
-                        ? waterFilterArea.slots[i].item[0].upd.Resource.Value
-                        : null;
-                    if (!resourceValue)
-                    {
-                        // None left
-                        resourceValue = 100 - filterDrainRate;
-                        pointsConsumed = filterDrainRate;
-                    }
-                    else
-                    {
-                        pointsConsumed = (waterFilterArea.slots[i].item[0].upd.Resource.UnitsConsumed || 0)
-                            + filterDrainRate;
-                        resourceValue -= filterDrainRate;
-                    }
-
-                    // Round to get values to 3dp
-                    resourceValue = Math.round(resourceValue * 10000) / 10000;
-                    pointsConsumed = Math.round(pointsConsumed * 10000) / 10000;
-
-                    // Check amount of units consumed for possible increment of hideout mgmt skill point
-                    if (pmcData && Math.floor(pointsConsumed / 10) >= 1)
-                    {
-                        this.profileHelper.addSkillPointsToPlayer(pmcData, SkillTypes.HIDEOUT_MANAGEMENT, 1);
-                        pointsConsumed -= 10;
-                    }
-
-                    // Filter has some juice left in it after we adjusted it
-                    if (resourceValue > 0)
-                    {
-                        // Set filter consumed amount
-                        waterFilterArea.slots[i].item[0].upd = this.getAreaUpdObject(1, resourceValue, pointsConsumed);
-                        this.logger.debug(`Water filter has: ${resourceValue} units left in slot ${i + 1}`);
-
-                        break; // Break here to avoid updating all filters
-                    }
-
-                    // Filter ran out / used up
-                    delete waterFilterArea.slots[i].item;
-                    // Update remaining resources to be subtracted
-                    filterDrainRate = Math.abs(resourceValue);
+                    continue;
                 }
+
+                // How many units of filter are left
+                let resourceValue = (waterFilterArea.slots[i].item[0].upd?.Resource)
+                    ? waterFilterArea.slots[i].item[0].upd.Resource.Value
+                    : null;
+                if (!resourceValue)
+                {
+                    // Missing, is new filter, add default and subtract usage
+                    resourceValue = 100 - filterDrainRate;
+                    pointsConsumed = filterDrainRate;
+                }
+                else
+                {
+                    pointsConsumed = (waterFilterArea.slots[i].item[0].upd.Resource.UnitsConsumed || 0)
+                        + filterDrainRate;
+                    resourceValue -= filterDrainRate;
+                }
+
+                // Round to get values to 3dp
+                resourceValue = Math.round(resourceValue * 1000) / 1000;
+                pointsConsumed = Math.round(pointsConsumed * 1000) / 1000;
+
+                // Check units consumed for possible increment of hideout mgmt skill point
+                if (pmcData && Math.floor(pointsConsumed / 10) >= 1)
+                {
+                    this.profileHelper.addSkillPointsToPlayer(pmcData, SkillTypes.HIDEOUT_MANAGEMENT, 1);
+                    pointsConsumed -= 10;
+                }
+
+                // Filter has some fuel left in it after our adjustment
+                if (resourceValue > 0)
+                {
+                    // Set filters consumed amount
+                    waterFilterArea.slots[i].item[0].upd = this.getAreaUpdObject(1, resourceValue, pointsConsumed);
+                    this.logger.debug(`Water filter has: ${resourceValue} units left in slot ${i + 1}`);
+
+                    break; // Break here to avoid iterating other filters now w're done
+                }
+
+                // Filter ran out / used up
+                delete waterFilterArea.slots[i].item;
+                // Update remaining resources to be subtracted
+                filterDrainRate = Math.abs(resourceValue);
             }
         }
     }
@@ -646,23 +693,21 @@ export class HideoutHelper
      * @param totalProductionTime Total time collecting water
      * @param productionProgress how far water collector has progressed
      * @param baseFilterDrainRate Base drain rate
-     * @returns
+     * @returns drain rate (adjusted)
      */
-    protected adjustWaterFilterDrainRate(
+    protected getAdjustWaterFilterDrainRate(
         secondsSinceServerTick: number,
         totalProductionTime: number,
         productionProgress: number,
         baseFilterDrainRate: number,
     ): number
     {
-        const drainRateMultiplier = secondsSinceServerTick > totalProductionTime
+        const drainTimeSeconds = secondsSinceServerTick > totalProductionTime
             ? (totalProductionTime - productionProgress) // more time passed than prod time, get total minus the current progress
             : secondsSinceServerTick;
 
         // Multiply drain rate by calculated multiplier
-        baseFilterDrainRate *= drainRateMultiplier;
-
-        return baseFilterDrainRate;
+        return baseFilterDrainRate * drainTimeSeconds;
     }
 
     /**
@@ -932,7 +977,7 @@ export class HideoutHelper
     protected getHideoutManagementConsumptionBonus(pmcData: IPmcData): number
     {
         const hideoutManagementSkill = this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.HIDEOUT_MANAGEMENT);
-        if (!hideoutManagementSkill)
+        if (!hideoutManagementSkill || hideoutManagementSkill.Progress === 0)
         {
             return 0;
         }
@@ -954,9 +999,9 @@ export class HideoutHelper
      * @param productionTime Time to complete hideout craft in seconds
      * @returns Adjusted craft time in seconds
      */
-    protected getCraftingSkillProductionTimeReduction(pmcData: IPmcData, productionTime: number): number
+    public getCraftingSkillProductionTimeReduction(pmcData: IPmcData, productionTime: number): number
     {
-        const craftingSkill = pmcData.Skills.Common.find((x) => x.Id === SkillTypes.CRAFTING);
+        const craftingSkill = pmcData.Skills.Common.find((skill) => skill.Id === SkillTypes.CRAFTING);
         if (!craftingSkill)
         {
             return productionTime;

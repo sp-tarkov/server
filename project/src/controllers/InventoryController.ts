@@ -463,10 +463,7 @@ export class InventoryController
         }
 
         // Item may not have upd object
-        if (!itemToFold.upd)
-        {
-            itemToFold.upd = {};
-        }
+        this.itemHelper.addUpdObjectToItem(itemToFold);
 
         itemToFold.upd.Foldable = { Folded: request.value };
 
@@ -494,13 +491,10 @@ export class InventoryController
         const itemToToggle = playerData.Inventory.items.find((x) => x._id === body.item);
         if (itemToToggle)
         {
-            if (!itemToToggle.upd)
-            {
-                this.logger.warning(
-                    this.localisationService.getText("inventory-item_to_toggle_missing_upd", itemToToggle._id),
-                );
-                itemToToggle.upd = {};
-            }
+            this.itemHelper.addUpdObjectToItem(
+                itemToToggle,
+                this.localisationService.getText("inventory-item_to_toggle_missing_upd", itemToToggle._id),
+            );
 
             itemToToggle.upd.Togglable = { On: body.value };
 

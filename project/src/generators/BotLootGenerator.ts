@@ -403,11 +403,11 @@ export class BotLootGenerator
                     ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemToAddTemplate, botRole),
                 }];
 
-                // Is Simple-Wallet
-                if (weightedItemTpl === "5783c43d2459774bbe137486")
+                // Is Simple-Wallet / WZ wallet
+                if (this.botConfig.walletLoot.walletTplPool.includes(weightedItemTpl))
                 {
-                    const addCurrency = this.randomUtil.getChance100(25);
-                    if (addCurrency)
+                    const addCurrencyToWallet = this.randomUtil.getChance100(this.botConfig.walletLoot.chancePercent);
+                    if (addCurrencyToWallet)
                     {
                         // Create the currency items we want to add to wallet
                         const itemsToAdd = this.createWalletLoot(newRootItemId);
@@ -429,15 +429,16 @@ export class BotLootGenerator
                                     containerGrid,
                                     itemToAdd,
                                     itemWithChildrenToAdd[0]._id,
+                                    "main",
                                 );
                             }
 
-                            itemWithChildrenToAdd.push(...itemsToAdd.flatMap((x) => x));
+                            itemWithChildrenToAdd.push(...itemsToAdd.flatMap((moneyStack) => moneyStack));
                         }
                     }
                 }
-
-                this.addRequiredChildItemsToParent(itemToAddTemplate, itemWithChildrenToAdd, isPmc);
+                // Some items (ammBox/ammo) need extra changes
+                this.addRequiredChildItemsToParent(itemToAddTemplate, itemWithChildrenToAdd, isPmc, botRole);
 
                 // Attempt to add item to container(s)
                 const itemAddedResult = this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
@@ -499,16 +500,19 @@ export class BotLootGenerator
         const result: Item[][] = [];
 
         // Choose how many stacks of currency will be added to wallet
-        const itemCount = this.randomUtil.getInt(1, this.botConfig.walletLoot.itemCount);
+        const itemCount = this.randomUtil.getInt(
+            this.botConfig.walletLoot.itemCount.min,
+            this.botConfig.walletLoot.itemCount.max,
+        );
         for (let index = 0; index < itemCount; index++)
         {
-            // Choose the size of the currency stack
+            // Choose the size of the currency stack - default is 5k, 10k, 15k, 20k, 25k
             const chosenStackCount = Number(
                 this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.stackSizeWeight),
             );
             result.push([{
                 _id: this.hashUtil.generate(),
-                _tpl: "5449016a4bdc2d6f028b456f", // TODO - extend to be more than just roubles
+                _tpl: this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.currencyWeight),
                 parentId: walletId,
                 upd: { StackObjectsCount: chosenStackCount },
             }]);
@@ -522,11 +526,13 @@ export class BotLootGenerator
      * @param itemToAddTemplate Db template of item to check
      * @param itemToAddChildrenTo Item to add children to
      * @param isPmc Is the item being generated for a pmc (affects money/ammo stack sizes)
+     * @param botRole role bot has that owns item
      */
     protected addRequiredChildItemsToParent(
         itemToAddTemplate: ITemplateItem,
         itemToAddChildrenTo: Item[],
         isPmc: boolean,
+        botRole: string,
     ): void
     {
         // Fill ammo box
@@ -537,7 +543,7 @@ export class BotLootGenerator
         // Make money a stack
         else if (this.itemHelper.isOfBaseclass(itemToAddTemplate._id, BaseClasses.MONEY))
         {
-            this.randomiseMoneyStackSize(isPmc, itemToAddTemplate, itemToAddChildrenTo[0]);
+            this.randomiseMoneyStackSize(botRole, itemToAddTemplate, itemToAddChildrenTo[0]);
         }
         // Make ammo a stack
         else if (this.itemHelper.isOfBaseclass(itemToAddTemplate._id, BaseClasses.AMMO))
@@ -692,25 +698,24 @@ export class BotLootGenerator
 
     /**
      * Randomise the stack size of a money object, uses different values for pmc or scavs
-     * @param isPmc Is money on a PMC bot
+     * @param botRole Role bot has that has money stack
      * @param itemTemplate item details from db
      * @param moneyItem Money item to randomise
      */
-    protected randomiseMoneyStackSize(isPmc: boolean, itemTemplate: ITemplateItem, moneyItem: Item): void
+    protected randomiseMoneyStackSize(botRole: string, itemTemplate: ITemplateItem, moneyItem: Item): void
     {
-        // PMCs have a different stack max size
-        const minStackSize = itemTemplate._props.StackMinRandom;
-        const maxStackSize = isPmc
-            ? this.pmcConfig.dynamicLoot.moneyStackLimits[itemTemplate._id]
-            : itemTemplate._props.StackMaxRandom;
-        const randomSize = this.randomUtil.getInt(minStackSize, maxStackSize);
-
-        if (!moneyItem.upd)
+        // Get all currency weights for this bot type
+        let currencyWeights = this.botConfig.currencyStackSize[botRole];
+        if (!currencyWeights)
         {
-            moneyItem.upd = {};
+            currencyWeights = this.botConfig.currencyStackSize.default;
         }
 
-        moneyItem.upd.StackObjectsCount = randomSize;
+        const currencyWeight = currencyWeights[moneyItem._tpl];
+
+        this.itemHelper.addUpdObjectToItem(moneyItem);
+
+        moneyItem.upd.StackObjectsCount = Number.parseInt(this.weightedRandomHelper.getWeightedValue(currencyWeight));
     }
 
     /**
@@ -728,10 +733,7 @@ export class BotLootGenerator
                 Math.min(itemTemplate._props.StackMaxRandom, 60),
             );
 
-        if (!ammoItem.upd)
-        {
-            ammoItem.upd = {};
-        }
+        this.itemHelper.addUpdObjectToItem(ammoItem);
 
         ammoItem.upd.StackObjectsCount = randomSize;
     }

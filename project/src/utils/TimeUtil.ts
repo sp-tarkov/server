@@ -108,4 +108,12 @@ export class TimeUtil
     {
         return hours * TimeUtil.ONE_HOUR_AS_SECONDS;
     }
+
+    public getTimestampOfNextHour(): number
+    {
+        const now = new Date();
+        const millisecondsUntilNextHour = (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000
+            - now.getMilliseconds();
+        return (now.getTime() + millisecondsUntilNextHour) / 1000;
+    }
 }

@@ -5,19 +5,26 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { TraderAssortHelper } from "@spt-aki/helpers/TraderAssortHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { ITraderAssort, ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
+import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Traders } from "@spt-aki/models/enums/Traders";
+import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { FenceService } from "@spt-aki/services/FenceService";
 import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
 import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
 export class TraderController
 {
+    protected traderConfig: ITraderConfig;
+
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("TraderAssortHelper") protected traderAssortHelper: TraderAssortHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -28,16 +35,21 @@ export class TraderController
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("ConfigServer") protected configServer: ConfigServer,
     )
-    {}
+    {
+        this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
+    }
 
     /**
      * Runs when onLoad event is fired
-     * Iterate over traders, ensure an unmolested copy of their assorts is stored in traderAssortService
+     * Iterate over traders, ensure a pristine copy of their assorts is stored in traderAssortService
      * Store timestamp of next assort refresh in nextResupply property of traders .base object
      */
     public load(): void
     {
+        const nextHourTimestamp = this.timeUtil.getTimestampOfNextHour();
+        const traderResetStartsWithServer = this.traderConfig.tradersResetFromServerStart;
         for (const traderId in this.databaseServer.getTables().traders)
         {
             if (traderId === "ragfair" || traderId === Traders.LIGHTHOUSEKEEPER)
@@ -63,7 +75,10 @@ export class TraderController
 
             this.traderPurchasePersisterService.removeStalePurchasesFromProfiles(traderId);
 
-            trader.base.nextResupply = this.traderHelper.getNextUpdateTimestamp(trader.base._id);
+            // Set to next hour on clock or current time + 60 mins
+            trader.base.nextResupply = traderResetStartsWithServer
+                ? this.traderHelper.getNextUpdateTimestamp(trader.base._id)
+                : nextHourTimestamp;
             this.databaseServer.getTables().traders[trader.base._id].base = trader.base;
         }
     }

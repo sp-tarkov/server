@@ -7,6 +7,8 @@ export interface ITraderConfig extends IBaseConfig
     kind: "aki-trader";
     updateTime: UpdateTime[];
     purchasesAreFoundInRaid: boolean;
+    /** Should trader reset times be set based on server start time (false = bsg time - on the hour) */
+    tradersResetFromServerStart: boolean;
     updateTimeDefault: number;
     traderPriceMultipler: number;
     /** Keep track of purchased trader-limited items beyond server restarts to prevent server-restart item scumming */
@@ -17,6 +19,7 @@ export interface ITraderConfig extends IBaseConfig
 export interface UpdateTime
 {
     traderId: string;
+    /** Seconds between trader resets */
     seconds: number;
 }
 
@@ -36,6 +39,8 @@ export interface FenceConfig
     /** Key: item tpl */
     itemStackSizeOverrideMinMax: Record<string, MinMax>;
     itemTypeLimits: Record<string, number>;
+    /** Prevent duplicate offers of items of specific categories by parentId*/
+    preventDuplicateOffersOfCategory: string[];
     regenerateAssortsOnRefresh: boolean;
     /** Max rouble price before item is not listed on flea */
     itemCategoryRoublePriceLimit: Record<string, number>;

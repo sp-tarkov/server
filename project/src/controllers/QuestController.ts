@@ -887,10 +887,11 @@ export class QuestController
                             childItems.shift(); // Remove the parent
 
                             // Sort by the current `location` and update
-                            childItems.sort((a, b) => a.location > b.location ? 1 : -1).forEach((item, index) =>
+                            childItems.sort((a, b) => a.location > b.location ? 1 : -1);
+                            for (const [index, item] of childItems.entries())
                             {
                                 item.location = index;
-                            });
+                            }
                         }
                     }
                 }
@@ -996,6 +997,8 @@ export class QuestController
         output: IItemEventRouterResponse,
     ): IItemEventRouterResponse
     {
-        return this.questHelper.failQuest(pmcData, request, sessionID, output);
+        this.questHelper.failQuest(pmcData, request, sessionID, output);
+
+        return output;
     }
 }

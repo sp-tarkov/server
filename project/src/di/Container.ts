@@ -76,6 +76,7 @@ import { PlayerScavGenerator } from "@spt-aki/generators/PlayerScavGenerator";
 import { RagfairAssortGenerator } from "@spt-aki/generators/RagfairAssortGenerator";
 import { RagfairOfferGenerator } from "@spt-aki/generators/RagfairOfferGenerator";
 import { RepeatableQuestGenerator } from "@spt-aki/generators/RepeatableQuestGenerator";
+import { RepeatableQuestRewardGenerator } from "@spt-aki/generators/RepeatableQuestRewardGenerator";
 import { ScavCaseRewardGenerator } from "@spt-aki/generators/ScavCaseRewardGenerator";
 import { WeatherGenerator } from "@spt-aki/generators/WeatherGenerator";
 import { BarrelInventoryMagGen } from "@spt-aki/generators/weapongen/implementations/BarrelInventoryMagGen";
@@ -519,6 +520,9 @@ export class Container
         });
         depContainer.register<RepeatableQuestGenerator>("RepeatableQuestGenerator", {
             useClass: RepeatableQuestGenerator,
+        });
+        depContainer.register<RepeatableQuestRewardGenerator>("RepeatableQuestRewardGenerator", {
+            useClass: RepeatableQuestRewardGenerator,
         });
 
         depContainer.register<BarrelInventoryMagGen>("BarrelInventoryMagGen", { useClass: BarrelInventoryMagGen });

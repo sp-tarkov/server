@@ -1,10 +1,13 @@
 {
     "akiVersion": "3.8.0",
     "projectName": "SPT-AKI",
-    "compatibleTarkovVersion": "0.14.1.28875",
+    "compatibleTarkovVersion": "0.14.1.28965",
     "serverName": "SPT Server",
     "profileSaveIntervalSeconds": 15,
     "sptFriendNickname": "SPT",
+    "release": {
+        "betaDisclaimerTimeoutDelay": 30
+    },
     "fixes": {
         "fixShotgunDispersion": true,
         "removeModItemsFromProfile": false,

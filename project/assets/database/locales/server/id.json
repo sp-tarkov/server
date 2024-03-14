@@ -40,7 +40,6 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Tidak dapat menemukan batas pemunculan untuk peran: %s kembali ke default",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Tidak dapat menemukan bot: {{botType}} kesulitan {{difficulty}}, menggunakan assault sebagai default",
 	"bot-unable_to_get_bot_fallback_to_assault": "Tidak dapat menemukan bot: %s JSON, menggunakan bot assault sebagai default",
-	"bot-weapon_contains_invalid_item": "Slot yang diperlukan '{{modSlot}}' dalam {{weaponTpl}} memiliki barang invalid: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Senjata %s salah dhasilkan, kembali ke preset senjata lihat error di atas",
 	"bot-weapon_missing_magazine_or_chamber": "Senjata dengan tpl: {{weaponId}} tidak memiliki magasin atau chamber - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Slot: {{modSlot}}' tidak ada untuk senjata: {{weaponId}} {{weaponName}} dalam {{botRole}}",
@@ -229,7 +228,6 @@
 	"websocket-pinging_player": "[WS] notifikasikan player: %s",
 	"websocket-player_connected": "[WS] Player: %s tersambung",
 	"websocket-received_message": "[WS] Menerima pesan dari pengguna %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Soket hilang, menghapus pegangan",
 	"websocket-started": "Websocket mulai di %s",
 	"pmc-name_prefix_42": "Palsu",
 	"pmc-name_prefix_47": "Besar",
@@ -238,7 +236,6 @@
 	"launcher-profile_leftbehind": "Sama seperti Standard tambahan; ukuran penyimpanan lebih besar (10x38), ekstra perlengkapan/barang, 500 dolar",
 	"launcher-profile_preparetoescape": "Sama seperti Left Behind tambahan; penyimpanan lebih besar (10x48), ekstra perlengkapan/barang, reputasi awal lebih tinggi dengan vendor, 250 euro",
 	"launcher-profile-edgeofdarkness": "Sama seperti Prepare To Escape tambahan; penyimpanan lebih besar (10x68), ekstra perlengkapan/barang, reputasi awal lebih tinggi dengan vendor, 1000 dolar, 500 euro",
-	"launcher-profile_spteasystart": "Banyak sekali Rubel/Dolar/Euro, Beberapa keahlian qualitas hidup berlevel 20, Reputasi vendor maksimal, level awal 15, belum ada quest yang selesai",
 	"launcher-profile_sptzerotohero": "Mulai dengan tidak ada apapun, tidak ada Rubel/Dolar/Euro, tidak ada reputasi vendor, 1 senjata melee, tidak ada quest selesai",
 	"launcher-profile_sptdeveloper": "Profil percobaan, level awal 69, Banyak Rubel/Dolar/Euro, USEC mulai dengan quest siap diterima, BEAR mulai dengan quest siap diserahkan, balaklava kekebalan",
 	"launcher-missing_property": "Profil: %s kehilangan sebuah data descriptionLocaleKey"

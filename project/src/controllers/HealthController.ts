@@ -79,10 +79,7 @@ export class HealthController
         }
 
         // Ensure item has a upd object
-        if (!healingItemToUse.upd)
-        {
-            healingItemToUse.upd = {};
-        }
+        this.itemHelper.addUpdObjectToItem(healingItemToUse);
 
         if (healingItemToUse.upd.MedKit)
         {

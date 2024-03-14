@@ -522,10 +522,22 @@ export class InsuranceController
     {
         // After all of the item filtering that we've done, if there are no items remaining, the insurance has
         // successfully "failed" to return anything and an appropriate message should be sent to the player.
-        if (insurance.items.length === 0)
+        const traderDialogMessages = this.databaseServer.getTables().traders[insurance.traderId].dialogue;
+        if (insurance.systemData?.location.toLowerCase() === "laboratory")
         {
-            const insuranceFailedTemplates =
-                this.databaseServer.getTables().traders[insurance.traderId].dialogue.insuranceFailed;
+            // Trader has labs-specific messages
+            // Wipe out returnable items
+            if (traderDialogMessages.insuranceFailedLabs?.length > 0)
+            {
+                const insuranceFailedLabTemplates = traderDialogMessages.insuranceFailedLabs;
+                insurance.messageTemplateId = this.randomUtil.getArrayValue(insuranceFailedLabTemplates);
+                insurance.items = [];
+            }
+        }
+        else if (insurance.items.length === 0)
+        {
+            // Not labs and no items to return
+            const insuranceFailedTemplates = traderDialogMessages.insuranceFailed;
             insurance.messageTemplateId = this.randomUtil.getArrayValue(insuranceFailedTemplates);
         }
 

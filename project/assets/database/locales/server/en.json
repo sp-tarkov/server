@@ -597,5 +597,14 @@
 	"launcher-profile_spteasystart": "Lots of Roubles/Dollars/Euros, Some QoL skills are level 20, trader rep maxed, starting level is 15, no quests completed",
 	"launcher-profile_sptzerotohero": "Start with almost nothing, no Roubles/Dollars/Euros, no trader rep, 1 knife, no quests completed",
 	"launcher-profile_sptdeveloper": "Testing profile, starting level is 69, lots of Roubles/Dollars/Euros, USEC start with all quests ready to start, BEAR start with all quests ready to hand in, invincibility balaclava",
-	"launcher-missing_property": "Profile: %s is missing a descriptionLocaleKey property"
+	"launcher-missing_property": "Profile: %s is missing a descriptionLocaleKey property",
+    "release-beta-disclaimer": "By pressing OK you agree that no support is offered and that this is for bug testing only. NOT actual gameplay. Mods are disabled. New profiles may be required frequently. Report all bugs in the reports channel in discord, or on the issues page on the website. If you don't press OK by the time specified, the game will close.",
+    "release-beta-disclaimer-accept": "User accepted the beta disclaimer",
+    "release-server-mods-loaded": "One or more server mods exist on a mod enabled build, reports will be invalid until removed. See the top of the server for loaded server mods to remove to report issues again.",
+    "release-server-mods-debug-message": "Server mods loaded",
+    "release-plugins-loaded": "One or more plugins exist on a mod enabled build, reports will be invalid until removed. See the following list for what to remove to report issues again:",
+    "release-plugins-loaded-debug-message": "Client mods loaded",
+    "release-illegal-plugins-loaded": "One or more non-whitelisted plugins were detected. Mods are not allowed in BleedingEdge builds of SPT. Illegal plugins:",
+    "release-illegal-plugins-exception": "Non-debug client mods have been detected. Mods are not allowed in BleedingEdge builds of SPT - please remove them before playing!",
+    "release-summary": ""
 }

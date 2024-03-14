@@ -9,12 +9,43 @@ export interface ICoreConfig extends IBaseConfig
     serverName: string;
     profileSaveIntervalSeconds: number;
     sptFriendNickname: string;
+    release: IRelease;
     fixes: IGameFixes;
     features: IServerFeatures;
     /** Commit hash build server was created from */
     commit?: string;
     /** Timestamp of server build */
     buildTime?: string;
+}
+
+export interface IRelease
+{
+    // Disclaimer outlining the intended usage of bleeding edge
+    betaDisclaimerText?: string;
+    // Text logged when users agreed to terms
+    betaDisclaimerAcceptText: string;
+    // Server mods loaded message
+    serverModsLoadedText: string;
+    // Server mods loaded debug message text
+    serverModsLoadedDebugText: string;
+    // Client mods loaded message
+    clientModsLoadedText: string;
+    // Client mods loaded debug message text
+    clientModsLoadedDebugText: string;
+    // Illegal plugins log message
+    illegalPluginsLoadedText: string;
+    // Illegal plugins exception
+    illegalPluginsExceptionText: string;
+    // Summary of release changes
+    releaseSummaryText?: string;
+    // Enables the cool watermark in-game
+    isBeta?: boolean;
+    // Whether mods are enabled
+    isModdable?: boolean;
+    // Are mods loaded on the server?
+    isModded: boolean;
+    // How long before the messagebox times out and closes the game
+    betaDisclaimerTimeoutDelay: number;
 }
 
 export interface IGameFixes

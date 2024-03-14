@@ -1,38 +1,47 @@
 {
     "updateTime": [
         {
+            "_name": "prapor",
             "traderId": "54cb50c76803fa8b248b4571",
-            "seconds": 3600
+            "seconds": 11100
         },
         {
+            "_name": "therapist",
             "traderId": "54cb57776803fa99248b456e",
-            "seconds": 3600
+            "seconds": 8040
         },
         {
+            "_name": "fence",
             "traderId": "579dc571d53a0658a154fbec",
-            "seconds": 3600
+            "seconds": 5220
         },
         {
+            "_name": "skier",
             "traderId": "58330581ace78e27b8b10cee",
-            "seconds": 3600
+            "seconds": 6240
         },
         {
+            "_name": "peacekeeper",
             "traderId": "5935c25fb3acc3127c3d8cd9",
-            "seconds": 3600
+            "seconds": 8580
         },
         {
+            "_name": "mechanic",
             "traderId": "5a7c2eca46aef81a7ca2145d",
-            "seconds": 3600
+            "seconds": 8160
         },
         {
+            "_name": "ragman",
             "traderId": "5ac3b934156ae10c4430e83c",
-            "seconds": 3600
+            "seconds": 8220
         },
         {
+            "_name": "jaeger",
             "traderId": "5c0647fdd443bc2504c2d371",
-            "seconds": 3600
+            "seconds": 5100
         },
         {
+            "_name": "btr",
             "traderId": "656f0f98d80a697f855d34b1",
             "seconds": 3600
         },
@@ -42,6 +51,7 @@
         }
     ],
     "updateTimeDefault": 3600,
+    "tradersResetFromServerStart": false,
     "purchasesAreFoundInRaid": false,
     "traderPriceMultipler": 1,
     "persistPurchaseDataInProfile": true,
@@ -61,7 +71,7 @@
         },
         "partialRefreshTimeSeconds": 240,
         "partialRefreshChangePercent": 15,
-        "assortSize": 140,
+        "assortSize": 120,
         "weaponPresetMinMax": {
 			"min": 12,
 			"max": 19
@@ -116,13 +126,37 @@
             "5485a8684bdc2da71d8b4567": 23,
             "5f4fbaaca5573a5ac31db429": 0,
             "5447e0e74bdc2d3c308b4567": 4,
-            "57bef4c42459772e8d35a53b": 1,
+            "57bef4c42459772e8d35a53b": 2,
             "5b3f15d486f77432d0509248": 3,
             "543be6564bdc2df4348b4568": 0,
             "5448ecbe4bdc2d60728b4568": 0,
             "5671435f4bdc2d96058b4569": 0,
-            "543be5cb4bdc2deb348b4568": 3
+            "543be5cb4bdc2deb348b4568": 3,
+            "5448e53e4bdc2d60728b4567": 7
         },
+        "preventDuplicateOffersOfCategory": [
+            "543be5cb4bdc2deb348b4568",
+            "57bef4c42459772e8d35a53b",
+            "5485a8684bdc2da71d8b4567",
+			"5448f3ac4bdc2dce718b4569",
+			"5448f39d4bdc2d0a728b4568",
+			"5448f3a14bdc2d27728b4569",
+			"5448bc234bdc2d3c308b4569",
+            "543be5e94bdc2df1348b4568",
+            "5448eb774bdc2d0a728b4567",
+            "5447e1d04bdc2dff2f8b4567",
+            "5448e53e4bdc2d60728b4567",
+            "5448ecbe4bdc2d60728b4568",
+            "543be6674bdc2df1348b4569",
+            "5448fe124bdc2da5018b4567",
+            "567849dd4bdc2d150f8b456e",
+            "5a341c4686f77469e155819e",
+            "5448e5284bdc2dcb718b4567",
+            "5447e0e74bdc2d3c308b4567",
+            "5b3f15d486f77432d0509248",
+            "5645bcb74bdc2ded0b8b4578",
+            "5795f317245977243854e041"
+        ],
         "weaponDurabilityPercentMinMax": {
             "current": {
                 "min": 40,
@@ -176,6 +210,14 @@
 			"544fb3364bdc2d34748b456a": {
 				"min": 1,
 				"max": 800
+			},
+			"5448bc234bdc2d3c308b4569": {
+				"min": 1,
+				"max": 50
+			},
+			"5448f3a14bdc2d27728b4569": {
+				"min": 1,
+				"max": 25
 			}
         },
         "itemCategoryRoublePriceLimit": {

@@ -40,7 +40,7 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Nie można znaleźć limitów respawnu dla roli: %s, cofanie się do wartości domyślnych",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Nie można znaleźć bota: {{botType}} o poziomie trudności {{difficulty}}, użycie poziomu trudności szturmowej jako awaryjego",
 	"bot-unable_to_get_bot_fallback_to_assault": "Nie można znaleźć bota: %s JSON, użycie bota szturmowego jako awaryjnego",
-	"bot-weapon_contains_invalid_item": "Wymagany slot '{{modSlot}}' na {{weaponTpl}} zawiera niewłaściwy przedmiot: {{modName}}",
+	"bot-weapon_contains_invalid_item": "Wymagany slot '{{modSlot}}' na broni: {{weaponTpl}} ma nieprawidłowy przedmiot: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Broń %s została wygenerowana nieprawidłowo, cofanie się do założenia broni, sprawdź błąd powyżej",
 	"bot-weapon_missing_magazine_or_chamber": "Broń o tpl: %s nie ma magazynka lub komory",
 	"bot-weapon_missing_mod_slot": "Slot: {{modSlot}}' nie istnieje dla broni: {{weaponId}} {{weaponName}} dla {{botRole}}",
@@ -594,8 +594,9 @@
 	"launcher-profile_leftbehind": "Tak samo jak w wersji Standard plus; większy rozmiar schowka (10x38), dodatkowy sprzęt/przedmioty, 500 dolarów",
 	"launcher-profile_preparetoescape": "Tak samo jak w wersji Left Behind plus; większy rozmiar schowka (10x48), dodatkowy sprzęt/przedmioty, wyższa startowa reputacja u handlarzy, 250 euro",
 	"launcher-profile-edgeofdarkness": "Tak samo jak w wersji Prepare To Escape plus; większy rozmiar schowka (10x68), dodatkowy sprzęt/przedmioty, wyższa startowa reputacja u handlarzy, 1000 dolarów, 500 euro",
-	"launcher-profile_spteasystart": "Dużo rubli/dolarów/euro, niektóre pomocne umiejętności na poziomie 20, maksymalna reputacja u handlarzy, początkowy poziom to 15, żadne zadania nie zostały ukończone",
+	"launcher-profile_spteasystart": "Dużo rubli/dollarów/euro, niektóre umiejętności są na poziomie 20, maksymalna reputacja u handlarzy, początkowy poziom to 15, brak ukończonych zadań",
 	"launcher-profile_sptzerotohero": "Zacznij praktycznie od zera, bez rubli/dolarów/euro, bez reputacji u handlarzy, 1 nóż, żadne zadania nie zostały ukończone",
 	"launcher-profile_sptdeveloper": "Profil testowy, początkowy poziom to 69, dużo rubli/dolarów/euro, USEC zaczyna z wszystkimi zadaniami gotowymi do rozpoczęcia, BEAR zaczyna z wszystkimi zadaniami gotowymi do oddania, kominiarka nieśmiertelności",
-	"launcher-missing_property": "Profil: %s nie ma właściwości descriptionLocaleKey"
+	"launcher-missing_property": "Profil: %s nie ma właściwości descriptionLocaleKey",
+	"beta-disclaimer": "Naciskająć \"OK\" zgadasz się, iż żadne wsprawie nie jest oferowane i że jest tylko do testowania błędów. Nie jest to aktualna gra. Modyfikacje są wyłączone. Nowe profile mogą być wymagane często. Zgłaszaj wszystkie błędy na discordzie na kanałach report lub w sekcji zgłoszeń na stronie. Jeśli nie naciśniesz OK w określonym czasie, gra zostanie zamknięta."
 }

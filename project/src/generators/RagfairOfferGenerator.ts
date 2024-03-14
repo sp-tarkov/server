@@ -126,7 +126,6 @@ export class RagfairOfferGenerator
 
         const itemsClone = this.jsonUtil.clone(items);
 
-
         // Add cartridges to offers for ammo boxes
         if (this.itemHelper.isOfBaseclass(itemsClone[0]._tpl, BaseClasses.AMMO_BOX))
         {
@@ -690,10 +689,7 @@ export class RagfairOfferGenerator
             );
             if (this.randomUtil.getChance100(25) && visorMod)
             {
-                if (!visorMod.upd)
-                {
-                    visorMod.upd = {};
-                }
+                this.itemHelper.addUpdObjectToItem(visorMod);
 
                 visorMod.upd.FaceShield = { Hits: this.randomUtil.getInt(1, 3) };
             }
@@ -795,10 +791,7 @@ export class RagfairOfferGenerator
             const itemDbDetails = this.itemHelper.getItem(armorItem._tpl)[1];
             if ((parseInt(<string>itemDbDetails._props.armorClass)) > 1)
             {
-                if (!armorItem.upd)
-                {
-                    armorItem.upd = {};
-                }
+                this.itemHelper.addUpdObjectToItem(armorItem);
 
                 const lowestMaxDurability = this.randomUtil.getFloat(maxMultiplier, 1)
                     * itemDbDetails._props.MaxDurability;

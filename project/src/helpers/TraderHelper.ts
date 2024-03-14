@@ -273,6 +273,7 @@ export class TraderHelper
                     updateTime: this.traderConfig.updateTimeDefault,
                 }),
             );
+
             this.traderConfig.updateTime.push( // create temporary entry to prevent logger spam
                 { traderId: traderId, seconds: this.traderConfig.updateTimeDefault },
             );

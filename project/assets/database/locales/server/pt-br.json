@@ -40,7 +40,7 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Incapaz de encontrar limites de spawn para a função: %s, retornando aos padrões",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Incapaz de encontrar o bot: {{botType}} dificuldade {{difficulty}}, utilizando a dificuldade de assalto como alternativa",
 	"bot-unable_to_get_bot_fallback_to_assault": "Incapaz de encontrar o bot: %s JSON, utilizando o bot de assalto como alternativa",
-	"bot-weapon_contains_invalid_item": "O slot obrigatório '{{modSlot}}' em {{weaponTpl}} tem um item inválido: {{modName}}",
+	"bot-weapon_contains_invalid_item": "Espaço necessário: '{{modSlot}}' na arma: {{weaponTpl}} tem um item inválido: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "A arma %s foi gerada incorretamente, retornando ao conjunto de armas predefinido. Veja o erro acima",
 	"bot-weapon_missing_magazine_or_chamber": "Arma com tpl: {{weaponId}} não possui carregador ou câmara - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Slot: {{modSlot}}' não existe para a arma: {{weaponId}} {{weaponName}} em {{botRole}}",
@@ -597,5 +597,6 @@
 	"launcher-profile_spteasystart": "Muitos Rublos/Dólares/Euros, algumas habilidades de qualidade de vida estão no nível 20, reputação máxima com os comerciantes, nível inicial é 15, nenhuma missão concluída",
 	"launcher-profile_sptzerotohero": "Comece com quase nada, sem rublos/dólares/euros, sem reputação de comerciante, 1 faca, nenhuma missão concluída",
 	"launcher-profile_sptdeveloper": "Perfil de teste, nível inicial é 69, muitos rublos/dólares/euros, início USEC com todas as missões prontas para começar, início BEAR com todas as missões prontas para entregar, balaclava de invencibilidade",
-	"launcher-missing_property": "O perfil: %s está sem a propriedade descriptionLocaleKey"
+	"launcher-missing_property": "O perfil: %s está sem a propriedade descriptionLocaleKey",
+	"beta-disclaimer": "Ao pressionar OK, você concorda que nenhum suporte será oferecido e que isso é apenas para teste de bugs. NÃO é um jogo de fato. Os mods estão desativados. Novos perfis podem ser necessários com frequência. Relate todos os bugs no canal de relatórios no Discord ou na página de problemas no site. Se você não pressionar OK até o horário especificado, o jogo será encerrado."
 }

@@ -20,7 +20,9 @@ import { IInventoryRemoveRequestData } from "@spt-aki/models/eft/inventory/IInve
 import { IInventorySplitRequestData } from "@spt-aki/models/eft/inventory/IInventorySplitRequestData";
 import { IInventoryTransferRequestData } from "@spt-aki/models/eft/inventory/IInventoryTransferRequestData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
+import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { IInventoryConfig, RewardDetails } from "@spt-aki/models/spt/config/IInventoryConfig";
@@ -87,7 +89,11 @@ export class InventoryHelper
         if (!this.canPlaceItemsInInventory(sessionId, request.itemsWithModsToAdd))
         {
             // No space, exit
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
 
             return;
         }
@@ -187,15 +193,12 @@ export class InventoryHelper
      * @param itemWithChildren An item
      * @param foundInRaid Item was found in raid
      */
-    private setFindInRaidStatusForItem(itemWithChildren: Item[], foundInRaid: boolean)
+    protected setFindInRaidStatusForItem(itemWithChildren: Item[], foundInRaid: boolean): void
     {
         for (const item of itemWithChildren)
         {
             // Ensure item has upd object
-            if (!item.upd)
-            {
-                item.upd = {};
-            }
+            this.itemHelper.addUpdObjectToItem(item);
 
             if (foundInRaid)
             {
@@ -212,7 +215,7 @@ export class InventoryHelper
     }
 
     /**
-     * Remove properties from a Upd object used by a trader/ragfair
+     * Remove properties from a Upd object used by a trader/ragfair that are unnecessary to a player
      * @param upd Object to update
      */
     protected removeTraderRagfairRelatedUpdProperties(upd: Upd): void
@@ -321,8 +324,14 @@ export class InventoryHelper
      * @param containerFS2D Container grid to add item to
      * @param itemWithChildren Item to add to grid
      * @param containerId Id of the container we're fitting item into
+     * @param desiredSlotId slot id value to use, default is "hideout"
      */
-    public placeItemInContainer(containerFS2D: number[][], itemWithChildren: Item[], containerId: string): void
+    public placeItemInContainer(
+        containerFS2D: number[][],
+        itemWithChildren: Item[],
+        containerId: string,
+        desiredSlotId = "hideout",
+    ): void
     {
         // Get x/y size of item
         const rootItemAdded = itemWithChildren[0];
@@ -352,7 +361,7 @@ export class InventoryHelper
             }
             // Store details for object, incuding container item will be placed in
             rootItemAdded.parentId = containerId;
-            rootItemAdded.slotId = "hideout";
+            rootItemAdded.slotId = desiredSlotId;
             rootItemAdded.location = {
                 x: findSlotResult.x,
                 y: findSlotResult.y,
@@ -472,16 +481,21 @@ export class InventoryHelper
         }
         else
         {
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
 
             return;
         }
     }
 
     /**
+     * Split an items stack size based on its StackMaxSize value
      * @param assortItems Items to add to inventory
      * @param requestItem Details of purchased item to add to inventory
-     * @param result Array split stacks are added to
+     * @param result Array split stacks are appended to
      */
     protected splitStackIntoSmallerChildStacks(
         assortItems: Item[],
@@ -605,10 +619,16 @@ export class InventoryHelper
         }
     }
 
+    /**
+     * Delete desired item from a player profiles mail
+     * @param sessionId Session id
+     * @param removeRequest Remove request
+     * @param output OPTIONAL - IItemEventRouterResponse
+     */
     public removeItemAndChildrenFromMailRewards(
         sessionId: string,
         removeRequest: IInventoryRemoveRequestData,
-        output: IItemEventRouterResponse,
+        output: IItemEventRouterResponse = undefined,
     ): void
     {
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
@@ -647,10 +667,19 @@ export class InventoryHelper
         }
     }
 
+    /**
+     * Find item by id in player inventory and remove x of its count
+     * @param pmcData player profile
+     * @param itemId Item id to decrement StackObjectsCount of
+     * @param countToRemove Number of item to remove
+     * @param sessionID Session id
+     * @param output IItemEventRouterResponse
+     * @returns IItemEventRouterResponse
+     */
     public removeItemByCount(
         pmcData: IPmcData,
         itemId: string,
-        count: number,
+        countToRemove: number,
         sessionID: string,
         output: IItemEventRouterResponse = undefined,
     ): IItemEventRouterResponse
@@ -660,16 +689,17 @@ export class InventoryHelper
             return output;
         }
 
+        // Goal is to keep removing items until we can remove part of an items stack
         const itemsToReduce = this.itemHelper.findAndReturnChildrenAsItems(pmcData.Inventory.items, itemId);
-        let remainingCount = count;
+        let remainingCount = countToRemove;
         for (const itemToReduce of itemsToReduce)
         {
-            const itemCount = this.itemHelper.getItemStackSize(itemToReduce);
+            const itemStackSize = this.itemHelper.getItemStackSize(itemToReduce);
 
-            // remove whole stack
-            if (remainingCount >= itemCount)
+            // Remove whole stack
+            if (remainingCount >= itemStackSize)
             {
-                remainingCount -= itemCount;
+                remainingCount -= itemStackSize;
                 this.removeItem(pmcData, itemToReduce._id, sessionID, output);
             }
             else
@@ -684,6 +714,7 @@ export class InventoryHelper
 
             if (remainingCount === 0)
             {
+                // Desired count of item has been removed / we ran out of items to remove
                 break;
             }
         }
@@ -691,9 +722,12 @@ export class InventoryHelper
         return output;
     }
 
-    /* Calculate Size of item input
-     * inputs Item template ID, Item Id, InventoryItem (item from inventory having _id and _tpl)
-     * outputs [width, height]
+    /**
+     * Get the height and width of an item - can have children that alter size
+     * @param itemTpl Item to get size of
+     * @param itemID Items id to get size of
+     * @param inventoryItems
+     * @returns [width, height]
      */
     public getItemSize(itemTpl: string, itemID: string, inventoryItems: Item[]): number[]
     {
@@ -835,33 +869,24 @@ export class InventoryHelper
         ];
     }
 
-    protected getInventoryItemHash(inventoryItem: Item[]): InventoryHelper.InventoryItemHash
-    {
-        const inventoryItemHash: InventoryHelper.InventoryItemHash = { byItemId: {}, byParentId: {} };
-
-        for (const item of inventoryItem)
-        {
-            inventoryItemHash.byItemId[item._id] = item;
-
-            if (!("parentId" in item))
-            {
-                continue;
-            }
-
-            if (!(item.parentId in inventoryItemHash.byParentId))
-            {
-                inventoryItemHash.byParentId[item.parentId] = [];
-            }
-            inventoryItemHash.byParentId[item.parentId].push(item);
-        }
-        return inventoryItemHash;
-    }
-
+    /**
+     * Get a blank two-dimentional representation of a container
+     * @param containerH Horizontal size of container
+     * @param containerY Vertical size of container
+     * @returns Two-dimensional representation of container
+     */
     protected getBlankContainerMap(containerH: number, containerY: number): number[][]
     {
         return Array(containerY).fill(0).map(() => Array(containerH).fill(0));
     }
 
+    /**
+     * @param containerH Horizontal size of container
+     * @param containerV Vertical size of container
+     * @param itemList
+     * @param containerId Id of the container
+     * @returns Two-dimensional representation of container
+     */
     public getContainerMap(containerH: number, containerV: number, itemList: Item[], containerId: string): number[][]
     {
         const container2D: number[][] = this.getBlankContainerMap(containerH, containerV);
@@ -915,6 +940,27 @@ export class InventoryHelper
         }
 
         return container2D;
+    }
+
+    protected getInventoryItemHash(inventoryItem: Item[]): InventoryHelper.InventoryItemHash
+    {
+        const inventoryItemHash: InventoryHelper.InventoryItemHash = { byItemId: {}, byParentId: {} };
+        for (const item of inventoryItem)
+        {
+            inventoryItemHash.byItemId[item._id] = item;
+
+            if (!("parentId" in item))
+            {
+                continue;
+            }
+
+            if (!(item.parentId in inventoryItemHash.byParentId))
+            {
+                inventoryItemHash.byParentId[item.parentId] = [];
+            }
+            inventoryItemHash.byParentId[item.parentId].push(item);
+        }
+        return inventoryItemHash;
     }
 
     /**
@@ -983,10 +1029,11 @@ export class InventoryHelper
     }
 
     /**
-     * Made a 2d array table with 0 - free slot and 1 - used slot
-     * @param {Object} pmcData
-     * @param {string} sessionID
-     * @returns Array
+     * Get a two dimensional array to represent stash slots
+     * 0 value = free, 1 = taken
+     * @param pmcData Player profile
+     * @param sessionID session id
+     * @returns 2-dimensional array
      */
     protected getStashSlotMap(pmcData: IPmcData, sessionID: string): number[][]
     {
@@ -999,6 +1046,11 @@ export class InventoryHelper
         );
     }
 
+    /**
+     * Get a blank two-dimensional array representation of a container
+     * @param containerTpl Container to get data for
+     * @returns blank two-dimensional array
+     */
     public getContainerSlotMap(containerTpl: string): number[][]
     {
         const containerTemplate = this.itemHelper.getItem(containerTpl)[1];
@@ -1009,37 +1061,54 @@ export class InventoryHelper
         return this.getBlankContainerMap(containerH, containerV);
     }
 
+    /**
+     * Get a two-dimensional array representation of the players sorting table
+     * @param pmcData Player profile
+     * @returns two-dimensional array
+     */
     protected getSortingTableSlotMap(pmcData: IPmcData): number[][]
     {
         return this.getContainerMap(10, 45, pmcData.Inventory.items, pmcData.Inventory.sortingTable);
     }
 
     /**
-     * Get Player Stash Proper Size
-     * @param sessionID Playerid
-     * @returns Array of 2 values, x and y stash size
+     * Get Players Stash Size
+     * @param sessionID Players id
+     * @returns Array of 2 values, horizontal and vertical stash size
      */
     protected getPlayerStashSize(sessionID: string): Record<number, number>
     {
+        const profile = this.profileHelper.getPmcProfile(sessionID);
+        const stashRowBonus = profile.Bonuses.find((bonus) => bonus.type === BonusType.STASH_ROWS);
+
         // this sets automatically a stash size from items.json (its not added anywhere yet cause we still use base stash)
         const stashTPL = this.getStashType(sessionID);
         if (!stashTPL)
         {
             this.logger.error(this.localisationService.getText("inventory-missing_stash_size"));
         }
-        const stashItemDetails = this.itemHelper.getItem(stashTPL);
-        if (!stashItemDetails[0])
+
+        const stashItemResult = this.itemHelper.getItem(stashTPL);
+        if (!stashItemResult[0])
         {
             this.logger.error(this.localisationService.getText("inventory-stash_not_found", stashTPL));
+
+            return;
         }
 
-        const stashH = stashItemDetails[1]._props.Grids[0]._props.cellsH !== 0
-            ? stashItemDetails[1]._props.Grids[0]._props.cellsH
-            : 10;
-        const stashY = stashItemDetails[1]._props.Grids[0]._props.cellsV !== 0
-            ? stashItemDetails[1]._props.Grids[0]._props.cellsV
-            : 66;
-        return [stashH, stashY];
+        const stashItemDetails = stashItemResult[1];
+        const firstStashItemGrid = stashItemDetails._props.Grids[0];
+
+        const stashH = firstStashItemGrid._props.cellsH !== 0 ? firstStashItemGrid._props.cellsH : 10;
+        let stashV = firstStashItemGrid._props.cellsV !== 0 ? firstStashItemGrid._props.cellsV : 66;
+
+        // Player has a bonus, apply to vertical size
+        if (stashRowBonus)
+        {
+            stashV += stashRowBonus.value;
+        }
+
+        return [stashH, stashV];
     }
 
     /**

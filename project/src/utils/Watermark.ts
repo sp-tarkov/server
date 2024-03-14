@@ -130,7 +130,7 @@ export class Watermark
     {
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
             ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE ${this.akiConfig.commit?.slice(0, 6) ?? ""}`
-            : this.akiConfig.akiVersion;
+            : `${this.akiConfig.akiVersion} - ${this.akiConfig.commit?.slice(0, 6) ?? ""}`;
 
         return `${this.akiConfig.projectName} ${versionTag}`;
     }

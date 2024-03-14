@@ -24,7 +24,6 @@ slnx-journal.sqlite
 ## nodejs
 node_modules
 node.exe
-package-lock.json
 pnpm-lock.yaml
 yarn.lock
 

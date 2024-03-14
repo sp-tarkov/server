@@ -219,7 +219,7 @@ export class BotLootCacheService
             }
         }
 
-        // Assign whitelisted grendes to bot if any exist
+        // Assign whitelisted stims to bot if any exist
         const stimItems: Record<string, number> =
             (Object.keys(botJsonTemplate.generation.items.stims.whitelist)?.length > 0)
                 ? botJsonTemplate.generation.items.stims.whitelist
@@ -238,7 +238,7 @@ export class BotLootCacheService
             }
         }
 
-        // Assign whitelisted grendes to bot if any exist
+        // Assign whitelisted grenades to bot if any exist
         const grenadeItems: Record<string, number> =
             (Object.keys(botJsonTemplate.generation.items.grenades.whitelist)?.length > 0)
                 ? botJsonTemplate.generation.items.grenades.whitelist
@@ -268,12 +268,17 @@ export class BotLootCacheService
             }
             const itemTemplate = itemResult[1];
             if (
-                !((this.isBulletOrGrenade(itemTemplate._props) || this.isMagazine(itemTemplate._props))
-                    || this.isGrenade(itemTemplate._props))
+                this.isBulletOrGrenade(itemTemplate._props)
+                || this.isMagazine(itemTemplate._props)
+                || this.isMedicalItem(itemTemplate._props)
+                || this.isGrenade(itemTemplate._props)
             )
             {
-                filteredBackpackItems[itemKey] = backpackLootPool[itemKey];
+                // Is type we dont want as backpack loot, skip
+                continue;
             }
+
+            filteredBackpackItems[itemKey] = backpackLootPool[itemKey];
         }
 
         // Get pocket loot (excluding magazines, bullets, grenades, medical and healing items)
@@ -287,16 +292,18 @@ export class BotLootCacheService
             }
             const itemTemplate = itemResult[1];
             if (
-                !this.isBulletOrGrenade(itemTemplate._props)
-                && !this.isMagazine(itemTemplate._props)
-                && !this.isMedicalItem(itemTemplate._props)
-                && !this.isGrenade(itemTemplate._props)
-                && ("Height" in itemTemplate._props)
-                && ("Width" in itemTemplate._props)
+                this.isBulletOrGrenade(itemTemplate._props)
+                || this.isMagazine(itemTemplate._props)
+                || this.isMedicalItem(itemTemplate._props)
+                || this.isGrenade(itemTemplate._props)
+                || !("Height" in itemTemplate._props) // lacks height
+                || !("Width" in itemTemplate._props) // lacks width
             )
             {
-                filteredPocketItems[itemKey] = pocketLootPool[itemKey];
+                continue;
             }
+
+            filteredPocketItems[itemKey] = pocketLootPool[itemKey];
         }
 
         // Get vest loot (excluding magazines, bullets, grenades, medical and healing items)
@@ -310,14 +317,16 @@ export class BotLootCacheService
             }
             const itemTemplate = itemResult[1];
             if (
-                !this.isBulletOrGrenade(itemTemplate._props)
-                && !this.isMagazine(itemTemplate._props)
-                && !this.isMedicalItem(itemTemplate._props)
-                && !this.isGrenade(itemTemplate._props)
+                this.isBulletOrGrenade(itemTemplate._props)
+                || this.isMagazine(itemTemplate._props)
+                || this.isMedicalItem(itemTemplate._props)
+                || this.isGrenade(itemTemplate._props)
             )
             {
-                filteredVestItems[itemKey] = vestLootPool[itemKey];
+                continue;
             }
+
+            filteredVestItems[itemKey] = vestLootPool[itemKey];
         }
 
         this.lootCache[botRole].healingItems = healingItems;

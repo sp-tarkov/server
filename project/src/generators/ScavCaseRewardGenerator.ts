@@ -19,6 +19,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -42,6 +43,7 @@ export class ScavCaseRewardGenerator
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
+        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
@@ -96,6 +98,9 @@ export class ScavCaseRewardGenerator
     {
         if (!this.dbItemsCache)
         {
+            // Get an array of seasonal items that should not be shown right now as seasonal event is not active
+            const seasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
+
             this.dbItemsCache = Object.values(this.databaseServer.getTables().templates.items).filter((item) =>
             {
                 // Base "Item" item has no parent, ignore it
@@ -131,6 +136,11 @@ export class ScavCaseRewardGenerator
 
                 // Skip item if parent id is blacklisted
                 if (this.itemHelper.isOfBaseclasses(item._id, this.scavCaseConfig.rewardItemParentBlacklist))
+                {
+                    return false;
+                }
+
+                if (seasonalItems.includes(item._id))
                 {
                     return false;
                 }

@@ -3,9 +3,9 @@ import { inject, injectable } from "tsyringe";
 import { RepeatableQuestGenerator } from "@spt-aki/generators/RepeatableQuestGenerator";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
-import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
 import { RepeatableQuestHelper } from "@spt-aki/helpers/RepeatableQuestHelper";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import {
     IChangeRequirement,
@@ -32,7 +32,6 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 
 @injectable()
 export class RepeatableQuestController
@@ -48,7 +47,6 @@ export class RepeatableQuestController
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
-        @inject("RagfairServerHelper") protected ragfairServerHelper: RagfairServerHelper,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("ObjectId") protected objectId: ObjectId,
@@ -353,8 +351,8 @@ export class RepeatableQuestController
      * @returns A filtered list of locations that allow the player PMC level to access it
      */
     protected getAllowedLocations(
-        locations: Record<ELocationName, string[]>, 
-        pmcLevel: number
+        locations: Record<ELocationName, string[]>,
+        pmcLevel: number,
     ): Partial<Record<ELocationName, string[]>>
     {
         const allowedLocation: Partial<Record<ELocationName, string[]>> = {};
@@ -398,8 +396,7 @@ export class RepeatableQuestController
             return true;
         }
 
-        return (pmcLevel <= locationBase.RequiredPlayerLevelMax
-                && pmcLevel >= locationBase.RequiredPlayerLevelMin);
+        return (pmcLevel <= locationBase.RequiredPlayerLevelMax && pmcLevel >= locationBase.RequiredPlayerLevelMin);
     }
 
     public debugLogRepeatableQuestIds(pmcData: IPmcData): void

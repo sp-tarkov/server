@@ -13,6 +13,10 @@ export class ClientLogStaticRouter extends StaticRouter
             {
                 return this.clientLogCallbacks.clientLog(url, info, sessionID);
             }),
+            new RouteAction("/singleplayer/release", (url: string, info: any, sessionID: string, output: string) =>
+            {
+                return this.clientLogCallbacks.releaseNotes();
+            }),
         ]);
     }
 }

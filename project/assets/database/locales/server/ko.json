@@ -40,7 +40,6 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "해당되는 봇 타입에 대한 생성 제약을 찾을 수 없음: %s, 기본값을 사용합니다",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "해당되는 봇 타입의 난이도를 찾을 수 없음: {{botType}} 난이도 {{difficulty}}, assault 봇 타입의 난이도를 사용합니다",
 	"bot-unable_to_get_bot_fallback_to_assault": "해당되는 봇 타입을 찾을 수 없음: %s JSON, assault 봇 타입을 사용합니다",
-	"bot-weapon_contains_invalid_item": "{{modName}} 부품의 '{{modSlot}}' 슬롯에 유효하지 않은 아이템: {{weaponTpl}}",
 	"bot-weapon_generated_incorrect_using_default": "무기 %s 이(가) 잘못 생성되었습니다, 무기 프리셋을 사용합니다, 위의 오류를 참조하세요",
 	"bot-weapon_missing_magazine_or_chamber": "무기 tpl: %s 은(는) 탄창 또는 약실(chamber)이 없습니다",
 	"bot-weapon_missing_mod_slot": "슬롯 '{{modSlot}}' 이 다음의 무기에 없음: {{weaponName}} - {{weaponId}}",
@@ -260,7 +259,6 @@
 	"websocket-pinging_player": "[WS] 플레이어 핑: %s",
 	"websocket-player_connected": "[WS] 플레이어: %s 이(가) 접속 됨",
 	"websocket-received_message": "[WS] %s 사용자로부터 메시지를 받음",
-	"websocket-socket_lost_deleting_handle": "[WS] 소켓 분실, 핸들 삭제 중",
 	"websocket-started": "시작된 웹소켓 서버 %s",
 	"pmcresponse-victim_positive_1": "나이스 샷",
 	"pmcresponse-victim_positive_2": "잘쏘네",
@@ -594,7 +592,6 @@
 	"launcher-profile_leftbehind": "스탠다드 + 더 큰 보관함 크기(10x38), 추가 장비/아이템, 500달러",
 	"launcher-profile_preparetoescape": "레프트 비하인드와 동일 더 큰 보관함 크기(10x48), 추가 장비/아이템, 상인과의 시작 평판 상승, 250유로",
 	"launcher-profile-edgeofdarkness": "프리페어 투 이스케이프와 동일 더 큰 은신처 크기(10x68), 추가 장비/아이템, 상인과의 높은 시작 평판, 1000달러, 500유로",
-	"launcher-profile_spteasystart": "많은 루블/달러/유로, 일부 품질 관리 기술 레벨 20, 상인 담당자 최대 레벨, 시작 레벨 15, 완료된 퀘스트 없음",
 	"launcher-profile_sptzerotohero": "루블/달러/유로, 상인 대표, 칼 1개, 퀘스트 완료 등 거의 아무것도 없이 시작하세요.",
 	"launcher-profile_sptdeveloper": "테스트 프로필, 시작 레벨은 69, 많은 루블/달러/유로, USEC는 모든 퀘스트를 시작할 준비가 된 상태로 시작, BEAR는 모든 퀘스트를 제출할 준비가 된 상태로 시작, 무적 발라 클라바",
 	"launcher-missing_property": "프로필: %s 은(는) descriptionLocaleKey 속성이 누락되어 있습니다"

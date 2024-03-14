@@ -394,6 +394,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -3043,6 +3044,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -5873,6 +5875,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -9081,6 +9084,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -12379,6 +12383,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -16057,6 +16062,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -19955,6 +19961,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -24265,6 +24272,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -30606,7 +30614,7 @@
                             "completeTime": 0,
                             "constructing": false,
                             "lastRecipe": "",
-                            "level": 1,
+                            "level": 3,
                             "passiveBonusesEnabled": true,
                             "slots": [],
                             "type": 16
@@ -30720,6 +30728,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -33647,7 +33656,7 @@
                             "completeTime": 0,
                             "constructing": false,
                             "lastRecipe": "",
-                            "level": 1,
+                            "level": 3,
                             "passiveBonusesEnabled": true,
                             "slots": [],
                             "type": 16
@@ -33761,6 +33770,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -36754,6 +36764,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -40105,6 +40116,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -41432,6 +41444,7 @@
                     },
                     "Side": "Bear",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },
@@ -42353,6 +42366,7 @@
                     },
                     "Side": "Usec",
                     "SquadInviteRestriction": false,
+					"HasCoopExtension": false,
                     "Voice": "__REPLACEME__",
                     "lockedMoveCommands": true
                 },

@@ -40,7 +40,6 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Kan ikke finne genererings grenser for rolle: %s, faller tilbake til standard",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Finner ikke bot: {{botType}} vanskelighetsgrad {{difficulty}}, bruker angreps vanskelighetsgrad som reserveløsning",
 	"bot-unable_to_get_bot_fallback_to_assault": "Finner ikke bot: JSON, %s JSON, bruker en angreps bot som reserveløsning",
-	"bot-weapon_contains_invalid_item": "Påkrevd plass '{{modSlot}}' på {{weaponTpl}} har et ugyldig element: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Våpen %s ble generert feil, faller tilbake til våpenets forhåndsinnstilling, se feil ovenfor",
 	"bot-weapon_missing_magazine_or_chamber": "Våpen med tpl: {{weaponId}} har ingen magasin eller kammer - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Slot '{{modSlot}}' eksisterer ikke for elementet: {{weaponId}} {{weaponName}} på {{botRole}}",
@@ -210,7 +209,6 @@
 	"websocket-pinging_player": "[WS] Pinger spiller: %s",
 	"websocket-player_connected": "[WS] Spiller: %s har koblet til",
 	"websocket-received_message": "[WS] Mottatt melding fra bruker %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket tapt, sletter handle",
 	"websocket-started": "Startet webserver på %s",
 	"pmcresponse-victim_positive_1": "Bra skudd",
 	"pmcresponse-victim_positive_2": "Bra skudd",
@@ -405,7 +403,6 @@
 	"launcher-profile_leftbehind": "Samme som standard, pluss; større stash-størrelse (10x38), ekstra utstyr/elementer, 500 dollar",
 	"launcher-profile_preparetoescape": "Samme som Left Behind, pluss; større stash-størrelse (10x48), ekstra utstyr/gjenstander, høyere omdømme med handelsfolk, 250 euro",
 	"launcher-profile-edgeofdarkness": "Samme som Prepare To Escape, pluss; større stash-størrelse (10x68), ekstra utstyr/gjenstander, høyere startomdømme med handlere, 1000 dollar, 500 euro",
-	"launcher-profile_spteasystart": "Massevis av Rubler/Dollar/Euro, enkelte QoL ferdigheter er allerede nivå 20, kjøpmann omdømme på maks, startnivå er level 15, ingen oppdrag fullført",
 	"launcher-profile_sptzerotohero": "Start med nesten ingenting, ingen Rubler/Dollar/Euro, ingen omdømme hos kjøpmenn, 1 kniv, ingen oppdrag fullført",
 	"launcher-profile_sptdeveloper": "Testprofil, startnivå er level 69, masse Rubler/Dollar/Euro, USEC starter med alle oppdrag som er klare for å starte, BEAR starter med alle oppdrag klare til å levere, uovervinnelighets-balaklava",
 	"launcher-missing_property": "Profil: %s mangler en descriptionLocaleKey egenskap"

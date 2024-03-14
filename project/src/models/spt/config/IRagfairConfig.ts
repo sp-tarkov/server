@@ -20,9 +20,7 @@ export interface Sell
     /** Settings to control chances of offer being sold */
     chance: Chance;
     /** Settings to control how long it takes for a player offer to sell */
-    time: Time;
-    /** Player offer reputation gain/loss settings */
-    reputation: Reputation;
+    time: MinMax;
     /**Seconds from clicking remove to remove offer from market */
     expireSeconds: number;
 }
@@ -37,17 +35,6 @@ export interface Chance
     maxSellChancePercent: number;
     /** Min possible sell chance % for a player listed offer */
     minSellChancePercent: number;
-}
-
-export interface Time extends MinMax
-{
-    base: number;
-}
-
-export interface Reputation
-{
-    gain: number;
-    loss: number;
 }
 
 export interface Dynamic
@@ -163,6 +150,10 @@ export interface Blacklist
     traderItems: boolean;
     /** Maximum level an armor plate can be found in a flea-listed armor item */
     armorPlate: IArmorPlateBlacklistSettings;
+    /** Should specific categories be blacklisted from the flea, true = use blacklist */
+    enableCustomItemCategoryList: boolean;
+    /** Custom category blacklist for parent Ids */
+    customItemCategoryList: string[];
 }
 
 export interface IArmorPlateBlacklistSettings

@@ -10,6 +10,8 @@ export interface IInventoryConfig extends IBaseConfig
     sealedAirdropContainer: ISealedAirdropContainerSettings;
     /** Contains item tpls that the server should consider money and treat the same as roubles/euros/dollars */
     customMoneyTpls: string[];
+    /** Multipliers for skill gain when inside menus, NOT in-game */
+    skillGainMultiplers: Record<string, number>;
 }
 
 export interface RewardDetails

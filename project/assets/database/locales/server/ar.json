@@ -40,7 +40,6 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "تعذر العثور على حدود الظهور للدور: %s، يتم الرجوع إلى القيم الافتراضية\n\n\n\n\n\n\n",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "تعذر العثور على البوت: {{botType}} صعوبة {{difficulty}}، يتم استخدام صعوبة الهجوم كبديل\n\n\n\n\n\n\n",
 	"bot-unable_to_get_bot_fallback_to_assault": "تعذر العثور على روبوت: %s JSON، يتم استخدام بوت الهجوم كبديل\n\n\n\n\n\n\n",
-	"bot-weapon_contains_invalid_item": "الفتحة المطلوبة '{{modSlot}}' على {{weaponTpl}} تحتوي على عنصر غير صالح: {{modName}}\n\n\n\n\n\n\n",
 	"bot-weapon_generated_incorrect_using_default": "تم إنشاء السلاح %s بشكل غير صحيح، يتم الرجوع إلى إعداد السلاح، انظر الخطأ أعلاه.\n\n\n\n\n\n\n",
 	"bot-weapon_missing_magazine_or_chamber": "السلاح بالنمط: {{weaponId}} لا يحتوي على مخزن أو حجرة - {{botRole}}\n\n\n\n\n\n\n",
 	"bot-weapon_missing_mod_slot": "الفتحة: {{modSlot}} لا توجد للسلاح: {{weaponId}} {{weaponName}} على {{botRole}}\n\n\n\n\n\n\n",

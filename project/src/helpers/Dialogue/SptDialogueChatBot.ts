@@ -8,6 +8,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
+import { IWeatherConfig } from "@spt-aki/models/spt/config/IWeatherConfig";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { GiftService } from "@spt-aki/services/GiftService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
@@ -17,6 +18,8 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 export class SptDialogueChatBot implements IDialogueChatBot
 {
     protected coreConfig: ICoreConfig;
+    protected weatherConfig: IWeatherConfig;
+
     public constructor(
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -26,6 +29,7 @@ export class SptDialogueChatBot implements IDialogueChatBot
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
+        this.weatherConfig = this.configServer.getConfig(ConfigTypes.WEATHER);
     }
 
     public getChatBot(): IUserDialogInfo
@@ -144,6 +148,28 @@ export class SptDialogueChatBot implements IDialogueChatBot
                 sessionId,
                 sptFriendUser,
                 this.randomUtil.getArrayValue(["beep boop", "**sad boop**", "probably", "sometimes", "yeah lol"]),
+            );
+        }
+
+        if (request.text.toLowerCase() === "itsonlysnowalan")
+        {
+            this.weatherConfig.forceWinterEvent = true;
+
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue(["Snow will be enabled after your next raid"]),
+            );
+        }
+
+        if (request.text.toLowerCase() === "givemespace")
+        {
+            this.profileHelper.addStashRowsBonusToProfile(sessionId, 2);
+
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                sptFriendUser,
+                this.randomUtil.getArrayValue(["Added 2 rows to stash, please restart your game to see them"]),
             );
         }
 

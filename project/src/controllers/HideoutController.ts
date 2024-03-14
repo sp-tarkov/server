@@ -35,6 +35,7 @@ import { IRecordShootingRangePoints } from "@spt-aki/models/eft/hideout/IRecordS
 import { IAddItemDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemDirectRequest";
 import { IAddItemsDirectRequest } from "@spt-aki/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt-aki/models/enums/BackendErrorCodes";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
 import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
@@ -592,7 +593,9 @@ export class HideoutController
         const recipe = this.databaseServer.getTables().hideout.production.find((p) => p._id === body.recipeId);
 
         // Find the actual amount of items we need to remove because body can send weird data
-        const recipeRequirementsClone = this.jsonUtil.clone(recipe.requirements.filter((i) => i.type === "Item" || i.type === "Tool"));
+        const recipeRequirementsClone = this.jsonUtil.clone(
+            recipe.requirements.filter((i) => i.type === "Item" || i.type === "Tool"),
+        );
 
         const output = this.eventOutputHolder.getOutput(sessionID);
         const itemsToDelete = body.items.concat(body.tools);
@@ -672,9 +675,11 @@ export class HideoutController
         }
 
         // @Important: Here we need to be very exact:
-        // - normal recipe: Production time value is stored in attribute "productionType" with small "p"
-        // - scav case recipe: Production time value is stored in attribute "ProductionType" with capital "P"
-        const modifiedScavCaseTime = this.getScavCaseTime(pmcData, recipe.ProductionTime);
+        // - normal recipe: Production time value is stored in attribute "productionTime" with small "p"
+        // - scav case recipe: Production time value is stored in attribute "ProductionTime" with capital "P"
+        const adjustedCraftTime = recipe.ProductionTime
+            - this.hideoutHelper.getCraftingSkillProductionTimeReduction(pmcData, recipe.ProductionTime);
+        const modifiedScavCaseTime = this.getScavCaseTime(pmcData, adjustedCraftTime);
 
         pmcData.Hideout.Production[body.recipeId] = this.hideoutHelper.initProduction(
             body.recipeId,
@@ -833,10 +838,13 @@ export class HideoutController
                 ),
             );
 
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText(
-                "hideout-unable_to_find_production_in_profile_by_recipie_id",
-                request.recipeId,
-            ));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText(
+                    "hideout-unable_to_find_production_in_profile_by_recipie_id",
+                    request.recipeId,
+                ),
+            );
 
             return;
         }
@@ -904,10 +912,7 @@ export class HideoutController
         {
             for (const reward of itemAndChildrenToSendToPlayer)
             {
-                if (!reward[0].upd)
-                {
-                    reward[0].upd = {};
-                }
+                this.itemHelper.addUpdObjectToItem(reward[0]);
 
                 reward[0].upd.RecodableComponent = { IsEncoded: true };
             }
@@ -920,19 +925,7 @@ export class HideoutController
         {
             for (const tool of production.sptRequiredTools)
             {
-                const toolToAdd: Item = {
-                    _id: this.hashUtil.generate(),
-                    _tpl: tool,
-                };
-
-                if (this.itemHelper.isItemTplStackable(tool))
-                {
-                    toolToAdd.upd = {
-                        StackObjectsCount: 1,
-                    }
-                }
-                
-                toolsToSendToPlayer.push([toolToAdd]);
+                toolsToSendToPlayer.push([tool]);
             }
         }
 
@@ -959,21 +952,30 @@ export class HideoutController
         const totalResultItems = toolsToSendToPlayer.concat(itemAndChildrenToSendToPlayer);
         if (!this.inventoryHelper.canPlaceItemsInInventory(sessionID, totalResultItems))
         {
-            this.httpResponse.appendErrorToOutput(output, this.localisationService.getText("inventory-no_stash_space"));
+            this.httpResponse.appendErrorToOutput(
+                output,
+                this.localisationService.getText("inventory-no_stash_space"),
+                BackendErrorCodes.NOTENOUGHSPACE,
+            );
             return;
         }
 
-        // Add the used tools to the stash as non-FiR
-        const addToolsRequest: IAddItemsDirectRequest = {
-            itemsWithModsToAdd: toolsToSendToPlayer,
-            foundInRaid: false,
-            useSortingTable: false,
-            callback: null,
-        };
-        this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
-        if (output.warnings.length > 0)
+        // Add the tools to the stash, we have to do this individually due to FiR state potentially being different
+        for (const toolItem of toolsToSendToPlayer)
         {
-            return;
+            // Note: FIR state will be based on the first item's SpawnedInSession property per item group
+            const addToolsRequest: IAddItemsDirectRequest = {
+                itemsWithModsToAdd: [toolItem],
+                foundInRaid: toolItem[0].upd?.SpawnedInSession ?? false,
+                useSortingTable: false,
+                callback: null,
+            };
+
+            this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
+            if (output.warnings.length > 0)
+            {
+                return;
+            }
         }
 
         // Add the crafting result to the stash, marked as FiR

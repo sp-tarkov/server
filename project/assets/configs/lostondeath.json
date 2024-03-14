@@ -8,6 +8,7 @@
         "ArmorVest": true,
         "Eyewear": true,
         "TacticalVest": true,
+        "PocketItems": true,
         "Backpack": true,
         "Holster": true,
         "FirstPrimaryWeapon": true,

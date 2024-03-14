@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
 import { RepairHelper } from "@spt-aki/helpers/RepairHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
@@ -7,6 +8,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IRepairActionDataRequest } from "@spt-aki/models/eft/repair/IRepairActionDataRequest";
 import { ITraderRepairActionDataRequest } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
+import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
@@ -28,6 +30,7 @@ export class RepairController
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("RepairHelper") protected repairHelper: RepairHelper,
         @inject("RepairService") protected repairService: RepairService,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     )
     {}
 
@@ -97,7 +100,11 @@ export class RepairController
             output,
         );
 
-        this.repairService.addBuffToItem(repairDetails, pmcData);
+        // Bonuses only get applied when players weapon maintenance skill is over level 10
+        if (this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.WEAPON_TREATMENT)?.Progress >= 1000)
+        {
+            this.repairService.addBuffToItem(repairDetails, pmcData);
+        }
 
         // add repaired item to send to client
         output.profileChanges[sessionID].items.change.push(repairDetails.repairedItem);

@@ -9,13 +9,8 @@
             "minSellChancePercent": 0
         },
         "time": {
-            "base": 1.5,
             "min": 0,
             "max": 1.0
-        },
-        "reputation": {
-            "gain": 0.0000002,
-            "loss": 0.0000002
         },
         "expireSeconds": 71
     },
@@ -302,7 +297,9 @@
 			"armorPlate": {
 				"maxProtectionLevel": 4,
 				"ignoreSlots": ["right_side_plate", "left_side_plate"]
-			}
+			},
+            "enableCustomItemCategoryList": false,
+            "customItemCategoryList": []
         },
         "unreasonableModPrices": {
             "5448fe124bdc2da5018b4567": {

@@ -40,7 +40,7 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Rol: %s için spawn limitleri bulunamıyor, varsayılanlara geri dönülüyor",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Bot bulunamıyor: {{botType}} zorluk {{difficulty}}, saldırı zorluğunu yedek olarak kullanıyor",
 	"bot-unable_to_get_bot_fallback_to_assault": "Bot bulunamıyor: %s JSON, yedek olarak saldırı botu kullanılıyor",
-	"bot-weapon_contains_invalid_item": "{{weaponTpl}} üzerindeki gerekli '{{modSlot}}' yuvası geçersiz bir öğeye sahip: {{modName}}",
+	"bot-weapon_contains_invalid_item": "Gerekli slot: '{{modSlot}}' bu silahta: {{weaponTpl}} uyumsuz mod var: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Silah %s yanlış oluşturuldu, silah ön ayarına geri dönüldü, ekranın üstündeki hataya bakın",
 	"bot-weapon_missing_magazine_or_chamber": "Tpl: {{weaponId}} içeren silahın şarjörü veya haznesi yok - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Slot: {{modSlot}}' silah için mevcut değil: {{weaponId}} {{weaponName}} on {{botRole}}",
@@ -260,7 +260,7 @@
 	"websocket-pinging_player": "[WS] Oyuncuya ping atılıyor: %s",
 	"websocket-player_connected": "[WS] Oyuncu: %s bağlandı",
 	"websocket-received_message": "[WS] Kullanıcıdan mesaj alındı %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Soket kayboldu, tanıtıcı siliniyor",
+	"websocket-socket_lost_deleting_handle": "[WS] Soket kayboldu, tanıtıcı siliniyor, durum",
 	"websocket-started": "Websocket %s'de başlatıldı",
 	"pmcresponse-victim_positive_1": "Güzel atış",
 	"pmcresponse-victim_positive_2": "Harika atış",
@@ -597,5 +597,6 @@
 	"launcher-profile_spteasystart": "Bir sürü Ruble/Dolar/Euro, Bazı QoL becerileri seviye 20, tüccar rep'i maksimum, başlangıç seviyesi 15, tamamlanan görev yok",
 	"launcher-profile_sptzerotohero": "Neredeyse hiçbir şey olmadan başlayın, Ruble/Dolar/Euro yok, tüccar repliği yok, 1 bıçak, tamamlanmış görev yok",
 	"launcher-profile_sptdeveloper": "Test profili, başlangıç seviyesi 69, çok sayıda Ruble/Dolar/Euro, USEC başlangıcı tüm görevler hazır, BEAR başlangıcı tüm görevler teslim edilmeye hazır, yenilmezlik kar maskesi",
-	"launcher-missing_property": "Profil: %s için bir descriptionLocaleKey özelliği eksik"
+	"launcher-missing_property": "Profil: %s için bir descriptionLocaleKey özelliği eksik",
+	"beta-disclaimer": "Tamam'a basarak, hiçbir destek sunulmadığını ve bu yalnızca hata testi için olduğunu kabul edersiniz. GERÇEK oyun oynanmaz. Modlar devre dışı bırakılmıştır. Yeni profiller sık sık gerekebilir. Tüm hataları Discord'daki raporlar kanalına veya web sitesindeki sorunlar sayfasına bildirin. Belirtilen süre dolmadan OK tuşuna basmazsanız, oyun kapanacaktır."
 }

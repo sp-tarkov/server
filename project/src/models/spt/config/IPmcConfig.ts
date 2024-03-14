@@ -15,7 +15,6 @@ export interface IPmcConfig extends IBaseConfig
     pocketLoot: SlotLootSettings;
     /** Global whitelist/blacklist of backpack loot for PMCs */
     backpackLoot: SlotLootSettings;
-    dynamicLoot: DynamicLoot;
     /** Use difficulty defined in config/bot.json/difficulty instead of chosen difficulty dropdown value */
     useDifficultyOverride: boolean;
     /** Difficulty override e.g. "AsOnline/Hard" */
@@ -61,10 +60,4 @@ export interface SlotLootSettings
 {
     whitelist: string[];
     blacklist: string[];
-    moneyStackLimits: Record<string, number>;
-}
-
-export interface DynamicLoot
-{
-    moneyStackLimits: Record<string, number>;
 }

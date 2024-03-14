@@ -250,5 +250,8 @@
         ],
         "allowBossItems": false
     },
-    "customMoneyTpls": []
+    "customMoneyTpls": [],
+	"skillGainMultiplers": {
+		"Strength": 1
+	}
 }

@@ -229,6 +229,7 @@ export class RagfairOfferService
         if (isPlayer && staleOffer.endTime <= this.timeUtil.getTimestamp())
         {
             this.returnPlayerOffer(staleOffer);
+            return;
         }
 
         // Remove expired existing offer from global offers

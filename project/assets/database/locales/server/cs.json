@@ -40,7 +40,6 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "Nelze najít spawn limity pro role: %s, návrat zpět do výchozích hodnot",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "Nelze najít bota: {{botType}} s obtížností {{difficulty}}, použití útočné obtížnosti jako záložní",
 	"bot-unable_to_get_bot_fallback_to_assault": "Nelze najít bota: %s JSON, používá útočný bota jako záložní",
-	"bot-weapon_contains_invalid_item": "Požadovaný slot '{{modSlot}}' na {{weaponTpl}} má neplatnou položku: {{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "Zbraň %s byla generována nesprávně, návrát k původní předvolbě zbraně, viz chyba výše",
 	"bot-weapon_missing_magazine_or_chamber": "Zbraň s tpl: {{weaponId}} nemá žádný zásobník nebo komoru - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "Slot: {{modSlot}}' neexistuje pro zbraň: {{weaponId}} {{weaponName}} na {{botRole}}",
@@ -260,7 +259,6 @@
 	"websocket-pinging_player": "[WS] Vyzvánění hráče: %s",
 	"websocket-player_connected": "[WS] Hráč: %s se připojil",
 	"websocket-received_message": "[WS] Obdržená zpráva od uživatele %s ",
-	"websocket-socket_lost_deleting_handle": "[WS] Socket ztracen, odstraňuji přezdívku",
 	"websocket-started": "Spuštěn websocket na %s",
 	"pmcresponse-victim_positive_1": "Dobrá trefa",
 	"pmcresponse-victim_positive_2": "Skvělá trefa",
@@ -594,7 +592,6 @@
 	"launcher-profile_leftbehind": "Stejné jako Standard plus; větší velikost skrýše (10x38), bonusové vybavení a věci, 500 dolarů",
 	"launcher-profile_preparetoescape": "Stejné jako Left Behind plus; větší velikost skrýše (10x48), extra vybavení/věci, vyšší startovací reputace s obchodníky, 250 Eur",
 	"launcher-profile-edgeofdarkness": "Stejné jako Prepare To Escape plus; větší velikost skrýše (10x68), extra vybavení a věci, vyšší startovací reputace s obchodníky, 1000 dolarů, 500 Eur",
-	"launcher-profile_spteasystart": "Spousta Roublů/Dollarů/Euro, některé QoL dovednosti jsou úrovně 20, reputace na max, počáteční úroveň je 15 a žádné úkoly nejsou dokončeny",
 	"launcher-profile_sptzerotohero": "Začněte s téměř ničím, bez Roublů/Dolarů/Eur, bez reputace u obchodníků, 1 nůž, bez vyplněných úkolů",
 	"launcher-profile_sptdeveloper": "Testovací profil, startovací úroveň je 69, spousta Roublů/Dolarů/Eur, USEC začíná se všemi úkoly připravenými k plnění, BEAR začíná se všemi úkoly připravenými k odevzdání, balaklava která umožňuje nesmrtelnost",
 	"launcher-missing_property": "Profilu: %s chybí vlastnost descriptionLocaleKey"

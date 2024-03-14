@@ -155,6 +155,10 @@ export class ItemHelper
         return false;
     }
 
+    /**
+     * Get all soft insert slot ids
+     * @returns An array of soft insert ids (e.g. soft_armor_back, helmet_top)
+     */
     public getSoftInsertSlotIds(): string[]
     {
         return [
@@ -169,6 +173,8 @@ export class ItemHelper
             "collar",
             "helmet_top",
             "helmet_back",
+            "helmet_eyes",
+            "helmet_jaw",
             "helmet_ears",
         ];
     }
@@ -801,6 +807,24 @@ export class ItemHelper
         }
 
         return items;
+    }
+
+    /**
+     * Mark the passed in array of items as found in raid.
+     * Modifies passed in items
+     * @param items The list of items to mark as FiR
+     */
+    public setFoundInRaid(items: Item[]): void
+    {
+        for (const item of items)
+        {
+            if (!item.upd)
+            {
+                item.upd = {};
+            }
+
+            item.upd.SpawnedInSession = true;
+        }
     }
 
     /**
@@ -1611,6 +1635,29 @@ export class ItemHelper
             itemsMap.set(item._id, item);
         }
         return itemsMap;
+    }
+
+    /**
+     * Add a blank upd object to passed in item if it does not exist already
+     * @param item item to add upd to
+     * @param warningMessageWhenMissing text to write to log when upd object was not found
+     * @returns True when upd object was added
+     */
+    public addUpdObjectToItem(item: Item, warningMessageWhenMissing: string = null): boolean
+    {
+        if (!item.upd)
+        {
+            item.upd = {};
+
+            if (warningMessageWhenMissing)
+            {
+                this.logger.warning(warningMessageWhenMissing);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }
 

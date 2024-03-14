@@ -143,29 +143,6 @@ export class InsuranceService
     }
 
     /**
-     * Send a message to player informing them gear was completely lost
-     * @param sessionId Session id
-     * @param locationName name of map insurance was lost on
-     */
-    public sendLostInsuranceMessage(sessionId: string, locationName = ""): void
-    {
-        const dialogueTemplates = this.databaseServer.getTables().traders[Traders.PRAPOR].dialogue; // todo: get trader id instead of hard coded prapor
-        const randomResponseId = locationName?.toLowerCase() === "laboratory"
-            ? this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailedLabs)
-            : this.randomUtil.getArrayValue(dialogueTemplates.insuranceFailed);
-
-        this.mailSendService.sendLocalisedNpcMessageToPlayer(
-            sessionId,
-            this.traderHelper.getTraderById(Traders.PRAPOR),
-            MessageType.NPC_TRADER,
-            randomResponseId,
-            [],
-            null,
-            { location: locationName },
-        );
-    }
-
-    /**
      * Check all root insured items and remove location property + set slotId to 'hideout'
      * @param sessionId Session id
      * @param traderId Trader id
@@ -369,44 +346,41 @@ export class InsuranceService
     ): Item
     {
         // Get baseline item to return, clone pre raid item
-        const itemToReturn: Item = this.jsonUtil.clone(preRaidItem);
+        const itemToReturnClone: Item = this.jsonUtil.clone(preRaidItem);
 
         // Add upd if it doesnt exist
-        if (!itemToReturn.upd)
-        {
-            itemToReturn.upd = {};
-        }
+        this.itemHelper.addUpdObjectToItem(itemToReturnClone);
 
         // Check for slotid values that need to be updated and adjust
-        this.updateSlotIdValue(pmcData.Inventory.equipment, itemToReturn);
+        this.updateSlotIdValue(pmcData.Inventory.equipment, itemToReturnClone);
 
         // Remove location property
-        if (itemToReturn.slotId === "hideout" && "location" in itemToReturn)
+        if (itemToReturnClone.slotId === "hideout" && "location" in itemToReturnClone)
         {
-            delete itemToReturn.location;
+            delete itemToReturnClone.location;
         }
 
         // Remove found in raid status when upd exists + SpawnedInSession value exists
-        if ("upd" in itemToReturn && "SpawnedInSession" in itemToReturn.upd)
+        if ("SpawnedInSession" in itemToReturnClone.upd)
         {
-            itemToReturn.upd.SpawnedInSession = false;
+            itemToReturnClone.upd.SpawnedInSession = false;
         }
 
         // Client item has durability values, Ensure values persist into server data
         if (insuredItemFromClient?.durability)
         {
             // Item didnt have Repairable object pre-raid, add it
-            if (!itemToReturn.upd.Repairable)
+            if (!itemToReturnClone.upd.Repairable)
             {
-                itemToReturn.upd.Repairable = {
+                itemToReturnClone.upd.Repairable = {
                     Durability: insuredItemFromClient.durability,
                     MaxDurability: insuredItemFromClient.maxDurability,
                 };
             }
             else
             {
-                itemToReturn.upd.Repairable.Durability = insuredItemFromClient.durability;
-                itemToReturn.upd.Repairable.MaxDurability = insuredItemFromClient.maxDurability;
+                itemToReturnClone.upd.Repairable.Durability = insuredItemFromClient.durability;
+                itemToReturnClone.upd.Repairable.MaxDurability = insuredItemFromClient.maxDurability;
             }
         }
 
@@ -414,17 +388,17 @@ export class InsuranceService
         if (insuredItemFromClient?.hits)
         {
             // Item didnt have faceshield object pre-raid, add it
-            if (!itemToReturn.upd.FaceShield)
+            if (!itemToReturnClone.upd.FaceShield)
             {
-                itemToReturn.upd.FaceShield = { Hits: insuredItemFromClient.hits };
+                itemToReturnClone.upd.FaceShield = { Hits: insuredItemFromClient.hits };
             }
             else
             {
-                itemToReturn.upd.FaceShield.Hits = insuredItemFromClient.hits;
+                itemToReturnClone.upd.FaceShield.Hits = insuredItemFromClient.hits;
             }
         }
 
-        return itemToReturn;
+        return itemToReturnClone;
     }
 
     /**

@@ -40,7 +40,7 @@
 	"bot-unable_to_find_spawn_limits_fallback_to_defaults": "找不到角色：%s生成限制，回调到默认",
 	"bot-unable_to_get_bot_difficulty_fallback_to_assault": "找不到{{difficulty}}难度的bot：{{botType}} ，回退使用assault难度",
 	"bot-unable_to_get_bot_fallback_to_assault": "找不到bot：%s JSON，回调使用assault bot",
-	"bot-weapon_contains_invalid_item": "{{weaponTpl}}上需要的槽位'{{modSlot}}'有一个无效物品：{{modName}}",
+	"bot-weapon_contains_invalid_item": "武器:{{weaponTpl}} 上所需槽位:'{{modSlot}}' 有一项无效物品:{{modName}}",
 	"bot-weapon_generated_incorrect_using_default": "武器 %s 生成不正确，回调到武器预设查看以上错误",
 	"bot-weapon_missing_magazine_or_chamber": "Tpl为{{weaponId}} 的武器缺失弹匣或者枪膛 - {{botRole}}",
 	"bot-weapon_missing_mod_slot": "{{botRole}}身上的武器：{{weaponId}} {{weaponName}}的槽位：{{modSlot}}不存在",
@@ -597,5 +597,6 @@
 	"launcher-profile_spteasystart": "大量卢布、美元和欧元，一些基础技能等级20，商人声望满，初始等级15，没有已完成任务",
 	"launcher-profile_sptzerotohero": "开局几乎没有物资，没有卢布、美元或欧元，没有商人声望，就一把刀，没有已完成任务",
 	"launcher-profile_sptdeveloper": "测试用存档，初始等级69，大量卢布、美元和欧元，USEC开局所有的任务已准备开始，BEAR开局所有任务已准备接取，无敌面罩",
-	"launcher-missing_property": "存档：%s缺少descriptionLocaleKey属性"
+	"launcher-missing_property": "存档：%s缺少descriptionLocaleKey属性",
+	"beta-disclaimer": "按下“OK”即表示您同意您不会获得任何技术支持，且该版本仅用于错误测试。 此版本不代表实际游戏体验，模组已被禁用，可能需要用户频繁新建存档。 在SPT官方Discord的报告频道里报告所有错误，或在SPT网站的问题页面报告。 如果您在指定时间内不按下“OK”，游戏将自动关闭。"
 }
