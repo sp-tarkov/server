@@ -42,7 +42,7 @@ const licenseFile = "../LICENSE.md";
 const compile = async () =>
 {
     // Compile TypeScript files using SWC
-    await exec("swc src -d obj", { stdio: "inherit" });
+    await exec("npx swc src -d obj", { stdio: "inherit" });
 
     // Merge the contents from the /obj/src directory into /obj
     const srcDir = path.join("obj", "src");
