@@ -2,7 +2,7 @@ import { ClientLogController } from "@spt-aki/controllers/ClientLogController";
 import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig, IRelease } from "@spt-aki/models/spt/config/ICoreConfig";
+import { IBsgLogging, ICoreConfig, IRelease } from "@spt-aki/models/spt/config/ICoreConfig";
 import { IClientLogRequest } from "@spt-aki/models/spt/logging/IClientLogRequest";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
@@ -52,6 +52,16 @@ export class ClientLogCallbacks
         data.isModdable = globalThis.G_MODS_ENABLED;
         data.isModded = this.modLoadOrder.getLoadOrder().length > 0 ? true : false;
 
+        return this.httpResponse.noBody(data);
+    }
+
+    /**
+     * Handle /singleplayer/enableBSGlogging
+     */
+
+    public bsgLogging(): string
+    {
+        const data: IBsgLogging = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).bsgLogging;
         return this.httpResponse.noBody(data);
     }
 }

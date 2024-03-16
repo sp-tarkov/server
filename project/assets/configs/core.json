@@ -5,6 +5,10 @@
     "serverName": "SPT Server",
     "profileSaveIntervalSeconds": 15,
     "sptFriendNickname": "SPT",
+    "bsgLogging": {
+        "verbosity": 6,
+        "sendToServer": false
+    },
     "release": {
         "betaDisclaimerTimeoutDelay": 30
     },

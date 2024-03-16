@@ -9,6 +9,7 @@ export interface ICoreConfig extends IBaseConfig
     serverName: string;
     profileSaveIntervalSeconds: number;
     sptFriendNickname: string;
+    bsgLogging: IBsgLogging;
     release: IRelease;
     fixes: IGameFixes;
     features: IServerFeatures;
@@ -16,6 +17,25 @@ export interface ICoreConfig extends IBaseConfig
     commit?: string;
     /** Timestamp of server build */
     buildTime?: string;
+}
+
+export interface IBsgLogging
+{
+    /**
+     * verbosity of what to log, yes I know this is backwards, but its how nlog deals with ordinals.
+     * complain to them about it! In all cases, better exceptions will be logged.
+     * WARNING: trace-info logging will quickly create log files in the megabytes.
+     * 0 - trace
+     * 1 - debug
+     * 2 - info
+     * 3 - warn
+     * 4 - error
+     * 5 - fatal
+     * 6 - off
+     */
+    verbosity: number;
+    // Should we send the logging to the server
+    sendToServer: boolean;
 }
 
 export interface IRelease
