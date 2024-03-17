@@ -599,6 +599,7 @@
 	"launcher-profile_sptdeveloper": "Testing profile, starting level is 69, lots of Roubles/Dollars/Euros, USEC start with all quests ready to start, BEAR start with all quests ready to hand in, invincibility balaclava",
 	"launcher-missing_property": "Profile: %s is missing a descriptionLocaleKey property",
     "release-beta-disclaimer": "By pressing OK you agree that no support is offered and that this is for bug testing only. NOT actual gameplay. Mods are disabled. New profiles may be required frequently. Report all bugs in the reports channel in discord, or on the issues page on the website. If you don't press OK by the time specified, the game will close.",
+    "release-beta-disclaimer-mods-enabled": "By pressing OK you agree that no support is offered and that this is for bug testing only. NOT actual gameplay. Mods are enabled, do NOT report issues with mods. Do NOT ask mod authors for updated mods. Report all bugs in the reports channel in discord, or on the issues page on the website. If you dont press OK by the time specificed, the game will close.",
     "release-beta-disclaimer-accept": "User accepted the beta disclaimer",
     "release-server-mods-loaded": "One or more server mods exist on a mod enabled build, reports will be invalid until removed. See the top of the server for loaded server mods to remove to report issues again.",
     "release-server-mods-debug-message": "Server mods loaded",

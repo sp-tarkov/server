@@ -38,7 +38,10 @@ export class ClientLogCallbacks
     {
         const data: IRelease = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE).release;
 
-        data.betaDisclaimerText = this.localisationService.getText("release-beta-disclaimer");
+        data.betaDisclaimerText = globalThis.G_MODS_ENABLED
+            ? this.localisationService.getText("release-beta-disclaimer-mods-enabled")
+            : this.localisationService.getText("release-beta-disclaimer");
+
         data.betaDisclaimerAcceptText = this.localisationService.getText("release-beta-disclaimer-accept");
         data.serverModsLoadedText = this.localisationService.getText("release-server-mods-loaded");
         data.serverModsLoadedDebugText = this.localisationService.getText("release-server-mods-debug-message");
