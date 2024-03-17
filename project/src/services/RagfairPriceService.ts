@@ -171,13 +171,14 @@ export class RagfairPriceService implements OnLoad
     }
 
     /**
-     * Get prices for all items on flea, priorities dynamic prices from prices.json, use handbook prices if missing
+     * Get prices for all items on flea, prioritize handbook prices first, use prices from prices.json if missing
      * @returns Dictionary of item tpls and rouble cost
      */
     public getAllFleaPrices(): Record<string, number>
     {
-        // assign static values first, then overwrite them with dynamic, any values not stored in dynamic data will be covered by static data
-        return { ...this.prices.static, ...this.prices.dynamic };
+        // assign dynamic (prices.json) values first, then overwrite them with static (handbook.json)
+        // any values not stored in static data will be covered by dynamic data
+        return { ...this.prices.dynamic, ...this.prices.static };
     }
 
     public getAllStaticPrices(): Record<string, number>

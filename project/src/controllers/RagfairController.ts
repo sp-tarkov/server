@@ -352,7 +352,21 @@ export class RagfairController
             const min = offers[0].requirementsCost; // Get first item from array as its pre-sorted
             const max = offers.at(-1).requirementsCost; // Get last item from array as its pre-sorted
 
-            return { avg: (min + max) / 2, min: min, max: max };
+            // Get the average offer price, excluding barter offers
+            let avgOfferCount = 0;
+            const avg = offers.reduce((sum, offer) =>
+            {
+                // Exclude barter items
+                if (offer.requirements.some((req) => !this.paymentHelper.isMoneyTpl(req._tpl)))
+                {
+                    return sum;
+                }
+
+                avgOfferCount++;
+                return sum + offer.requirementsCost;
+            }, 0) / Math.max(avgOfferCount, 1);
+
+            return { avg: avg, min: min, max: max };
         }
 
         // No offers listed, get price from live ragfair price list prices.json
