@@ -3467,6 +3467,202 @@
             "associatedEvent": "Promo",
             "collectionTimeHours": 72,
             "messageText": "<ch>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</ch><cz>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</cz><en>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</en><fr>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</fr><ge>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</ge><hu>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</hu><it>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</it><jp>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</jp><kr>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</kr><pl>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</pl><po>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</po><sk>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</sk><es>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</es><es-mx>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</es-mx><tu>Greetings, warrior. I've heard you've been helping out our local hard workers with their stuff, testing everything out, so to speak. That's a good deed, soldier, great job. The higher-ups sent you a little present as a token of gratitude. Keep it up!</tu><ru>Привет, боец. Слыхал, ты местным работягам активно помогал, проверял всё на прочность, так сказать. Это дело правильное, молодец, вояка. Ребята сверху тебе за это подарочек передали в знак благодарности. Продолжай в том же духе!</ru><ro>Promo code is activated</ro>"
+        },
+        "KONTOROVICH": {
+            "items": [
+                {
+                    "_id": "4271a505e9e0e43abe0661b7",
+                    "_tpl": "5a3c16fe86f77452b62de32a",
+                    "parentId": "5fe49444ae6628187a2e78b8",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 50
+                    }
+                },
+                {
+                    "_id": "f6c1c2e4a832e1dac859363c",
+                    "_tpl": "5a3c16fe86f77452b62de32a",
+                    "parentId": "5fe49444ae6628187a2e78b8",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 50
+                    }
+                },
+                {
+                    "_id": "d2074dc88fcc33e5fdcbce9d",
+                    "_tpl": "583990e32459771419544dd2",
+                    "parentId": "5fe49444ae6628187a2e78b8",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "c315ddc6684d0e2a5678be12",
+                    "_tpl": "57dc334d245977597164366f",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_reciever"
+                },
+                {
+                    "_id": "be46fd287191d37a410dddc9",
+                    "_tpl": "59d36a0086f7747e673f3946",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_gas_block"
+                },
+                {
+                    "_id": "bd993ffee1b2a8841193af17",
+                    "_tpl": "55d480c04bdc2d1d4e8b456a",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_magazine"
+                },
+                {
+                    "_id": "5b5c7cef0bd8a6066f95a2cd",
+                    "_tpl": "5648ac824bdc2ded0b8b457d",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_charge"
+                },
+                {
+                    "_id": "34fd4b47438b9693c2139cdb",
+                    "_tpl": "59ecc28286f7746d7a68aa8c",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_stock"
+                },
+                {
+                    "_id": "ae46d9699234a05a1e8412a7",
+                    "_tpl": "57ffaea724597779f52b3a4d",
+                    "parentId": "a98012979a70ccf2a72d8a34",
+                    "slotId": "mod_tactical_000"
+                },
+                {
+                    "_id": "02818a0aba29759dd5f7f5d6",
+                    "_tpl": "57ffb0062459777a045af529",
+                    "parentId": "c315ddc6684d0e2a5678be12",
+                    "slotId": "mod_mount_000"
+                },
+                {
+                    "_id": "d28218deb552b41b556dfd2f",
+                    "_tpl": "5649ab884bdc2ded0b8b457f",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_muzzle"
+                },
+                {
+                    "_id": "a98012979a70ccf2a72d8a34",
+                    "_tpl": "57ffa9f4245977728561e844",
+                    "parentId": "be46fd287191d37a410dddc9",
+                    "slotId": "mod_handguard"
+                },
+                {
+                    "_id": "5cefbcc5e70a4c6a65476f10",
+                    "_tpl": "59fc48e086f77463b1118392",
+                    "parentId": "a98012979a70ccf2a72d8a34",
+                    "slotId": "mod_foregrip"
+                },
+                {
+                    "_id": "d5a14137c0977b064466ee00",
+                    "_tpl": "57fd23e32459772d0805bcf1",
+                    "parentId": "ae46d9699234a05a1e8412a7",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "4315d5f6f68b8844ca9c2726",
+                    "_tpl": "59ecc3dd86f7746dc827481c",
+                    "parentId": "34fd4b47438b9693c2139cdb",
+                    "slotId": "mod_stock"
+                },
+                {
+                    "_id": "4712863be841ca2de19c633f",
+                    "_tpl": "5649ae4a4bdc2d1b2b8b4588",
+                    "parentId": "d2074dc88fcc33e5fdcbce9d",
+                    "slotId": "mod_pistol_grip"
+                },
+                {
+                    "_id": "9f51836b3f3b02b4545a5d0c",
+                    "_tpl": "584924ec24597768f12ae244",
+                    "parentId": "02818a0aba29759dd5f7f5d6",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "a76880e04d88f8b24c188230",
+                    "_tpl": "56dfef82d2720bbd668b4567",
+                    "upd": {
+                        "StackObjectsCount": 30
+                    },
+                    "parentId": "bd993ffee1b2a8841193af17",
+                    "slotId": "cartridges",
+                    "location": 0
+                },
+                {
+                    "_id": "ade8274d65ef2e1ce7a88975",
+                    "_tpl": "56d59856d2720bd8418b456a",
+                    "parentId": "5fe49444ae6628187a2e78b8",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "1e1fcc843eac847a3731255d",
+                    "_tpl": "56d5a2bbd2720bb8418b456a",
+                    "parentId": "ade8274d65ef2e1ce7a88975",
+                    "slotId": "mod_pistol_grip"
+                },
+                {
+                    "_id": "523fff2aefc957f315456595",
+                    "_tpl": "56d5a407d2720bb3418b456b",
+                    "parentId": "ade8274d65ef2e1ce7a88975",
+                    "slotId": "mod_reciever"
+                },
+                {
+                    "_id": "0f3dfd44b4c9de9307eff694",
+                    "_tpl": "56d5a77ed2720b90418b4568",
+                    "parentId": "523fff2aefc957f315456595",
+                    "slotId": "mod_sight_rear"
+                },
+                {
+                    "_id": "0a65e97132cd09633df7ad0d",
+                    "_tpl": "56d5a661d2720bd8418b456b",
+                    "parentId": "523fff2aefc957f315456595",
+                    "slotId": "mod_sight_front"
+                },
+                {
+                    "_id": "00313e53e77412d80003ff30",
+                    "_tpl": "56d59948d2720bb7418b4582",
+                    "parentId": "ade8274d65ef2e1ce7a88975",
+                    "slotId": "mod_magazine"
+                },
+                {
+                    "_id": "b4114229bcde3b0500638b41",
+                    "_tpl": "587de4282459771bca0ec90b",
+                    "parentId": "ade8274d65ef2e1ce7a88975",
+                    "slotId": "mod_barrel"
+                },
+                {
+                    "_id": "6e400a1bdb8d0b6315c7e929",
+                    "_tpl": "5a33b2c9c4a282000c5a9511",
+                    "parentId": "bde91a09616c9a77623e3af0",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "b99a4695dc0e7430644b4f41",
+                    "_tpl": "5a32aa8bc4a2826c6e06d737",
+                    "parentId": "6e400a1bdb8d0b6315c7e929",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "bde91a09616c9a77623e3af0",
+                    "_tpl": "5a33a8ebc4a282000c5a950d",
+                    "parentId": "b4114229bcde3b0500638b41",
+                    "slotId": "mod_muzzle"
+                },
+                {
+                    "_id": "61f34f8efeef7092e71c1391",
+                    "_tpl": "56d59d3ad2720bdb418b4577",
+                    "parentId": "00313e53e77412d80003ff30",
+                    "slotId": "cartridges",
+                    "upd": {
+                        "StackObjectsCount": 15
+                    },
+                    "location": 0
+                }
+            ],
+            "sender": "System",
+            "associatedEvent": "Promo",
+            "collectionTimeHours": 72,
+            "messageText": "Thank you for purchasing of the first book in EFT series by A, Kontorovich. We are glad to give you this theme package with ingame items."
         }
     }
 }
