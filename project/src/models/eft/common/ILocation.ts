@@ -1,4 +1,4 @@
-import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { Exit, ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
 import { ILooseLoot } from "@spt-aki/models/eft/common/ILooseLoot";
 
 export interface ILocation
@@ -6,6 +6,7 @@ export interface ILocation
     base: ILocationBase;
     looseLoot: ILooseLoot;
     statics: IStaticContainer;
+    allExtracts: Exit[];
 }
 
 export interface IStaticContainer

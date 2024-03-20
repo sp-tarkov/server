@@ -7,6 +7,7 @@ import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { ILocation } from "@spt-aki/models/eft/common/ILocation";
 import { ILooseLoot } from "@spt-aki/models/eft/common/ILooseLoot";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { BodyPartHealth } from "@spt-aki/models/eft/common/tables/IBotBase";
@@ -29,7 +30,6 @@ import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
 import { ILootConfig } from "@spt-aki/models/spt/config/ILootConfig";
 import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILocationData } from "@spt-aki/models/spt/server/ILocations";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -243,7 +243,7 @@ export class GameController
 
         for (const locationKey in this.botConfig.maxBotCap)
         {
-            const map: ILocationData = mapsDb[locationKey];
+            const map: ILocation = mapsDb[locationKey];
             if (!map)
             {
                 continue;
@@ -361,7 +361,7 @@ export class GameController
 
         for (const mapId in this.locationConfig.botTypeLimits)
         {
-            const map: ILocationData = mapsDb[mapId];
+            const map: ILocation = mapsDb[mapId];
             if (!map)
             {
                 this.logger.warning(
@@ -626,7 +626,7 @@ export class GameController
             }
 
             // Loop over all of the locations waves and look for waves with identical min and max slots
-            const location: ILocationData = this.databaseServer.getTables().locations[locationKey];
+            const location: ILocation = this.databaseServer.getTables().locations[locationKey];
             if (!location.base)
             {
                 this.logger.warning(
@@ -701,7 +701,7 @@ export class GameController
             }
 
             // Iterate over all maps
-            const location: ILocationData = this.databaseServer.getTables().locations[locationKey];
+            const location: ILocation = this.databaseServer.getTables().locations[locationKey];
             for (const wave of location.base.waves)
             {
                 // Wave has size that makes it candidate for splitting

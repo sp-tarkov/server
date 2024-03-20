@@ -732,14 +732,8 @@ export class RepeatableQuestGenerator
 
         if (requiresSpecificExtract)
         {
-            // Filter by whitelist, it's also possible that the field "PassageRequirement" does not exist (e.g. Shoreline)
-            let mapExits = this.getLocationExitsForSide(locationKey, repeatableConfig.side);
-
-            // Exclude scav coop exits when choosing pmc exit
-            if (repeatableConfig.side === "Pmc")
-            {
-                mapExits = mapExits.filter((exit) => exit.PassageRequirement !== "ScavCooperation");
-            }
+            // Fetch extracts for the requested side
+            const mapExits = this.getLocationExitsForSide(locationKey, repeatableConfig.side);
 
             // Only get exits that have a greater than 0% chance to spawn
             const exitPool = mapExits.filter((exit) => exit.Chance > 0);
@@ -787,33 +781,15 @@ export class RepeatableQuestGenerator
     /**
      * Filter a maps exits to just those for the desired side
      * @param locationKey Map id (e.g. factory4_day)
-     * @param playerSide Scav/Bear
+     * @param playerSide Scav/Pmc
      * @returns Array of Exit objects
      */
     protected getLocationExitsForSide(locationKey: string, playerSide: string): Exit[]
     {
-        const mapBase = this.databaseServer.getTables().locations[locationKey.toLowerCase()].base as ILocationBase;
+        const mapExtracts = this.databaseServer.getTables().locations[locationKey.toLocaleLowerCase()]
+            .allExtracts as Exit[];
 
-        const infilPointsOfSameSide = new Set<string>();
-        for (const spawnPoint of mapBase.SpawnPointParams)
-        {
-            // Same side, add infil to list
-            if (spawnPoint.Sides.includes(playerSide) || spawnPoint.Sides.includes("All"))
-            {
-                // Has specific start location
-                if (spawnPoint.Infiltration.length > 0)
-                {
-                    infilPointsOfSameSide.add(spawnPoint.Infiltration);
-                }
-            }
-        }
-
-        // use list of allowed infils to figure out side of exits
-        const infilPointsArray = Array.from(infilPointsOfSameSide);
-
-        return mapBase.exits.filter((exit) =>
-            exit.EntryPoints.split(",").some((entryPoint) => infilPointsArray.includes(entryPoint))
-        );
+        return mapExtracts.filter((exit) => exit.Side === playerSide);
     }
 
     protected generatePickupQuest(

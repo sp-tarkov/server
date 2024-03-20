@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { IConfig } from "@spt-aki/models/eft/common/IGlobals";
+import { ILocation } from "@spt-aki/models/eft/common/ILocation";
 import { BossLocationSpawn } from "@spt-aki/models/eft/common/ILocationBase";
 import { Inventory } from "@spt-aki/models/eft/common/tables/IBotType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
@@ -11,7 +12,6 @@ import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
 import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
 import { ISeasonalEvent, ISeasonalEventConfig } from "@spt-aki/models/spt/config/ISeasonalEventConfig";
 import { IWeatherConfig } from "@spt-aki/models/spt/config/IWeatherConfig";
-import { ILocationData } from "@spt-aki/models/spt/server/ILocations";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -530,7 +530,7 @@ export class SeasonalEventService
                 continue;
             }
 
-            const mapData: ILocationData = maps[mapName];
+            const mapData: ILocation = maps[mapName];
             if (mapData?.base?.BotLocationModifier && "KhorovodChance" in mapData.base.BotLocationModifier)
             {
                 mapData.base.BotLocationModifier.KhorovodChance = 100;
@@ -547,7 +547,7 @@ export class SeasonalEventService
         const maps = this.databaseServer.getTables().locations;
         for (const gifterMapSettings of gifterSettings)
         {
-            const mapData: ILocationData = maps[gifterMapSettings.map];
+            const mapData: ILocation = maps[gifterMapSettings.map];
             // Dont add gifter to map twice
             if (mapData.base.BossLocationSpawn.some((boss) => boss.BossName === "gifter"))
             {
