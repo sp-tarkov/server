@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Neįmanoma surasti grobio N vertės botui: %s, bus naudojamas scav n vertė vietoj to",
 	"bot-unable_to_find_bot_in_cache": "Neįmanoma surasti boto talpykloje su vardu: %s",
 	"bot-missing_application_context": "applicationContext nesurado %s vertės. Ar jūs perkrovetė serverį neperkrovus žaidimo?",
-	"client_request": "[Kliento Prašymas] %s",
+	"client_request": "[Kliento Prašymas]",
 	"customisation-item_already_purchased": "Rūbas {{itemId}} {{itemName}} jau nupirktas",
 	"customisation-unable_to_find_suit_by_id": "Neįmanoma surasti prekėjo pasiūlymo su id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Rūbas nerastas inventoriuje su id: %s",

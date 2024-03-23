@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Не удалось найти значение лута N для бота: %s, используем значение N дикого",
 	"bot-unable_to_find_bot_in_cache": "Не удалось найти бота в кеше с именем: %s",
 	"bot-missing_application_context": "applicationContext не нашло значение %s. Вы перезапустили сервер без перезапуска самой игры?",
-	"client_request": "[Запрос Клиента] %s",
+	"client_request": "[Запрос Клиента]",
 	"customisation-item_already_purchased": "Предмет одежды {{itemName}} с id {{itemId}} уже куплен",
 	"customisation-unable_to_find_suit_by_id": "Не удалось найти предложение торговца подходящее к id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Предмет одежды был не найден в инвентаре с id: %s",

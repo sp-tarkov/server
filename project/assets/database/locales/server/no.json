@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Finner ikke loot N verdi for bot: %s, bruker scav n verdi i stedet",
 	"bot-unable_to_find_bot_in_cache": "Kan ikke finne bot i mellomlager med navn: %s",
 	"bot-missing_application_context": "applikasjonsKontekst kunne ikke finne %s verdi. Har du startet serveren på nytt uten å starte spillet på nytt?",
-	"client_request": "[Client Request] %s",
+	"client_request": "[Client Request]",
 	"customisation-item_already_purchased": "Kles-element {{itemId}} {{itemName}} er allerede kjøpt",
 	"customisation-unable_to_find_suit_by_id": "Kan ikke finne kjøpmannens drakttilbud med id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Kles-element ikke funnet i inventaret med ID: %s",

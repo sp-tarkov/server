@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Não foi possível encontrar o valor N do saque para o bot: %s, usando o valor n do saque em vez disso",
 	"bot-unable_to_find_bot_in_cache": "Não foi possível localizar o bot no cache com o nome: %s",
 	"bot-missing_application_context": "applicationContext não conseguiu encontrar o valor %s. Você reiniciou o servidor sem reiniciar o jogo?",
-	"client_request": "[Client Request] %s",
+	"client_request": "[Client Request]",
 	"customisation-item_already_purchased": "Item de vestuário {{itemId}} {{itemName}} já comprado",
 	"customisation-unable_to_find_suit_by_id": "Não foi possível encontrar a oferta de traje do negociante com o ID: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Item de vestuário não encontrado no inventário com id: %s",

@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Tidak dapat menemukan nilai N benda untuk bot: %s, menggunakan nilai n scav sebagai gantinya",
 	"bot-unable_to_find_bot_in_cache": "Tidak dapat menemukan bot bernama: %s dalam cache",
 	"bot-missing_application_context": "applicationContext tidak dapat menemukan nilai %s. Apakah anda mulai ulang server tanpa memulai ulang game?",
-	"client_request": "[Client Request] %s",
+	"client_request": "[Client Request]",
 	"customisation-item_already_purchased": "Baju {{itemId}} {{itemName}} telah dibeli",
 	"customisation-unable_to_find_suit_by_id": "Tidak dapat menemukan penawaran setelan vendor dengan id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Baju tidak ditemukan di inventory dengan id: %s",

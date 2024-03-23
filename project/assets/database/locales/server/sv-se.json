@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Det går inte att hitta loot N värde för bot: %s, använder scav n värde istället",
 	"bot-unable_to_find_bot_in_cache": "Kunde inte hitta bot i cachen med namn: %s",
 	"bot-missing_application_context": "applicationContex kan inte hitta %s-värde. Startade du om servern utan att starta om spelet?",
-	"client_request": "[Klient Förfrågan] %s",
+	"client_request": "[Klient Förfrågan]",
 	"customisation-item_already_purchased": "Klädobjektet {{itemId}} {{itemName}} har redan köpts",
 	"customisation-unable_to_find_suit_by_id": "Det gick inte att hitta erbjudande om traderkostym med id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Klädesföremål hittades inte i förrådet med id: %s",

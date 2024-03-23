@@ -80,7 +80,11 @@ export class HttpServer
         // http.json logRequests boolean option to allow the user/server to choose to not log requests
         if (this.httpConfig.logRequests)
         {
-            this.logger.info(this.localisationService.getText("client_request", req.url));
+            const ip = req.socket.remoteAddress;
+
+            // note: passing path into localizasionservice as property causes the '/' to get codified,
+            //       that's why sting interpolation is used here.
+            this.logger.info(`${this.localisationService.getText("client_request")}][${ip}] ${req.url}`);
         }
 
         for (const listener of this.httpListeners)

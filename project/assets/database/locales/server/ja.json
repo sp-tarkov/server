@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Botの戦利品%sのN値が見つかりませんでした, 代わりにscavのn値を使用しています",
 	"bot-unable_to_find_bot_in_cache": "%s という名前のキャッシュ内のボットを見つけることができません。",
 	"bot-missing_application_context": "applicationContextは %s 値を見つけることができませんでした。ゲームを再起動せずにサーバーを再起動しましたか？",
-	"client_request": "[Client Request] %s",
+	"client_request": "[Client Request]",
 	"customisation-item_already_purchased": "アイテム {{itemId}} {{itemName}} は既に購入されています",
 	"customisation-unable_to_find_suit_by_id": "ID: %s のトレーダースーツオファーを見つけることができません",
 	"customisation-unable_to_find_clothing_item_in_inventory": "ID: %s の在庫がありません",

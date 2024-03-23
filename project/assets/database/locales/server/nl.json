@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Niet in staat om loo N waarde te vinden voor bot: %s, scav n wordt gebruikt",
 	"bot-unable_to_find_bot_in_cache": "Niet in staat om bot te vinden in de cache met de naam: %s",
 	"bot-missing_application_context": "toepassingContext kon geen %s waarde vinden. Heeft u de server opnieuw opgestart zonder het spel te herstarten?",
-	"client_request": "[Cliëntverzoek] %s",
+	"client_request": "[Cliëntverzoek]",
 	"customisation-item_already_purchased": "Kleding item {{itemId}} {{itemName}} is al gekocht",
 	"customisation-unable_to_find_suit_by_id": "Niet in staat om trader kleding aanbod te vinden met id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Kleding item niet gevonden in inventaris met id: %s",

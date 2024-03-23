@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Nelze najít hodnotu lootu N pro bota: %s, místo toho použijte hodnotu n u scava",
 	"bot-unable_to_find_bot_in_cache": "Nelze najít bota v mezipaměti s názvem: %s",
 	"bot-missing_application_context": "applicationContext nemohl najít hodnotu %s. Restartovali jste server bez restartování hry?",
-	"client_request": "[Žádost klienta] %s",
+	"client_request": "[Žádost klienta]",
 	"customisation-item_already_purchased": "Položka oblečení {{itemId}} {{itemName}} již byla zakoupena",
 	"customisation-unable_to_find_suit_by_id": "Nelze najít obchodníka vyhovojující nabídce s id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Položka oblečení nebyla nalezena v inventáři s id: %s",

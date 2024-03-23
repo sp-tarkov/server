@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Impossible de trouver la valeur de butin N pour le bot : %s, utilisation de la valeur de scav n à la place",
 	"bot-unable_to_find_bot_in_cache": "Impossible de trouver un bot dans le cache ayant le nom: %s",
 	"bot-missing_application_context": "applicationContext n'a pas pu trouver la valeur %s . Avez-vous redémarré le serveur sans redémarrer le jeu ?",
-	"client_request": "[Requête Client] %s",
+	"client_request": "[Requête Client]",
 	"customisation-item_already_purchased": "Tenue {{itemId}} {{itemName}} déjà achetée",
 	"customisation-unable_to_find_suit_by_id": "Impossible de trouver l'offre de tenue de vendeur avec l'id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Vêtement avec id: %s introuvable dans l'inventaire",

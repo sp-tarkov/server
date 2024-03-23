@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Bot: %s için ganimet N değeri bulunamıyor, bunun yerine scav N değeri kullanılıyor",
 	"bot-unable_to_find_bot_in_cache": "Önbellekte adı: %s olan bot bulunamıyor",
 	"bot-missing_application_context": "applicationContext %s değerini bulamadı. Oyunu yeniden başlatmadan sunucuyu yeniden başlattınız mı?",
-	"client_request": "[İstemci İsteği] %s",
+	"client_request": "[İstemci İsteği]",
 	"customisation-item_already_purchased": "Giyim ürünü {{itemId}} {{itemName}} zaten satın alındı",
 	"customisation-unable_to_find_suit_by_id": "Id: %s ile tüccar takım teklifi bulunamıyor",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Envanterde id: %s ile giyim eşyası bulunamadı",

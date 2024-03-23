@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Nie można znaleźć wartości łupów N dla bota: %s, używanie wartości łupów n dla Scava",
 	"bot-unable_to_find_bot_in_cache": "Nie można znaleźć bota w cache o nazwie: %s",
 	"bot-missing_application_context": "applicationContex nie znalazł wartości %s. Czy zrestartowałeś serwer bez restartowania gry?",
-	"client_request": "[Żądanie klienta] %s",
+	"client_request": "[Żądanie klienta]",
 	"customisation-item_already_purchased": "Przedmiot ubioru {{itemId}} {{itemName}} już zakupiony",
 	"customisation-unable_to_find_suit_by_id": "Nie można znaleźć dostępnej oferty stroju w sprzedaży dla id: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Przedmiot ubioru nie znaleziony w ekwipunku z id: %s",

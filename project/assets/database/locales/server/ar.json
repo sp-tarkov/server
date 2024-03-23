@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "تعذر العثور على قيمة N للغنيمة للبوت: %s، يتم استخدام قيمة N للسكاف بدلاً من ذلك.\n\n\n\n\n\n\n",
 	"bot-unable_to_find_bot_in_cache": "تعذر العثور على الروبوت في الذاكرة التخزين المؤقتة بالاسم: %s\n\n\n\n\n\n\n",
 	"bot-missing_application_context": "لا يمكن لـ applicationContext العثور على قيمة %s. هل قمت بإعادة تشغيل الخادم دون إعادة تشغيل اللعبة؟\n\n\n\n\n\n\n",
-	"client_request": "[طلب السيرفر] %s\n\n\n\n\n\n\n",
+	"client_request": "[طلب السيرفر]\n\n\n\n\n\n\n",
 	"customisation-item_already_purchased": "تم شراء العنصر الخاص بالملابس {{itemId}} {{itemName}} بالفعل.\n\n\n\n\n\n\n",
 	"customisation-unable_to_find_suit_by_id": "تعذر العثور على عرض لبيع ملابس التاجر بالرقم: %s\n\n\n\n\n\n\n",
 	"customisation-unable_to_find_clothing_item_in_inventory": "لم يتم العثور على عنصر الملابس في المخزون بالرقم: %s\n\n\n\n\n\n\n",

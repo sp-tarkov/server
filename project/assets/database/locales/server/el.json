@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Αδυναμία εύρεσης τιμής loot N για το bot: %s, χρησιμοποιώντας την τιμή scav n",
 	"bot-unable_to_find_bot_in_cache": "Αδύνατη η εύρεση bot στην κρυφή μνήμη με όνομα: %s",
 	"bot-missing_application_context": "συμφραζόμεναΕφαρμογής δεν μπόρεσε να βρει την τιμή %s. Μήπως επανεκκινήσετε το διακομιστή χωρίς επανεκκίνηση του παιχνιδιού;",
-	"client_request": "[Αίτημα Πελάτη] %s",
+	"client_request": "[Αίτημα Πελάτη]",
 	"customisation-item_already_purchased": "Το Στοιχείο Ένδυσης {{itemId}} {{itemName}} ήδη αγοράστηκε",
 	"customisation-unable_to_find_suit_by_id": "Αδυναμία εύρεσης προσφοράς ρουχισμού εμπόρου με ταυτότητα: %s",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Δε βρέθηκε στοιχείο ένδυσης στο απόθεμα του παίκτη με ταυτότητα: %s",

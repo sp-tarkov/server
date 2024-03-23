@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "找不到bot：%s的战利品N值，使用scav的n值代替",
 	"bot-unable_to_find_bot_in_cache": "缓存中找不到名称：%s的bot",
 	"bot-missing_application_context": "applicationContext 找不到%s值。是不是重启服务器的时候忘了重启游戏客户端？",
-	"client_request": "[客户端请求] %s",
+	"client_request": "[客户端请求]",
 	"customisation-item_already_purchased": "服装物品{{itemId}} {{itemName}}已购买",
 	"customisation-unable_to_find_suit_by_id": "找不到id：%s的商人服装报价",
 	"customisation-unable_to_find_clothing_item_in_inventory": "物品栏中找不到id：%s的服装物品",

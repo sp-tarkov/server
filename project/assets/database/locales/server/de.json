@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Beute-N-Wert für Bot: %s konnte nicht gefunden werden. Stattdessen wird der Scav-N-Wert verwendet",
 	"bot-unable_to_find_bot_in_cache": "Der Bot mit dem Namen %s konnte im Cache nicht gefunden werden",
 	"bot-missing_application_context": "applicationContex konnte Wert %s nicht finden. Hast du den Server neu gestartet, ohne das Spiel neu zu starten?",
-	"client_request": "[Client-Anfrage] %s",
+	"client_request": "[Client-Anfrage]",
 	"customisation-item_already_purchased": "Kleidungsstück {{itemId}} {{itemName}} bereits gekauft",
 	"customisation-unable_to_find_suit_by_id": "Anzug-Angebot eines Händlers mit der ID %s konnte nicht gefunden werden",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Kleidungsstück mit der ID %s wurde nicht im Inventar gefunden",

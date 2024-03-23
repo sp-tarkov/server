@@ -50,7 +50,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "%s 봇의 전리품 N 값을 찾을 수가 없습니다 따라서 스캐브의 N 값을 사용하겠습니다",
 	"bot-unable_to_find_bot_in_cache": "캐시 내부에서 %s 라는 봇을 찾을 수 없었습니다",
 	"bot-missing_application_context": "applicationContext가 %s 값을 찾을 수 없었습니다. 게임을 재시작하지 않고 서버를 재시작했습니까?",
-	"client_request": "[클라이언트 요청] %s",
+	"client_request": "[클라이언트 요청]",
 	"customisation-item_already_purchased": "의류 아이템 {{itemId}} {{itemName}} 은(는) 이미 구매했습니다",
 	"customisation-unable_to_find_suit_by_id": "%s 해당 아이디를 가진 거래상의 수트 거래 항목을 찾을 수 없었습니다",
 	"customisation-unable_to_find_clothing_item_in_inventory": "%s 해당 아이디를 가진 옷가지 아이템을 인벤토리에서 찾을 수 없었습니다",

@@ -51,7 +51,7 @@
 	"bot-unable_to_find_loot_n_value_for_bot": "Impossibile trovare il valore N del loot per il bot: %s, usando invece il valore scav N",
 	"bot-unable_to_find_bot_in_cache": "Impossibile trovare il bot nella cache con nome: %s",
 	"bot-missing_application_context": "applicationContex non ha trovato il valore %s. Hai riavviato il server senza riavviare il gioco?",
-	"client_request": "[Richiesta Client] %s",
+	"client_request": "[Richiesta Client]",
 	"customisation-item_already_purchased": "I vestiti {{itemId}} {{itemName}} è già stato acquistato",
 	"customisation-unable_to_find_suit_by_id": "applicationContex non ha trovato il valore %s . Hai riavviato il server senza riavviare la partita?",
 	"customisation-unable_to_find_clothing_item_in_inventory": "Impossibile trovare nell'inventario l'oggetto d'abbigliamento con id: %s",
