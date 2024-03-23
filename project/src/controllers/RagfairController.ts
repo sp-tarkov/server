@@ -342,31 +342,51 @@ export class RagfairController
      */
     public getItemMinAvgMaxFleaPriceValues(getPriceRequest: IGetMarketPriceRequestData): IGetItemPriceResult
     {
-        // Get all items of tpl (sort by price)
-        let offers = this.ragfairOfferService.getOffersOfType(getPriceRequest.templateId);
+        // Get all items of tpl
+        const offers = this.ragfairOfferService.getOffersOfType(getPriceRequest.templateId);
 
         // Offers exist for item, get averages of what's listed
         if (typeof offers === "object" && offers.length > 0)
         {
-            offers = this.ragfairSortHelper.sortOffers(offers, RagfairSort.PRICE);
-            const min = offers[0].requirementsCost; // Get first item from array as its pre-sorted
-            const max = offers.at(-1).requirementsCost; // Get last item from array as its pre-sorted
+            // These get calculated while iterating through the list below
+            let min = Number.MAX_VALUE;
+            let max = 0;
 
             // Get the average offer price, excluding barter offers
             let avgOfferCount = 0;
             const avg = offers.reduce((sum, offer) =>
             {
-                // Exclude barter items
+                // Exclude barter items, they tend to have outrageous equivalent prices
                 if (offer.requirements.some((req) => !this.paymentHelper.isMoneyTpl(req._tpl)))
                 {
                     return sum;
                 }
 
+                // Figure out how many items the requirementsCost is applying to, and what the per-item price is
+                const offerItemCount = Math.max(offer.sellInOnePiece ? offer.items[0].upd?.StackObjectsCount ?? 1 : 1);
+                const perItemPrice = offer.requirementsCost / offerItemCount;
+
+                // Handle min/max calculations based on the per-item price
+                if (perItemPrice < min)
+                {
+                    min = perItemPrice;
+                }
+                else if (perItemPrice > max)
+                {
+                    max = perItemPrice;
+                }
+
                 avgOfferCount++;
-                return sum + offer.requirementsCost;
+                return sum + perItemPrice;
             }, 0) / Math.max(avgOfferCount, 1);
 
-            return { avg: avg, min: min, max: max };
+            // If no items were actually counted, min will still be MAX_VALUE, so set it to 0
+            if (min === Number.MAX_VALUE)
+            {
+                min = 0;
+            }
+
+            return { avg: Math.round(avg), min: min, max: max };
         }
 
         // No offers listed, get price from live ragfair price list prices.json
