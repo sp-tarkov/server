@@ -55,6 +55,9 @@ export class CustomItemService
         if (tables.templates.items[newItemId])
         {
             result.errors.push(`ItemId already exists. ${tables.templates.items[newItemId]._name}`);
+            result.success = false;
+            result.itemId = newItemId;
+
             return result;
         }
 

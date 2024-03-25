@@ -53,6 +53,7 @@ export class CreateItemResult
     constructor()
     {
         this.success = false;
+        this.errors = [];
     }
 
     success: boolean;
