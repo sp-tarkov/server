@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import path from "path";
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
@@ -55,7 +56,7 @@ export class BundleLoader
 
         if (local)
         {
-            bundle.path = bundle.filepath;
+            bundle.path = path.join(process.cwd(), bundle.filepath);
         }
 
         delete bundle.filepath;
