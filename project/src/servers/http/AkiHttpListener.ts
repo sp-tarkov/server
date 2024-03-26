@@ -48,7 +48,7 @@ export class AkiHttpListener implements IHttpListener
                 // kinda big), on a slow connection. We need to re-assemble the entire http payload
                 // before processing it.
 
-                const requestLength = parseInt(req.headers["content-length"]);
+                const requestLength = Number.parseInt(req.headers["content-length"]);
                 const buffer = Buffer.alloc(requestLength);
                 let written = 0;
 

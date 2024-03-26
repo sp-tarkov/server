@@ -1,4 +1,4 @@
-import http, { IncomingMessage, ServerResponse } from "node:http";
+import http, { IncomingMessage, ServerResponse, Server } from "node:http";
 import { inject, injectAll, injectable } from "tsyringe";
 
 import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
@@ -38,7 +38,9 @@ export class HttpServer
     public load(): void
     {
         /* create server */
-        const httpServer: http.Server = http.createServer((req, res) =>
+        const httpServer: Server = http.createServer();
+
+        httpServer.on("request", (req, res) =>
         {
             this.handleRequest(req, res);
         });
@@ -104,7 +106,7 @@ export class HttpServer
         }
     }
 
-    protected getCookies(req: http.IncomingMessage): Record<string, string>
+    protected getCookies(req: IncomingMessage): Record<string, string>
     {
         const found: Record<string, string> = {};
         const cookies = req.headers.cookie;

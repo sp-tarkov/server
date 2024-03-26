@@ -1,6 +1,6 @@
+import path from "node:path";
 import { inject, injectable } from "tsyringe";
 
-import path from "path";
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
@@ -84,7 +84,7 @@ export class BundleLoader
 
 export interface BundleManifest
 {
-    manifest: Array<BundleManifestEntry>;
+    manifest: BundleManifestEntry[];
 }
 
 export interface BundleManifestEntry
