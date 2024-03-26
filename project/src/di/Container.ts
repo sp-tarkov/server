@@ -199,7 +199,6 @@ import { BotWeaponModLimitService } from "@spt-aki/services/BotWeaponModLimitSer
 import { CustomLocationWaveService } from "@spt-aki/services/CustomLocationWaveService";
 import { FenceService } from "@spt-aki/services/FenceService";
 import { GiftService } from "@spt-aki/services/GiftService";
-import { HashCacheService } from "@spt-aki/services/HashCacheService";
 import { InsuranceService } from "@spt-aki/services/InsuranceService";
 import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
@@ -228,6 +227,8 @@ import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
 import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
 import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
+import { BundleHashCacheService } from "@spt-aki/services/cache/BundleHashCacheService";
+import { ModHashCacheService } from "@spt-aki/services/cache/ModHashCacheService";
 import { CustomItemService } from "@spt-aki/services/mod/CustomItemService";
 import { DynamicRouterModService } from "@spt-aki/services/mod/dynamicRouter/DynamicRouterModService";
 import { HttpListenerModService } from "@spt-aki/services/mod/httpListener/HttpListenerModService";
@@ -690,7 +691,10 @@ export class Container
             lifecycle: Lifecycle.Singleton,
         });
         depContainer.register<ModCompilerService>("ModCompilerService", ModCompilerService);
-        depContainer.register<HashCacheService>("HashCacheService", HashCacheService, {
+        depContainer.register<BundleHashCacheService>("BundleHashCacheService", BundleHashCacheService, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<ModHashCacheService>("ModHashCacheService", ModHashCacheService, {
             lifecycle: Lifecycle.Singleton,
         });
         depContainer.register<LocaleService>("LocaleService", LocaleService, { lifecycle: Lifecycle.Singleton });

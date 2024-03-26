@@ -5,7 +5,7 @@ import { inject, injectable } from "tsyringe";
 import ts from "typescript";
 
 import type { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { HashCacheService } from "@spt-aki/services/HashCacheService";
+import { ModHashCacheService } from "@spt-aki/services/cache/ModHashCacheService";
 import { VFS } from "@spt-aki/utils/VFS";
 
 @injectable()
@@ -15,7 +15,7 @@ export class ModCompilerService
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("HashCacheService") protected hashCacheService: HashCacheService,
+        @inject("ModHashCacheService") protected modHashCacheService: ModHashCacheService,
         @inject("VFS") protected vfs: VFS,
     )
     {
@@ -47,7 +47,7 @@ export class ModCompilerService
             }
         }
 
-        const hashMatches = this.hashCacheService.modContentMatchesStoredHash(modName, tsFileContents);
+        const hashMatches = this.modHashCacheService.calculateAndCompareHash(modName, tsFileContents);
 
         if (fileExists && hashMatches)
         {
@@ -58,7 +58,7 @@ export class ModCompilerService
         if (!hashMatches)
         {
             // Store / update hash in json file
-            this.hashCacheService.storeModContent(modName, tsFileContents);
+            this.modHashCacheService.calculateAndStoreHash(modName, tsFileContents);
         }
 
         return this.compile(modTypeScriptFiles, {
