@@ -32,6 +32,7 @@
     },
     "dependencies": {
         "atomically": "~1.7",
+        "buffer-crc32": "^1.0.0",
         "date-fns": "~2.30",
         "date-fns-tz": "~2.0",
         "i18n": "~0.15",

@@ -1,4 +1,6 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
+import crc32 from "buffer-crc32";
 import { inject, injectable } from "tsyringe";
 
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -30,6 +32,11 @@ export class HashUtil
     public generateSha1ForData(data: string): string
     {
         return this.generateHashForData("sha1", data);
+    }
+
+    public generateCRC32ForFile(filePath: fs.PathLike): number
+    {
+        return crc32.unsigned(fs.readFileSync(filePath));
     }
 
     /**
