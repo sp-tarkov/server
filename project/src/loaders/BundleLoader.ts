@@ -2,6 +2,7 @@ import path from "node:path";
 import { inject, injectable } from "tsyringe";
 
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { BundleHashCacheService } from "@spt-aki/services/cache/BundleHashCacheService";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
 
@@ -11,14 +12,16 @@ export class BundleInfo
     key: string;
     path: string;
     filepath: string;
+    crc: number;
     dependencyKeys: string[];
 
-    constructor(modpath: string, bundle: any, bundlePath: string, bundleFilepath: string)
+    constructor(modpath: string, bundle: any, bundlePath: string, bundleFilepath: string, bundleHash: number)
     {
         this.modPath = modpath;
         this.key = bundle.key;
         this.path = bundlePath;
         this.filepath = bundleFilepath;
+        this.crc = bundleHash;
         this.dependencyKeys = bundle.dependencyKeys || [];
     }
 }
@@ -32,6 +35,7 @@ export class BundleLoader
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("VFS") protected vfs: VFS,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("BundleHashCacheService") protected bundleHashCacheService: BundleHashCacheService,
     )
     {}
 
@@ -72,7 +76,15 @@ export class BundleLoader
         {
             const bundlePath = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundle.key}`;
             const bundleFilepath = bundle.path || `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/");
-            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, bundlePath, bundleFilepath));
+
+            if (!this.bundleHashCacheService.calculateAndMatchHash(bundleFilepath))
+            {
+                this.bundleHashCacheService.calculateAndStoreHash(bundleFilepath);
+            }
+
+            const bundleHash = this.bundleHashCacheService.getStoredValue(bundleFilepath);
+
+            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, bundlePath, bundleFilepath, bundleHash));
         }
     }
 
