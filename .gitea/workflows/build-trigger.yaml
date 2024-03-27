@@ -9,11 +9,6 @@ jobs:
   trigger-main-build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 1
-
     - name: Setup Git Config
       run: |
         git config --global user.email "triggerbot@example.com"
