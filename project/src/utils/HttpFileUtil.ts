@@ -11,12 +11,12 @@ export class HttpFileUtil
     {
     }
 
-    public sendFile(resp: ServerResponse, file: any): void
+    public sendFile(resp: ServerResponse, filePath: string): void
     {
-        const pathSlic = file.split("/");
+        const pathSlic = filePath.split("/");
         const type = this.httpServerHelper.getMimeText(pathSlic[pathSlic.length - 1].split(".").at(-1))
             || this.httpServerHelper.getMimeText("txt");
-        const fileStream = fs.createReadStream(file);
+        const fileStream = fs.createReadStream(filePath);
 
         fileStream.on("open", () =>
         {
