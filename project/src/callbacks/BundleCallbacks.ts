@@ -25,8 +25,7 @@ export class BundleCallbacks
      */
     public getBundles(url: string, info: any, sessionID: string): string
     {
-        const local = this.httpConfig.ip === "127.0.0.1" || this.httpConfig.ip === "localhost";
-        return this.httpResponse.noBody(this.bundleLoader.getBundles(local));
+        return this.httpResponse.noBody(this.bundleLoader.getBundles());
     }
 
     public getBundle(url: string, info: any, sessionID: string): string

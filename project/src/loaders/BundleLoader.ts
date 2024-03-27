@@ -8,21 +8,17 @@ import { VFS } from "@spt-aki/utils/VFS";
 
 export class BundleInfo
 {
-    modPath: string;
-    key: string;
-    path: string;
-    filepath: string;
+    modpath: string;
+    filename: string;
     crc: number;
-    dependencyKeys: string[];
+    dependencies: string[];
 
-    constructor(modpath: string, bundle: any, bundlePath: string, bundleFilepath: string, bundleHash: number)
+    constructor(modpath: string, bundle: any, crc: number)
     {
-        this.modPath = modpath;
-        this.key = bundle.key;
-        this.path = bundlePath;
-        this.filepath = bundleFilepath;
-        this.crc = bundleHash;
-        this.dependencyKeys = bundle.dependencyKeys || [];
+        this.modpath = modpath;
+        this.filename = bundle.key;
+        this.crc = crc;                 // client-side cache validation
+        this.dependencies = bundle.dependencyKeys || [];
     }
 }
 
@@ -42,28 +38,21 @@ export class BundleLoader
     /**
      * Handle singleplayer/bundles
      */
-    public getBundles(local: boolean): BundleInfo[]
+    public getBundles(): BundleInfo[]
     {
         const result: BundleInfo[] = [];
 
         for (const bundle in this.bundles)
         {
-            result.push(this.getBundle(bundle, local));
+            result.push(this.getBundle(bundle));
         }
 
         return result;
     }
 
-    public getBundle(key: string, local: boolean): BundleInfo
+    public getBundle(key: string): BundleInfo
     {
-        const bundle = this.jsonUtil.clone(this.bundles[key]);
-
-        if (local)
-        {
-            bundle.path = path.join(process.cwd(), bundle.filepath);
-        }
-
-        delete bundle.filepath;
+        const bundle = structuredClone(this.bundles[key]);
         return bundle;
     }
 
@@ -74,17 +63,16 @@ export class BundleLoader
 
         for (const bundle of manifest)
         {
-            const bundlePath = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundle.key}`;
-            const bundleFilepath = bundle.path || `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/");
+            const filepath = `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/");
 
-            if (!this.bundleHashCacheService.calculateAndMatchHash(bundleFilepath))
+            if (!this.bundleHashCacheService.calculateAndMatchHash(filepath))
             {
-                this.bundleHashCacheService.calculateAndStoreHash(bundleFilepath);
+                this.bundleHashCacheService.calculateAndStoreHash(filepath);
             }
 
-            const bundleHash = this.bundleHashCacheService.getStoredValue(bundleFilepath);
+            const hash = this.bundleHashCacheService.getStoredValue(filepath);
 
-            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, bundlePath, bundleFilepath, bundleHash));
+            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, hash));
         }
     }
 
