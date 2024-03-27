@@ -1,3 +1,4 @@
+import path from "node:path";
 import { inject, injectable } from "tsyringe";
 
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
@@ -7,16 +8,14 @@ import { VFS } from "@spt-aki/utils/VFS";
 
 export class BundleInfo
 {
-    remote: string;
-    local: string;
+    modpath: string;
     filename: string;
     crc: number;
     dependencies: string[];
 
-    constructor(bundle: BundleManifestEntry, remote: string, local: string, bundleHash: number)
+    constructor(modpath: string, bundle: BundleManifestEntry, bundleHash: number)
     {
-        this.remote = remote;
-        this.local = local;
+        this.modpath = modpath;
         this.filename = bundle.key;
         this.crc = bundleHash;
         this.dependencies = bundle.dependencyKeys || [];
@@ -53,10 +52,7 @@ export class BundleLoader
 
     public getBundle(key: string): BundleInfo
     {
-        const bundle = this.jsonUtil.clone(this.bundles[key]);
-
-        // delete bundle.filepath;
-        return bundle;
+        return this.jsonUtil.clone(this.bundles[key]);
     }
 
     public addBundles(modpath: string): void
@@ -66,7 +62,7 @@ export class BundleLoader
 
         for (const bundleManifest of bundleManifestArr)
         {
-            const bundleRemoteUrl = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundleManifest.key}`;
+            const absoluteModPath = path.join(process.cwd(), modpath).slice(0, -1).replace(/\\/g, "/");
             const bundleLocalPath = `${modpath}bundles/${bundleManifest.key}`.replace(/\\/g, "/");
 
             if (!this.bundleHashCacheService.calculateAndMatchHash(bundleLocalPath))
@@ -76,10 +72,7 @@ export class BundleLoader
 
             const bundleHash = this.bundleHashCacheService.getStoredValue(bundleLocalPath);
 
-            this.addBundle(
-                bundleManifest.key,
-                new BundleInfo(bundleManifest, bundleRemoteUrl, bundleLocalPath, bundleHash),
-            );
+            this.addBundle(bundleManifest.key, new BundleInfo(absoluteModPath, bundleManifest, bundleHash));
         }
     }
 
