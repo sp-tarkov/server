@@ -1,4 +1,3 @@
-import path from "node:path";
 import { inject, injectable } from "tsyringe";
 
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
@@ -8,21 +7,19 @@ import { VFS } from "@spt-aki/utils/VFS";
 
 export class BundleInfo
 {
-    modPath: string;
-    key: string;
-    path: string;
-    filepath: string;
+    remote: string;
+    local: string;
+    filename: string;
     crc: number;
-    dependencyKeys: string[];
+    dependencies: string[];
 
-    constructor(modpath: string, bundle: any, bundlePath: string, bundleFilepath: string, bundleHash: number)
+    constructor(bundle: BundleManifestEntry, remote: string, local: string, bundleHash: number)
     {
-        this.modPath = modpath;
-        this.key = bundle.key;
-        this.path = bundlePath;
-        this.filepath = bundleFilepath;
+        this.remote = remote;
+        this.local = local;
+        this.filename = bundle.key;
         this.crc = bundleHash;
-        this.dependencyKeys = bundle.dependencyKeys || [];
+        this.dependencies = bundle.dependencyKeys || [];
     }
 }
 
@@ -42,49 +39,47 @@ export class BundleLoader
     /**
      * Handle singleplayer/bundles
      */
-    public getBundles(local: boolean): BundleInfo[]
+    public getBundles(): BundleInfo[]
     {
         const result: BundleInfo[] = [];
 
         for (const bundle in this.bundles)
         {
-            result.push(this.getBundle(bundle, local));
+            result.push(this.getBundle(bundle));
         }
 
         return result;
     }
 
-    public getBundle(key: string, local: boolean): BundleInfo
+    public getBundle(key: string): BundleInfo
     {
         const bundle = this.jsonUtil.clone(this.bundles[key]);
 
-        if (local)
-        {
-            bundle.path = path.join(process.cwd(), bundle.filepath);
-        }
-
-        delete bundle.filepath;
+        // delete bundle.filepath;
         return bundle;
     }
 
     public addBundles(modpath: string): void
     {
-        const manifest =
+        const bundleManifestArr =
             this.jsonUtil.deserialize<BundleManifest>(this.vfs.readFile(`${modpath}bundles.json`)).manifest;
 
-        for (const bundle of manifest)
+        for (const bundleManifest of bundleManifestArr)
         {
-            const bundlePath = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundle.key}`;
-            const bundleFilepath = bundle.path || `${modpath}bundles/${bundle.key}`.replace(/\\/g, "/");
+            const bundleRemoteUrl = `${this.httpServerHelper.getBackendUrl()}/files/bundle/${bundleManifest.key}`;
+            const bundleLocalPath = `${modpath}bundles/${bundleManifest.key}`.replace(/\\/g, "/");
 
-            if (!this.bundleHashCacheService.calculateAndMatchHash(bundleFilepath))
+            if (!this.bundleHashCacheService.calculateAndMatchHash(bundleLocalPath))
             {
-                this.bundleHashCacheService.calculateAndStoreHash(bundleFilepath);
+                this.bundleHashCacheService.calculateAndStoreHash(bundleLocalPath);
             }
 
-            const bundleHash = this.bundleHashCacheService.getStoredValue(bundleFilepath);
+            const bundleHash = this.bundleHashCacheService.getStoredValue(bundleLocalPath);
 
-            this.addBundle(bundle.key, new BundleInfo(modpath, bundle, bundlePath, bundleFilepath, bundleHash));
+            this.addBundle(
+                bundleManifest.key,
+                new BundleInfo(bundleManifest, bundleRemoteUrl, bundleLocalPath, bundleHash),
+            );
         }
     }
 
@@ -102,5 +97,5 @@ export interface BundleManifest
 export interface BundleManifestEntry
 {
     key: string;
-    path: string;
+    dependencyKeys: string[];
 }
