@@ -2165,12 +2165,12 @@
     "BodyParts": [
       {
         "Chest": {
-          "max": 6666,
-          "min": 6666
+          "max": 9999,
+          "min": 9999
         },
         "Head": {
-          "max": 6666,
-          "min": 6666
+          "max": 9999,
+          "min": 9999
         },
         "LeftArm": {
           "max": 6666,
@@ -2227,7 +2227,9 @@
       "FirstPrimaryWeapon": {
         "60339954d62c9b14ed777c06": 1
       },
-      "Headwear": {},
+      "Headwear": {
+        "6531119b9afebff7ff0a1769": 1
+      },
       "Holster": {},
       "Pockets": {
         "557ffd194bdc2d28148b457f": 1
@@ -2344,6 +2346,15 @@
     "Планчик"
   ],
   "skills": {
-    "Common": {}
+    "Common": {
+      "BotReload": {
+        "max": 2000,
+        "min": 2000
+      },
+      "BotSound": {
+        "max": 2000,
+        "min": 2000
+      }
+    }
   }
 }

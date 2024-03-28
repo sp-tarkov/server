@@ -449,14 +449,17 @@ export class HideoutHelper
         let fuelUsedSinceLastTick = this.databaseServer.getTables().hideout.settings.generatorFuelFlowRate
             * this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
 
-        const fuelConsumptionBonus = pmcData.Bonuses.find((bonus) => bonus.type === BonusType.FUEL_CONSUMPTION);
-        const fuelConsumptionBonusPercent = 1.0
-            - (fuelConsumptionBonus ? Math.abs(fuelConsumptionBonus.value) : 0) / 100;
-        fuelUsedSinceLastTick *= fuelConsumptionBonusPercent;
+        const profileFuelConsumptionBonus = pmcData.Bonuses.find((bonus) => bonus.type === BonusType.FUEL_CONSUMPTION);
 
-        // Hideout management resource consumption bonus:
-        const hideoutManagementConsumptionBonus = 1.0 - this.getHideoutManagementConsumptionBonus(pmcData);
-        fuelUsedSinceLastTick *= hideoutManagementConsumptionBonus;
+        // 0 to 1
+        const fuelConsumptionBonusMultipler =
+            (profileFuelConsumptionBonus ? Math.abs(profileFuelConsumptionBonus.value) : 0) / 100;
+
+        // 0 to 1
+        const hideoutManagementConsumptionBonusMultipler = this.getHideoutManagementConsumptionBonus(pmcData);
+
+        const combinedBonus = 1.0 - (fuelConsumptionBonusMultipler + hideoutManagementConsumptionBonusMultipler);
+        fuelUsedSinceLastTick *= combinedBonus;
 
         let hasFuelRemaining = false;
         let pointsConsumed = 0;

@@ -307,15 +307,31 @@ export class InsuranceController
         for (const [parentId, attachmentItems] of parentAttachmentsMap)
         {
             const parentItem = itemsMap.get(parentId);
-            const moddableAttachments = [];
+            const moddableAttachments: Item[] = [];
             for (const attachment of attachmentItems)
             {
-                if (this.itemHelper.isRaidModdable(attachment, parentItem))
+                // By default, assume the parent of the current attachment is the main-parent included in the map.
+                let attachmentParentItem = parentItem;
+
+                // If the attachment includes a parentId, use it to find its direct parent item, even if it's another
+                // attachment on the main-parent. For example, if the attachment is a stock, we need to check to see if
+                // it's moddable in the upper receiver (attachment/parent), which is attached to the gun (main-parent).
+                if (attachment.parentId)
+                {
+                    const directParentItem = itemsMap.get(attachment.parentId);
+                    if (directParentItem)
+                    {
+                        attachmentParentItem = directParentItem;
+                    }
+                }
+
+                if (this.itemHelper.isRaidModdable(attachment, attachmentParentItem))
                 {
                     moddableAttachments.push(attachment);
                 }
             }
-            // Only set the parentId and its attachments in the updatedMap if there are moddable attachments.
+
+            // If any moddable attachments remain, add them to the updated map.
             if (moddableAttachments.length > 0)
             {
                 updatedMap.set(parentId, moddableAttachments);
@@ -397,6 +413,13 @@ export class InsuranceController
     {
         for (const [parentId, attachmentItems] of mainParentToAttachmentsMap)
         {
+            // Skip processing if parentId is already marked for deletion, as all attachments for that parent will
+            // already be marked for deletion as well.
+            if (toDelete.has(parentId))
+            {
+                continue;
+            }
+
             // Log the parent item's name.
             const parentItem = itemsMap.get(parentId);
             const parentName = this.itemHelper.getItemName(parentItem._tpl);
