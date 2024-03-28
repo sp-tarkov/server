@@ -13,7 +13,7 @@
       "5cc2e4d014c02e000d0115f8": 1
     },
     "voice": {
-      "Scav_1": 1
+      "SectantPriest": 1
     }
   },
   "chances": {
@@ -2098,7 +2098,9 @@
       "FirstPrimaryWeapon": {
         "5c46fbd72e2216398b5a8c9c": 1
       },
-      "Headwear": {},
+      "Headwear": {
+        "636270263f2495c26f00b007": 1
+      },
       "Holster": {},
       "Pockets": {
         "60c7272c204bc17802313365": 1
@@ -2115,7 +2117,9 @@
     "items": {
       "Backpack": {},
       "Pockets": {
-        "590c678286f77426c9660122": 1
+        "590c678286f77426c9660122": 59,
+        "59f99a7d86f7745b134aa97b": 117,
+        "60098ad7c2240c0fe85c570a": 58
       },
       "SecuredContainer": {
         "5e023d48186a883be655e551": 1
