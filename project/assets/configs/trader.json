@@ -90,68 +90,65 @@
             "assortSize": 45,
             "itemPriceMult": 0.8,
             "presetPriceMult": 1.15,
-			"weaponPresetMinMax": {
-				"min": 5,
-				"max": 12
-			},
-			"equipmentPresetMinMax": {
-				"min": 5,
-				"max": 12
-			}
+            "weaponPresetMinMax": {
+                "min": 5,
+                "max": 12
+            },
+            "equipmentPresetMinMax": {
+                "min": 5,
+                "max": 12
+            }
         },
         "partialRefreshTimeSeconds": 240,
         "partialRefreshChangePercent": 15,
         "assortSize": 120,
         "weaponPresetMinMax": {
-			"min": 12,
-			"max": 19
-		},
-		"equipmentPresetMinMax": {
-			"min": 8,
-			"max": 15
-		},
+            "min": 12,
+            "max": 19
+        },
+        "equipmentPresetMinMax": {
+            "min": 8,
+            "max": 15
+        },
         "itemPriceMult": 1.3,
         "presetPriceMult": 1.3,
         "regenerateAssortsOnRefresh": false,
         "itemTypeLimits": {
-			"5448eb774bdc2d0a728b4567": 10,
-			"5c518ec986f7743b68682ce2": 3,
-			"5c518ed586f774119a772aee": 0,
-			"5448bc234bdc2d3c308b4569": 16,
-			"55802f4a4bdc2ddb688b4569": 3,
+            "5448eb774bdc2d0a728b4567": 10,
+            "5c518ec986f7743b68682ce2": 3,
+            "5c518ed586f774119a772aee": 0,
+            "5448bc234bdc2d3c308b4569": 16,
+            "55802f4a4bdc2ddb688b4569": 3,
             "644120aa86ffbe10ee032b6f": 3,
-
             "5c99f98d86f7745c314214b3": 2,
             "5447b5cf4bdc2d65278b4567": 4,
-
-			"55818a104bdc2db9688b4569": 1,
-			"55818a304bdc2db5418b457d": 1,
+            "55818a104bdc2db9688b4569": 1,
+            "55818a304bdc2db5418b457d": 1,
             "5448fe394bdc2d0d028b456c": 0,
-			"55818a594bdc2db9688b456a": 0,
-			"55818a604bdc2db5418b457e": 0,
-			"55818a684bdc2ddd698b456d": 1,
-			"55818a6f4bdc2db9688b456b": 1,
-			"55818ac54bdc2d5b648b456e": 1,
-			"55818acf4bdc2dde698b456b": 0,
-			"55818ad54bdc2ddc698b4569": 0,
-			"55818add4bdc2d5b648b456f": 0,
-			"55818ae44bdc2dde698b456c": 0,
-			"55818aeb4bdc2ddc698b456a": 0,
-			"55818af64bdc2d5b648b4570": 0,
-			"55818afb4bdc2dde698b456d": 1,
-			"55818b014bdc2ddc698b456b": 1,
-			"55818b084bdc2d5b648b4571": 1,
-			"55818b0e4bdc2dde698b456e": 0,
-			"55818b164bdc2ddc698b456c": 0,
-			"55818b1d4bdc2d5b648b4572": 1,
-			"55818b224bdc2dde698b456f": 1,
+            "55818a594bdc2db9688b456a": 0,
+            "55818a604bdc2db5418b457e": 0,
+            "55818a684bdc2ddd698b456d": 1,
+            "55818a6f4bdc2db9688b456b": 1,
+            "55818ac54bdc2d5b648b456e": 1,
+            "55818acf4bdc2dde698b456b": 0,
+            "55818ad54bdc2ddc698b4569": 0,
+            "55818add4bdc2d5b648b456f": 0,
+            "55818ae44bdc2dde698b456c": 0,
+            "55818aeb4bdc2ddc698b456a": 0,
+            "55818af64bdc2d5b648b4570": 0,
+            "55818afb4bdc2dde698b456d": 1,
+            "55818b014bdc2ddc698b456b": 1,
+            "55818b084bdc2d5b648b4571": 1,
+            "55818b0e4bdc2dde698b456e": 0,
+            "55818b164bdc2ddc698b456c": 0,
+            "55818b1d4bdc2d5b648b4572": 1,
+            "55818b224bdc2dde698b456f": 1,
             "550aa4cd4bdc2dd8348b456c": 0,
             "550aa4dd4bdc2dc9348b4569": 1,
             "5a74651486f7744e73386dd1": 0,
             "5a2c3a9486f774688b05e574": 0,
             "56ea9461d2720b67698b456f": 0,
             "5448f3a64bdc2d60728b456a": 0,
-
             "5a341c4686f77469e155819e": 7,
             "5485a8684bdc2da71d8b4567": 23,
             "5f4fbaaca5573a5ac31db429": 0,
@@ -168,10 +165,10 @@
             "543be5cb4bdc2deb348b4568",
             "57bef4c42459772e8d35a53b",
             "5485a8684bdc2da71d8b4567",
-			"5448f3ac4bdc2dce718b4569",
-			"5448f39d4bdc2d0a728b4568",
-			"5448f3a14bdc2d27728b4569",
-			"5448bc234bdc2d3c308b4569",
+            "5448f3ac4bdc2dce718b4569",
+            "5448f39d4bdc2d0a728b4568",
+            "5448f3a14bdc2d27728b4569",
+            "5448bc234bdc2d3c308b4569",
             "543be5e94bdc2df1348b4568",
             "5448eb774bdc2d0a728b4567",
             "5447e1d04bdc2dff2f8b4567",
@@ -217,38 +214,38 @@
                 "min": 80,
                 "max": 7000
             },
-			"543be5cb4bdc2deb348b4568": {
-				"min": 1,
-				"max": 16
-			},
-			"5b432b965acfc47a8774094e": {
-				"min": 120,
-				"max": 352
-			},
-			"544fb25a4bdc2dfb738b4567": {
-				"min": 120,
-				"max": 700
-			},
-			"5e831507ea0a7c419c2f9bd9": {
-				"min": 5,
-				"max": 100
-			},
-			"5755356824597772cb798962": {
-				"min": 1,
-				"max": 400
-			},
-			"544fb3364bdc2d34748b456a": {
-				"min": 1,
-				"max": 800
-			},
-			"5448bc234bdc2d3c308b4569": {
-				"min": 1,
-				"max": 50
-			},
-			"5448f3a14bdc2d27728b4569": {
-				"min": 1,
-				"max": 25
-			}
+            "543be5cb4bdc2deb348b4568": {
+                "min": 1,
+                "max": 16
+            },
+            "5b432b965acfc47a8774094e": {
+                "min": 120,
+                "max": 352
+            },
+            "544fb25a4bdc2dfb738b4567": {
+                "min": 120,
+                "max": 700
+            },
+            "5e831507ea0a7c419c2f9bd9": {
+                "min": 5,
+                "max": 100
+            },
+            "5755356824597772cb798962": {
+                "min": 1,
+                "max": 400
+            },
+            "544fb3364bdc2d34748b456a": {
+                "min": 1,
+                "max": 800
+            },
+            "5448bc234bdc2d3c308b4569": {
+                "min": 1,
+                "max": 50
+            },
+            "5448f3a14bdc2d27728b4569": {
+                "min": 1,
+                "max": 25
+            }
         },
         "itemCategoryRoublePriceLimit": {
             "5448eb774bdc2d0a728b4567": 14000,
@@ -266,7 +263,6 @@
             "550aa4cd4bdc2dd8348b456c": 70000,
             "57864ee62459775490116fc1": 95000,
             "5448bc234bdc2d3c308b4569": 29000,
-
             "5447b6094bdc2dc3278b4567": 35009,
             "5447bedf4bdc2d87278b4568": 27008,
             "5447bed64bdc2d97278b4568": 27007,
@@ -276,19 +272,15 @@
             "5447b5cf4bdc2d65278b4567": 28003,
             "5447b6254bdc2dc3278b4568": 28002,
             "5447e1d04bdc2dff2f8b4567": 19001,
-
             "55818ae44bdc2dde698b456c": 45000,
             "55818add4bdc2d5b648b456f": 35000,
             "590c745b86f7743cc433c5f2": 64000,
             "57864bb7245977548b3b66c2": 85000,
-
-			"5448e5284bdc2dcb718b4567": 59001,
-			"5a341c4086f77401f2541505": 35000,
-
-			"5d21f59b6dbe99052b54ef83": 45000,
-
-			"5645bcb74bdc2ded0b8b4578": 35000,
-			"644120aa86ffbe10ee032b6f": 20000,
+            "5448e5284bdc2dcb718b4567": 59001,
+            "5a341c4086f77401f2541505": 35000,
+            "5d21f59b6dbe99052b54ef83": 45000,
+            "5645bcb74bdc2ded0b8b4578": 35000,
+            "644120aa86ffbe10ee032b6f": 20000,
             "57864c8c245977548867e7f1": 15000,
             "5447e0e74bdc2d3c308b4567": 20000,
             "616eb7aea207f41933308f46": 40000,
@@ -296,7 +288,6 @@
             "5448f3ac4bdc2dce718b4569": 42000,
             "5448f3a14bdc2d27728b4569": 20000,
             "543be5cb4bdc2deb348b4568": 15000,
-
             "5c99f98d86f7745c314214b3": 15000
         },
         "presetSlotsToRemoveChancePercent": {
@@ -307,8 +298,8 @@
             "mod_muzzle": 40,
             "mod_pistol_grip": 5,
             "mod_stock": 5,
-			"mod_handguard": 10,
-			"mod_barrel": 5,
+            "mod_handguard": 10,
+            "mod_barrel": 5,
             "mod_stock_000": 10,
             "mod_tactical_2": 35,
             "mod_foregrip": 20,
@@ -327,7 +318,7 @@
             "front_plate": 25,
             "back_plate": 75,
             "left_side_plate": 75,
-			"right_side_plate": 75
+            "right_side_plate": 75
         },
         "blacklistSeasonalItems": true,
         "blacklist": [
@@ -352,7 +343,7 @@
             "5a341c4086f77401f2541505",
             "5422acb9af1c889c16000029",
             "64d0b40fbe2eed70e254e2d4",
-			"5fc22d7c187fea44d52eda44"
+            "5fc22d7c187fea44d52eda44"
         ],
         "coopExtractGift": {
             "sendGift": true,

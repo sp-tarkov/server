@@ -7,8 +7,15 @@
         "54cb50c76803fa8b248b4571": 75,
         "54cb57776803fa99248b456e": 85
     },
-    "blacklistedEquipment": ["SpecialSlot1", "SpecialSlot2", "SpecialSlot3"],
-    "slotIdsToAlwaysRemove": ["cartridges", "patron_in_weapon"],
+    "blacklistedEquipment": [
+        "SpecialSlot1",
+        "SpecialSlot2",
+        "SpecialSlot3"
+    ],
+    "slotIdsToAlwaysRemove": [
+        "cartridges",
+        "patron_in_weapon"
+    ],
     "returnTimeOverrideSeconds": 0,
     "runIntervalSeconds": 600
 }

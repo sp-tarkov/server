@@ -78,8 +78,7 @@
                 }
             },
             "labsAccessCardChancePercent": 0,
-			"lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-6": {
             "botTypeForLoot": "assault",
@@ -164,8 +163,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-5": {
             "botTypeForLoot": "assault",
@@ -250,8 +248,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-4": {
             "botTypeForLoot": "assault",
@@ -336,8 +333,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-3": {
             "botTypeForLoot": "assault",
@@ -422,8 +418,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-2": {
             "botTypeForLoot": "assault",
@@ -508,8 +503,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "-1": {
             "botTypeForLoot": "assault",
@@ -594,8 +588,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "0": {
             "botTypeForLoot": "assault",
@@ -680,8 +673,7 @@
                     "whitelist": []
                 }
             },
-            "lootItemsToAddChancePercent": {
-			}
+            "lootItemsToAddChancePercent": {}
         },
         "1": {
             "botTypeForLoot": "assault",
@@ -769,9 +761,9 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 3,
-				"64d4b23dc1b37504b41ac2b6": 10
-			}
+                "5c94bbff86f7747ee735c08f": 3,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         },
         "2": {
             "botTypeForLoot": "assault",
@@ -855,19 +847,28 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 6,
-				"62178c4d4ecf221597654e3d": 3,
-				"64d4b23dc1b37504b41ac2b6": 10
-			}
+                "5c94bbff86f7747ee735c08f": 6,
+                "62178c4d4ecf221597654e3d": 3,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         },
         "3": {
             "botTypeForLoot": "assault",
             "equipmentBlacklist": {
                 "Headwear": [],
-                "ArmorVest": ["5df8a2ca86f7740bfe6df777"],
-                "TacticalVest": ["572b7adb24597762ae139821"],
-                "Backpack": ["56e33634d2720bd8058b456b", "5ab8ee7786f7742d8f33f0b9"],
-                "FirstPrimaryWeapon": ["5a38e6bac4a2826c6e06d79b"],
+                "ArmorVest": [
+                    "5df8a2ca86f7740bfe6df777"
+                ],
+                "TacticalVest": [
+                    "572b7adb24597762ae139821"
+                ],
+                "Backpack": [
+                    "56e33634d2720bd8058b456b",
+                    "5ab8ee7786f7742d8f33f0b9"
+                ],
+                "FirstPrimaryWeapon": [
+                    "5a38e6bac4a2826c6e06d79b"
+                ],
                 "Holster": [],
                 "Scabbard": []
             },
@@ -945,19 +946,31 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 11,
-				"62178c4d4ecf221597654e3d": 8,
-				"64d4b23dc1b37504b41ac2b6": 10
-			}
+                "5c94bbff86f7747ee735c08f": 11,
+                "62178c4d4ecf221597654e3d": 8,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         },
         "4": {
             "botTypeForLoot": "assault",
             "equipmentBlacklist": {
                 "Headwear": [],
-                "ArmorVest": ["59e7635f86f7742cbf2c1095", "5df8a2ca86f7740bfe6df777"],
-                "TacticalVest": ["5fd4c5477a8d854fa0105061", "572b7adb24597762ae139821"],
-                "Backpack": ["56e33680d2720be2748b4576", "56e33634d2720bd8058b456b", "5ab8ee7786f7742d8f33f0b9"],
-                "FirstPrimaryWeapon": ["5a38e6bac4a2826c6e06d79b"],
+                "ArmorVest": [
+                    "59e7635f86f7742cbf2c1095",
+                    "5df8a2ca86f7740bfe6df777"
+                ],
+                "TacticalVest": [
+                    "5fd4c5477a8d854fa0105061",
+                    "572b7adb24597762ae139821"
+                ],
+                "Backpack": [
+                    "56e33680d2720be2748b4576",
+                    "56e33634d2720bd8058b456b",
+                    "5ab8ee7786f7742d8f33f0b9"
+                ],
+                "FirstPrimaryWeapon": [
+                    "5a38e6bac4a2826c6e06d79b"
+                ],
                 "Holster": [],
                 "Scabbard": []
             },
@@ -1034,20 +1047,31 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 17,
-				"62178c4d4ecf221597654e3d": 13,
-				"64d4b23dc1b37504b41ac2b6": 10
-				
-			}
+                "5c94bbff86f7747ee735c08f": 17,
+                "62178c4d4ecf221597654e3d": 13,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         },
         "5": {
             "botTypeForLoot": "assault",
             "equipmentBlacklist": {
                 "Headwear": [],
-                "ArmorVest": ["59e7635f86f7742cbf2c1095", "5df8a2ca86f7740bfe6df777"],
-                "TacticalVest": ["5fd4c5477a8d854fa0105061", "572b7adb24597762ae139821"],
-                "Backpack": ["56e33680d2720be2748b4576", "56e33634d2720bd8058b456b", "5ab8ee7786f7742d8f33f0b9"],
-                "FirstPrimaryWeapon": ["5a38e6bac4a2826c6e06d79b"],
+                "ArmorVest": [
+                    "59e7635f86f7742cbf2c1095",
+                    "5df8a2ca86f7740bfe6df777"
+                ],
+                "TacticalVest": [
+                    "5fd4c5477a8d854fa0105061",
+                    "572b7adb24597762ae139821"
+                ],
+                "Backpack": [
+                    "56e33680d2720be2748b4576",
+                    "56e33634d2720bd8058b456b",
+                    "5ab8ee7786f7742d8f33f0b9"
+                ],
+                "FirstPrimaryWeapon": [
+                    "5a38e6bac4a2826c6e06d79b"
+                ],
                 "Holster": [],
                 "Scabbard": []
             },
@@ -1124,20 +1148,49 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 22,
-				"62178c4d4ecf221597654e3d": 18,
-				"64d4b23dc1b37504b41ac2b6": 10
-			}
+                "5c94bbff86f7747ee735c08f": 22,
+                "62178c4d4ecf221597654e3d": 18,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         },
         "6": {
             "botTypeForLoot": "assault",
             "equipmentBlacklist": {
-                "Headwear": ["61c18db6dfd64163ea78fbb4", "60361b0b5a45383c122086a1", "5aa2b87de5b5b00016327c25", "5aa2ba19e5b5b00014028f4e", "59e770f986f7742cbe3164ef", "572b7fa124597762b472f9d2", "572b7d8524597762b472f9d1", "60361b5a9a15b10d96792291", "5f60e7788adaa7100c3adb49", "5aa2a7e8e5b5b00016327c16"],
-                "ArmorVest": ["59e7635f86f7742cbf2c1095", "5df8a2ca86f7740bfe6df777"],
-                "TacticalVest": ["5fd4c5477a8d854fa0105061", "572b7adb24597762ae139821"],
-                "Backpack": ["56e33680d2720be2748b4576", "56e33634d2720bd8058b456b", "5ab8ee7786f7742d8f33f0b9", "5ab8f04f86f774585f4237d8", "5f5e45cc5021ce62144be7aa"],
-                "FirstPrimaryWeapon": ["5a38e6bac4a2826c6e06d79b"],
-                "Holster": ["5448bd6b4bdc2dfc2f8b4569", "579204f224597773d619e051", "571a12c42459771f627b58a0"],
+                "Headwear": [
+                    "61c18db6dfd64163ea78fbb4",
+                    "60361b0b5a45383c122086a1",
+                    "5aa2b87de5b5b00016327c25",
+                    "5aa2ba19e5b5b00014028f4e",
+                    "59e770f986f7742cbe3164ef",
+                    "572b7fa124597762b472f9d2",
+                    "572b7d8524597762b472f9d1",
+                    "60361b5a9a15b10d96792291",
+                    "5f60e7788adaa7100c3adb49",
+                    "5aa2a7e8e5b5b00016327c16"
+                ],
+                "ArmorVest": [
+                    "59e7635f86f7742cbf2c1095",
+                    "5df8a2ca86f7740bfe6df777"
+                ],
+                "TacticalVest": [
+                    "5fd4c5477a8d854fa0105061",
+                    "572b7adb24597762ae139821"
+                ],
+                "Backpack": [
+                    "56e33680d2720be2748b4576",
+                    "56e33634d2720bd8058b456b",
+                    "5ab8ee7786f7742d8f33f0b9",
+                    "5ab8f04f86f774585f4237d8",
+                    "5f5e45cc5021ce62144be7aa"
+                ],
+                "FirstPrimaryWeapon": [
+                    "5a38e6bac4a2826c6e06d79b"
+                ],
+                "Holster": [
+                    "5448bd6b4bdc2dfc2f8b4569",
+                    "579204f224597773d619e051",
+                    "571a12c42459771f627b58a0"
+                ],
                 "Scabbard": []
             },
             "modifiers": {
@@ -1212,10 +1265,10 @@
                 }
             },
             "lootItemsToAddChancePercent": {
-				"5c94bbff86f7747ee735c08f": 27,
-				"62178c4d4ecf221597654e3d": 23,
-				"64d4b23dc1b37504b41ac2b6": 10
-			}
+                "5c94bbff86f7747ee735c08f": 27,
+                "62178c4d4ecf221597654e3d": 23,
+                "64d4b23dc1b37504b41ac2b6": 10
+            }
         }
     }
 }

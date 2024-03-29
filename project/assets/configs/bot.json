@@ -305,18 +305,18 @@
             "5448e8d64bdc2dce718b4568": 3,
             "5448e8d04bdc2ddf718b4569": 3,
             "5449016a4bdc2d6f028b456f": 2,
-			"5783c43d2459774bbe137486": 1,
-			"60b0f6c058e0b0481a09ad11": 1
+            "5783c43d2459774bbe137486": 1,
+            "60b0f6c058e0b0481a09ad11": 1
         },
         "marksman": {
-			"60b0f6c058e0b0481a09ad11": 1,
-			"5783c43d2459774bbe137486": 1,
+            "60b0f6c058e0b0481a09ad11": 1,
+            "5783c43d2459774bbe137486": 1,
             "62a09d3bcf4a99369e262447": 1
-		},
+        },
         "cursedassault": {},
         "exusec": {
-			"60098ad7c2240c0fe85c570a": 2
-		},
+            "60098ad7c2240c0fe85c570a": 2
+        },
         "bossbully": {},
         "bossgluhar": {},
         "bosskilla": {},
@@ -331,23 +331,23 @@
         "bosskolontay": {},
         "bosstest": {},
         "followerbully": {
-			"5448e8d64bdc2dce718b4568": 2
-		},
+            "5448e8d64bdc2dce718b4568": 2
+        },
         "followergluharassault": {
-			"5c0fa877d174af02a012e1cf": 1
-		},
+            "5c0fa877d174af02a012e1cf": 1
+        },
         "followergluharscout": {
-			"5c0fa877d174af02a012e1cf": 1
-		},
+            "5c0fa877d174af02a012e1cf": 1
+        },
         "followergluharsecurity": {
-			"5c0fa877d174af02a012e1cf": 1
-		},
+            "5c0fa877d174af02a012e1cf": 1
+        },
         "followergluharsnipe": {
-			"5c0fa877d174af02a012e1cf": 1
-		},
+            "5c0fa877d174af02a012e1cf": 1
+        },
         "followerkojaniy": {
-			"5448e8d64bdc2dce718b4568": 2
-		},
+            "5448e8d64bdc2dce718b4568": 2
+        },
         "followersanitar": {},
         "followertagilla": {},
         "followerbirdeye": {},
@@ -358,17 +358,17 @@
         "followerboarclose1": {},
         "followerboarclose2": {},
         "followerkolontayassault": {
-			"544fb62a4bdc2dfb738b4568": 2
-		},
+            "544fb62a4bdc2dfb738b4568": 2
+        },
         "followerkolontaysecurity": {
-			"544fb62a4bdc2dfb738b4568": 2
-		},
+            "544fb62a4bdc2dfb738b4568": 2
+        },
         "sectantpriest": {},
         "sectantwarrior": {},
         "test": {},
         "pmcbot": {
-			"60098ad7c2240c0fe85c570a": 2
-		},
+            "60098ad7c2240c0fe85c570a": 2
+        },
         "arenafighterevent": {},
         "arenafighter": {},
         "crazyassaultevent": {},
@@ -398,7 +398,7 @@
             "5d650c3e815116009f6201d2": 2,
             "5448f39d4bdc2d0a728b4568": 2,
             "543be6564bdc2df4348b4568": 1,
-			"5751a25924597722c463c472": 2,
+            "5751a25924597722c463c472": 2,
             "544fb37f4bdc2dee738b4567": 2
         },
         "shooterbtr": {}
@@ -413,9 +413,10 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 85,
             "laserIsActiveChancePercent": 75,
-			"nvgIsActiveChanceDayPercent": 20,
-			"nvgIsActiveChanceNightPercent": 90,
-            "weightingAdjustmentsByPlayerLevel": [{
+            "nvgIsActiveChanceDayPercent": 20,
+            "nvgIsActiveChanceNightPercent": 90,
+            "weightingAdjustmentsByPlayerLevel": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 6
@@ -464,7 +465,9 @@
             "lightIsActiveNightChancePercent": 90,
             "laserIsActiveChancePercent": 85,
             "forceStock": true,
-            "weaponSlotIdsToMakeRequired": ["mod_reciever"]
+            "weaponSlotIdsToMakeRequired": [
+                "mod_reciever"
+            ]
         },
         "bossbully": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -539,7 +542,7 @@
             "lightIsActiveDayChancePercent": 25,
             "lightIsActiveNightChancePercent": 85,
             "laserIsActiveChancePercent": 85,
-			"weaponModLimits": {
+            "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
             },
@@ -742,7 +745,9 @@
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
             },
-            "weaponSlotIdsToMakeRequired": ["mod_reciever"]
+            "weaponSlotIdsToMakeRequired": [
+                "mod_reciever"
+            ]
         },
         "arenafighterevent": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -861,8 +866,13 @@
             "laserIsActiveChancePercent": 85,
             "forceOnlyArmoredRigWhenNoArmor": true,
             "filterPlatesByLevel": true,
-            "weaponSlotIdsToMakeRequired": ["mod_reciever", "mod_stock", "mod_muzzle"],
-            "randomisation": [{
+            "weaponSlotIdsToMakeRequired": [
+                "mod_reciever",
+                "mod_stock",
+                "mod_muzzle"
+            ],
+            "randomisation": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -1010,13 +1020,14 @@
                         "mod_tactical_003": 10,
                         "mod_tactical_2": 10
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 22
                     },
-					"generation": {
-						"backpackLoot": {
+                    "generation": {
+                        "backpackLoot": {
                             "weights": {
                                 "0": 3,
                                 "1": 5,
@@ -1052,18 +1063,18 @@
                                 "0": 0,
                                 "1": 1,
                                 "2": 4,
-								"3": 3
+                                "3": 3
                             },
                             "whitelist": []
                         },
                         "stims": {
                             "weights": {
                                 "0": 10,
-								"1": 1
+                                "1": 1
                             },
                             "whitelist": []
                         }
-					},
+                    },
                     "equipment": {
                         "ArmBand": 90,
                         "FirstPrimaryWeapon": 90,
@@ -1153,7 +1164,7 @@
                         "mod_muzzle_001": 20,
                         "mod_pistol_grip_akms": 35,
                         "mod_pistol_grip": 40,
-						"mod_reciever": 20,
+                        "mod_reciever": 20,
                         "mod_scope": 15,
                         "mod_scope_000": 45,
                         "mod_scope_001": 35,
@@ -1168,7 +1179,8 @@
                         "mod_tactical_003": 30,
                         "mod_tactical_2": 15
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 23,
                         "max": 45
@@ -1223,7 +1235,8 @@
                         "mod_tactical_002",
                         "mod_tactical_003"
                     ]
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 46,
                         "max": 100
@@ -1295,7 +1308,8 @@
                     ]
                 }
             ],
-            "blacklist": [{
+            "blacklist": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 100
@@ -1349,7 +1363,8 @@
                     }
                 }
             ],
-            "weightingAdjustmentsByBotLevel": [{
+            "weightingAdjustmentsByBotLevel": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 14
@@ -1401,7 +1416,7 @@
                                 "58dd3ad986f77403051cba8f": 1,
                                 "5a608bf24f39f98ffc77720e": 0,
                                 "5a6086ea4f39f99cd479502f": 0,
-								"5efb0c1bd79ff02a1f5e68d9": 0,
+                                "5efb0c1bd79ff02a1f5e68d9": 0,
                                 "5e023e6e34d52a55c3304f71": 200,
                                 "5e023e88277cce2b522ff2b1": 300
                             },
@@ -1618,12 +1633,13 @@
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 22
                     },
-					"ammo": {
+                    "ammo": {
                         "add": {},
                         "edit": {
                             "Caliber1143x23ACP": {
@@ -1670,7 +1686,7 @@
                                 "58dd3ad986f77403051cba8f": 1,
                                 "5a608bf24f39f98ffc77720e": 0,
                                 "5a6086ea4f39f99cd479502f": 0,
-								"5efb0c1bd79ff02a1f5e68d9": 0,
+                                "5efb0c1bd79ff02a1f5e68d9": 0,
                                 "5e023e6e34d52a55c3304f71": 100,
                                 "5e023e88277cce2b522ff2b1": 150
                             },
@@ -1781,7 +1797,8 @@
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 30,
                         "max": 50
@@ -1834,7 +1851,8 @@
                             }
                         }
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 51,
                         "max": 100
@@ -1979,7 +1997,8 @@
                     }
                 }
             ],
-            "armorPlateWeighting": [{
+            "armorPlateWeighting": [
+                {
                     "levelRange": {
                         "min": 1,
                         "max": 10
@@ -2019,7 +2038,8 @@
                         "5": 1,
                         "6": 1
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 11,
                         "max": 14
@@ -2059,7 +2079,8 @@
                         "5": 1,
                         "6": 1
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 15,
                         "max": 24
@@ -2099,7 +2120,8 @@
                         "5": 5,
                         "6": 4
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 25,
                         "max": 35
@@ -2139,7 +2161,8 @@
                         "5": 15,
                         "6": 5
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 36,
                         "max": 55
@@ -2179,7 +2202,8 @@
                         "5": 45,
                         "6": 20
                     }
-                }, {
+                },
+                {
                     "levelRange": {
                         "min": 56,
                         "max": 90
@@ -2221,7 +2245,8 @@
                     }
                 }
             ],
-            "whitelist": [{
+            "whitelist": [
+                {
                     "levelRange": {
                         "min": 101,
                         "max": 101
@@ -2525,66 +2550,69 @@
         "sandbox": 16,
         "default": 16
     },
-	"walletLoot": {
+    "walletLoot": {
         "chancePercent": 45,
-		"itemCount": {
-			"min": 1,
-			"max": 3
-		},
-		"stackSizeWeight": {
-			"25000": 1,
-			"20000": 2,
-			"15000": 4,
-			"10000": 7,
-			"5000": 10
-		},
+        "itemCount": {
+            "min": 1,
+            "max": 3
+        },
+        "stackSizeWeight": {
+            "25000": 1,
+            "20000": 2,
+            "15000": 4,
+            "10000": 7,
+            "5000": 10
+        },
         "currencyWeight": {
             "5449016a4bdc2d6f028b456f": 1,
             "569668774bdc2da2298b4568": 0,
             "5696686a4bdc2da3298b456a": 0
         },
-        "walletTplPool": ["5783c43d2459774bbe137486", "60b0f6c058e0b0481a09ad11"]
-	},
-	"currencyStackSize": {
-		"default": {
-			"5449016a4bdc2d6f028b456f": {
-					"25000": 2,
-					"20000": 4,
-					"15000": 8,
-					"10000": 14,
-					"5000": 20
-			},
-			"5696686a4bdc2da3298b456a": {
-					"50": 10,
-					"100": 5,
-					"250": 1
-			},
-			"569668774bdc2da2298b4568": {
-					"50": 10,
-					"100": 5,
-					"250": 1
-			}
-		},
-		"assault": {
-			"5449016a4bdc2d6f028b456f": {
-					"350000": 1,
-					"30000": 4,
-					"25000": 8,
-					"20000": 16,
-					"15000": 32,
-					"10000": 56,
-					"5000": 80
-			},
-			"5696686a4bdc2da3298b456a": {
-					"50": 10,
-					"100": 5,
-					"250": 1
-			},
-			"569668774bdc2da2298b4568": {
-					"50": 10,
-					"100": 5,
-					"250": 1
-			}
-		}
-	}
+        "walletTplPool": [
+            "5783c43d2459774bbe137486",
+            "60b0f6c058e0b0481a09ad11"
+        ]
+    },
+    "currencyStackSize": {
+        "default": {
+            "5449016a4bdc2d6f028b456f": {
+                "25000": 2,
+                "20000": 4,
+                "15000": 8,
+                "10000": 14,
+                "5000": 20
+            },
+            "5696686a4bdc2da3298b456a": {
+                "50": 10,
+                "100": 5,
+                "250": 1
+            },
+            "569668774bdc2da2298b4568": {
+                "50": 10,
+                "100": 5,
+                "250": 1
+            }
+        },
+        "assault": {
+            "5449016a4bdc2d6f028b456f": {
+                "350000": 1,
+                "30000": 4,
+                "25000": 8,
+                "20000": 16,
+                "15000": 32,
+                "10000": 56,
+                "5000": 80
+            },
+            "5696686a4bdc2da3298b456a": {
+                "50": 10,
+                "100": 5,
+                "250": 1
+            },
+            "569668774bdc2da2298b4568": {
+                "50": 10,
+                "100": 5,
+                "250": 1
+            }
+        }
+    }
 }

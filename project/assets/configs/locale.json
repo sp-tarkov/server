@@ -26,11 +26,11 @@
         "pt-pt",
         "ru",
         "sv",
-		"vi",
+        "vi",
         "zh-cn"
     ],
     "fallbacks": {
-		"en-*": "en",
+        "en-*": "en",
         "pt-*": "pt-pt",
         "zh-*": "zh-cn",
         "es-*": "es-es"

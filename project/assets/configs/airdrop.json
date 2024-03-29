@@ -46,8 +46,7 @@
                 "min": 1,
                 "max": 2
             },
-            "itemBlacklist": [
-            ],
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "543be5dd4bdc2deb348b4569",
                 "5485a8684bdc2da71d8b4567",
@@ -149,8 +148,7 @@
                 "min": 0,
                 "max": 2
             },
-            "itemBlacklist": [
-            ],
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "5485a8684bdc2da71d8b4567",
                 "5448e8d64bdc2dce718b4568",
@@ -224,8 +222,7 @@
                 "min": 0,
                 "max": 0
             },
-            "itemBlacklist": [
-            ],
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "543be5dd4bdc2deb348b4569",
                 "5448e8d64bdc2dce718b4568",
@@ -303,8 +300,7 @@
                 "min": 0,
                 "max": 0
             },
-            "itemBlacklist": [
-            ],
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "5d650c3e815116009f6201d2",
                 "57864ee62459775490116fc1",

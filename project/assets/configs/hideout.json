@@ -1,5 +1,5 @@
 {
     "runIntervalSeconds": 15,
     "hoursForSkillCrafting": 28800,
-	"expCraftAmount": 10
+    "expCraftAmount": 10
 }

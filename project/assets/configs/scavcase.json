@@ -22,8 +22,7 @@
         "62f109593b54472778797866",
         "65649eb40bf0ed77b8044453"
     ],
-    "rewardItemBlacklist": [
-    ],
+    "rewardItemBlacklist": [],
     "moneyRewards": {
         "moneyRewardChancePercent": 5,
         "rubCount": {

@@ -37,5 +37,5 @@
     "scavExtractGain": 0.01,
     "pmcKillProbabilityForScavGain": 0.2,
     "keepFiRSecureContainerOnDeath": false,
-	"playerScavHostileChancePercent": 15
+    "playerScavHostileChancePercent": 15
 }

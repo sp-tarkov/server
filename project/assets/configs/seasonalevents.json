@@ -236,11 +236,12 @@
         "sectactPriestEvent": "sectantPriest",
         "ravangeZryachiyEvent": "ravangeZryachiyEvent",
         "arenaFighterEvent": "arenaFighterEvent",
-		"crazyAssaultEvent": "crazyAssaultEvent"
+        "crazyAssaultEvent": "crazyAssaultEvent"
     },
     "eventBossSpawns": {
         "halloween": {
-            "bigmap": [{
+            "bigmap": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -257,7 +258,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -274,7 +276,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -293,7 +296,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "interchange": [{
+            "interchange": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -310,7 +314,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -327,7 +332,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -346,7 +352,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "lighthouse": [{
+            "lighthouse": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -363,7 +370,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -380,7 +388,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -399,7 +408,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "rezervbase": [{
+            "rezervbase": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -416,7 +426,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -433,7 +444,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -452,7 +464,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "shoreline": [{
+            "shoreline": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -469,7 +482,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -486,7 +500,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -505,7 +520,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "tarkovstreets": [{
+            "tarkovstreets": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -522,7 +538,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -539,7 +556,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -558,7 +576,8 @@
                     "TriggerName": "botEvent"
                 }
             ],
-            "woods": [{
+            "woods": [
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -575,7 +594,8 @@
                     "Time": -1,
                     "TriggerId": "",
                     "TriggerName": ""
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "5",
@@ -592,7 +612,8 @@
                     "Time": 999999,
                     "TriggerId": "ZryachiyPeaceKill",
                     "TriggerName": "botEvent"
-                }, {
+                },
+                {
                     "BossChance": 100,
                     "BossDifficult": "normal",
                     "BossEscortAmount": "0",
@@ -612,72 +633,86 @@
                 }
             ]
         },
-		"christmas": {}
+        "christmas": {}
     },
-    "gifterSettings": [{
+    "gifterSettings": [
+        {
             "map": "bigmap",
             "zones": "ZoneDormitory,ZoneGasStation,ZoneScavBase",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "factory4_day",
             "zones": "BotZone",
             "spawnChance": 30
-        }, {
+        },
+        {
             "map": "laboratory",
             "zones": "BotZoneFloor1,BotZoneFloor2",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "interchange",
             "zones": "ZoneCenterBot,ZoneCenter,ZoneOLI,ZoneIDEA,ZoneGoshan,ZoneIDEAPark,ZoneOLIPark",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "lighthouse",
             "zones": "Zone_TreatmentContainers,Zone_Chalet,Zone_RoofContainers,Zone_RoofBeach,Zone_Hellicopter",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "rezervbase",
             "zones": "ZoneRailStrorage,ZoneRailStrorage,ZoneRailStrorage,ZonePTOR1,ZonePTOR2,ZoneBarrack,ZoneBarrack,ZoneBarrack,ZoneSubStorage",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "shoreline",
             "zones": "ZonePort,ZoneGreenHouses,ZoneSanatorium1,ZoneGreenHouses,ZoneSanatorium2,ZoneMeteoStation,ZoneSanatorium1,ZoneSanatorium2",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "tarkovstreets",
             "zones": "ZoneColumn",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "woods",
             "zones": "ZoneScavBase2,ZoneWoodCutter",
             "spawnChance": 75
-        }, {
+        },
+        {
             "map": "sandbox",
             "zones": "ZoneSandbox",
             "spawnChance": 75
         }
     ],
-    "events": [{
+    "events": [
+        {
             "name": "halloween",
             "type": "HALLOWEEN",
             "startDay": "24",
             "startMonth": "10",
             "endDay": "4",
             "endMonth": "11"
-        }, {
+        },
+        {
             "name": "christmas",
             "type": "CHRISTMAS",
             "startDay": "7",
             "startMonth": "12",
             "endDay": "31",
             "endMonth": "12"
-        }, {
+        },
+        {
             "name": "newyears",
             "type": "NEW_YEARS",
             "startDay": "1",
             "startMonth": "1",
             "endDay": "7",
             "endMonth": "1"
-        }, {
+        },
+        {
             "name": "snow",
             "type": "SNOW",
             "startDay": "8",
