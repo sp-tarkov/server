@@ -14,7 +14,7 @@
     },
     "settings": {
         "window.title": "SPT-AKI Server",
-        "editor.formatOnSave": false,
+        "editor.formatOnSave": true,
         "editor.defaultFormatter": "dprint.dprint",
         "editor.codeActionsOnSave": [
             "source.organizeImports.biome"
