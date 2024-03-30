@@ -320,6 +320,7 @@ export class TraderHelper
     public addTraderPurchasesToPlayerProfile(
         sessionID: string,
         newPurchaseDetails: { items: { itemId: string; count: number; }[]; traderId: string; },
+        itemPurchased: Item
     ): void
     {
         const profile = this.profileHelper.getFullProfile(sessionID);
@@ -350,6 +351,10 @@ export class TraderHelper
                 continue;
             }
 
+            if( profile.traderPurchases[traderId][purchasedItem.itemId].count + purchasedItem.count > itemPurchased.upd.BuyRestrictionMax )
+            {
+                throw new Error("Unable to purchase item, Purchase limit reached");
+            }
             profile.traderPurchases[traderId][purchasedItem.itemId].count += purchasedItem.count;
             profile.traderPurchases[traderId][purchasedItem.itemId].purchaseTimestamp = currentTime;
         }

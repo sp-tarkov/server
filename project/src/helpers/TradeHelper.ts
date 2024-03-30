@@ -103,7 +103,7 @@ export class TradeHelper
                         items: [{ itemId: buyRequestData.item_id, count: buyCount }],
                         traderId: buyRequestData.tid,
                     };
-                    this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, itemPurchaseDat);
+                    this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, itemPurchaseDat, itemPurchased);
                 }
 
                 if (assortHasBuyRestrictions)
@@ -176,10 +176,10 @@ export class TradeHelper
                         items: [{ itemId: buyRequestData.item_id, count: buyCount }],
                         traderId: buyRequestData.tid,
                     };
-                    this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, itemPurchaseDat);
+                    this.traderHelper.addTraderPurchasesToPlayerProfile(sessionID, itemPurchaseDat, itemPurchased);
                 }
 
-                if (assortHasBuyRestrictions)
+                else if (assortHasBuyRestrictions)
                 {
                     // Increment non-fence trader item buy count
                     this.incrementAssortBuyCount(itemPurchased, buyCount);
