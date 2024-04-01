@@ -116,7 +116,7 @@ export class RepeatableQuestRewardGenerator
 
         // Possible improvement -> draw trader-specific items e.g. with this.itemHelper.isOfBaseclass(val._id, ItemHelper.BASECLASS.FoodDrink)
         let roublesBudget = rewardRoubles;
-        const rewardItemPool = this.chooseRewardItemsWithinBudget(repeatableConfig, roublesBudget, traderId);
+        let rewardItemPool = this.chooseRewardItemsWithinBudget(repeatableConfig, roublesBudget, traderId);
         this.logger.debug(
             `Generating daily quest for ${traderId} with budget ${roublesBudget} for ${rewardNumItems} items`,
         );
@@ -213,7 +213,8 @@ export class RepeatableQuestRewardGenerator
                 if (roublesBudget > 0)
                 {
                     // Filter possible reward items to only items with a price below the remaining budget
-                    if (!this.filterRewardPoolWithinBudget(rewardItemPool, roublesBudget, 0))
+                    rewardItemPool = this.filterRewardPoolWithinBudget(rewardItemPool, roublesBudget, 0);
+                    if (rewardItemPool.length === 0)
                     {
                         this.logger.debug(`  Reward pool empty with ${roublesBudget} remaining`);
                         break; // No reward items left, exit
@@ -269,15 +270,13 @@ export class RepeatableQuestRewardGenerator
         rewardItems: ITemplateItem[],
         roublesBudget: number,
         minPrice: number,
-    ): boolean
+    ): ITemplateItem[]
     {
-        rewardItems.filter((item) =>
+        return rewardItems.filter((item) =>
         {
             const itemPrice = this.presetHelper.getDefaultPresetOrItemPrice(item._id);
             return itemPrice < roublesBudget && itemPrice > minPrice;
         });
-
-        return (rewardItems.length > 0);
     }
 
     /**
@@ -357,7 +356,12 @@ export class RepeatableQuestRewardGenerator
         const minPrice = Math.min(25000, 0.5 * roublesBudget);
 
         let rewardableItemPoolWithinBudget = rewardableItemPool.map((x) => x[1]);
-        if (!this.filterRewardPoolWithinBudget(rewardableItemPoolWithinBudget, roublesBudget, minPrice))
+        rewardableItemPoolWithinBudget = this.filterRewardPoolWithinBudget(
+            rewardableItemPoolWithinBudget,
+            roublesBudget,
+            minPrice,
+        );
+        if (rewardableItemPoolWithinBudget.length === 0)
         {
             this.logger.warning(
                 this.localisationService.getText("repeatable-no_reward_item_found_in_price_range", {
