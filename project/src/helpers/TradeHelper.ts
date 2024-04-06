@@ -158,6 +158,15 @@ export class TradeHelper
                     );
                 }
 
+                // Check if trader has enough stock
+                this.logger.info( "total stock: " + itemPurchased.upd.StackObjectsCount + " buyCount: " + buyCount);
+                if (itemPurchased.upd.StackObjectsCount < buyCount)
+                {
+                    throw new Error(
+                        `Unable to purchase ${buyCount} items, this would exceed the remaining stock left ${itemPurchased.upd.StackObjectsCount} from the traders assort: ${buyRequestData.tid} this refresh`,
+                    );
+                }
+
                 // Decrement trader item count
                 itemPurchased.upd.StackObjectsCount -= buyCount;
 
