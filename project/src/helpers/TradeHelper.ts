@@ -159,7 +159,6 @@ export class TradeHelper
                 }
 
                 // Check if trader has enough stock
-                this.logger.info( "total stock: " + itemPurchased.upd.StackObjectsCount + " buyCount: " + buyCount);
                 if (itemPurchased.upd.StackObjectsCount < buyCount)
                 {
                     throw new Error(
