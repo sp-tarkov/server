@@ -351,7 +351,11 @@
                 "5da89b3a86f7742f9026cb83 0"
             ],
             "giftExpiryHours": 168,
-            "presetCount": {
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "armorPresetCount": {
                 "min": 0,
                 "max": 0
             },
