@@ -99,12 +99,15 @@ export class LootGenerator
             && options.itemTypeWhitelist.includes(x[1]._parent)
         );
 
-        const randomisedItemCount = this.randomUtil.getInt(options.itemCount.min, options.itemCount.max);
-        for (let index = 0; index < randomisedItemCount; index++)
+        if (items.length > 0)
         {
-            if (!this.findAndAddRandomItemToLoot(items, itemTypeCounts, options, result))
+            const randomisedItemCount = this.randomUtil.getInt(options.itemCount.min, options.itemCount.max);
+            for (let index = 0; index < randomisedItemCount; index++)
             {
-                index--;
+                if (!this.findAndAddRandomItemToLoot(items, itemTypeCounts, options, result))
+                {
+                    index--;
+                }
             }
         }
 
@@ -122,13 +125,21 @@ export class LootGenerator
                 this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON)
             );
 
-            for (let index = 0; index < randomisedWeaponPresetCount; index++)
+            if (weaponDefaultPresets.length > 0)
             {
-                if (
-                    !this.findAndAddRandomPresetToLoot(weaponDefaultPresets, itemTypeCounts, itemBlacklistArray, result)
-                )
+                for (let index = 0; index < randomisedWeaponPresetCount; index++)
                 {
-                    index--;
+                    if (
+                        !this.findAndAddRandomPresetToLoot(
+                            weaponDefaultPresets,
+                            itemTypeCounts,
+                            itemBlacklistArray,
+                            result,
+                        )
+                    )
+                    {
+                        index--;
+                    }
                 }
             }
         }
@@ -146,18 +157,22 @@ export class LootGenerator
             const levelFilteredArmorPresets = armorDefaultPresets.filter((armor) =>
                 this.armorIsDesiredProtectionLevel(armor, options)
             );
-            for (let index = 0; index < randomisedArmorPresetCount; index++)
+
+            if (levelFilteredArmorPresets.length > 0)
             {
-                if (
-                    !this.findAndAddRandomPresetToLoot(
-                        levelFilteredArmorPresets,
-                        itemTypeCounts,
-                        itemBlacklistArray,
-                        result,
-                    )
-                )
+                for (let index = 0; index < randomisedArmorPresetCount; index++)
                 {
-                    index--;
+                    if (
+                        !this.findAndAddRandomPresetToLoot(
+                            levelFilteredArmorPresets,
+                            itemTypeCounts,
+                            itemBlacklistArray,
+                            result,
+                        )
+                    )
+                    {
+                        index--;
+                    }
                 }
             }
         }
@@ -307,7 +322,7 @@ export class LootGenerator
         const randomPreset = this.randomUtil.getArrayValue(globalDefaultPresets);
         if (!randomPreset?._encyclopedia)
         {
-            this.logger.debug(`Airdrop - preset with id: ${randomPreset._id} lacks encyclopedia property, skipping`);
+            this.logger.debug(`Airdrop - preset with id: ${randomPreset?._id} lacks encyclopedia property, skipping`);
 
             return false;
         }
