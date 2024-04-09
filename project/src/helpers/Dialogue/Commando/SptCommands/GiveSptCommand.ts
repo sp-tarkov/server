@@ -51,7 +51,7 @@ export class GiveSptCommand implements ISptCommand
 
     public getCommandHelp(): string
     {
-        return "Usage:\n\t- spt give tplId quantity\n\t- spt give locale \"item name\" quantity\n\t- spt give \"item name\" quantity\nIf using name, must be as seen in the wiki.";
+        return "spt give\n========\nSends items to the player through the message system.\n\n\tspt give [template ID] [quantity]\n\t\tEx: spt give 544fb25a4bdc2dfb738b4567 2\n\n\tspt give [\"item name\"] [quantity]\n\t\tEx: spt give \"pack of sugar\" 10\n\n\tspt give [locale] [\"item name\"] [quantity]\n\t\tEx: spt give fr \"figurine de chat\" 3";
     }
 
     public performAction(commandHandler: IUserDialogInfo, sessionId: string, request: ISendMessageRequest): string
@@ -61,7 +61,7 @@ export class GiveSptCommand implements ISptCommand
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 commandHandler,
-                "Invalid use of give command! Use \"help\" for more info",
+                "Invalid use of give command. Use \"help\" for more information.",
             );
             return request.dialogId;
         }
@@ -81,7 +81,7 @@ export class GiveSptCommand implements ISptCommand
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
                     commandHandler,
-                    "Invalid use of give command! Use \"help\" for more info",
+                    "Invalid use of give command. Use \"help\" for more information.",
                 );
                 return request.dialogId;
             }
@@ -90,7 +90,7 @@ export class GiveSptCommand implements ISptCommand
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
                     commandHandler,
-                    "Invalid item selected, outside of bounds! Use \"help\" for more info",
+                    "Invalid selection. Outside of bounds! Use \"help\" for more information.",
                 );
                 return request.dialogId;
             }
@@ -116,7 +116,7 @@ export class GiveSptCommand implements ISptCommand
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
-                        `Invalid use of give command! Unknown locale "${locale}". Use "help" for more info`,
+                        `Unknown locale "${locale}". Use \"help\" for more information.`,
                     );
                     return request.dialogId;
                 }
@@ -136,7 +136,7 @@ export class GiveSptCommand implements ISptCommand
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
-                        "We couldn't find any items that are similar to what you entered.",
+                        "That item could not be found. Please refine your request and try again.",
                     );
                     return request.dialogId;
                 }
@@ -146,12 +146,12 @@ export class GiveSptCommand implements ISptCommand
                     let i = 1;
                     const slicedItems = closestItemsMatchedByName.slice(0, 10);
                     // max 10 item names and map them
-                    const itemList = slicedItems.map((itemName) => `\t${i++}. ${itemName}`).join("\n");
+                    const itemList = slicedItems.map((itemName) => `${i++}. ${itemName}`).join("\n");
                     this.savedCommand = new SavedCommand(quantity, slicedItems, locale);
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
-                        `We couldn't find the exact name match you were looking for. The closest matches are:\n${itemList}\nType in "spt give [number]" to indicate which one you want.`,
+                        `Could not find exact match. Closest matches are:\n\n${itemList}\n\nUse "spt give [number]" to select one.`,
                     );
                     return request.dialogId;
                 }
@@ -162,9 +162,9 @@ export class GiveSptCommand implements ISptCommand
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
-                        `There was only one match for your item search of "${item}" but its outside the acceptable bounds: ${
+                        `Found a possible match for "${item}" but uncertain. Match: "${
                             closestItemsMatchedByName[0]
-                        }`,
+                        }". Please refine your request and try again.`,
                     );
                     return request.dialogId;
                 }
@@ -187,7 +187,7 @@ export class GiveSptCommand implements ISptCommand
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 commandHandler,
-                "Invalid template ID requested for give command. The item doesn't exists on the DB.",
+                "That item could not be found. Please refine your request and try again.",
             );
             return request.dialogId;
         }
@@ -201,7 +201,7 @@ export class GiveSptCommand implements ISptCommand
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
                     commandHandler,
-                    "Invalid weapon template ID requested. There are no default presets for this weapon.",
+                    "That weapon template ID could not be found. Please refine your request and try again.",
                 );
                 return request.dialogId;
             }
@@ -233,7 +233,7 @@ export class GiveSptCommand implements ISptCommand
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
                     commandHandler,
-                    "The amount of items you requested to be given caused an error, try using a smaller amount!",
+                    "Too many items requested. Please lower the amount and try again.",
                 );
                 return request.dialogId;
             }
@@ -242,7 +242,7 @@ export class GiveSptCommand implements ISptCommand
         // Flag the items as FiR
         this.itemHelper.setFoundInRaid(itemsToSend);
 
-        this.mailSendService.sendSystemMessageToPlayer(sessionId, "Give command!", itemsToSend);
+        this.mailSendService.sendSystemMessageToPlayer(sessionId, "SPT GIVE", itemsToSend);
         return request.dialogId;
     }
 }

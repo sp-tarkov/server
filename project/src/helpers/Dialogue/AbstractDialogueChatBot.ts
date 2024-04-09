@@ -16,8 +16,9 @@ export abstract class AbstractDialogueChatBot implements IDialogueChatBot
     }
 
     /**
-     * @deprecated use registerChatCommand instead
+     * @deprecated As of v3.7.6. Use registerChatCommand.
      */
+    // TODO: v3.9.0 - Remove registerCommandoCommand method.
     public registerCommandoCommand(chatCommand: IChatCommand | ICommandoCommand): void
     {
         this.registerChatCommand(chatCommand);
@@ -27,7 +28,9 @@ export abstract class AbstractDialogueChatBot implements IDialogueChatBot
     {
         if (this.chatCommands.some((cc) => cc.getCommandPrefix() === chatCommand.getCommandPrefix()))
         {
-            throw new Error(`The commando command ${chatCommand.getCommandPrefix()} being registered already exists!`);
+            throw new Error(
+                `The command "${chatCommand.getCommandPrefix()}" attempting to be registered already exists.`,
+            );
         }
         this.chatCommands.push(chatCommand);
     }
@@ -55,7 +58,7 @@ export abstract class AbstractDialogueChatBot implements IDialogueChatBot
         if (splitCommand[0].toLowerCase() === "help")
         {
             const helpMessage = this.chatCommands.map((c) =>
-                `Help for ${c.getCommandPrefix()}:\n${
+                `Available commands:\n\n${c.getCommandPrefix()}:\n\n${
                     Array.from(c.getCommands()).map((command) => c.getCommandHelp(command)).join("\n")
                 }`
             ).join("\n");

@@ -4,6 +4,7 @@ import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
 /**
  * @deprecated As of v3.7.6. Use IChatCommand. Will be removed in v3.9.0.
  */
+// TODO: v3.9.0 - Remove ICommandoCommand.
 export type ICommandoCommand = IChatCommand;
 export interface IChatCommand
 {

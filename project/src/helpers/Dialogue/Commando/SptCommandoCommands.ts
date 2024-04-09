@@ -31,7 +31,7 @@ export class SptCommandoCommands implements IChatCommand
     {
         if (this.sptCommands.some((c) => c.getCommand() === command.getCommand()))
         {
-            throw new Error(`The command ${command.getCommand()} being registered for SPT Commands already exists!`);
+            throw new Error(`The command "${command.getCommand()}" attempting to be registered already exists.`);
         }
         this.sptCommands.push(command);
     }
