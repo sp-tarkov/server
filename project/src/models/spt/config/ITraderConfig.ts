@@ -46,6 +46,8 @@ export interface FenceConfig
     presetSlotsToRemoveChancePercent: Record<string, number>;
     /** Block seasonal items from appearing when season is inactive */
     blacklistSeasonalItems: boolean;
+    /** Max pen value allowed to be listed on flea - affects ammo + ammo boxes */
+    ammoMaxPenLimit: number;
     blacklist: string[];
     coopExtractGift: CoopExtractReward;
     btrDeliveryExpireHours: number;

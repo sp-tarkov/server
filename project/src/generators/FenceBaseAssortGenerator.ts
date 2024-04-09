@@ -74,7 +74,7 @@ export class FenceBaseAssortGenerator
                 }
             }
 
-            // Only allow  rigs with no slots (carrier rigs)
+            // Only allow rigs with no slots (carrier rigs)
             if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.VEST) && rootItemDb._props.Slots.length > 0)
             {
                 continue;
@@ -94,6 +94,15 @@ export class FenceBaseAssortGenerator
                 slotId: "hideout",
                 upd: { StackObjectsCount: 9999999 },
             }];
+
+            // Ensure ammo is not above penetration limit value
+            if (this.itemHelper.isOfBaseclasses(rootItemDb._id, [BaseClasses.AMMO_BOX, BaseClasses.AMMO]))
+            {
+                if (this.isAmmoAbovePenetrationLimit(rootItemDb))
+                {
+                    continue;
+                }
+            }
 
             if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.AMMO_BOX))
             {
@@ -173,6 +182,53 @@ export class FenceBaseAssortGenerator
 
             baseFenceAssort.loyal_level_items[itemAndChildren[0]._id] = 1;
         }
+    }
+
+    /**
+     * Check ammo in boxes + loose ammos has a penetration value above the configured value in trader.json / ammoMaxPenLimit
+     * @param rootItemDb Ammo box or ammo item from items.db
+     * @returns True if penetration value is above limit set in config
+     */
+    protected isAmmoAbovePenetrationLimit(rootItemDb: ITemplateItem): boolean
+    {
+        const ammoPenetrationPower = this.getAmmoPenetrationPower(rootItemDb);
+        if (ammoPenetrationPower === null)
+        {
+            this.logger.warning(`Ammo: ${rootItemDb._id} has no penetration value, skipping`);
+            return false;
+        }
+
+        return ammoPenetrationPower > this.traderConfig.fence.ammoMaxPenLimit;
+    }
+
+    /**
+     * Get the penetration power value of an ammo, works with ammo boxes and raw ammos
+     * @param rootItemDb Ammo box or ammo item from items.db
+     * @returns Penetration power of passed in item, null if it doesnt have a power
+     */
+    protected getAmmoPenetrationPower(rootItemDb: ITemplateItem): number
+    {
+        if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.AMMO_BOX))
+        {
+            const ammoTplInBox = rootItemDb._props.StackSlots[0]._props.filters[0].Filter[0];
+            const ammoItemDb = this.itemHelper.getItem(ammoTplInBox);
+            if (!ammoItemDb[0])
+            {
+                this.logger.warning(`Ammo: ${ammoTplInBox} not an item, skipping`);
+                return null;
+            }
+
+            return ammoItemDb[1]._props.PenetrationPower;
+        }
+
+        // Plain old ammo, get its pen property
+        if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.AMMO))
+        {
+            return rootItemDb._props.PenetrationPower;
+        }
+
+        // Not an ammobox or ammo
+        return null;
     }
 
     protected getItemPrice(itemTpl: string, items: Item[]): number

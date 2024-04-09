@@ -324,7 +324,9 @@
             "5d08d21286f774736e7c94c3": 1,
             "5c94bbff86f7747ee735c08f": 1
         },
-        "bosssanitar": {},
+        "bosssanitar": {
+			"5efde6b4f5448336730dbd61": 1
+		},
         "bosstagilla": {},
         "bossknight": {},
         "bosszryachiy": {},

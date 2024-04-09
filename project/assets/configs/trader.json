@@ -319,6 +319,7 @@
             "left_side_plate": 75,
             "right_side_plate": 75
         },
+        "ammoMaxPenLimit": 20,
         "blacklistSeasonalItems": true,
         "blacklist": [
             "5c164d2286f774194c5e69fa",
@@ -343,12 +344,6 @@
             "5422acb9af1c889c16000029",
             "64d0b40fbe2eed70e254e2d4",
             "5fc22d7c187fea44d52eda44",
-            "65702577cfc010a0f5006a2c",
-            "65702591c5d7d4cb4d07857c",
-            "6570240ecfc010a0f50069f2",
-            "65702606cfc010a0f5006a3e",
-            "65702640cfc010a0f5006a4d",
-            "657024011419851aef03e6f4",
             "646372518610c40fc20204e8"
         ],
         "coopExtractGift": {
