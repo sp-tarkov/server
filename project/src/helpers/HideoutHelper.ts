@@ -595,7 +595,7 @@ export class HideoutHelper
      * @param applyHideoutManagementBonus should the hideout mgmt bonus be appled to the calculation
      * @returns Items craft time with bonuses subtracted
      */
-    protected getAdjustedCraftTimeWithSkills(
+    public getAdjustedCraftTimeWithSkills(
         pmcData: IPmcData,
         recipeId: string,
         applyHideoutManagementBonus = false,
@@ -613,13 +613,19 @@ export class HideoutHelper
             return undefined;
         }
 
-        // Seconds to deduct from crafts total time
-        let timeReductionSeconds = this.getSkillProductionTimeReduction(
-            pmcData,
-            recipe.productionTime,
-            SkillTypes.CRAFTING,
-            globalSkillsDb.Crafting.ProductionTimeReductionPerLevel,
-        );
+        let timeReductionSeconds = 0;
+
+        // Bitcoin farm is excluded from crafting skill cooldown reduction
+        if (recipeId !== HideoutHelper.bitcoinFarm)
+        {
+            // Seconds to deduct from crafts total time
+            timeReductionSeconds += this.getSkillProductionTimeReduction(
+                pmcData,
+                recipe.productionTime,
+                SkillTypes.CRAFTING,
+                globalSkillsDb.Crafting.ProductionTimeReductionPerLevel,
+            );
+        }
 
         // Some crafts take into account hideout management, e.g. fuel, water/air filters
         if (applyHideoutManagementBonus)

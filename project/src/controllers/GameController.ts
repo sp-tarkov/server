@@ -203,6 +203,7 @@ export class GameController
                 this.hideoutHelper.setHideoutImprovementsToCompleted(pmcProfile);
                 this.hideoutHelper.unlockHideoutWallInProfile(pmcProfile);
                 this.profileFixerService.addMissingIdsToBonuses(pmcProfile);
+                this.profileFixerService.fixBitcoinProductionTime(pmcProfile);
             }
 
             this.logProfileDetails(fullProfile);

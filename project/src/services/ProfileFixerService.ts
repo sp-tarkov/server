@@ -1312,6 +1312,21 @@ export class ProfileFixerService
     }
 
     /**
+     * 3.8.0 utilized the wrong ProductionTime for bitcoin, fix it if it's found
+     */
+    public fixBitcoinProductionTime(pmcProfile: IPmcData): void
+    {
+        const btcProd = pmcProfile.Hideout?.Production[HideoutHelper.bitcoinFarm];
+        if (btcProd)
+        {
+            btcProd.ProductionTime = this.hideoutHelper.getAdjustedCraftTimeWithSkills(
+                pmcProfile,
+                HideoutHelper.bitcoinProductionId,
+            );
+        }
+    }
+
+    /**
      * At some point the property name was changed,migrate data across to new name
      * @param pmcProfile Profile to migrate improvements in
      */
