@@ -389,8 +389,12 @@
         "pmcbot": {
             "60098ad7c2240c0fe85c570a": 2
         },
-        "arenafighterevent": {},
-        "arenafighter": {},
+        "arenafighterevent": {
+			"5734758f24597738025ee253": 1
+		},
+        "arenafighter": {
+			"5734758f24597738025ee253": 1
+		},
         "crazyassaultevent": {},
         "assaultgroup": {},
         "gifter": {},
