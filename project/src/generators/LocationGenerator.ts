@@ -1096,7 +1096,6 @@ export class LocationGenerator
                 // Replace existing magazine with above array
                 items.splice(items.indexOf(rootItem), 1, ...magazineWithCartridges);
             }
-
         }
         */
         else if (this.itemHelper.armorItemCanHoldMods(chosenTpl))
