@@ -1077,8 +1077,11 @@ export class LocationGenerator
         {
             this.itemHelper.addCartridgesToAmmoBox(items, itemTemplate);
         }
+        // Leaving this code here in case BSG decides the empty magazines in containers *was* a bug.
+        /*
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.MAGAZINE))
         {
+
             if (this.randomUtil.getChance100(this.locationConfig.magazineLootHasAmmoChancePercent))
             {
                 // Create array with just magazine
@@ -1094,7 +1097,10 @@ export class LocationGenerator
                 // Replace existing magazine with above array
                 items.splice(items.indexOf(rootItem), 1, ...magazineWithCartridges);
             }
+
         }
+        */
+
         else if (this.itemHelper.armorItemCanHoldMods(chosenTpl))
         {
             const defaultPreset = this.presetHelper.getDefaultPreset(chosenTpl);
