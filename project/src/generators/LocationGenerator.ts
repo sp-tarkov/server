@@ -1077,6 +1077,8 @@ export class LocationGenerator
         {
             this.itemHelper.addCartridgesToAmmoBox(items, itemTemplate);
         }
+        // Disable code that generates ammo for magazines inside containers. Keeping here in case BSG decides it was a few-wipe-long bug.
+        /*
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.MAGAZINE))
         {
             if (this.randomUtil.getChance100(this.locationConfig.magazineLootHasAmmoChancePercent))
@@ -1095,6 +1097,7 @@ export class LocationGenerator
                 items.splice(items.indexOf(rootItem), 1, ...magazineWithCartridges);
             }
         }
+        */
         else if (this.itemHelper.armorItemCanHoldMods(chosenTpl))
         {
             const defaultPreset = this.presetHelper.getDefaultPreset(chosenTpl);
