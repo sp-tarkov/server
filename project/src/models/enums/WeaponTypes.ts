@@ -13,6 +13,8 @@ export enum Weapons9x39
 {
     AS_VAL = "57c44b372459772d2b39b8ce",
     VSS_VINTOREZ = "57838ad32459774a17445cd2",
+    KBP_9A_91 = "644674a13d52156624001fbc",
+    VSK_94 = "645e0c6b3b381ede770e1cc9", 
 }
 
 export enum Weapons762x54R
@@ -22,6 +24,10 @@ export enum Weapons762x54R
     MOSIN_INFANTRY = "5bfd297f0db834001a669119",
     MOSIN_SNIPER = "5ae08f0a5acfc408fb1398a1",
     SV_98 = "55801eed4bdc2d89578b4588",
+    AVT_40 = "6410733d5dd49d77bd07847e",
+	SVT_40 = "643ea5b23db6f9f57107d9fd",
+	PKM = "64637076203536ad5600c990",
+	PKP = "64ca3d3954fc657e230529cc",
 }
 
 export enum Weapons762x51
@@ -60,6 +66,8 @@ export enum Weapons762x39
     MK47_MUTANT = "606587252535c57a13424cfd",
     RD_704 = "628a60ae6b1d481ff772e9c8",
     VPO_136 = "59e6152586f77473dc057aa1",
+    RPD = "6513ef33e06849f06c0957ca",
+	RPDN = "65268d8ecb944ff1e90ea385",
 }
 
 export enum Weapons762x35
@@ -79,6 +87,8 @@ export enum Weapons556x45
     SCARL_BLACK = "6184055050224f204c1da540",
     SCARL_FDE = "618428466ef05c2ce828f218",
     TX15_DML = "5d43021ca4b9362eab4b5e25",
+    AUG_A1 = "62e7c4fba689e8c9c50dfc38",
+	AUG_A3 = "63171672192e68c5460cebc5",
 }
 
 export enum Weapons545x39
@@ -95,6 +105,7 @@ export enum Weapons545x39
     SAG_AK = "628b5638ad252a16da6dd245",
     SAG_AK_SHORT = "628b9c37a733087d0d7fe84b",
     RPK_16 = "5beed0f50db834001c062b12",
+    AK_12 = "6499849fc93611967b034949",
 }
 
 export enum Weapons57x28FN
@@ -127,6 +138,7 @@ export enum Weapons9x33R
 export enum Weapons9x21
 {
     SR_1MP = "59f98b4986f7746f546d2cef",
+    SR_2M = "62e14904c2699c0ec93adc47",
 }
 
 export enum Weapons9x19
@@ -147,6 +159,7 @@ export enum Weapons9x19
     SAIGA_9 = "59f9cabd86f7743a10721f46",
     STM_9 = "60339954d62c9b14ed777c06",
     VECTOR_9MM = "5fc3f2d5900b1d5091531e57",
+    GLOCK_19X = "63088377b5cd696784087147",
 }
 
 export enum Weapons9x18
@@ -189,4 +202,9 @@ export enum Weapons20Gauge
 export enum Weapons23x75
 {
     KS_23M = "5e848cc2988a8701445df1e8",
+}
+
+export enum Weapons68x51
+{
+    MCX_SPEAR = "65290f395ae2ae97b80fdf2d",
 }
