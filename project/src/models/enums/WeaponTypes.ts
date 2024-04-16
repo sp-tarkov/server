@@ -1,6 +1,7 @@
 export enum Weapons127x55
 {
     ASH_12 = "5cadfbf7ae92152ac412eeef",
+    RSH_12 = "633ec7c2a6918cb895019c6c",
 }
 
 export enum Weapons86x70
@@ -207,4 +208,10 @@ export enum Weapons23x75
 export enum Weapons68x51
 {
     MCX_SPEAR = "65290f395ae2ae97b80fdf2d",
+}
+
+export enum Weapons40x46
+{
+    M32A1 = "6275303a9f372d6ea97f9ec7",
+    FN40GL = "5e81ebcd8e146c7080625e15",
 }
