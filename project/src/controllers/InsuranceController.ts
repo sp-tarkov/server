@@ -102,7 +102,13 @@ export class InsuranceController
         const insuranceTime = time || this.timeUtil.getTimestamp();
 
         const profileInsuranceDetails = this.saveServer.getProfile(sessionID).insurance;
-        this.logger.debug(`Found ${profileInsuranceDetails.length} insurance packages in profile ${sessionID}`, true);
+        if (profileInsuranceDetails.length > 0)
+        {
+            this.logger.debug(
+                `Found ${profileInsuranceDetails.length} insurance packages in profile ${sessionID}`,
+                true,
+            );
+        }
 
         return profileInsuranceDetails.filter((insured) => insuranceTime >= insured.scheduledTime);
     }
@@ -543,10 +549,16 @@ export class InsuranceController
      */
     protected sendMail(sessionID: string, insurance: Insurance): void
     {
+        const labsId = "laboratory";
         // After all of the item filtering that we've done, if there are no items remaining, the insurance has
         // successfully "failed" to return anything and an appropriate message should be sent to the player.
         const traderDialogMessages = this.databaseServer.getTables().traders[insurance.traderId].dialogue;
-        if (insurance.systemData?.location.toLowerCase() === "laboratory")
+
+        // Map is labs + insurance is disabled in base.json
+        if (
+            insurance.systemData?.location.toLowerCase() === labsId
+            && !this.databaseServer.getTables().locations[labsId].base.Insurance
+        )
         {
             // Trader has labs-specific messages
             // Wipe out returnable items

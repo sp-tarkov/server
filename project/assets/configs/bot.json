@@ -317,7 +317,9 @@
         "exusec": {
             "60098ad7c2240c0fe85c570a": 2
         },
-        "bossbully": {},
+        "bossbully": {
+            "5448ba0b4bdc2d02308b456c": 1
+        },
         "bossgluhar": {},
         "bosskilla": {},
         "bosskojaniy": {
@@ -325,7 +327,8 @@
             "5c94bbff86f7747ee735c08f": 1
         },
         "bosssanitar": {
-			"5efde6b4f5448336730dbd61": 1
+            "5efde6b4f5448336730dbd61": 1,
+            "5eff09cd30a7dc22fd1ddfed": 1
 		},
         "bosstagilla": {},
         "bossknight": {},

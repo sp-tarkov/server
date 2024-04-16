@@ -96,11 +96,12 @@ export class ScavCaseRewardGenerator
      */
     protected cacheDbItems(): void
     {
+        // TODO: pre-loop and get array of valid items, e.g. non-node/non-blacklisted, then loop over those results for below code
+
+        // Get an array of seasonal items that should not be shown right now as seasonal event is not active
+        const inactiveSeasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
         if (!this.dbItemsCache)
         {
-            // Get an array of seasonal items that should not be shown right now as seasonal event is not active
-            const seasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
-
             this.dbItemsCache = Object.values(this.databaseServer.getTables().templates.items).filter((item) =>
             {
                 // Base "Item" item has no parent, ignore it
@@ -129,7 +130,7 @@ export class ScavCaseRewardGenerator
                     return false;
                 }
 
-                // Globally blacklisted
+                // Globally reward-blacklisted
                 if (this.itemFilterService.isItemRewardBlacklisted(item._id))
                 {
                     return false;
@@ -146,7 +147,7 @@ export class ScavCaseRewardGenerator
                     return false;
                 }
 
-                if (seasonalItems.includes(item._id))
+                if (inactiveSeasonalItems.includes(item._id))
                 {
                     return false;
                 }
@@ -172,6 +173,32 @@ export class ScavCaseRewardGenerator
 
                 // Not ammo, skip
                 if (!this.itemHelper.isOfBaseclass(item._id, BaseClasses.AMMO))
+                {
+                    return false;
+                }
+
+                // Skip item if item id is on blacklist
+                if (
+                    this.scavCaseConfig.rewardItemBlacklist.includes(item._id)
+                    || this.itemFilterService.isItemBlacklisted(item._id)
+                )
+                {
+                    return false;
+                }
+
+                // Globally reward-blacklisted
+                if (this.itemFilterService.isItemRewardBlacklisted(item._id))
+                {
+                    return false;
+                }
+
+                if (!this.scavCaseConfig.allowBossItemsAsRewards && this.itemFilterService.isBossItem(item._id))
+                {
+                    return false;
+                }
+
+                // Skip seasonal items
+                if (inactiveSeasonalItems.includes(item._id))
                 {
                     return false;
                 }

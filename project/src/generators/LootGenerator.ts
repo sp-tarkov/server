@@ -106,6 +106,7 @@ export class LootGenerator
             {
                 if (!this.findAndAddRandomItemToLoot(items, itemTypeCounts, options, result))
                 {
+                    // Failed to add, reduce index so we get another attempt
                     index--;
                 }
             }
@@ -138,6 +139,7 @@ export class LootGenerator
                         )
                     )
                     {
+                        // Failed to add, reduce index so we get another attempt
                         index--;
                     }
                 }
@@ -158,6 +160,7 @@ export class LootGenerator
                 this.armorIsDesiredProtectionLevel(armor, options)
             );
 
+            // Add some armors to rewards
             if (levelFilteredArmorPresets.length > 0)
             {
                 for (let index = 0; index < randomisedArmorPresetCount; index++)
@@ -171,6 +174,7 @@ export class LootGenerator
                         )
                     )
                     {
+                        // Failed to add, reduce index so we get another attempt
                         index--;
                     }
                 }
@@ -181,10 +185,10 @@ export class LootGenerator
     }
 
     /**
-     * Filter armor items by their main plates protection level
-     * @param armor Armor preset
-     * @param options Loot request options
-     * @returns True item passes checks
+     * Filter armor items by their front plates protection level - top if its a helmet
+     * @param armor Armor preset to check
+     * @param options Loot request options - armor level etc
+     * @returns True if item has desired armor level
      */
     protected armorIsDesiredProtectionLevel(armor: IPreset, options: LootRequest): boolean
     {
@@ -305,68 +309,76 @@ export class LootGenerator
 
     /**
      * Find a random item in items.json and add to result array
-     * @param globalDefaultPresets presets to choose from
-     * @param itemTypeCounts item limit counts
-     * @param itemBlacklist items to skip
-     * @param result array to add found preset to
+     * @param presetPool Presets to choose from
+     * @param itemTypeCounts Item limit counts
+     * @param itemBlacklist Items to skip
+     * @param result Array to add chosen preset to
      * @returns true if preset was valid and added to pool
      */
     protected findAndAddRandomPresetToLoot(
-        globalDefaultPresets: IPreset[],
+        presetPool: IPreset[],
         itemTypeCounts: Record<string, { current: number; max: number; }>,
         itemBlacklist: string[],
         result: LootItem[],
     ): boolean
     {
-        // Choose random preset and get details from item.json using encyclopedia value (encyclopedia === tplId)
-        const randomPreset = this.randomUtil.getArrayValue(globalDefaultPresets);
-        if (!randomPreset?._encyclopedia)
+        // Choose random preset and get details from item db using encyclopedia value (encyclopedia === tplId)
+        const chosenPreset = this.randomUtil.getArrayValue(presetPool);
+        if (!chosenPreset)
         {
-            this.logger.debug(`Airdrop - preset with id: ${randomPreset?._id} lacks encyclopedia property, skipping`);
+            this.logger.warning("Unable to find random preset in given presets, skipping");
 
             return false;
         }
 
-        const itemDetails = this.itemHelper.getItem(randomPreset._encyclopedia);
-        if (!itemDetails[0])
+        // No `_encyclopedia` property, not possible to reliably get root item tpl
+        if (!chosenPreset?._encyclopedia)
         {
-            this.logger.debug(`Airdrop - Unable to find preset with tpl: ${randomPreset._encyclopedia}, skipping`);
+            this.logger.debug(`Preset with id: ${chosenPreset?._id} lacks encyclopedia property, skipping`);
 
             return false;
         }
 
-        // Skip blacklisted items
-        if (itemBlacklist.includes(randomPreset._items[0]._tpl))
+        // Get preset root item db details via its `_encyclopedia` property
+        const itemDbDetails = this.itemHelper.getItem(chosenPreset._encyclopedia);
+        if (!itemDbDetails[0])
         {
-            return false;
-        }
-
-        // Some custom mod items are lacking a parent property
-        if (!itemDetails[1]._parent)
-        {
-            this.logger.error(this.localisationService.getText("loot-item_missing_parentid", itemDetails[1]?._name));
+            this.logger.debug(`Unable to find preset with tpl: ${chosenPreset._encyclopedia}, skipping`);
 
             return false;
         }
 
-        // Check picked preset hasn't exceeded spawn limit
-        const itemLimitCount = itemTypeCounts[itemDetails[1]._parent];
+        // Skip preset if root item is blacklisted
+        if (itemBlacklist.includes(chosenPreset._items[0]._tpl))
+        {
+            return false;
+        }
+
+        // Some custom mod items lack a parent property
+        if (!itemDbDetails[1]._parent)
+        {
+            this.logger.error(this.localisationService.getText("loot-item_missing_parentid", itemDbDetails[1]?._name));
+
+            return false;
+        }
+
+        // Check chosen preset hasn't exceeded spawn limit
+        const itemLimitCount = itemTypeCounts[itemDbDetails[1]._parent];
         if (itemLimitCount && itemLimitCount.current > itemLimitCount.max)
         {
             return false;
         }
 
-        const newLootItem: LootItem = { tpl: randomPreset._items[0]._tpl, isPreset: true, stackCount: 1 };
-
-        result.push(newLootItem);
+        // Add chosen preset tpl to result array
+        result.push({ tpl: chosenPreset._items[0]._tpl, isPreset: true, stackCount: 1 });
 
         if (itemLimitCount)
         {
-            // increment item count as its in limit array
+            // Increment item count as item has been chosen and its inside itemLimitCount dictionary
             itemLimitCount.current++;
         }
 
-        // item added okay
+        // Item added okay
         return true;
     }
 
@@ -379,10 +391,12 @@ export class LootGenerator
     {
         const itemsToReturn: Item[][] = [];
 
-        // choose a weapon to give to the player (weighted)
+        // Choose a weapon to give to the player (weighted)
         const chosenWeaponTpl = this.weightedRandomHelper.getWeightedValue<string>(
             containerSettings.weaponRewardWeight,
         );
+
+        // Get itemDb details of weapon
         const weaponDetailsDb = this.itemHelper.getItem(chosenWeaponTpl);
         if (!weaponDetailsDb[0])
         {
@@ -393,24 +407,26 @@ export class LootGenerator
             return itemsToReturn;
         }
 
-        // Get weapon preset - default or choose a random one from all possible
+        // Get weapon preset - default or choose a random one from globals.json preset pool
         let chosenWeaponPreset = (containerSettings.defaultPresetsOnly)
             ? this.presetHelper.getDefaultPreset(chosenWeaponTpl)
             : this.randomUtil.getArrayValue(this.presetHelper.getPresets(chosenWeaponTpl));
 
+        // No default preset found for weapon, choose a random one
         if (!chosenWeaponPreset)
         {
             this.logger.warning(`Default preset for weapon ${chosenWeaponTpl} not found, choosing random instead`);
             chosenWeaponPreset = this.randomUtil.getArrayValue(this.presetHelper.getPresets(chosenWeaponTpl));
         }
 
+        // Clean up Ids to ensure they're all unique and prevent collisions
         const presetAndMods: Item[] = this.itemHelper.replaceIDs(chosenWeaponPreset._items);
         this.itemHelper.remapRootItemId(presetAndMods);
 
         // Add preset to return object
         itemsToReturn.push(presetAndMods);
 
-        // Get items related to chosen weapon
+        // Get a random collection of weapon mods related to chosen weawpon and add them to result array
         const linkedItemsToWeapon = this.ragfairLinkedItemService.getLinkedDbItems(chosenWeaponTpl);
         itemsToReturn.push(
             ...this.getSealedContainerWeaponModRewards(containerSettings, linkedItemsToWeapon, chosenWeaponPreset),
