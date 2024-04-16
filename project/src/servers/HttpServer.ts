@@ -17,6 +17,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 export class HttpServer
 {
     protected httpConfig: IHttpConfig;
+    protected started: boolean;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -37,6 +38,8 @@ export class HttpServer
      */
     public load(): void
     {
+        this.started = false;
+
         /* create server */
         const httpServer: Server = http.createServer();
 
@@ -48,6 +51,7 @@ export class HttpServer
         /* Config server to listen on a port */
         httpServer.listen(this.httpConfig.port, this.httpConfig.ip, () =>
         {
+            this.started = true;
             this.logger.success(
                 this.localisationService.getText("started_webserver_success", this.httpServerHelper.getBackendUrl()),
             );
@@ -122,5 +126,10 @@ export class HttpServer
         }
 
         return found;
+    }
+
+    public isStarted(): boolean
+    {
+        return this.started;
     }
 }
