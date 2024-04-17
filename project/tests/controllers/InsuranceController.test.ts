@@ -983,7 +983,7 @@ describe("InsuranceController", () =>
 
     describe("sortAttachmentsByPrice", () =>
     {
-        it("should sort the attachments array by maxPrice in descending order", () =>
+        it("should sort the attachments array by dynamicPrice in descending order", () =>
         {
             const insured = insuranceFixture[0];
             const itemsMap = insuranceController.itemHelper.generateItemsMap(insured.items);
@@ -1001,14 +1001,14 @@ describe("InsuranceController", () =>
             // Verify the length of the sorted attachments array is unchanged
             expect(sortedAttachments.length).toBe(attachmentCount);
 
-            // Verify that the attachments are sorted by maxPrice in descending order
+            // Verify that the attachments are sorted by dynamicPrice in descending order
             for (let i = 1; i < sortedAttachments.length; i++)
             {
-                expect(sortedAttachments[i - 1].maxPrice).toBeGreaterThanOrEqual(sortedAttachments[i].maxPrice);
+                expect(sortedAttachments[i - 1].dynamicPrice).toBeGreaterThanOrEqual(sortedAttachments[i].dynamicPrice);
             }
         });
 
-        it("should place attachments with null maxPrice at the bottom of the sorted list", () =>
+        it("should place attachments with null dynamicPrice at the bottom of the sorted list", () =>
         {
             const insured = insuranceFixture[0];
             const itemsMap = insuranceController.itemHelper.generateItemsMap(insured.items);
@@ -1019,23 +1019,24 @@ describe("InsuranceController", () =>
             );
             const attachments = parentAttachmentsMap.entries().next().value;
 
-            // Set the maxPrice of the first attachment to null.
-            vi.spyOn(insuranceController.itemHelper, "getItemMaxPrice").mockReturnValue(666).mockReturnValueOnce(null);
+            // Set the dynamicPrice of the first attachment to null.
+            vi.spyOn(insuranceController.ragfairPriceService, "getDynamicItemPrice").mockReturnValue(666)
+                .mockReturnValueOnce(null);
 
             // Execute the method.
             const sortedAttachments = insuranceController.sortAttachmentsByPrice(attachments);
 
-            // Verify that the attachments with null maxPrice are at the bottom of the list
+            // Verify that the attachments with null dynamicPrice are at the bottom of the list
             const nullPriceAttachments = sortedAttachments.slice(-1);
             for (const attachment of nullPriceAttachments)
             {
-                expect(attachment.maxPrice).toBeNull();
+                expect(attachment.dynamicPrice).toBeNull();
             }
 
-            // Verify that the rest of the attachments are sorted by maxPrice in descending order
+            // Verify that the rest of the attachments are sorted by dynamicPrice in descending order
             for (let i = 1; i < sortedAttachments.length - 2; i++)
             {
-                expect(sortedAttachments[i - 1].maxPrice).toBeGreaterThanOrEqual(sortedAttachments[i].maxPrice);
+                expect(sortedAttachments[i - 1].dynamicPrice).toBeGreaterThanOrEqual(sortedAttachments[i].dynamicPrice);
             }
         });
     });
@@ -1044,10 +1045,10 @@ describe("InsuranceController", () =>
     {
         it("should log details for each attachment", () =>
         {
-            const attachments = [{ _id: "item1", name: "Item 1", maxPrice: 100 }, {
+            const attachments = [{ _id: "item1", name: "Item 1", dynamicPrice: 100 }, {
                 _id: "item2",
                 name: "Item 2",
-                maxPrice: 200,
+                dynamicPrice: 200,
             }];
 
             // Mock the logger.debug function.
