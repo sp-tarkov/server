@@ -484,7 +484,7 @@ export class GameController
      */
     public getServer(sessionId: string): IServerDetails[]
     {
-        return [{ ip: this.httpConfig.ip, port: this.httpConfig.port }];
+        return [{ ip: this.httpConfig.backendIp, port: Number.parseInt(this.httpConfig.backendPort) }];
     }
 
     /**
