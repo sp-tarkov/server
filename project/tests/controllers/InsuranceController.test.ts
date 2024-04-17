@@ -1020,8 +1020,7 @@ describe("InsuranceController", () =>
             const attachments = parentAttachmentsMap.entries().next().value;
 
             // Set the dynamicPrice of the first attachment to null.
-            vi.spyOn(insuranceController.ragfairPriceService, "getDynamicItemPrice").mockReturnValue(666)
-                .mockReturnValueOnce(null);
+            vi.spyOn(insuranceController.ragfairPriceService, "getDynamicItemPrice").mockReturnValue(666).mockReturnValueOnce(null);
 
             // Execute the method.
             const sortedAttachments = insuranceController.sortAttachmentsByPrice(attachments);
