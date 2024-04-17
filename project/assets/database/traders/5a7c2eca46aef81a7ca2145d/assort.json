@@ -2630,7 +2630,7 @@
       "slotId": "hideout",
       "upd": {
         "StackObjectsCount": 11956,
-        "BuyRestrictionMax": "8",
+        "BuyRestrictionMax": 8,
         "BuyRestrictionCurrent": 0
       }
     },
@@ -4567,7 +4567,7 @@
       "slotId": "hideout",
       "upd": {
         "StackObjectsCount": 5962,
-        "BuyRestrictionMax": "4",
+        "BuyRestrictionMax": 4,
         "BuyRestrictionCurrent": 0
       }
     },
