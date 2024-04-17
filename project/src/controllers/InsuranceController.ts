@@ -23,6 +23,7 @@ import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { InsuranceService } from "@spt-aki/services/InsuranceService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { PaymentService } from "@spt-aki/services/PaymentService";
+import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -50,6 +51,7 @@ export class InsuranceController
         @inject("PaymentService") protected paymentService: PaymentService,
         @inject("InsuranceService") protected insuranceService: InsuranceService,
         @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -459,7 +461,7 @@ export class InsuranceController
     }
 
     /**
-     * Sorts the attachment items by their max price in descending order.
+     * Sorts the attachment items by their dynamic price in descending order.
      *
      * @param attachments The array of attachments items.
      * @returns An array of items enriched with their max price and common locale-name.
@@ -469,8 +471,8 @@ export class InsuranceController
         return attachments.map((item) => ({
             ...item,
             name: this.itemHelper.getItemName(item._tpl),
-            maxPrice: this.itemHelper.getItemMaxPrice(item._tpl),
-        })).sort((a, b) => b.maxPrice - a.maxPrice);
+            dynamicPrice: this.ragfairPriceService.getDynamicItemPrice(item._tpl, this.roubleTpl, item, null, false),
+        })).sort((a, b) => b.dynamicPrice - a.dynamicPrice);
     }
 
     /**
@@ -483,7 +485,7 @@ export class InsuranceController
         let index = 1;
         for (const attachment of attachments)
         {
-            this.logger.debug(`Attachment ${index}: "${attachment.name}" - Price: ${attachment.maxPrice}`);
+            this.logger.debug(`Attachment ${index}: "${attachment.name}" - Price: ${attachment.dynamicPrice}`);
             index++;
         }
     }
@@ -521,8 +523,8 @@ export class InsuranceController
             const valuableChild = attachments.find(({ _id }) => _id === attachmentsId);
             if (valuableChild)
             {
-                const { name, maxPrice } = valuableChild;
-                this.logger.debug(`Marked attachment "${name}" for removal - Max Price: ${maxPrice}`);
+                const { name, dynamicPrice } = valuableChild;
+                this.logger.debug(`Marked attachment "${name}" for removal - Dyanmic Price: ${dynamicPrice}`);
                 toDelete.add(attachmentsId);
             }
         }
@@ -723,9 +725,9 @@ export class InsuranceController
     }
 }
 
-// Represents an insurance item that has had it's common locale-name and max price added to it.
+// Represents an insurance item that has had it's common locale-name and value added to it.
 interface EnrichedItem extends Item
 {
     name: string;
-    maxPrice: number;
+    dynamicPrice: number;
 }

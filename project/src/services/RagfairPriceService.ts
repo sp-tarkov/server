@@ -428,9 +428,7 @@ export class RagfairPriceService implements OnLoad
         {
             // const itemDetails = this.itemHelper.getItem(itemTpl);
             // this.logger.debug(`item below handbook price ${itemDetails[1]._name} handbook: ${itemHandbookPrice} flea: ${itemPrice} ${priceDifferencePercent}%`);
-            itemPrice = Math.round(
-                itemHandbookPrice * this.ragfairConfig.dynamic.offerAdjustment.handbookPriceMultipier,
-            );
+            return Math.round(itemHandbookPrice * this.ragfairConfig.dynamic.offerAdjustment.handbookPriceMultipier);
         }
 
         return itemPrice;
