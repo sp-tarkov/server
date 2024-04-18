@@ -17,6 +17,7 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ModSpawn } from "@spt-aki/models/enums/ModSpawn";
 import { IChooseRandomCompatibleModResult } from "@spt-aki/models/spt/bots/IChooseRandomCompatibleModResult";
 import { EquipmentFilterDetails, EquipmentFilters, IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
+import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
 import { ExhaustableArray } from "@spt-aki/models/spt/server/ExhaustableArray";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -957,17 +958,25 @@ export class BotEquipmentModGenerator
             // You'd have a mod being picked without any sub-mods in its chain, possibly resulting in missing required mods not being added
             if (matchingMod)
             {
-                // Mod isnt in existing mod pool
+                // Mod is in existing mod pool
                 if (itemModPool[modSlot].includes(matchingMod._tpl))
                 {
                     // Found mod on preset + it already exists in mod pool
                     return [matchingMod._tpl];
                 }
 
-                // Mod isnt in existing pool, only add if its got no children
-                if (this.itemHelper.getItem(matchingMod._tpl)[1]._props.Slots.length === 0)
+                // Check the filter of the slot to ensure a chosen mod fits
+                const parentSlotCompatibleItems = parentTemplate._props.Slots?.find((slot) =>
+                    slot._name.toLowerCase() === modSlot.toLowerCase()
+                )._props.filters[0].Filter;
+
+                // Mod isnt in existing pool, only add if it has no children and matches parent filter
+                if (
+                    this.itemHelper.getItem(matchingMod._tpl)[1]._props.Slots.length === 0
+                    && parentSlotCompatibleItems.includes(matchingMod._tpl)
+                )
                 {
-                    // Mod has no children
+                    // Mod has no children and matches parent filters, can be used
                     return [matchingMod._tpl];
                 }
             }
