@@ -329,7 +329,7 @@ export class PreAkiModLoader implements IModLoader
      */
     protected isModCombatibleWithAki(mod: IPackageJsonData): boolean
     {
-        const akiVersion = this.akiConfig.akiVersion;
+        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
         const modName = `${mod.author}-${mod.name}`;
 
         // Error and prevent loading If no akiVersion property exists

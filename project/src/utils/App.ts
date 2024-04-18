@@ -42,15 +42,15 @@ export class App
         this.logger.debug(`RAM: ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.argv[0])}`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.execPath)}`);
-        this.logger.debug(`Server: ${this.coreConfig.akiVersion}`);
-        if (this.coreConfig.buildTime)
+        this.logger.debug(`Server: ${globalThis.G_AKIVERSION || this.coreConfig.akiVersion}`);
+        if (globalThis.G_BUILDTIME)
         {
-            this.logger.debug(`Date: ${this.coreConfig.buildTime}`);
+            this.logger.debug(`Date: ${globalThis.G_BUILDTIME}`);
         }
 
-        if (this.coreConfig.commit)
+        if (globalThis.G_COMMIT)
         {
-            this.logger.debug(`Commit: ${this.coreConfig.commit}`);
+            this.logger.debug(`Commit: ${globalThis.G_COMMIT}`);
         }
 
         for (const onLoad of this.onLoadComponents)

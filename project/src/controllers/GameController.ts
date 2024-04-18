@@ -964,7 +964,9 @@ export class GameController
     protected logProfileDetails(fullProfile: IAkiProfile): void
     {
         this.logger.debug(`Profile made with: ${fullProfile.aki.version}`);
-        this.logger.debug(`Server version: ${this.coreConfig.akiVersion} ${this.coreConfig.commit}`);
+        this.logger.debug(
+            `Server version: ${globalThis.G_AKIVERSION || this.coreConfig.akiVersion} ${globalThis.G_COMMIT}`,
+        );
         this.logger.debug(`Debug enabled: ${globalThis.G_DEBUG_CONFIGURATION}`);
         this.logger.debug(`Mods enabled: ${globalThis.G_MODS_ENABLED}`);
     }

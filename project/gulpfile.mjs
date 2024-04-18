@@ -155,27 +155,32 @@ const downloadPnpm = async () =>
 const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.txt")).pipe(gulp.dest(buildDir));
 
 /**
- * Writes the latest Git commit hash to the core.json configuration file.
+ * Writes the latest build data to the core.json and build.json configuration files.
  */
-const writeCommitHashToCoreJSON = async () =>
+const writeBuildDataToJSON = async () =>
 {
     try
     {
-        const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
-        const coreJSON = await fs.readFile(coreJSONPath, "utf8");
-        const parsed = JSON.parse(coreJSON);
-
         // Fetch the latest Git commit hash
         const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
 
-        // Update the commit hash in the core.json object
-        parsed.commit = gitResult.stdout.trim() || "";
+        // Update core.json
+        const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
+        const coreJSON = await fs.readFile(coreJSONPath, "utf8");
+        const coreParsed = JSON.parse(coreJSON);
 
-        // Add build timestamp
-        parsed.buildTime = new Date().getTime();
+        coreParsed.commit = gitResult.stdout.trim() || "";
+        coreParsed.buildTime = new Date().getTime();
+        await fs.writeFile(coreJSONPath, JSON.stringify(coreParsed, null, 4));
 
-        // Write the updated object back to core.json
-        await fs.writeFile(coreJSONPath, JSON.stringify(parsed, null, 4));
+        // Write build.json
+        const buildJsonPath = path.join("obj", "ide", "build.json");
+        const buildInfo = {};
+
+        buildInfo.commit = coreParsed.commit;
+        buildInfo.buildTime = coreParsed.buildTime;
+        buildInfo.akiVersion = coreParsed.akiVersion;
+        await fs.writeFile(buildJsonPath, JSON.stringify(buildInfo, null, 4));
     }
     catch (error)
     {
@@ -195,7 +200,7 @@ const createHashFile = async () =>
 };
 
 // Combine all tasks into addAssets
-const addAssets = gulp.series(copyAssets, downloadPnpm, copyLicense, writeCommitHashToCoreJSON, createHashFile);
+const addAssets = gulp.series(copyAssets, downloadPnpm, copyLicense, writeBuildDataToJSON, createHashFile);
 
 /**
  * Cleans the build directory.
@@ -313,9 +318,9 @@ const build = (packagingType) =>
         cleanBuild,
         validateJSONs,
         compile,
+        addAssets,
         fetchPackageImage,
         anonPackaging,
-        addAssets,
         updateBuildProperties,
         cleanCompiled,
     ];

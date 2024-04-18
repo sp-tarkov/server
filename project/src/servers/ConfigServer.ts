@@ -53,7 +53,7 @@ export class ConfigServer
             }
         }
 
-        this.logger.info(`Commit hash: ${(this.configs[ConfigTypes.CORE] as ICoreConfig).commit || "DEBUG"}`);
-        this.logger.info(`Build date: ${(this.configs[ConfigTypes.CORE] as ICoreConfig).buildTime || "DEBUG"}`);
+        this.logger.info(`Commit hash: ${globalThis.G_COMMIT || "DEBUG"}`);
+        this.logger.info(`Build date: ${globalThis.G_BUILDTIME || "DEBUG"}`);
     }
 }

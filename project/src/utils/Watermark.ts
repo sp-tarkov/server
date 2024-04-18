@@ -108,9 +108,10 @@ export class Watermark
      */
     public getVersionTag(withEftVersion = false): string
     {
+        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
-            : this.akiConfig.akiVersion;
+            ? `${akiVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
+            : akiVersion;
 
         if (withEftVersion)
         {
@@ -128,9 +129,10 @@ export class Watermark
      */
     public getInGameVersionLabel(): string
     {
+        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
         const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE ${this.akiConfig.commit?.slice(0, 6) ?? ""}`
-            : `${this.akiConfig.akiVersion} - ${this.akiConfig.commit?.slice(0, 6) ?? ""}`;
+            ? `${akiVersion} - BLEEDINGEDGE ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`
+            : `${akiVersion} - ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`;
 
         return `${this.akiConfig.projectName} ${versionTag}`;
     }
