@@ -56,13 +56,11 @@ export class RagfairPriceService implements OnLoad
         if (!this.generatedStaticPrices)
         {
             this.generateStaticPrices();
-            this.generatedStaticPrices = true;
         }
 
         if (!this.generatedDynamicPrices)
         {
             this.generateDynamicPrices();
-            this.generatedDynamicPrices = true;
         }
     }
 
@@ -84,14 +82,18 @@ export class RagfairPriceService implements OnLoad
         {
             this.prices.static[item._id] = Math.round(this.handbookHelper.getTemplatePrice(item._id));
         }
+
+        this.generatedStaticPrices = true;
     }
 
     /**
      * Create a dictionary and store prices from prices.json in it
      */
-    protected generateDynamicPrices(): void
+    public generateDynamicPrices(): void
     {
         Object.assign(this.prices.dynamic, this.databaseServer.getTables().templates.prices);
+
+        this.generatedDynamicPrices = true;
     }
 
     /**
