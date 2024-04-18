@@ -17,7 +17,6 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ModSpawn } from "@spt-aki/models/enums/ModSpawn";
 import { IChooseRandomCompatibleModResult } from "@spt-aki/models/spt/bots/IChooseRandomCompatibleModResult";
 import { EquipmentFilterDetails, EquipmentFilters, IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
 import { ExhaustableArray } from "@spt-aki/models/spt/server/ExhaustableArray";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
