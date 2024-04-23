@@ -72,7 +72,7 @@ export class CustomItemService
 
         this.addToItemsDb(newItemId, itemClone);
 
-        this.addToHandbookDb(newItemId, newItemDetails.handbookParentId, newItemDetails.fleaPriceRoubles);
+        this.addToHandbookDb(newItemId, newItemDetails.handbookParentId, newItemDetails.handbookPriceRoubles);
 
         this.addToLocaleDbs(newItemDetails.locales, newItemId);
 
@@ -116,7 +116,7 @@ export class CustomItemService
 
         this.addToItemsDb(newItem._id, newItem);
 
-        this.addToHandbookDb(newItem._id, newItemDetails.handbookParentId, newItemDetails.fleaPriceRoubles);
+        this.addToHandbookDb(newItem._id, newItemDetails.handbookParentId, newItemDetails.handbookPriceRoubles);
 
         this.addToLocaleDbs(newItemDetails.locales, newItem._id);
 
