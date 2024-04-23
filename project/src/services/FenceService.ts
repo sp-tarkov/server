@@ -72,6 +72,33 @@ export class FenceService
     }
 
     /**
+     * Replace discount fence assort with new assort
+     * @param assort New assorts to replace old with
+     */
+    public setDiscountFenceAssort(assort: ITraderAssort): void
+    {
+        this.fenceDiscountAssort = assort;
+    }
+
+    /**
+     * Get main fence assort
+     * @return ITraderAssort
+     */
+    public getMainFenceAssort(): ITraderAssort
+    {
+        return this.fenceAssort;
+    }
+
+    /**
+     * Get discount fence assort
+     * @return ITraderAssort
+     */
+    public getDiscountFenceAssort(): ITraderAssort
+    {
+        return this.fenceDiscountAssort;
+    }
+
+    /**
      * Replace high rep level fence assort with new assort
      * @param discountAssort New assorts to replace old with
      */
