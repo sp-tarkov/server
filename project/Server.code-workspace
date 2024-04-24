@@ -4,14 +4,6 @@
             "path": "."
         }
     ],
-    "extensions": {
-        "recommendations": [
-            "EditorConfig.EditorConfig",
-            "dprint.dprint",
-            "dbaeumer.vscode-eslint",
-            "biomejs.biome"
-        ]
-    },
     "settings": {
         "window.title": "SPT-AKI Server",
         "editor.formatOnSave": true,
