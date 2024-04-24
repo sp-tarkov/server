@@ -157,6 +157,7 @@ export class ProfileFixerService
         }
 
         this.fixNullTraderSalesSums(pmcProfile);
+        this.fixNullTraderNextResupply(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
     }
 
@@ -1427,6 +1428,22 @@ export class ProfileFixerService
             {
                 profileQuests.splice(i, 1);
                 this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");
+            }
+        }
+    }
+
+    /**
+     * If someone has run a mod from pre-3.8.0, it results in an invalid `nextResupply` value
+     * Resolve this by setting the nextResupply to 0 if it's null
+     */
+    protected fixNullTraderNextResupply(pmcProfile: IPmcData): void
+    {
+        for (const [traderId, trader] of Object.entries(pmcProfile.TradersInfo))
+        {
+            if (trader && trader.nextResupply === null)
+            {
+                this.logger.warning(`trader ${traderId} has a null nextResupply value, resetting to 0`);
+                trader.nextResupply = 0;
             }
         }
     }
