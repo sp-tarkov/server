@@ -68,7 +68,7 @@ Bot data is emulated to mimic live bots as closely as possible. This includes th
 - Scavs
 	- Regular Scav (*assault*)
 	- Sniper Scav (*marksman*)
-	- Tagged & Cursed (*curedAssault*)
+	- Tagged & Cursed (*cursedAssault*)
 - Bosses
 	- Reshalla (*bossBully*)
 		- Guard (*followerBully*)
