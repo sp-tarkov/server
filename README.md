@@ -91,9 +91,9 @@ We're really excited that you're interested in contributing! Before submitting y
 
 - __master__  
   The default branch used for the latest stable release. This branch is protected and typically is only merges with release branches.
-- __3.9.0-DEV__
+- __3.9.0-DEV__  
   Development for the next minor release of SPT. Minor releases target the latest version of EFT. Late in the minor release cycle the EFT version is frozen for stability to prepare for release. Larger changes to the project structure may be included in minor releases.
-- __3.8.1-DEV__
+- __3.8.1-DEV__  
   Development for the next hotfix release of SPT. Hotfix releases include bug fixes and minor features that do not effect the coding structure of the project. Special care is taken to not break server mod stability. These always target the same version of EFT as the last minor release.
 
 ### Pull Request Guidelines
@@ -102,11 +102,11 @@ We're really excited that you're interested in contributing! Before submitting y
   If you're fixing a bug, try to keep the changes to the bug fix only. If you're adding a feature, try to keep the changes to the feature only. This will make it easier to review and merge your changes.
 - __Perform a Self-Review__  
   Before submitting your changes, review your own code. This will help you catch any mistakes you may have made.
-- __Remove Noise__
+- __Remove Noise__  
   Remove any unnecessary changes to white space, code style formatting, or some text change that has no impact related to the intention of the PR.
-- __Create a Meaningful Title__
+- __Create a Meaningful Title__  
   When creating a PR, make sure the title is meaningful and describes the changes you've made.
-- __Write Detailed Commit Messages__
+- __Write Detailed Commit Messages__  
   Bring out your table manners, speak the Queen's English and be on your best behaviour.
 
 ### Style Guide
