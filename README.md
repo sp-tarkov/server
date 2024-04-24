@@ -1,6 +1,6 @@
 # Single Player Tarkov - Server Project
 
-This is the server project for the Single Player Tarkov modification for Escape From Tarkov. It can be run locally to replicate responses to the modified Escape From Tarkov client.
+This is the Server project for the Single Player Tarkov mod for Escape From Tarkov. It can be run locally to replicate responses to the modified Escape From Tarkov client.
 
 # Table of Contents
 
