@@ -85,7 +85,7 @@ To debug a server mod in Visual Studio Code, you can copy the mod files into the
 
 ## Contributing 
 
-We're really excited that you're interested in contributing! Before submitting your contribution, please concider the following:
+We're really excited that you're interested in contributing! Before submitting your contribution, please consider the following:
 
 ### Branchs
 
