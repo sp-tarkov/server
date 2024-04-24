@@ -22,7 +22,7 @@
 
 ### Progression
 
-The player profile is stored as a JSON file, allowing for changes to persist across server restarts. The profile contains the following information for both your PMC and Scav player characters.
+The player profile is stored as a JSON file, allowing for changes to persist across server restarts. The profile contains the following information for both your PMC and Scav player characters:
 
 - Task Conditions
 - Account Bonuses
@@ -42,7 +42,7 @@ The player profile is stored as a JSON file, allowing for changes to persist acr
 
 ### Starting Profile Types
 
-The following profile types are available to start with when creating an account in the Launcher.
+The following profile types are available to start with when creating an account in the Launcher:
 
 - Standard Profiles:
 	- Standard
@@ -63,7 +63,7 @@ The following profile types are available to start with when creating an account
 
 ### AI Types
 
-Bot data is emulated to mimic live bots as closely as possible. This includes the following bot types.
+Bot data is emulated to mimic live bots as closely as possible. This includes the following bot types:
 
 - Scavs
 	- Regular Scav (*assault*)
@@ -104,7 +104,7 @@ Bot data is emulated to mimic live bots as closely as possible. This includes th
 
 ### Generation
 
-Bots are generated with the following characteristics.
+Bots are generated with the following characteristics:
 
 - All Bots:
 	- Weapons - *Weighted, semi-randomly selected*
@@ -117,7 +117,7 @@ Bots are generated with the following characteristics.
 		- Chance of name being the name of a contributor to the project
 	- Voices - *Randomly chosen Bear/USEC voices for each faction*
 
-Other bot generation systems/features include.
+Other bot generation systems/features include:
 
 - Loot item blacklist & whitelist
 - Loot items can be configured to be limited to a certain number based on bot type
@@ -128,7 +128,7 @@ Other bot generation systems/features include.
 
 ## Inventory
 
-The inventory system includes the following features.
+The inventory system includes the following features:
 
 - Move, Split, and Delete Item Stacks
 - Add, Modify, and Remove Item Tags
@@ -159,7 +159,7 @@ The trader system includes the following features:
 
 ## Flea market
 
-The flea market system has been build to simulate the live flea market as closely as possible. It includes the following features.
+The flea market system has been build to simulate the live flea market as closely as possible. It includes the following features:
 
 - Simulated Player Offers
 	- Generated with random names, ratings, and expiry times
@@ -192,7 +192,7 @@ The flea market system has been build to simulate the live flea market as closel
 
 ## Quests
 
-The quest system includes the following features. 
+The quest system includes the following features:
 
 - Accurate Quest List - *roughly 90% implemented*
 - Trader Quests - *Accept, Turn-in Items, and Complete*
@@ -206,7 +206,7 @@ The quest system includes the following features.
 
 ## Hideout
 
-The hideout has the following features implemented.
+The hideout has the following features implemented:
 
 - Areas
 	- Air Filter
@@ -249,7 +249,7 @@ The hideout has the following features implemented.
 
 ## Weapon Building
 
-The weapon building system has been fully implemented.
+The weapon building system has been fully implemented:
 
 - Create Weapon Presets
 - Saving Presets
@@ -257,7 +257,7 @@ The weapon building system has been fully implemented.
 
 ## Raids
 
-The in-raid systems included are as follows.
+The in-raid systems included are as follows:
 
 - Maps
 	- Customs
@@ -298,7 +298,7 @@ The in-raid systems included are as follows.
 
 ## Messages
 
-A messaging system has been implemented to allow for the following functionality.
+A messaging system has been implemented to allow for the following functionality:
 
 - Receive messages (with item attachments) from traders or "system"
 - Pin/unpin senders within the message list
@@ -307,7 +307,7 @@ A messaging system has been implemented to allow for the following functionality
 
 ## Events
 
-The following events have been implemented and have a set time period for when they will be active.
+The following events have been implemented and have a set time period for when they will be active:
 
 - Snow
 - Halloween
