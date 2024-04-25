@@ -29,6 +29,7 @@ jobs:
           git clone https://dev.sp-tarkov.com/${{ github.repository }}.git /workspace/SPT-AKI/Server/current
 
           cd /workspace/SPT-AKI/Server/current
+          git fetch
           git checkout $REF
         env:
           GITHUB_SHA: ${{ github.sha }}
