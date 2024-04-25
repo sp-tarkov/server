@@ -9,50 +9,64 @@ on:
 jobs:
   vitest:
     runs-on: ubuntu-latest
+    if: >  # Conditional to limit runs: checks if it's NOT a push to a branch with an open PR
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     container:
       image: refringe/spt-build-node:1.0.7
     steps:
-    - name: Clone
-      run: |
-        rm -rf /workspace/SPT-AKI/Build/server
-        git clone https://dev.sp-tarkov.com/${GITHUB_REPOSITORY}.git --branch master /workspace/SPT-AKI/Build/server
+      - name: Clone
+        run: |
+          # For pull request events, checkout using GITHUB_SHA
+          # For push events, checkout using GITHUB_REF_NAME
+          if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
+            REF=${GITHUB_SHA}
+          else
+            REF=${GITHUB_REF_NAME}
+          fi
 
-        cd /workspace/SPT-AKI/Build/server
-        git checkout ${GITHUB_SHA}
-      shell: bash
+          rm -rf /workspace/SPT-AKI/Server/current
+          git clone https://dev.sp-tarkov.com/${{ github.repository }}.git /workspace/SPT-AKI/Server/current
 
-    - name: Pull LFS Files
-      run: |
-        cd /workspace/SPT-AKI/Build/server
-        git lfs pull
-        git lfs ls-files
-      shell: bash
+          cd /workspace/SPT-AKI/Server/current
+          git checkout $REF
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        shell: bash
 
-    - name: Cache NPM Dependencies
-      id: cache-npm-dependencies
-      uses: actions/cache@v4
-      with:
-        path: /workspace/SPT-AKI/Build/server/project/node_modules
-        key: npm-dependencies-${{ hashFiles('/workspace/SPT-AKI/Build/server/project/package.json') }}
+      - name: Pull LFS Files
+        run: |
+          cd /workspace/SPT-AKI/Server/current && ls -lah
+          git lfs pull && git lfs ls-files
+        shell: bash
 
-    - name: Install NPM Dependencies
-      if: steps.cache-npm-dependencies.outputs.cache-hit != 'true'
-      run: |
-        cd /workspace/SPT-AKI/Build/server/project
-        rm -rf node_modules
-        npm install
-      shell: bash
+      - name: Cache NPM Dependencies
+        id: cache-npm-dependencies
+        uses: actions/cache@v4
+        with:
+          path: /workspace/SPT-AKI/Server/current/project/node_modules
+          key: npm-dependencies-${{ hashFiles('/workspace/SPT-AKI/Server/current/project/package.json') }}
 
-    - name: Run Tests
-      id: run-tests
-      run: |
-        cd /workspace/SPT-AKI/Build/server/project
-        npm run test
-      shell: bash
+      - name: Install NPM Dependencies
+        if: steps.cache-npm-dependencies.outputs.cache-hit != 'true'
+        run: |
+          cd /workspace/SPT-AKI/Server/current/project
+          rm -rf /workspace/SPT-AKI/Server/current/project/node_modules
+          npm install
+        shell: bash
 
-    - name: Fix Instructions
-      if: failure() && steps.run-tests.outcome == 'failure'
-      run: |
-        echo -e "Automated tests have failed. This could point to an issue with the commited code, or an updated test that has yet to be updated. Please look into resolving these test failures. The testing suite has a GUI to aid in writing tests. You can launch this by running the following command from within the 'project' directory.\n\nnpm run test:ui\n"
-        echo -e "A test written today is a bug prevented tomorrow.™"
-      shell: bash
+      - name: Run Tests
+        id: run-tests
+        run: |
+          cd /workspace/SPT-AKI/Server/current/project
+          npm run test
+        shell: bash
+
+      - name: Fix Instructions
+        if: failure() && steps.run-tests.outcome == 'failure'
+        run: |
+          echo -e "Automated tests have failed. This could point to an issue with the committed code, or an updated test that has yet to be updated. Please look into resolving these test failures. The testing suite has a GUI to aid in writing tests. You can launch this by running the following command from within the 'project' directory.\n\nnpm run test:ui\n"
+          echo -e "A test written today is a bug prevented tomorrow.™"
+        shell: bash
