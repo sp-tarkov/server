@@ -272,7 +272,7 @@ export class TraderHelper
     public getTraderUpdateSeconds(traderId: string): number
     {
         const traderDetails = this.traderConfig.updateTime.find((x) => x.traderId === traderId);
-        if (!traderDetails)
+        if (!traderDetails || traderDetails.seconds.min === undefined || traderDetails.seconds.max === undefined)
         {
             this.logger.warning(
                 this.localisationService.getText("trader-missing_trader_details_using_default_refresh_time", {
