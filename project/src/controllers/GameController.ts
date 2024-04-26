@@ -15,6 +15,8 @@ import { ICheckVersionResponse } from "@spt-aki/models/eft/game/ICheckVersionRes
 import { ICurrentGroupResponse } from "@spt-aki/models/eft/game/ICurrentGroupResponse";
 import { IGameConfigResponse } from "@spt-aki/models/eft/game/IGameConfigResponse";
 import { IGameKeepAliveResponse } from "@spt-aki/models/eft/game/IGameKeepAliveResponse";
+import { IGameModeRequestData } from "@spt-aki/models/eft/game/IGameModeRequestData";
+import { ESessionMode } from "@spt-aki/models/eft/game/IGameModeResponse";
 import { IGetRaidTimeRequest } from "@spt-aki/models/eft/game/IGetRaidTimeRequest";
 import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeResponse";
 import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
@@ -477,6 +479,14 @@ export class GameController
         };
 
         return config;
+    }
+
+    /**
+     * Handle client/game/mode
+     */
+    public getGameMode(sessionID: string, info: IGameModeRequestData): any
+    {
+        return { gameMode: ESessionMode.REGULAR, backendUrl: this.httpServerHelper.getBackendUrl() };
     }
 
     /**

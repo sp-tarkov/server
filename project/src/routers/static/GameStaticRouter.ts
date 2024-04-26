@@ -13,6 +13,10 @@ export class GameStaticRouter extends StaticRouter
             {
                 return this.gameCallbacks.getGameConfig(url, info, sessionID);
             }),
+            new RouteAction("/client/game/mode", (url: string, info: any, sessionID: string, output: string): any =>
+            {
+                return this.gameCallbacks.getGameMode(url, info, sessionID);
+            }),
             new RouteAction("/client/server/list", (url: string, info: any, sessionID: string, output: string): any =>
             {
                 return this.gameCallbacks.getServer(url, info, sessionID);
