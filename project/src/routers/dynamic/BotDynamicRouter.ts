@@ -24,7 +24,7 @@ export class BotDynamicRouter extends DynamicRouter
                 },
             ),
             new RouteAction(
-                "/singleplayer/settings/bot/difficulties/",
+                "/singleplayer/settings/bot/difficulties",
                 (url: string, info: any, sessionID: string, output: string): any =>
                 {
                     return this.botCallbacks.getAllBotDifficulties(url, info, sessionID);
