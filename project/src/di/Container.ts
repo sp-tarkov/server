@@ -90,7 +90,9 @@ import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { BotWeaponGeneratorHelper } from "@spt-aki/helpers/BotWeaponGeneratorHelper";
 import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
 import { SptCommandoCommands } from "@spt-aki/helpers/Dialogue/Commando/SptCommandoCommands";
-import { GiveSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveSptCommand";
+import { GiveSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveCommand/GiveSptCommand";
+import { ProfileSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ProfileCommand/ProfileSptCommand";
+import { TraderSptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/TraderCommand/TraderSptCommand";
 import { CommandoDialogueChatBot } from "@spt-aki/helpers/Dialogue/CommandoDialogueChatBot";
 import { SptDialogueChatBot } from "@spt-aki/helpers/Dialogue/SptDialogueChatBot";
 import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
@@ -375,6 +377,8 @@ export class Container
 
         // SptCommando Commands
         depContainer.registerType("SptCommand", "GiveSptCommand");
+        depContainer.registerType("SptCommand", "TraderSptCommand");
+        depContainer.registerType("SptCommand", "ProfileSptCommand");
     }
 
     private static registerUtils(depContainer: DependencyContainer): void
@@ -598,6 +602,12 @@ export class Container
         });
         // SptCommands
         depContainer.register<GiveSptCommand>("GiveSptCommand", GiveSptCommand, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<TraderSptCommand>("TraderSptCommand", TraderSptCommand, {
+            lifecycle: Lifecycle.Singleton,
+        });
+        depContainer.register<ProfileSptCommand>("ProfileSptCommand", ProfileSptCommand, {
+            lifecycle: Lifecycle.Singleton,
+        });
     }
 
     private static registerLoaders(depContainer: DependencyContainer): void

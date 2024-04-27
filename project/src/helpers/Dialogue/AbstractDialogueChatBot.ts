@@ -57,12 +57,34 @@ export abstract class AbstractDialogueChatBot implements IDialogueChatBot
 
         if (splitCommand[0].toLowerCase() === "help")
         {
-            const helpMessage = this.chatCommands.map((c) =>
-                `Available commands:\n\n${c.getCommandPrefix()}:\n\n${
-                    Array.from(c.getCommands()).map((command) => c.getCommandHelp(command)).join("\n")
-                }`
-            ).join("\n");
-            this.mailSendService.sendUserMessageToPlayer(sessionId, this.getChatBot(), helpMessage);
+            this.mailSendService.sendUserMessageToPlayer(
+                sessionId,
+                this.getChatBot(),
+                "The available commands will be listed below:",
+            );
+            // due to BSG being dumb with messages we need a mandatory timeout between messages so they get out on the right order
+            setTimeout(() =>
+            {
+                for (const chatCommand of this.chatCommands)
+                {
+                    this.mailSendService.sendUserMessageToPlayer(
+                        sessionId,
+                        this.getChatBot(),
+                        `Commands available for "${chatCommand.getCommandPrefix()}" prefix:`,
+                    );
+                    setTimeout(() =>
+                    {
+                        for (const subCommand of chatCommand.getCommands())
+                        {
+                            this.mailSendService.sendUserMessageToPlayer(
+                                sessionId,
+                                this.getChatBot(),
+                                `Subcommand ${subCommand}:\n${chatCommand.getCommandHelp(subCommand)}`,
+                            );
+                        }
+                    }, 1000);
+                }
+            }, 1000);
             return request.dialogId;
         }
 

@@ -1,5 +1,5 @@
+import { SavedCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveCommand/SavedCommand";
 import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
-import { SavedCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/SavedCommand";
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
@@ -107,6 +107,15 @@ export class GiveSptCommand implements ISptCommand
             isItemName = result[5] !== undefined;
             item = result[5] ? result[5] : result[2];
             quantity = +result[6];
+            if (quantity <= 0)
+            {
+                this.mailSendService.sendUserMessageToPlayer(
+                    sessionId,
+                    commandHandler,
+                    `Invalid quantity! Must be 1 or higher. Use \"help\" for more information.`,
+                );
+                return request.dialogId;
+            }
 
             if (isItemName)
             {

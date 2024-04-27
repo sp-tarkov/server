@@ -10,7 +10,7 @@ import { Dialogue, IUserDialogInfo, Message, MessageItems } from "@spt-aki/model
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { Traders } from "@spt-aki/models/enums/Traders";
-import { ISendMessageDetails } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
+import { IProfileChangeEvent, ISendMessageDetails } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
@@ -169,7 +169,8 @@ export class MailSendService
         sessionId: string,
         message: string,
         items: Item[] = [],
-        maxStorageTimeSeconds = null,
+        maxStorageTimeSeconds?: number,
+        profileChangeEvents?: IProfileChangeEvent[],
     ): void
     {
         const details: ISendMessageDetails = {
@@ -183,6 +184,11 @@ export class MailSendService
         {
             details.items = items;
             details.itemsMaxStorageLifetimeSeconds = maxStorageTimeSeconds ?? 172800; // 48 hours if no value supplied
+        }
+
+        if ((profileChangeEvents?.length ?? 0) > 0)
+        {
+            details.profileChangeEvents = profileChangeEvents;
         }
 
         this.sendMessageToPlayer(details);
@@ -199,8 +205,8 @@ export class MailSendService
         sessionId: string,
         messageLocaleId: string,
         items: Item[] = [],
-        profileChangeEvents = [],
-        maxStorageTimeSeconds = null,
+        profileChangeEvents?: IProfileChangeEvent[],
+        maxStorageTimeSeconds?: number,
     ): void
     {
         const details: ISendMessageDetails = {
@@ -216,7 +222,7 @@ export class MailSendService
             details.itemsMaxStorageLifetimeSeconds = maxStorageTimeSeconds ?? 172800; // 48 hours if no value supplied
         }
 
-        if (profileChangeEvents.length > 0)
+        if ((profileChangeEvents?.length ?? 0) > 0)
         {
             details.profileChangeEvents = profileChangeEvents;
         }
