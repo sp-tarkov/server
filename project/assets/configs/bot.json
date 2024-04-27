@@ -1013,7 +1013,8 @@
                         "mod_equipment_000": 3,
                         "mod_equipment_001": 3,
                         "mod_equipment_002": 3,
-                        "mod_nvg": 3
+                        "mod_nvg": 3,
+                        "mod_mount": 1
                     },
                     "weaponMods": {
                         "mod_barrel": 5,

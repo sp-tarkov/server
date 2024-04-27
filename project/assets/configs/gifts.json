@@ -3663,6 +3663,23 @@
             "associatedEvent": "Promo",
             "collectionTimeHours": 72,
             "messageText": "Thank you for purchasing of the first book in EFT series by A, Kontorovich. We are glad to give you this theme package with ingame items."
+        },
+        "UNHEARD": {
+            "items": [
+                {
+                    "_id": "a89275c1b18254ef7432a6d9",
+                    "_tpl": "5696686a4bdc2da3298b456a",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 250
+                    },
+                    "parentId": "64b996c9d0de4697180359b6"
+                }
+            ],
+            "sender": "System",
+            "messageText": "Have a nice 20 minute adventure in the blatant plagiarist game. In and out",
+            "collectionTimeHours": 72,
+            "associatedEvent": "Promo"
         }
     }
 }

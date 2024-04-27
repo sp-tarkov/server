@@ -173,7 +173,7 @@ export class MatchController
 
         if (extractName && this.extractWasViaCoop(extractName) && this.traderConfig.fence.coopExtractGift.sendGift)
         {
-            this.handleCoopExtract(pmcData, extractName);
+            this.handleCoopExtract(sessionId, pmcData, extractName);
             this.sendCoopTakenFenceMessage(sessionId);
         }
     }
@@ -225,10 +225,11 @@ export class MatchController
 
     /**
      * Handle when a player extracts using a coop extract - add rep to fence
+     * @param sessionId Session/player id
      * @param pmcData Profile
      * @param extractName Name of extract taken
      */
-    protected handleCoopExtract(pmcData: IPmcData, extractName: string): void
+    protected handleCoopExtract(sessionId: string, pmcData: IPmcData, extractName: string): void
     {
         if (!pmcData.CoopExtractCounts)
         {
@@ -256,6 +257,11 @@ export class MatchController
         // Check if new standing has leveled up trader
         this.traderHelper.lvlUp(fenceId, pmcData);
         pmcData.TradersInfo[fenceId].loyaltyLevel = Math.max(pmcData.TradersInfo[fenceId].loyaltyLevel, 1);
+
+        // Copy updated fence rep values into scav profile to ensure consistency
+        const scavData: IPmcData = this.profileHelper.getScavProfile(sessionId);
+        scavData.TradersInfo[fenceId].standing = pmcData.TradersInfo[fenceId].standing;
+        scavData.TradersInfo[fenceId].loyaltyLevel = pmcData.TradersInfo[fenceId].loyaltyLevel;
     }
 
     /**
@@ -313,6 +319,7 @@ export class MatchController
         this.logger.debug(
             `Car extract: ${extractName} used, total times taken: ${pmcData.CarExtractCounts[extractName]}`,
         );
+
         // Copy updated fence rep values into scav profile to ensure consistency
         const scavData: IPmcData = this.profileHelper.getScavProfile(sessionId);
         scavData.TradersInfo[fenceId].standing = pmcData.TradersInfo[fenceId].standing;
