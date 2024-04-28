@@ -16,7 +16,7 @@ export class HttpListenerMod implements IHttpListener
         return this.canHandleOverride(sessionId, req);
     }
 
-    public handle(sessionId: string, req: IncomingMessage, resp: ServerResponse): void
+    public async handle(sessionId: string, req: IncomingMessage, resp: ServerResponse): Promise<void>
     {
         this.handleOverride(sessionId, req, resp);
     }

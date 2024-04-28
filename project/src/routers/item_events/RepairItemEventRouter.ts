@@ -18,12 +18,12 @@ export class RepairItemEventRouter extends ItemEventRouterDefinition
         return [new HandledRoute("Repair", false), new HandledRoute("TraderRepair", false)];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         switch (url)
         {

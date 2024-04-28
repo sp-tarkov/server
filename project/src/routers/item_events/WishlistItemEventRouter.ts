@@ -18,12 +18,12 @@ export class WishlistItemEventRouter extends ItemEventRouterDefinition
         return [new HandledRoute("AddToWishList", false), new HandledRoute("RemoveFromWishList", false)];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         switch (url)
         {

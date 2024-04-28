@@ -3,6 +3,11 @@ import { inject, injectable } from "tsyringe";
 import { MatchCallbacks } from "@spt-aki/callbacks/MatchCallbacks";
 import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { IAcceptGroupInviteResponse } from "@spt-aki/models/eft/match/IAcceptGroupInviteResponse";
+import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
+import { IJoinMatchResult } from "@spt-aki/models/eft/match/IJoinMatchResult";
 
 @injectable()
 export class MatchStaticRouter extends StaticRouter
@@ -12,138 +17,202 @@ export class MatchStaticRouter extends StaticRouter
         super([
             new RouteAction(
                 "/client/match/available",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.serverAvailable(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/updatePing",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.updatePing(url, info, sessionID);
                 },
             ),
-            new RouteAction("/client/match/join", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.matchCallbacks.joinMatch(url, info, sessionID);
-            }),
-            new RouteAction("/client/match/exit", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.matchCallbacks.exitMatch(url, info, sessionID);
-            }),
+            new RouteAction(
+                "/client/match/join",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
+                {
+                    return this.matchCallbacks.joinMatch(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/match/exit",
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
+                {
+                    return this.matchCallbacks.exitMatch(url, info, sessionID);
+                },
+            ),
             new RouteAction(
                 "/client/match/group/delete",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.deleteGroup(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/leave",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.leaveGroup(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/status",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetGroupStatusResponse>> =>
                 {
                     return this.matchCallbacks.getGroupStatus(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/start_game",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
                 {
                     return this.matchCallbacks.joinMatch(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/exit_from_menu",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.exitToMenu(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/looking/start",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.startGroupSearch(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/looking/stop",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.stopGroupSearch(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/send",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<string>> =>
                 {
                     return this.matchCallbacks.sendGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/accept",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IAcceptGroupInviteResponse[]>> =>
                 {
                     return this.matchCallbacks.acceptGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/decline",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<IGetBodyResponseData<any>> =>
                 {
                     return this.matchCallbacks.declineGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/cancel",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.cancelGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/cancel-all",
-                (url: string, info: IEmptyRequestData, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: IEmptyRequestData,
+                    sessionID: string,
+                    output: string,
+                ): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.cancelAllGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/transfer",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.transferGroup(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/offline/end",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.endOfflineRaid(url, info, sessionID);
                 },
             ),
-            new RouteAction("/client/putMetrics", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.matchCallbacks.putMetrics(url, info, sessionID);
-            }),
+            new RouteAction(
+                "/client/putMetrics",
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
+                {
+                    return this.matchCallbacks.putMetrics(url, info, sessionID);
+                },
+            ),
             new RouteAction(
                 "/client/getMetricsConfig",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<string>> =>
                 {
                     return this.matchCallbacks.getMetrics(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/raid/configuration",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.getRaidConfiguration(url, info, sessionID);
                 },
@@ -151,14 +220,14 @@ export class MatchStaticRouter extends StaticRouter
             new RouteAction(
                 "/client/raid/configuration-by-profile",
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.getConfigurationByProfile(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/player/remove",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.removePlayerFromGroup(url, info, sessionID);
                 },

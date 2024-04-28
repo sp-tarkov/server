@@ -58,13 +58,13 @@ export class BotCallbacks
      * Handle client/game/bot/generate
      * @returns IGetBodyResponseData
      */
-    public generateBots(
+    public async generateBots(
         url: string,
         info: IGenerateBotsRequestData,
         sessionID: string,
-    ): IGetBodyResponseData<IBotBase[]>
+    ): Promise<IGetBodyResponseData<IBotBase[]>>
     {
-        return this.httpResponse.getBody(this.botController.generate(sessionID, info));
+        return this.httpResponse.getBody(await this.botController.generate(sessionID, info));
     }
 
     /**

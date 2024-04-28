@@ -2,6 +2,14 @@ import { inject, injectable } from "tsyringe";
 
 import { DialogueCallbacks } from "@spt-aki/callbacks/DialogueCallbacks";
 import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
+import { IChatServer } from "@spt-aki/models/eft/dialog/IChatServer";
+import { IFriendRequestSendResponse } from "@spt-aki/models/eft/dialog/IFriendRequestSendResponse";
+import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
+import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
+import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { DialogueInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
 
 @injectable()
 export class DialogStaticRouter extends StaticRouter
@@ -11,138 +19,237 @@ export class DialogStaticRouter extends StaticRouter
         super([
             new RouteAction(
                 "/client/chatServer/list",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IChatServer[]>> =>
                 {
                     return this.dialogueCallbacks.getChatServerList(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/list",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<DialogueInfo[]>> =>
                 {
                     return this.dialogueCallbacks.getMailDialogList(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/view",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetMailDialogViewResponseData>> =>
                 {
                     return this.dialogueCallbacks.getMailDialogView(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/info",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<DialogueInfo>> =>
                 {
                     return this.dialogueCallbacks.getMailDialogInfo(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/remove",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.removeDialog(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/pin",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.pinDialog(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/unpin",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.unpinDialog(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/read",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.setRead(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/remove",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.removeMail(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/mail/dialog/getAllAttachments",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetAllAttachmentsResponse>> =>
                 {
                     return this.dialogueCallbacks.getAllAttachments(url, info, sessionID);
                 },
             ),
-            new RouteAction("/client/mail/msg/send", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.dialogueCallbacks.sendMessage(url, info, sessionID);
-            }),
+            new RouteAction(
+                "/client/mail/msg/send",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<string>> =>
+                {
+                    return this.dialogueCallbacks.sendMessage(url, info, sessionID);
+                },
+            ),
             new RouteAction(
                 "/client/mail/dialog/clear",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.clearMail(url, info, sessionID);
                 },
             ),
-            new RouteAction("/client/friend/list", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.dialogueCallbacks.getFriendList(url, info, sessionID);
-            }),
+            new RouteAction(
+                "/client/friend/list",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetFriendListDataResponse>> =>
+                {
+                    return this.dialogueCallbacks.getFriendList(url, info, sessionID);
+                },
+            ),
             new RouteAction(
                 "/client/friend/request/list/outbox",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.listOutbox(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/friend/request/list/inbox",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.listInbox(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/friend/request/send",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IFriendRequestSendResponse>> =>
                 {
                     return this.dialogueCallbacks.sendFriendRequest(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/friend/request/accept",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.dialogueCallbacks.acceptFriendRequest(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/friend/request/cancel",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.dialogueCallbacks.cancelFriendRequest(url, info, sessionID);
                 },
             ),
-            new RouteAction("/client/friend/delete", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.dialogueCallbacks.deleteFriend(url, info, sessionID);
-            }),
+            new RouteAction(
+                "/client/friend/delete",
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
+                {
+                    return this.dialogueCallbacks.deleteFriend(url, info, sessionID);
+                },
+            ),
             new RouteAction(
                 "/client/friend/ignore/set",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.dialogueCallbacks.ignoreFriend(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/friend/ignore/remove",
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.dialogueCallbacks.unIgnoreFriend(url, info, sessionID);
                 },

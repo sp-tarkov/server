@@ -25,12 +25,12 @@ export class NoteItemEventRouter extends ItemEventRouterDefinition
         ];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: INoteActionData,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         switch (url)
         {

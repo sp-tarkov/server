@@ -27,12 +27,12 @@ export class QuestItemEventRouter extends ItemEventRouterDefinition
         ];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         eventAction: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         this.logger.debug(`${eventAction} ${body.qid}`);
         switch (eventAction)

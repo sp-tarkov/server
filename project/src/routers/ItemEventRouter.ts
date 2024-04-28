@@ -27,7 +27,7 @@ export class ItemEventRouter
      * @param sessionID Session id
      * @returns Item response
      */
-    public handleEvents(info: IItemEventRouterRequest, sessionID: string): IItemEventRouterResponse
+    public async handleEvents(info: IItemEventRouterRequest, sessionID: string): Promise<IItemEventRouterResponse>
     {
         const output = this.eventOutputHolder.getOutput(sessionID);
 
@@ -39,7 +39,7 @@ export class ItemEventRouter
             if (eventRouter)
             {
                 this.logger.debug(`event: ${body.Action}`);
-                eventRouter.handleItemEvent(body.Action, pmcData, body, sessionID, output);
+                await eventRouter.handleItemEvent(body.Action, pmcData, body, sessionID, output);
                 if (output.warnings.length > 0)
                 {
                     break;

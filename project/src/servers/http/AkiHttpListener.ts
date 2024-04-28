@@ -30,13 +30,13 @@ export class AkiHttpListener implements IHttpListener
         return ["GET", "PUT", "POST"].includes(req.method);
     }
 
-    public handle(sessionId: string, req: IncomingMessage, resp: ServerResponse): void
+    public async handle(sessionId: string, req: IncomingMessage, resp: ServerResponse): Promise<void>
     {
         switch (req.method)
         {
             case "GET":
             {
-                const response = this.getResponse(sessionId, req, null);
+                const response = await this.getResponse(sessionId, req, null);
                 this.sendResponse(sessionId, req, resp, null, response);
                 break;
             }
@@ -58,7 +58,7 @@ export class AkiHttpListener implements IHttpListener
                     written += data.length;
                 });
 
-                req.on("end", () =>
+                req.on("end", async () =>
                 {
                     // Contrary to reasonable expectations, the content-encoding is _not_ actually used to
                     // determine if the payload is compressed. All PUT requests are, and POST requests without
@@ -73,7 +73,7 @@ export class AkiHttpListener implements IHttpListener
                         this.logger.debug(value.toString(), true);
                     }
 
-                    const response = this.getResponse(sessionId, req, value);
+                    const response = await this.getResponse(sessionId, req, value);
                     this.sendResponse(sessionId, req, resp, value, response);
                 });
 
@@ -136,7 +136,7 @@ export class AkiHttpListener implements IHttpListener
         }
     }
 
-    public getResponse(sessionID: string, req: IncomingMessage, body: Buffer): string
+    public async getResponse(sessionID: string, req: IncomingMessage, body: Buffer): Promise<string>
     {
         const info = this.getBodyInfo(body, req.url);
         if (globalThis.G_LOG_REQUESTS)
@@ -148,7 +148,7 @@ export class AkiHttpListener implements IHttpListener
             this.requestsLogger.info(`REQUEST=${this.jsonUtil.serialize(log)}`);
         }
 
-        let output = this.httpRouter.getResponse(req, info, sessionID);
+        let output = await this.httpRouter.getResponse(req, info, sessionID);
         /* route doesn't exist or response is not properly set up */
         if (!output)
         {

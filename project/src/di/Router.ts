@@ -42,7 +42,7 @@ export class StaticRouter extends Router
         super();
     }
 
-    public handleStatic(url: string, info: any, sessionID: string, output: string): any
+    public async handleStatic(url: string, info: any, sessionID: string, output: string): Promise<any>
     {
         return this.routes.find((route) => route.url === url).action(url, info, sessionID, output);
     }
@@ -60,7 +60,7 @@ export class DynamicRouter extends Router
         super();
     }
 
-    public handleDynamic(url: string, info: any, sessionID: string, output: string): any
+    public async handleDynamic(url: string, info: any, sessionID: string, output: string): Promise<any>
     {
         return this.routes.find((r) => url.includes(r.url)).action(url, info, sessionID, output);
     }
@@ -75,13 +75,13 @@ export class DynamicRouter extends Router
 // So instead I added the definition
 export class ItemEventRouterDefinition extends Router
 {
-    public handleItemEvent(
+    public async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
         output: IItemEventRouterResponse,
-    ): void
+    ): Promise<any>
     {
         throw new Error("This method needs to be overrode by the router classes");
     }
@@ -103,6 +103,9 @@ export class HandledRoute
 
 export class RouteAction
 {
-    constructor(public url: string, public action: (url: string, info: any, sessionID: string, output: string) => any)
+    constructor(
+        public url: string,
+        public action: (url: string, info: any, sessionID: string, output: string) => Promise<any>,
+    )
     {}
 }

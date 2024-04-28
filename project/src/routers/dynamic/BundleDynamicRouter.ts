@@ -9,10 +9,13 @@ export class BundleDynamicRouter extends DynamicRouter
     constructor(@inject("BundleCallbacks") protected bundleCallbacks: BundleCallbacks)
     {
         super([
-            new RouteAction(".bundle", (url: string, info: any, sessionID: string, output: string): any =>
-            {
-                return this.bundleCallbacks.getBundle(url, info, sessionID);
-            }),
+            new RouteAction(
+                ".bundle",
+                async (url: string, info: any, sessionID: string, output: string): Promise<string> =>
+                {
+                    return this.bundleCallbacks.getBundle(url, info, sessionID);
+                },
+            ),
         ]);
     }
 }

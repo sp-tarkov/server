@@ -2,6 +2,8 @@ import { inject, injectable } from "tsyringe";
 
 import { LocationCallbacks } from "@spt-aki/callbacks/LocationCallbacks";
 import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
+import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class LocationDynamicRouter extends DynamicRouter
@@ -11,7 +13,12 @@ export class LocationDynamicRouter extends DynamicRouter
         super([
             new RouteAction(
                 "/client/location/getLocalloot",
-                (url: string, info: any, sessionID: string, _output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    _output: string,
+                ): Promise<IGetBodyResponseData<ILocationBase>> =>
                 {
                     return this.locationCallbacks.getLocation(url, info, sessionID);
                 },

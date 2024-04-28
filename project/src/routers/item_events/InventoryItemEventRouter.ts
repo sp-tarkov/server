@@ -46,13 +46,13 @@ export class InventoryItemEventRouter extends ItemEventRouterDefinition
         ];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
         output: IItemEventRouterResponse,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         switch (url)
         {

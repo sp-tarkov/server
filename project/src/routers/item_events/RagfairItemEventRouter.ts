@@ -22,12 +22,12 @@ export class RagfairItemEventRouter extends ItemEventRouterDefinition
         ];
     }
 
-    public override handleItemEvent(
+    public override async handleItemEvent(
         url: string,
         pmcData: IPmcData,
         body: any,
         sessionID: string,
-    ): IItemEventRouterResponse
+    ): Promise<IItemEventRouterResponse>
     {
         switch (url)
         {

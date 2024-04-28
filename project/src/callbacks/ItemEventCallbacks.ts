@@ -17,13 +17,13 @@ export class ItemEventCallbacks
     )
     {}
 
-    public handleEvents(
+    public async handleEvents(
         url: string,
         info: IItemEventRouterRequest,
         sessionID: string,
-    ): IGetBodyResponseData<IItemEventRouterResponse>
+    ): Promise<IGetBodyResponseData<IItemEventRouterResponse>>
     {
-        const eventResponse = this.itemEventRouter.handleEvents(info, sessionID);
+        const eventResponse = await this.itemEventRouter.handleEvents(info, sessionID);
         const result = (this.isCriticalError(eventResponse.warnings))
             ? this.httpResponse.getBody(
                 eventResponse,

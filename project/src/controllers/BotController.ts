@@ -6,7 +6,7 @@ import { BotGenerator } from "@spt-aki/generators/BotGenerator";
 import { BotDifficultyHelper } from "@spt-aki/helpers/BotDifficultyHelper";
 import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { IGenerateBotsRequestData } from "@spt-aki/models/eft/bot/IGenerateBotsRequestData";
+import { Condition, IGenerateBotsRequestData } from "@spt-aki/models/eft/bot/IGenerateBotsRequestData";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { IBotCore } from "@spt-aki/models/eft/common/tables/IBotCore";
@@ -179,7 +179,7 @@ export class BotController
      * @param info bot generation request info
      * @returns IBotBase array
      */
-    public generate(sessionId: string, info: IGenerateBotsRequestData): IBotBase[]
+    public async generate(sessionId: string, info: IGenerateBotsRequestData): Promise<IBotBase[]>
     {
         const pmcProfile = this.profileHelper.getPmcProfile(sessionId);
 
@@ -199,11 +199,11 @@ export class BotController
      * @param sessionId Session id
      * @returns
      */
-    protected generateBotsFirstTime(
+    protected async generateBotsFirstTime(
         request: IGenerateBotsRequestData,
         pmcProfile: IPmcData,
         sessionId: string,
-    ): IBotBase[]
+    ): Promise<IBotBase[]>
     {
         // Clear bot cache before any work starts
         this.botGenerationCacheService.clearStoredBots();
@@ -211,6 +211,7 @@ export class BotController
         const allPmcsHaveSameNameAsPlayer = this.randomUtil.getChance100(
             this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance,
         );
+        const conditionPromises: Promise<void>[] = [];
         for (const condition of request.conditions)
         {
             const botGenerationDetails: BotGenerationDetails = {
@@ -227,45 +228,80 @@ export class BotController
                 allPmcsHaveSameNameAsPlayer: allPmcsHaveSameNameAsPlayer,
             };
 
-            // Event bots need special actions to occur, set data up for them
-            const isEventBot = condition.Role.toLowerCase().includes("event");
-            if (isEventBot)
-            {
-                // Add eventRole data + reassign role property to be base type
-                botGenerationDetails.eventRole = condition.Role;
-                botGenerationDetails.role = this.seasonalEventService.getBaseRoleForEventBot(
-                    botGenerationDetails.eventRole,
-                );
-            }
+            conditionPromises.push(this.generateWithBotDetails(condition, botGenerationDetails, sessionId));
+        }
 
-            // Custom map waves can have spt roles in them
-            // Is bot type sptusec/sptbear, set is pmc true and set side
-            if (this.botHelper.botRoleIsPmc(condition.Role))
-            {
-                botGenerationDetails.isPmc = true;
-                botGenerationDetails.side = this.botHelper.getPmcSideByRole(condition.Role);
-            }
+        await Promise.all(conditionPromises).then((p) => Promise.all(p));
 
-            // Loop over and make x bots for this bot wave
-            const cacheKey = `${
-                botGenerationDetails.eventRole ?? botGenerationDetails.role
-            }${botGenerationDetails.botDifficulty}`;
-            for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
-            {
-                // Generate and add bot to cache
-                const detailsClone = this.jsonUtil.clone(botGenerationDetails);
-                const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, detailsClone);
-                this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
-            }
+        return [];
+    }
 
+    /**
+     * Generate many bots and store then on the cache
+     * @param condition the condition details to generate the bots with
+     * @param botGenerationDetails the bot details to generate the bot with
+     * @param sessionId Session id
+     * @returns A promise for the bots to be done generating
+     */
+    protected async generateWithBotDetails(
+        condition: Condition,
+        botGenerationDetails: BotGenerationDetails,
+        sessionId: string,
+    ): Promise<void>
+    {
+        const isEventBot = condition.Role.toLowerCase().includes("event");
+        if (isEventBot)
+        {
+            // Add eventRole data + reassign role property to be base type
+            botGenerationDetails.eventRole = condition.Role;
+            botGenerationDetails.role = this.seasonalEventService.getBaseRoleForEventBot(
+                botGenerationDetails.eventRole,
+            );
+        }
+
+        // Custom map waves can have spt roles in them
+        // Is bot type sptusec/sptbear, set is pmc true and set side
+        if (this.botHelper.botRoleIsPmc(condition.Role))
+        {
+            botGenerationDetails.isPmc = true;
+            botGenerationDetails.side = this.botHelper.getPmcSideByRole(condition.Role);
+        }
+
+        // Loop over and make x bots for this bot wave
+        const cacheKey = `${
+            botGenerationDetails.eventRole ?? botGenerationDetails.role
+        }${botGenerationDetails.botDifficulty}`;
+        const botPromises: Promise<void>[] = [];
+        for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
+        {
+            const detailsClone = this.jsonUtil.clone(botGenerationDetails);
+            botPromises.push(this.generateSingleBotAndStoreInCache(detailsClone, sessionId, cacheKey));
+        }
+        return Promise.all(botPromises).then(() =>
+        {
             this.logger.debug(
                 `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
                     botGenerationDetails.eventRole ?? ""
                 }) ${botGenerationDetails.botDifficulty} bots`,
             );
-        }
+        });
+    }
 
-        return [];
+    /**
+     * Generate a single bot and store it in the cache
+     * @param botGenerationDetails the bot details to generate the bot with
+     * @param sessionId Session id
+     * @param cacheKey the cache key to store the bot with
+     * @returns A promise for the bot to be stored
+     */
+    protected async generateSingleBotAndStoreInCache(
+        botGenerationDetails: BotGenerationDetails,
+        sessionId: string,
+        cacheKey: string,
+    ): Promise<void>
+    {
+        const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, botGenerationDetails);
+        this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
     }
 
     /**
@@ -274,7 +310,7 @@ export class BotController
      * @param request Bot generation request object
      * @returns Single IBotBase object
      */
-    protected returnSingleBotFromCache(sessionId: string, request: IGenerateBotsRequestData): IBotBase[]
+    protected async returnSingleBotFromCache(sessionId: string, request: IGenerateBotsRequestData): Promise<IBotBase[]>
     {
         const pmcProfile = this.profileHelper.getPmcProfile(sessionId);
         const requestedBot = request.conditions[0];
@@ -334,18 +370,21 @@ export class BotController
         // Check cache for bot using above key
         if (!this.botGenerationCacheService.cacheHasBotOfRole(cacheKey))
         {
+            const botPromises: Promise<void>[] = [];
             // No bot in cache, generate new and return one
             for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
             {
-                const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, botGenerationDetails);
-                this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
+                botPromises.push(this.generateSingleBotAndStoreInCache(botGenerationDetails, sessionId, cacheKey));
             }
 
-            this.logger.debug(
-                `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
-                    botGenerationDetails.eventRole ?? ""
-                }) ${botGenerationDetails.botDifficulty} bots`,
-            );
+            await Promise.all(botPromises).then(() =>
+            {
+                this.logger.debug(
+                    `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
+                        botGenerationDetails.eventRole ?? ""
+                    }) ${botGenerationDetails.botDifficulty} bots`,
+                );
+            });
         }
 
         const desiredBot = this.botGenerationCacheService.getBot(cacheKey);

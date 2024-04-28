@@ -2,6 +2,9 @@ import { inject, injectable } from "tsyringe";
 
 import { AchievementCallbacks } from "@spt-aki/callbacks/AchievementCallbacks";
 import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
+import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { ICompletedAchievementsResponse } from "@spt-aki/models/eft/profile/ICompletedAchievementsResponse";
+import { IGetAchievementsResponse } from "@spt-aki/models/eft/profile/IGetAchievementsResponse";
 
 @injectable()
 export class AchievementStaticRouter extends StaticRouter
@@ -12,7 +15,12 @@ export class AchievementStaticRouter extends StaticRouter
             new RouteAction(
                 "/client/achievement/list",
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetAchievementsResponse>> =>
                 {
                     return this.achievementCallbacks.getAchievements(url, info, sessionID);
                 },
@@ -21,7 +29,12 @@ export class AchievementStaticRouter extends StaticRouter
             new RouteAction(
                 "/client/achievement/statistic",
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                (url: string, info: any, sessionID: string, output: string): any =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<ICompletedAchievementsResponse>> =>
                 {
                     return this.achievementCallbacks.statistic(url, info, sessionID);
                 },
