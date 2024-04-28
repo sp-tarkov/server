@@ -25,6 +25,7 @@ export class BotDynamicRouter extends DynamicRouter
                 },
             ),
             new RouteAction(
+<<<<<<< HEAD
                 "/singleplayer/settings/bot/difficulties/",
                 async (
                     url: string,
@@ -32,6 +33,10 @@ export class BotDynamicRouter extends DynamicRouter
                     sessionID: string,
                     output: string,
                 ): Promise<Record<string, Difficulties>> =>
+=======
+                "/singleplayer/settings/bot/difficulties",
+                (url: string, info: any, sessionID: string, output: string): any =>
+>>>>>>> 3.9.0-DEV
                 {
                     return this.botCallbacks.getAllBotDifficulties(url, info, sessionID);
                 },

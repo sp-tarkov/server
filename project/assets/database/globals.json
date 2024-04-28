@@ -6124,6 +6124,12 @@
         "unheard_edition"
       ]
     },
+    "PveSettings": {
+        "ModeEnabled": true,
+        "AvailableVersions": [
+            "unheard_edition"
+        ]
+    },
     "BufferZone": {
       "CustomerCriticalTimeStart": 10,
       "CustomerKickNotifTime": 60,
