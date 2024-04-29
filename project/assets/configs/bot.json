@@ -331,7 +331,7 @@
         "bosssanitar": {
             "5efde6b4f5448336730dbd61": 1,
             "5eff09cd30a7dc22fd1ddfed": 1
-		},
+        },
         "bosstagilla": {},
         "bossknight": {},
         "bosszryachiy": {},
@@ -399,11 +399,11 @@
             "60098ad7c2240c0fe85c570a": 2
         },
         "arenafighterevent": {
-			"5734758f24597738025ee253": 1
-		},
+            "5734758f24597738025ee253": 1
+        },
         "arenafighter": {
-			"5734758f24597738025ee253": 1
-		},
+            "5734758f24597738025ee253": 1
+        },
         "crazyassaultevent": {},
         "assaultgroup": {},
         "gifter": {},
@@ -790,7 +790,7 @@
             "lightIsActiveDayChancePercent": 35,
             "lightIsActiveNightChancePercent": 95,
             "laserIsActiveChancePercent": 95,
-			"forceStock": true,
+            "forceStock": true,
             "weaponModLimits": {
                 "scopeLimit": 1,
                 "lightLaserLimit": 1
@@ -1655,18 +1655,18 @@
                                 "5bffdc370db834001d23eca8": 100,
                                 "54491bb74bdc2d09088b4567": 100
                             }
-                        },
-                        "clothing": {
-                            "add": {},
-                            "edit": {
-                                "body": {
-                                    "5cc0858d14c02e000c6bea66": 20,
-                                    "5cde95d97d6c8b647a3769b0": 20
-                                },
-                                "feet": {
-                                    "5cc085bb14c02e000e67a5c5": 20,
-                                    "5cde95ef7d6c8b04713c4f2d": 20
-                                }
+                        }
+                    },
+                    "clothing": {
+                        "add": {},
+                        "edit": {
+                            "body": {
+                                "5cc0858d14c02e000c6bea66": 20,
+                                "5cde95d97d6c8b647a3769b0": 20
+                            },
+                            "feet": {
+                                "5cc085bb14c02e000e67a5c5": 20,
+                                "5cde95ef7d6c8b04713c4f2d": 20
                             }
                         }
                     }
@@ -1775,6 +1775,7 @@
                         }
                     },
                     "equipment": {
+                        "add": {},
                         "edit": {
                             "ArmorVest": {
                                 "5c0e5bab86f77461f55ed1f3": 135,
@@ -1841,6 +1842,7 @@
                         "max": 50
                     },
                     "equipment": {
+                        "add": {},
                         "edit": {
                             "FirstPrimaryWeapon": {
                                 "5c501a4d2e221602b412b540": 2
@@ -1948,6 +1950,7 @@
                         }
                     },
                     "equipment": {
+                        "add": {},
                         "edit": {
                             "FirstPrimaryWeapon": {
                                 "65290f395ae2ae97b80fdf2d": 8,
