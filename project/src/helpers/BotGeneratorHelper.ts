@@ -532,12 +532,17 @@ export class BotGeneratorHelper
         rootItemTplId: string,
         itemWithChildren: Item[],
         inventory: Inventory,
+        containersIdFull?: Set<string>,
     ): ItemAddedResult
     {
         /** Track how many containers are unable to be found */
         let missingContainerCount = 0;
         for (const equipmentSlotId of equipmentSlots)
         {
+            if (containersIdFull?.has(equipmentSlotId))
+            {
+                continue;
+            }
             // Get container to put item into
             const container = inventory.items.find((item) => item.slotId === equipmentSlotId);
             if (!container)
@@ -583,8 +588,11 @@ export class BotGeneratorHelper
             const totalSlotGridCount = containerTemplate[1]._props.Grids.length;
             for (const slotGrid of containerTemplate[1]._props.Grids)
             {
-                // Grid is empty, skip
-                if (slotGrid._props.cellsH === 0 || slotGrid._props.cellsV === 0)
+                // Grid is empty, skip or item size is bigger than grid
+                if (
+                    (slotGrid._props.cellsH === 0 || slotGrid._props.cellsV === 0)
+                    || (itemSize[0] * itemSize[1] > slotGrid._props.cellsV * slotGrid._props.cellsH)
+                )
                 {
                     continue;
                 }
@@ -592,12 +600,6 @@ export class BotGeneratorHelper
                 // Can't put item type in grid, skip all grids as we're assuming they have the same rules
                 if (!this.itemAllowedInContainer(slotGrid, rootItemTplId))
                 {
-                    // Only one possible slot and item is incompatible, exit function and inform caller
-                    if (equipmentSlots.length === 1)
-                    {
-                        return ItemAddedResult.INCOMPATIBLE_ITEM;
-                    }
-
                     // Multiple containers, maybe next one allows item, only break out of loop for this containers grids
                     break;
                 }
@@ -653,15 +655,25 @@ export class BotGeneratorHelper
                 // If we've checked all grids in container and reached this point, there's no space for item
                 if (currentGridCount >= totalSlotGridCount)
                 {
-                    return ItemAddedResult.NO_SPACE;
+                    break;
                 }
-                currentGridCount++;
 
+                currentGridCount++;
                 // No space in this grid, move to next container grid and try again
+            }
+
+            // if we got to this point, the item couldnt be placed on the container
+            if (containersIdFull)
+            {
+                // if the item was a one by one, we know it must be full. Or if the maps cant find a slot for a one by one
+                if ((itemSize[0] === 1 && itemSize[1] === 1))
+                {
+                    containersIdFull.add(equipmentSlotId);
+                }
             }
         }
 
-        return ItemAddedResult.UNKNOWN;
+        return ItemAddedResult.NO_SPACE;
     }
 
     /**

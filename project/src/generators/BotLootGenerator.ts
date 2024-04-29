@@ -119,6 +119,10 @@ export class BotLootGenerator
 
         const containersBotHasAvailable = this.getAvailableContainersBotCanStoreItemsIn(botInventory);
 
+        // This set is passed as a reference to fill up the containers that are already full, this aliviates
+        // generation of the bots by avoiding checking the slots of containers we already know are full
+        const containersIdFull = new Set<string>();
+
         // Special items
         this.addLootFromPool(
             this.botLootCacheService.getLootFromCache(botRole, isPmc, LootCacheType.SPECIAL, botJsonTemplate),
@@ -127,6 +131,9 @@ export class BotLootGenerator
             botInventory,
             botRole,
             botItemLimits,
+            undefined,
+            undefined,
+            containersIdFull,
         );
 
         // Healing items / Meds
@@ -139,6 +146,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Drugs
@@ -151,6 +159,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Food
@@ -163,6 +172,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Drink
@@ -175,6 +185,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Currency
@@ -187,6 +198,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Stims
@@ -199,6 +211,7 @@ export class BotLootGenerator
             botItemLimits,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Grenades
@@ -211,6 +224,7 @@ export class BotLootGenerator
             null,
             0,
             isPmc,
+            containersIdFull,
         );
 
         // Backpack - generate loot if they have one
@@ -228,6 +242,7 @@ export class BotLootGenerator
                     botRole,
                     isPmc,
                     botLevel,
+                    containersIdFull,
                 );
             }
 
@@ -240,6 +255,7 @@ export class BotLootGenerator
                 botItemLimits,
                 this.pmcConfig.maxBackpackLootTotalRub,
                 isPmc,
+                containersIdFull,
             );
         }
 
@@ -256,6 +272,7 @@ export class BotLootGenerator
                 botItemLimits,
                 this.pmcConfig.maxVestLootTotalRub,
                 isPmc,
+                containersIdFull,
             );
         }
 
@@ -269,6 +286,7 @@ export class BotLootGenerator
             botItemLimits,
             this.pmcConfig.maxPocketLootTotalRub,
             isPmc,
+            containersIdFull,
         );
 
         // Secure
@@ -281,6 +299,7 @@ export class BotLootGenerator
             null,
             -1,
             isPmc,
+            containersIdFull,
         );
     }
 
@@ -373,6 +392,7 @@ export class BotLootGenerator
         itemSpawnLimits: IItemSpawnLimitSettings = null,
         totalValueLimitRub = 0,
         isPmc = false,
+        containersIdFull = new Set<string>(),
     ): void
     {
         // Loot pool has items
@@ -465,6 +485,7 @@ export class BotLootGenerator
                     itemToAddTemplate._id,
                     itemWithChildrenToAdd,
                     inventoryToAddItemsTo,
+                    containersIdFull,
                 );
 
                 // Handle when item cannot be added
@@ -593,6 +614,7 @@ export class BotLootGenerator
         botRole: string,
         isPmc: boolean,
         botLevel: number,
+        containersIdFull?: Set<string>,
     ): void
     {
         const chosenWeaponType = this.randomUtil.getArrayValue([
@@ -625,6 +647,7 @@ export class BotLootGenerator
                     generatedWeapon.weapon[0]._tpl,
                     [...generatedWeapon.weapon],
                     botInventory,
+                    containersIdFull,
                 );
 
                 if (result !== ItemAddedResult.SUCCESS)
