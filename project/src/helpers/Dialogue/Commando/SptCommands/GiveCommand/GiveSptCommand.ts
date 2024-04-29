@@ -29,7 +29,7 @@ export class GiveSptCommand implements ISptCommand
     private static commandRegex = /^spt give (((([a-z]{2,5}) )?"(.+)"|\w+) )?([0-9]+)$/;
     private static maxAllowedDistance = 1.5;
 
-    protected savedCommand: SavedCommand;
+    protected savedCommand: Map<string, SavedCommand> = new Map<string, SavedCommand>();
 
     public constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -76,7 +76,7 @@ export class GiveSptCommand implements ISptCommand
         // This is a reply to a give request previously made pending a reply
         if (result[1] === undefined)
         {
-            if (this.savedCommand === undefined)
+            if (!this.savedCommand.has(sessionId))
             {
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
@@ -85,7 +85,8 @@ export class GiveSptCommand implements ISptCommand
                 );
                 return request.dialogId;
             }
-            if (+result[6] > this.savedCommand.potentialItemNames.length)
+            const savedCommand = this.savedCommand.get(sessionId);
+            if (+result[6] > savedCommand.potentialItemNames.length)
             {
                 this.mailSendService.sendUserMessageToPlayer(
                     sessionId,
@@ -94,11 +95,11 @@ export class GiveSptCommand implements ISptCommand
                 );
                 return request.dialogId;
             }
-            item = this.savedCommand.potentialItemNames[+result[6] - 1];
-            quantity = this.savedCommand.quantity;
-            locale = this.savedCommand.locale;
+            item = savedCommand.potentialItemNames[+result[6] - 1];
+            quantity = savedCommand.quantity;
+            locale = savedCommand.locale;
             isItemName = true;
-            this.savedCommand = undefined;
+            this.savedCommand.delete(sessionId);
         }
         else
         {
@@ -156,7 +157,7 @@ export class GiveSptCommand implements ISptCommand
                     const slicedItems = closestItemsMatchedByName.slice(0, 10);
                     // max 10 item names and map them
                     const itemList = slicedItems.map((itemName) => `${i++}. ${itemName}`).join("\n");
-                    this.savedCommand = new SavedCommand(quantity, slicedItems, locale);
+                    this.savedCommand.set(sessionId, new SavedCommand(quantity, slicedItems, locale));
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
