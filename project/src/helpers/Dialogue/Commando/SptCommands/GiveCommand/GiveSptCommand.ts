@@ -8,6 +8,7 @@ import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
@@ -40,6 +41,7 @@ export class GiveSptCommand implements ISptCommand
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
     )
     {
     }
@@ -104,7 +106,10 @@ export class GiveSptCommand implements ISptCommand
         else
         {
             // A new give request was entered, we need to ignore the old saved command
-            this.savedCommand = undefined;
+            if (this.savedCommand.has(sessionId))
+            {
+                this.savedCommand.delete(sessionId);
+            }
             isItemName = result[5] !== undefined;
             item = result[5] ? result[5] : result[2];
             quantity = +result[6];
@@ -135,9 +140,9 @@ export class GiveSptCommand implements ISptCommand
 
                 const closestItemsMatchedByName = closestMatch(
                     item.toLowerCase(),
-                    this.itemHelper.getItems().filter((i) => i._type !== "Node").map((i) =>
-                        localizedGlobal[`${i?._id} Name`]?.toLowerCase()
-                    ).filter((i) => i !== undefined),
+                    this.itemHelper.getItems().filter((i) => i._type !== "Node").filter((i) =>
+                        !this.itemFilterService.isItemBlacklisted(i._id)
+                    ).map((i) => localizedGlobal[`${i?._id} Name`]?.toLowerCase()).filter((i) => i !== undefined),
                     true,
                 ) as string[];
 
