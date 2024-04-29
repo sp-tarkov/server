@@ -191,7 +191,7 @@ export class GiveSptCommand implements ISptCommand
         // If item is an item name, we need to search using that item name and the locale which one we want otherwise
         // item is just the tplId.
         const tplId = isItemName
-            ? this.itemHelper.getItems().find((i) =>
+            ? this.itemHelper.getItems().filter((i) => !this.itemFilterService.isItemBlacklisted(i._id)).find((i) =>
                 this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() === item
             )._id
             : item;
