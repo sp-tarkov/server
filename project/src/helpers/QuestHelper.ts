@@ -950,7 +950,7 @@ export class QuestHelper
                     // Handled elsewhere, TODO: find and say here
                     break;
                 case QuestRewardType.STASH_ROWS:
-                    this.logger.debug("Not implemented stash rows reward yet");
+                    this.profileHelper.addStashRowsBonusToProfile(sessionId, Number.parseInt(<string>reward.value)); // add specified stash rows from quest reward - requires client restart
                     break;
                 case QuestRewardType.PRODUCTIONS_SCHEME:
                     this.findAndAddHideoutProductionIdToProfile(
