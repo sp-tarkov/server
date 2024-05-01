@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { InsuredItem } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { Item, Location, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
+import { Item, Location, Repairable, Upd } from "@spt-aki/models/eft/common/tables/IItem";
 import { IStaticAmmoDetails } from "@spt-aki/models/eft/common/tables/ILootBase";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
@@ -14,6 +14,7 @@ import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { CompareUtil } from "@spt-aki/utils/CompareUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
@@ -46,8 +47,136 @@ export class ItemHelper
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("LocaleService") protected localeService: LocaleService,
+        @inject("CompareUtil") protected compareUtil: CompareUtil,
     )
     {}
+
+    /**
+     * This method will compare two items (with all its children) and see if the are equivalent.
+     * This method will NOT compare IDs on the items
+     * @param item1 first item with all its children to compare
+     * @param item2 second item with all its children to compare
+     * @param compareUpdProperties Upd properties to compare between the items
+     * @returns true if they are the same, false if they arent
+     */
+    public isSameItems(item1: Item[], item2: Item[], compareUpdProperties?: Set<string>): boolean
+    {
+        if (item1.length !== item2.length)
+        {
+            return false;
+        }
+        for (const itemOf1 of item1)
+        {
+            const itemOf2 = item2.find((i2) => i2._tpl === itemOf1._tpl);
+            if (itemOf2 === undefined)
+            {
+                return false;
+            }
+            if (!this.isSameItem(itemOf1, itemOf2, compareUpdProperties))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * This method will compare two items and see if the are equivalent.
+     * This method will NOT compare IDs on the items
+     * @param item1 first item to compare
+     * @param item2 second item to compare
+     * @param compareUpdProperties Upd properties to compare between the items
+     * @returns true if they are the same, false if they arent
+     */
+    public isSameItem(item1: Item, item2: Item, compareUpdProperties?: Set<string>): boolean
+    {
+        if (item1._tpl !== item2._tpl)
+        {
+            return false;
+        }
+
+        if (compareUpdProperties)
+        {
+            return Array.from(compareUpdProperties.values()).every((p) =>
+                this.compareUtil.recursiveCompare(item1.upd?.[p], item2.upd?.[p])
+            );
+        }
+
+        return this.compareUtil.recursiveCompare(item1.upd, item2.upd);
+    }
+
+    /**
+     * Helper method to generate a Upd based on a template
+     * @param itemTemplate the item template to generate a Upd for
+     * @returns A Upd with all the default properties set
+     */
+    public generateUpdForItem(itemTemplate: ITemplateItem): Upd
+    {
+        const itemProperties: Upd = {};
+
+        // armors, etc
+        if (itemTemplate._props.MaxDurability)
+        {
+            itemProperties.Repairable = {
+                Durability: itemTemplate._props.MaxDurability,
+                MaxDurability: itemTemplate._props.MaxDurability,
+            };
+        }
+
+        if (itemTemplate._props.HasHinge)
+        {
+            itemProperties.Togglable = { On: true };
+        }
+
+        if (itemTemplate._props.Foldable)
+        {
+            itemProperties.Foldable = { Folded: false };
+        }
+
+        if (itemTemplate._props.weapFireType?.length)
+        {
+            if (itemTemplate._props.weapFireType.includes("fullauto"))
+            {
+                itemProperties.FireMode = { FireMode: "fullauto" };
+            }
+            else
+            {
+                itemProperties.FireMode = { FireMode: this.randomUtil.getArrayValue(itemTemplate._props.weapFireType) };
+            }
+        }
+
+        if (itemTemplate._props.MaxHpResource)
+        {
+            itemProperties.MedKit = { HpResource: itemTemplate._props.MaxHpResource };
+        }
+
+        if (itemTemplate._props.MaxResource && itemTemplate._props.foodUseTime)
+        {
+            itemProperties.FoodDrink = { HpPercent: itemTemplate._props.MaxResource };
+        }
+
+        if (itemTemplate._parent === BaseClasses.FLASHLIGHT)
+        {
+            itemProperties.Light = { IsActive: false, SelectedMode: 0 };
+        }
+        else if (itemTemplate._parent === BaseClasses.TACTICAL_COMBO)
+        {
+            itemProperties.Light = { IsActive: false, SelectedMode: 0 };
+        }
+
+        if (itemTemplate._parent === BaseClasses.NIGHTVISION)
+        {
+            itemProperties.Togglable = { On: false };
+        }
+
+        // Togglable face shield
+        if (itemTemplate._props.HasHinge && itemTemplate._props.FaceShieldComponent)
+        {
+            itemProperties.Togglable = { On: false };
+        }
+
+        return itemProperties;
+    }
 
     /**
      * Checks if an id is a valid item. Valid meaning that it's an item that be stored in stash

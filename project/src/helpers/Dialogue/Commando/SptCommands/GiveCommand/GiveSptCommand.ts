@@ -208,7 +208,11 @@ export class GiveSptCommand implements ISptCommand
         }
 
         const itemsToSend: Item[] = [];
-        if (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.WEAPON))
+        if (
+            this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.WEAPON)
+            || this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.ARMOR)
+            || this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.VEST)
+        )
         {
             const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
             if (!preset)
@@ -220,37 +224,58 @@ export class GiveSptCommand implements ISptCommand
                 );
                 return request.dialogId;
             }
-            itemsToSend.push(...this.jsonUtil.clone(preset._items));
+            for (let i = 0; i < quantity; i++)
+            {
+                let items = this.jsonUtil.clone(preset._items);
+                items = this.itemHelper.replaceIDs(items);
+                itemsToSend.push(...items);
+            }
         }
         else if (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.AMMO_BOX))
         {
-            for (let i = 0; i < +quantity; i++)
+            for (let i = 0; i < quantity; i++)
             {
                 const ammoBoxArray: Item[] = [];
                 ammoBoxArray.push({ _id: this.hashUtil.generate(), _tpl: checkedItem[1]._id });
-                this.itemHelper.addCartridgesToAmmoBox(ammoBoxArray, checkedItem[1]);
+                // DO NOT generate the ammo box cartridges, the mail service does it for us! :)
+                // this.itemHelper.addCartridgesToAmmoBox(ammoBoxArray, checkedItem[1]);
                 itemsToSend.push(...ammoBoxArray);
             }
         }
         else
         {
-            const item: Item = {
-                _id: this.hashUtil.generate(),
-                _tpl: checkedItem[1]._id,
-                upd: { StackObjectsCount: +quantity, SpawnedInSession: true },
-            };
-            try
+            if (checkedItem[1]._props.StackMaxSize === 1)
             {
-                itemsToSend.push(...this.itemHelper.splitStack(item));
+                for (let i = 0; i < quantity; i++)
+                {
+                    itemsToSend.push({
+                        _id: this.hashUtil.generate(),
+                        _tpl: checkedItem[1]._id,
+                        upd: this.itemHelper.generateUpdForItem(checkedItem[1]),
+                    });
+                }
             }
-            catch
+            else
             {
-                this.mailSendService.sendUserMessageToPlayer(
-                    sessionId,
-                    commandHandler,
-                    "Too many items requested. Please lower the amount and try again.",
-                );
-                return request.dialogId;
+                const item: Item = {
+                    _id: this.hashUtil.generate(),
+                    _tpl: checkedItem[1]._id,
+                    upd: this.itemHelper.generateUpdForItem(checkedItem[1]),
+                };
+                item.upd.StackObjectsCount = quantity;
+                try
+                {
+                    itemsToSend.push(...this.itemHelper.splitStack(item));
+                }
+                catch
+                {
+                    this.mailSendService.sendUserMessageToPlayer(
+                        sessionId,
+                        commandHandler,
+                        "Too many items requested. Please lower the amount and try again.",
+                    );
+                    return request.dialogId;
+                }
             }
         }
 

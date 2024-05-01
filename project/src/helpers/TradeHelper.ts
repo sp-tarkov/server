@@ -274,6 +274,14 @@ export class TradeHelper
 
             this.logger.debug(`Selling: id: ${matchingItemInInventory._id} tpl: ${matchingItemInInventory._tpl}`);
 
+            if (sellRequest.tid === Traders.FENCE)
+            {
+                this.fenceService.addItemsToFenceAssort(
+                    profileWithItemsToSell.Inventory.items,
+                    matchingItemInInventory,
+                );
+            }
+
             // Also removes children
             this.inventoryHelper.removeItem(profileWithItemsToSell, itemToBeRemoved.id, sessionID, output);
         }

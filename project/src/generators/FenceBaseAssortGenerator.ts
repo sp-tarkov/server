@@ -14,6 +14,7 @@ import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { FenceService } from "@spt-aki/services/FenceService";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
@@ -35,6 +36,7 @@ export class FenceBaseAssortGenerator
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("FenceService") protected fenceService: FenceService,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -123,7 +125,7 @@ export class FenceBaseAssortGenerator
 
             // Create barter scheme (price)
             const barterSchemeToAdd: IBarterScheme = {
-                count: Math.round(this.getItemPrice(rootItemDb._id, itemWithChildrenToAdd)),
+                count: Math.round(this.fenceService.getItemPrice(rootItemDb._id, itemWithChildrenToAdd)),
                 _tpl: Money.ROUBLES,
             };
 
@@ -233,27 +235,6 @@ export class FenceBaseAssortGenerator
 
         // Not an ammobox or ammo
         return null;
-    }
-
-    protected getItemPrice(itemTpl: string, items: Item[]): number
-    {
-        return this.itemHelper.isOfBaseclass(itemTpl, BaseClasses.AMMO_BOX)
-            ? this.getAmmoBoxPrice(items) * this.traderConfig.fence.itemPriceMult
-            : this.handbookHelper.getTemplatePrice(itemTpl) * this.traderConfig.fence.itemPriceMult;
-    }
-
-    protected getAmmoBoxPrice(items: Item[]): number
-    {
-        let total = 0;
-        for (const item of items)
-        {
-            if (this.itemHelper.isOfBaseclass(item._tpl, BaseClasses.AMMO))
-            {
-                total += this.handbookHelper.getTemplatePrice(item._tpl) * (item.upd.StackObjectsCount ?? 1);
-            }
-        }
-
-        return total;
     }
 
     /**

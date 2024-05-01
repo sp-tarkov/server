@@ -10,6 +10,7 @@ import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { IBarterScheme, ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { Money } from "@spt-aki/models/enums/Money";
 import { Traders } from "@spt-aki/models/enums/Traders";
 import { IItemDurabilityCurrentMax, ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
 import { ICreateFenceAssortsResult } from "@spt-aki/models/spt/fence/ICreateFenceAssortsResult";
@@ -45,6 +46,18 @@ export class FenceService
 
     /** Desired baseline counts - Hydrated on initial assort generation as part of generateFenceAssorts() */
     protected desiredAssortCounts: IFenceAssortGenerationValues;
+
+    protected fenceItemUpdCompareProperties = new Set<string>([
+        "Buff",
+        "Repairable",
+        "RecodableComponent",
+        "Key",
+        "Resource",
+        "MedKit",
+        "FoodDrink",
+        "Dogtag",
+        "RepairKit",
+    ]);
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -140,6 +153,72 @@ export class FenceService
         }
 
         return assort;
+    }
+
+    /**
+     * Adds to fence assort a single item (with its children)
+     * @param items the items to add with all its childrens
+     * @param mainItem the most parent item of the array
+     */
+    public addItemsToFenceAssort(items: Item[], mainItem: Item): void
+    {
+        // HUGE THANKS TO LACYWAY AND LEAVES FOR PROVIDING THIS SOLUTION FOR SPT TO IMPLEMENT!!
+        // Copy the item and its children
+        let clonedItems = this.jsonUtil.clone(this.itemHelper.findAndReturnChildrenAsItems(items, mainItem._id));
+        const root = clonedItems[0];
+
+        const cost = this.getItemPrice(root._tpl, clonedItems);
+
+        // Fix IDs
+        clonedItems = this.itemHelper.reparentItemAndChildren(root, clonedItems);
+        root.parentId = "hideout";
+        if (root.upd?.SpawnedInSession !== undefined)
+        {
+            root.upd.SpawnedInSession = false;
+        }
+
+        // Clean up the items
+        delete root.location;
+
+        const createAssort: ICreateFenceAssortsResult = { sptItems: [], barter_scheme: {}, loyal_level_items: {} };
+        createAssort.barter_scheme[root._id] = [[{ count: cost, _tpl: Money.ROUBLES }]];
+        createAssort.sptItems.push(clonedItems);
+        createAssort.loyal_level_items[root._id] = 1;
+
+        this.updateFenceAssorts(createAssort, this.fenceAssort);
+    }
+
+    /**
+     * Calculates the overall price for an item (with all its children)
+     * @param itemTpl the item tpl to calculate the fence price for
+     * @param items the items (with its children) to calculate fence price for
+     * @returns the fence price of the item
+     */
+    public getItemPrice(itemTpl: string, items: Item[]): number
+    {
+        return this.itemHelper.isOfBaseclass(itemTpl, BaseClasses.AMMO_BOX)
+            ? this.getAmmoBoxPrice(items) * this.traderConfig.fence.itemPriceMult
+            : this.handbookHelper.getTemplatePrice(itemTpl) * this.traderConfig.fence.itemPriceMult;
+    }
+
+    /**
+     * Calculate the overall price for an ammo box, where only one item is
+     * the ammo box itself and every other items are the bullets in that box
+     * @param items the ammo box (and all its children ammo items)
+     * @returns the price of the ammo box
+     */
+    protected getAmmoBoxPrice(items: Item[]): number
+    {
+        let total = 0;
+        for (const item of items)
+        {
+            if (this.itemHelper.isOfBaseclass(item._tpl, BaseClasses.AMMO))
+            {
+                total += this.handbookHelper.getTemplatePrice(item._tpl) * (item.upd.StackObjectsCount ?? 1);
+            }
+        }
+
+        return total;
     }
 
     /**
@@ -325,18 +404,36 @@ export class FenceService
             // Check if same type of item exists + its on list of item types to always stack
             if (existingRootItem && this.itemInPreventDupeCategoryList(newRootItem._tpl))
             {
-                // Guard against a missing stack count
-                if (!existingRootItem.upd.StackObjectsCount)
+                const existingFullItemTree = this.itemHelper.findAndReturnChildrenAsItems(
+                    existingFenceAssorts.items,
+                    existingRootItem._id,
+                );
+                if (
+                    this.itemHelper.isSameItems(
+                        itemWithChildren,
+                        existingFullItemTree,
+                        this.fenceItemUpdCompareProperties,
+                    )
+                )
                 {
-                    existingRootItem.upd.StackObjectsCount = 1;
+                    // Guard against a missing stack count
+                    if (!existingRootItem.upd.StackObjectsCount)
+                    {
+                        existingRootItem.upd.StackObjectsCount = 1;
+                    }
+
+                    // Merge new items count into existing, dont add new loyalty/barter data as it already exists
+                    existingRootItem.upd.StackObjectsCount += newRootItem?.upd?.StackObjectsCount ?? 1;
+
+                    continue;
                 }
-
-                // Merge new items count into existing, dont add new loyalty/barter data as it already exists
-                existingRootItem.upd.StackObjectsCount += newRootItem.upd.StackObjectsCount;
-
-                continue;
             }
 
+            // if the upd doesnt exist just initialize it
+            if (newRootItem.upd === undefined)
+            {
+                newRootItem.upd = {};
+            }
             // New assort to be added to existing assorts
             existingFenceAssorts.items.push(...itemWithChildren);
             existingFenceAssorts.barter_scheme[newRootItem._id] = newFenceAssorts.barter_scheme[newRootItem._id];
@@ -366,7 +463,7 @@ export class FenceService
     ): IGenerationAssortValues
     {
         const allRootItems = assortItems.filter((item) => item.slotId === "hideout");
-        const rootPresetItems = allRootItems.filter((item) => item.upd.sptPresetId);
+        const rootPresetItems = allRootItems.filter((item) => item?.upd?.sptPresetId);
 
         // Get count of weapons
         const currentWeaponPresetCount = rootPresetItems.reduce((count, item) =>

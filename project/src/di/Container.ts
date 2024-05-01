@@ -241,6 +241,7 @@ import { OnUpdateModService } from "@spt-aki/services/mod/onUpdate/OnUpdateModSe
 import { StaticRouterModService } from "@spt-aki/services/mod/staticRouter/StaticRouterModService";
 import { App } from "@spt-aki/utils/App";
 import { AsyncQueue } from "@spt-aki/utils/AsyncQueue";
+import { CompareUtil } from "@spt-aki/utils/CompareUtil";
 import { DatabaseImporter } from "@spt-aki/utils/DatabaseImporter";
 import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
@@ -410,6 +411,7 @@ export class Container
         depContainer.register<HttpFileUtil>("HttpFileUtil", HttpFileUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModLoadOrder>("ModLoadOrder", ModLoadOrder, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModTypeCheck>("ModTypeCheck", ModTypeCheck, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<CompareUtil>("CompareUtil", CompareUtil, { lifecycle: Lifecycle.Singleton });
     }
 
     private static registerRouters(depContainer: DependencyContainer): void
