@@ -25,7 +25,7 @@ export class RagfairOfferService
     protected expiredOffers: Record<string, IRagfairOffer> = {};
 
     protected ragfairConfig: IRagfairConfig;
-    protected ragfairOfferHandler: RagfairOfferHolder = new RagfairOfferHolder();
+    protected ragfairOfferHandler: RagfairOfferHolder;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -41,6 +41,10 @@ export class RagfairOfferService
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
+        this.ragfairOfferHandler = new RagfairOfferHolder(
+            this.ragfairConfig.dynamic.offerItemCount.max,
+            ragfairServerHelper,
+        );
     }
 
     /**

@@ -1,3 +1,4 @@
+import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 
 export class RagfairOfferHolder
@@ -6,7 +7,7 @@ export class RagfairOfferHolder
     protected offersByTemplate: Map<string, Map<string, IRagfairOffer>>;
     protected offersByTrader: Map<string, Map<string, IRagfairOffer>>;
 
-    constructor()
+    constructor(protected maxOffersPerTemplate: number, protected ragfairServerHelper: RagfairServerHelper)
     {
         this.offersById = new Map();
         this.offersByTemplate = new Map();
@@ -62,6 +63,15 @@ export class RagfairOfferHolder
         const trader = offer.user.id;
         const offerId = offer._id;
         const itemTpl = offer.items[0]._tpl;
+        // If its an NPC PMC offer AND we have already reached the maximum amount of possible offers
+        // for this template, just dont add in more
+        if (
+            !(this.ragfairServerHelper.isTrader(trader) || this.ragfairServerHelper.isPlayer(trader))
+            && this.getOffersByTemplate(itemTpl)?.length >= this.maxOffersPerTemplate
+        )
+        {
+            return;
+        }
         this.offersById.set(offerId, offer);
         this.addOfferByTrader(trader, offer);
         this.addOfferByTemplates(itemTpl, offer);
