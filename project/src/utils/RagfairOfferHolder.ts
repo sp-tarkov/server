@@ -86,7 +86,16 @@ export class RagfairOfferHolder
         if (this.offersById.has(offer._id))
         {
             this.offersById.delete(offer._id);
-            this.offersByTrader.get(offer.user.id).delete(offer._id);
+            const traderOffers = this.offersByTrader.get(offer.user.id);
+            traderOffers.delete(offer._id);
+            // This was causing a memory leak, we need to make sure that we remove
+            // the user ID from the cached offers after they dont have anything else
+            // on the flea placed. We regenerate the ID for the NPC users, making it
+            // continously grow otherwise
+            if (traderOffers.size === 0)
+            {
+                this.offersByTrader.delete(offer.user.id);
+            }
             this.offersByTemplate.get(offer.items[0]._tpl).delete(offer._id);
         }
     }
