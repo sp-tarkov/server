@@ -8,5 +8,5 @@ export interface ICancelFriendRequestData extends IBaseFriendRequest
 
 export interface IBaseFriendRequest
 {
-    request_id: string;
+    profileId: string;
 }

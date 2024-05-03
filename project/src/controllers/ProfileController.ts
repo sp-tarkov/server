@@ -394,7 +394,19 @@ export class ProfileController
      */
     public getFriends(info: ISearchFriendRequestData, sessionID: string): ISearchFriendResponse[]
     {
-        return [{ _id: this.hashUtil.generate(), Info: { Level: 1, Side: "Bear", Nickname: info.nickname } }];
+        const profile = this.saveServer.getProfile(sessionID);
+
+        // return some of the current player info for now
+        return [{
+            _id: profile.characters.pmc._id,
+            aid: profile.characters.pmc.aid,
+            Info: {
+                Nickname: info.nickname,
+                Side: "Bear",
+                Level: 1,
+                MemberCategory: profile.characters.pmc.Info.MemberCategory,
+            },
+        }];
     }
 
     /**
@@ -422,6 +434,7 @@ export class ProfileController
     {
         const player = this.profileHelper.getFullProfile(sessionId);
         const playerPmc = player.characters.pmc;
+        const playerScav = player.characters.scav;
 
         // return player for now
         return {
@@ -458,8 +471,8 @@ export class ProfileController
             },
             scavStats: {
                 eft: {
-                    totalInGameTime: player.characters.scav.Stats.Eft.TotalInGameTime,
-                    overAllCounters: player.characters.scav.Stats.Eft.OverallCounters,
+                    totalInGameTime: playerScav.Stats.Eft.TotalInGameTime,
+                    overAllCounters: playerScav.Stats.Eft.OverallCounters,
                 },
             },
         };
