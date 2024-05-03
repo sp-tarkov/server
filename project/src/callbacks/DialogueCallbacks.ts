@@ -6,6 +6,7 @@ import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData"
 import {
     IAcceptFriendRequestData,
     ICancelFriendRequestData,
+    IDeclineFriendRequestData,
 } from "@spt-aki/models/eft/dialog/IAcceptFriendRequestData";
 import { IChatServer } from "@spt-aki/models/eft/dialog/IChatServer";
 import { IClearMailMessageRequest } from "@spt-aki/models/eft/dialog/IClearMailMessageRequest";
@@ -186,7 +187,16 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<IFriendRequestSendResponse>
     {
-        return this.httpResponse.getBody({ status: 0, requestid: "12345", retryAfter: 600 });
+        return this.httpResponse.getBody({ status: 0, requestId: "12345", retryAfter: 600 });
+    }
+
+    /**
+     * Handle client/friend/request/accept-all
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public acceptAllFriendRequests(url: string, request: IEmptyRequestData, sessionID: string): INullResponseData
+    {
+        return this.httpResponse.nullResponse();
     }
 
     /**
@@ -196,6 +206,19 @@ export class DialogueCallbacks implements OnUpdate
     public acceptFriendRequest(
         url: string,
         request: IAcceptFriendRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<boolean>
+    {
+        return this.httpResponse.getBody(true);
+    }
+
+    /**
+     * Handle client/friend/request/decline
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public declineFriendRequest(
+        url: string,
+        request: IDeclineFriendRequestData,
         sessionID: string,
     ): IGetBodyResponseData<boolean>
     {
