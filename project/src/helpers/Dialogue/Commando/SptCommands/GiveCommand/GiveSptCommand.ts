@@ -3,6 +3,7 @@ import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISpt
 import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
@@ -13,7 +14,7 @@ import { LocaleService } from "@spt-aki/services/LocaleService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { closestMatch, distance } from "closest-match";
+import { stringSimilarity } from "string-similarity-js";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -28,7 +29,7 @@ export class GiveSptCommand implements ISptCommand
      * spt give 5 <== this is the reply when the algo isn't sure about an item
      */
     private static commandRegex = /^spt give (((([a-z]{2,5}) )?"(.+)"|\w+) )?([0-9]+)$/;
-    private static maxAllowedDistance = 1.5;
+    private static acceptableConfidence = 0.9;
 
     protected savedCommand: Map<string, SavedCommand> = new Map<string, SavedCommand>();
 
@@ -125,44 +126,51 @@ export class GiveSptCommand implements ISptCommand
 
             if (isItemName)
             {
-                locale = result[4] ? result[4] : this.localeService.getDesiredGameLocale();
-                if (!this.localeService.getServerSupportedLocales().includes(locale))
+                try
+                {
+                    locale = result[4] ? result[4] : (this.localeService.getDesiredGameLocale() ?? "en");
+                    if (!this.localeService.getServerSupportedLocales().includes(locale))
+                    {
+                        this.mailSendService.sendUserMessageToPlayer(
+                            sessionId,
+                            commandHandler,
+                            `Unknown locale "${locale}". Use \"help\" for more information.`,
+                        );
+                        return request.dialogId;
+                    }
+                }
+                catch (e)
                 {
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
-                        `Unknown locale "${locale}". Use \"help\" for more information.`,
+                        `An error occurred while trying to use localized text. Locale will be defaulted to 'en'.`,
                     );
-                    return request.dialogId;
+                    this.logger.error(e);
+                    locale = "en";
                 }
 
                 const localizedGlobal = this.databaseServer.getTables().locales.global[locale];
 
-                const closestItemsMatchedByName = closestMatch(
-                    item.toLowerCase(),
-                    this.itemHelper.getItems().filter((i) => i._type !== "Node").filter((i) =>
-                        !this.itemFilterService.isItemBlacklisted(i._id)
-                    ).map((i) => localizedGlobal[`${i?._id} Name`]?.toLowerCase()).filter((i) => i !== undefined),
-                    true,
-                ) as string[];
+                const closestItemsMatchedByName = this.itemHelper.getItems()
+                    .filter((i) => this.isItemAllowed(i))
+                    .map((i) => localizedGlobal[`${i?._id} Name`]?.toLowerCase())
+                    .filter((i) => i !== undefined)
+                    .map(i => ({match: stringSimilarity(item.toLocaleLowerCase(), i.toLocaleLowerCase()), itemName: i}))
+                    .sort((a1, a2) => a2.match - a1.match);
 
-                if (closestItemsMatchedByName === undefined || closestItemsMatchedByName.length === 0)
+                if (closestItemsMatchedByName[0].match >= GiveSptCommand.acceptableConfidence)
                 {
-                    this.mailSendService.sendUserMessageToPlayer(
-                        sessionId,
-                        commandHandler,
-                        "That item could not be found. Please refine your request and try again.",
-                    );
-                    return request.dialogId;
+                    item = closestItemsMatchedByName[0].itemName;
                 }
-
-                if (closestItemsMatchedByName.length > 1)
-                {
+                else
+                {    
                     let i = 1;
                     const slicedItems = closestItemsMatchedByName.slice(0, 10);
                     // max 10 item names and map them
-                    const itemList = slicedItems.map((itemName) => `${i++}. ${itemName}`).join("\n");
-                    this.savedCommand.set(sessionId, new SavedCommand(quantity, slicedItems, locale));
+                    const itemList = slicedItems.map((match) => `${i++}. ${match.itemName} (conf: ${(match.match * 100).toFixed(2)})`)
+                        .join("\n");
+                    this.savedCommand.set(sessionId, new SavedCommand(quantity, slicedItems.map(i => i.itemName), locale));
                     this.mailSendService.sendUserMessageToPlayer(
                         sessionId,
                         commandHandler,
@@ -170,30 +178,15 @@ export class GiveSptCommand implements ISptCommand
                     );
                     return request.dialogId;
                 }
-
-                const dist = distance(item, closestItemsMatchedByName[0]);
-                if (dist > GiveSptCommand.maxAllowedDistance)
-                {
-                    this.mailSendService.sendUserMessageToPlayer(
-                        sessionId,
-                        commandHandler,
-                        `Found a possible match for "${item}" but uncertain. Match: "${
-                            closestItemsMatchedByName[0]
-                        }". Please refine your request and try again.`,
-                    );
-                    return request.dialogId;
-                }
-                // Only one available so we get that entry and use it
-                item = closestItemsMatchedByName[0];
             }
         }
 
         // If item is an item name, we need to search using that item name and the locale which one we want otherwise
         // item is just the tplId.
         const tplId = isItemName
-            ? this.itemHelper.getItems().filter((i) => !this.itemFilterService.isItemBlacklisted(i._id)).find((i) =>
-                this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() === item
-            )._id
+            ? this.itemHelper.getItems()
+                .filter((i) => this.isItemAllowed(i))
+                .find((i) => this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() === item)._id
             : item;
 
         const checkedItem = this.itemHelper.getItem(tplId);
@@ -284,5 +277,22 @@ export class GiveSptCommand implements ISptCommand
 
         this.mailSendService.sendSystemMessageToPlayer(sessionId, "SPT GIVE", itemsToSend);
         return request.dialogId;
+    }
+
+    /**
+     * A "simple" function that checks if an item is supposed to be given to a player or not
+     * @param templateItem the template item to check
+     * @returns true if its obtainable, false if its not
+     */
+    protected isItemAllowed(templateItem: ITemplateItem): boolean
+    {
+        return templateItem._type !== "Node" && 
+            !this.itemHelper.isQuestItem(templateItem._id) &&
+            !this.itemFilterService.isItemBlacklisted(templateItem._id) && 
+            (templateItem._props?.Prefab?.path ?? "") !== "" && 
+            !this.itemHelper.isOfBaseclass(templateItem._id, BaseClasses.HIDEOUT_AREA_CONTAINER) &&
+            !this.itemHelper.isOfBaseclass(templateItem._id, BaseClasses.LOOT_CONTAINER) &&
+            !this.itemHelper.isOfBaseclass(templateItem._id, BaseClasses.RANDOM_LOOT_CONTAINER) &&
+            !this.itemHelper.isOfBaseclass(templateItem._id, BaseClasses.MOB_CONTAINER);
     }
 }
