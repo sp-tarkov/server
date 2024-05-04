@@ -32,14 +32,25 @@ export class WebSocketServer
     protected httpConfig: IHttpConfig;
     protected defaultNotification: INotification = { type: NotificationType.PING, eventId: "ping" };
 
+    protected webSocketServer: WebSocket.Server;
     protected webSockets: Record<string, WebSocket.WebSocket> = {};
     protected websocketPingHandler = null;
 
+    public getWebSocketServer(): WebSocket.Server
+    {
+        return this.webSocketServer;
+    }
+
+    public getSessionWebSocket(sessionID: string): WebSocket.WebSocket
+    {
+        return this.webSockets[sessionID];
+    }
+
     public setupWebSocket(httpServer: http.Server): void
     {
-        const webSocketServer = new WebSocket.Server({ server: httpServer });
+        this.webSocketServer = new WebSocket.Server({ server: httpServer });
 
-        webSocketServer.addListener("listening", () =>
+        this.webSocketServer.addListener("listening", () =>
         {
             this.logger.success(
                 this.localisationService.getText("websocket-started", this.httpServerHelper.getWebsocketUrl()),
@@ -49,7 +60,7 @@ export class WebSocketServer
             );
         });
 
-        webSocketServer.addListener("connection", this.wsOnConnection.bind(this));
+        this.webSocketServer.addListener("connection", this.wsOnConnection.bind(this));
     }
 
     public sendMessage(sessionID: string, output: INotification): void
@@ -101,7 +112,7 @@ export class WebSocketServer
 
         const logger = this.logger;
         const msgToLog = this.localisationService.getText("websocket-received_message", playerInfoText);
-        ws.on("message", function message(msg)
+        ws.on("message", (msg) =>
         {
             logger.info(`${msgToLog} ${msg}`);
         });
