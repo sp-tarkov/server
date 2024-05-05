@@ -57,6 +57,7 @@ export class CompareUtil
         {
             return v1 === v2;
         }
-        throw new Error(`could not detect type match for ${typeOfv1} and ${typeOfv2}`);
+
+        return false;
     }
 }
