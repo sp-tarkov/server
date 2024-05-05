@@ -146,16 +146,17 @@ export class GiveSptCommand implements ISptCommand
                         commandHandler,
                         `An error occurred while trying to use localized text. Locale will be defaulted to 'en'.`,
                     );
-                    this.logger.error(e);
+                    this.logger.warning(e);
                     locale = "en";
                 }
 
-                const localizedGlobal = this.databaseServer.getTables().locales.global[locale];
+                const localizedGlobal = this.databaseServer.getTables().locales.global[locale] ??
+                    this.databaseServer.getTables().locales.global.en;
 
                 const closestItemsMatchedByName = this.itemHelper.getItems()
                     .filter((i) => this.isItemAllowed(i))
-                    .map((i) => localizedGlobal[`${i?._id} Name`]?.toLowerCase())
-                    .filter((i) => i !== undefined)
+                    .map((i) => localizedGlobal[`${i?._id} Name`]?.toLowerCase() ?? i._props.Name)
+                    .filter((i) => i !== undefined && i !== "")
                     .map(i => ({match: stringSimilarity(item.toLocaleLowerCase(), i.toLocaleLowerCase()), itemName: i}))
                     .sort((a1, a2) => a2.match - a1.match);
 
@@ -186,7 +187,7 @@ export class GiveSptCommand implements ISptCommand
         const tplId = isItemName
             ? this.itemHelper.getItems()
                 .filter((i) => this.isItemAllowed(i))
-                .find((i) => this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() === item)._id
+                .find((i) => (this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() ?? i._props.Name) === item)._id
             : item;
 
         const checkedItem = this.itemHelper.getItem(tplId);
