@@ -29,6 +29,7 @@ import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 
 @injectable()
 export class InsuranceController
