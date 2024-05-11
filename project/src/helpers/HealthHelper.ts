@@ -7,6 +7,7 @@ import { IHealthConfig } from "@spt-aki/models/spt/config/IHealthConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -21,6 +22,7 @@ export class HealthHelper
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.healthConfig = this.configServer.getConfig(ConfigTypes.HEALTH);
@@ -115,7 +117,7 @@ export class HealthHelper
             this.saveEffects(
                 pmcData,
                 sessionID,
-                this.jsonUtil.clone(this.saveServer.getProfile(sessionID).vitality.effects),
+                this.cloner.clone(this.saveServer.getProfile(sessionID).vitality.effects),
                 deleteExistingEffects,
             );
         }

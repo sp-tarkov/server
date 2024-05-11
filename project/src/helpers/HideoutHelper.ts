@@ -23,6 +23,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PlayerService } from "@spt-aki/services/PlayerService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
@@ -54,6 +55,7 @@ export class HideoutHelper
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
@@ -106,7 +108,7 @@ export class HideoutHelper
 
             for (const tool of bodyAsSingle.tools)
             {
-                const toolItem = this.jsonUtil.clone(pmcData.Inventory.items.find(x => x._id === tool.id));
+                const toolItem = this.cloner.clone(pmcData.Inventory.items.find(x => x._id === tool.id));
 
                 // Make sure we only return as many as we took
                 this.itemHelper.addUpdObjectToItem(toolItem);

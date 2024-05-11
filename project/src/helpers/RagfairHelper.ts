@@ -13,6 +13,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
@@ -30,6 +31,7 @@ export class RagfairHelper
         @inject("RagfairLinkedItemService") protected ragfairLinkedItemService: RagfairLinkedItemService,
         @inject("UtilityHelper") protected utilityHelper: UtilityHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -162,7 +164,7 @@ export class RagfairHelper
             {
                 if (!rootItem)
                 {
-                    rootItem = this.jsonUtil.clone(item);
+                    rootItem = this.cloner.clone(item);
                     rootItem.upd.OriginalStackObjectsCount = rootItem.upd.StackObjectsCount;
                 }
                 else

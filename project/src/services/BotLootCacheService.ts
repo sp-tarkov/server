@@ -9,6 +9,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
@@ -24,6 +25,7 @@ export class BotLootCacheService
         @inject("PMCLootGenerator") protected pmcLootGenerator: PMCLootGenerator,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.clearCache();
@@ -111,7 +113,7 @@ export class BotLootCacheService
                 break;
         }
 
-        return this.jsonUtil.clone(result);
+        return this.cloner.clone(result);
     }
 
     /**
@@ -136,9 +138,9 @@ export class BotLootCacheService
         if (isPmc)
         {
             // Replace lootPool from bot json with our own generated list for PMCs
-            lootPool.Backpack = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCBackpackLootPool(botRole));
-            lootPool.Pockets = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCPocketLootPool(botRole));
-            lootPool.TacticalVest = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCVestLootPool(botRole));
+            lootPool.Backpack = this.cloner.clone(this.pmcLootGenerator.generatePMCBackpackLootPool(botRole));
+            lootPool.Pockets = this.cloner.clone(this.pmcLootGenerator.generatePMCPocketLootPool(botRole));
+            lootPool.TacticalVest = this.cloner.clone(this.pmcLootGenerator.generatePMCVestLootPool(botRole));
         }
 
         // Backpack/Pockets etc

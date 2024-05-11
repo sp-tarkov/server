@@ -20,6 +20,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
@@ -43,6 +44,7 @@ export class RepeatableQuestGenerator
         @inject("RepeatableQuestRewardGenerator") protected repeatableQuestRewardGenerator:
         RepeatableQuestRewardGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
@@ -873,7 +875,7 @@ export class RepeatableQuestGenerator
     // @Incomplete: define Type for "type".
     protected generateRepeatableTemplate(type: string, traderId: string, side: string): IRepeatableQuest
     {
-        const questClone = this.jsonUtil.clone<IRepeatableQuest>(
+        const questClone = this.cloner.clone<IRepeatableQuest>(
             this.databaseServer.getTables().templates.repeatableQuests.templates[type],
         );
         questClone._id = this.objectId.generate();

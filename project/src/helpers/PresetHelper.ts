@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ItemHelper } from "./ItemHelper";
 
@@ -16,6 +17,7 @@ export class PresetHelper
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -70,8 +72,10 @@ export class PresetHelper
     {
         if (!this.defaultEquipmentPresets)
         {
-            this.defaultEquipmentPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets).filter(preset => preset._encyclopedia !== undefined && this.itemHelper.armorItemCanHoldMods(preset._encyclopedia))
-                .reduce((acc, cur) =>
+            this.defaultEquipmentPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets)
+                .filter(preset => preset._encyclopedia !== undefined
+                && this.itemHelper.armorItemCanHoldMods(preset._encyclopedia),
+                ).reduce((acc, cur) =>
                 {
                     acc[cur._id] = cur;
                     return acc;
@@ -104,12 +108,12 @@ export class PresetHelper
 
     public getPreset(id: string): IPreset
     {
-        return this.jsonUtil.clone(this.databaseServer.getTables().globals.ItemPresets[id]);
+        return this.cloner.clone(this.databaseServer.getTables().globals.ItemPresets[id]);
     }
 
     public getAllPresets(): IPreset[]
     {
-        return this.jsonUtil.clone(Object.values(this.databaseServer.getTables().globals.ItemPresets));
+        return this.cloner.clone(Object.values(this.databaseServer.getTables().globals.ItemPresets));
     }
 
     public getPresets(templateId: string): IPreset[]

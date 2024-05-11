@@ -24,6 +24,7 @@ import { BotGenerationCacheService } from "@spt-aki/services/BotGenerationCacheS
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCacheService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
@@ -48,6 +49,7 @@ export class BotController
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -281,7 +283,7 @@ export class BotController
         const botPromises: Promise<void>[] = [];
         for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++)
         {
-            const detailsClone = this.jsonUtil.clone(botGenerationDetails);
+            const detailsClone = this.cloner.clone(botGenerationDetails);
             botPromises.push(this.generateSingleBotAndStoreInCache(detailsClone, sessionId, cacheKey));
         }
         return Promise.all(botPromises).then(() =>

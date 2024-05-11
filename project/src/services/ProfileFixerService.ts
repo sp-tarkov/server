@@ -21,6 +21,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -46,6 +47,7 @@ export class ProfileFixerService
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);
@@ -1322,7 +1324,7 @@ export class ProfileFixerService
         if ("OverallCounters" in fullProfile.characters.pmc.Stats)
         {
             this.logger.debug("Migrating stats object into new structure");
-            const statsCopy = this.jsonUtil.clone(fullProfile.characters.pmc.Stats);
+            const statsCopy = this.cloner.clone(fullProfile.characters.pmc.Stats);
 
             // Clear stats object
             fullProfile.characters.pmc.Stats = { Eft: null };
@@ -1400,7 +1402,7 @@ export class ProfileFixerService
         if ("Improvements" in pmcProfile.Hideout)
         {
             const improvements = pmcProfile.Hideout.Improvements as Record<string, IHideoutImprovement>;
-            pmcProfile.Hideout.Improvement = this.jsonUtil.clone(improvements);
+            pmcProfile.Hideout.Improvement = this.cloner.clone(improvements);
             delete pmcProfile.Hideout.Improvements;
             this.logger.success("Successfully migrated hideout Improvements data to new location, deleted old data");
         }

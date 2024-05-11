@@ -27,6 +27,7 @@ import { FenceService } from "@spt-aki/services/FenceService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -60,6 +61,7 @@ export class RagfairOfferGenerator
         @inject("FenceService") protected fenceService: FenceService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -123,7 +125,7 @@ export class RagfairOfferGenerator
             offerRequirements.push(requirement);
         }
 
-        const itemsClone = this.jsonUtil.clone(items);
+        const itemsClone = this.cloner.clone(items);
 
         // Add cartridges to offers for ammo boxes
         if (this.itemHelper.isOfBaseclass(itemsClone[0]._tpl, BaseClasses.AMMO_BOX))
@@ -380,7 +382,7 @@ export class RagfairOfferGenerator
         for (let index = 0; index < offerCount; index++)
         {
             // Clone the item so we don't have shared references and generate new item IDs
-            const clonedAssort = this.jsonUtil.clone(assortItemWithChildren);
+            const clonedAssort = this.cloner.clone(assortItemWithChildren);
             this.itemHelper.reparentItemAndChildren(clonedAssort[0], clonedAssort);
 
             // Clear unnecessary properties

@@ -23,6 +23,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -49,6 +50,7 @@ export class BotLootGenerator
         @inject("BotLootCacheService") protected botLootCacheService: BotLootCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -459,7 +461,7 @@ export class BotLootGenerator
 
                         // Check if all the chosen currency items fit into wallet
                         const canAddToContainer = this.inventoryHelper.canPlaceItemsInContainer(
-                            this.jsonUtil.clone(containerGrid), // MUST clone grid before passing in as function modifies grid
+                            this.cloner.clone(containerGrid), // MUST clone grid before passing in as function modifies grid
                             itemsToAdd,
                         );
                         if (canAddToContainer)

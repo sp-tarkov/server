@@ -41,6 +41,7 @@ import { FenceService } from "@spt-aki/services/FenceService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PlayerService } from "@spt-aki/services/PlayerService";
 import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
@@ -69,6 +70,7 @@ export class InventoryController
         @inject("LootGenerator") protected lootGenerator: LootGenerator,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("HttpResponseUtil") protected httpResponseUtil: HttpResponseUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -212,7 +214,7 @@ export class InventoryController
         }
 
         // Create new upd object that retains properties of original upd + new stack count size
-        const updatedUpd = this.jsonUtil.clone(itemToSplit.upd);
+        const updatedUpd = this.cloner.clone(itemToSplit.upd);
         updatedUpd.StackObjectsCount = request.count;
 
         // Remove split item count from source stack

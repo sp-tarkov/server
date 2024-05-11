@@ -21,6 +21,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -69,6 +70,7 @@ export class FenceService
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -134,13 +136,13 @@ export class FenceService
         }
 
         // Clone assorts so we can adjust prices before sending to client
-        const assort = this.jsonUtil.clone(this.fenceAssort);
+        const assort = this.cloner.clone(this.fenceAssort);
         this.adjustAssortItemPricesByConfigMultiplier(assort, 1, this.traderConfig.fence.presetPriceMult);
 
         // merge normal fence assorts + discount assorts if player standing is large enough
         if (pmcProfile.TradersInfo[Traders.FENCE].standing >= 6)
         {
-            const discountAssort = this.jsonUtil.clone(this.fenceDiscountAssort);
+            const discountAssort = this.cloner.clone(this.fenceDiscountAssort);
             this.adjustAssortItemPricesByConfigMultiplier(
                 discountAssort,
                 this.traderConfig.fence.discountOptions.itemPriceMult,
@@ -163,7 +165,7 @@ export class FenceService
     {
         // HUGE THANKS TO LACYWAY AND LEAVES FOR PROVIDING THIS SOLUTION FOR SPT TO IMPLEMENT!!
         // Copy the item and its children
-        let clonedItems = this.jsonUtil.clone(this.itemHelper.findAndReturnChildrenAsItems(items, mainItem._id));
+        let clonedItems = this.cloner.clone(this.itemHelper.findAndReturnChildrenAsItems(items, mainItem._id));
         const root = clonedItems[0];
 
         const cost = this.getItemPrice(root._tpl, clonedItems);
@@ -310,7 +312,7 @@ export class FenceService
      */
     public getRawFenceAssorts(): ITraderAssort
     {
-        return this.mergeAssorts(this.jsonUtil.clone(this.fenceAssort), this.jsonUtil.clone(this.fenceDiscountAssort));
+        return this.mergeAssorts(this.cloner.clone(this.fenceAssort), this.cloner.clone(this.fenceDiscountAssort));
     }
 
     /**
@@ -682,7 +684,7 @@ export class FenceService
     {
         const result: ICreateFenceAssortsResult = { sptItems: [], barter_scheme: {}, loyal_level_items: {} };
 
-        const baseFenceAssortClone = this.jsonUtil.clone(this.databaseServer.getTables().traders[Traders.FENCE].assort);
+        const baseFenceAssortClone = this.cloner.clone(this.databaseServer.getTables().traders[Traders.FENCE].assort);
         const itemTypeLimitCounts = this.initItemLimitCounter(this.traderConfig.fence.itemTypeLimits);
 
         if (itemCounts.item > 0)
@@ -743,7 +745,7 @@ export class FenceService
 
                 continue;
             }
-            let desiredAssortItemAndChildrenClone = this.jsonUtil.clone(
+            let desiredAssortItemAndChildrenClone = this.cloner.clone(
                 this.itemHelper.findAndReturnChildrenAsItems(baseFenceAssortClone.items, chosenBaseAssortRoot._id),
             );
 
@@ -814,7 +816,7 @@ export class FenceService
 
             assorts.sptItems.push(desiredAssortItemAndChildrenClone);
 
-            assorts.barter_scheme[rootItemBeingAdded._id] = this.jsonUtil.clone(
+            assorts.barter_scheme[rootItemBeingAdded._id] = this.cloner.clone(
                 baseFenceAssortClone.barter_scheme[chosenBaseAssortRoot._id],
             );
 
@@ -1004,7 +1006,7 @@ export class FenceService
 
                 const rootItemDb = this.itemHelper.getItem(randomPresetRoot._tpl)[1];
 
-                const presetWithChildrenClone = this.jsonUtil.clone(
+                const presetWithChildrenClone = this.cloner.clone(
                     this.itemHelper.findAndReturnChildrenAsItems(baseFenceAssort.items, randomPresetRoot._id),
                 );
 
@@ -1060,7 +1062,7 @@ export class FenceService
             const randomPresetRoot = this.randomUtil.getArrayValue(equipmentPresetRootItems);
             const rootItemDb = this.itemHelper.getItem(randomPresetRoot._tpl)[1];
 
-            const presetWithChildrenClone = this.jsonUtil.clone(
+            const presetWithChildrenClone = this.cloner.clone(
                 this.itemHelper.findAndReturnChildrenAsItems(baseFenceAssort.items, randomPresetRoot._id),
             );
 

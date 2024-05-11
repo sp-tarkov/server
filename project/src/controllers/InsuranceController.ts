@@ -56,6 +56,7 @@ export class InsuranceController
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);
@@ -458,7 +459,7 @@ export class InsuranceController
         const countOfAttachmentsToRemove = this.getAttachmentCountToRemove(weightedAttachmentByPrice, traderId);
 
         // Create prob array and add all attachments with rouble price as the weight
-        const attachmentsProbabilityArray = new ProbabilityObjectArray<string, number>(this.mathUtil, this.jsonUtil);
+        const attachmentsProbabilityArray = new ProbabilityObjectArray<string, number>(this.mathUtil, this.cloner);
         for (const attachmentTpl of Object.keys(weightedAttachmentByPrice))
         {
             attachmentsProbabilityArray.push(

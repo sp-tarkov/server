@@ -23,6 +23,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
@@ -61,6 +62,7 @@ export class LocationGenerator
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
@@ -84,7 +86,8 @@ export class LocationGenerator
         const db = this.databaseServer.getTables();
         const mapData: ILocation = db.locations[locationId];
 
-        const staticWeaponsOnMapClone = this.jsonUtil.clone(mapData.staticContainers.staticWeapons);
+        const staticWeaponsOnMapClone = this.cloner.clone(mapData.staticContainers.staticWeapons);
+
         if (!staticWeaponsOnMapClone)
         {
             this.logger.error(`Unable to find static weapon data for map: ${locationBase.Name}`);
@@ -93,7 +96,8 @@ export class LocationGenerator
         // Add mounted weapons to output loot
         result.push(...staticWeaponsOnMapClone ?? []);
 
-        const allStaticContainersOnMapClone = this.jsonUtil.clone(mapData.staticContainers.staticContainers);
+        const allStaticContainersOnMapClone = this.cloner.clone(mapData.staticContainers.staticContainers);
+
         if (!allStaticContainersOnMapClone)
         {
             this.logger.error(`Unable to find static container data for map: ${locationBase.Name}`);
@@ -101,7 +105,8 @@ export class LocationGenerator
         const staticRandomisableContainersOnMap = this.getRandomisableContainersOnMap(allStaticContainersOnMapClone);
 
         // Containers that MUST be added to map (quest containers etc)
-        const staticForcedOnMapClone = this.jsonUtil.clone(mapData.staticContainers.staticForced);
+        const staticForcedOnMapClone = this.cloner.clone(mapData.staticContainers.staticForced);
+
         if (!staticForcedOnMapClone)
         {
             this.logger.error(`Unable to find forced static data for map: ${locationBase.Name}`);
@@ -192,7 +197,7 @@ export class LocationGenerator
             // EDGE CASE: These are containers without a group and have a probability < 100%
             if (groupId === "")
             {
-                const containerIdsCopy = this.jsonUtil.clone(data.containerIdsWithProbability);
+                const containerIdsCopy = this.cloner.clone(data.containerIdsWithProbability);
                 // Roll each containers probability, if it passes, it gets added
                 data.containerIdsWithProbability = {};
                 for (const containerId in containerIdsCopy)
@@ -305,7 +310,7 @@ export class LocationGenerator
         }
 
         // Create probability array with all possible container ids in this group and their relataive probability of spawning
-        const containerDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
+        const containerDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.cloner);
         for (const x of containerIds)
         {
             containerDistribution.push(new ProbabilityObject(x, containerData.containerIdsWithProbability[x]));
@@ -395,7 +400,7 @@ export class LocationGenerator
         locationName: string,
     ): IStaticContainerData
     {
-        const containerClone = this.jsonUtil.clone(staticContainer);
+        const containerClone = this.cloner.clone(staticContainer);
         const containerTpl = containerClone.template.Items[0]._tpl;
 
         // Create new unique parent id to prevent any collisions
@@ -509,7 +514,7 @@ export class LocationGenerator
     ): number
     {
         // Create probability array to calcualte the total count of lootable items inside container
-        const itemCountArray = new ProbabilityObjectArray<number>(this.mathUtil, this.jsonUtil);
+        const itemCountArray = new ProbabilityObjectArray<number>(this.mathUtil, this.cloner);
         const countDistribution = staticLootDist[containerTypeId]?.itemcountDistribution;
         if (!countDistribution)
         {
@@ -546,7 +551,7 @@ export class LocationGenerator
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getInactiveSeasonalEventItems();
 
-        const itemDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
+        const itemDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.cloner);
 
         const itemContainerDistribution = staticLootDist[containerTypeId]?.itemDistribution;
         if (!itemContainerDistribution)
@@ -617,7 +622,7 @@ export class LocationGenerator
         const guaranteedLoosePoints: Spawnpoint[] = [];
 
         const blacklistedSpawnpoints = this.locationConfig.looseLootBlacklist[locationName];
-        const spawnpointArray = new ProbabilityObjectArray<string, Spawnpoint>(this.mathUtil, this.jsonUtil);
+        const spawnpointArray = new ProbabilityObjectArray<string, Spawnpoint>(this.mathUtil, this.cloner);
 
         for (const spawnpoint of allDynamicSpawnpoints)
         {
@@ -699,7 +704,7 @@ export class LocationGenerator
                 continue;
             }
 
-            const itemArray = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
+            const itemArray = new ProbabilityObjectArray<string>(this.mathUtil, this.cloner);
             for (const itemDist of spawnPoint.itemDistribution)
             {
                 if (
@@ -769,7 +774,7 @@ export class LocationGenerator
                 // Create probability array of all spawn positions for this spawn id
                 const spawnpointArray = new ProbabilityObjectArray<string, SpawnpointsForced>(
                     this.mathUtil,
-                    this.jsonUtil,
+                    this.cloner,
                 );
                 for (const si of items)
                 {
@@ -986,7 +991,7 @@ export class LocationGenerator
         else if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.WEAPON))
         {
             let children: Item[] = [];
-            const defaultPreset = this.jsonUtil.clone(this.presetHelper.getDefaultPreset(chosenTpl));
+            const defaultPreset = this.cloner.clone(this.presetHelper.getDefaultPreset(chosenTpl));
             if (defaultPreset)
             {
                 try

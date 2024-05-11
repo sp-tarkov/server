@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 
@@ -20,7 +21,7 @@ import { MathUtil } from "@spt-aki/utils/MathUtil";
  */
 export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityObject<K, V>>
 {
-    constructor(private mathUtil: MathUtil, private jsonUtil: JsonUtil, ...items: ProbabilityObject<K, V>[])
+    constructor(private mathUtil: MathUtil, private cloner: ICloner, ...items: ProbabilityObject<K, V>[])
     {
         super();
         this.push(...items);
@@ -30,7 +31,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
         callbackfn: (value: ProbabilityObject<K, V>, index: number, array: ProbabilityObject<K, V>[]) => any,
     ): ProbabilityObjectArray<K, V>
     {
-        return new ProbabilityObjectArray(this.mathUtil, this.jsonUtil, ...super.filter(callbackfn));
+        return new ProbabilityObjectArray(this.mathUtil, this.cloner, ...super.filter(callbackfn));
     }
 
     /**
@@ -52,8 +53,8 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     clone(): ProbabilityObjectArray<K, V>
     {
-        const clone = this.jsonUtil.clone(this);
-        const probabliltyObjects = new ProbabilityObjectArray<K, V>(this.mathUtil, this.jsonUtil);
+        const clone = this.cloner.clone(this);
+        const probabliltyObjects = new ProbabilityObjectArray<K, V>(this.mathUtil, this.cloner);
         for (const ci of clone)
         {
             probabliltyObjects.push(new ProbabilityObject(ci.key, ci.relativeProbability, ci.data));
@@ -204,7 +205,7 @@ export class ProbabilityObject<K, V = undefined>
 @injectable()
 export class RandomUtil
 {
-    constructor(@inject("JsonUtil") protected jsonUtil: JsonUtil, @inject("WinstonLogger") protected logger: ILogger)
+    constructor(@inject("RecursiveCloner") protected cloner: ICloner, @inject("WinstonLogger") protected logger: ILogger)
     {
     }
 
@@ -342,7 +343,7 @@ export class RandomUtil
         let list = originalList;
         if (!replacement)
         {
-            list = this.jsonUtil.clone(originalList);
+            list = this.cloner.clone(originalList);
         }
 
         const results = [];

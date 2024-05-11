@@ -29,6 +29,7 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { PlayerService } from "@spt-aki/services/PlayerService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -57,6 +58,7 @@ export class QuestController
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
@@ -466,10 +468,10 @@ export class QuestController
         const completeQuestResponse = this.eventOutputHolder.getOutput(sessionID);
 
         const completedQuest = this.questHelper.getQuestFromDb(body.qid, pmcData);
-        const preCompleteProfileQuests = this.jsonUtil.clone(pmcData.Quests);
+        const preCompleteProfileQuests = this.cloner.clone(pmcData.Quests);
 
         const completedQuestId = body.qid;
-        const clientQuestsClone = this.jsonUtil.clone(this.getClientQuests(sessionID)); // Must be gathered prior to applyQuestReward() & failQuests()
+        const clientQuestsClone = this.cloner.clone(this.getClientQuests(sessionID)); // Must be gathered prior to applyQuestReward() & failQuests()
 
         const newQuestState = QuestStatus.Success;
         this.questHelper.updateQuestState(pmcData, newQuestState, completedQuestId);

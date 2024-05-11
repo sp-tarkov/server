@@ -240,6 +240,10 @@ import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchase
 import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
 import { App } from "@spt-aki/utils/App";
 import { AsyncQueue } from "@spt-aki/utils/AsyncQueue";
+import type { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { JsonCloner } from "@spt-aki/utils/cloners/JsonCloner";
+import { RecursiveCloner } from "@spt-aki/utils/cloners/RecursiveCloner";
+import { StructuredCloner } from "@spt-aki/utils/cloners/StructuredCloner";
 import { CompareUtil } from "@spt-aki/utils/CompareUtil";
 import { DatabaseImporter } from "@spt-aki/utils/DatabaseImporter";
 import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
@@ -411,6 +415,9 @@ export class Container
         depContainer.register<ModLoadOrder>("ModLoadOrder", ModLoadOrder, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModTypeCheck>("ModTypeCheck", ModTypeCheck, { lifecycle: Lifecycle.Singleton });
         depContainer.register<CompareUtil>("CompareUtil", CompareUtil, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ICloner>("StructuredCloner", StructuredCloner, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ICloner>("JsonCloner", JsonCloner, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ICloner>("RecursiveCloner", RecursiveCloner, { lifecycle: Lifecycle.Singleton });
     }
 
     private static registerRouters(depContainer: DependencyContainer): void

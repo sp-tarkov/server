@@ -13,6 +13,7 @@ import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { CompareUtil } from "@spt-aki/utils/CompareUtil";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
@@ -47,6 +48,7 @@ export class ItemHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("CompareUtil") protected compareUtil: CompareUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -428,7 +430,7 @@ export class ItemHelper
      */
     public getItems(): ITemplateItem[]
     {
-        return this.jsonUtil.clone(Object.values(this.databaseServer.getTables().templates.items));
+        return this.cloner.clone(Object.values(this.databaseServer.getTables().templates.items));
     }
 
     /**
@@ -734,7 +736,7 @@ export class ItemHelper
         // return the item as is.
         if (remainingCount <= maxStackSize)
         {
-            rootAndChildren.push(this.jsonUtil.clone(itemToSplit));
+            rootAndChildren.push(this.cloner.clone(itemToSplit));
 
             return rootAndChildren;
         }
@@ -742,7 +744,7 @@ export class ItemHelper
         while (remainingCount)
         {
             const amount = Math.min(remainingCount, maxStackSize);
-            const newStackClone = this.jsonUtil.clone(itemToSplit);
+            const newStackClone = this.cloner.clone(itemToSplit);
 
             newStackClone._id = this.hashUtil.generate();
             newStackClone.upd.StackObjectsCount = amount;
@@ -775,7 +777,7 @@ export class ItemHelper
         while (remainingCount)
         {
             const amount = Math.min(remainingCount, itemMaxStackSize);
-            const newItemClone = this.jsonUtil.clone(itemToSplit);
+            const newItemClone = this.cloner.clone(itemToSplit);
 
             newItemClone._id = this.hashUtil.generate();
             newItemClone.upd.StackObjectsCount = amount;
@@ -836,7 +838,7 @@ export class ItemHelper
         fastPanel = null,
     ): Item[]
     {
-        let items = this.jsonUtil.clone(originalItems); // Deep-clone the items to avoid mutation.
+        let items = this.cloner.clone(originalItems); // Deep-clone the items to avoid mutation.
         let serialisedInventory = this.jsonUtil.serialize(items);
 
         for (const item of items)

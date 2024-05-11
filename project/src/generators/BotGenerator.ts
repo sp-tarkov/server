@@ -29,6 +29,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { BotEquipmentFilterService } from "@spt-aki/services/BotEquipmentFilterService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -57,6 +58,7 @@ export class BotGenerator
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
@@ -109,7 +111,7 @@ export class BotGenerator
         bot.Info.Settings.BotDifficulty = botGenerationDetails.botDifficulty;
 
         // Get raw json data for bot (Cloned)
-        const botJsonTemplateClone = this.jsonUtil.clone(
+        const botJsonTemplateClone = this.cloner.clone(
             this.botHelper.getBotTemplate(botGenerationDetails.isPmc ? bot.Info.Side : botGenerationDetails.role),
         );
 
@@ -124,7 +126,7 @@ export class BotGenerator
      */
     protected getCloneOfBotBase(): IBotBase
     {
-        return this.jsonUtil.clone(this.databaseServer.getTables().bots.base);
+        return this.cloner.clone(this.databaseServer.getTables().bots.base);
     }
 
     /**

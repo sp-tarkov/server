@@ -26,6 +26,7 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { PaymentService } from "@spt-aki/services/PaymentService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ObjectId } from "@spt-aki/utils/ObjectId";
@@ -53,6 +54,7 @@ export class RepeatableQuestController
         @inject("RepeatableQuestHelper") protected repeatableQuestHelper: RepeatableQuestHelper,
         @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
@@ -458,7 +460,7 @@ export class RepeatableQuestController
             );
 
             // Get cost to replace existing quest
-            changeRequirement = this.jsonUtil.clone(currentRepeatablePool.changeRequirement[changeRequest.qid]);
+            changeRequirement = this.cloner.clone(currentRepeatablePool.changeRequirement[changeRequest.qid]);
             delete currentRepeatablePool.changeRequirement[changeRequest.qid];
             // TODO: somehow we need to reduce the questPool by the currently active quests (for all repeatables)
 
@@ -490,7 +492,7 @@ export class RepeatableQuestController
             }
 
             // Found and replaced the quest in current repeatable
-            repeatableToChange = this.jsonUtil.clone(currentRepeatablePool);
+            repeatableToChange = this.cloner.clone(currentRepeatablePool);
             delete repeatableToChange.inactiveQuests;
 
             break;

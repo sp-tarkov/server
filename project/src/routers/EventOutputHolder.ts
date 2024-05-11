@@ -4,6 +4,7 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IHideoutImprovement, Productive, TraderInfo } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { ProfileChange, TraderData } from "@spt-aki/models/eft/itemEvent/IItemEventRouterBase";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -17,6 +18,7 @@ export class EventOutputHolder
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -54,7 +56,7 @@ export class EventOutputHolder
             production: {},
             improvements: {},
             skills: { Common: [], Mastering: [], Points: 0 },
-            health: this.jsonUtil.clone(pmcData.Health),
+            health: this.cloner.clone(pmcData.Health),
             traderRelations: {},
             // changedHideoutStashes: {},
             recipeUnlocked: {},
@@ -72,15 +74,15 @@ export class EventOutputHolder
         const profileChanges: ProfileChange = this.output.profileChanges[sessionId];
 
         profileChanges.experience = pmcData.Info.Experience;
-        profileChanges.health = this.jsonUtil.clone(pmcData.Health);
-        profileChanges.skills.Common = this.jsonUtil.clone(pmcData.Skills.Common); // Always send skills for Item event route response
-        profileChanges.skills.Mastering = this.jsonUtil.clone(pmcData.Skills.Mastering);
+        profileChanges.health = this.cloner.clone(pmcData.Health);
+        profileChanges.skills.Common = this.cloner.clone(pmcData.Skills.Common); // Always send skills for Item event route response
+        profileChanges.skills.Mastering = this.cloner.clone(pmcData.Skills.Mastering);
 
         // Clone productions to ensure we preseve the profile jsons data
         profileChanges.production = this.getProductionsFromProfileAndFlagComplete(
-            this.jsonUtil.clone(pmcData.Hideout.Production),
+            this.cloner.clone(pmcData.Hideout.Production),
         );
-        profileChanges.improvements = this.jsonUtil.clone(this.getImprovementsFromProfileAndFlagComplete(pmcData));
+        profileChanges.improvements = this.cloner.clone(this.getImprovementsFromProfileAndFlagComplete(pmcData));
         profileChanges.traderRelations = this.constructTraderRelations(pmcData.TradersInfo);
 
         // Fixes container craft from water collector not resetting after collection + removed completed normal crafts

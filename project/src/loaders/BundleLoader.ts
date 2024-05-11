@@ -2,6 +2,7 @@ import path from "node:path";
 import { inject, injectable } from "tsyringe";
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 import { BundleHashCacheService } from "@spt-aki/services/cache/BundleHashCacheService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";
 
@@ -31,6 +32,7 @@ export class BundleLoader
         @inject("VFS") protected vfs: VFS,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("BundleHashCacheService") protected bundleHashCacheService: BundleHashCacheService,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -51,7 +53,7 @@ export class BundleLoader
 
     public getBundle(key: string): BundleInfo
     {
-        return this.jsonUtil.clone(this.bundles[key]);
+        return this.cloner.clone(this.bundles[key]);
     }
 
     public addBundles(modpath: string): void

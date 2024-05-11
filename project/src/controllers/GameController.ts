@@ -44,6 +44,7 @@ import { ProfileActivityService } from "@spt-aki/services/ProfileActivityService
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
 import { RaidTimeAdjustmentService } from "@spt-aki/services/RaidTimeAdjustmentService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -83,6 +84,7 @@ export class GameController
         @inject("ProfileActivityService") protected profileActivityService: ProfileActivityService,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
@@ -321,7 +323,7 @@ export class GameController
                 this.logger.warning(
                     `Trader ${trader.base._id} ${trader.base.nickname} is missing a repair object, adding in default values`,
                 );
-                trader.base.repair = this.jsonUtil.clone(this.databaseServer.getTables().traders.ragfair.base.repair);
+                trader.base.repair = this.cloner.clone(this.databaseServer.getTables().traders.ragfair.base.repair);
 
                 return;
             }
@@ -331,7 +333,7 @@ export class GameController
                 this.logger.warning(
                     `Trader ${trader.base._id} ${trader.base.nickname} is missing a repair quality value, adding in default value`,
                 );
-                trader.base.repair.quality = this.jsonUtil.clone(
+                trader.base.repair.quality = this.cloner.clone(
                     this.databaseServer.getTables().traders.ragfair.base.repair.quality,
                 );
                 trader.base.repair.quality = this.databaseServer.getTables().traders.ragfair.base.repair.quality;
@@ -791,7 +793,7 @@ export class GameController
                     for (let index = indexOfWaveToSplit + 1; index < indexOfWaveToSplit + waveSize; index++)
                     {
                         // Clone wave ready to insert into array
-                        const waveToAddClone = this.jsonUtil.clone(wave);
+                        const waveToAddClone = this.cloner.clone(wave);
 
                         // Some waves have value of 0 for some reason, preserve
                         if (waveToAddClone.number !== 0)

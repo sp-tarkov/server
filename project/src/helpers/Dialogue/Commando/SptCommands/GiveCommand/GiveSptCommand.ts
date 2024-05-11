@@ -14,6 +14,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
@@ -43,6 +44,7 @@ export class GiveSptCommand implements ISptCommand
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
     }
@@ -229,7 +231,7 @@ export class GiveSptCommand implements ISptCommand
             }
             for (let i = 0; i < quantity; i++)
             {
-                let items = this.jsonUtil.clone(preset._items);
+                let items = this.cloner.clone(preset._items);
                 items = this.itemHelper.replaceIDs(items);
                 itemsToSend.push(...items);
             }

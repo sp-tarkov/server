@@ -15,6 +15,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ProfileSnapshotService } from "@spt-aki/services/ProfileSnapshotService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -37,6 +38,7 @@ export class ProfileHelper
         @inject("ProfileSnapshotService") protected profileSnapshotService: ProfileSnapshotService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);
@@ -120,8 +122,8 @@ export class ProfileHelper
         scavProfile: IPmcData,
     ): IPmcData[]
     {
-        const clonedPmc = this.jsonUtil.clone(pmcProfile);
-        const clonedScav = this.jsonUtil.clone(scavProfile);
+        const clonedPmc = this.cloner.clone(pmcProfile);
+        const clonedScav = this.cloner.clone(scavProfile);
 
         const profileSnapshot = this.profileSnapshotService.getProfileSnapshot(sessionId);
         clonedPmc.Info.Level = profileSnapshot.characters.pmc.Info.Level;

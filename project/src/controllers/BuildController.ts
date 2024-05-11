@@ -10,6 +10,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
@@ -25,6 +26,7 @@ export class BuildController
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("SaveServer") protected saveServer: SaveServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -39,7 +41,7 @@ export class BuildController
         }
 
         // Ensure the secure container in the default presets match what the player has equipped
-        const defaultEquipmentPresetsClone = this.jsonUtil.clone(
+        const defaultEquipmentPresetsClone = this.cloner.clone(
             this.databaseServer.getTables().templates.defaultEquipmentPresets,
         );
         const playerSecureContainer = profile.characters.pmc.Inventory.items?.find(x =>
@@ -63,7 +65,7 @@ export class BuildController
         }
 
         // Clone player build data from profile and append the above defaults onto end
-        const userBuildsClone = this.jsonUtil.clone(profile.userbuilds);
+        const userBuildsClone = this.cloner.clone(profile.userbuilds);
         userBuildsClone.equipmentBuilds.push(...defaultEquipmentPresetsClone);
 
         return userBuildsClone;

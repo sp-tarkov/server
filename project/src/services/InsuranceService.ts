@@ -12,7 +12,6 @@ import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgre
 import { BonusType } from "@spt-aki/models/enums/BonusType";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { Traders } from "@spt-aki/models/enums/Traders";
 import { IInsuranceConfig } from "@spt-aki/models/spt/config/IInsuranceConfig";
 import { ILostOnDeathConfig } from "@spt-aki/models/spt/config/ILostOnDeathConfig";
 import { IInsuranceEquipmentPkg } from "@spt-aki/models/spt/services/IInsuranceEquipmentPkg";
@@ -23,6 +22,7 @@ import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
@@ -52,6 +52,7 @@ export class InsuranceService
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);

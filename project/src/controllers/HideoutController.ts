@@ -48,6 +48,7 @@ import { FenceService } from "@spt-aki/services/FenceService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PlayerService } from "@spt-aki/services/PlayerService";
 import { ProfileActivityService } from "@spt-aki/services/ProfileActivityService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
@@ -83,6 +84,7 @@ export class HideoutController
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("FenceService") protected fenceService: FenceService,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
@@ -594,7 +596,7 @@ export class HideoutController
         const recipe = this.databaseServer.getTables().hideout.production.find(p => p._id === body.recipeId);
 
         // Find the actual amount of items we need to remove because body can send weird data
-        const recipeRequirementsClone = this.jsonUtil.clone(
+        const recipeRequirementsClone = this.cloner.clone(
             recipe.requirements.filter(i => i.type === "Item" || i.type === "Tool"),
         );
 

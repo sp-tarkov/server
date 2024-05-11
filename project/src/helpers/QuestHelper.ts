@@ -28,6 +28,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocaleService } from "@spt-aki/services/LocaleService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -56,6 +57,7 @@ export class QuestHelper
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
@@ -320,13 +322,13 @@ export class QuestHelper
         for (const target of targets)
         {
             // This has all the original id relations since we reset the id to the original after the splitStack
-            const itemsClone = [this.jsonUtil.clone(target)];
+            const itemsClone = [this.cloner.clone(target)];
             // Here we generate a new id for the root item
             target._id = this.hashUtil.generate();
 
             for (const mod of mods)
             {
-                itemsClone.push(this.jsonUtil.clone(mod));
+                itemsClone.push(this.cloner.clone(mod));
             }
 
             rewardItems = rewardItems.concat(this.itemHelper.reparentItemAndChildren(target, itemsClone));
@@ -691,7 +693,7 @@ export class QuestHelper
      */
     public getQuestWithOnlyLevelRequirementStartCondition(quest: IQuest): IQuest
     {
-        const updatedQuest = this.jsonUtil.clone(quest);
+        const updatedQuest = this.cloner.clone(quest);
         updatedQuest.conditions.AvailableForStart = updatedQuest.conditions.AvailableForStart.filter(q =>
             q.conditionType === "Level",
         );

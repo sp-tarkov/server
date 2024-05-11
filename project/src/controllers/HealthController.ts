@@ -15,6 +15,7 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { PaymentService } from "@spt-aki/services/PaymentService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
@@ -31,6 +32,7 @@ export class HealthController
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("HealthHelper") protected healthHelper: HealthHelper,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {}
 
@@ -215,7 +217,7 @@ export class HealthController
         }
 
         // Inform client of new post-raid, post-therapist heal values
-        output.profileChanges[sessionID].health = this.jsonUtil.clone(pmcData.Health);
+        output.profileChanges[sessionID].health = this.cloner.clone(pmcData.Health);
 
         return output;
     }

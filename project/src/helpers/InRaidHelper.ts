@@ -19,6 +19,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
+import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
@@ -45,6 +46,7 @@ export class InRaidHelper
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
+        @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
@@ -480,7 +482,7 @@ export class InRaidHelper
     public setInventory(sessionID: string, serverProfile: IPmcData, postRaidProfile: IPmcData): void
     {
         // Store insurance (as removeItem() removes insurance also)
-        const insured = this.jsonUtil.clone(serverProfile.InsuredItems);
+        const insured = this.cloner.clone(serverProfile.InsuredItems);
 
         // Remove possible equipped items from before the raid
         this.inventoryHelper.removeItem(serverProfile, serverProfile.Inventory.equipment, sessionID);
