@@ -188,12 +188,14 @@ export class GiveSptCommand implements ISptCommand
             }
         }
 
+        const localizedGlobal = this.databaseServer.getTables().locales.global[locale]
+          ?? this.databaseServer.getTables().locales.global.en;
         // If item is an item name, we need to search using that item name and the locale which one we want otherwise
         // item is just the tplId.
         const tplId = isItemName
             ? this.itemHelper.getItems()
                 .filter(i => this.isItemAllowed(i))
-                .find(i => (this.databaseServer.getTables().locales.global[locale][`${i?._id} Name`]?.toLowerCase() ?? i._props.Name) === item)._id
+                .find(i => (localizedGlobal[`${i?._id} Name`]?.toLowerCase() ?? i._props.Name) === item)._id
             : item;
 
         const checkedItem = this.itemHelper.getItem(tplId);
