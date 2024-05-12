@@ -79,9 +79,14 @@ export class HttpServer
         const sessionId = this.getCookies(req).PHPSESSID;
         this.applicationContext.addValue(ContextVariableType.SESSION_ID, sessionId);
 
+        // Extract headers for original IP detection
+        const realIp = req.headers["x-real-ip"] as string;
+        const forwardedFor = req.headers["x-forwarded-for"] as string;
+        const clientIp = realIp || (forwardedFor ? forwardedFor.split(",")[0].trim() : req.socket.remoteAddress);
+
         if (this.httpConfig.logRequests)
         {
-            const isLocalRequest = this.isLocalRequest(req.socket.remoteAddress);
+            const isLocalRequest = this.isLocalRequest(clientIp);
             if (typeof isLocalRequest !== "undefined")
             {
                 if (isLocalRequest)
@@ -91,7 +96,7 @@ export class HttpServer
                 else
                 {
                     this.logger.info(this.localisationService.getText("client_request_ip", {
-                        ip: req.socket.remoteAddress,
+                        ip: clientIp,
                         url: req.url.replaceAll("/", "\\"), // Localisation service escapes `/` into hex code `&#x2f;`
                     }));
                 }
