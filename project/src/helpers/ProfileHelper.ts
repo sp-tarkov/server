@@ -17,7 +17,6 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ProfileSnapshotService } from "@spt-aki/services/ProfileSnapshotService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 import { Watermark } from "@spt-aki/utils/Watermark";
 
@@ -28,7 +27,6 @@ export class ProfileHelper
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("Watermark") protected watermark: Watermark,
         @inject("TimeUtil") protected timeUtil: TimeUtil,

@@ -8,7 +8,6 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -17,7 +16,6 @@ export class HealthHelper
     protected healthConfig: IHealthConfig;
 
     constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,

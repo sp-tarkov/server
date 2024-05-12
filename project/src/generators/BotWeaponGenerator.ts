@@ -25,7 +25,6 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { RepairService } from "@spt-aki/services/RepairService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -37,7 +36,6 @@ export class BotWeaponGenerator
     protected repairConfig: IRepairConfig;
 
     constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,

@@ -51,7 +51,6 @@ import { ProfileActivityService } from "@spt-aki/services/ProfileActivityService
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -82,7 +81,6 @@ export class HideoutController
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileActivityService") protected profileActivityService: ProfileActivityService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )

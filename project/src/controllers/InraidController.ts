@@ -37,7 +37,6 @@ import { MailSendService } from "@spt-aki/services/MailSendService";
 import { MatchBotDetailsCacheService } from "@spt-aki/services/MatchBotDetailsCacheService";
 import { PmcChatResponseService } from "@spt-aki/services/PmcChatResponseService";
 import { TraderServicesService } from "@spt-aki/services/TraderServicesService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -58,7 +57,6 @@ export class InraidController
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PmcChatResponseService") protected pmcChatResponseService: PmcChatResponseService,

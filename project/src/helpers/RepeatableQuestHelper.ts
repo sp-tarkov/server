@@ -3,7 +3,6 @@ import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IEliminationConfig, IQuestConfig, IRepeatableQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 import { ProbabilityObject, ProbabilityObjectArray } from "@spt-aki/utils/RandomUtil";
 
@@ -14,7 +13,6 @@ export class RepeatableQuestHelper
 
     constructor(
         @inject("MathUtil") protected mathUtil: MathUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )

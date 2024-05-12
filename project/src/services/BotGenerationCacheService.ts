@@ -3,7 +3,6 @@ import { BotHelper } from "@spt-aki/helpers/BotHelper";
 import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -15,7 +14,6 @@ export class BotGenerationCacheService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotHelper") protected botHelper: BotHelper,
     )

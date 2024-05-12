@@ -5,14 +5,12 @@ import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderService
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class TraderServicesService
 {
     constructor(
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RecursiveCloner") protected cloner: ICloner,

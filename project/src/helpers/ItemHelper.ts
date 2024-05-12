@@ -1486,7 +1486,7 @@ export class ItemHelper
             );
             return;
         }
-        const ammoArray = new ProbabilityObjectArray<string>(this.mathUtil, this.jsonUtil);
+        const ammoArray = new ProbabilityObjectArray<string>(this.mathUtil, this.cloner);
         for (const icd of ammos)
         {
             // Whitelist exists and tpl not inside it, skip
@@ -1826,6 +1826,7 @@ export class ItemHelper
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace ItemHelper
 {
     export interface ItemSize

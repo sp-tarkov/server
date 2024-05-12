@@ -31,7 +31,6 @@ import { PlayerService } from "@spt-aki/services/PlayerService";
 import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -42,7 +41,6 @@ export class QuestController
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HttpResponseUtil") protected httpResponseUtil: HttpResponseUtil,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,

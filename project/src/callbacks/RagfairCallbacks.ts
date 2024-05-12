@@ -24,7 +24,6 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { RagfairServer } from "@spt-aki/servers/RagfairServer";
 import { RagfairTaxService } from "@spt-aki/services/RagfairTaxService";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 /**
  * Handle ragfair related callback events
@@ -36,7 +35,6 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
 
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("RagfairController") protected ragfairController: RagfairController,
         @inject("RagfairTaxService") protected ragfairTaxService: RagfairTaxService,

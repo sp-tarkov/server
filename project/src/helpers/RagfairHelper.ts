@@ -14,7 +14,6 @@ import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class RagfairHelper
@@ -23,7 +22,6 @@ export class RagfairHelper
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("TraderAssortHelper") protected traderAssortHelper: TraderAssortHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,

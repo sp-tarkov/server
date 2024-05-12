@@ -5,7 +5,6 @@ import { IHideoutImprovement, Productive, TraderInfo } from "@spt-aki/models/eft
 import { ProfileChange, TraderData } from "@spt-aki/models/eft/itemEvent/IItemEventRouterBase";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -15,7 +14,6 @@ export class EventOutputHolder
     protected clientActiveSessionStorage: Record<string, { clientInformed: boolean }> = {};
 
     constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("RecursiveCloner") protected cloner: ICloner,

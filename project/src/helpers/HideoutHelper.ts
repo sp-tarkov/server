@@ -26,7 +26,6 @@ import { PlayerService } from "@spt-aki/services/PlayerService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -54,7 +53,6 @@ export class HideoutHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )
     {

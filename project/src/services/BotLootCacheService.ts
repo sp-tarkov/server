@@ -10,7 +10,6 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class BotLootCacheService
@@ -19,7 +18,6 @@ export class BotLootCacheService
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PMCLootGenerator") protected pmcLootGenerator: PMCLootGenerator,

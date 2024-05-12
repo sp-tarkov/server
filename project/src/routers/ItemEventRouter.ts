@@ -7,14 +7,12 @@ import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class ItemEventRouter
 {
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @injectAll("IERouters") protected itemEventRouters: ItemEventRouterDefinition[],
         @inject("LocalisationService") protected localisationService: LocalisationService,

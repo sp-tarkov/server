@@ -14,7 +14,6 @@ import { FenceService } from "@spt-aki/services/FenceService";
 import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
 import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
 @injectable()
@@ -33,7 +32,6 @@ export class TraderController
         @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService: TraderPurchasePersisterService,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )

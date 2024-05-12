@@ -24,7 +24,6 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -42,7 +41,6 @@ export class InsuranceService
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
@@ -346,7 +344,7 @@ export class InsuranceService
     ): Item
     {
         // Get baseline item to return, clone pre raid item
-        const itemToReturnClone: Item = this.jsonUtil.clone(preRaidItem);
+        const itemToReturnClone: Item = this.cloner.clone(preRaidItem);
 
         // Add upd if it doesnt exist
         this.itemHelper.addUpdObjectToItem(itemToReturnClone);

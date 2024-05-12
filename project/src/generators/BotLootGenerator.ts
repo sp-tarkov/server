@@ -25,7 +25,6 @@ import { BotLootCacheService } from "@spt-aki/services/BotLootCacheService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 @injectable()
@@ -39,7 +38,6 @@ export class BotLootGenerator
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,

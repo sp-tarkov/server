@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { MathUtil } from "@spt-aki/utils/MathUtil";
 
 /**

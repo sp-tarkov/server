@@ -21,7 +21,6 @@ import { LocaleService } from "@spt-aki/services/LocaleService";
 import { MailSendService } from "@spt-aki/services/MailSendService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 
@@ -47,7 +46,6 @@ export class RagfairServerHelper
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("ConfigServer") protected configServer: ConfigServer,

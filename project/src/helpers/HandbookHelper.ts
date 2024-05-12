@@ -7,7 +7,6 @@ import { IItemConfig } from "@spt-aki/models/spt/config/IItemConfig";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 class LookupItem<T, I>
 {
@@ -42,7 +41,6 @@ export class HandbookHelper
 
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )

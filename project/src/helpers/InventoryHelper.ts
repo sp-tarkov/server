@@ -33,7 +33,6 @@ import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 export interface IOwnerInventoryItems
 {
@@ -52,7 +51,6 @@ export class InventoryHelper
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("FenceService") protected fenceService: FenceService,
@@ -1329,6 +1327,7 @@ export class InventoryHelper
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace InventoryHelper
 {
     export interface InventoryItemHash

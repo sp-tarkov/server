@@ -17,7 +17,6 @@ import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
 import { LocalisationService } from "@spt-aki/services/LocalisationService";
 import { RagfairLinkedItemService } from "@spt-aki/services/RagfairLinkedItemService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 
 type ItemLimit = { current: number, max: number };
@@ -30,7 +29,6 @@ export class LootGenerator
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,

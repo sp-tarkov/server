@@ -3,7 +3,6 @@ import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { ItemHelper } from "./ItemHelper";
 
 @injectable()
@@ -14,7 +13,6 @@ export class PresetHelper
     protected defaultWeaponPresets: Record<string, IPreset>;
 
     constructor(
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("RecursiveCloner") protected cloner: ICloner,

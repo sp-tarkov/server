@@ -14,7 +14,6 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
 import { ICloner } from "@spt-aki/utils/cloners/ICloner";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 
 @injectable()
 export class CustomItemService
@@ -24,7 +23,6 @@ export class CustomItemService
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ItemBaseClassService") protected itemBaseClassService: ItemBaseClassService,
