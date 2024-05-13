@@ -30,7 +30,8 @@ export class GiveSptCommand implements ISptCommand
      */
     private static commandRegex = /^spt give (((([a-z]{2,5}) )?"(.+)"|\w+) )?([0-9]+)$/;
     private static acceptableConfidence = 0.9;
-
+    // exception for flares
+    private static excludedPresetItems = new Set<string>(["62178c4d4ecf221597654e3d", "6217726288ed9f0845317459", "624c0b3340357b5f566e8766"]);
     protected savedCommand: Map<string, SavedCommand> = new Map<string, SavedCommand>();
 
     public constructor(
@@ -201,25 +202,9 @@ export class GiveSptCommand implements ISptCommand
         }
 
         const itemsToSend: Item[] = [];
-        if (
-            (this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.WEAPON)
-            || this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.ARMOR)
-            || this.itemHelper.isOfBaseclass(checkedItem[1]._id, BaseClasses.VEST))
-            && !["62178c4d4ecf221597654e3d", "6217726288ed9f0845317459", "624c0b3340357b5f566e8766"].includes(
-                checkedItem[1]._id,
-            ) // edge case for handheld flares
-        )
+        const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
+        if (preset && !GiveSptCommand.excludedPresetItems.has(checkedItem[1]._id))
         {
-            const preset = this.presetHelper.getDefaultPreset(checkedItem[1]._id);
-            if (!preset)
-            {
-                this.mailSendService.sendUserMessageToPlayer(
-                    sessionId,
-                    commandHandler,
-                    "That weapon template ID could not be found. Please refine your request and try again.",
-                );
-                return request.dialogId;
-            }
             for (let i = 0; i < quantity; i++)
             {
                 let items = this.cloner.clone(preset._items);
