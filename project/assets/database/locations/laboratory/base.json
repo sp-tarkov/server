@@ -47,6 +47,10 @@
       "BossZone": "BotZoneFloor1",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 900,
       "TriggerId": "",
       "TriggerName": ""
@@ -62,6 +66,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 300,
       "TriggerId": "",
       "TriggerName": ""
@@ -77,6 +85,10 @@
       "BossZone": "BotZoneBasement",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 450,
       "TriggerId": "autoId_00008_EXFIL",
       "TriggerName": "interactObject"
@@ -92,6 +104,10 @@
       "BossZone": "BotZoneBasement",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 800,
       "TriggerId": "autoId_00010_EXFIL",
       "TriggerName": "interactObject"
@@ -107,6 +123,10 @@
       "BossZone": "BotZoneBasement",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00007_EXFIL",
       "TriggerName": "interactObject"
@@ -122,6 +142,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00007_EXFIL",
       "TriggerName": "interactObject"
@@ -137,6 +161,10 @@
       "BossZone": "BotZoneFloor1",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 600,
       "TriggerId": "autoId_00632_EXFIL",
       "TriggerName": "interactObject"
@@ -152,6 +180,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 600,
       "TriggerId": "autoId_00632_EXFIL",
       "TriggerName": "interactObject"
@@ -167,6 +199,10 @@
       "BossZone": "BotZoneFloor1",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00012_EXFIL",
       "TriggerName": "interactObject"
@@ -182,6 +218,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00012_EXFIL",
       "TriggerName": "interactObject"
@@ -197,6 +237,10 @@
       "BossZone": "BotZoneFloor1",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 1200,
       "TriggerId": "autoId_00014_EXFIL",
       "TriggerName": "interactObject"
@@ -212,6 +256,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": 1200,
       "TriggerId": "autoId_00014_EXFIL",
       "TriggerName": "interactObject"
@@ -227,6 +275,10 @@
       "BossZone": "BotZoneFloor1",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00009_EXFIL",
       "TriggerName": "interactObject"
@@ -242,6 +294,10 @@
       "BossZone": "BotZoneFloor2",
       "Delay": 0,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00009_EXFIL",
       "TriggerName": "interactObject"
@@ -257,6 +313,10 @@
       "BossZone": "BotZoneGate2",
       "Delay": 8,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00014_EXFIL",
       "TriggerName": "interactObject"
@@ -272,6 +332,10 @@
       "BossZone": "BotZoneGate1",
       "Delay": 8,
       "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
       "Time": -1,
       "TriggerId": "autoId_00632_EXFIL",
       "TriggerName": "interactObject"
@@ -296,6 +360,7 @@
   "BotMarksman": 0,
   "BotMax": 14,
   "BotMaxPlayer": 14,
+  "BotMaxPvE": 25,
   "BotMaxTimePlayer": 1000,
   "BotNormal": 30,
   "BotSpawnCountStep": 3,
@@ -314,9 +379,11 @@
   "Enabled": true,
   "EscapeTimeLimit": 35,
   "EscapeTimeLimitCoop": 30,
+  "EscapeTimeLimitPVE": 25,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.65,
+  "GlobalLootChanceModifier": 0.77,
+  "GlobalLootChanceModifierPvE": 1,
   "IconX": 700,
   "IconY": 800,
   "Id": "laboratory",

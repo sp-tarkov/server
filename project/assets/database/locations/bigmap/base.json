@@ -150,7 +150,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 15,
+      "BossChance": 20,
       "BossDifficult": "normal",
       "BossEscortAmount": "4",
       "BossEscortDifficult": "normal",
@@ -166,7 +166,7 @@
         "regular",
         "pve"
       ],
-      "Supports": [],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -230,9 +230,10 @@
   "Enabled": true,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 25,
+  "EscapeTimeLimitPVE": 26,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.8,
+  "GlobalLootChanceModifier": 0.9,
   "GlobalLootChanceModifierPvE": 1,
   "IconX": 550,
   "IconY": 460,
@@ -8166,7 +8167,7 @@
       ]
     }
   ],
-  "UnixDateTime": 1707142711,
+  "UnixDateTime": 1636382469,
   "_Id": "56f40101d2720b2a4d8b45d6",
   "doors": [],
   "exit_access_time": 60,
