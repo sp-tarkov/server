@@ -129,15 +129,6 @@ export class GiveSptCommand implements ISptCommand
                 try
                 {
                     locale = result[4] ? result[4] : this.localeService.getDesiredGameLocale() ?? "en";
-                    if (!this.localeService.getServerSupportedLocales().includes(locale))
-                    {
-                        this.mailSendService.sendUserMessageToPlayer(
-                            sessionId,
-                            commandHandler,
-                            `Unknown locale "${locale}". Use \"help\" for more information.`,
-                        );
-                        return request.dialogId;
-                    }
                 }
                 catch (e)
                 {

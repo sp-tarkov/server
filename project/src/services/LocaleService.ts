@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ILocaleConfig } from "@spt-aki/models/spt/config/ILocaleConfig";
+import { ILocaleBase } from "@spt-aki/models/spt/server/ILocaleBase";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -12,6 +13,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 export class LocaleService
 {
     protected localeConfig: ILocaleConfig;
+    protected localesTable: ILocaleBase;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -20,6 +22,7 @@ export class LocaleService
     )
     {
         this.localeConfig = this.configServer.getConfig(ConfigTypes.LOCALE);
+        this.localesTable = this.databaseServer.getTables().locales;
     }
 
     /**
@@ -28,7 +31,7 @@ export class LocaleService
      */
     public getLocaleDb(): Record<string, string>
     {
-        const desiredLocale = this.databaseServer.getTables().locales.global[this.getDesiredGameLocale()];
+        const desiredLocale = this.localesTable.global[this.getDesiredGameLocale()];
         if (desiredLocale)
         {
             return desiredLocale;
@@ -38,7 +41,7 @@ export class LocaleService
             `Unable to find desired locale file using locale: ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
         );
 
-        return this.databaseServer.getTables().locales.global.en;
+        return this.localesTable.global.en;
     }
 
     /**
@@ -95,29 +98,30 @@ export class LocaleService
      */
     protected getPlatformForServerLocale(): string
     {
-        const platformLocale = new Intl.Locale(Intl.DateTimeFormat().resolvedOptions().locale);
+        const platformLocale = this.getPlatformLocale();
         if (!platformLocale)
         {
-            this.logger.warning("System langauge could not be found, falling back to english");
+            this.logger.warning("System language could not be found, falling back to english");
 
             return "en";
         }
 
-        const localeCode = platformLocale.baseName.toLowerCase();
-        if (!this.localeConfig.serverSupportedLocales.includes(localeCode))
+        const baseNameCode = platformLocale.baseName.toLowerCase();
+        if (!this.localeConfig.serverSupportedLocales.includes(baseNameCode))
         {
             // Chek if base language (e.g. CN / EN / DE) exists
-            if (this.localeConfig.serverSupportedLocales.includes(platformLocale.language))
+            const languageCode = platformLocale.language.toLocaleLowerCase();
+            if (this.localeConfig.serverSupportedLocales.includes(languageCode))
             {
-                return platformLocale.language;
+                return languageCode;
             }
 
-            this.logger.warning(`Unsupported system langauge found: ${localeCode}, falling back to english`);
+            this.logger.warning(`Unsupported system language found: ${baseNameCode}, falling back to english`);
 
             return "en";
         }
 
-        return localeCode;
+        return baseNameCode;
     }
 
     /**
@@ -126,26 +130,29 @@ export class LocaleService
      */
     protected getPlatformForClientLocale(): string
     {
-        const platformLocale = new Intl.Locale(Intl.DateTimeFormat().resolvedOptions().locale);
+        const platformLocale = this.getPlatformLocale();
         if (!platformLocale)
         {
-            this.logger.warning("System langauge could not be found, falling back to english");
-
+            this.logger.warning("System language could not be found, falling back to english");
             return "en";
         }
 
-        const langaugeCode = platformLocale.language.toLowerCase();
-        if (!this.localeConfig.serverSupportedLocales.includes(langaugeCode))
+        const baseNameCode = platformLocale.baseName?.toLocaleLowerCase();
+        if (baseNameCode && this.localesTable.global[baseNameCode])
         {
-            this.logger.warning(`Unsupported system langauge found: ${langaugeCode}, falling back to english`);
-
-            return "en";
+            return baseNameCode;
         }
 
-        // BSG map Czech to CZ for some reason
-        if (platformLocale.language === "cs")
+        const languageCode = platformLocale.language?.toLowerCase();
+        if (languageCode && this.localesTable.global[languageCode])
         {
-            return "cz";
+            return languageCode;
+        }
+
+        const regionCode = platformLocale.region?.toLocaleLowerCase();
+        if (regionCode && this.localesTable.global[regionCode])
+        {
+            return regionCode;
         }
 
         // BSG map DE to GE some reason
@@ -154,6 +161,16 @@ export class LocaleService
             return "ge";
         }
 
-        return langaugeCode;
+        this.logger.warning(`Unsupported system language found: ${languageCode}, falling back to english`);
+        return "en";
+    }
+
+    /**
+     * This is in a function so we can overwrite it during testing
+     * @returns The current platform locale
+     */
+    protected getPlatformLocale(): Intl.Locale
+    {
+        return new Intl.Locale(Intl.DateTimeFormat().resolvedOptions().locale);
     }
 }
