@@ -358,7 +358,7 @@ export interface Props
     casingSounds?: string
     ProjectileCount?: number
     PenetrationChanceObstacle?: number
-    PenetrationDamageMod: number
+    PenetrationDamageMod?: number
     RicochetChance?: number
     FragmentationChance?: number
     Deterioration?: number

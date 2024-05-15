@@ -101,7 +101,7 @@ export class HandbookHelper
 
     /**
      * Get price from internal cache, if cache empty look up price directly in handbook (expensive)
-     * If no values found, return 1
+     * If no values found, return 0
      * @param tpl item tpl to look up price for
      * @returns price in roubles
      */
@@ -127,6 +127,7 @@ export class HandbookHelper
             return newValue;
         }
 
+        this.handbookPriceCache.items.byId.set(tpl, handbookItem.Price);
         return handbookItem.Price;
     }
 

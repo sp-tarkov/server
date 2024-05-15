@@ -27,8 +27,6 @@ import { RandomUtil } from "@spt-aki/utils/RandomUtil";
 export class RagfairPriceService implements OnLoad
 {
     protected ragfairConfig: IRagfairConfig;
-    protected generatedDynamicPrices: boolean;
-    protected generatedStaticPrices: boolean;
 
     protected prices: IRagfairServerPrices = { static: {}, dynamic: {} };
 
@@ -52,15 +50,8 @@ export class RagfairPriceService implements OnLoad
      */
     public async onLoad(): Promise<void>
     {
-        if (!this.generatedStaticPrices)
-        {
-            this.generateStaticPrices();
-        }
-
-        if (!this.generatedDynamicPrices)
-        {
-            this.generateDynamicPrices();
-        }
+        this.refreshStaticPrices();
+        this.refreshDynamicPrices();
     }
 
     public getRoute(): string
@@ -71,7 +62,7 @@ export class RagfairPriceService implements OnLoad
     /**
      * Iterate over all items of type "Item" in db and get template price, store in cache
      */
-    public generateStaticPrices(): void
+    public refreshStaticPrices(): void
     {
         for (
             const item of Object.values(this.databaseServer.getTables().templates.items).filter(x =>
@@ -81,18 +72,15 @@ export class RagfairPriceService implements OnLoad
         {
             this.prices.static[item._id] = Math.round(this.handbookHelper.getTemplatePrice(item._id));
         }
-
-        this.generatedStaticPrices = true;
     }
 
     /**
-     * Create a dictionary and store prices from prices.json in it
+     * Copy the prices.json data into our dynamic price dictionary
      */
-    public generateDynamicPrices(): void
+    public refreshDynamicPrices(): void
     {
-        Object.assign(this.prices.dynamic, this.databaseServer.getTables().templates.prices);
-
-        this.generatedDynamicPrices = true;
+        const pricesTable = this.databaseServer.getTables().templates.prices;
+        this.prices.dynamic = { ...this.prices.dynamic, ...pricesTable };
     }
 
     /**
@@ -142,15 +130,15 @@ export class RagfairPriceService implements OnLoad
 
     /**
      * get the dynamic (flea) price for an item
-     * Grabs prices from prices.json and stores in class if none currently exist
      * @param itemTpl item template id to look up
      * @returns price in roubles
      */
     public getDynamicPriceForItem(itemTpl: string): number
     {
-        if (!this.generatedDynamicPrices)
+        // If the price doesn't exist in the cache yet, try to find it
+        if (!this.prices.dynamic[itemTpl])
         {
-            this.generateDynamicPrices();
+            this.prices.dynamic[itemTpl] = this.databaseServer.getTables().templates.prices[itemTpl];
         }
 
         return this.prices.dynamic[itemTpl];
@@ -163,9 +151,15 @@ export class RagfairPriceService implements OnLoad
      */
     public getStaticPriceForItem(itemTpl: string): number
     {
-        if (!this.generatedStaticPrices)
+        // If the price doesn't exist in the cache yet, try to find it
+        if (!this.prices.static[itemTpl])
         {
-            this.generateStaticPrices();
+            // Store the price in the cache only if it exists
+            const itemPrice = Math.round(this.handbookHelper.getTemplatePrice(itemTpl));
+            if (itemPrice !== 0)
+            {
+                this.prices.static[itemTpl] = itemPrice;
+            }
         }
 
         return this.prices.static[itemTpl];
@@ -173,10 +167,15 @@ export class RagfairPriceService implements OnLoad
 
     /**
      * Get prices for all items on flea, prioritize handbook prices first, use prices from prices.json if missing
+     * This will refresh the caches prior to building the output
      * @returns Dictionary of item tpls and rouble cost
      */
     public getAllFleaPrices(): Record<string, number>
     {
+        // Refresh the caches so we include any newly added custom items
+        this.refreshDynamicPrices();
+        this.refreshStaticPrices();
+
         // assign dynamic (prices.json) values first, then overwrite them with static (handbook.json)
         // any values not stored in static data will be covered by dynamic data
         return { ...this.prices.dynamic, ...this.prices.static };
@@ -184,6 +183,9 @@ export class RagfairPriceService implements OnLoad
 
     public getAllStaticPrices(): Record<string, number>
     {
+        // Refresh the cache so we include any newly added custom items
+        this.refreshStaticPrices();
+
         return { ...this.prices.static };
     }
 
@@ -209,7 +211,7 @@ export class RagfairPriceService implements OnLoad
 
         for (const item of barterScheme)
         {
-            price += this.prices.static[item._tpl] * item.count;
+            price += this.getStaticPriceForItem(item._tpl) * item.count;
         }
 
         return Math.round(price);
