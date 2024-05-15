@@ -18,6 +18,7 @@ project/src/__coverage__/
 ## visual studio
 .vs
 .idea
+.vscode
 slnx.sqlite
 slnx-journal.sqlite
 

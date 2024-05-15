@@ -1,0 +1,9 @@
+**/.git
+**/.pkg-cache
+**/.vscode
+**/build
+**/node_modules
+**/types
+**/tests/__cache__
+**/tests/__coverage__
+.editorconfig

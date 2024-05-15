@@ -6,16 +6,16 @@ This is the Server project for the Single Player Tarkov mod for Escape From Tark
 
 - [Features](#features)
 - [Installation](#installation)
-	- [Requirements](#requirements)
-	- [Initial Setup](#initial-setup)
+  - [Requirements](#requirements)
+  - [Initial Setup](#initial-setup)
 - [Development](#development)
-	- [Commands](#commands)
-	- [Debugging](#debugging)
-	- [Mod Debugging](#mod-debugging)
+  - [Commands](#commands)
+  - [Debugging](#debugging)
+  - [Mod Debugging](#mod-debugging)
 - [Contributing](#contributing)
-	- [Branches](#branchs)
-	- [Pull Request Guidelines](#pull-request-guidelines)
-	- [Tests](#tests)
+  - [Branches](#branchs)
+  - [Pull Request Guidelines](#pull-request-guidelines)
+  - [Tests](#tests)
 - [License](#license)
 
 ## Features
@@ -31,10 +31,11 @@ This project has been built in [Visual Studio Code](https://code.visualstudio.co
 There are a number of VSC extensions that we recommended for this project. VSC will prompt you to install these when you open the workspace file. If you do not see the prompt, you can install them manually:
 
 - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) - Editor Settings Synchronization
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting for Coding Issues & Naming Conventions
 - [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer) - Debugging Tests
 - [SPT ID Highlighter](https://marketplace.visualstudio.com/items?itemName=refringe.spt-id-highlighter) - Converts IDs to Names
-
+- [Format Code Action](https://marketplace.visualstudio.com/items?itemName=rohit-gohri.format-code-action) - Custom Format-on-save Actions
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code Formatting
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - Linting for Coding Issues & Naming Conventions
 
 ### Initial Setup
 
@@ -42,9 +43,9 @@ To prepare the project for development you will need to:
 
 1. Run `git clone https://dev.sp-tarkov.com/SPT-AKI/Server.git server` to clone the repository.
 2. Run `git lfs pull` to download LFS files locally.
-2. Open the `project/mod.code-workspace` file in Visual Studio Code (VSC).
-3. Run `nvm use 20.11.1` in the VSC terminal.
-4. Run `npm install` in the VSC terminal.
+3. Open the `project/mod.code-workspace` file in Visual Studio Code (VSC).
+4. Run `nvm use 20.11.1` in the VSC terminal.
+5. Run `npm install` in the VSC terminal.
 
 ## Development
 
@@ -52,24 +53,27 @@ To prepare the project for development you will need to:
 
 The following commands are available after the initial setup. Run them with `npm run <command>`.
 
-| Command                  | Description                                                           |
-|--------------------------|-----------------------------------------------------------------------|
-| `check:circular`         | Check for circular dependencies in the project.                       |
-| `lint`                   | Check the project for coding standards and style/formatting issues.   |
-| `lint:fix`               | Automatically fix coding standard issues and style/formatting issues. |
-| `test`                   | Run all tests.                                                        |
-| `test:watch`             | Run tests in watch mode. Tests will re-run when files are changed.    |
-| `test:coverage`          | Run tests and generate a coverage report.                             |
-| `test:ui`                | Run tests in UI mode. This will open a browser window to view tests.  |
-| `build:release`          | Build the project for release.                                        |
-| `build:debug`            | Build the project for debugging.                                      |
-| `build:bleeding`         | Build the project on the bleeding edge.                               |
-| `build:bleedingmods`     | Build the project on the bleeding edge with mods.                     |
-| `run:build`              | Run the project in build mode.                                        |
-| `run:debug`              | Run the project in debug mode.                                        |
-| `run:profiler`           | Run the project in profiler mode.                                     |
-| `gen:types`              | Generate types for the project.                                       |
-| `gen:docs`               | Generate documentation for the project.                               |
+| Command              | Description                                                                   |
+| -------------------- | ----------------------------------------------------------------------------- |
+| `check:circular`     | Check for circular dependencies in the project.                               |
+| `lint`               | Check the project for coding standards and post-Prettier formatting issues.   |
+| `lint:fix`           | Automatically fix coding standard issues and post-Prettier formatting issues. |
+| `style`              | Check the project for coding standards and post-Prettier formatting issues.   |
+| `style:fix`          | Automatically fix coding standard issues and post-Prettier formatting issues. |
+| `format`             | Run Prettier and then ESLint Stylistic to fix code formatting.                |
+| `test`               | Run all tests.                                                                |
+| `test:watch`         | Run tests in watch mode. Tests will re-run when files are changed.            |
+| `test:coverage`      | Run tests and generate a coverage report.                                     |
+| `test:ui`            | Run tests in UI mode. This will open a browser window to view tests.          |
+| `build:release`      | Build the project for release.                                                |
+| `build:debug`        | Build the project for debugging.                                              |
+| `build:bleeding`     | Build the project on the bleeding edge.                                       |
+| `build:bleedingmods` | Build the project on the bleeding edge with mods.                             |
+| `run:build`          | Run the project in build mode.                                                |
+| `run:debug`          | Run the project in debug mode.                                                |
+| `run:profiler`       | Run the project in profiler mode.                                             |
+| `gen:types`          | Generate types for the project.                                               |
+| `gen:docs`           | Generate documentation for the project.                                       |
 
 ### Debugging
 
@@ -85,29 +89,29 @@ We're really excited that you're interested in contributing! Before submitting y
 
 ### Branchs
 
-- __master__  
+- **master**  
   The default branch used for the latest stable release. This branch is protected and typically is only merges with release branches.
-- __3.9.0-DEV__  
+- **3.9.0-DEV**  
   Development for the next minor release of SPT. Minor releases target the latest version of EFT. Late in the minor release cycle the EFT version is frozen for stability to prepare for release. Larger changes to the project structure may be included in minor releases.
-- __3.8.1-DEV__  
+- **3.8.4-DEV**  
   Development for the next hotfix release of SPT. Hotfix releases include bug fixes and minor features that do not effect the coding structure of the project. Special care is taken to not break server mod stability. These always target the same version of EFT as the last minor release.
 
 ### Pull Request Guidelines
 
-- __Keep Them Small__  
+- **Keep Them Small**  
   If you're fixing a bug, try to keep the changes to the bug fix only. If you're adding a feature, try to keep the changes to the feature only. This will make it easier to review and merge your changes.
-- __Perform a Self-Review__  
+- **Perform a Self-Review**  
   Before submitting your changes, review your own code. This will help you catch any mistakes you may have made.
-- __Remove Noise__  
+- **Remove Noise**  
   Remove any unnecessary changes to white space, code style formatting, or some text change that has no impact related to the intention of the PR.
-- __Create a Meaningful Title__  
+- **Create a Meaningful Title**  
   When creating a PR, make sure the title is meaningful and describes the changes you've made.
-- __Write Detailed Commit Messages__  
+- **Write Detailed Commit Messages**  
   Bring out your table manners, speak the Queen's English and be on your best behaviour.
 
 ### Style Guide
 
-We use ESLint Stylistic to enforce a consistent code style. Please run `npm run lint` and/or `npm run lint:fix` before submitting your changes. This is made easier by using the recommended VSC extensions to automatically format your code whenever you save a file.
+We use a combination of Prettier and ESLint Stylistic to enforce a consistent code style. Please run `npm run format` before submitting your changes. This is made easier by using the recommended VSC extensions to automatically format your code whenever you save a file.
 
 ### Tests
 

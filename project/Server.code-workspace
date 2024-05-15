@@ -1,17 +1,52 @@
 {
     "folders": [
         {
-            "path": "."
-        }
+            "path": ".",
+        },
     ],
     "settings": {
         "window.title": "SPT-AKI Server",
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-        "editor.codeActionsOnSave": {
-            "source.fixAll.eslint": "explicit"
-        },
-        "eslint.debug": true,
-        "eslint.experimental.useFlatConfig": false
-    }
+        "editor.formatOnSave": false, // We use an extension to format on save.
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+        "eslint.debug": false,
+        "eslint.experimental.useFlatConfig": false,
+    },
+    "extensions": {
+        "recommendations": [
+            "EditorConfig.EditorConfig", // EditorConfig file format support.
+            "vitest.explorer", // ViTest test runner.
+            "refringe.spt-id-highlighter", // Highly SPT IDs.
+            "rohit-gohri.format-code-action", // Custom format on save actions.
+            "esbenp.prettier-vscode", // Prettier code formatter.
+            "dbaeumer.vscode-eslint", // ESLint code linter and formatter.
+        ],
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Debug",
+                "type": "node",
+                "runtimeVersion": "20.11.1",
+                "runtimeExecutable": "npm",
+                "request": "launch",
+                "sourceMaps": true,
+                "runtimeArgs": ["run", "run:debug"],
+                "outFiles": ["!**/node_modules/**"],
+                "cwd": "${workspaceFolder}",
+                "outputCapture": "std",
+            },
+            {
+                "name": "Run Vitest Tests",
+                "type": "node",
+                "runtimeVersion": "20.11.1",
+                "runtimeExecutable": "npm",
+                "request": "launch",
+                "runtimeArgs": ["run", "test"],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen",
+            },
+        ],
+    },
 }
