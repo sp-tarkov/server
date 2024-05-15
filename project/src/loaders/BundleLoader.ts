@@ -43,15 +43,16 @@ export class BundleLoader
 
         for (const bundle in this.bundles)
         {
-            result.push(this.getBundle(bundle));
+            result.push(this.getBundle(bundle)!);
         }
 
         return result;
     }
 
-    public getBundle(key: string): BundleInfo
+    public getBundle(key: string): BundleInfo | undefined
     {
-        return this.jsonUtil.clone(this.bundles[key]);
+        const bundle = this.bundles[key];
+        return !!bundle ? this.jsonUtil.clone(bundle) : undefined;
     }
 
     public addBundles(modpath: string): void

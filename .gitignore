@@ -22,11 +22,14 @@ slnx.sqlite
 slnx-journal.sqlite
 
 ## nodejs
-package-lock.json
 node_modules
-node.exe
-pnpm-lock.yaml
-yarn.lock
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 ## windows
 desktop.ini

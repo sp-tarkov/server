@@ -1,20 +1,25 @@
-FROM node:16-buster AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json .
-RUN yarn
+RUN apk add --no-cache libc6-compat git
 
-COPY tsconfig.json tsconfig.base.json ./
-COPY src ./src
-RUN yarn test:comp-linux
+COPY package.json .yarnrc.yml yarn.lock ./
+RUN corepack enable
+RUN yarn install
+
+COPY . .
+RUN yarn build:docker
 
 ##############################################
 
-FROM debian:buster
+FROM node:20-alpine AS target
 
-COPY --from=builder /app/bundle /bin/Aki-server
+WORKDIR /app/build
+COPY --from=builder /app/node_modules /app/build/node_modules
+COPY --from=builder /app/build /app/build
 
 EXPOSE 6969
 
-CMD ["/bin/Aki-server"]
+VOLUME "/app/build/user"
+ENTRYPOINT ["node", "/app/build/obj/ide/ReleaseEntry.js"]

@@ -22,6 +22,7 @@
         "build:debug": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:debug",
         "build:bleeding": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleeding",
         "build:bleedingmods": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleedingmods",
+        "build:docker": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:docker",
         "run:build": "gulp run:build",
         "run:debug": "gulp run:debug",
         "run:profiler": "gulp run:profiler",
@@ -89,5 +90,6 @@
         "default": {
             "includeNodeModules": true
         }
-    }
+    },
+    "packageManager": "yarn@4.2.2"
 }

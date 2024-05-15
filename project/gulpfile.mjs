@@ -157,6 +157,37 @@ const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.tx
 /**
  * Writes the latest build data to the core.json and build.json configuration files.
  */
+const dockerWriteBuildDataToJSON = async () =>
+{
+    try
+    {
+        // Update core.json
+        const coreJSONPath = path.resolve(dataDir, "configs", "core.json");
+        const coreJSON = await fs.readFile(coreJSONPath, "utf8");
+        const coreParsed = JSON.parse(coreJSON);
+
+        coreParsed.commit = process.env.CI_GIT_COMMIT_ID || "docker";
+        coreParsed.buildTime = new Date().getTime();
+        await fs.writeFile(coreJSONPath, JSON.stringify(coreParsed, null, 4));
+
+        // Write build.json
+        const buildJsonPath = path.join("obj", "ide", "build.json");
+        const buildInfo = {};
+
+        buildInfo.commit = coreParsed.commit;
+        buildInfo.buildTime = coreParsed.buildTime;
+        buildInfo.akiVersion = coreParsed.akiVersion;
+        await fs.writeFile(buildJsonPath, JSON.stringify(buildInfo, null, 4));
+    }
+    catch (error)
+    {
+        throw new Error(`Failed to write build data to core.json: ${error.message}`);
+    }
+};
+
+/**
+ * Writes the latest build data to the core.json and build.json configuration files.
+ */
 const writeBuildDataToJSON = async () =>
 {
     try
@@ -184,7 +215,7 @@ const writeBuildDataToJSON = async () =>
     }
     catch (error)
     {
-        throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
+        throw new Error(`Failed to write build data to core.json: ${error.message}`);
     }
 };
 
@@ -312,6 +343,18 @@ const loadRecursiveAsync = async (filepath) =>
 // Main Tasks Generation
 const build = (packagingType) =>
 {
+    if (packagingType === 'docker') {
+        return gulp.series([
+            cleanBuild,
+            validateJSONs,
+            compile,
+            copyAssets,
+            dockerWriteBuildDataToJSON,
+            createHashFile,
+            dockerPackaging
+        ]);
+    }
+
     const anonPackaging = () => packaging(entries[packagingType]);
     anonPackaging.displayName = `packaging-${packagingType}`;
     const tasks = [
@@ -326,6 +369,11 @@ const build = (packagingType) =>
     ];
     return gulp.series(tasks);
 };
+
+const dockerPackaging = async () => {
+    await fs.rename('obj', 'build/obj');
+    await fs.copy('package.json', 'build/package.json');
+}
 
 // Packaging Arguments
 const packaging = async (entry) =>
@@ -356,6 +404,7 @@ gulp.task("build:debug", build("debug"));
 gulp.task("build:release", build("release"));
 gulp.task("build:bleeding", build("bleeding"));
 gulp.task("build:bleedingmods", build("bleedingmods"));
+gulp.task("build:docker", build("docker"));
 
 gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: buildDir }));
 gulp.task(

@@ -19,14 +19,18 @@ export class BundleSerializer extends Serializer
 
     public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void
     {
-        const key = decodeURI(req.url.split("/bundle/")[1]);
+        this.logger.info(`[BUNDLE]: ${req.url}`);
+
+        const key = decodeURIComponent(req.url.split("/bundle/")[1]);
         const bundle = this.bundleLoader.getBundle(key);
+
         if (!bundle)
         {
+            this.logger.error(`[BUNDLE NOT FOUND]: ${req.url}`);
+            resp.writeHead(404, "NOT FOUND");
+            resp.end("Bundle not found");
             return;
         }
-
-        this.logger.info(`[BUNDLE]: ${req.url}`);
 
         this.httpFileUtil.sendFile(resp, `${bundle.modpath}/bundles/${bundle.filename}`);
     }
