@@ -7,3 +7,4 @@
 **/tests/__cache__
 **/tests/__coverage__
 .editorconfig
+src/services/ModCompilerService.ts
