@@ -1,8 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { INotification, NotificationType } from "@spt-aki/models/eft/notifier/INotifier";
 import { Dialogue, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IWsChatMessageReceived } from "@spt-aki/models/eft/ws/IWsChatMessageReceived";
+import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { WebSocketServer } from "@spt-aki/servers/WebSocketServer";
 import { NotificationService } from "@spt-aki/services/NotificationService";
@@ -24,7 +26,7 @@ export class NotificationSendHelper
      * @param sessionID
      * @param notificationMessage
      */
-    public sendMessage(sessionID: string, notificationMessage: INotification): void
+    public sendMessage(sessionID: string, notificationMessage: IWsNotificationEvent): void
     {
         if (this.webSocketServer.isConnectionWebSocket(sessionID))
         {
@@ -65,8 +67,8 @@ export class NotificationSendHelper
         };
         dialog.messages.push(message);
 
-        const notification: INotification = {
-            type: NotificationType.NEW_MESSAGE,
+        const notification: IWsChatMessageReceived = {
+            type: NotificationEventType.CHAT_MESSAGE_RECEIVED,
             eventId: message._id,
             dialogId: message.uid,
             message: message,

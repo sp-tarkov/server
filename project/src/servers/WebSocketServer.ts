@@ -3,8 +3,9 @@ import { inject, injectable } from "tsyringe";
 import WebSocket from "ws";
 import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { INotification, NotificationType } from "@spt-aki/models/eft/notifier/INotifier";
+import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
 import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
@@ -29,7 +30,7 @@ export class WebSocketServer
     }
 
     protected httpConfig: IHttpConfig;
-    protected defaultNotification: INotification = { type: NotificationType.PING, eventId: "ping" };
+    protected defaultNotification: IWsNotificationEvent = { type: NotificationEventType.PING, eventId: "ping" };
 
     protected webSocketServer: WebSocket.Server;
     protected webSockets: Record<string, WebSocket.WebSocket> = {};
@@ -62,7 +63,7 @@ export class WebSocketServer
         this.webSocketServer.addListener("connection", this.wsOnConnection.bind(this));
     }
 
-    public sendMessage(sessionID: string, output: INotification): void
+    public sendMessage(sessionID: string, output: IWsNotificationEvent): void
     {
         try
         {

@@ -4,10 +4,10 @@ import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { IAcceptGroupInviteResponse } from "@spt-aki/models/eft/match/IAcceptGroupInviteResponse";
-import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
-import { IGroupCurrentResponse } from "@spt-aki/models/eft/match/IGroupCurrentResponse";
-import { IJoinMatchResult } from "@spt-aki/models/eft/match/IJoinMatchResult";
+import { IGroupCharacter } from "@spt-aki/models/eft/match/IGroupCharacter";
+import { IMatchGroupCurrentResponse } from "@spt-aki/models/eft/match/IMatchGroupCurrentResponse";
+import { IMatchGroupStatusResponse } from "@spt-aki/models/eft/match/IMatchGroupStatusResponse";
+import { IProfileStatusResponse } from "@spt-aki/models/eft/match/IProfileStatusResponse";
 
 @injectable()
 export class MatchStaticRouter extends StaticRouter
@@ -41,7 +41,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
+                ): Promise<IGetBodyResponseData<IProfileStatusResponse>> =>
                 {
                     return this.matchCallbacks.joinMatch(url, info, sessionID);
                 },
@@ -84,7 +84,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IGetGroupStatusResponse>> =>
+                ): Promise<IGetBodyResponseData<IMatchGroupStatusResponse>> =>
                 {
                     return this.matchCallbacks.getGroupStatus(url, info, sessionID);
                 },
@@ -96,7 +96,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
+                ): Promise<IGetBodyResponseData<IProfileStatusResponse>> =>
                 {
                     return this.matchCallbacks.joinMatch(url, info, sessionID);
                 },
@@ -115,7 +115,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: IEmptyRequestData,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IGroupCurrentResponse>> =>
+                ): Promise<IGetBodyResponseData<IMatchGroupCurrentResponse>> =>
                 {
                     return this.matchCallbacks.groupCurrent(url, info, sessionID);
                 },
@@ -153,7 +153,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IAcceptGroupInviteResponse[]>> =>
+                ): Promise<IGetBodyResponseData<IGroupCharacter[]>> =>
                 {
                     return this.matchCallbacks.acceptGroupInvite(url, info, sessionID);
                 },

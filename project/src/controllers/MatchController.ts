@@ -7,11 +7,11 @@ import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { IEndOfflineRaidRequestData } from "@spt-aki/models/eft/match/IEndOfflineRaidRequestData";
-import { IGetGroupStatusRequestData } from "@spt-aki/models/eft/match/IGetGroupStatusRequestData";
-import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
 import { IGetRaidConfigurationRequestData } from "@spt-aki/models/eft/match/IGetRaidConfigurationRequestData";
-import { IJoinMatchRequestData } from "@spt-aki/models/eft/match/IJoinMatchRequestData";
-import { IJoinMatchResult } from "@spt-aki/models/eft/match/IJoinMatchResult";
+import { IMatchGroupStartGameRequest } from "@spt-aki/models/eft/match/IMatchGroupStartGameRequest";
+import { IMatchGroupStatusRequest } from "@spt-aki/models/eft/match/IMatchGroupStatusRequest";
+import { IMatchGroupStatusResponse } from "@spt-aki/models/eft/match/IMatchGroupStatusResponse";
+import { IProfileStatusResponse } from "@spt-aki/models/eft/match/IProfileStatusResponse";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { Traders } from "@spt-aki/models/enums/Traders";
@@ -76,9 +76,9 @@ export class MatchController
 
     /** Handle match/group/start_game */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public joinMatch(info: IJoinMatchRequestData, sessionId: string): IJoinMatchResult
+    public joinMatch(info: IMatchGroupStartGameRequest, sessionId: string): IProfileStatusResponse
     {
-        const output: IJoinMatchResult = { maxPveCountExceeded: false, profiles: [] };
+        const output: IProfileStatusResponse = { maxPveCountExceeded: false, profiles: [] };
 
         // get list of players joining into the match
         output.profiles.push({
@@ -92,7 +92,7 @@ export class MatchController
             location: "TODO get location",
             raidMode: "Online",
             mode: "deathmatch",
-            shortid: null,
+            shortId: null,
             // eslint-disable-next-line @typescript-eslint/naming-convention
             additional_info: null,
         });
@@ -102,7 +102,7 @@ export class MatchController
 
     /** Handle client/match/group/status */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getGroupStatus(info: IGetGroupStatusRequestData): IGetGroupStatusResponse
+    public getGroupStatus(info: IMatchGroupStatusRequest): IMatchGroupStatusResponse
     {
         return { players: [], maxPveCountExceeded: false };
     }
