@@ -6,7 +6,7 @@
         "plugin:import/typescript",
         "prettier"
     ],
-    "plugins": ["@typescript-eslint", "@stylistic", "import", "unused-imports"],
+    "plugins": ["@typescript-eslint", "@stylistic", "import", "unused-imports", "switch-allman"],
     "settings": {
         "import/resolver": {
             "typescript": {
@@ -98,7 +98,8 @@
                 }
             }
         ],
-        "unused-imports/no-unused-imports-ts": "error"
+        "unused-imports/no-unused-imports-ts": "error",
+        "switch-allman/case-allman": "error"
     },
     "overrides": [
         {
