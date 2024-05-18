@@ -403,7 +403,7 @@ export class InventoryController
     {
         // During post-raid scav transfer, the swap may be in the scav inventory
         let playerData = pmcData;
-        if (request.fromOwner && request.fromOwner.type === "Profile" && request.fromOwner.id !== playerData._id)
+        if (request.fromOwner?.type === "Profile" && request.fromOwner.id !== playerData._id)
         {
             playerData = this.profileHelper.getScavProfile(sessionID);
         }
@@ -464,7 +464,7 @@ export class InventoryController
         let playerData = pmcData;
 
         // We may be folding data on scav profile, get that profile instead
-        if (request.fromOwner && request.fromOwner.type === "Profile" && request.fromOwner.id !== playerData._id)
+        if (request.fromOwner?.type === "Profile" && request.fromOwner.id !== playerData._id)
         {
             playerData = this.profileHelper.getScavProfile(sessionID);
         }
@@ -502,7 +502,7 @@ export class InventoryController
         let playerData = pmcData;
 
         // Fix for toggling items while on they're in the Scav inventory
-        if (body.fromOwner && body.fromOwner.type === "Profile" && body.fromOwner.id !== playerData._id)
+        if (body.fromOwner?.type === "Profile" && body.fromOwner.id !== playerData._id)
         {
             playerData = this.profileHelper.getScavProfile(sessionID);
         }
