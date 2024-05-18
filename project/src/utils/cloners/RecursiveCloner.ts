@@ -35,6 +35,8 @@ export class RecursiveCloner implements ICloner
             const newObj = {};
             for (const propOf1 in obj)
             {
+                // If the value of the original property is null, ensure the cloned value is also null
+                // This fixes an issue where null arrays were incorrectly being converted to empty objects
                 if (obj[propOf1] === null)
                 {
                     newObj[propOf1.toString()] = null;
