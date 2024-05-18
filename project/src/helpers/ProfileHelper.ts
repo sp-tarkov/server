@@ -227,7 +227,7 @@ export class ProfileHelper
             playerLevel = expTable.length - 1;
         }
 
-        for (let i = 0; i < level; i++)
+        for (let i = 0; i < playerLevel; i++)
         {
             exp += expTable[i].exp;
         }
