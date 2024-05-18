@@ -655,11 +655,13 @@ export class PreAkiModLoader implements IModLoader
             return false;
         }
 
-        // Check if config exists
+        // Check if config exists or is disabled
         const modPackagePath = `${modPath}/package.json`;
         if (!this.vfs.exists(modPackagePath))
         {
-            this.logger.error(this.localisationService.getText("modloader-missing_package_json", modName));
+            const errorMessage: string = this.vfs.exists(`${modPackagePath}.disabled`) ? "modloader-disabled_package_json" : "modloader-missing_package_json";
+            
+            this.logger.error(this.localisationService.getText(errorMessage, modName));
             return false;
         }
 

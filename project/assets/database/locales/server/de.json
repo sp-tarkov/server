@@ -147,6 +147,7 @@
 	"modloader-missing_package_json": "Mod (%s) fehlt package.json. Stell sicher, dass du die Installationsanweisungen auf der Mod-Hub-Seite gelesen hast",
 	"modloader-missing_package_json_property": "Mod {{modName}} package.json erfordert die Eigenschaft {{prop}}",
 	"modloader-mod_incompatible": "ModLoader: Mod (%s) ist inkompatibel. Es muss mindestens eines von IPostAkiLoadMod, IPostDBLoadMod, IPreAkiLoadMod implementiert sein",
+    "modloader-disabled_package_json": "Mod (%s) wurde deaktiviert und wird nicht geladen.",
 	"modloader-mod_has_no_main_property": "ModLoader: Mod (%s) ist inkompatibel. Es fehlt eine 'Haupt'-Eigenschaft",
 	"modloader-async_mod_error": "ModLoader: Fehler beim Laden der asynchronen Mod: %s",
 	"modloader-no_mods_loaded": "Bei den Mods wurden Fehler gefunden. Es werden keine Mods geladen",
