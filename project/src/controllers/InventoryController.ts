@@ -401,13 +401,20 @@ export class InventoryController
         sessionID: string,
     ): IItemEventRouterResponse
     {
-        const itemOne = pmcData.Inventory.items.find((x) => x._id === request.item);
+        // During post-raid scav transfer, the swap may be in the scav inventory
+        let playerData = pmcData;
+        if (request.fromOwner && request.fromOwner.type === "Profile" && request.fromOwner.id !== playerData._id)
+        {
+            playerData = this.profileHelper.getScavProfile(sessionID);
+        }
+
+        const itemOne = playerData.Inventory.items.find((x) => x._id === request.item);
         if (!itemOne)
         {
             this.logger.error(`Unable to find item: ${request.item} to swap positions with: ${request.item2}`);
         }
 
-        const itemTwo = pmcData.Inventory.items.find((x) => x._id === request.item2);
+        const itemTwo = playerData.Inventory.items.find((x) => x._id === request.item2);
         if (!itemTwo)
         {
             this.logger.error(`Unable to find item: ${request.item2} to swap positions with: ${request.item}`);
