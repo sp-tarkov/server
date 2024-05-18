@@ -192,6 +192,10 @@ import { HttpServer } from "@spt-aki/servers/HttpServer";
 import { RagfairServer } from "@spt-aki/servers/RagfairServer";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { WebSocketServer } from "@spt-aki/servers/WebSocketServer";
+import { AkiWebSocketConnectionHandler } from "@spt-aki/servers/ws/AkiWebSocketConnectionHandler";
+import { IWebSocketConnectionHandler } from "@spt-aki/servers/ws/IWebSocketConnectionHandler";
+import { DefaultAkiWebSocketMessageHandler } from "@spt-aki/servers/ws/message/DefaultAkiWebSocketMessageHandler";
+import { IAkiWebSocketMessageHandler } from "@spt-aki/servers/ws/message/IAkiWebSocketMessageHandler";
 import { BotEquipmentFilterService } from "@spt-aki/services/BotEquipmentFilterService";
 import { BotEquipmentModPoolService } from "@spt-aki/services/BotEquipmentModPoolService";
 import { BotGenerationCacheService } from "@spt-aki/services/BotGenerationCacheService";
@@ -383,6 +387,12 @@ export class Container
         depContainer.registerType("SptCommand", "GiveSptCommand");
         depContainer.registerType("SptCommand", "TraderSptCommand");
         depContainer.registerType("SptCommand", "ProfileSptCommand");
+
+        // WebSocketHandlers
+        depContainer.registerType("WebSocketConnectionHandler", "AkiWebSocketConnectionHandler");
+
+        // WebSocketMessageHandlers
+        depContainer.registerType("AkiWebSocketMessageHandler", "DefaultAkiWebSocketMessageHandler");
     }
 
     private static registerUtils(depContainer: DependencyContainer): void
@@ -778,6 +788,8 @@ export class Container
         depContainer.register<DatabaseServer>("DatabaseServer", DatabaseServer, { lifecycle: Lifecycle.Singleton });
         depContainer.register<HttpServer>("HttpServer", HttpServer, { lifecycle: Lifecycle.Singleton });
         depContainer.register<WebSocketServer>("WebSocketServer", WebSocketServer, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<IWebSocketConnectionHandler>("AkiWebSocketConnectionHandler", AkiWebSocketConnectionHandler, { lifecycle: Lifecycle.Singleton });
+        depContainer.register<IAkiWebSocketMessageHandler>("DefaultAkiWebSocketMessageHandler", DefaultAkiWebSocketMessageHandler, { lifecycle: Lifecycle.Singleton });
         depContainer.register<RagfairServer>("RagfairServer", RagfairServer);
         depContainer.register<SaveServer>("SaveServer", SaveServer, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ConfigServer>("ConfigServer", ConfigServer, { lifecycle: Lifecycle.Singleton });

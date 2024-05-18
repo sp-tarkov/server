@@ -191,8 +191,8 @@ export class GiveSptCommand implements ISptCommand
             }
         }
 
-        const localizedGlobal
-            = this.databaseServer.getTables().locales.global[locale] ?? this.databaseServer.getTables().locales.global.en;
+        const localizedGlobal = this.databaseServer.getTables().locales.global[locale]
+          ?? this.databaseServer.getTables().locales.global.en;
         // If item is an item name, we need to search using that item name and the locale which one we want otherwise
         // item is just the tplId.
         const tplId = isItemName

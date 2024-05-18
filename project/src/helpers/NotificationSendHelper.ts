@@ -6,7 +6,7 @@ import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
 import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { WebSocketServer } from "@spt-aki/servers/WebSocketServer";
+import { AkiWebSocketConnectionHandler } from "@spt-aki/servers/ws/AkiWebSocketConnectionHandler";
 import { NotificationService } from "@spt-aki/services/NotificationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 
@@ -14,7 +14,7 @@ import { HashUtil } from "@spt-aki/utils/HashUtil";
 export class NotificationSendHelper
 {
     constructor(
-        @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
+        @inject("AkiWebSocketConnectionHandler") protected akiWebSocketConnection: AkiWebSocketConnectionHandler,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("NotificationService") protected notificationService: NotificationService,
@@ -28,9 +28,9 @@ export class NotificationSendHelper
      */
     public sendMessage(sessionID: string, notificationMessage: IWsNotificationEvent): void
     {
-        if (this.webSocketServer.isConnectionWebSocket(sessionID))
+        if (this.akiWebSocketConnection.isConnectionWebSocket(sessionID))
         {
-            this.webSocketServer.sendMessage(sessionID, notificationMessage);
+            this.akiWebSocketConnection.sendMessage(sessionID, notificationMessage);
         }
         else
         {
