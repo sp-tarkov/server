@@ -35,6 +35,12 @@ export class RecursiveCloner implements ICloner
             const newObj = {};
             for (const propOf1 in obj)
             {
+                if (obj[propOf1] === null)
+                {
+                    newObj[propOf1.toString()] = null;
+                    continue;
+                }
+
                 newObj[propOf1.toString()] = this.clone(obj[propOf1]);
             }
             return newObj as T;
