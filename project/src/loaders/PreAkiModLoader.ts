@@ -548,12 +548,13 @@ export class PreAkiModLoader implements IModLoader
             os.platform() === "win32" ? "pnpm.exe" : "pnpm",
         );
 
-        let command = `${pnpmPath} install `;
+        let command = `"${pnpmPath}" install `;
         for (const [depName, depVersion] of dependenciesToInstall)
         {
             command += `${depName}@${depVersion} `;
         }
 
+        this.logger.debug(`Running command: ${command}`);
         execSync(command, { cwd: modPath });
 
         // Delete the new blank package.json then rename the backup back to the original name
