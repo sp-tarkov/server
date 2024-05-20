@@ -755,7 +755,7 @@ export class QuestHelper
                     MessageType.QUEST_FAIL,
                     quest.failMessageText,
                     questRewards,
-                    this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
+                    this.timeUtil.getHoursAsSeconds(this.getMailItemRedeemTimeHoursForProfile(pmcData)),
                 );
             }
         }
@@ -1166,5 +1166,21 @@ export class QuestHelper
 
             return quest.conditions.Fail.some((condition) => condition.target?.includes(completedQuestId));
         });
+    }
+
+    /**
+     * Get the hours a mails items can be collected for by profile type
+     * @param pmcData Profile to get hours for
+     * @returns Hours item will be available for
+     */
+    public getMailItemRedeemTimeHoursForProfile(pmcData: IPmcData): number
+    {
+        const value = this.questConfig.mailRedeemTimeHours[pmcData.Info.GameVersion];
+        if (!value)
+        {
+            return this.questConfig.mailRedeemTimeHours["default"];
+        }
+
+        return value;
     }
 }
