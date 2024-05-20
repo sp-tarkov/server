@@ -33,6 +33,7 @@ import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
 import { RagfairRequiredItemsService } from "@spt-aki/services/RagfairRequiredItemsService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { QuestHelper } from "./QuestHelper";
 
 @injectable()
 export class RagfairOfferHelper
@@ -53,6 +54,7 @@ export class RagfairOfferHelper
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("RagfairServerHelper") protected ragfairServerHelper: RagfairServerHelper,
         @inject("RagfairSortHelper") protected ragfairSortHelper: RagfairSortHelper,
         @inject("RagfairHelper") protected ragfairHelper: RagfairHelper,
@@ -503,7 +505,8 @@ export class RagfairOfferHelper
             MessageType.FLEAMARKET_MESSAGE,
             this.getLocalisedOfferSoldMessage(itemTpl, boughtAmount),
             itemsToSend,
-            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
+            this.timeUtil.getHoursAsSeconds(
+                this.questHelper.getMailItemRedeemTimeHoursForProfile(this.profileHelper.getPmcProfile(sessionID))),
             null,
             ragfairDetails,
         );

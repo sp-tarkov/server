@@ -337,7 +337,7 @@ export class QuestController
             MessageType.QUEST_START,
             messageId,
             startedQuestRewardItems,
-            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
+            this.timeUtil.getHoursAsSeconds(this.questHelper.getMailItemRedeemTimeHoursForProfile(pmcData)),
         );
 
         // Having accepted new quest, look for newly unlocked quests and inform client of them
@@ -644,7 +644,7 @@ export class QuestController
             MessageType.QUEST_SUCCESS,
             quest.successMessageText,
             questRewards,
-            this.timeUtil.getHoursAsSeconds(this.questConfig.redeemTime),
+            this.timeUtil.getHoursAsSeconds(this.questHelper.getMailItemRedeemTimeHoursForProfile(pmcData)),
         );
     }
 

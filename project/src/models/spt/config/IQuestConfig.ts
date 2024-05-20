@@ -6,8 +6,8 @@ import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
 export interface IQuestConfig extends IBaseConfig
 {
     kind: "aki-quest"
-    // Hours to get/redeem items from quest mail
-    redeemTime: number
+    // Hours to get/redeem items from quest mail keyed by profile type
+    mailRedeemTimeHours: Record<string, number>
     questTemplateIds: IPlayerTypeQuestIds
     /** Show non-seasonal quests be shown to player */
     showNonSeasonalEventQuests: boolean
