@@ -101,11 +101,20 @@ export class InsuranceService
      */
     public sendInsuredItems(pmcData: IPmcData, sessionID: string, mapId: string): void
     {
+        // Check for Mark of The Unheard in special slot (only slot it can fit)
+        const markOfTheUnheardOnPlayer = pmcData.Inventory.items
+            .filter((item) => item.slotId?.startsWith("SpecialSlot"))
+            .find((item) => item._tpl === "65ddcc9cfa85b9f17d0dfb07");
         // Get insurance items for each trader
         for (const traderId in this.getInsurance(sessionID))
         {
             const traderBase = this.traderHelper.getTrader(traderId, sessionID);
-            const insuranceReturnTimestamp = this.getInsuranceReturnTimestamp(pmcData, traderBase);
+            let insuranceReturnTimestamp = this.getInsuranceReturnTimestamp(pmcData, traderBase);
+            if (markOfTheUnheardOnPlayer)
+            {
+                insuranceReturnTimestamp *= this.databaseServer.getTables()
+                    .globals.config.Insurance.CoefOfHavingMarkOfUnknown;
+            }
             const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
 
             const systemData = {
