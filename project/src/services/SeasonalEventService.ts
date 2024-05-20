@@ -342,7 +342,7 @@ export class SeasonalEventService
             }
 
             // Get non-christmas items
-            const nonChristmasTpls = Object.keys(containerItems).filter(tpl => !christmasItems.includes(tpl));
+            const nonChristmasTpls = Object.keys(containerItems).filter((tpl) => !christmasItems.includes(tpl));
             const intermediaryDict = {};
 
             for (const tpl of nonChristmasTpls)
@@ -368,7 +368,7 @@ export class SeasonalEventService
         switch (eventType.toLowerCase())
         {
             case SeasonalEventType.HALLOWEEN.toLowerCase():
-                globalConfig.EventType = globalConfig.EventType.filter(x => x !== "None");
+                globalConfig.EventType = globalConfig.EventType.filter((x) => x !== "None");
                 globalConfig.EventType.push("Halloween");
                 globalConfig.EventType.push("HalloweenIllumination");
                 globalConfig.Health.ProfileHealthSettings.DefaultStimulatorBuff = "Buffs_Halloween";
@@ -380,7 +380,7 @@ export class SeasonalEventService
                 this.adjustTraderIcons(eventType);
                 break;
             case SeasonalEventType.CHRISTMAS.toLowerCase():
-                globalConfig.EventType = globalConfig.EventType.filter(x => x !== "None");
+                globalConfig.EventType = globalConfig.EventType.filter((x) => x !== "None");
                 globalConfig.EventType.push("Christmas");
                 this.addEventGearToBots(eventType);
                 this.addGifterBotToMaps();
@@ -435,7 +435,7 @@ export class SeasonalEventService
             {
                 const mapBosses: BossLocationSpawn[]
                     = this.databaseServer.getTables().locations[mapKey].base.BossLocationSpawn;
-                if (!mapBosses.find(x => x.BossName === boss.BossName))
+                if (!mapBosses.find((x) => x.BossName === boss.BossName))
                 {
                     this.databaseServer.getTables().locations[mapKey].base.BossLocationSpawn.push(...bossesToAdd);
                 }
@@ -474,9 +474,11 @@ export class SeasonalEventService
                 break;
         }
 
-        this.databaseImporter.loadImages(`${this.databaseImporter.getSptDataPath()}images/`, ["traders"], [
-            "/files/trader/avatar/",
-        ]);
+        this.databaseImporter.loadImages(
+            `${this.databaseImporter.getSptDataPath()}images/`,
+            ["traders"],
+            ["/files/trader/avatar/"],
+        );
     }
 
     /**
@@ -487,8 +489,9 @@ export class SeasonalEventService
         const gifterBot = this.databaseServer.getTables().bots.types.gifter;
         for (const difficulty in gifterBot.difficulty)
         {
-            gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = Object.keys(gifterBot.inventory.items.Backpack)
-                .join(", ");
+            gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = Object.keys(
+                gifterBot.inventory.items.Backpack,
+            ).join(", ");
         }
     }
 
@@ -574,7 +577,7 @@ export class SeasonalEventService
         {
             const mapData: ILocation = maps[gifterMapSettings.map];
             // Dont add gifter to map twice
-            if (mapData.base.BossLocationSpawn.some(boss => boss.BossName === "gifter"))
+            if (mapData.base.BossLocationSpawn.some((boss) => boss.BossName === "gifter"))
             {
                 continue;
             }

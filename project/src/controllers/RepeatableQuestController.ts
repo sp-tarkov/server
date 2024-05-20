@@ -90,7 +90,7 @@ export class RepeatableQuestController
         const pmcData = this.profileHelper.getPmcProfile(sessionID);
         const time = this.timeUtil.getTimestamp();
         const scavQuestUnlocked
-            = pmcData?.Hideout?.Areas?.find(hideoutArea => hideoutArea.type === HideoutAreas.INTEL_CENTER)?.level >= 1;
+            = pmcData?.Hideout?.Areas?.find((hideoutArea) => hideoutArea.type === HideoutAreas.INTEL_CENTER)?.level >= 1;
 
         // Daily / weekly / Daily_Savage
         for (const repeatableConfig of this.questConfig.repeatableQuests)
@@ -118,7 +118,7 @@ export class RepeatableQuestController
                     for (const activeQuest of currentRepeatableQuestType.activeQuests)
                     {
                         // Keep finished quests in list so player can hand in
-                        const quest = pmcData.Quests.find(quest => quest.qid === activeQuest._id);
+                        const quest = pmcData.Quests.find((quest) => quest.qid === activeQuest._id);
                         if (quest)
                         {
                             if (quest.status === QuestStatus.AvailableForFinish)
@@ -134,7 +134,7 @@ export class RepeatableQuestController
                         this.profileFixerService.removeDanglingConditionCounters(pmcData);
 
                         // Remove expired quest from pmc.quest array
-                        pmcData.Quests = pmcData.Quests.filter(quest => quest.qid !== activeQuest._id);
+                        pmcData.Quests = pmcData.Quests.filter((quest) => quest.qid !== activeQuest._id);
                         currentRepeatableQuestType.inactiveQuests.push(activeQuest);
                     }
                     currentRepeatableQuestType.activeQuests = questsToKeep;
@@ -216,14 +216,11 @@ export class RepeatableQuestController
         )
         {
             // Elite charisma skill gives extra daily quest(s)
-            return repeatableConfig.numQuests + this.databaseServer.getTables()
-                .globals
-                .config
-                .SkillsSettings
-                .Charisma
-                .BonusSettings
-                .EliteBonusSettings
-                .RepeatableQuestExtraCount;
+            return (
+                repeatableConfig.numQuests
+                + this.databaseServer.getTables().globals.config.SkillsSettings.Charisma.BonusSettings.EliteBonusSettings
+                    .RepeatableQuestExtraCount
+            );
         }
 
         return repeatableConfig.numQuests;
@@ -241,7 +238,7 @@ export class RepeatableQuestController
     ): IPmcDataRepeatableQuest
     {
         // Get from profile, add if missing
-        let repeatableQuestDetails = pmcData.RepeatableQuests.find(x => x.name === repeatableConfig.name);
+        let repeatableQuestDetails = pmcData.RepeatableQuests.find((x) => x.name === repeatableConfig.name);
         if (!repeatableQuestDetails)
         {
             repeatableQuestDetails = {
@@ -331,9 +328,10 @@ export class RepeatableQuestController
                 const possibleLocations = Object.keys(locations);
 
                 // Set possible locations for elimination task, if target is savage, exclude labs from locations
-                questPool.pool.Elimination.targets[probabilityObject.key] = probabilityObject.key === "Savage"
-                    ? { locations: possibleLocations.filter(x => x !== "laboratory") }
-                    : { locations: possibleLocations };
+                questPool.pool.Elimination.targets[probabilityObject.key]
+                    = probabilityObject.key === "Savage"
+                        ? { locations: possibleLocations.filter((x) => x !== "laboratory") }
+                        : { locations: possibleLocations };
             }
         }
 
@@ -443,7 +441,7 @@ export class RepeatableQuestController
         for (const currentRepeatablePool of pmcData.RepeatableQuests)
         {
             // Check for existing quest in (daily/weekly/scav arrays)
-            const questToReplace = currentRepeatablePool.activeQuests.find(x => x._id === changeRequest.qid);
+            const questToReplace = currentRepeatablePool.activeQuests.find((x) => x._id === changeRequest.qid);
             if (!questToReplace)
             {
                 continue;
@@ -453,8 +451,8 @@ export class RepeatableQuestController
             replacedQuestTraderId = questToReplace.traderId;
 
             // Update active quests to exclude the quest we're replacing
-            currentRepeatablePool.activeQuests = currentRepeatablePool.activeQuests.filter(x =>
-                x._id !== changeRequest.qid,
+            currentRepeatablePool.activeQuests = currentRepeatablePool.activeQuests.filter(
+                (x) => x._id !== changeRequest.qid,
             );
 
             // Get cost to replace existing quest
@@ -462,8 +460,8 @@ export class RepeatableQuestController
             delete currentRepeatablePool.changeRequirement[changeRequest.qid];
             // TODO: somehow we need to reduce the questPool by the currently active quests (for all repeatables)
 
-            const repeatableConfig = this.questConfig.repeatableQuests.find(x =>
-                x.name === currentRepeatablePool.name,
+            const repeatableConfig = this.questConfig.repeatableQuests.find(
+                (x) => x.name === currentRepeatablePool.name,
             );
             const questTypePool = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
             const newRepeatableQuest = this.attemptToGenerateRepeatableQuest(pmcData, questTypePool, repeatableConfig);

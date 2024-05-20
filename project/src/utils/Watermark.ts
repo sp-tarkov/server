@@ -154,10 +154,11 @@ export class Watermark
         const result = [];
 
         // Calculate size, add 10% for spacing to the right
-        const longestLength = this.text.reduce((a, b) =>
-        {
-            return a.length > b.length ? a : b;
-        }).length * 1.1;
+        const longestLength
+            = this.text.reduce((a, b) =>
+            {
+                return a.length > b.length ? a : b;
+            }).length * 1.1;
 
         // Create line of - to add top/bottom of watermark
         let line = "";

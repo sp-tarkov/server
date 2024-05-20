@@ -42,7 +42,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 37,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -86,7 +86,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 35,
+      "BossChance": 37,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -181,9 +181,10 @@
   "Enabled": true,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
+  "EscapeTimeLimitPVE": 26,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.9,
+  "GlobalLootChanceModifier": 0.95,
   "GlobalLootChanceModifierPvE": 1,
   "IconX": 460,
   "IconY": 660,

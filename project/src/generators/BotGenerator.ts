@@ -232,7 +232,11 @@ export class BotGenerator
      * @param appearance Appearance settings to choose from
      * @param botGenerationDetails Generation details
      */
-    protected setBotAppearance(bot: IBotBase, appearance: Appearance, botGenerationDetails: BotGenerationDetails): void
+    protected setBotAppearance(
+        bot: IBotBase,
+        appearance: Appearance,
+        botGenerationDetails: BotGenerationDetails,
+    ): void
     {
         bot.Customization.Head = this.weightedRandomHelper.getWeightedValue<string>(appearance.head);
         bot.Customization.Body = this.weightedRandomHelper.getWeightedValue<string>(appearance.body);
@@ -425,27 +429,29 @@ export class BotGenerator
             return [];
         }
 
-        return Object.keys(skills).map((skillKey): IBaseSkill =>
-        {
-            // Get skill from dict, skip if not found
-            const skill = skills[skillKey];
-            if (!skill)
+        return Object.keys(skills)
+            .map((skillKey): IBaseSkill =>
             {
-                return null;
-            }
+                // Get skill from dict, skip if not found
+                const skill = skills[skillKey];
+                if (!skill)
+                {
+                    return null;
+                }
 
-            // All skills have id and progress props
-            const skillToAdd: IBaseSkill = { Id: skillKey, Progress: this.randomUtil.getInt(skill.min, skill.max) };
+                // All skills have id and progress props
+                const skillToAdd: IBaseSkill = { Id: skillKey, Progress: this.randomUtil.getInt(skill.min, skill.max) };
 
-            // Common skills have additional props
-            if (isCommonSkills)
-            {
-                (skillToAdd as Common).PointsEarnedDuringSession = 0;
-                (skillToAdd as Common).LastAccess = 0;
-            }
+                // Common skills have additional props
+                if (isCommonSkills)
+                {
+                    (skillToAdd as Common).PointsEarnedDuringSession = 0;
+                    (skillToAdd as Common).LastAccess = 0;
+                }
 
-            return skillToAdd;
-        }).filter(x => x !== null);
+                return skillToAdd;
+            })
+            .filter((x) => x !== null);
     }
 
     /**

@@ -39,8 +39,8 @@ export class RepeatableQuestGenerator
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ObjectId") protected objectId: ObjectId,
         @inject("RepeatableQuestHelper") protected repeatableQuestHelper: RepeatableQuestHelper,
-        @inject("RepeatableQuestRewardGenerator") protected repeatableQuestRewardGenerator:
-        RepeatableQuestRewardGenerator,
+        @inject("RepeatableQuestRewardGenerator")
+        protected repeatableQuestRewardGenerator: RepeatableQuestRewardGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RecursiveCloner") protected cloner: ICloner,
     )
@@ -67,11 +67,11 @@ export class RepeatableQuestGenerator
         const questType = this.randomUtil.drawRandomFromList<string>(questTypePool.types)[0];
 
         // get traders from whitelist and filter by quest type availability
-        let traders = repeatableConfig.traderWhitelist.filter(x => x.questTypes.includes(questType)).map(x =>
-            x.traderId,
-        );
+        let traders = repeatableConfig.traderWhitelist
+            .filter((x) => x.questTypes.includes(questType))
+            .map((x) => x.traderId);
         // filter out locked traders
-        traders = traders.filter(x => pmcTraderInfo[x].unlocked);
+        traders = traders.filter((x) => pmcTraderInfo[x].unlocked);
         const traderId = this.randomUtil.drawRandomFromList(traders)[0];
 
         switch (questType)
@@ -158,15 +158,15 @@ export class RepeatableQuestGenerator
             return Math.sqrt(Math.sqrt(target) + bodyPart + dist + weaponRequirement) * kill;
         }
 
-        targetsConfig = targetsConfig.filter(x =>
+        targetsConfig = targetsConfig.filter((x) =>
             Object.keys(questTypePool.pool.Elimination.targets).includes(x.key),
         );
-        if (targetsConfig.length === 0 || targetsConfig.every(x => x.data.isBoss))
+        if (targetsConfig.length === 0 || targetsConfig.every((x) => x.data.isBoss))
         {
             // There are no more targets left for elimination; delete it as a possible quest type
             // also if only bosses are left we need to leave otherwise it's a guaranteed boss elimination
             // -> then it would not be a quest with low probability anymore
-            questTypePool.types = questTypePool.types.filter(t => t !== "Elimination");
+            questTypePool.types = questTypePool.types.filter((t) => t !== "Elimination");
             return null;
         }
 
@@ -188,12 +188,12 @@ export class RepeatableQuestGenerator
         }
         else
         {
-            locations = locations.filter(l => l !== "any");
+            locations = locations.filter((l) => l !== "any");
             if (locations.length > 0)
             {
                 locationKey = this.randomUtil.drawRandomFromList<string>(locations)[0];
-                questTypePool.pool.Elimination.targets[targetKey].locations = locations.filter(l =>
-                    l !== locationKey,
+                questTypePool.pool.Elimination.targets[targetKey].locations = locations.filter(
+                    (l) => l !== locationKey,
                 );
                 if (questTypePool.pool.Elimination.targets[targetKey].locations.length === 0)
                 {
@@ -238,16 +238,18 @@ export class RepeatableQuestGenerator
         if (targetsConfig.data(targetKey).isBoss)
         {
             // Get all boss spawn information
-            const bossSpawns = Object.values(this.databaseServer.getTables().locations).filter(x =>
-                "base" in x && "Id" in x.base,
-            ).map(x => ({ Id: x.base.Id, BossSpawn: x.base.BossLocationSpawn }));
+            const bossSpawns = Object.values(this.databaseServer.getTables().locations)
+                .filter((x) => "base" in x && "Id" in x.base)
+                .map((x) => ({ Id: x.base.Id, BossSpawn: x.base.BossLocationSpawn }));
             // filter for the current boss to spawn on map
-            const thisBossSpawns = bossSpawns.map(x => ({
-                Id: x.Id,
-                BossSpawn: x.BossSpawn.filter(e => e.BossName === targetKey),
-            })).filter(x => x.BossSpawn.length > 0);
+            const thisBossSpawns = bossSpawns
+                .map((x) => ({
+                    Id: x.Id,
+                    BossSpawn: x.BossSpawn.filter((e) => e.BossName === targetKey),
+                }))
+                .filter((x) => x.BossSpawn.length > 0);
             // remove blacklisted locations
-            const allowedSpawns = thisBossSpawns.filter(x => !eliminationConfig.distLocationBlacklist.includes(x.Id));
+            const allowedSpawns = thisBossSpawns.filter((x) => !eliminationConfig.distLocationBlacklist.includes(x.Id));
             // if the boss spawns on nom-blacklisted locations and the current location is allowed we can generate a distance kill requirement
             isDistanceRequirementAllowed = isDistanceRequirementAllowed && allowedSpawns.length > 0;
         }
@@ -260,7 +262,7 @@ export class RepeatableQuestGenerator
                 + eliminationConfig.minDist,
             );
             distance = Math.ceil(distance / 5) * 5;
-            distanceDifficulty = maxDistDifficulty * distance / eliminationConfig.maxDist;
+            distanceDifficulty = (maxDistDifficulty * distance) / eliminationConfig.maxDist;
         }
 
         let allowedWeaponsCategory: string = undefined;
@@ -269,13 +271,14 @@ export class RepeatableQuestGenerator
             // Filter out close range weapons from far distance requirement
             if (distance > 50)
             {
-                weaponCategoryRequirementConfig = weaponCategoryRequirementConfig.filter(category =>
+                weaponCategoryRequirementConfig = weaponCategoryRequirementConfig.filter((category) =>
                     ["Shotgun", "Pistol"].includes(category.key),
                 );
             }
             else if (distance < 20)
-            { // Filter out far range weapons from close distance requirement
-                weaponCategoryRequirementConfig = weaponCategoryRequirementConfig.filter(category =>
+            {
+                // Filter out far range weapons from close distance requirement
+                weaponCategoryRequirementConfig = weaponCategoryRequirementConfig.filter((category) =>
                     ["MarksmanRifle", "DMR"].includes(category.key),
                 );
             }
@@ -497,8 +500,8 @@ export class RepeatableQuestGenerator
             this.mathUtil.interp1(pmcLevel, levelsConfig, roublesConfig) * this.randomUtil.getFloat(0.5, 1),
         );
         roublesBudget = Math.max(roublesBudget, 5000);
-        let itemSelection = possibleItemsToRetrievePool.filter(x =>
-            this.itemHelper.getItemPrice(x[0]) < roublesBudget,
+        let itemSelection = possibleItemsToRetrievePool.filter(
+            (x) => this.itemHelper.getItemPrice(x[0]) < roublesBudget,
         );
 
         // We also have the option to use whitelist and/or blacklist which is defined in repeatableQuests.json as
@@ -509,15 +512,16 @@ export class RepeatableQuestGenerator
                 = this.databaseServer.getTables().templates.repeatableQuests.data.Completion.itemsWhitelist;
 
             // Filter and concatenate the arrays according to current player level
-            const itemIdsWhitelisted = itemWhitelist.filter(p => p.minPlayerLevel <= pmcLevel).reduce(
-                (a, p) => a.concat(p.itemIds),
-                [],
-            );
+            const itemIdsWhitelisted = itemWhitelist
+                .filter((p) => p.minPlayerLevel <= pmcLevel)
+                .reduce((a, p) => a.concat(p.itemIds), []);
             itemSelection = itemSelection.filter((x) =>
             {
                 // Whitelist can contain item tpls and item base type ids
-                return itemIdsWhitelisted.some(v => this.itemHelper.isOfBaseclass(x[0], v))
-                  || itemIdsWhitelisted.includes(x[0]);
+                return (
+                    itemIdsWhitelisted.some((v) => this.itemHelper.isOfBaseclass(x[0], v))
+                    || itemIdsWhitelisted.includes(x[0])
+                );
             });
             // check if items are missing
             // const flatList = itemSelection.reduce((a, il) => a.concat(il[0]), []);
@@ -530,15 +534,16 @@ export class RepeatableQuestGenerator
                 = this.databaseServer.getTables().templates.repeatableQuests.data.Completion.itemsBlacklist;
 
             // we filter and concatenate the arrays according to current player level
-            const itemIdsBlacklisted = itemBlacklist.filter(p => p.minPlayerLevel <= pmcLevel).reduce(
-                (a, p) => a.concat(p.itemIds),
-                [],
-            );
+            const itemIdsBlacklisted = itemBlacklist
+                .filter((p) => p.minPlayerLevel <= pmcLevel)
+                .reduce((a, p) => a.concat(p.itemIds), []);
 
             itemSelection = itemSelection.filter((x) =>
             {
-                return itemIdsBlacklisted.every(v => !this.itemHelper.isOfBaseclass(x[0], v))
-                  || !itemIdsBlacklisted.includes(x[0]);
+                return (
+                    itemIdsBlacklisted.every((v) => !this.itemHelper.isOfBaseclass(x[0], v))
+                    || !itemIdsBlacklisted.includes(x[0])
+                );
             });
         }
 
@@ -601,7 +606,7 @@ export class RepeatableQuestGenerator
             if (roublesBudget > 0)
             {
                 // reduce the list possible items to fulfill the new budget constraint
-                itemSelection = itemSelection.filter(x => this.itemHelper.getItemPrice(x[0]) < roublesBudget);
+                itemSelection = itemSelection.filter((x) => this.itemHelper.getItemPrice(x[0]) < roublesBudget);
                 if (itemSelection.length === 0)
                 {
                     break;
@@ -692,7 +697,7 @@ export class RepeatableQuestGenerator
         if (Object.keys(questTypePool.pool.Exploration.locations).length === 0)
         {
             // there are no more locations left for exploration; delete it as a possible quest type
-            questTypePool.types = questTypePool.types.filter(t => t !== "Exploration");
+            questTypePool.types = questTypePool.types.filter((t) => t !== "Exploration");
             return null;
         }
 
@@ -737,13 +742,15 @@ export class RepeatableQuestGenerator
             const mapExits = this.getLocationExitsForSide(locationKey, repeatableConfig.side);
 
             // Only get exits that have a greater than 0% chance to spawn
-            const exitPool = mapExits.filter(exit => exit.Chance > 0);
+            const exitPool = mapExits.filter((exit) => exit.Chance > 0);
 
             // Exclude exits with a requirement to leave (e.g. car extracts)
-            const possibleExits = exitPool.filter(exit => !("PassageRequirement" in exit)
-              || repeatableConfig.questConfig.Exploration.specificExits.passageRequirementWhitelist.includes(
-                  exit.PassageRequirement,
-              ),
+            const possibleExits = exitPool.filter(
+                (exit) =>
+                    !("PassageRequirement" in exit)
+                    || repeatableConfig.questConfig.Exploration.specificExits.passageRequirementWhitelist.includes(
+                        exit.PassageRequirement,
+                    ),
             );
 
             if (possibleExits.length === 0)
@@ -788,7 +795,7 @@ export class RepeatableQuestGenerator
         const mapExtracts = this.databaseServer.getTables().locations[locationKey.toLocaleLowerCase()]
             .allExtracts as Exit[];
 
-        return mapExtracts.filter(exit => exit.Side === playerSide);
+        return mapExtracts.filter((exit) => exit.Side === playerSide);
     }
 
     protected generatePickupQuest(
@@ -811,18 +818,18 @@ export class RepeatableQuestGenerator
         // const locationKey: string = this.randomUtil.drawRandomFromDict(questTypePool.pool.Pickup.locations)[0];
         // const locationTarget = questTypePool.pool.Pickup.locations[locationKey];
 
-        const findCondition = quest.conditions.AvailableForFinish.find(x => x.conditionType === "FindItem");
+        const findCondition = quest.conditions.AvailableForFinish.find((x) => x.conditionType === "FindItem");
         findCondition.target = [itemTypeToFetchWithCount.itemType];
         findCondition.value = itemCountToFetch;
 
-        const counterCreatorCondition = quest.conditions.AvailableForFinish.find(x =>
-            x.conditionType === "CounterCreator",
+        const counterCreatorCondition = quest.conditions.AvailableForFinish.find(
+            (x) => x.conditionType === "CounterCreator",
         );
         // const locationCondition = counterCreatorCondition._props.counter.conditions.find(x => x._parent === "Location");
         // (locationCondition._props as ILocationConditionProps).target = [...locationTarget];
 
-        const equipmentCondition = counterCreatorCondition.counter.conditions.find(x =>
-            x.conditionType === "Equipment",
+        const equipmentCondition = counterCreatorCondition.counter.conditions.find(
+            (x) => x.conditionType === "Equipment",
         );
         equipmentCondition.equipmentInclusive = [[itemTypeToFetchWithCount.itemType]];
 
@@ -887,46 +894,36 @@ export class RepeatableQuestGenerator
         // Get template id from config based on side and type of quest
         questClone.templateId = this.questConfig.questTemplateIds[side.toLowerCase()][type.toLowerCase()];
 
-        questClone.name = questClone.name.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.note = questClone.note.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.description = questClone.description.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.successMessageText = questClone.successMessageText.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.failMessageText = questClone.failMessageText.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.startedMessageText = questClone.startedMessageText.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.changeQuestMessageText = questClone.changeQuestMessageText.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.acceptPlayerMessage = questClone.acceptPlayerMessage.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.declinePlayerMessage = questClone.declinePlayerMessage.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
-        questClone.completePlayerMessage = questClone.completePlayerMessage.replace("{traderId}", traderId).replace(
-            "{templateId}",
-            questClone.templateId,
-        );
+        questClone.name = questClone.name
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.note = questClone.note
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.description = questClone.description
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.successMessageText = questClone.successMessageText
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.failMessageText = questClone.failMessageText
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.startedMessageText = questClone.startedMessageText
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.changeQuestMessageText = questClone.changeQuestMessageText
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.acceptPlayerMessage = questClone.acceptPlayerMessage
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.declinePlayerMessage = questClone.declinePlayerMessage
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
+        questClone.completePlayerMessage = questClone.completePlayerMessage
+            .replace("{traderId}", traderId)
+            .replace("{templateId}", questClone.templateId);
 
         return questClone;
     }

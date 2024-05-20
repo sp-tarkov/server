@@ -58,13 +58,14 @@ export class PMCLootGenerator
             // Blacklist inactive seasonal items
             itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
 
-            const itemsToAdd = Object.values(items).filter(item =>
-                allowedItemTypes.includes(item._parent)
-                && this.itemHelper.isValidItem(item._id)
-                && !pmcItemBlacklist.includes(item._id)
-                && !itemBlacklist.includes(item._id)
-                && item._props.Width === 1
-                && item._props.Height === 1,
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent)
+                    && this.itemHelper.isValidItem(item._id)
+                    && !pmcItemBlacklist.includes(item._id)
+                    && !itemBlacklist.includes(item._id)
+                    && item._props.Width === 1
+                    && item._props.Height === 1,
             );
 
             for (const itemToAdd of itemsToAdd)
@@ -87,7 +88,7 @@ export class PMCLootGenerator
             {
                 // Invert price so cheapest has a larger weight
                 // Times by highest price so most expensive item has weight of 1
-                this.pocketLootPool[key] = Math.round(1 / this.pocketLootPool[key] * highestPrice);
+                this.pocketLootPool[key] = Math.round((1 / this.pocketLootPool[key]) * highestPrice);
             }
 
             this.weightedRandomHelper.reduceWeightValues(this.pocketLootPool);
@@ -117,12 +118,13 @@ export class PMCLootGenerator
             // Blacklist seasonal items
             itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
 
-            const itemsToAdd = Object.values(items).filter(item =>
-                allowedItemTypes.includes(item._parent)
-                && this.itemHelper.isValidItem(item._id)
-                && !pmcItemBlacklist.includes(item._id)
-                && !itemBlacklist.includes(item._id)
-                && this.itemFitsInto2By2Slot(item),
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent)
+                    && this.itemHelper.isValidItem(item._id)
+                    && !pmcItemBlacklist.includes(item._id)
+                    && !itemBlacklist.includes(item._id)
+                    && this.itemFitsInto2By2Slot(item),
             );
 
             for (const itemToAdd of itemsToAdd)
@@ -145,7 +147,7 @@ export class PMCLootGenerator
             {
                 // Invert price so cheapest has a larger weight
                 // Times by highest price so most expensive item has weight of 1
-                this.vestLootPool[key] = Math.round(1 / this.vestLootPool[key] * highestPrice);
+                this.vestLootPool[key] = Math.round((1 / this.vestLootPool[key]) * highestPrice);
             }
 
             this.weightedRandomHelper.reduceWeightValues(this.vestLootPool);
@@ -186,11 +188,12 @@ export class PMCLootGenerator
             // Blacklist seasonal items
             itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
 
-            const itemsToAdd = Object.values(items).filter(item =>
-                allowedItemTypes.includes(item._parent)
-                && this.itemHelper.isValidItem(item._id)
-                && !pmcItemBlacklist.includes(item._id)
-                && !itemBlacklist.includes(item._id),
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent)
+                    && this.itemHelper.isValidItem(item._id)
+                    && !pmcItemBlacklist.includes(item._id)
+                    && !itemBlacklist.includes(item._id),
             );
 
             for (const itemToAdd of itemsToAdd)
@@ -213,7 +216,7 @@ export class PMCLootGenerator
             {
                 // Invert price so cheapest has a larger weight
                 // Times by highest price so most expensive item has weight of 1
-                this.backpackLootPool[key] = Math.round(1 / this.backpackLootPool[key] * highestPrice);
+                this.backpackLootPool[key] = Math.round((1 / this.backpackLootPool[key]) * highestPrice);
             }
 
             this.weightedRandomHelper.reduceWeightValues(this.backpackLootPool);

@@ -7,7 +7,6 @@ import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IRepairActionDataRequest } from "@spt-aki/models/eft/repair/IRepairActionDataRequest";
 import { ITraderRepairActionDataRequest } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
-import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
 import { IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
@@ -86,7 +85,11 @@ export class RepairController
      * @param pmcData player profile
      * @returns item event router action
      */
-    public repairWithKit(sessionID: string, body: IRepairActionDataRequest, pmcData: IPmcData): IItemEventRouterResponse
+    public repairWithKit(
+        sessionID: string,
+        body: IRepairActionDataRequest,
+        pmcData: IPmcData,
+    ): IItemEventRouterResponse
     {
         const output = this.eventOutputHolder.getOutput(sessionID);
 

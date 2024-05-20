@@ -79,7 +79,7 @@ export class RagfairServer
      */
     public getUpdateableTraders(): string[]
     {
-        return Object.keys(this.ragfairConfig.traders).filter(x => this.ragfairConfig.traders[x]);
+        return Object.keys(this.ragfairConfig.traders).filter((x) => this.ragfairConfig.traders[x]);
     }
 
     public getAllActiveCategories(
@@ -98,7 +98,7 @@ export class RagfairServer
     public hideOffer(offerId: string): void
     {
         const offers = this.ragfairOfferService.getOffers();
-        const offer = offers.find(x => x._id === offerId);
+        const offer = offers.find((x) => x._id === offerId);
 
         if (!offer)
         {

@@ -14,7 +14,6 @@ import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEve
 import { IAkiProfile, ISystemData } from "@spt-aki/models/eft/profile/IAkiProfile";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { ISearchRequestData, OfferOwnerType } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
@@ -185,7 +184,7 @@ export class RagfairOfferHelper
                 const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcData);
 
                 // Exclude locked offers + above loyalty locked offers if at least 1 was found
-                const availableOffers = possibleOffers.filter(x => !(x.locked || lockedOffers.includes(x._id)));
+                const availableOffers = possibleOffers.filter((x) => !(x.locked || lockedOffers.includes(x._id)));
                 if (availableOffers.length > 0)
                 {
                     possibleOffers = availableOffers;
@@ -220,8 +219,8 @@ export class RagfairOfferHelper
      */
     public traderOfferItemQuestLocked(offer: IRagfairOffer, traderAssorts: Record<string, ITraderAssort>): boolean
     {
-        return offer.items?.some(i =>
-            traderAssorts[offer.user.id].barter_scheme[i._id]?.some(bs1 => bs1?.some(bs2 => bs2.sptQuestLocked)),
+        return offer.items?.some((i) =>
+            traderAssorts[offer.user.id].barter_scheme[i._id]?.some((bs1) => bs1?.some((bs2) => bs2.sptQuestLocked)),
         );
     }
 
@@ -248,15 +247,15 @@ export class RagfairOfferHelper
     protected traderBuyRestrictionReached(offer: IRagfairOffer): boolean
     {
         const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(offer.user.id).items;
-        const assortData = traderAssorts.find(x => x._id === offer.items[0]._id);
+        const assortData = traderAssorts.find((x) => x._id === offer.items[0]._id);
 
         // No trader assort data
         if (!assortData)
         {
             this.logger.warning(
-                `Unable to find trader: ${offer.user.nickname} assort for item: ${
-                    this.itemHelper.getItemName(offer.items[0]._tpl)
-                } ${offer.items[0]._tpl}, cannot check if buy restriction reached`,
+                `Unable to find trader: ${offer.user.nickname} assort for item: ${this.itemHelper.getItemName(
+                    offer.items[0]._tpl,
+                )} ${offer.items[0]._tpl}, cannot check if buy restriction reached`,
             );
             return false;
         }
@@ -333,7 +332,7 @@ export class RagfairOfferHelper
 
                 this.increaseProfileRagfairRating(
                     this.saveServer.getProfile(sessionID),
-                    offer.summaryCost / totalItemsCount * boughtAmount,
+                    (offer.summaryCost / totalItemsCount) * boughtAmount,
                 );
 
                 this.completeOffer(sessionID, offer, boughtAmount);
@@ -361,7 +360,7 @@ export class RagfairOfferHelper
             return;
         }
         profile.characters.pmc.RagfairInfo.rating
-            += ragfairConfig.ratingIncreaseCount / ragfairConfig.ratingSumForIncrease * amountToIncrementBy;
+            += (ragfairConfig.ratingIncreaseCount / ragfairConfig.ratingSumForIncrease) * amountToIncrementBy;
     }
 
     /**
@@ -389,7 +388,7 @@ export class RagfairOfferHelper
     protected deleteOfferById(sessionID: string, offerId: string): void
     {
         const profileRagfairInfo = this.saveServer.getProfile(sessionID).characters.pmc.RagfairInfo;
-        const index = profileRagfairInfo.offers.findIndex(o => o._id === offerId);
+        const index = profileRagfairInfo.offers.findIndex((o) => o._id === offerId);
         profileRagfairInfo.offers.splice(index, 1);
 
         // Also delete from ragfair
@@ -416,7 +415,7 @@ export class RagfairOfferHelper
         else
         {
             offer.items[0].upd.StackObjectsCount -= boughtAmount;
-            const rootItems = offer.items.filter(i => i.parentId === "hideout");
+            const rootItems = offer.items.filter((i) => i.parentId === "hideout");
             rootItems.splice(0, 1);
 
             let removeCount = boughtAmount;
@@ -446,9 +445,9 @@ export class RagfairOfferHelper
 
                 for (const id of idsToRemove)
                 {
-                    const newIds = offer.items.filter(i =>
-                        !idsToRemove.includes(i._id) && idsToRemove.includes(i.parentId),
-                    ).map(i => i._id);
+                    const newIds = offer.items
+                        .filter((i) => !idsToRemove.includes(i._id) && idsToRemove.includes(i.parentId))
+                        .map((i) => i._id);
                     if (newIds.length > 0)
                     {
                         foundNewItems = true;
@@ -459,7 +458,7 @@ export class RagfairOfferHelper
 
             if (idsToRemove.length > 0)
             {
-                offer.items = offer.items.filter(i => !idsToRemove.includes(i._id));
+                offer.items = offer.items.filter((i) => !idsToRemove.includes(i._id));
             }
         }
 
@@ -684,7 +683,7 @@ export class RagfairOfferHelper
         if (this.itemHelper.armorItemCanHoldMods(offerRootItem._tpl))
         {
             const offerRootTemplate = this.itemHelper.getItem(offerRootItem._tpl)[1];
-            const requiredPlateCount = offerRootTemplate._props.Slots?.filter(item => item._required)?.length;
+            const requiredPlateCount = offerRootTemplate._props.Slots?.filter((item) => item._required)?.length;
 
             return offer.items.length > requiredPlateCount;
         }
@@ -724,7 +723,7 @@ export class RagfairOfferHelper
         // Performing a required search and offer doesn't have requirement for item
         if (
             searchRequest.neededSearchId
-            && !offer.requirements.some(requirement => requirement._tpl === searchRequest.neededSearchId)
+            && !offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId)
         )
         {
             return false;
@@ -782,7 +781,7 @@ export class RagfairOfferHelper
 
     public isDisplayableOfferThatNeedsItem(searchRequest: ISearchRequestData, offer: IRagfairOffer): boolean
     {
-        if (offer.requirements.some(requirement => requirement._tpl === searchRequest.neededSearchId))
+        if (offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId))
         {
             return true;
         }
@@ -799,7 +798,11 @@ export class RagfairOfferHelper
     {
         // thanks typescript, undefined assertion is not returnable since it
         // tries to return a multitype object
-        return item.upd.MedKit || item.upd.Repairable || item.upd.Resource || item.upd.FoodDrink || item.upd.Key
+        return item.upd.MedKit
+          || item.upd.Repairable
+          || item.upd.Resource
+          || item.upd.FoodDrink
+          || item.upd.Key
           || item.upd.RepairKit
             ? true
             : false;

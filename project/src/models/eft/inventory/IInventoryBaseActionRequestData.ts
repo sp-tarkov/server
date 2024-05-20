@@ -1,8 +1,7 @@
 import { IBaseInteractionRequestData } from "@spt-aki/models/eft/common/request/IBaseInteractionRequestData";
 
 export interface IInventoryBaseActionRequestData extends IBaseInteractionRequestData
-{
-}
+{}
 
 export interface To
 {

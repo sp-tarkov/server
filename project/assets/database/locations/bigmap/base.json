@@ -84,6 +84,28 @@
   ],
   "BossLocationSpawn": [
     {
+      "BossChance": 0,
+      "BossDifficult": "normal",
+      "BossEscortAmount": "2,2,3,3,3,4,4,5",
+      "BossEscortDifficult": "normal",
+      "BossEscortType": "skier",
+      "BossName": "skier",
+      "BossPlayer": false,
+      "BossZone": "ZoneScavBase,ZoneDormitory,ZoneFactoryCenter,ZoneCustoms,ZoneBrige",
+      "Delay": 0,
+      "ForceSpawn": false,
+      "IgnoreMaxBots": true,
+      "RandomTimeSpawn": false,
+      "SpawnMode": [
+        "regular",
+        "pve"
+      ],
+      "Supports": null,
+      "Time": -1,
+      "TriggerId": "",
+      "TriggerName": ""
+    },
+    {
       "BossChance": 35,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",

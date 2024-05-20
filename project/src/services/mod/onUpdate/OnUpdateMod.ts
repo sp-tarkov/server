@@ -6,8 +6,7 @@ export class OnUpdateMod implements OnUpdate
         private onUpdateOverride: (timeSinceLastRun: number) => boolean,
         private getRouteOverride: () => string,
     )
-    {
-    }
+    {}
 
     public async onUpdate(timeSinceLastRun: number): Promise<boolean>
     {

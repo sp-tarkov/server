@@ -172,7 +172,7 @@ export class DurabilityLimitsHelper
         const delta = this.randomUtil.getInt(minDelta, maxDelta);
         const result = Number((maxDurability - delta).toFixed(2));
         const durabilityValueMinLimit = Math.round(
-            this.getMinWeaponLimitPercentFromConfig(botRole) / 100 * maxDurability,
+            (this.getMinWeaponLimitPercentFromConfig(botRole) / 100) * maxDurability,
         );
 
         // Dont let weapon dura go below the percent defined in config
@@ -186,7 +186,7 @@ export class DurabilityLimitsHelper
         const delta = this.randomUtil.getInt(minDelta, maxDelta);
         const result = Number((maxDurability - delta).toFixed(2));
         const durabilityValueMinLimit = Math.round(
-            this.getMinArmorLimitPercentFromConfig(botRole) / 100 * maxDurability,
+            (this.getMinArmorLimitPercentFromConfig(botRole) / 100) * maxDurability,
         );
 
         // Dont let armor dura go below the percent defined in config

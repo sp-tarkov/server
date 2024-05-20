@@ -145,12 +145,22 @@ export interface Message
     Member?: IUpdatableChatMember
     templateId?: string
     text?: string
+    replyTo?: IReplyTo
     hasRewards?: boolean
     rewardCollected: boolean
     items?: MessageItems
     maxStorageTime?: number
     systemData?: ISystemData
     profileChangeEvents?: IProfileChangeEvent[]
+}
+
+export interface IReplyTo
+{
+    _id: string
+    uid: string
+    type: MessageType
+    dt: number
+    text?: string
 }
 
 export interface MessagePreview

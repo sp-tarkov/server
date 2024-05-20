@@ -94,7 +94,7 @@ export class RagfairLinkedItemService
         applyLinkedItems: (items: string[]) => void,
     ): void
     {
-        const cylinderMod = cylinder._props.Slots.find(x => x._name === "mod_magazine");
+        const cylinderMod = cylinder._props.Slots.find((x) => x._name === "mod_magazine");
         if (cylinderMod)
         {
             // Get the first cylinder filter tpl

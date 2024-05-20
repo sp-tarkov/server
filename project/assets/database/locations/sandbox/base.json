@@ -52,12 +52,13 @@
   "Enabled": true,
   "EscapeTimeLimit": 35,
   "EscapeTimeLimitCoop": 30,
+  "EscapeTimeLimitPVE": 24,
   "ExitZones": {
     "$oid": "5c82534488a45046451a2386"
   },
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.6,
+  "GlobalLootChanceModifier": 0.72,
   "GlobalLootChanceModifierPvE": 1,
   "IconX": 760,
   "IconY": 740,

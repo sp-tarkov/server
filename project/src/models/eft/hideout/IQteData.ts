@@ -17,8 +17,7 @@ export interface IQteData
     area: HideoutAreas
     areaLevel: number
     quickTimeEvents: IQuickTimeEvent[]
-    requirements:
-    (
+    requirements: (
       | IAreaRequirement
       | IItemRequirement
       | ITraderUnlockRequirement

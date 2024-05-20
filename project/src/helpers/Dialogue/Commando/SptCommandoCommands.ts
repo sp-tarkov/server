@@ -18,18 +18,20 @@ export class SptCommandoCommands implements IChatCommand
         const coreConfigs = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
         // if give command is disabled or commando commands are disabled
         if (
-            !(coreConfigs.features?.chatbotFeatures?.commandoFeatures?.giveCommandEnabled
-            && coreConfigs.features?.chatbotFeatures?.commandoEnabled)
+            !(
+                coreConfigs.features?.chatbotFeatures?.commandoFeatures?.giveCommandEnabled
+                && coreConfigs.features?.chatbotFeatures?.commandoEnabled
+            )
         )
         {
-            const giveCommand = this.sptCommands.find(c => c.getCommand().toLocaleLowerCase() === "give");
+            const giveCommand = this.sptCommands.find((c) => c.getCommand().toLocaleLowerCase() === "give");
             this.sptCommands.splice(this.sptCommands.indexOf(giveCommand), 1);
         }
     }
 
     public registerSptCommandoCommand(command: ISptCommand): void
     {
-        if (this.sptCommands.some(c => c.getCommand() === command.getCommand()))
+        if (this.sptCommands.some((c) => c.getCommand() === command.getCommand()))
         {
             throw new Error(`The command "${command.getCommand()}" attempting to be registered already exists.`);
         }
@@ -38,7 +40,7 @@ export class SptCommandoCommands implements IChatCommand
 
     public getCommandHelp(command: string): string
     {
-        return this.sptCommands.find(c => c.getCommand() === command)?.getCommandHelp();
+        return this.sptCommands.find((c) => c.getCommand() === command)?.getCommandHelp();
     }
 
     public getCommandPrefix(): string
@@ -48,7 +50,7 @@ export class SptCommandoCommands implements IChatCommand
 
     public getCommands(): Set<string>
     {
-        return new Set(this.sptCommands.map(c => c.getCommand()));
+        return new Set(this.sptCommands.map((c) => c.getCommand()));
     }
 
     public handle(
@@ -58,10 +60,8 @@ export class SptCommandoCommands implements IChatCommand
         request: ISendMessageRequest,
     ): string
     {
-        return this.sptCommands.find(c => c.getCommand() === command).performAction(
-            commandHandler,
-            sessionId,
-            request,
-        );
+        return this.sptCommands
+            .find((c) => c.getCommand() === command)
+            .performAction(commandHandler, sessionId, request);
     }
 }

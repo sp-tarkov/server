@@ -52,7 +52,7 @@ export class ProfileHelper
         for (const questId in questConditionId)
         {
             const conditionId = questConditionId[questId];
-            const profileQuest = pmcData.Quests.find(x => x.qid === questId);
+            const profileQuest = pmcData.Quests.find((x) => x.qid === questId);
 
             // Find index of condition in array
             const index = profileQuest.completedConditions.indexOf(conditionId);
@@ -227,7 +227,7 @@ export class ProfileHelper
             playerLevel = expTable.length - 1;
         }
 
-        for (let i = 0; i < level; i++)
+        for (let i = 0; i < playerLevel; i++)
         {
             exp += expTable[i].exp;
         }
@@ -339,7 +339,7 @@ export class ProfileHelper
     public removeSecureContainer(profile: IPmcData): IPmcData
     {
         const items = profile.Inventory.items;
-        const secureContainer = items.find(x => x.slotId === "SecuredContainer");
+        const secureContainer = items.find((x) => x.slotId === "SecuredContainer");
         if (secureContainer)
         {
             // Find and remove container + children
@@ -349,7 +349,7 @@ export class ProfileHelper
             );
 
             // Remove child items + secure container
-            profile.Inventory.items = items.filter(x => !childItemsInSecureContainer.includes(x._id));
+            profile.Inventory.items = items.filter((x) => !childItemsInSecureContainer.includes(x._id));
         }
 
         return profile;
@@ -393,7 +393,7 @@ export class ProfileHelper
             return false;
         }
 
-        return !!profile.aki.receivedGifts.find(x => x.giftId === giftId);
+        return !!profile.aki.receivedGifts.find((x) => x.giftId === giftId);
     }
 
     /**
@@ -403,7 +403,7 @@ export class ProfileHelper
      */
     public incrementStatCounter(counters: CounterKeyValue[], keyToIncrement: string): void
     {
-        const stat = counters.find(x => x.Key.includes(keyToIncrement));
+        const stat = counters.find((x) => x.Key.includes(keyToIncrement));
         if (stat)
         {
             stat.Value++;
@@ -424,7 +424,7 @@ export class ProfileHelper
             return false;
         }
 
-        const profileSkill = profileSkills.find(x => x.Id === skillType);
+        const profileSkill = profileSkills.find((x) => x.Id === skillType);
         if (!profileSkill)
         {
             this.logger.warning(`Unable to check for elite skill ${skillType}, not found in profile`);
@@ -466,7 +466,7 @@ export class ProfileHelper
             return;
         }
 
-        const profileSkill = profileSkills.find(profileSkill => profileSkill.Id === skill);
+        const profileSkill = profileSkills.find((profileSkill) => profileSkill.Id === skill);
         if (!profileSkill)
         {
             this.logger.error(this.localisationService.getText("quest-no_skill_found", skill));
@@ -499,7 +499,7 @@ export class ProfileHelper
      */
     public getSkillFromProfile(pmcData: IPmcData, skill: SkillTypes): Common
     {
-        const skillToReturn = pmcData.Skills.Common.find(commonSkill => commonSkill.Id === skill);
+        const skillToReturn = pmcData.Skills.Common.find((commonSkill) => commonSkill.Id === skill);
         if (!skillToReturn)
         {
             this.logger.warning(`Profile ${pmcData.sessionId} does not have a skill named: ${skill}`);
@@ -527,7 +527,7 @@ export class ProfileHelper
     public addStashRowsBonusToProfile(sessionId: string, rowsToAdd: number): void
     {
         const profile = this.getPmcProfile(sessionId);
-        const existingBonus = profile.Bonuses.find(bonus => bonus.type === BonusType.STASH_ROWS);
+        const existingBonus = profile.Bonuses.find((bonus) => bonus.type === BonusType.STASH_ROWS);
         if (!existingBonus)
         {
             profile.Bonuses.push({

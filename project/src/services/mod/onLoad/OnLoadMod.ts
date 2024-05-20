@@ -2,7 +2,10 @@ import { OnLoad } from "@spt-aki/di/OnLoad";
 
 export class OnLoadMod implements OnLoad
 {
-    public constructor(private onLoadOverride: () => void, private getRouteOverride: () => string)
+    public constructor(
+        private onLoadOverride: () => void,
+        private getRouteOverride: () => string,
+    )
     {
         // super();
     }

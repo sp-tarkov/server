@@ -386,6 +386,9 @@ export interface Productive
     ProductionTime?: number
     GivenItemsInStart?: string[]
     Interrupted?: boolean
+    Code?: string
+    Decoded?: boolean
+    AvailableForFinish?: boolean
     /** Used in hideout production.json */
     needFuelForAllProductionTime?: boolean
     /** Used when sending data to client */
@@ -456,8 +459,7 @@ export interface Notes
 }
 
 export interface CarExtractCounts
-{
-}
+{}
 
 export enum SurvivorClass
 {

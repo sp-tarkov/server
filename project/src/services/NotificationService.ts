@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { INotification } from "@spt-aki/models/eft/notifier/INotifier";
+import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
 
 @injectable()
 export class NotificationService
@@ -37,7 +37,7 @@ export class NotificationService
     /**
      * Add message to queue
      */
-    public add(sessionID: string, message: INotification): void
+    public add(sessionID: string, message: IWsNotificationEvent): void
     {
         this.get(sessionID).push(message);
     }

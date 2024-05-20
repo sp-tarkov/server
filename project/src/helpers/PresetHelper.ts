@@ -44,11 +44,9 @@ export class PresetHelper
     {
         if (!this.defaultWeaponPresets)
         {
-            this.defaultWeaponPresets = Object.values(
-                this.databaseServer.getTables().globals.ItemPresets,
-            )
+            this.defaultWeaponPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets)
                 .filter(
-                    preset =>
+                    (preset) =>
                         preset._encyclopedia !== undefined
                         && this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON),
                 )
@@ -71,9 +69,12 @@ export class PresetHelper
         if (!this.defaultEquipmentPresets)
         {
             this.defaultEquipmentPresets = Object.values(this.databaseServer.getTables().globals.ItemPresets)
-                .filter(preset => preset._encyclopedia !== undefined
-                && this.itemHelper.armorItemCanHoldMods(preset._encyclopedia),
-                ).reduce((acc, cur) =>
+                .filter(
+                    (preset) =>
+                        preset._encyclopedia !== undefined
+                        && this.itemHelper.armorItemCanHoldMods(preset._encyclopedia),
+                )
+                .reduce((acc, cur) =>
                 {
                     acc[cur._id] = cur;
                     return acc;
@@ -186,7 +187,7 @@ export class PresetHelper
         const defaultPreset = this.getDefaultPreset(tpl);
 
         // Bundle up tpls we want price for
-        const tpls = defaultPreset ? defaultPreset._items.map(item => item._tpl) : [tpl];
+        const tpls = defaultPreset ? defaultPreset._items.map((item) => item._tpl) : [tpl];
 
         // Get price of tpls
         return this.itemHelper.getItemAndChildrenPrice(tpls);

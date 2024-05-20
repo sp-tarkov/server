@@ -88,7 +88,11 @@ export class DataCallbacks
      * Handle client/account/customization
      * @returns string[]
      */
-    public getTemplateCharacter(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string[]>
+    public getTemplateCharacter(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<string[]>
     {
         return this.httpResponse.getBody(this.databaseServer.getTables().templates.character);
     }

@@ -307,8 +307,9 @@ export class BotInventoryGenerator
      */
     protected generateEquipment(settings: IGenerateEquipmentProperties): boolean
     {
-        const spawnChance = ([EquipmentSlots.POCKETS, EquipmentSlots.SECURED_CONTAINER] as string[])
-            .includes(settings.rootEquipmentSlot)
+        const spawnChance = ([EquipmentSlots.POCKETS, EquipmentSlots.SECURED_CONTAINER] as string[]).includes(
+            settings.rootEquipmentSlot,
+        )
             ? 100
             : settings.spawnChances.equipment[settings.rootEquipmentSlot];
 
@@ -442,7 +443,7 @@ export class BotInventoryGenerator
         for (const modSlot of Object.keys(modPool ?? []))
         {
             const blacklistedMods = equipmentBlacklist[0]?.equipment[modSlot] || [];
-            const filteredMods = modPool[modSlot].filter(x => !blacklistedMods.includes(x));
+            const filteredMods = modPool[modSlot].filter((x) => !blacklistedMods.includes(x));
 
             if (filteredMods.length > 0)
             {
@@ -504,17 +505,21 @@ export class BotInventoryGenerator
     protected getDesiredWeaponsForBot(equipmentChances: Chances): { slot: EquipmentSlots, shouldSpawn: boolean }[]
     {
         const shouldSpawnPrimary = this.randomUtil.getChance100(equipmentChances.equipment.FirstPrimaryWeapon);
-        return [{ slot: EquipmentSlots.FIRST_PRIMARY_WEAPON, shouldSpawn: shouldSpawnPrimary }, {
-            slot: EquipmentSlots.SECOND_PRIMARY_WEAPON,
-            shouldSpawn: shouldSpawnPrimary
-                ? this.randomUtil.getChance100(equipmentChances.equipment.SecondPrimaryWeapon)
-                : false,
-        }, {
-            slot: EquipmentSlots.HOLSTER,
-            shouldSpawn: shouldSpawnPrimary
-                ? this.randomUtil.getChance100(equipmentChances.equipment.Holster) // Primary weapon = roll for chance at pistol
-                : true, // No primary = force pistol
-        }];
+        return [
+            { slot: EquipmentSlots.FIRST_PRIMARY_WEAPON, shouldSpawn: shouldSpawnPrimary },
+            {
+                slot: EquipmentSlots.SECOND_PRIMARY_WEAPON,
+                shouldSpawn: shouldSpawnPrimary
+                    ? this.randomUtil.getChance100(equipmentChances.equipment.SecondPrimaryWeapon)
+                    : false,
+            },
+            {
+                slot: EquipmentSlots.HOLSTER,
+                shouldSpawn: shouldSpawnPrimary
+                    ? this.randomUtil.getChance100(equipmentChances.equipment.Holster) // Primary weapon = roll for chance at pistol
+                    : true, // No primary = force pistol
+            },
+        ];
     }
 
     /**

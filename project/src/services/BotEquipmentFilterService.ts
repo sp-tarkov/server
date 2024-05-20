@@ -99,7 +99,10 @@ export class BotEquipmentFilterService
      * @param equipmentChanges Changes to apply
      * @param baseValues data to update
      */
-    protected adjustChances(equipmentChanges: Record<string, number>, baseValues: EquipmentChances | ModsChances): void
+    protected adjustChances(
+        equipmentChanges: Record<string, number>,
+        baseValues: EquipmentChances | ModsChances,
+    ): void
     {
         if (!equipmentChanges)
         {
@@ -173,15 +176,16 @@ export class BotEquipmentFilterService
 
         // No equipment blacklist found, skip
         if (
-            !blacklistDetailsForBot || Object.keys(blacklistDetailsForBot).length === 0
+            !blacklistDetailsForBot
+            || Object.keys(blacklistDetailsForBot).length === 0
             || !blacklistDetailsForBot.blacklist
         )
         {
             return null;
         }
 
-        return blacklistDetailsForBot.blacklist.find(x =>
-            playerLevel >= x.levelRange.min && playerLevel <= x.levelRange.max,
+        return blacklistDetailsForBot.blacklist.find(
+            (x) => playerLevel >= x.levelRange.min && playerLevel <= x.levelRange.max,
         );
     }
 
@@ -201,8 +205,8 @@ export class BotEquipmentFilterService
             return null;
         }
 
-        return botEquipmentConfig.whitelist.find(x =>
-            playerLevel >= x.levelRange.min && playerLevel <= x.levelRange.max,
+        return botEquipmentConfig.whitelist.find(
+            (x) => playerLevel >= x.levelRange.min && playerLevel <= x.levelRange.max,
         );
     }
 
@@ -218,15 +222,16 @@ export class BotEquipmentFilterService
 
         // No config found, skip
         if (
-            !botEquipmentConfig || Object.keys(botEquipmentConfig).length === 0
+            !botEquipmentConfig
+            || Object.keys(botEquipmentConfig).length === 0
             || !botEquipmentConfig.weightingAdjustmentsByBotLevel
         )
         {
             return null;
         }
 
-        return botEquipmentConfig.weightingAdjustmentsByBotLevel.find(x =>
-            botLevel >= x.levelRange.min && botLevel <= x.levelRange.max,
+        return botEquipmentConfig.weightingAdjustmentsByBotLevel.find(
+            (x) => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max,
         );
     }
 
@@ -236,21 +241,25 @@ export class BotEquipmentFilterService
      * @param playerlevel Level of bot
      * @returns Weighting adjustments for bot items
      */
-    protected getBotWeightingAdjustmentsByPlayerLevel(botRole: string, playerlevel: number): WeightingAdjustmentDetails
+    protected getBotWeightingAdjustmentsByPlayerLevel(
+        botRole: string,
+        playerlevel: number,
+    ): WeightingAdjustmentDetails
     {
         const botEquipmentConfig = this.botEquipmentConfig[botRole];
 
         // No config found, skip
         if (
-            !botEquipmentConfig || Object.keys(botEquipmentConfig).length === 0
+            !botEquipmentConfig
+            || Object.keys(botEquipmentConfig).length === 0
             || !botEquipmentConfig.weightingAdjustmentsByPlayerLevel
         )
         {
             return null;
         }
 
-        return botEquipmentConfig.weightingAdjustmentsByPlayerLevel.find(x =>
-            playerlevel >= x.levelRange.min && playerlevel <= x.levelRange.max,
+        return botEquipmentConfig.weightingAdjustmentsByPlayerLevel.find(
+            (x) => playerlevel >= x.levelRange.min && playerlevel <= x.levelRange.max,
         );
     }
 

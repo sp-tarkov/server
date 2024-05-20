@@ -65,9 +65,10 @@ export class BotLevelGenerator
         maxLevel: number,
     ): number
     {
-        const maxPossibleLevel = botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
-            ? Math.min(botGenerationDetails.locationSpecificPmcLevelOverride.max, maxLevel) // Was a PMC and they have a level override
-            : Math.min(levelDetails.max, maxLevel); // Not pmc with override or non-pmc
+        const maxPossibleLevel
+            = botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
+                ? Math.min(botGenerationDetails.locationSpecificPmcLevelOverride.max, maxLevel) // Was a PMC and they have a level override
+                : Math.min(levelDetails.max, maxLevel); // Not pmc with override or non-pmc
 
         let level = botGenerationDetails.playerLevel + botGenerationDetails.botRelativeLevelDeltaMax;
         if (level > maxPossibleLevel)
@@ -91,12 +92,13 @@ export class BotLevelGenerator
         maxlevel: number,
     ): number
     {
-        const minPossibleLevel = botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
-            ? Math.min(
-                Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
-                maxlevel, // Fallback if value above is crazy (default is 79)
-            )
-            : Math.min(levelDetails.min, maxlevel); // Not pmc with override or non-pmc
+        const minPossibleLevel
+            = botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
+                ? Math.min(
+                    Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
+                    maxlevel, // Fallback if value above is crazy (default is 79)
+                )
+                : Math.min(levelDetails.min, maxlevel); // Not pmc with override or non-pmc
 
         let level = botGenerationDetails.playerLevel - botGenerationDetails.botRelativeLevelDeltaMin;
         if (level < minPossibleLevel)

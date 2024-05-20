@@ -211,9 +211,10 @@
   "Enabled": true,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
+  "EscapeTimeLimitPVE": 30,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
-  "GlobalLootChanceModifier": 0.33,
+  "GlobalLootChanceModifier": 0.4,
   "GlobalLootChanceModifierPvE": 1,
   "IconX": 360,
   "IconY": 410,
@@ -428,9 +429,9 @@
       "Id": "0438fda7-9b94-4052-a234-211b5598ec62",
       "Infiltration": "Common",
       "Position": {
-        "x": -115.929993,
-        "y": -5.47,
-        "z": -22.95398
+        "x": -261.38,
+        "y": -10.8371286,
+        "z": -64.01001
       },
       "Rotation": 170,
       "Sides": [
@@ -576,9 +577,9 @@
       "Id": "0a5669a9-4221-4e76-b4ac-67ea8c8bfc7e",
       "Infiltration": "Common",
       "Position": {
-        "x": 86.823,
-        "y": -6.77,
-        "z": -33.8469849
+        "x": 233.929932,
+        "y": -10.7823429,
+        "z": -1.97000122
       },
       "Rotation": 254.950012,
       "Sides": [
@@ -656,18 +657,18 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 35
+          "Radius": 63
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "119bf539-a9d7-400e-a69d-f7e36f715193",
       "Infiltration": "Common",
       "Position": {
-        "x": -168.593018,
-        "y": -6.298,
-        "z": 55.697998
+        "x": -218.140015,
+        "y": -10.865,
+        "z": 51.0800171
       },
-      "Rotation": 117.288177,
+      "Rotation": 180.89,
       "Sides": [
         "All"
       ]
@@ -1097,18 +1098,18 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 35
+          "Radius": 63
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "1e5d8495-e764-497f-9209-f26bd9911a54",
       "Infiltration": "Common",
       "Position": {
-        "x": -167.830017,
-        "y": -6.303,
-        "z": 59.125
+        "x": -219.359985,
+        "y": -10.8605223,
+        "z": 50.3699951
       },
-      "Rotation": 135.641571,
+      "Rotation": 180.89,
       "Sides": [
         "All"
       ]
@@ -1196,9 +1197,9 @@
       "Id": "206ed703-1a5a-47b5-a354-b34cd6c267d2",
       "Infiltration": "Common",
       "Position": {
-        "x": -108.281006,
-        "y": -10.45,
-        "z": 73.56604
+        "x": -132.31,
+        "y": -11.7000122,
+        "z": 80.6500244
       },
       "Rotation": 96.94,
       "Sides": [
@@ -1218,7 +1219,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 45
+          "Radius": 50
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -1254,9 +1255,9 @@
       "Id": "24d23092-ce33-40cd-b1cf-b45c72f68fd9",
       "Infiltration": "Common",
       "Position": {
-        "x": -119.008972,
-        "y": -5.466,
-        "z": -24.3669739
+        "x": -267.82,
+        "y": -10.865,
+        "z": -75.04999
       },
       "Rotation": 83.81,
       "Sides": [
@@ -1305,16 +1306,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 35
+          "Radius": 63
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "25353616-a83d-476e-b9e1-d30a67314b35",
       "Infiltration": "Common",
       "Position": {
-        "x": -160.515991,
-        "y": -6.293,
-        "z": 65.64099
+        "x": -213.789978,
+        "y": -10.865,
+        "z": 50.8900146
       },
       "Rotation": 180.89,
       "Sides": [
@@ -1540,16 +1541,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 35
+          "Radius": 63
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "348e573d-a5bf-4488-a64e-3c047677153c",
       "Infiltration": "Common",
       "Position": {
-        "x": -162.341,
-        "y": -6.305,
-        "z": 62.19403
+        "x": -215.419983,
+        "y": -10.8603563,
+        "z": 50.9299927
       },
       "Rotation": 180.89,
       "Sides": [
@@ -1802,7 +1803,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 55
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -2454,9 +2455,9 @@
       "Id": "5ddf18ce-8b04-4a2f-a18c-352505ec1baa",
       "Infiltration": "Common",
       "Position": {
-        "x": -121.913025,
-        "y": -5.454,
-        "z": -21.6659851
+        "x": -262.94,
+        "y": -10.865,
+        "z": -67.33002
       },
       "Rotation": 126.350006,
       "Sides": [
@@ -2476,7 +2477,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 55
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -2681,7 +2682,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 60
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -2828,7 +2829,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 55
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -2857,7 +2858,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 55
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -3070,9 +3071,9 @@
       "Id": "7fce3e48-e5eb-4db4-9c45-9f063aea47b7",
       "Infiltration": "Common",
       "Position": {
-        "x": -115.359009,
-        "y": -5.447,
-        "z": -26.6069946
+        "x": -266.05,
+        "y": -10.8621635,
+        "z": -76.8500061
       },
       "Rotation": 28.36,
       "Sides": [
@@ -3151,16 +3152,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 45
+          "Radius": 50
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "85485da0-9a38-41c6-b322-d3f18520c484",
       "Infiltration": "Common",
       "Position": {
-        "x": 86.15997,
-        "y": -6.81,
-        "z": -36.5599976
+        "x": 234.079956,
+        "y": -10.7748346,
+        "z": -3.29000854
       },
       "Rotation": 254.950012,
       "Sides": [
@@ -3414,7 +3415,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 60
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -3450,11 +3451,11 @@
       "Id": "8a9c0e57-c784-497c-a215-1c45b6256f8a",
       "Infiltration": "Common",
       "Position": {
-        "x": 85.05798,
-        "y": -6.676,
-        "z": -37.8710022
+        "x": 233.829956,
+        "y": -10.8204985,
+        "z": -0.5799866
       },
-      "Rotation": 337.909149,
+      "Rotation": 254.950012,
       "Sides": [
         "All"
       ]
@@ -3501,16 +3502,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 35
+          "Radius": 63
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "8b961fc6-835c-430c-822c-733424995c94",
       "Infiltration": "Common",
       "Position": {
-        "x": -163.706,
-        "y": -6.311,
-        "z": 61.1260376
+        "x": -216.780029,
+        "y": -10.8633461,
+        "z": 51.02997
       },
       "Rotation": 180.89,
       "Sides": [
@@ -3589,7 +3590,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 55
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -4421,9 +4422,9 @@
       "Id": "b2fa9077-6179-4774-9aa9-fcbd7356f8b9",
       "Infiltration": "Common",
       "Position": {
-        "x": -114.937988,
-        "y": -10.443,
-        "z": 76.39899
+        "x": -130.280029,
+        "y": -11.705,
+        "z": 80.26001
       },
       "Rotation": 96.94,
       "Sides": [
@@ -4532,7 +4533,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 60
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -4802,9 +4803,9 @@
       "Id": "c24ae3d6-ca2f-4ff7-97d2-962436e34a6e",
       "Infiltration": "Common",
       "Position": {
-        "x": -115.723022,
-        "y": -5.444,
-        "z": -19.9519958
+        "x": -263.02002,
+        "y": -10.865,
+        "z": -64.70999
       },
       "Rotation": 170,
       "Sides": [
@@ -4835,9 +4836,9 @@
       "Id": "c2617f1a-b99e-4a99-a863-28b779479b0a",
       "Infiltration": "Common",
       "Position": {
-        "x": -112.146973,
+        "x": -126.839966,
         "y": -10.4690428,
-        "z": 75.19202
+        "z": 79.09003
       },
       "Rotation": 96.94,
       "Sides": [
@@ -5004,16 +5005,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 45
+          "Radius": 50
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "cd1ecd67-b353-41a3-864f-685b27d0cb96",
       "Infiltration": "Common",
       "Position": {
-        "x": 87.76599,
-        "y": -6.758,
-        "z": -30.5809937
+        "x": 234.439941,
+        "y": -10.7718134,
+        "z": -4.83999634
       },
       "Rotation": 254.950012,
       "Sides": [
@@ -5121,9 +5122,9 @@
             "z": 0
           },
           "Size": {
-            "x": 30,
+            "x": 50,
             "y": 4,
-            "z": 30
+            "z": 50
           }
         }
       },
@@ -5153,16 +5154,16 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 45
+          "Radius": 50
         }
       },
       "DelayToCanSpawnSec": 4,
       "Id": "d91a39ba-2c87-4cc0-8203-82f91d607526",
       "Infiltration": "Common",
       "Position": {
-        "x": 89.41498,
-        "y": -6.823,
-        "z": -24.7189941
+        "x": 234.300049,
+        "y": -10.8054333,
+        "z": -6.720001
       },
       "Rotation": 254.950012,
       "Sides": [
@@ -5417,7 +5418,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 45
+          "Radius": 50
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -5475,7 +5476,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 60
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -5918,7 +5919,7 @@
             "y": 0,
             "z": 0
           },
-          "Radius": 40
+          "Radius": 60
         }
       },
       "DelayToCanSpawnSec": 4,
@@ -6061,13 +6062,13 @@
   "exits": [
     {
       "Chance": 100,
-      "Count": 420,
+      "Count": 400,
       "EntryPoints": "Common",
       "EventAvailable": false,
       "ExfiltrationTime": 5,
       "ExfiltrationType": "SharedTimer",
       "Id": "0",
-      "MaxTime": 1500,
+      "MaxTime": 1250,
       "MinTime": 1200,
       "Name": "EXFIL_Train",
       "PassageRequirement": "Train",

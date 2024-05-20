@@ -156,7 +156,7 @@ export class RagfairHelper
         for (let item of items)
         {
             item = this.itemHelper.fixItemStackCount(item);
-            const isChild = items.find(it => it._id === item.parentId);
+            const isChild = items.find((it) => it._id === item.parentId);
 
             if (!isChild)
             {

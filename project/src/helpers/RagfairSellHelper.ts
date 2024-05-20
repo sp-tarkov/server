@@ -43,7 +43,7 @@ export class RagfairSellHelper
         const baseSellChancePercent = sellConfig.base * qualityMultiplier;
 
         // Modfier gets applied twice to either penalize or incentivize over/under pricing (Probably a cleaner way to do this)
-        const sellModifier = averageOfferPriceRub / playerListedPriceRub * sellConfig.sellMultiplier;
+        const sellModifier = (averageOfferPriceRub / playerListedPriceRub) * sellConfig.sellMultiplier;
         let sellChance = Math.round(baseSellChancePercent * sellModifier * sellModifier ** 3 + 10); // Power of 3
 
         // Adjust sell chance if below config value
@@ -72,10 +72,11 @@ export class RagfairSellHelper
         const startTime = this.timeUtil.getTimestamp();
 
         // Get a time in future to stop simulating sell chances at
-        const endTime = startTime
-          + this.timeUtil.getHoursAsSeconds(
-              this.databaseServer.getTables().globals.config.RagFair.offerDurationTimeInHour,
-          );
+        const endTime
+            = startTime
+            + this.timeUtil.getHoursAsSeconds(
+                this.databaseServer.getTables().globals.config.RagFair.offerDurationTimeInHour,
+            );
 
         let sellTime = startTime;
         let remainingCount = itemSellCount;

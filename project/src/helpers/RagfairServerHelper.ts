@@ -106,7 +106,8 @@ export class RagfairServerHelper
 
         // Don't include damaged ammo packs
         if (
-            this.ragfairConfig.dynamic.blacklist.damagedAmmoPacks && itemDetails[1]._parent === BaseClasses.AMMO_BOX
+            this.ragfairConfig.dynamic.blacklist.damagedAmmoPacks
+            && itemDetails[1]._parent === BaseClasses.AMMO_BOX
             && itemDetails[1]._name.includes("_damaged")
         )
         {
@@ -217,7 +218,7 @@ export class RagfairServerHelper
             this.randomUtil.getInt(config.stackablePercent.min, config.stackablePercent.max),
         );
 
-        return Math.round(maxStackCount / 100 * stackPercent);
+        return Math.round((maxStackCount / 100) * stackPercent);
     }
 
     /**

@@ -22284,8 +22284,8 @@
         "edge_of_darkness",
         "press_edition",
         "tournament_live",
-          "unheard_edition",
-          "edge_of_darkness_with_pve"
+        "unheard_edition",
+        "edge_of_darkness_with_pve"
       ]
     },
     "Customization": {
@@ -22518,38 +22518,38 @@
             "Savage"
           ],
           "voice": "Boss_Sturman"
-          },
-          {
-            "isNotRandom": true,
-            "side": [
-              "Usec",
-              "Savage"
-            ],
-            "voice": "Usec_4"
-          },
-          {
-            "isNotRandom": true,
-            "side": [
-              "Usec",
-              "Savage"
-            ],
-            "voice": "Usec_5"
-          },
-          {
-            "isNotRandom": true,
-            "side": [
-              "Bear",
-              "Savage"
-            ],
-            "voice": "Bear_1_Eng"
-          },
-          {
-            "isNotRandom": true,
-            "side": [
-              "Bear",
-              "Savage"
-            ],
-            "voice": "Bear_2_Eng "
+        },
+        {
+          "isNotRandom": true,
+          "side": [
+            "Usec",
+            "Savage"
+          ],
+          "voice": "Usec_4"
+        },
+        {
+          "isNotRandom": true,
+          "side": [
+            "Usec",
+            "Savage"
+          ],
+          "voice": "Usec_5"
+        },
+        {
+          "isNotRandom": true,
+          "side": [
+            "Bear",
+            "Savage"
+          ],
+          "voice": "Bear_1_Eng"
+        },
+        {
+          "isNotRandom": true,
+          "side": [
+            "Bear",
+            "Savage"
+          ],
+          "voice": "Bear_2_Eng "
         }
       ],
       "SavageBody": {
@@ -22618,100 +22618,100 @@
           "hands": "5cc2e68f14c02e28b47de290",
           "isNotRandom": true
         },
-          "bear_top_borey": {
-            "body": "5fce3e47fe40296c1d5fd784",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_top_ops_windshirt ": {
-            "body": "657058fddf9b3231400e9188",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_tshirt_termo": {
-            "body": "5fce3e0cfe40296c1d5fd782",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_OPS_Windshirt_black ": {
-            "body": "660440d2c8949a435906e43a",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_SpNa": {
-            "body": "6377266693a3b4967208e42b",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_blacklynx": {
-            "body": "5d1f566d86f7744bcd13459a",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_contractortshirt ": {
-            "body": "5d1f565786f7743f8362bcd5",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_fsbfastresponse ": {
-            "body": "5d1f568486f7744bca3f0b98",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_g99": {
-            "body": "5f5e401747344c2e4f6c42c5",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_ghostmarksman": {
-            "body": "5d1f567786f7744bcc04874f",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_summerfield": {
-            "body": "5d1f564b86f7744bcb0acd16",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_tactical_long": {
-            "body": "6295e698e9de5e7b3751c47a",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_telnik ": {
-            "body": "5e4bb31586f7740695730568",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_tiger": {
-            "body": "5e9d9fa986f774054d6b89f2",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_turtleneck_black ": {
-            "body": "66043cc27502eca33a08cad0",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "bear_upper_zaslon": {
-            "body": "5df89f1f86f77412631087ea",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
+        "bear_top_borey": {
+          "body": "5fce3e47fe40296c1d5fd784",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_top_ops_windshirt ": {
+          "body": "657058fddf9b3231400e9188",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_tshirt_termo": {
+          "body": "5fce3e0cfe40296c1d5fd782",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_OPS_Windshirt_black ": {
+          "body": "660440d2c8949a435906e43a",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_SpNa": {
+          "body": "6377266693a3b4967208e42b",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_blacklynx": {
+          "body": "5d1f566d86f7744bcd13459a",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_contractortshirt ": {
+          "body": "5d1f565786f7743f8362bcd5",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_fsbfastresponse ": {
+          "body": "5d1f568486f7744bca3f0b98",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_g99": {
+          "body": "5f5e401747344c2e4f6c42c5",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_ghostmarksman": {
+          "body": "5d1f567786f7744bcc04874f",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_summerfield": {
+          "body": "5d1f564b86f7744bcb0acd16",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_tactical_long": {
+          "body": "6295e698e9de5e7b3751c47a",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_telnik ": {
+          "body": "5e4bb31586f7740695730568",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_tiger": {
+          "body": "5e9d9fa986f774054d6b89f2",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_turtleneck_black ": {
+          "body": "66043cc27502eca33a08cad0",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "bear_upper_zaslon": {
+          "body": "5df89f1f86f77412631087ea",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
         "scav_kit_upper_meteor": {
           "body": "5df8a10486f77412672a1e3a",
           "hands": "5df8eac086f77412640e2ea7",
           "isNotRandom": false
-          },
-          "top_bear_sumrak ": {
-            "body": "617bca4b4013b06b0b78df2a",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "top_bear_voin ": {
-            "body": "6033a31e9ec839204e6a2f3e",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
+        },
+        "top_bear_sumrak ": {
+          "body": "617bca4b4013b06b0b78df2a",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "top_bear_voin ": {
+          "body": "6033a31e9ec839204e6a2f3e",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
         },
         "top_boss_tagilla": {
           "body": "609e86926e8078716f600883",
@@ -22733,11 +22733,11 @@
           "hands": "5cc2e68f14c02e28b47de290",
           "isNotRandom": true
         },
-          "usec_upper_CryeAC_Alpha_Green": {
-            "body": "66043728333907134309d647",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
+        "usec_upper_CryeAC_Alpha_Green": {
+          "body": "66043728333907134309d647",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
         "usec_upper_acu": {
           "body": "5fd3e9f71b735718c25cd9f8",
           "hands": "5cc2e68f14c02e28b47de290",
@@ -22745,21 +22745,21 @@
         },
         "usec_upper_aggressor": {
           "body": "5d1f56c686f7744bcd13459c",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "usec_upper_carinthia_softshell ": {
-            "body": "637b945722e2a933ed0e33c8",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "usec_upper_cereum": {
-            "body": "618109c96d7ca35d076b3363",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "usec_upper_chameleon_softshell": {
-            "body": "6295e8c3e08ed747e64aea00",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "usec_upper_carinthia_softshell ": {
+          "body": "637b945722e2a933ed0e33c8",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "usec_upper_cereum": {
+          "body": "618109c96d7ca35d076b3363",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "usec_upper_chameleon_softshell": {
+          "body": "6295e8c3e08ed747e64aea00",
           "hands": "5cc2e68f14c02e28b47de290",
           "isNotRandom": true
         },
@@ -22800,16 +22800,16 @@
         },
         "usec_upper_tier_2": {
           "body": "5e4bb35286f77406a511c9bc",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "usec_upper_velocity ": {
-            "body": "6571cb0923aa6d72760a7f8f",
-            "hands": "5cc2e68f14c02e28b47de290",
-            "isNotRandom": true
-          },
-          "usec_upper_velocity_multicam": {
-            "body": "660437e57502eca33a08caca",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "usec_upper_velocity ": {
+          "body": "6571cb0923aa6d72760a7f8f",
+          "hands": "5cc2e68f14c02e28b47de290",
+          "isNotRandom": true
+        },
+        "usec_upper_velocity_multicam": {
+          "body": "660437e57502eca33a08caca",
           "hands": "5cc2e68f14c02e28b47de290",
           "isNotRandom": true
         },
@@ -22985,81 +22985,81 @@
           "feet": "5cdea3c47d6c8b0475341734",
           "isNotRandom": true
         },
-          "bear_lower_Windshirt_tan ": {
-            "NotRandom": false,
-            "feet": "66043d7ac8949a435906e434",
-            "isNotRandom": true
-          },
-          "bear_lower_combat": {
-            "NotRandom": false,
-            "feet": "5e4bb39386f774067f79de05",
-            "isNotRandom": true
-          },
-          "bear_lower_fsburban": {
-            "NotRandom": false,
-            "feet": "5d1f58cb86f7744bca3f0b9a",
-            "isNotRandom": true
-          },
-          "bear_lower_g99": {
-            "NotRandom": false,
-            "feet": "5f5e40400bc58666c37e7819",
-            "isNotRandom": true
-          },
-          "bear_lower_gorkakobra": {
-            "NotRandom": false,
-            "feet": "5d1f58a086f7743f8362bcd9",
-            "isNotRandom": true
-          },
-          "bear_lower_gorkasso ": {
-            "NotRandom": false,
-            "feet": "5d1f58bd86f7744bce0ee9ef",
-            "isNotRandom": true
-          },
-          "bear_lower_oldschool": {
-            "NotRandom": false,
-            "feet": "5df89f8f86f77412672a1e38",
-            "isNotRandom": true
-          },
-          "bear_lower_ops_windshirt ": {
-            "NotRandom": false,
-            "feet": "65707a89f5a6f1412f0c5f7b",
-            "isNotRandom": true
-          },
-          "bear_lower_spna": {
-            "NotRandom": false,
-            "feet": "6377315993a3b4967208e437",
-            "isNotRandom": true
-          },
-          "bear_lower_srvv_surpat ": {
-            "NotRandom": false,
-            "feet": "66043cf87502eca33a08cad2",
-            "isNotRandom": true
-          },
-          "bear_lower_summerfield ": {
-            "NotRandom": false,
-            "feet": "5d1f588e86f7744bcc048753",
-            "isNotRandom": true
-          },
-          "bear_lower_sumrak ": {
-            "NotRandom": false,
-            "feet": "617be9e4e02b3b3fa50fa8f2",
-            "isNotRandom": true
-          },
-          "bear_lower_triarius": {
-            "NotRandom": false,
-            "feet": "5fce3e965a9f8c40685693bc",
-            "isNotRandom": true
-          },
-          "bear_lower_voin ": {
-            "NotRandom": false,
-            "feet": "6033a3d8ed2e0509b15f9031",
-            "isNotRandom": true
-          },
-          "bear_lower_zaslon": {
-            "NotRandom": false,
-            "feet": "5e9dc97c86f774054c19ac9a",
-            "isNotRandom": true
-          },
+        "bear_lower_Windshirt_tan ": {
+          "NotRandom": false,
+          "feet": "66043d7ac8949a435906e434",
+          "isNotRandom": true
+        },
+        "bear_lower_combat": {
+          "NotRandom": false,
+          "feet": "5e4bb39386f774067f79de05",
+          "isNotRandom": true
+        },
+        "bear_lower_fsburban": {
+          "NotRandom": false,
+          "feet": "5d1f58cb86f7744bca3f0b9a",
+          "isNotRandom": true
+        },
+        "bear_lower_g99": {
+          "NotRandom": false,
+          "feet": "5f5e40400bc58666c37e7819",
+          "isNotRandom": true
+        },
+        "bear_lower_gorkakobra": {
+          "NotRandom": false,
+          "feet": "5d1f58a086f7743f8362bcd9",
+          "isNotRandom": true
+        },
+        "bear_lower_gorkasso ": {
+          "NotRandom": false,
+          "feet": "5d1f58bd86f7744bce0ee9ef",
+          "isNotRandom": true
+        },
+        "bear_lower_oldschool": {
+          "NotRandom": false,
+          "feet": "5df89f8f86f77412672a1e38",
+          "isNotRandom": true
+        },
+        "bear_lower_ops_windshirt ": {
+          "NotRandom": false,
+          "feet": "65707a89f5a6f1412f0c5f7b",
+          "isNotRandom": true
+        },
+        "bear_lower_spna": {
+          "NotRandom": false,
+          "feet": "6377315993a3b4967208e437",
+          "isNotRandom": true
+        },
+        "bear_lower_srvv_surpat ": {
+          "NotRandom": false,
+          "feet": "66043cf87502eca33a08cad2",
+          "isNotRandom": true
+        },
+        "bear_lower_summerfield ": {
+          "NotRandom": false,
+          "feet": "5d1f588e86f7744bcc048753",
+          "isNotRandom": true
+        },
+        "bear_lower_sumrak ": {
+          "NotRandom": false,
+          "feet": "617be9e4e02b3b3fa50fa8f2",
+          "isNotRandom": true
+        },
+        "bear_lower_triarius": {
+          "NotRandom": false,
+          "feet": "5fce3e965a9f8c40685693bc",
+          "isNotRandom": true
+        },
+        "bear_lower_voin ": {
+          "NotRandom": false,
+          "feet": "6033a3d8ed2e0509b15f9031",
+          "isNotRandom": true
+        },
+        "bear_lower_zaslon": {
+          "NotRandom": false,
+          "feet": "5e9dc97c86f774054c19ac9a",
+          "isNotRandom": true
+        },
         "pants_boss_tagilla": {
           "NotRandom": false,
           "feet": "609e86c09776a947754429b2",
@@ -23079,91 +23079,91 @@
           "NotRandom": false,
           "feet": "5df8a15186f77412640e2e6a",
           "isNotRandom": false
-          },
-          "usec_lower_CryeAC_Alpha_Green": {
-            "NotRandom": false,
-            "feet": "660436487502eca33a08cac8",
-            "isNotRandom": true
-          },
-          "usec_lower_DeepRecon": {
-            "NotRandom": false,
-            "feet": "5e9dcadd86f7743e20652f23",
-            "isNotRandom": true
-          },
-          "usec_lower_UrbanResponder ": {
-            "NotRandom": false,
-            "feet": "5f5e40a06760b4138443b341",
-            "isNotRandom": true
-          },
-          "usec_lower_beltstaff ": {
-            "NotRandom": false,
-            "feet": "6033a3fee29c9f6c9b14e74e",
-            "isNotRandom": true
-          },
-          "usec_lower_carinthia_softshell": {
-            "NotRandom": false,
-            "feet": "637ba17aa10a96c2b605dbc2",
-            "isNotRandom": true
-          },
-          "usec_lower_cereum": {
-            "NotRandom": false,
-            "feet": "617c02e24013b06b0b78df80",
-            "isNotRandom": true
-          },
-          "usec_lower_chameleon_softshell": {
-            "NotRandom": false,
-            "feet": "6295e944e9de5e7b3751c4da",
-            "isNotRandom": true
-          },
-          "usec_lower_commando ": {
-            "NotRandom": false,
-            "feet": "5e4bb3b586f77406812bd579",
-            "isNotRandom": true
-          },
-          "usec_lower_gen2khyber": {
-            "NotRandom": false,
-            "feet": "5d1f591186f7744bcc048755",
-            "isNotRandom": true
-          },
-          "usec_lower_infiltrator": {
-            "NotRandom": false,
-            "feet": "5d1f592286f7743f8362bcdb",
-            "isNotRandom": true
-          },
-          "usec_lower_jeansranger": {
-            "NotRandom": false,
-            "feet": "5d1f590486f7744bcd13459e",
-            "isNotRandom": true
-          },
-          "usec_lower_taclifeterrain ": {
-            "NotRandom": false,
-            "feet": "5d1f58ed86f7744bcb0acd1c",
-            "isNotRandom": true
-          },
-          "usec_lower_tacres ": {
-            "NotRandom": false,
-            "feet": "5d1f593286f7743014162044",
-            "isNotRandom": true
-          },
-          "usec_lower_tier3": {
-            "NotRandom": false,
-            "feet": "5fcf940bce1ba36a513bb9cc",
-            "isNotRandom": true
-          },
-          "usec_lower_tier_2": {
-            "NotRandom": false,
-            "feet": "5df8a08886f7740bfe6df775",
-            "isNotRandom": true
-          },
-          "usec_lower_velocity": {
-            "NotRandom": false,
-            "feet": "6571cad4c8673f00290f5657",
-            "isNotRandom": true
-          },
-          "usec_lower_velocity_multicam": {
-            "NotRandom": false,
-            "feet": "660436a810bcdf80ff0e9f78",
-            "isNotRandom": true
+        },
+        "usec_lower_CryeAC_Alpha_Green": {
+          "NotRandom": false,
+          "feet": "660436487502eca33a08cac8",
+          "isNotRandom": true
+        },
+        "usec_lower_DeepRecon": {
+          "NotRandom": false,
+          "feet": "5e9dcadd86f7743e20652f23",
+          "isNotRandom": true
+        },
+        "usec_lower_UrbanResponder ": {
+          "NotRandom": false,
+          "feet": "5f5e40a06760b4138443b341",
+          "isNotRandom": true
+        },
+        "usec_lower_beltstaff ": {
+          "NotRandom": false,
+          "feet": "6033a3fee29c9f6c9b14e74e",
+          "isNotRandom": true
+        },
+        "usec_lower_carinthia_softshell": {
+          "NotRandom": false,
+          "feet": "637ba17aa10a96c2b605dbc2",
+          "isNotRandom": true
+        },
+        "usec_lower_cereum": {
+          "NotRandom": false,
+          "feet": "617c02e24013b06b0b78df80",
+          "isNotRandom": true
+        },
+        "usec_lower_chameleon_softshell": {
+          "NotRandom": false,
+          "feet": "6295e944e9de5e7b3751c4da",
+          "isNotRandom": true
+        },
+        "usec_lower_commando ": {
+          "NotRandom": false,
+          "feet": "5e4bb3b586f77406812bd579",
+          "isNotRandom": true
+        },
+        "usec_lower_gen2khyber": {
+          "NotRandom": false,
+          "feet": "5d1f591186f7744bcc048755",
+          "isNotRandom": true
+        },
+        "usec_lower_infiltrator": {
+          "NotRandom": false,
+          "feet": "5d1f592286f7743f8362bcdb",
+          "isNotRandom": true
+        },
+        "usec_lower_jeansranger": {
+          "NotRandom": false,
+          "feet": "5d1f590486f7744bcd13459e",
+          "isNotRandom": true
+        },
+        "usec_lower_taclifeterrain ": {
+          "NotRandom": false,
+          "feet": "5d1f58ed86f7744bcb0acd1c",
+          "isNotRandom": true
+        },
+        "usec_lower_tacres ": {
+          "NotRandom": false,
+          "feet": "5d1f593286f7743014162044",
+          "isNotRandom": true
+        },
+        "usec_lower_tier3": {
+          "NotRandom": false,
+          "feet": "5fcf940bce1ba36a513bb9cc",
+          "isNotRandom": true
+        },
+        "usec_lower_tier_2": {
+          "NotRandom": false,
+          "feet": "5df8a08886f7740bfe6df775",
+          "isNotRandom": true
+        },
+        "usec_lower_velocity": {
+          "NotRandom": false,
+          "feet": "6571cad4c8673f00290f5657",
+          "isNotRandom": true
+        },
+        "usec_lower_velocity_multicam": {
+          "NotRandom": false,
+          "feet": "660436a810bcdf80ff0e9f78",
+          "isNotRandom": true
         },
         "wild_feet": {
           "NotRandom": false,
@@ -23312,26 +23312,26 @@
           "head": "5cc084dd14c02e000b0550a3",
           "isNotRandom": true
         },
-          "bear_head_3": {
-            "NotRandom": false,
-            "head": "5fdb7571e4ed5b5ea251e529",
-            "isNotRandom": true
-          },
-          "bear_head_5 ": {
-            "NotRandom": false,
-            "head": "619f94f5b90286142b59d45f",
-            "isNotRandom": true
-          },
-          "bear_head_6": {
-            "NotRandom": false,
-            "head": "62a9e7d15ea3b87d6f642a28",
-            "isNotRandom": true
-          },
-          "bear_head_eug": {
-            "NotRandom": false,
-            "head": "6574aa9a1b144de18c0fba45",
-            "isNotRandom": true
-          },
+        "bear_head_3": {
+          "NotRandom": false,
+          "head": "5fdb7571e4ed5b5ea251e529",
+          "isNotRandom": true
+        },
+        "bear_head_5 ": {
+          "NotRandom": false,
+          "head": "619f94f5b90286142b59d45f",
+          "isNotRandom": true
+        },
+        "bear_head_6": {
+          "NotRandom": false,
+          "head": "62a9e7d15ea3b87d6f642a28",
+          "isNotRandom": true
+        },
+        "bear_head_eug": {
+          "NotRandom": false,
+          "head": "6574aa9a1b144de18c0fba45",
+          "isNotRandom": true
+        },
         "head_cultist_01": {
           "NotRandom": false,
           "head": "5fb5297a0359a84b77066e56",
@@ -23365,21 +23365,21 @@
         "usec_head_5": {
           "NotRandom": false,
           "head": "60a6aa8fd559ae040d0d951f",
-            "isNotRandom": true
-          },
-          "usec_head_6": {
-            "NotRandom": false,
-            "head": "619f9e338858a474c8685cc9",
-            "isNotRandom": true
-          },
-          "usec_head_7": {
-            "NotRandom": false,
-            "head": "62aca6a1310e67685a2fc2e7",
-            "isNotRandom": true
-          },
-          "usec_head_eric": {
-            "NotRandom": false,
-            "head": "6574aabee0423b9ebe0c79cf",
+          "isNotRandom": true
+        },
+        "usec_head_6": {
+          "NotRandom": false,
+          "head": "619f9e338858a474c8685cc9",
+          "isNotRandom": true
+        },
+        "usec_head_7": {
+          "NotRandom": false,
+          "head": "62aca6a1310e67685a2fc2e7",
+          "isNotRandom": true
+        },
+        "usec_head_eric": {
+          "NotRandom": false,
+          "head": "6574aabee0423b9ebe0c79cf",
           "isNotRandom": true
         },
         "wild_head_1": {
@@ -26221,7 +26221,7 @@
       },
       "InertiaLimits": {
         "x": 0,
-          "y": 73,
+        "y": 73,
         "z": 0.5
       },
       "InertiaLimitsStep": 0.025,
@@ -27067,8 +27067,8 @@
     },
     "PveSettings": {
       "AvailableVersions": [
-          "unheard_edition",
-          "edge_of_darkness_with_pve"
+        "unheard_edition",
+        "edge_of_darkness_with_pve"
       ],
       "ModeEnabled": true
     },
@@ -27095,83 +27095,83 @@
           "count": 1,
           "countForSpecialEditions": 1,
           "from": -10000,
-            "to": -10
-          },
-          {
-            "count": 2,
-            "countForSpecialEditions": 3,
-            "from": -10,
+          "to": -10
+        },
+        {
+          "count": 2,
+          "countForSpecialEditions": 3,
+          "from": -10,
           "to": -2
         },
         {
-            "count": 3,
-            "countForSpecialEditions": 4,
+          "count": 3,
+          "countForSpecialEditions": 4,
           "from": -2,
           "to": 0.2
         },
         {
-            "count": 4,
-            "countForSpecialEditions": 5,
+          "count": 4,
+          "countForSpecialEditions": 5,
           "from": 0.2,
           "to": 7
         },
         {
-            "count": 5,
-            "countForSpecialEditions": 6,
+          "count": 5,
+          "countForSpecialEditions": 6,
           "from": 7,
           "to": 30
         },
         {
-            "count": 6,
-            "countForSpecialEditions": 7,
+          "count": 6,
+          "countForSpecialEditions": 7,
           "from": 30,
           "to": 60
         },
         {
-            "count": 7,
-            "countForSpecialEditions": 8,
+          "count": 7,
+          "countForSpecialEditions": 8,
           "from": 60,
           "to": 100
         },
         {
-            "count": 7,
-            "countForSpecialEditions": 8,
+          "count": 7,
+          "countForSpecialEditions": 8,
           "from": 100,
           "to": 150
         },
         {
           "count": 8,
-            "countForSpecialEditions": 9,
+          "countForSpecialEditions": 9,
           "from": 150,
           "to": 200
         },
         {
-            "count": 9,
-            "countForSpecialEditions": 10,
+          "count": 9,
+          "countForSpecialEditions": 10,
           "from": 200,
           "to": 250
         },
         {
-            "count": 10,
-            "countForSpecialEditions": 11,
+          "count": 10,
+          "countForSpecialEditions": 11,
           "from": 250,
           "to": 500
         },
         {
-            "count": 11,
-            "countForSpecialEditions": 12,
+          "count": 11,
+          "countForSpecialEditions": 12,
           "from": 500,
           "to": 750
         },
         {
-            "count": 12,
-            "countForSpecialEditions": 13,
+          "count": 12,
+          "countForSpecialEditions": 13,
           "from": 750,
           "to": 1000
         },
         {
-            "count": 15,
-            "countForSpecialEditions": 16,
+          "count": 15,
+          "countForSpecialEditions": 16,
           "from": 1000,
           "to": 10000
         }
@@ -27722,6 +27722,11 @@
         "MaxInLobby": 2,
         "MaxInRaid": 2,
         "TemplateId": "628baf0b967de16aab5a4f36"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 1,
+        "TemplateId": "6638a5474e92f038531e210e"
       }
     ],
     "SavagePlayCooldown": 1500,
@@ -28164,11 +28169,11 @@
       "BaseHoldBreathConsumption": 4,
       "BaseOverweightLimits": {
         "x": 26,
-          "y": 77,
+        "y": 77,
         "z": 0
       },
       "BaseRestorationRate": 4.5,
-        "Capacity": 115,
+      "Capacity": 115,
       "ClimbLegsConsumption": {
         "x": 0,
         "y": 20,
@@ -28196,7 +28201,7 @@
       "FatigueRestorationRate": 0.42,
       "GrenadeHighThrow": 11,
       "GrenadeLowThrow": 8,
-        "HandsCapacity": 80,
+      "HandsCapacity": 80,
       "HandsRestoration": 2.1,
       "HoldBreathStaminaMultiplier": {
         "x": 2,
@@ -28243,7 +28248,7 @@
       "SprintDrainRate": 4,
       "SprintOverweightLimits": {
         "x": 26,
-          "y": 72,
+        "y": 72,
         "z": 0
       },
       "SprintSensitivityLowerLimit": 0.5,
@@ -28278,12 +28283,12 @@
       },
       "WalkOverweightLimits": {
         "x": 45,
-          "y": 86,
+        "y": 86,
         "z": 0
       },
       "WalkSpeedOverweightLimits": {
         "x": 35,
-          "y": 80,
+        "y": 80,
         "z": 0
       },
       "WalkVisualEffectMultiplier": 0.1,

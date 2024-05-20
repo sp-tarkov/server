@@ -64,11 +64,9 @@ export class RagfairPriceService implements OnLoad
      */
     public refreshStaticPrices(): void
     {
-        for (
-            const item of Object.values(this.databaseServer.getTables().templates.items).filter(x =>
-                x._type === "Item",
-            )
-        )
+        for (const item of Object.values(this.databaseServer.getTables().templates.items).filter(
+            (x) => x._type === "Item",
+        ))
         {
             this.prices.static[item._id] = Math.round(this.handbookHelper.getTemplatePrice(item._id));
         }
@@ -197,7 +195,7 @@ export class RagfairPriceService implements OnLoad
      */
     protected getPriceDifference(a: number, b: number): number
     {
-        return 100 * a / (a + b);
+        return (100 * a) / (a + b);
     }
 
     /**
@@ -241,7 +239,10 @@ export class RagfairPriceService implements OnLoad
             price += this.getDynamicItemPrice(item._tpl, desiredCurrency, item, offerItems, isPackOffer);
 
             // Check if the item is a weapon preset.
-            if (item?.upd?.sptPresetId && this.presetHelper.isPresetBaseClass(item.upd.sptPresetId, BaseClasses.WEAPON))
+            if (
+                item?.upd?.sptPresetId
+                && this.presetHelper.isPresetBaseClass(item.upd.sptPresetId, BaseClasses.WEAPON)
+            )
             {
                 // This is a weapon preset, which has it's own price calculation that takes into account the mods in the
                 // preset. Since we've already calculated the price for the preset entire preset in
@@ -367,7 +368,7 @@ export class RagfairPriceService implements OnLoad
         price: number,
     ): number
     {
-        const itemHandbookPrice = handbookPrices.find(handbookItem => handbookItem.Id === itemTpl);
+        const itemHandbookPrice = handbookPrices.find((handbookItem) => handbookItem.Id === itemTpl);
         if (!itemHandbookPrice)
         {
             return price;
@@ -425,7 +426,8 @@ export class RagfairPriceService implements OnLoad
 
         // Only adjust price if difference is > a percent AND item price passes threshold set in config
         if (
-            priceDifferencePercent > this.ragfairConfig.dynamic.offerAdjustment.maxPriceDifferenceBelowHandbookPercent
+            priceDifferencePercent
+            > this.ragfairConfig.dynamic.offerAdjustment.maxPriceDifferenceBelowHandbookPercent
             && itemPrice >= this.ragfairConfig.dynamic.offerAdjustment.priceThreshholdRub
         )
         {
@@ -469,8 +471,8 @@ export class RagfairPriceService implements OnLoad
         }
 
         // Get mods on current gun not in default preset
-        const newOrReplacedModsInPresetVsDefault = weaponWithChildren.filter(x =>
-            !presetResult.preset._items.some(y => y._tpl === x._tpl),
+        const newOrReplacedModsInPresetVsDefault = weaponWithChildren.filter(
+            (x) => !presetResult.preset._items.some((y) => y._tpl === x._tpl),
         );
 
         // Add up extra mods price
@@ -485,8 +487,8 @@ export class RagfairPriceService implements OnLoad
         if (newOrReplacedModsInPresetVsDefault.length >= 1)
         {
             // Add up cost of mods replaced
-            const modsReplacedByNewMods = newOrReplacedModsInPresetVsDefault.filter(x =>
-                presetResult.preset._items.some(y => y.slotId === x.slotId),
+            const modsReplacedByNewMods = newOrReplacedModsInPresetVsDefault.filter((x) =>
+                presetResult.preset._items.some((y) => y.slotId === x.slotId),
             );
 
             // Add up replaced mods price
@@ -538,17 +540,13 @@ export class RagfairPriceService implements OnLoad
         if (nonDefaultPresets.length === 1)
         {
             this.logger.debug(
-                `Item Id: ${weapon._tpl} has no default encyclopedia entry but only one preset (${
-                    nonDefaultPresets[0]._name
-                }), choosing preset (${nonDefaultPresets[0]._name})`,
+                `Item Id: ${weapon._tpl} has no default encyclopedia entry but only one preset (${nonDefaultPresets[0]._name}), choosing preset (${nonDefaultPresets[0]._name})`,
             );
         }
         else
         {
             this.logger.debug(
-                `Item Id: ${weapon._tpl} has no default encyclopedia entry, choosing first preset (${
-                    nonDefaultPresets[0]._name
-                }) of ${nonDefaultPresets.length}`,
+                `Item Id: ${weapon._tpl} has no default encyclopedia entry, choosing first preset (${nonDefaultPresets[0]._name}) of ${nonDefaultPresets.length}`,
             );
         }
 

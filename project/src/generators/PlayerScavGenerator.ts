@@ -162,11 +162,13 @@ export class PlayerScavGenerator
             }
 
             const itemTemplate = itemResult[1];
-            const itemsToAdd: Item[] = [{
-                _id: this.hashUtil.generate(),
-                _tpl: itemTemplate._id,
-                ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemTemplate),
-            }];
+            const itemsToAdd: Item[] = [
+                {
+                    _id: this.hashUtil.generate(),
+                    _tpl: itemTemplate._id,
+                    ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemTemplate),
+                },
+            ];
 
             const result = this.botGeneratorHelper.addItemWithChildrenToEquipmentSlot(
                 containersToAddTo,

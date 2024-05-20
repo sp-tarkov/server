@@ -1,10 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
-import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
 import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import { IWeather, IWeatherData } from "@spt-aki/models/eft/weather/IWeatherData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Season } from "@spt-aki/models/enums/Season";
 import { WindDirection } from "@spt-aki/models/enums/WindDirection";
 import { IWeatherConfig } from "@spt-aki/models/spt/config/IWeatherConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
@@ -181,7 +179,8 @@ export class WeatherGenerator
     protected getRandomFloat(node: string): number
     {
         return Number.parseFloat(
-            this.randomUtil.getFloat(this.weatherConfig.weather[node].min, this.weatherConfig.weather[node].max)
+            this.randomUtil
+                .getFloat(this.weatherConfig.weather[node].min, this.weatherConfig.weather[node].max)
                 .toPrecision(3),
         );
     }

@@ -35,7 +35,7 @@ export class ContainerHelper
         const limitX = containerX - minVolume;
 
         // Every x+y slot taken up in container, exit
-        if (container2D.every(x => x.every(y => y === 1)))
+        if (container2D.every((x) => x.every((y) => y === 1)))
         {
             return new FindSlotResult(false);
         }
@@ -44,7 +44,7 @@ export class ContainerHelper
         for (let y = 0; y < limitY; y++)
         {
             // Across
-            if (container2D[y].every(x => x === 1))
+            if (container2D[y].every((x) => x === 1))
             {
                 // Every item in row is full, skip row
                 continue;

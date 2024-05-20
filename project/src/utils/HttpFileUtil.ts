@@ -7,14 +7,14 @@ import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
 export class HttpFileUtil
 {
     constructor(@inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper)
-    {
-    }
+    {}
 
     public sendFile(resp: ServerResponse, filePath: string): void
     {
         const pathSlic = filePath.split("/");
-        const type = this.httpServerHelper.getMimeText(pathSlic[pathSlic.length - 1].split(".").at(-1))
-          || this.httpServerHelper.getMimeText("txt");
+        const type
+            = this.httpServerHelper.getMimeText(pathSlic[pathSlic.length - 1].split(".").at(-1))
+            || this.httpServerHelper.getMimeText("txt");
         const fileStream = fs.createReadStream(filePath);
 
         fileStream.on("open", () =>

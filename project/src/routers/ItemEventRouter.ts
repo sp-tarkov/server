@@ -34,7 +34,7 @@ export class ItemEventRouter
         {
             const pmcData = this.profileHelper.getPmcProfile(sessionID);
 
-            const eventRouter = this.itemEventRouters.find(r => r.canHandle(body.Action));
+            const eventRouter = this.itemEventRouters.find((r) => r.canHandle(body.Action));
             if (eventRouter)
             {
                 this.logger.debug(`event: ${body.Action}`);

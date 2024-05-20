@@ -108,7 +108,7 @@ export class TraderHelper
         }
 
         // Find specific assort in traders data
-        const purchasedAssort = traderAssorts.items.find(item => item._id === assortId);
+        const purchasedAssort = traderAssorts.items.find((item) => item._id === assortId);
         if (!purchasedAssort)
         {
             this.logger.debug(`No assort ${assortId} on trader: ${traderId} found`);
@@ -239,7 +239,8 @@ export class TraderHelper
             if (
                 loyalty.minLevel <= pmcData.Info.Level
                 && loyalty.minSalesSum <= pmcData.TradersInfo[traderID].salesSum
-                && loyalty.minStanding <= pmcData.TradersInfo[traderID].standing && targetLevel < 4
+                && loyalty.minStanding <= pmcData.TradersInfo[traderID].standing
+                && targetLevel < 4
             )
             {
                 // level reached
@@ -270,7 +271,7 @@ export class TraderHelper
      */
     public getTraderUpdateSeconds(traderId: string): number
     {
-        const traderDetails = this.traderConfig.updateTime.find(x => x.traderId === traderId);
+        const traderDetails = this.traderConfig.updateTime.find((x) => x.traderId === traderId);
         if (!traderDetails || traderDetails.seconds.min === undefined || traderDetails.seconds.max === undefined)
         {
             this.logger.warning(
@@ -280,7 +281,8 @@ export class TraderHelper
                 }),
             );
 
-            this.traderConfig.updateTime.push( // create temporary entry to prevent logger spam
+            this.traderConfig.updateTime.push(
+                // create temporary entry to prevent logger spam
                 {
                     traderId: traderId,
                     seconds: { min: this.traderConfig.updateTimeDefault, max: this.traderConfig.updateTimeDefault },
@@ -397,15 +399,16 @@ export class TraderHelper
             }
 
             // Get all item assorts that have parentid of hideout (base item and not a mod of other item)
-            for (const item of traderAssorts.items.filter(x => x.parentId === "hideout"))
+            for (const item of traderAssorts.items.filter((x) => x.parentId === "hideout"))
             {
                 // Get barter scheme (contains cost of item)
                 const barterScheme = traderAssorts.barter_scheme[item._id][0][0];
 
                 // Convert into roubles
-                const roubleAmount = barterScheme._tpl === Money.ROUBLES
-                    ? barterScheme.count
-                    : this.handbookHelper.inRUB(barterScheme.count, barterScheme._tpl);
+                const roubleAmount
+                    = barterScheme._tpl === Money.ROUBLES
+                        ? barterScheme.count
+                        : this.handbookHelper.inRUB(barterScheme.count, barterScheme._tpl);
 
                 // Existing price smaller in dict than current iteration, overwrite
                 if (this.highestTraderPriceItems[item._tpl] ?? 0 < roubleAmount)
@@ -478,7 +481,7 @@ export class TraderHelper
      */
     public getTraderById(traderId: string): Traders
     {
-        const keys = Object.keys(Traders).filter(x => Traders[x] === traderId);
+        const keys = Object.keys(Traders).filter((x) => Traders[x] === traderId);
 
         if (keys.length === 0)
         {
@@ -523,7 +526,7 @@ export class TraderHelper
      */
     public traderEnumHasKey(key: string): boolean
     {
-        return Object.keys(Traders).some(x => x === key);
+        return Object.keys(Traders).some((x) => x === key);
     }
 
     /**
@@ -533,6 +536,6 @@ export class TraderHelper
      */
     public traderEnumHasValue(traderId: string): boolean
     {
-        return Object.values(Traders).some(x => x === traderId);
+        return Object.values(Traders).some((x) => x === traderId);
     }
 }

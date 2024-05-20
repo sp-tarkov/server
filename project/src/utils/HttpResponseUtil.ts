@@ -17,12 +17,12 @@ export class HttpResponseUtil
 
     protected clearString(s: string): any
     {
-        return s.replace(/[\b]/g, "").replace(/[\f]/g, "").replace(/[\n]/g, "")
+        return s
+            .replace(/[\b]/g, "")
+            .replace(/[\f]/g, "")
+            .replace(/[\n]/g, "")
             .replace(/[\r]/g, "")
-            .replace(
-                /[\t]/g,
-                "",
-            );
+            .replace(/[\t]/g, "");
     }
 
     /**

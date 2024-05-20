@@ -5,7 +5,11 @@ export class ExhaustableArray<T> implements IExhaustableArray<T>
 {
     private pool: T[];
 
-    constructor(private itemPool: T[], private randomUtil: RandomUtil, private cloner: ICloner)
+    constructor(
+        private itemPool: T[],
+        private randomUtil: RandomUtil,
+        private cloner: ICloner,
+    )
     {
         this.pool = this.cloner.clone(itemPool);
     }

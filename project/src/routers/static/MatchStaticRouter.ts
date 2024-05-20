@@ -4,9 +4,10 @@ import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
 import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { IAcceptGroupInviteResponse } from "@spt-aki/models/eft/match/IAcceptGroupInviteResponse";
-import { IGetGroupStatusResponse } from "@spt-aki/models/eft/match/IGetGroupStatusResponse";
-import { IJoinMatchResult } from "@spt-aki/models/eft/match/IJoinMatchResult";
+import { IGroupCharacter } from "@spt-aki/models/eft/match/IGroupCharacter";
+import { IMatchGroupCurrentResponse } from "@spt-aki/models/eft/match/IMatchGroupCurrentResponse";
+import { IMatchGroupStatusResponse } from "@spt-aki/models/eft/match/IMatchGroupStatusResponse";
+import { IProfileStatusResponse } from "@spt-aki/models/eft/match/IProfileStatusResponse";
 
 @injectable()
 export class MatchStaticRouter extends StaticRouter
@@ -40,7 +41,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
+                ): Promise<IGetBodyResponseData<IProfileStatusResponse>> =>
                 {
                     return this.matchCallbacks.joinMatch(url, info, sessionID);
                 },
@@ -54,7 +55,12 @@ export class MatchStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/match/group/delete",
-                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.deleteGroup(url, info, sessionID);
                 },
@@ -78,7 +84,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IGetGroupStatusResponse>> =>
+                ): Promise<IGetBodyResponseData<IMatchGroupStatusResponse>> =>
                 {
                     return this.matchCallbacks.getGroupStatus(url, info, sessionID);
                 },
@@ -90,7 +96,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IJoinMatchResult>> =>
+                ): Promise<IGetBodyResponseData<IProfileStatusResponse>> =>
                 {
                     return this.matchCallbacks.joinMatch(url, info, sessionID);
                 },
@@ -100,6 +106,18 @@ export class MatchStaticRouter extends StaticRouter
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.exitToMenu(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/match/group/current",
+                async (
+                    url: string,
+                    info: IEmptyRequestData,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IMatchGroupCurrentResponse>> =>
+                {
+                    return this.matchCallbacks.groupCurrent(url, info, sessionID);
                 },
             ),
             new RouteAction(
@@ -135,14 +153,19 @@ export class MatchStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<IAcceptGroupInviteResponse[]>> =>
+                ): Promise<IGetBodyResponseData<IGroupCharacter[]>> =>
                 {
                     return this.matchCallbacks.acceptGroupInvite(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/match/group/invite/decline",
-                async (url: string, info: any, sessionID: string, output: string): Promise<IGetBodyResponseData<any>> =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any>> =>
                 {
                     return this.matchCallbacks.declineGroupInvite(url, info, sessionID);
                 },
@@ -166,7 +189,7 @@ export class MatchStaticRouter extends StaticRouter
                     info: IEmptyRequestData,
                     sessionID: string,
                     output: string,
-                ): Promise<INullResponseData> =>
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.cancelAllGroupInvite(url, info, sessionID);
                 },
@@ -181,6 +204,30 @@ export class MatchStaticRouter extends StaticRouter
                 ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.transferGroup(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/match/group/raid/ready",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
+                {
+                    return this.matchCallbacks.raidReady(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/match/group/raid/not-ready",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
+                {
+                    return this.matchCallbacks.notRaidReady(url, info, sessionID);
                 },
             ),
             new RouteAction(
@@ -226,7 +273,12 @@ export class MatchStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/match/group/player/remove",
-                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.matchCallbacks.removePlayerFromGroup(url, info, sessionID);
                 },

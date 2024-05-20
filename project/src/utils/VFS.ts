@@ -121,7 +121,7 @@ export class VFS
         const files = this.getFiles(filepath);
         const dirs = this.getDirs(filepath);
 
-        if (!await this.existsAsync(target))
+        if (!(await this.existsAsync(target)))
         {
             await this.createDirAsync(`${target}/`);
         }
@@ -194,7 +194,7 @@ export class VFS
     {
         const options = append ? { flag: "a" } : { flag: "w" };
 
-        if (!await this.exists(filepath))
+        if (!(await this.exists(filepath)))
         {
             await this.createDir(filepath);
             await this.writeFilePromisify(filepath, "");
@@ -332,7 +332,7 @@ export class VFS
 
     public async minifyAllJsonInDirRecursive(filepath: string): Promise<void>
     {
-        const files = this.getFiles(filepath).filter(item => this.getFileExtension(item) === "json");
+        const files = this.getFiles(filepath).filter((item) => this.getFileExtension(item) === "json");
         for (const file of files)
         {
             const filePathAndName = path.join(filepath, file);
@@ -349,7 +349,7 @@ export class VFS
 
     public async minifyAllJsonInDirRecursiveAsync(filepath: string): Promise<void>
     {
-        const files = this.getFiles(filepath).filter(item => this.getFileExtension(item) === "json");
+        const files = this.getFiles(filepath).filter((item) => this.getFileExtension(item) === "json");
         for (const file of files)
         {
             const filePathAndName = path.join(filepath, file);

@@ -6,7 +6,6 @@ import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
 import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { AddItem } from "@spt-aki/models/eft/inventory/IAddItemRequestData";
 import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
 import { ISealedAirdropContainerSettings, RewardDetails } from "@spt-aki/models/spt/config/IInventoryConfig";
 import { LootItem } from "@spt-aki/models/spt/services/LootItem";
@@ -71,7 +70,7 @@ export class LootGenerator
         if (desiredWeaponCrateCount > 0)
         {
             // Get list of all sealed containers from db
-            const sealedWeaponContainerPool = Object.values(tables.templates.items).filter(x =>
+            const sealedWeaponContainerPool = Object.values(tables.templates.items).filter((x) =>
                 x._name.includes("event_container_airdrop"),
             );
 
@@ -89,11 +88,12 @@ export class LootGenerator
         }
 
         // Get items from items.json that have a type of item + not in global blacklist + basetype is in whitelist
-        const items = Object.entries(tables.templates.items).filter(x =>
-            !itemBlacklist.has(x[1]._id)
-            && x[1]._type.toLowerCase() === "item"
-            && !x[1]._props.QuestItem
-            && options.itemTypeWhitelist.includes(x[1]._parent),
+        const items = Object.entries(tables.templates.items).filter(
+            (x) =>
+                !itemBlacklist.has(x[1]._id)
+                && x[1]._type.toLowerCase() === "item"
+                && !x[1]._props.QuestItem
+                && options.itemTypeWhitelist.includes(x[1]._parent),
         );
 
         if (items.length > 0)
@@ -119,7 +119,7 @@ export class LootGenerator
         );
         if (randomisedWeaponPresetCount > 0)
         {
-            const weaponDefaultPresets = globalDefaultPresets.filter(preset =>
+            const weaponDefaultPresets = globalDefaultPresets.filter((preset) =>
                 this.itemHelper.isOfBaseclass(preset._encyclopedia, BaseClasses.WEAPON),
             );
 
@@ -150,10 +150,10 @@ export class LootGenerator
         );
         if (randomisedArmorPresetCount > 0)
         {
-            const armorDefaultPresets = globalDefaultPresets.filter(preset =>
+            const armorDefaultPresets = globalDefaultPresets.filter((preset) =>
                 this.itemHelper.armorItemCanHoldMods(preset._encyclopedia),
             );
-            const levelFilteredArmorPresets = armorDefaultPresets.filter(armor =>
+            const levelFilteredArmorPresets = armorDefaultPresets.filter((armor) =>
                 this.armorIsDesiredProtectionLevel(armor, options),
             );
 
@@ -189,21 +189,21 @@ export class LootGenerator
      */
     protected armorIsDesiredProtectionLevel(armor: IPreset, options: LootRequest): boolean
     {
-        const frontPlate = armor._items.find(mod => mod?.slotId?.toLowerCase() === "front_plate");
+        const frontPlate = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "front_plate");
         if (frontPlate)
         {
             const plateDb = this.itemHelper.getItem(frontPlate._tpl);
             return options.armorLevelWhitelist.includes(Number.parseInt(plateDb[1]._props.armorClass as any));
         }
 
-        const helmetTop = armor._items.find(mod => mod?.slotId?.toLowerCase() === "helmet_top");
+        const helmetTop = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "helmet_top");
         if (helmetTop)
         {
             const plateDb = this.itemHelper.getItem(helmetTop._tpl);
             return options.armorLevelWhitelist.includes(Number.parseInt(plateDb[1]._props.armorClass as any));
         }
 
-        const softArmorFront = armor._items.find(mod => mod?.slotId?.toLowerCase() === "soft_armor_front");
+        const softArmorFront = armor._items.find((mod) => mod?.slotId?.toLowerCase() === "soft_armor_front");
         if (softArmorFront)
         {
             const plateDb = this.itemHelper.getItem(softArmorFront._tpl);
@@ -470,7 +470,7 @@ export class LootGenerator
 
                 // Need to find boxes that matches weapons caliber
                 const weaponCaliber = weaponDetailsDb._props.ammoCaliber;
-                const ammoBoxesMatchingCaliber = ammoBoxesDetails.filter(x => x._props.ammoCaliber === weaponCaliber);
+                const ammoBoxesMatchingCaliber = ammoBoxesDetails.filter((x) => x._props.ammoCaliber === weaponCaliber);
                 if (ammoBoxesMatchingCaliber.length === 0)
                 {
                     this.logger.debug(`No ammo box with caliber ${weaponCaliber} found, skipping`);
@@ -490,12 +490,13 @@ export class LootGenerator
             }
 
             // Get all items of the desired type + not quest items + not globally blacklisted
-            const rewardItemPool = Object.values(this.databaseServer.getTables().templates.items).filter(x =>
-                x._parent === rewardTypeId
-                && x._type.toLowerCase() === "item"
-                && !this.itemFilterService.isItemBlacklisted(x._id)
-                && !(containerSettings.allowBossItems || this.itemFilterService.isBossItem(x._id))
-                && !x._props.QuestItem,
+            const rewardItemPool = Object.values(this.databaseServer.getTables().templates.items).filter(
+                (x) =>
+                    x._parent === rewardTypeId
+                    && x._type.toLowerCase() === "item"
+                    && !this.itemFilterService.isItemBlacklisted(x._id)
+                    && !(containerSettings.allowBossItems || this.itemFilterService.isBossItem(x._id))
+                    && !x._props.QuestItem,
             );
 
             if (rewardItemPool.length === 0)
@@ -544,8 +545,8 @@ export class LootGenerator
             }
 
             // Get items that fulfil reward type criteria from items that fit on gun
-            const relatedItems = linkedItemsToWeapon.filter(x =>
-                x._parent === rewardTypeId && !this.itemFilterService.isItemBlacklisted(x._id),
+            const relatedItems = linkedItemsToWeapon.filter(
+                (x) => x._parent === rewardTypeId && !this.itemFilterService.isItemBlacklisted(x._id),
             );
             if (!relatedItems || relatedItems.length === 0)
             {

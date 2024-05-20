@@ -93,10 +93,10 @@ export class PreAkiModLoader implements IModLoader
         for (const modName in modsGroupedByName)
         {
             const modDatas = modsGroupedByName[modName];
-            const modVersions = modDatas.map(x => x.version);
+            const modVersions = modDatas.map((x) => x.version);
             const highestVersion = maxSatisfying(modVersions, "*");
 
-            const chosenVersion = modDatas.find(x => x.name === modName && x.version === highestVersion);
+            const chosenVersion = modDatas.find((x) => x.name === modName && x.version === highestVersion);
             if (!chosenVersion)
             {
                 continue;
@@ -174,7 +174,8 @@ export class PreAkiModLoader implements IModLoader
 
             // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
             if (
-                modToValidate.dependencies && Object.keys(modToValidate.dependencies).length > 0
+                modToValidate.dependencies
+                && Object.keys(modToValidate.dependencies).length > 0
                 && !this.vfs.exists(`${this.basepath}${modFolderName}/node_modules`)
             )
             {
@@ -267,7 +268,7 @@ export class PreAkiModLoader implements IModLoader
         for (const mod of modPackageData.values())
         {
             const name = `${mod.author}-${mod.name}`;
-            grouppedMods.set(name, [...grouppedMods.get(name) ?? [], mod]);
+            grouppedMods.set(name, [...(grouppedMods.get(name) ?? []), mod]);
 
             // if there's more than one entry for a given mod it means there's at least 2 mods with the same author and name trying to load.
             if (grouppedMods.get(name).length > 1 && !this.skippedMods.has(name))
@@ -641,7 +642,7 @@ export class PreAkiModLoader implements IModLoader
         const modIsCalledSrc = modName.toLowerCase() === "src";
         const modIsCalledDb = modName.toLowerCase() === "db";
         const hasBepinExFolderStructure = this.vfs.exists(`${modPath}/plugins`);
-        const containsDll = this.vfs.getFiles(`${modPath}`).find(x => x.includes(".dll"));
+        const containsDll = this.vfs.getFiles(`${modPath}`).find((x) => x.includes(".dll"));
 
         if (modIsCalledSrc || modIsCalledDb || modIsCalledUser)
         {
@@ -691,7 +692,8 @@ export class PreAkiModLoader implements IModLoader
         if ("main" in config)
         {
             if (config.main.split(".").pop() !== "js")
-            { // expects js file as entry
+            {
+                // expects js file as entry
                 this.logger.error(this.localisationService.getText("modloader-main_property_not_js", modName));
                 issue = true;
             }

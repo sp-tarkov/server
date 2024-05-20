@@ -33,8 +33,7 @@ export class TraderSptCommand implements ISptCommand
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )
-    {
-    }
+    {}
 
     public getCommand(): string
     {
@@ -53,7 +52,7 @@ export class TraderSptCommand implements ISptCommand
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 commandHandler,
-                "Invalid use of trader command. Use \"help\" for more information.",
+                'Invalid use of trader command. Use "help" for more information.',
             );
             return request.dialogId;
         }
@@ -64,15 +63,15 @@ export class TraderSptCommand implements ISptCommand
         const command: string = result.groups.command;
         const quantity: number = +result.groups.quantity;
 
-        const dbTrader = Object.values(this.databaseServer.getTables().traders).find(t =>
-            t.base.nickname.toLocaleLowerCase() === trader.toLocaleLowerCase(),
+        const dbTrader = Object.values(this.databaseServer.getTables().traders).find(
+            (t) => t.base.nickname.toLocaleLowerCase() === trader.toLocaleLowerCase(),
         );
         if (dbTrader === undefined)
         {
             this.mailSendService.sendUserMessageToPlayer(
                 sessionId,
                 commandHandler,
-                "Invalid use of trader command, the trader was not found. Use \"help\" for more information.",
+                'Invalid use of trader command, the trader was not found. Use "help" for more information.',
             );
             return request.dialogId;
         }
@@ -97,13 +96,15 @@ export class TraderSptCommand implements ISptCommand
         this.mailSendService.sendSystemMessageToPlayer(
             sessionId,
             "A single ruble is being attached, required by BSG logic.",
-            [{
-                _id: this.hashUtil.generate(),
-                _tpl: "5449016a4bdc2d6f028b456f",
-                upd: { StackObjectsCount: 1 },
-                parentId: this.hashUtil.generate(),
-                slotId: "main",
-            }],
+            [
+                {
+                    _id: this.hashUtil.generate(),
+                    _tpl: "5449016a4bdc2d6f028b456f",
+                    upd: { StackObjectsCount: 1 },
+                    parentId: this.hashUtil.generate(),
+                    slotId: "main",
+                },
+            ],
             undefined,
             [event],
         );

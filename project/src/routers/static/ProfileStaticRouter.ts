@@ -60,14 +60,24 @@ export class ProfileStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/game/profile/nickname/change",
-                async (url: string, info: any, sessionID: string, output: string): Promise<IGetBodyResponseData<any>> =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any>> =>
                 {
                     return this.profileCallbacks.changeNickname(url, info, sessionID);
                 },
             ),
             new RouteAction(
                 "/client/game/profile/nickname/validate",
-                async (url: string, info: any, sessionID: string, output: string): Promise<IGetBodyResponseData<any>> =>
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any>> =>
                 {
                     return this.profileCallbacks.validateNickname(url, info, sessionID);
                 },

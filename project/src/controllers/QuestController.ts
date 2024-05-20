@@ -78,7 +78,7 @@ export class QuestController
         for (const quest of allQuests)
         {
             // Player already accepted the quest, show it regardless of status
-            const questInProfile = profile.Quests.find(x => x.qid === quest._id);
+            const questInProfile = profile.Quests.find((x) => x.qid === quest._id);
             if (questInProfile)
             {
                 quest.sptStatus = questInProfile.status;
@@ -123,7 +123,11 @@ export class QuestController
             );
 
             // Quest has no conditions, standing or loyalty conditions, add to visible quest list
-            if (questRequirements.length === 0 && loyaltyRequirements.length === 0 && standingRequirements.length === 0)
+            if (
+                questRequirements.length === 0
+                && loyaltyRequirements.length === 0
+                && standingRequirements.length === 0
+            )
             {
                 quest.sptStatus = QuestStatus.AvailableForStart;
                 questsToShowPlayer.push(quest);
@@ -136,7 +140,7 @@ export class QuestController
             for (const conditionToFulfil of questRequirements)
             {
                 // If the previous quest isn't in the user profile, it hasn't been completed or started
-                const prerequisiteQuest = profile.Quests.find(profileQuest =>
+                const prerequisiteQuest = profile.Quests.find((profileQuest) =>
                     conditionToFulfil.target.includes(profileQuest.qid),
                 );
                 if (!prerequisiteQuest)
@@ -147,7 +151,7 @@ export class QuestController
 
                 // Prereq does not have its status requirement fulfilled
                 // Some bsg status ids are strings, MUST convert to number before doing includes check
-                if (!conditionToFulfil.status.map(status => Number(status)).includes(prerequisiteQuest.status))
+                if (!conditionToFulfil.status.map((status) => Number(status)).includes(prerequisiteQuest.status))
                 {
                     haveCompletedPreviousQuest = false;
                     break;
@@ -291,7 +295,7 @@ export class QuestController
 
         // Does quest exist in profile
         // Restarting a failed quest can mean quest exists in profile
-        const existingQuestStatus = pmcData.Quests.find(x => x.qid === acceptedQuest.qid);
+        const existingQuestStatus = pmcData.Quests.find((x) => x.qid === acceptedQuest.qid);
         if (existingQuestStatus)
         {
             // Update existing
@@ -398,16 +402,17 @@ export class QuestController
             fullProfile.characters.scav.Quests.push(newRepeatableQuest);
         }
 
-        const repeatableSettings = pmcData.RepeatableQuests.find(x =>
-            x.name === repeatableQuestProfile.sptRepatableGroupName,
+        const repeatableSettings = pmcData.RepeatableQuests.find(
+            (x) => x.name === repeatableQuestProfile.sptRepatableGroupName,
         );
 
         const change = {};
         change[repeatableQuestProfile._id] = repeatableSettings.changeRequirement[repeatableQuestProfile._id];
         const responseData: IPmcDataRepeatableQuest = {
-            id: repeatableSettings.id ?? this.questConfig.repeatableQuests.find(x =>
-                x.name === repeatableQuestProfile.sptRepatableGroupName,
-            ).id,
+            id:
+                repeatableSettings.id
+                ?? this.questConfig.repeatableQuests.find((x) => x.name === repeatableQuestProfile.sptRepatableGroupName)
+                    .id,
             name: repeatableSettings.name,
             endTime: repeatableSettings.endTime,
             changeRequirement: change,
@@ -430,11 +435,14 @@ export class QuestController
      * @param acceptedQuest Quest to search for
      * @returns IRepeatableQuest
      */
-    protected getRepeatableQuestFromProfile(pmcData: IPmcData, acceptedQuest: IAcceptQuestRequestData): IRepeatableQuest
+    protected getRepeatableQuestFromProfile(
+        pmcData: IPmcData,
+        acceptedQuest: IAcceptQuestRequestData,
+    ): IRepeatableQuest
     {
         for (const repeatableQuest of pmcData.RepeatableQuests)
         {
-            const matchingQuest = repeatableQuest.activeQuests.find(x => x._id === acceptedQuest.qid);
+            const matchingQuest = repeatableQuest.activeQuests.find((x) => x._id === acceptedQuest.qid);
             if (matchingQuest)
             {
                 this.logger.debug(`Accepted repeatable quest ${acceptedQuest.qid} from ${repeatableQuest.name}`);
@@ -503,8 +511,8 @@ export class QuestController
         // Check if it's a repeatable quest. If so, remove from Quests
         for (const currentRepeatable of pmcData.RepeatableQuests)
         {
-            const repeatableQuest = currentRepeatable.activeQuests.find(activeRepeatable =>
-                activeRepeatable._id === completedQuestId,
+            const repeatableQuest = currentRepeatable.activeQuests.find(
+                (activeRepeatable) => activeRepeatable._id === completedQuestId,
             );
             if (repeatableQuest)
             {
@@ -547,15 +555,15 @@ export class QuestController
 
             // Quest already failed in profile, skip
             if (
-                pmcProfile.Quests.some(profileQuest =>
-                    profileQuest.qid === quest._id && profileQuest.status === QuestStatus.Fail,
+                pmcProfile.Quests.some(
+                    (profileQuest) => profileQuest.qid === quest._id && profileQuest.status === QuestStatus.Fail,
                 )
             )
             {
                 return false;
             }
 
-            return quest.conditions.Fail.some(condition => condition.target?.includes(completedQuestId));
+            return quest.conditions.Fail.some((condition) => condition.target?.includes(completedQuestId));
         });
     }
 
@@ -567,7 +575,7 @@ export class QuestController
     protected removeQuestFromScavProfile(sessionId: string, questIdToRemove: string): void
     {
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
-        const repeatableInScavProfile = fullProfile.characters.scav.Quests?.find(x => x.qid === questIdToRemove);
+        const repeatableInScavProfile = fullProfile.characters.scav.Quests?.find((x) => x.qid === questIdToRemove);
         if (!repeatableInScavProfile)
         {
             this.logger.warning(
@@ -599,7 +607,7 @@ export class QuestController
         for (const quest of postQuestStatuses)
         {
             // Add quest if status differs or quest not found
-            const preQuest = preQuestStatusus.find(x => x.qid === quest.qid);
+            const preQuest = preQuestStatusus.find((x) => x.qid === quest.qid);
             if (!preQuest || preQuest.status !== quest.status)
             {
                 result.push(quest);
@@ -652,8 +660,8 @@ export class QuestController
         for (const quest of quests)
         {
             // If quest has prereq of completed quest + availableAfter value > 0 (quest has wait time)
-            const nextQuestWaitCondition = quest.conditions.AvailableForStart.find(x =>
-                x.target?.includes(completedQuestId) && x.availableAfter > 0,
+            const nextQuestWaitCondition = quest.conditions.AvailableForStart.find(
+                (x) => x.target?.includes(completedQuestId) && x.availableAfter > 0,
             );
             if (nextQuestWaitCondition)
             {
@@ -661,7 +669,7 @@ export class QuestController
                 const availableAfterTimestamp = this.timeUtil.getTimestamp() + nextQuestWaitCondition.availableAfter;
 
                 // Update quest in profile with status of AvailableAfter
-                const existingQuestInProfile = pmcData.Quests.find(x => x.qid === quest._id);
+                const existingQuestInProfile = pmcData.Quests.find((x) => x.qid === quest._id);
                 if (existingQuestInProfile)
                 {
                     existingQuestInProfile.availableAfter = availableAfterTimestamp;
@@ -704,12 +712,12 @@ export class QuestController
         for (const questToFail of questsToFail)
         {
             // Skip failing a quest that has a fail status of something other than success
-            if (questToFail.conditions.Fail?.some(x => x.status?.some(status => status !== QuestStatus.Success)))
+            if (questToFail.conditions.Fail?.some((x) => x.status?.some((status) => status !== QuestStatus.Success)))
             {
                 continue;
             }
 
-            const isActiveQuestInPlayerProfile = pmcData.Quests.find(quest => quest.qid === questToFail._id);
+            const isActiveQuestInPlayerProfile = pmcData.Quests.find((quest) => quest.qid === questToFail._id);
             if (isActiveQuestInPlayerProfile)
             {
                 if (isActiveQuestInPlayerProfile.status !== QuestStatus.Fail)
@@ -771,9 +779,10 @@ export class QuestController
                 isItemHandoverQuest = condition.conditionType === handoverQuestTypes[0];
                 handoverRequirements = condition;
 
-                const profileCounter = handoverQuestRequest.conditionId in pmcData.TaskConditionCounters
-                    ? pmcData.TaskConditionCounters[handoverQuestRequest.conditionId].value
-                    : 0;
+                const profileCounter
+                    = handoverQuestRequest.conditionId in pmcData.TaskConditionCounters
+                        ? pmcData.TaskConditionCounters[handoverQuestRequest.conditionId].value
+                        : 0;
                 handedInCount -= profileCounter;
 
                 if (handedInCount <= 0)
@@ -805,7 +814,7 @@ export class QuestController
         let totalItemCountToRemove = 0;
         for (const itemHandover of handoverQuestRequest.items)
         {
-            const matchingItemInProfile = pmcData.Inventory.items.find(item => item._id === itemHandover.id);
+            const matchingItemInProfile = pmcData.Inventory.items.find((item) => item._id === itemHandover.id);
             if (!(matchingItemInProfile && handoverRequirements.target.includes(matchingItemInProfile._tpl)))
             {
                 // Item handed in by player doesnt match what was requested

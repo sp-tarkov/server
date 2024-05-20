@@ -1,8 +1,0 @@
-{
-    "recommendations": [
-        "EditorConfig.EditorConfig",
-        "vitest.explorer",
-        "refringe.spt-id-highlighter",
-        "dbaeumer.vscode-eslint"
-    ]
-}

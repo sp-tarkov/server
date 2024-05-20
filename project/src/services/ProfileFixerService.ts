@@ -87,10 +87,10 @@ export class ProfileFixerService
             this.reorderHideoutAreasWithResouceInputs(pmcProfile);
 
             if (
-                pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.GENERATOR).slots.length
+                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.GENERATOR).slots.length
                 < 6
-                + this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots
-                    .Generator.Slots
+                + this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots.Generator
+                    .Slots
             )
             {
                 this.logger.debug("Updating generator area slots to a size of 6 + hideout management skill");
@@ -104,7 +104,7 @@ export class ProfileFixerService
             }
 
             if (
-                pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WATER_COLLECTOR).slots.length
+                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WATER_COLLECTOR).slots.length
                 < 1
                 + this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots
                     .WaterCollector.Slots
@@ -121,7 +121,7 @@ export class ProfileFixerService
             }
 
             if (
-                pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.AIR_FILTERING).slots.length
+                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.AIR_FILTERING).slots.length
                 < 3
                 + this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots
                     .AirFilteringUnit.Slots
@@ -139,7 +139,7 @@ export class ProfileFixerService
 
             // BTC Farm doesnt have extra slots for hideout management, but we still check for modded stuff!!
             if (
-                pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.BITCOIN_FARM).slots.length
+                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.BITCOIN_FARM).slots.length
                 < 50
                 + this.databaseServer.getTables().globals.config.SkillsSettings.HideoutManagement.EliteSlots
                     .BitcoinFarm.Slots
@@ -172,7 +172,7 @@ export class ProfileFixerService
 
     protected addMissingGunStandContainerImprovements(pmcProfile: IPmcData): void
     {
-        const weaponStandArea = pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND);
+        const weaponStandArea = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WEAPON_STAND);
         if (!weaponStandArea || weaponStandArea.level === 0)
         {
             // No stand in profile or its level 0, skip
@@ -180,8 +180,8 @@ export class ProfileFixerService
         }
 
         const db = this.databaseServer.getTables();
-        const hideoutStandAreaDb = db.hideout.areas.find(x => x.type === HideoutAreas.WEAPON_STAND);
-        const hideoutStandSecondaryAreaDb = db.hideout.areas.find(x => x.parentArea === hideoutStandAreaDb._id);
+        const hideoutStandAreaDb = db.hideout.areas.find((x) => x.type === HideoutAreas.WEAPON_STAND);
+        const hideoutStandSecondaryAreaDb = db.hideout.areas.find((x) => x.parentArea === hideoutStandAreaDb._id);
         const stageCurrentAt = hideoutStandAreaDb.stages[weaponStandArea.level];
         const hideoutStandStashId = pmcProfile.Inventory.hideoutAreaStashes[HideoutAreas.WEAPON_STAND];
         const hideoutSecondaryStashId = pmcProfile.Inventory.hideoutAreaStashes[HideoutAreas.WEAPON_STAND_SECONDARY];
@@ -195,7 +195,7 @@ export class ProfileFixerService
                 = hideoutStandSecondaryAreaDb._id;
 
             // Add stash item to profile
-            const gunStandStashItem = pmcProfile.Inventory.items.find(x => x._id === hideoutStandAreaDb._id);
+            const gunStandStashItem = pmcProfile.Inventory.items.find((x) => x._id === hideoutStandAreaDb._id);
             if (gunStandStashItem)
             {
                 gunStandStashItem._tpl = stageCurrentAt.container;
@@ -212,8 +212,8 @@ export class ProfileFixerService
             }
 
             // Add secondary stash item to profile
-            const gunStandStashSecondaryItem = pmcProfile.Inventory.items.find(x =>
-                x._id === hideoutStandSecondaryAreaDb._id,
+            const gunStandStashSecondaryItem = pmcProfile.Inventory.items.find(
+                (x) => x._id === hideoutStandSecondaryAreaDb._id,
             );
             if (gunStandStashItem)
             {
@@ -236,12 +236,12 @@ export class ProfileFixerService
             return;
         }
 
-        let stashItem = pmcProfile.Inventory.items?.find(x => x._id === hideoutStandAreaDb._id);
+        let stashItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandAreaDb._id);
         if (!stashItem)
         {
             // Stand inventory stash item doesnt exist, add it
             pmcProfile.Inventory.items.push({ _id: hideoutStandAreaDb._id, _tpl: stageCurrentAt.container });
-            stashItem = pmcProfile.Inventory.items?.find(x => x._id === hideoutStandAreaDb._id);
+            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -254,12 +254,12 @@ export class ProfileFixerService
             stashItem._tpl = stageCurrentAt.container;
         }
 
-        let stashSecondaryItem = pmcProfile.Inventory.items?.find(x => x._id === hideoutStandSecondaryAreaDb._id);
+        let stashSecondaryItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandSecondaryAreaDb._id);
         if (!stashSecondaryItem)
         {
             // Stand inventory stash item doesnt exist, add it
             pmcProfile.Inventory.items.push({ _id: hideoutStandSecondaryAreaDb._id, _tpl: stageCurrentAt.container });
-            stashSecondaryItem = pmcProfile.Inventory.items?.find(x => x._id === hideoutStandSecondaryAreaDb._id);
+            stashSecondaryItem = pmcProfile.Inventory.items?.find((x) => x._id === hideoutStandSecondaryAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -275,7 +275,7 @@ export class ProfileFixerService
 
     protected addMissingHallOfFameContainerImprovements(pmcProfile: IPmcData): void
     {
-        const placeOfFameArea = pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.PLACE_OF_FAME);
+        const placeOfFameArea = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.PLACE_OF_FAME);
         if (!placeOfFameArea || placeOfFameArea.level === 0)
         {
             // No place of fame in profile or its level 0, skip
@@ -283,7 +283,7 @@ export class ProfileFixerService
         }
 
         const db = this.databaseServer.getTables();
-        const placeOfFameAreaDb = db.hideout.areas.find(area => area.type === HideoutAreas.PLACE_OF_FAME);
+        const placeOfFameAreaDb = db.hideout.areas.find((area) => area.type === HideoutAreas.PLACE_OF_FAME);
         if (!placeOfFameAreaDb)
         {
             return;
@@ -298,7 +298,7 @@ export class ProfileFixerService
             pmcProfile.Inventory.hideoutAreaStashes[HideoutAreas.PLACE_OF_FAME] = placeOfFameAreaDb._id;
 
             // Add stash item to profile
-            const placeOfFameStashItem = pmcProfile.Inventory.items.find(x => x._id === placeOfFameAreaDb._id);
+            const placeOfFameStashItem = pmcProfile.Inventory.items.find((x) => x._id === placeOfFameAreaDb._id);
             if (placeOfFameStashItem)
             {
                 placeOfFameStashItem._tpl = stageCurrentlyAt.container;
@@ -317,12 +317,12 @@ export class ProfileFixerService
             return;
         }
 
-        let stashItem = pmcProfile.Inventory.items?.find(x => x._id === placeOfFameAreaDb._id);
+        let stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id);
         if (!stashItem)
         {
             // Stand inventory stash item doesnt exist, add it
             pmcProfile.Inventory.items.push({ _id: placeOfFameAreaDb._id, _tpl: stageCurrentlyAt.container });
-            stashItem = pmcProfile.Inventory.items?.find(x => x._id === placeOfFameAreaDb._id);
+            stashItem = pmcProfile.Inventory.items?.find((x) => x._id === placeOfFameAreaDb._id);
         }
 
         // `hideoutAreaStashes` has value related stash inventory items tpl doesnt match what's expected
@@ -339,10 +339,10 @@ export class ProfileFixerService
     protected ensureGunStandLevelsMatch(pmcProfile: IPmcData): void
     {
         // only proceed if stand is level 1 or above
-        const gunStandParent = pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND);
+        const gunStandParent = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WEAPON_STAND);
         if (gunStandParent && gunStandParent.level > 0)
         {
-            const gunStandChild = pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND_SECONDARY);
+            const gunStandChild = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WEAPON_STAND_SECONDARY);
             if (gunStandChild && gunStandParent.level !== gunStandChild.level)
             {
                 this.logger.success("Upgraded gun stand levels to match");
@@ -362,7 +362,7 @@ export class ProfileFixerService
 
     protected addMissingHideoutWallAreas(pmcProfile: IPmcData): void
     {
-        if (!pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND))
+        if (!pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WEAPON_STAND))
         {
             pmcProfile.Hideout.Areas.push({
                 type: 24,
@@ -376,7 +376,7 @@ export class ProfileFixerService
             });
         }
 
-        if (!pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.WEAPON_STAND_SECONDARY))
+        if (!pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WEAPON_STAND_SECONDARY))
         {
             pmcProfile.Hideout.Areas.push({
                 type: 25,
@@ -473,14 +473,14 @@ export class ProfileFixerService
                 // Only check if profile has repeatable quests
                 if (pmcProfile.RepeatableQuests && activeRepeatableQuests.length > 0)
                 {
-                    const existsInActiveRepeatableQuests = activeRepeatableQuests.some(quest =>
-                        quest._id === taskConditionCounter.sourceId,
+                    const existsInActiveRepeatableQuests = activeRepeatableQuests.some(
+                        (quest) => quest._id === taskConditionCounter.sourceId,
                     );
-                    const existsInQuests = pmcProfile.Quests.some(quest =>
-                        quest.qid === taskConditionCounter.sourceId,
+                    const existsInQuests = pmcProfile.Quests.some(
+                        (quest) => quest.qid === taskConditionCounter.sourceId,
                     );
-                    const isAchievementTracker = achievements.some(quest =>
-                        quest.id === taskConditionCounter.sourceId,
+                    const isAchievementTracker = achievements.some(
+                        (quest) => quest.id === taskConditionCounter.sourceId,
                     );
 
                     // If task conditions id is neither in activeQuests, quests or achievements - it's stale and should be cleaned up
@@ -565,12 +565,12 @@ export class ProfileFixerService
                 continue;
             }
 
-            if (quest.status && Number.isNaN(Number.parseInt(<string><unknown>quest.status)))
+            if (quest.status && Number.isNaN(Number.parseInt(<string>(<unknown>quest.status))))
             {
                 fixes[quest.status] = (fixes[quest.status] ?? 0) + 1;
 
                 const newQuestStatus = QuestStatus[quest.status];
-                quest.status = <QuestStatus><unknown>newQuestStatus;
+                quest.status = <QuestStatus>(<unknown>newQuestStatus);
             }
 
             for (const statusTimer in quest.statusTimers)
@@ -594,16 +594,18 @@ export class ProfileFixerService
         if (Object.keys(fixes).length > 0)
         {
             this.logger.debug(
-                `Updated quests values: ${Object.entries(fixes).map(([k, v]) => `(${k}: ${v} times)`).join(", ")}`,
+                `Updated quests values: ${Object.entries(fixes)
+                    .map(([k, v]) => `(${k}: ${v} times)`)
+                    .join(", ")}`,
             );
         }
 
         if (Object.keys(timerFixes).length > 0)
         {
             this.logger.debug(
-                `Updated statusTimers values: ${
-                    Object.entries(timerFixes).map(([k, v]) => `(${k}: ${v} times)`).join(", ")
-                }`,
+                `Updated statusTimers values: ${Object.entries(timerFixes)
+                    .map(([k, v]) => `(${k}: ${v} times)`)
+                    .join(", ")}`,
             );
         }
     }
@@ -616,8 +618,12 @@ export class ProfileFixerService
             for (const currentRepeatable of pmcProfile.RepeatableQuests)
             {
                 if (
-                    !(currentRepeatable.changeRequirement
-                    && currentRepeatable.activeQuests.every(x => typeof x.changeCost !== "undefined" && typeof x.changeStandingCost !== "undefined"))
+                    !(
+                        currentRepeatable.changeRequirement
+                        && currentRepeatable.activeQuests.every(
+                            (x) => typeof x.changeCost !== "undefined" && typeof x.changeStandingCost !== "undefined",
+                        )
+                    )
                 )
                 {
                     repeatablesCompatible = false;
@@ -642,10 +648,10 @@ export class ProfileFixerService
      */
     protected addMissingWallImprovements(pmcProfile: IPmcData): void
     {
-        const profileWallArea = pmcProfile.Hideout.Areas.find(x => x.type === HideoutAreas.EMERGENCY_WALL);
-        const wallDb = this.databaseServer.getTables().hideout.areas.find(x =>
-            x.type === HideoutAreas.EMERGENCY_WALL,
-        );
+        const profileWallArea = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.EMERGENCY_WALL);
+        const wallDb = this.databaseServer
+            .getTables()
+            .hideout.areas.find((x) => x.type === HideoutAreas.EMERGENCY_WALL);
 
         if (profileWallArea.level > 0)
         {
@@ -693,13 +699,13 @@ export class ProfileFixerService
             }
 
             // Only slots with location index
-            area.slots = area.slots.filter(x => "locationIndex" in x);
+            area.slots = area.slots.filter((x) => "locationIndex" in x);
 
             // Only slots that:
             // Have an item property and it has at least one item in it
             // Or
             // Have no item property
-            area.slots = area.slots.filter(x => ("item" in x && x.item?.length > 0) || !("item" in x));
+            area.slots = area.slots.filter((x) => ("item" in x && x.item?.length > 0) || !("item" in x));
         }
     }
 
@@ -718,7 +724,7 @@ export class ProfileFixerService
 
         for (const areaId of areasToCheck)
         {
-            const area = pmcProfile.Hideout.Areas.find(area => area.type === areaId);
+            const area = pmcProfile.Hideout.Areas.find((area) => area.type === areaId);
             if (!area)
             {
                 this.logger.debug(`unable to sort: ${area.type} (${areaId}) slots, no area found`);
@@ -749,7 +755,7 @@ export class ProfileFixerService
         pmcProfile: IPmcData,
     ): void
     {
-        const area = pmcProfile.Hideout.Areas.find(x => x.type === areaType);
+        const area = pmcProfile.Hideout.Areas.find((x) => x.type === areaType);
         area.slots = this.addObjectsToArray(emptyItemCount, area.slots);
     }
 
@@ -757,7 +763,7 @@ export class ProfileFixerService
     {
         for (let i = 0; i < count; i++)
         {
-            if (!slots.find(x => x.locationIndex === i))
+            if (!slots.find((x) => x.locationIndex === i))
             {
                 slots.push({ locationIndex: i });
             }
@@ -795,7 +801,7 @@ export class ProfileFixerService
             }
 
             // Iterate over area levels, check for bonuses, add if needed
-            const dbArea = dbHideoutAreas.find(x => x.type === areaType);
+            const dbArea = dbHideoutAreas.find((x) => x.type === areaType);
             if (!dbArea)
             {
                 continue;
@@ -840,22 +846,22 @@ export class ProfileFixerService
         // match by id first, used by "TextBonus" bonuses
         if (bonus.id)
         {
-            return profileBonuses.find(x => x.id === bonus.id);
+            return profileBonuses.find((x) => x.id === bonus.id);
         }
 
         if (bonus.type === BonusType.STASH_SIZE)
         {
-            return profileBonuses.find(x => x.type === bonus.type && x.templateId === bonus.templateId);
+            return profileBonuses.find((x) => x.type === bonus.type && x.templateId === bonus.templateId);
         }
 
         if (bonus.type === BonusType.ADDITIONAL_SLOTS)
         {
-            return profileBonuses.find(x =>
-                x.type === bonus.type && x.value === bonus.value && x.visible === bonus.visible,
+            return profileBonuses.find(
+                (x) => x.type === bonus.type && x.value === bonus.value && x.visible === bonus.visible,
             );
         }
 
-        return profileBonuses.find(x => x.type === bonus.type && x.value === bonus.value);
+        return profileBonuses.find((x) => x.type === bonus.type && x.value === bonus.value);
     }
 
     /**
@@ -870,7 +876,7 @@ export class ProfileFixerService
 
         // Get items placed in root of stash
         // TODO: extend to other areas / sub items
-        const inventoryItemsToCheck = pmcProfile.Inventory.items.filter(item =>
+        const inventoryItemsToCheck = pmcProfile.Inventory.items.filter((item) =>
             ["hideout", "main"].includes(item.slotId),
         );
         if (inventoryItemsToCheck)
@@ -952,7 +958,10 @@ export class ProfileFixerService
 
                         if (this.coreConfig.fixes.removeModItemsFromProfile)
                         {
-                            dialog.messages.splice(dialog.messages.findIndex(x => x._id === message._id), 1);
+                            dialog.messages.splice(
+                                dialog.messages.findIndex((x) => x._id === message._id),
+                                1,
+                            );
                             this.logger.warning(
                                 `Item: ${item._tpl} has resulted in the deletion of message: ${message._id} from dialog ${dialogId}`,
                             );
@@ -991,7 +1000,7 @@ export class ProfileFixerService
                             `Non-default quest: ${activeQuest._id} from trader: ${activeQuest.traderId} removed from RepeatableQuests list in profile`,
                         );
                         repeatable.activeQuests.splice(
-                            repeatable.activeQuests.findIndex(x => x._id === activeQuest._id),
+                            repeatable.activeQuests.findIndex((x) => x._id === activeQuest._id),
                             1,
                         );
                     }
@@ -1016,7 +1025,7 @@ export class ProfileFixerService
                                         `Non-default quest: ${activeQuest._id} from trader: ${activeQuest.traderId} removed from RepeatableQuests list in profile`,
                                     );
                                     repeatable.activeQuests.splice(
-                                        repeatable.activeQuests.findIndex(x => x._id === activeQuest._id),
+                                        repeatable.activeQuests.findIndex((x) => x._id === activeQuest._id),
                                         1,
                                     );
                                 }
@@ -1081,7 +1090,10 @@ export class ProfileFixerService
      * @param itemsDb The items database to use for item lookup
      * @returns True if the build should be removed from the build list, false otherwise
      */
-    protected shouldRemoveMagazineBuild(magazineBuild: IMagazineBuild, itemsDb: Record<string, ITemplateItem>): boolean
+    protected shouldRemoveMagazineBuild(
+        magazineBuild: IMagazineBuild,
+        itemsDb: Record<string, ITemplateItem>,
+    ): boolean
     {
         for (const item of magazineBuild.Items)
         {
@@ -1141,7 +1153,7 @@ export class ProfileFixerService
             if (itemAJson === itemBJson)
             {
                 // Both items match, we can safely delete one
-                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex(x => x._id === key);
+                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex((x) => x._id === key);
                 pmcProfile.Inventory.items.splice(indexOfItemToRemove, 1);
                 this.logger.warning(`Deleted duplicate item: ${key}`);
             }
@@ -1149,10 +1161,10 @@ export class ProfileFixerService
             {
                 // Items are different, replace ID with unique value
                 // Only replace ID if items have no children, we dont want orphaned children
-                const itemsHaveChildren = pmcProfile.Inventory.items.some(x => x.parentId === key);
+                const itemsHaveChildren = pmcProfile.Inventory.items.some((x) => x.parentId === key);
                 if (!itemsHaveChildren)
                 {
-                    const itemToAdjustId = pmcProfile.Inventory.items.find(x => x._id === key);
+                    const itemToAdjustId = pmcProfile.Inventory.items.find((x) => x._id === key);
                     itemToAdjustId._id = this.hashUtil.generate();
                     this.logger.warning(`Replace duplicate item Id: ${key} with ${itemToAdjustId._id}`);
                 }
@@ -1160,7 +1172,7 @@ export class ProfileFixerService
         }
 
         // Iterate over all inventory items
-        for (const item of pmcProfile.Inventory.items.filter(x => x.slotId))
+        for (const item of pmcProfile.Inventory.items.filter((x) => x.slotId))
         {
             if (!item.upd)
             {
@@ -1193,35 +1205,38 @@ export class ProfileFixerService
         if (!customizationDb[pmcProfile.Customization.Head])
         {
             const defaultHead = playerIsUsec
-                ? customizationDbArray.find(x => x._name === "DefaultUsecHead")
-                : customizationDbArray.find(x => x._name === "DefaultBearHead");
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecHead")
+                : customizationDbArray.find((x) => x._name === "DefaultBearHead");
             pmcProfile.Customization.Head = defaultHead._id;
         }
 
         // check Body
         if (!customizationDb[pmcProfile.Customization.Body])
         {
-            const defaultBody = pmcProfile.Info.Side.toLowerCase() === "usec"
-                ? customizationDbArray.find(x => x._name === "DefaultUsecBody")
-                : customizationDbArray.find(x => x._name === "DefaultBearBody");
+            const defaultBody
+                = pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecBody")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearBody");
             pmcProfile.Customization.Body = defaultBody._id;
         }
 
         // check Hands
         if (!customizationDb[pmcProfile.Customization.Hands])
         {
-            const defaultHands = pmcProfile.Info.Side.toLowerCase() === "usec"
-                ? customizationDbArray.find(x => x._name === "DefaultUsecHands")
-                : customizationDbArray.find(x => x._name === "DefaultBearHands");
+            const defaultHands
+                = pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecHands")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearHands");
             pmcProfile.Customization.Hands = defaultHands._id;
         }
 
         // check Hands
         if (!customizationDb[pmcProfile.Customization.Feet])
         {
-            const defaultFeet = pmcProfile.Info.Side.toLowerCase() === "usec"
-                ? customizationDbArray.find(x => x._name === "DefaultUsecFeet")
-                : customizationDbArray.find(x => x._name === "DefaultBearFeet");
+            const defaultFeet
+                = pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecFeet")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearFeet");
             pmcProfile.Customization.Feet = defaultFeet._id;
         }
     }
@@ -1266,7 +1281,7 @@ export class ProfileFixerService
         // Get all areas from templates/profiles.json
         for (const area of profileTemplate.character.Hideout.Areas)
         {
-            if (!pmcProfile.Hideout.Areas.find(x => x.type === area.type))
+            if (!pmcProfile.Hideout.Areas.find((x) => x.type === area.type))
             {
                 pmcProfile.Hideout.Areas.push(area);
                 this.logger.debug(`Added missing hideout area ${area.type} to profile`);
@@ -1300,10 +1315,10 @@ export class ProfileFixerService
         // biome-ignore lint/suspicious/noGlobalIsNan: <value can be a valid string, Number.IsNaN() would ignore it>
         if (isNaN(fullProfile.characters.pmc.aid) || !fullProfile.info.aid)
         {
-            fullProfile.characters.pmc.sessionId = <string><unknown>fullProfile.characters.pmc.aid;
+            fullProfile.characters.pmc.sessionId = <string>(<unknown>fullProfile.characters.pmc.aid);
             fullProfile.characters.pmc.aid = this.hashUtil.generateAccountId();
 
-            fullProfile.characters.scav.sessionId = <string><unknown>fullProfile.characters.pmc.sessionId;
+            fullProfile.characters.scav.sessionId = <string>(<unknown>fullProfile.characters.pmc.sessionId);
             fullProfile.characters.scav.aid = fullProfile.characters.pmc.aid;
 
             fullProfile.info.aid = fullProfile.characters.pmc.aid;
@@ -1329,7 +1344,7 @@ export class ProfileFixerService
             // Clear stats object
             fullProfile.characters.pmc.Stats = { Eft: null };
 
-            fullProfile.characters.pmc.Stats.Eft = <any><unknown>statsCopy;
+            fullProfile.characters.pmc.Stats.Eft = <any>(<unknown>statsCopy);
         }
     }
 
@@ -1355,8 +1370,8 @@ export class ProfileFixerService
                 for (const stageIndex in area.stages)
                 {
                     const stageInfo = area.stages[stageIndex];
-                    const matchingBonus = stageInfo.bonuses.find(x =>
-                        x.templateId === bonus.templateId && x.type === bonus.type,
+                    const matchingBonus = stageInfo.bonuses.find(
+                        (x) => x.templateId === bonus.templateId && x.type === bonus.type,
                     );
                     if (matchingBonus)
                     {
@@ -1425,7 +1440,7 @@ export class ProfileFixerService
 
         for (let i = profileQuests.length - 1; i >= 0; i--)
         {
-            if (!(quests[profileQuests[i].qid] || repeatableQuests.find(x => x._id === profileQuests[i].qid)))
+            if (!(quests[profileQuests[i].qid] || repeatableQuests.find((x) => x._id === profileQuests[i].qid)))
             {
                 profileQuests.splice(i, 1);
                 this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");

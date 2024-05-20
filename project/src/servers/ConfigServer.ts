@@ -1,6 +1,5 @@
 import { inject, injectable } from "tsyringe";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { JsonUtil } from "@spt-aki/utils/JsonUtil";
 import { VFS } from "@spt-aki/utils/VFS";

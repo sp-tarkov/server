@@ -23,7 +23,7 @@ export class ErrorHandler
             this.logger.error(`\nStacktrace:\n${err.stack}`);
         }
 
-        this.readLine.question("Press Enter to close the window", _ans => this.readLine.close());
+        this.readLine.question("Press Enter to close the window", (_ans) => this.readLine.close());
         this.readLine.on("close", () => process.exit(1));
     }
 }

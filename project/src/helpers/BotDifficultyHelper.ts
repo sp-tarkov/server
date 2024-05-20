@@ -92,9 +92,10 @@ export class BotDifficultyHelper
      */
     protected getDifficultySettings(type: string, difficulty: string): Difficulty
     {
-        let difficultySetting = this.pmcConfig.difficulty.toLowerCase() === "asonline"
-            ? difficulty
-            : this.pmcConfig.difficulty.toLowerCase();
+        let difficultySetting
+            = this.pmcConfig.difficulty.toLowerCase() === "asonline"
+                ? difficulty
+                : this.pmcConfig.difficulty.toLowerCase();
 
         difficultySetting = this.convertBotDifficultyDropdownToBotDifficulty(difficultySetting);
 

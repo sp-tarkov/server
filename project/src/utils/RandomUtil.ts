@@ -20,7 +20,11 @@ import { MathUtil } from "@spt-aki/utils/MathUtil";
  */
 export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityObject<K, V>>
 {
-    constructor(private mathUtil: MathUtil, private cloner: ICloner, ...items: ProbabilityObject<K, V>[])
+    constructor(
+        private mathUtil: MathUtil,
+        private cloner: ICloner,
+        ...items: ProbabilityObject<K, V>[]
+    )
     {
         super();
         this.push(...items);
@@ -69,7 +73,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     drop(key: K): ProbabilityObjectArray<K, V>
     {
-        return this.filter(r => r.key !== key);
+        return this.filter((r) => r.key !== key);
     }
 
     /**
@@ -79,7 +83,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     data(key: K): V
     {
-        return this.filter(r => r.key === key)[0]?.data;
+        return this.filter((r) => r.key === key)[0]?.data;
     }
 
     /**
@@ -94,7 +98,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     probability(key: K): number
     {
-        return this.filter(r => r.key === key)[0].relativeProbability;
+        return this.filter((r) => r.key === key)[0].relativeProbability;
     }
 
     /**
@@ -108,7 +112,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     maxProbability(): number
     {
-        return Math.max(...this.map(x => x.relativeProbability));
+        return Math.max(...this.map((x) => x.relativeProbability));
     }
 
     /**
@@ -122,7 +126,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      */
     minProbability(): number
     {
-        return Math.min(...this.map(x => x.relativeProbability));
+        return Math.min(...this.map((x) => x.relativeProbability));
     }
 
     /**
@@ -140,19 +144,22 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
             return [];
         }
 
-        const { probArray, keyArray } = this.reduce((acc, x) =>
-        {
-            acc.probArray.push(x.relativeProbability);
-            acc.keyArray.push(x.key);
-            return acc;
-        }, { probArray: [], keyArray: [] });
+        const { probArray, keyArray } = this.reduce(
+            (acc, x) =>
+            {
+                acc.probArray.push(x.relativeProbability);
+                acc.keyArray.push(x.key);
+                return acc;
+            },
+            { probArray: [], keyArray: [] },
+        );
         let probCumsum = this.cumulativeProbability(probArray);
 
         const drawnKeys = [];
         for (let i = 0; i < count; i++)
         {
             const rand = Math.random();
-            const randomIndex = probCumsum.findIndex(x => x > rand);
+            const randomIndex = probCumsum.findIndex((x) => x > rand);
             // We cannot put Math.random() directly in the findIndex because then it draws anew for each of its iteration
             if (replacement || locklist.includes(keyArray[randomIndex]))
             {
@@ -204,9 +211,11 @@ export class ProbabilityObject<K, V = undefined>
 @injectable()
 export class RandomUtil
 {
-    constructor(@inject("RecursiveCloner") protected cloner: ICloner, @inject("WinstonLogger") protected logger: ILogger)
-    {
-    }
+    constructor(
+        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("WinstonLogger") protected logger: ILogger,
+    )
+    {}
 
     public getInt(min: number, max: number): number
     {
@@ -232,7 +241,7 @@ export class RandomUtil
 
     public getPercentOfValue(percent: number, number: number, toFixed = 2): number
     {
-        return Number.parseFloat((percent * number / 100).toFixed(toFixed));
+        return Number.parseFloat(((percent * number) / 100).toFixed(toFixed));
     }
 
     /**
@@ -446,8 +455,7 @@ export class RandomUtil
         do
         {
             num = boundedGaussian(biasedMin, biasedMax, n);
-        }
-        while (num < min || num > max);
+        } while (num < min || num > max);
 
         return num;
     }

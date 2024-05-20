@@ -107,9 +107,8 @@ export class DatabaseImporter implements OnLoad
             (fileWithPath: string, data: string) => this.onReadValidate(fileWithPath, data),
         );
 
-        const validation = this.valid === VaildationResult.FAILED || this.valid === VaildationResult.NOT_FOUND
-            ? "."
-            : "";
+        const validation
+            = this.valid === VaildationResult.FAILED || this.valid === VaildationResult.NOT_FOUND ? "." : "";
         this.logger.info(`${this.localisationService.getText("importing_database_finish")}${validation}`);
         this.databaseServer.setTables(dataToImport);
     }

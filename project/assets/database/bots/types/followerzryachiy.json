@@ -5,15 +5,15 @@
     },
     "feet": {
       "5fb535bd1c69e5198e234125": 1,
-      "5fb535cf1c69e5198e234126": 1
+      "5fb535cf1c69e5198e234126": 3
     },
     "hands": {
       "5cc2e68f14c02e28b47de290": 1
     },
     "head": {
-      "5fb5297a0359a84b77066e56": 2,
-      "5fb52a3a1c69e5198e234118": 3,
-      "5fb52a537b5d1342ee24bd57": 3
+      "5fb5297a0359a84b77066e56": 5,
+      "5fb52a3a1c69e5198e234118": 6,
+      "5fb52a537b5d1342ee24bd57": 1
     },
     "voice": {
       "SectantPriest": 1
@@ -32,13 +32,13 @@
       "Holster": 0,
       "Pockets": 100,
       "Scabbard": 0,
-      "SecondPrimaryWeapon": 76,
+      "SecondPrimaryWeapon": 77,
       "SecuredContainer": 100,
       "TacticalVest": 100
     },
     "equipmentMods": {},
     "weaponMods": {
-      "mod_charge": 39,
+      "mod_charge": 38,
       "mod_foregrip": 100,
       "mod_handguard": 100,
       "mod_magazine": 100,
@@ -2155,8 +2155,8 @@
         "56dff4a2d2720bbd668b456a": 1
       },
       "Caliber762x54R": {
-        "560d61e84bdc2da74d8b4571": 823,
-        "5887431f2459777e1612938f": 1228
+        "560d61e84bdc2da74d8b4571": 59,
+        "5887431f2459777e1612938f": 88
       },
       "Caliber9x19PARA": {
         "56d59d3ad2720bdb418b4577": 1
@@ -2169,13 +2169,13 @@
       "Earpiece": {},
       "Eyewear": {},
       "FaceCover": {
-        "5ab8f4ff86f77431c60d91ba": 701,
-        "5b432b2f5acfc4771e1c6622": 714,
-        "635267ab3c89e2112001f826": 423
+        "5ab8f4ff86f77431c60d91ba": 964,
+        "5b432b2f5acfc4771e1c6622": 974,
+        "635267ab3c89e2112001f826": 561
       },
       "FirstPrimaryWeapon": {
-        "55801eed4bdc2d89578b4588": 1089,
-        "5c46fbd72e2216398b5a8c9c": 749
+        "55801eed4bdc2d89578b4588": 88,
+        "5c46fbd72e2216398b5a8c9c": 59
       },
       "Headwear": {},
       "Holster": {},
@@ -2184,8 +2184,8 @@
       },
       "Scabbard": {},
       "SecondPrimaryWeapon": {
-        "57dc2fa62459775949412633": 859,
-        "59984ab886f7743e98271174": 554
+        "57dc2fa62459775949412633": 1192,
+        "59984ab886f7743e98271174": 749
       },
       "SecuredContainer": {
         "5c0a794586f77461c458f892": 1
@@ -2197,20 +2197,20 @@
     "items": {
       "Backpack": {},
       "Pockets": {
-        "559ba5b34bdc2d1f1a8b4582": 2455,
-        "590c678286f77426c9660122": 2050
+        "559ba5b34bdc2d1f1a8b4582": 2991,
+        "590c678286f77426c9660122": 2498
       },
       "SecuredContainer": {
-        "560d61e84bdc2da74d8b4571": 24661,
-        "56d59d3ad2720bdb418b4577": 6121,
-        "56dff4a2d2720bbd668b456a": 9671,
-        "5887431f2459777e1612938f": 36811
+        "560d61e84bdc2da74d8b4571": 30061,
+        "56d59d3ad2720bdb418b4577": 7481,
+        "56dff4a2d2720bbd668b456a": 11901,
+        "5887431f2459777e1612938f": 44851
       },
       "SpecialLoot": {},
       "TacticalVest": {
-        "55d482194bdc2d1d4e8b456b": 1935,
-        "599860ac86f77436b225ed1a": 1225,
-        "5c88f24b2e22160bc12c69a6": 1645
+        "55d482194bdc2d1d4e8b456b": 2381,
+        "599860ac86f77436b225ed1a": 1497,
+        "5c88f24b2e22160bc12c69a6": 2005
       }
     },
     "mods": {

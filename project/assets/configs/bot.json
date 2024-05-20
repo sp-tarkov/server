@@ -1283,9 +1283,9 @@
                         "FaceCover": 75
                     },
                     "equipmentMods": {
-                        "left_side_plate": 90,
-                        "right_side_plate": 90,
-                        "mod_equipment": 75,
+                        "left_side_plate": 95,
+                        "right_side_plate": 95,
+                        "mod_equipment": 85,
                         "mod_equipment_000": 80,
                         "mod_equipment_001": 75,
                         "mod_equipment_002": 90,
@@ -1293,7 +1293,7 @@
                     },
                     "weaponMods": {
                         "mod_scope": 95,
-                        "mod_muzzle": 75,
+                        "mod_muzzle": 85,
                         "mod_muzzle_000": 95,
                         "mod_muzzle_001": 95
                     },

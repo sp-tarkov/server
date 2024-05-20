@@ -66,7 +66,7 @@ export class DialogueHelper
         const dialogueData = this.saveServer.getProfile(sessionID).dialogues;
         for (const dialogueId in dialogueData)
         {
-            const message = dialogueData[dialogueId].messages.find(x => x._id === messageID);
+            const message = dialogueData[dialogueId].messages.find((x) => x._id === messageID);
             if (!message)
             {
                 continue;
@@ -87,7 +87,7 @@ export class DialogueHelper
                     message.items.data = [];
                 }
 
-                const rewardItemCount = message.items.data?.filter(item => item._id !== itemId);
+                const rewardItemCount = message.items.data?.filter((item) => item._id !== itemId);
                 if (rewardItemCount.length === 0)
                 {
                     message.rewardCollected = true;

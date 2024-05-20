@@ -36,7 +36,8 @@ export class HealthHelper
         const profile = this.saveServer.getProfile(sessionID);
 
         if (!profile.vitality)
-        { // Occurs on newly created profiles
+        {
+            // Occurs on newly created profiles
             profile.vitality = { health: null, effects: null };
         }
         profile.vitality.health = {
@@ -99,13 +100,14 @@ export class HealthHelper
                 profileEffects[bodyPart] = postRaidBodyParts[bodyPart].Effects;
             }
             if (request.IsAlive === true)
-            { // is player alive, not is limb alive
+            {
+                // is player alive, not is limb alive
                 profileHealth[bodyPart] = postRaidBodyParts[bodyPart].Current;
             }
             else
             {
-                profileHealth[bodyPart] = pmcData.Health.BodyParts[bodyPart].Health.Maximum
-                * this.healthConfig.healthMultipliers.death;
+                profileHealth[bodyPart]
+                    = pmcData.Health.BodyParts[bodyPart].Health.Maximum * this.healthConfig.healthMultipliers.death;
             }
         }
 

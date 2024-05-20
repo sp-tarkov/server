@@ -4,7 +4,7 @@ import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
 import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
 import { QuestHelper } from "@spt-aki/helpers/QuestHelper";
 import { IPmcData, IPostRaidPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IQuestStatus, TraderInfo, Victim } from "@spt-aki/models/eft/common/tables/IBotBase";
+import { IQuestStatus, TraderInfo } from "@spt-aki/models/eft/common/tables/IBotBase";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ISaveProgressRequestData } from "@spt-aki/models/eft/inRaid/ISaveProgressRequestData";
 import { IFailQuestRequestData } from "@spt-aki/models/eft/quests/IFailQuestRequestData";
@@ -67,7 +67,7 @@ export class InRaidHelper
      */
     public addUpdToMoneyFromRaid(items: Item[]): void
     {
-        for (const moneyItem of items.filter(item => this.paymentHelper.isMoneyTpl(item._tpl)))
+        for (const moneyItem of items.filter((item) => this.paymentHelper.isMoneyTpl(item._tpl)))
         {
             this.itemHelper.addUpdObjectToItem(moneyItem);
 
@@ -128,7 +128,10 @@ export class InRaidHelper
     }
 
     /** Check counters are correct in profile */
-    protected validateTaskConditionCounters(saveProgressRequest: ISaveProgressRequestData, profileData: IPmcData): void
+    protected validateTaskConditionCounters(
+        saveProgressRequest: ISaveProgressRequestData,
+        profileData: IPmcData,
+    ): void
     {
         for (const backendCounterKey in saveProgressRequest.profile.TaskConditionCounters)
         {
@@ -203,12 +206,12 @@ export class InRaidHelper
     ): void
     {
         // Only copy active quests into scav profile // Progress will later to copied over to PMC profile
-        const existingActiveQuestIds = scavData.Quests?.filter(
-            x => x.status !== QuestStatus.AvailableForStart,
-        ).map(x => x.qid);
+        const existingActiveQuestIds = scavData.Quests?.filter((x) => x.status !== QuestStatus.AvailableForStart).map(
+            (x) => x.qid,
+        );
         if (existingActiveQuestIds)
         {
-            scavData.Quests = saveProgressRequest.profile.Quests.filter(x => existingActiveQuestIds.includes(x.qid));
+            scavData.Quests = saveProgressRequest.profile.Quests.filter((x) => existingActiveQuestIds.includes(x.qid));
         }
 
         this.profileFixerService.checkForAndFixScavProfileIssues(scavData);
@@ -240,10 +243,10 @@ export class InRaidHelper
         for (const postRaidQuest of postRaidProfile.Quests)
         {
             // postRaidQuest.status has a weird value, need to do some nasty casting to compare it
-            const postRaidQuestStatus = <string><unknown>postRaidQuest.status;
+            const postRaidQuestStatus = <string>(<unknown>postRaidQuest.status);
 
             // Find matching pre-raid quest, skip if we can't
-            const preRaidQuest = preRaidQuests?.find(preRaidQuest => preRaidQuest.qid === postRaidQuest.qid);
+            const preRaidQuest = preRaidQuests?.find((preRaidQuest) => preRaidQuest.qid === postRaidQuest.qid);
             if (!preRaidQuest)
             {
                 continue;
@@ -269,7 +272,8 @@ export class InRaidHelper
 
             // Quest with time-gate has unlocked
             if (
-                postRaidQuestStatus === "AvailableAfter" && postRaidQuest.availableAfter <= this.timeUtil.getTimestamp()
+                postRaidQuestStatus === "AvailableAfter"
+                && postRaidQuest.availableAfter <= this.timeUtil.getTimestamp()
             )
             {
                 // Flag as ready to start
@@ -298,8 +302,8 @@ export class InRaidHelper
                 // Does failed quest have requirement to collect items from raid
                 const questDbData = this.questHelper.getQuestFromDb(postRaidQuest.qid, pmcData);
                 // AvailableForFinish
-                const matchingAffFindConditions = questDbData.conditions.AvailableForFinish.filter(condition =>
-                    condition.conditionType === "FindItem",
+                const matchingAffFindConditions = questDbData.conditions.AvailableForFinish.filter(
+                    (condition) => condition.conditionType === "FindItem",
                 );
                 const itemsToCollect: string[] = [];
                 if (matchingAffFindConditions)
@@ -314,7 +318,7 @@ export class InRaidHelper
                 // Remove quest items from profile as quest has failed and may still be alive
                 // Required as restarting the quest from main menu does not remove value from CarriedQuestItems array
                 postRaidProfile.Stats.Eft.CarriedQuestItems = postRaidProfile.Stats.Eft.CarriedQuestItems.filter(
-                    carriedQuestItem => !itemsToCollect.includes(carriedQuestItem),
+                    (carriedQuestItem) => !itemsToCollect.includes(carriedQuestItem),
                 );
 
                 // Remove quest item from profile now quest is failed
@@ -322,8 +326,8 @@ export class InRaidHelper
                 for (const itemTpl of itemsToCollect)
                 {
                     // Look for sessioncounter and remove it
-                    const counterIndex = postRaidProfile.Stats.Eft.SessionCounters.Items.findIndex(x =>
-                        x.Key.includes(itemTpl) && x.Key.includes("LootItem"),
+                    const counterIndex = postRaidProfile.Stats.Eft.SessionCounters.Items.findIndex(
+                        (x) => x.Key.includes(itemTpl) && x.Key.includes("LootItem"),
                     );
                     if (counterIndex > -1)
                     {
@@ -331,7 +335,7 @@ export class InRaidHelper
                     }
 
                     // Look for quest item and remove it
-                    const inventoryItemIndex = postRaidProfile.Inventory.items.findIndex(x => x._tpl === itemTpl);
+                    const inventoryItemIndex = postRaidProfile.Inventory.items.findIndex((x) => x._tpl === itemTpl);
                     if (inventoryItemIndex > -1)
                     {
                         postRaidProfile.Inventory.items.splice(inventoryItemIndex, 1);
@@ -454,10 +458,15 @@ export class InRaidHelper
         const itemsToRemovePropertyFrom = postRaidProfile.Inventory.items.filter((x) =>
         {
             // Has upd object + upd.SpawnedInSession property + not a quest item
-            return "upd" in x && "SpawnedInSession" in x.upd
-              && !dbItems[x._tpl]._props.QuestItem
-              && !(this.inRaidConfig.keepFiRSecureContainerOnDeath
-              && this.itemHelper.itemIsInsideContainer(x, "SecuredContainer", postRaidProfile.Inventory.items));
+            return (
+                "upd" in x
+                && "SpawnedInSession" in x.upd
+                && !dbItems[x._tpl]._props.QuestItem
+                && !(
+                    this.inRaidConfig.keepFiRSecureContainerOnDeath
+                    && this.itemHelper.itemIsInsideContainer(x, "SecuredContainer", postRaidProfile.Inventory.items)
+                )
+            );
         });
 
         for (const item of itemsToRemovePropertyFrom)
@@ -502,7 +511,7 @@ export class InRaidHelper
     public deleteInventory(pmcData: IPmcData, sessionId: string): void
     {
         // Get inventory item ids to remove from players profile
-        const itemIdsToDeleteFromProfile = this.getInventoryItemsLostOnDeath(pmcData).map(item => item._id);
+        const itemIdsToDeleteFromProfile = this.getInventoryItemsLostOnDeath(pmcData).map((item) => item._id);
         for (const itemIdToDelete of itemIdsToDeleteFromProfile)
         {
             // Items inside containers are handled as part of function
@@ -555,13 +564,13 @@ export class InRaidHelper
      */
     protected getBaseItemsInRigPocketAndBackpack(pmcData: IPmcData): Item[]
     {
-        const rig = pmcData.Inventory.items.find(x => x.slotId === "TacticalVest");
-        const pockets = pmcData.Inventory.items.find(x => x.slotId === "Pockets");
-        const backpack = pmcData.Inventory.items.find(x => x.slotId === "Backpack");
+        const rig = pmcData.Inventory.items.find((x) => x.slotId === "TacticalVest");
+        const pockets = pmcData.Inventory.items.find((x) => x.slotId === "Pockets");
+        const backpack = pmcData.Inventory.items.find((x) => x.slotId === "Backpack");
 
-        const baseItemsInRig = pmcData.Inventory.items.filter(x => x.parentId === rig?._id);
-        const baseItemsInPockets = pmcData.Inventory.items.filter(x => x.parentId === pockets?._id);
-        const baseItemsInBackpack = pmcData.Inventory.items.filter(x => x.parentId === backpack?._id);
+        const baseItemsInRig = pmcData.Inventory.items.filter((x) => x.parentId === rig?._id);
+        const baseItemsInPockets = pmcData.Inventory.items.filter((x) => x.parentId === pockets?._id);
+        const baseItemsInBackpack = pmcData.Inventory.items.filter((x) => x.parentId === backpack?._id);
 
         return [...baseItemsInRig, ...baseItemsInPockets, ...baseItemsInBackpack];
     }

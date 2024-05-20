@@ -102,7 +102,11 @@ export class InventoryCallbacks
         return this.inventoryController.foldItem(pmcData, body, sessionID);
     }
 
-    public toggleItem(pmcData: IPmcData, body: IInventoryToggleRequestData, sessionID: string): IItemEventRouterResponse
+    public toggleItem(
+        pmcData: IPmcData,
+        body: IInventoryToggleRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.inventoryController.toggleItem(pmcData, body, sessionID);
     }

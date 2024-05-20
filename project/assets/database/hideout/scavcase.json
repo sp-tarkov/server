@@ -1,86 +1,5 @@
 [
   {
-    "_id": "6271093e621b0a76055cd61e",
-    "ProductionTime": 16800,
-    "Requirements": [
-      {
-        "templateId": "5d1b376e86f774252519444e",
-        "count": 1,
-        "isFunctional": false,
-        "isEncoded": false,
-        "type": "Item"
-      }
-    ],
-    "EndProducts": {
-      "Common": {
-        "min": "0",
-        "max": "0"
-      },
-      "Rare": {
-        "min": "1",
-        "max": "1"
-      },
-      "Superrare": {
-        "min": "3",
-        "max": "5"
-      }
-    }
-  },
-  {
-    "_id": "62710974e71632321e5afd5f",
-    "ProductionTime": 2500,
-    "Requirements": [
-      {
-        "templateId": "5449016a4bdc2d6f028b456f",
-        "count": 2500,
-        "isFunctional": false,
-        "isEncoded": false,
-        "type": "Item"
-      }
-    ],
-    "EndProducts": {
-      "Common": {
-        "min": "1",
-        "max": "2"
-      },
-      "Rare": {
-        "min": "0",
-        "max": "1"
-      },
-      "Superrare": {
-        "min": "0",
-        "max": "0"
-      }
-    }
-  },
-  {
-    "_id": "62710a0e436dcc0b9c55f4ec",
-    "ProductionTime": 19200,
-    "Requirements": [
-      {
-        "templateId": "5c12613b86f7743bbe2c3f76",
-        "count": 1,
-        "isFunctional": false,
-        "isEncoded": false,
-        "type": "Item"
-      }
-    ],
-    "EndProducts": {
-      "Common": {
-        "min": "0",
-        "max": "0"
-      },
-      "Rare": {
-        "min": "2",
-        "max": "4"
-      },
-      "Superrare": {
-        "min": "2",
-        "max": "3"
-      }
-    }
-  },
-  {
     "_id": "62710a8c403346379e3de9be",
     "ProductionTime": 7700,
     "Requirements": [
@@ -131,6 +50,87 @@
       "Superrare": {
         "min": "1",
         "max": "2"
+      }
+    }
+  },
+  {
+    "_id": "62710a0e436dcc0b9c55f4ec",
+    "ProductionTime": 19200,
+    "Requirements": [
+      {
+        "templateId": "5c12613b86f7743bbe2c3f76",
+        "count": 1,
+        "isFunctional": false,
+        "isEncoded": false,
+        "type": "Item"
+      }
+    ],
+    "EndProducts": {
+      "Common": {
+        "min": "0",
+        "max": "0"
+      },
+      "Rare": {
+        "min": "2",
+        "max": "4"
+      },
+      "Superrare": {
+        "min": "2",
+        "max": "3"
+      }
+    }
+  },
+  {
+    "_id": "62710974e71632321e5afd5f",
+    "ProductionTime": 2500,
+    "Requirements": [
+      {
+        "templateId": "5449016a4bdc2d6f028b456f",
+        "count": 2500,
+        "isFunctional": false,
+        "isEncoded": false,
+        "type": "Item"
+      }
+    ],
+    "EndProducts": {
+      "Common": {
+        "min": "1",
+        "max": "2"
+      },
+      "Rare": {
+        "min": "0",
+        "max": "1"
+      },
+      "Superrare": {
+        "min": "0",
+        "max": "0"
+      }
+    }
+  },
+  {
+    "_id": "6271093e621b0a76055cd61e",
+    "ProductionTime": 16800,
+    "Requirements": [
+      {
+        "templateId": "5d1b376e86f774252519444e",
+        "count": 1,
+        "isFunctional": false,
+        "isEncoded": false,
+        "type": "Item"
+      }
+    ],
+    "EndProducts": {
+      "Common": {
+        "min": "0",
+        "max": "0"
+      },
+      "Rare": {
+        "min": "1",
+        "max": "1"
+      },
+      "Superrare": {
+        "min": "3",
+        "max": "5"
       }
     }
   }

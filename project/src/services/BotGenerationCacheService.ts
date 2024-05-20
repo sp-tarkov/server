@@ -79,7 +79,7 @@ export class BotGenerationCacheService
      */
     public getUsedBot(profileId: string): IBotBase
     {
-        return this.activeBotsInRaid.find(x => x._id === profileId);
+        return this.activeBotsInRaid.find((x) => x._id === profileId);
     }
 
     /**

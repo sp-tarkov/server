@@ -29,7 +29,8 @@ export class TraderController
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("TraderAssortService") protected traderAssortService: TraderAssortService,
-        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService: TraderPurchasePersisterService,
+        @inject("TraderPurchasePersisterService")
+        protected traderPurchasePersisterService: TraderPurchasePersisterService,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,

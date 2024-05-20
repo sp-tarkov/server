@@ -25,7 +25,7 @@ export class ObjectId
         let hexString = "";
         for (let i = 0; i < byteArray.length; i++)
         {
-            hexString += `0${(byteArray[i] & 0xFF).toString(16)}`.slice(-2);
+            hexString += `0${(byteArray[i] & 0xff).toString(16)}`.slice(-2);
         }
         return hexString;
     }
@@ -42,16 +42,16 @@ export class ObjectId
         const objectIdBinary = Buffer.alloc(12);
 
         objectIdBinary[3] = time & 0xff;
-        objectIdBinary[2] = time >> 8 & 0xff;
-        objectIdBinary[1] = time >> 16 & 0xff;
-        objectIdBinary[0] = time >> 24 & 0xff;
+        objectIdBinary[2] = (time >> 8) & 0xff;
+        objectIdBinary[1] = (time >> 16) & 0xff;
+        objectIdBinary[0] = (time >> 24) & 0xff;
         objectIdBinary[4] = this.randomBytes[0];
         objectIdBinary[5] = this.randomBytes[1];
         objectIdBinary[6] = this.randomBytes[2];
         objectIdBinary[7] = this.randomBytes[3];
         objectIdBinary[8] = this.randomBytes[4];
-        objectIdBinary[9] = counter >> 16 & 0xff;
-        objectIdBinary[10] = counter >> 8 & 0xff;
+        objectIdBinary[9] = (counter >> 16) & 0xff;
+        objectIdBinary[10] = (counter >> 8) & 0xff;
         objectIdBinary[11] = counter & 0xff;
 
         return this.toHexString(objectIdBinary);

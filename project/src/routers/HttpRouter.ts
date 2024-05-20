@@ -47,7 +47,7 @@ export class HttpRouter
         }
 
         // TODO: Temporary hack to change ItemEventRouter response sessionID binding to what client expects
-        if (wrapper.output?.includes("\"profileChanges\":{"))
+        if (wrapper.output?.includes('"profileChanges":{'))
         {
             wrapper.output = wrapper.output.replace(sessionID, sessionID);
         }

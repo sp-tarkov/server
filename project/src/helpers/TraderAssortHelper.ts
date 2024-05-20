@@ -40,8 +40,8 @@ export class TraderAssortHelper
         @inject("RagfairOfferGenerator") protected ragfairOfferGenerator: RagfairOfferGenerator,
         @inject("TraderAssortService") protected traderAssortService: TraderAssortService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("TraderPurchasePersisterService") protected traderPurchasePersisterService:
-        TraderPurchasePersisterService,
+        @inject("TraderPurchasePersisterService")
+        protected traderPurchasePersisterService: TraderPurchasePersisterService,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -95,7 +95,7 @@ export class TraderAssortHelper
         for (const assortId in assortPurchasesfromTrader)
         {
             // Find assort we want to update current buy count of
-            const assortToAdjust = traderClone.assort.items.find(x => x._id === assortId);
+            const assortToAdjust = traderClone.assort.items.find((x) => x._id === assortId);
             if (!assortToAdjust)
             {
                 this.logger.debug(
@@ -147,7 +147,7 @@ export class TraderAssortHelper
     protected resetBuyRestrictionCurrentValue(assortItems: Item[]): void
     {
         // iterate over root items
-        for (const assort of assortItems.filter(item => item.slotId === "hideout"))
+        for (const assort of assortItems.filter((item) => item.slotId === "hideout"))
         {
             // no value to adjust
             if (!assort.upd.BuyRestrictionCurrent)

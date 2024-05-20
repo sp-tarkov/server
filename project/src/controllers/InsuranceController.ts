@@ -112,7 +112,7 @@ export class InsuranceController
             this.logger.debug(`Found ${profileInsuranceDetails.length} insurance packages in profile ${sessionID}`);
         }
 
-        return profileInsuranceDetails.filter(insured => insuranceTime >= insured.scheduledTime);
+        return profileInsuranceDetails.filter((insured) => insuranceTime >= insured.scheduledTime);
     }
 
     /**
@@ -125,9 +125,9 @@ export class InsuranceController
     protected processInsuredItems(insuranceDetails: Insurance[], sessionID: string): void
     {
         this.logger.debug(
-            `Processing ${insuranceDetails.length} insurance packages, which includes a total of ${
-                this.countAllInsuranceItems(insuranceDetails)
-            } items, in profile ${sessionID}`,
+            `Processing ${insuranceDetails.length} insurance packages, which includes a total of ${this.countAllInsuranceItems(
+                insuranceDetails,
+            )} items, in profile ${sessionID}`,
         );
 
         // Fetch the root Item parentId property value that should be used for insurance packages.
@@ -160,7 +160,7 @@ export class InsuranceController
      */
     protected countAllInsuranceItems(insurance: Insurance[]): number
     {
-        return this.mathUtil.arraySum(insurance.map(ins => ins.items.length));
+        return this.mathUtil.arraySum(insurance.map((ins) => ins.items.length));
     }
 
     /**
@@ -173,11 +173,12 @@ export class InsuranceController
     protected removeInsurancePackageFromProfile(sessionID: string, insPackage: Insurance): void
     {
         const profile = this.saveServer.getProfile(sessionID);
-        profile.insurance = profile.insurance.filter(insurance =>
-            insurance.traderId !== insPackage.traderId
-            || insurance.systemData.date !== insPackage.systemData.date
-            || insurance.systemData.time !== insPackage.systemData.time
-            || insurance.systemData.location !== insPackage.systemData.location,
+        profile.insurance = profile.insurance.filter(
+            (insurance) =>
+                insurance.traderId !== insPackage.traderId
+                || insurance.systemData.date !== insPackage.systemData.date
+                || insurance.systemData.time !== insPackage.systemData.time
+                || insurance.systemData.location !== insPackage.systemData.location,
         );
 
         this.logger.debug(`Removed processed insurance package. Remaining packages: ${profile.insurance.length}`);
@@ -200,8 +201,8 @@ export class InsuranceController
         let parentAttachmentsMap = this.populateParentAttachmentsMap(rootItemParentID, insured, itemsMap);
 
         // Check to see if any regular items are present.
-        const hasRegularItems = Array.from(itemsMap.values()).some(item =>
-            !this.itemHelper.isAttachmentAttached(item),
+        const hasRegularItems = Array.from(itemsMap.values()).some(
+            (item) => !this.itemHelper.isAttachmentAttached(item),
         );
 
         // Process all items that are not attached, attachments; those are handled separately, by value.
@@ -249,7 +250,7 @@ export class InsuranceController
         for (const insuredItem of insured.items)
         {
             // Use the parent ID from the item to get the parent item.
-            const parentItem = insured.items.find(item => item._id === insuredItem.parentId);
+            const parentItem = insured.items.find((item) => item._id === insuredItem.parentId);
 
             // The parent (not the hideout) could not be found. Skip and warn.
             if (!parentItem && insuredItem.parentId !== rootItemParentID)
@@ -489,7 +490,7 @@ export class InsuranceController
         {
             this.logger.debug(
                 `Attachment ${index} Id: ${attachmentId} Tpl: ${
-                    attachments.find(x => x._id === attachmentId)?._tpl
+                    attachments.find((x) => x._id === attachmentId)?._tpl
                 } - Price: ${attachmentPrices[attachmentId]}`,
             );
             index++;
@@ -556,7 +557,7 @@ export class InsuranceController
      */
     protected removeItemsFromInsurance(insured: Insurance, toDelete: Set<string>): void
     {
-        insured.items = insured.items.filter(item => !toDelete.has(item._id));
+        insured.items = insured.items.filter((item) => !toDelete.has(item._id));
     }
 
     /**

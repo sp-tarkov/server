@@ -92,7 +92,7 @@ export class LocationGenerator
         }
 
         // Add mounted weapons to output loot
-        result.push(...staticWeaponsOnMapClone ?? []);
+        result.push(...(staticWeaponsOnMapClone ?? []));
 
         const allStaticContainersOnMapClone = this.cloner.clone(mapData.staticContainers.staticContainers);
 
@@ -137,8 +137,10 @@ export class LocationGenerator
 
         // Randomisation is turned off globally or just turned off for this map
         if (
-            !(this.locationConfig.containerRandomisationSettings.enabled
-            && this.locationConfig.containerRandomisationSettings.maps[locationId])
+            !(
+                this.locationConfig.containerRandomisationSettings.enabled
+                && this.locationConfig.containerRandomisationSettings.maps[locationId]
+            )
         )
         {
             this.logger.debug(
@@ -221,15 +223,13 @@ export class LocationGenerator
             for (const chosenContainerId of chosenContainerIds)
             {
                 // Look up container object from full list of containers on map
-                const containerObject = staticRandomisableContainersOnMap.find(staticContainer =>
-                    staticContainer.template.Id === chosenContainerId,
+                const containerObject = staticRandomisableContainersOnMap.find(
+                    (staticContainer) => staticContainer.template.Id === chosenContainerId,
                 );
                 if (!containerObject)
                 {
                     this.logger.debug(
-                        `Container: ${
-                            chosenContainerIds[chosenContainerId]
-                        } not found in staticRandomisableContainersOnMap, this is bad`,
+                        `Container: ${chosenContainerIds[chosenContainerId]} not found in staticRandomisableContainersOnMap, this is bad`,
                     );
                     continue;
                 }
@@ -265,11 +265,13 @@ export class LocationGenerator
      */
     protected getRandomisableContainersOnMap(staticContainers: IStaticContainerData[]): IStaticContainerData[]
     {
-        return staticContainers.filter(staticContainer =>
-            staticContainer.probability !== 1 && !staticContainer.template.IsAlwaysSpawn
-            && !this.locationConfig.containerRandomisationSettings.containerTypesToNotRandomise.includes(
-                staticContainer.template.Items[0]._tpl,
-            ),
+        return staticContainers.filter(
+            (staticContainer) =>
+                staticContainer.probability !== 1
+                && !staticContainer.template.IsAlwaysSpawn
+                && !this.locationConfig.containerRandomisationSettings.containerTypesToNotRandomise.includes(
+                    staticContainer.template.Items[0]._tpl,
+                ),
         );
     }
 
@@ -280,11 +282,13 @@ export class LocationGenerator
      */
     protected getGuaranteedContainers(staticContainersOnMap: IStaticContainerData[]): IStaticContainerData[]
     {
-        return staticContainersOnMap.filter(staticContainer =>
-            staticContainer.probability === 1 || staticContainer.template.IsAlwaysSpawn
-            || this.locationConfig.containerRandomisationSettings.containerTypesToNotRandomise.includes(
-                staticContainer.template.Items[0]._tpl,
-            ),
+        return staticContainersOnMap.filter(
+            (staticContainer) =>
+                staticContainer.probability === 1
+                || staticContainer.template.IsAlwaysSpawn
+                || this.locationConfig.containerRandomisationSettings.containerTypesToNotRandomise.includes(
+                    staticContainer.template.Items[0]._tpl,
+                ),
         );
     }
 
@@ -415,9 +419,9 @@ export class LocationGenerator
         const containerLootPool = this.getPossibleLootItemsForContainer(containerTpl, staticLootDist);
 
         // Some containers need to have items forced into it (quest keys etc)
-        const tplsForced = staticForced.filter(forcedStaticProp =>
-            forcedStaticProp.containerId === containerClone.template.Id,
-        ).map(x => x.itemTpl);
+        const tplsForced = staticForced
+            .filter((forcedStaticProp) => forcedStaticProp.containerId === containerClone.template.Id)
+            .map((x) => x.itemTpl);
 
         // Draw random loot
         // Money spawn more than once in container
@@ -426,11 +430,9 @@ export class LocationGenerator
 
         // Choose items to add to container, factor in weighting + lock money down
         // Filter out items picked that're already in the above `tplsForced` array
-        const chosenTpls = containerLootPool.draw(
-            itemCountToAdd,
-            this.locationConfig.allowDuplicateItemsInStaticContainers,
-            locklist,
-        ).filter(tpl => !tplsForced.includes(tpl));
+        const chosenTpls = containerLootPool
+            .draw(itemCountToAdd, this.locationConfig.allowDuplicateItemsInStaticContainers, locklist)
+            .filter((tpl) => !tplsForced.includes(tpl));
 
         // Add forced loot to chosen item pool
         const tplsToAddToContainer = tplsForced.concat(chosenTpls);
@@ -495,7 +497,9 @@ export class LocationGenerator
         const width = containerTemplate._props.Grids[0]._props.cellsH;
 
         // Calcualte 2d array and return
-        return Array(height).fill(0).map(() => Array(width).fill(0));
+        return Array(height)
+            .fill(0)
+            .map(() => Array(width).fill(0));
     }
 
     /**
@@ -600,7 +604,7 @@ export class LocationGenerator
 
         // Build the list of forced loot from both `spawnpointsForced` and any point marked `IsAlwaysSpawn`
         dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpointsForced);
-        dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpoints.filter(point => point.template.IsAlwaysSpawn));
+        dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpoints.filter((point) => point.template.IsAlwaysSpawn));
 
         // Add forced loot
         this.addForcedLoot(loot, dynamicForcedSpawnPoints, locationName);
@@ -663,7 +667,7 @@ export class LocationGenerator
 
         // Filter out duplicate locationIds
         chosenSpawnpoints = [
-            ...new Map(chosenSpawnpoints.map(spawnPoint => [spawnPoint.locationId, spawnPoint])).values(),
+            ...new Map(chosenSpawnpoints.map((spawnPoint) => [spawnPoint.locationId, spawnPoint])).values(),
         ];
 
         // Do we have enough items in pool to fulfill requirement
@@ -706,8 +710,9 @@ export class LocationGenerator
             for (const itemDist of spawnPoint.itemDistribution)
             {
                 if (
-                    !seasonalEventActive && seasonalItemTplBlacklist.includes(
-                        spawnPoint.template.Items.find(item => item._id === itemDist.composedKey.key)._tpl,
+                    !seasonalEventActive
+                    && seasonalItemTplBlacklist.includes(
+                        spawnPoint.template.Items.find((item) => item._id === itemDist.composedKey.key)._tpl,
                     )
                 )
                 {
@@ -758,8 +763,8 @@ export class LocationGenerator
             for (const itemTpl of lootToForceSingleAmountOnMap)
             {
                 // Get all spawn positions for item tpl in forced loot array
-                const items = forcedSpawnPoints.filter(forcedSpawnPoint =>
-                    forcedSpawnPoint.template.Items[0]._tpl === itemTpl,
+                const items = forcedSpawnPoints.filter(
+                    (forcedSpawnPoint) => forcedSpawnPoint.template.Items[0]._tpl === itemTpl,
                 );
                 if (!items || items.length === 0)
                 {
@@ -783,7 +788,7 @@ export class LocationGenerator
                 // Choose 1 out of all found spawn positions for spawn id and add to loot array
                 for (const spawnPointLocationId of spawnpointArray.draw(1, false))
                 {
-                    const itemToAdd = items.find(item => item.locationId === spawnPointLocationId);
+                    const itemToAdd = items.find((item) => item.locationId === spawnPointLocationId);
                     const lootItem = itemToAdd.template;
                     lootItem.Root = this.objectId.generate();
                     lootItem.Items[0]._id = lootItem.Root;
@@ -819,8 +824,8 @@ export class LocationGenerator
             locationTemplateToAdd.Items[0]._id = locationTemplateToAdd.Root;
 
             // Push forced location into array as long as it doesnt exist already
-            const existingLocation = lootLocationTemplates.find(spawnPoint =>
-                spawnPoint.Id === locationTemplateToAdd.Id,
+            const existingLocation = lootLocationTemplates.find(
+                (spawnPoint) => spawnPoint.Id === locationTemplateToAdd.Id,
             );
             if (!existingLocation)
             {
@@ -848,7 +853,7 @@ export class LocationGenerator
         staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
     ): IContainerItem
     {
-        const chosenItem = spawnPoint.template.Items.find(item => item._id === chosenComposedKey);
+        const chosenItem = spawnPoint.template.Items.find((item) => item._id === chosenComposedKey);
         const chosenTpl = chosenItem._tpl;
         const itemTemplate = this.itemHelper.getItem(chosenTpl)[1];
 
@@ -858,9 +863,10 @@ export class LocationGenerator
         // Money/Ammo - don't rely on items in spawnPoint.template.Items so we can randomise it ourselves
         if (this.itemHelper.isOfBaseclasses(chosenTpl, [BaseClasses.MONEY, BaseClasses.AMMO]))
         {
-            const stackCount = itemTemplate._props.StackMaxSize === 1
-                ? 1
-                : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
+            const stackCount
+                = itemTemplate._props.StackMaxSize === 1
+                    ? 1
+                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
 
             itemWithMods.push({
                 _id: this.objectId.generate(),
@@ -948,10 +954,10 @@ export class LocationGenerator
     {
         if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.WEAPON))
         {
-            return items.find(v => v._tpl === chosenTpl && v.parentId === undefined);
+            return items.find((v) => v._tpl === chosenTpl && v.parentId === undefined);
         }
 
-        return items.find(item => item._tpl === chosenTpl);
+        return items.find((item) => item._tpl === chosenTpl);
     }
 
     // TODO: rewrite, BIG yikes
@@ -979,9 +985,10 @@ export class LocationGenerator
         )
         {
             // Edge case - some ammos e.g. flares or M406 grenades shouldn't be stacked
-            const stackCount = itemTemplate._props.StackMaxSize === 1
-                ? 1
-                : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
+            const stackCount
+                = itemTemplate._props.StackMaxSize === 1
+                    ? 1
+                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
 
             rootItem.upd = { StackObjectsCount: stackCount };
         }
@@ -990,7 +997,7 @@ export class LocationGenerator
         {
             let children: Item[] = [];
             const defaultPreset = this.cloner.clone(this.presetHelper.getDefaultPreset(chosenTpl));
-            if (defaultPreset)
+            if (defaultPreset?._items)
             {
                 try
                 {
@@ -1055,7 +1062,7 @@ export class LocationGenerator
             // it can handle revolver ammo (it's not restructured to be used here yet.)
             // General: Make a WeaponController for Ragfair preset stuff and the generating weapons and ammo stuff from
             // BotGenerator
-            const magazine = items.filter(item => item.slotId === "mod_magazine")[0];
+            const magazine = items.filter((item) => item.slotId === "mod_magazine")[0];
             // some weapon presets come without magazine; only fill the mag if it exists
             if (magazine)
             {

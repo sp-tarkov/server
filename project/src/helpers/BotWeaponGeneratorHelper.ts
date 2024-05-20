@@ -45,9 +45,10 @@ export class BotWeaponGeneratorHelper
         {
             const firstSlotAmmoTpl = magTemplate._props.Cartridges[0]._props.filters[0].Filter[0];
             const ammoMaxStackSize = this.itemHelper.getItem(firstSlotAmmoTpl)[1]?._props?.StackMaxSize ?? 1;
-            chamberBulletCount = ammoMaxStackSize === 1
-                ? 1 // Rotating grenade launcher
-                : magTemplate._props.Slots.length; // Shotguns/revolvers. We count the number of camoras as the _max_count of the magazine is 0
+            chamberBulletCount
+                = ammoMaxStackSize === 1
+                    ? 1 // Rotating grenade launcher
+                    : magTemplate._props.Slots.length; // Shotguns/revolvers. We count the number of camoras as the _max_count of the magazine is 0
         }
         else if (parentItem._id === BaseClasses.UBGL)
         {
@@ -60,7 +61,7 @@ export class BotWeaponGeneratorHelper
         }
 
         /* Get the amount of bullets that would fit in the internal magazine
-        * and multiply by how many magazines were supposed to be created */
+         * and multiply by how many magazines were supposed to be created */
         return chamberBulletCount * randomizedMagazineCount;
     }
 

@@ -1,10 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { INotification, NotificationType } from "@spt-aki/models/eft/notifier/INotifier";
 import { Dialogue, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IWsChatMessageReceived } from "@spt-aki/models/eft/ws/IWsChatMessageReceived";
+import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
 import { MessageType } from "@spt-aki/models/enums/MessageType";
+import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { WebSocketServer } from "@spt-aki/servers/WebSocketServer";
+import { AkiWebSocketConnectionHandler } from "@spt-aki/servers/ws/AkiWebSocketConnectionHandler";
 import { NotificationService } from "@spt-aki/services/NotificationService";
 import { HashUtil } from "@spt-aki/utils/HashUtil";
 
@@ -12,7 +14,7 @@ import { HashUtil } from "@spt-aki/utils/HashUtil";
 export class NotificationSendHelper
 {
     constructor(
-        @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
+        @inject("AkiWebSocketConnectionHandler") protected akiWebSocketConnection: AkiWebSocketConnectionHandler,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("NotificationService") protected notificationService: NotificationService,
@@ -24,11 +26,11 @@ export class NotificationSendHelper
      * @param sessionID
      * @param notificationMessage
      */
-    public sendMessage(sessionID: string, notificationMessage: INotification): void
+    public sendMessage(sessionID: string, notificationMessage: IWsNotificationEvent): void
     {
-        if (this.webSocketServer.isConnectionWebSocket(sessionID))
+        if (this.akiWebSocketConnection.isConnectionWebSocket(sessionID))
         {
-            this.webSocketServer.sendMessage(sessionID, notificationMessage);
+            this.akiWebSocketConnection.sendMessage(sessionID, notificationMessage);
         }
         else
         {
@@ -65,8 +67,8 @@ export class NotificationSendHelper
         };
         dialog.messages.push(message);
 
-        const notification: INotification = {
-            type: NotificationType.NEW_MESSAGE,
+        const notification: IWsChatMessageReceived = {
+            type: NotificationEventType.CHAT_MESSAGE_RECEIVED,
             eventId: message._id,
             dialogId: message.uid,
             message: message,
@@ -84,9 +86,10 @@ export class NotificationSendHelper
     protected getDialog(sessionId: string, messageType: MessageType, senderDetails: IUserDialogInfo): Dialogue
     {
         // Use trader id if sender is trader, otherwise use nickname
-        const key = senderDetails.Info.MemberCategory === MemberCategory.TRADER
-            ? senderDetails._id
-            : senderDetails.Info.Nickname;
+        const key
+            = senderDetails.Info.MemberCategory === MemberCategory.TRADER
+                ? senderDetails._id
+                : senderDetails.Info.Nickname;
         const dialogueData = this.saveServer.getProfile(sessionId).dialogues;
         const isNewDialogue = !(key in dialogueData);
         let dialogue: Dialogue = dialogueData[key];

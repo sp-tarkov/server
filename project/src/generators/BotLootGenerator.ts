@@ -85,6 +85,27 @@ export class BotLootGenerator
         // Limits on item types to be added as loot
         const itemCounts = botJsonTemplate.generation.items;
 
+        if (
+            !itemCounts.backpackLoot.weights
+            || !itemCounts.pocketLoot.weights
+            || !itemCounts.vestLoot.weights
+            || !itemCounts.specialItems.weights
+            || !itemCounts.healing.weights
+            || !itemCounts.drugs.weights
+            || !itemCounts.food.weights
+            || !itemCounts.drink.weights
+            || !itemCounts.currency.weights
+            || !itemCounts.stims.weights
+            || !itemCounts.grenades.weights
+        )
+        {
+            this.logger.warning(
+                `Unable to generate bot loot for ${botRole} as bot.generation.items lacks data, skipping`,
+            );
+
+            return;
+        }
+
         const backpackLootCount = Number(
             this.weightedRandomHelper.getWeightedValue<number>(itemCounts.backpackLoot.weights),
         );
@@ -316,12 +337,12 @@ export class BotLootGenerator
     {
         const result = [EquipmentSlots.POCKETS];
 
-        if (botInventory.items.find(item => item.slotId === EquipmentSlots.TACTICAL_VEST))
+        if (botInventory.items.find((item) => item.slotId === EquipmentSlots.TACTICAL_VEST))
         {
             result.push(EquipmentSlots.TACTICAL_VEST);
         }
 
-        if (botInventory.items.find(item => item.slotId === EquipmentSlots.BACKPACK))
+        if (botInventory.items.find((item) => item.slotId === EquipmentSlots.BACKPACK))
         {
             result.push(EquipmentSlots.BACKPACK);
         }
@@ -439,11 +460,13 @@ export class BotLootGenerator
                 }
 
                 const newRootItemId = this.hashUtil.generate();
-                const itemWithChildrenToAdd: Item[] = [{
-                    _id: newRootItemId,
-                    _tpl: itemToAddTemplate._id,
-                    ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemToAddTemplate, botRole),
-                }];
+                const itemWithChildrenToAdd: Item[] = [
+                    {
+                        _id: newRootItemId,
+                        _tpl: itemToAddTemplate._id,
+                        ...this.botGeneratorHelper.generateExtraPropertiesForItem(itemToAddTemplate, botRole),
+                    },
+                ];
 
                 // Is Simple-Wallet / WZ wallet
                 if (this.botConfig.walletLoot.walletTplPool.includes(weightedItemTpl))
@@ -475,7 +498,7 @@ export class BotLootGenerator
                                 );
                             }
 
-                            itemWithChildrenToAdd.push(...itemsToAdd.flatMap(moneyStack => moneyStack));
+                            itemWithChildrenToAdd.push(...itemsToAdd.flatMap((moneyStack) => moneyStack));
                         }
                     }
                 }
@@ -508,9 +531,9 @@ export class BotLootGenerator
                     if (fitItemIntoContainerAttempts >= 4)
                     {
                         this.logger.debug(
-                            `Failed to place item ${i} of ${totalItemCount} items into ${botRole} containers: ${
-                                equipmentSlots.join(",")
-                            }. Tried ${fitItemIntoContainerAttempts} times, reason: ${
+                            `Failed to place item ${i} of ${totalItemCount} items into ${botRole} containers: ${equipmentSlots.join(
+                                ",",
+                            )}. Tried ${fitItemIntoContainerAttempts} times, reason: ${
                                 ItemAddedResult[itemAddedResult]
                             }, skipping`,
                         );
@@ -553,12 +576,14 @@ export class BotLootGenerator
             const chosenStackCount = Number(
                 this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.stackSizeWeight),
             );
-            result.push([{
-                _id: this.hashUtil.generate(),
-                _tpl: this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.currencyWeight),
-                parentId: walletId,
-                upd: { StackObjectsCount: chosenStackCount },
-            }]);
+            result.push([
+                {
+                    _id: this.hashUtil.generate(),
+                    _tpl: this.weightedRandomHelper.getWeightedValue<string>(this.botConfig.walletLoot.currencyWeight),
+                    parentId: walletId,
+                    upd: { StackObjectsCount: chosenStackCount },
+                },
+            ]);
         }
 
         return result;
@@ -657,9 +682,7 @@ export class BotLootGenerator
                 if (result !== ItemAddedResult.SUCCESS)
                 {
                     this.logger.debug(
-                        `Failed to add additional weapon ${generatedWeapon.weapon[0]._id} to bot backpack, reason: ${
-                            ItemAddedResult[result]
-                        }`,
+                        `Failed to add additional weapon ${generatedWeapon.weapon[0]._id} to bot backpack, reason: ${ItemAddedResult[result]}`,
                     );
                 }
             }
@@ -771,12 +794,13 @@ export class BotLootGenerator
      */
     protected randomiseAmmoStackSize(isPmc: boolean, itemTemplate: ITemplateItem, ammoItem: Item): void
     {
-        const randomSize = itemTemplate._props.StackMaxSize === 1
-            ? 1
-            : this.randomUtil.getInt(
-                itemTemplate._props.StackMinRandom,
-                Math.min(itemTemplate._props.StackMaxRandom, 60),
-            );
+        const randomSize
+            = itemTemplate._props.StackMaxSize === 1
+                ? 1
+                : this.randomUtil.getInt(
+                    itemTemplate._props.StackMinRandom,
+                    Math.min(itemTemplate._props.StackMaxRandom, 60),
+                );
 
         this.itemHelper.addUpdObjectToItem(ammoItem);
 

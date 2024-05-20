@@ -7,7 +7,10 @@ export class RagfairOfferHolder
     protected offersByTemplate: Map<string, Map<string, IRagfairOffer>>;
     protected offersByTrader: Map<string, Map<string, IRagfairOffer>>;
 
-    constructor(protected maxOffersPerTemplate: number, protected ragfairServerHelper: RagfairServerHelper)
+    constructor(
+        protected maxOffersPerTemplate: number,
+        protected ragfairServerHelper: RagfairServerHelper,
+    )
     {
         this.offersById = new Map();
         this.offersByTemplate = new Map();
@@ -122,7 +125,7 @@ export class RagfairOfferHolder
      */
     public getStaleOffers(time: number): Array<IRagfairOffer>
     {
-        return this.getOffers().filter(o => this.isStale(o, time));
+        return this.getOffers().filter((o) => this.isStale(o, time));
     }
 
     protected addOfferByTemplates(template: string, offer: IRagfairOffer): void

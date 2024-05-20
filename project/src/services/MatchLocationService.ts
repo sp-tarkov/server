@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateGroupRequestData } from "@spt-aki/models/eft/match/ICreateGroupRequestData";
 import { SaveServer } from "@spt-aki/servers/SaveServer";
 import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 

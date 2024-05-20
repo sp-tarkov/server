@@ -4,7 +4,7 @@ import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { TradeHelper } from "@spt-aki/helpers/TradeHelper";
 import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
 import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
+import { Item } from "@spt-aki/models/eft/common/tables/IItem";
 import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
 import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
@@ -170,9 +170,7 @@ export class TradeController
         // Skip buying items when player doesn't have needed loyalty
         if (this.playerLacksTraderLoyaltyLevelToBuyOffer(fleaOffer, pmcData))
         {
-            const errorMessage = `Unable to buy item: ${
-                fleaOffer.items[0]._tpl
-            } from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`;
+            const errorMessage = `Unable to buy item: ${fleaOffer.items[0]._tpl} from trader: ${fleaOffer.user.id} as loyalty level too low, skipping`;
             this.logger.debug(errorMessage);
 
             this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.RAGFAIRUNAVAILABLE);
@@ -291,7 +289,7 @@ export class TradeController
             this.traderHelper.getTraderById(trader),
             MessageType.MESSAGE_WITH_ITEMS,
             this.randomUtil.getArrayValue(this.databaseServer.getTables().traders[trader].dialogue.soldItems),
-            curencyReward.flatMap(x => x),
+            curencyReward.flatMap((x) => x),
             this.timeUtil.getHoursAsSeconds(72),
         );
     }
@@ -317,10 +315,12 @@ export class TradeController
         for (const itemToSell of itemWithChildren)
         {
             const itemDetails = this.itemHelper.getItem(itemToSell._tpl);
-            if (!(itemDetails[0] && this.itemHelper.isOfBaseclasses(
-                itemDetails[1]._id,
-                traderDetails.items_buy.category,
-            )))
+            if (
+                !(
+                    itemDetails[0]
+                    && this.itemHelper.isOfBaseclasses(itemDetails[1]._id, traderDetails.items_buy.category)
+                )
+            )
             {
                 // Skip if tpl isn't item OR item doesn't fulfil match traders buy categories
                 continue;

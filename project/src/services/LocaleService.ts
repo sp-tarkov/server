@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ILocaleConfig } from "@spt-aki/models/spt/config/ILocaleConfig";
-import { ILocaleBase } from "@spt-aki/models/spt/server/ILocaleBase";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
@@ -13,7 +12,6 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 export class LocaleService
 {
     protected localeConfig: ILocaleConfig;
-    protected localesTable: ILocaleBase;
 
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
@@ -22,7 +20,6 @@ export class LocaleService
     )
     {
         this.localeConfig = this.configServer.getConfig(ConfigTypes.LOCALE);
-        this.localesTable = this.databaseServer.getTables().locales;
     }
 
     /**
@@ -31,7 +28,7 @@ export class LocaleService
      */
     public getLocaleDb(): Record<string, string>
     {
-        const desiredLocale = this.localesTable.global[this.getDesiredGameLocale()];
+        const desiredLocale = this.databaseServer.getTables().locales.global[this.getDesiredGameLocale()];
         if (desiredLocale)
         {
             return desiredLocale;
@@ -41,7 +38,7 @@ export class LocaleService
             `Unable to find desired locale file using locale: ${this.getDesiredGameLocale()} from config/locale.json, falling back to 'en'`,
         );
 
-        return this.localesTable.global.en;
+        return this.databaseServer.getTables().locales.global.en;
     }
 
     /**
@@ -138,19 +135,19 @@ export class LocaleService
         }
 
         const baseNameCode = platformLocale.baseName?.toLocaleLowerCase();
-        if (baseNameCode && this.localesTable.global[baseNameCode])
+        if (baseNameCode && this.databaseServer.getTables().locales.global[baseNameCode])
         {
             return baseNameCode;
         }
 
         const languageCode = platformLocale.language?.toLowerCase();
-        if (languageCode && this.localesTable.global[languageCode])
+        if (languageCode && this.databaseServer.getTables().locales.global[languageCode])
         {
             return languageCode;
         }
 
         const regionCode = platformLocale.region?.toLocaleLowerCase();
-        if (regionCode && this.localesTable.global[regionCode])
+        if (regionCode && this.databaseServer.getTables().locales.global[regionCode])
         {
             return regionCode;
         }

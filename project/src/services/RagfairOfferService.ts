@@ -2,7 +2,6 @@ import { inject, injectable } from "tsyringe";
 import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
 import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
 import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
 import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
@@ -251,7 +250,7 @@ export class RagfairOfferService
         const pmcId = String(playerOffer.user.id);
         const profile = this.profileHelper.getProfileByPmcId(pmcId);
 
-        const offerinProfileIndex = profile.RagfairInfo.offers.findIndex(o => o._id === playerOffer._id);
+        const offerinProfileIndex = profile.RagfairInfo.offers.findIndex((o) => o._id === playerOffer._id);
         if (offerinProfileIndex === -1)
         {
             this.logger.warning(

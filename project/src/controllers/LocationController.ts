@@ -92,9 +92,9 @@ export class LocationController
 
         // Check for a loot multipler adjustment in app context and apply if one is found
         let locationConfigCopy: ILocationConfig;
-        const raidAdjustments = this.applicationContext.getLatestValue(ContextVariableType.RAID_ADJUSTMENTS)?.getValue<
-            IRaidChanges
-        >();
+        const raidAdjustments = this.applicationContext
+            .getLatestValue(ContextVariableType.RAID_ADJUSTMENTS)
+            ?.getValue<IRaidChanges>();
         if (raidAdjustments)
         {
             locationConfigCopy = this.cloner.clone(this.locationConfig); // Clone values so they can be used to reset originals later

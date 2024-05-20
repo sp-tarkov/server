@@ -8,8 +8,11 @@ import {
     ICancelFriendRequestData,
     IDeclineFriendRequestData,
 } from "@spt-aki/models/eft/dialog/IAcceptFriendRequestData";
+import { IAddUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IAddUserGroupMailRequest";
+import { IChangeGroupMailOwnerRequest } from "@spt-aki/models/eft/dialog/IChangeGroupMailOwnerRequest";
 import { IChatServer } from "@spt-aki/models/eft/dialog/IChatServer";
 import { IClearMailMessageRequest } from "@spt-aki/models/eft/dialog/IClearMailMessageRequest";
+import { ICreateGroupMailRequest } from "@spt-aki/models/eft/dialog/ICreateGroupMailRequest";
 import { IDeleteFriendRequest } from "@spt-aki/models/eft/dialog/IDeleteFriendRequest";
 import { IFriendRequestData } from "@spt-aki/models/eft/dialog/IFriendRequestData";
 import { IFriendRequestSendResponse } from "@spt-aki/models/eft/dialog/IFriendRequestSendResponse";
@@ -24,6 +27,7 @@ import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetM
 import { IPinDialogRequestData } from "@spt-aki/models/eft/dialog/IPinDialogRequestData";
 import { IRemoveDialogRequestData } from "@spt-aki/models/eft/dialog/IRemoveDialogRequestData";
 import { IRemoveMailMessageRequest } from "@spt-aki/models/eft/dialog/IRemoveMailMessageRequest";
+import { IRemoveUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IRemoveUserGroupMailRequest";
 import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
 import { ISetDialogReadRequestData } from "@spt-aki/models/eft/dialog/ISetDialogReadRequestData";
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
@@ -36,14 +40,14 @@ import { TimeUtil } from "@spt-aki/utils/TimeUtil";
 @injectable()
 export class DialogueCallbacks implements OnUpdate
 {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructor(
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("DialogueController") protected dialogueController: DialogueController,
     )
-    {
-    }
+    {}
 
     /**
      * Handle client/friend/list
@@ -187,7 +191,7 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<IFriendRequestSendResponse>
     {
-        return this.httpResponse.getBody({ status: 0, requestId: "12345", retryAfter: 600 });
+        return this.httpResponse.getBody(this.dialogueController.sendFriendRequest(sessionID, request));
     }
 
     /**
@@ -269,6 +273,34 @@ export class DialogueCallbacks implements OnUpdate
     public removeMail(url: string, request: IRemoveMailMessageRequest, sessionID: string): IGetBodyResponseData<any[]>
     {
         return this.httpResponse.emptyArrayResponse();
+    }
+
+    public createGroupMail(url: string, info: ICreateGroupMailRequest, sessionID: string): IGetBodyResponseData<any[]>
+    {
+        throw new Error("Method not implemented.");
+    }
+
+    public changeMailGroupOwner(
+        url: string,
+        info: IChangeGroupMailOwnerRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<any[]>
+    {
+        throw new Error("Method not implemented.");
+    }
+
+    public addUserToMail(url: string, info: IAddUserGroupMailRequest, sessionID: string): IGetBodyResponseData<any[]>
+    {
+        throw new Error("Method not implemented.");
+    }
+
+    public removeUserFromMail(
+        url: string,
+        info: IRemoveUserGroupMailRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<any[]>
+    {
+        throw new Error("Method not implemented.");
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

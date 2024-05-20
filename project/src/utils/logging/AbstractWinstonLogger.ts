@@ -133,7 +133,11 @@ export abstract class AbstractWinstonLogger implements ILogger
         await this.asyncQueue.waitFor(command);
     }
 
-    public async log(data: string | Error | Record<string, unknown>, color: string, backgroundColor = ""): Promise<void>
+    public async log(
+        data: string | Error | Record<string, unknown>,
+        color: string,
+        backgroundColor = "",
+    ): Promise<void>
     {
         const textColor = `${color} ${backgroundColor}`.trimEnd();
         const tmpLogger = createLogger({

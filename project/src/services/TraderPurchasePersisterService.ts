@@ -121,7 +121,7 @@ export class TraderPurchasePersisterService
 
             for (const purchaseKey in profile.traderPurchases[traderId])
             {
-                const traderUpdateDetails = this.traderConfig.updateTime.find(x => x.traderId === traderId);
+                const traderUpdateDetails = this.traderConfig.updateTime.find((x) => x.traderId === traderId);
                 if (!traderUpdateDetails)
                 {
                     this.logger.error(
@@ -135,8 +135,9 @@ export class TraderPurchasePersisterService
                 }
 
                 const purchaseDetails = profile.traderPurchases[traderId][purchaseKey];
-                const resetTimeForItem = purchaseDetails.purchaseTimestamp
-                  + this.randomUtil.getInt(traderUpdateDetails.seconds.min, traderUpdateDetails.seconds.max);
+                const resetTimeForItem
+                    = purchaseDetails.purchaseTimestamp
+                    + this.randomUtil.getInt(traderUpdateDetails.seconds.min, traderUpdateDetails.seconds.max);
                 if (resetTimeForItem < this.timeUtil.getTimestamp())
                 {
                     // Item was purchased far enough in past a trader refresh would have occured, remove purchase record from profile

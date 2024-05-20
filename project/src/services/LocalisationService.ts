@@ -1,7 +1,6 @@
 import path from "node:path";
 import { I18n } from "i18n";
 import { inject, injectable } from "tsyringe";
-import { ILocaleConfig } from "@spt-aki/models/spt/config/ILocaleConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { LocaleService } from "@spt-aki/services/LocaleService";
@@ -66,7 +65,7 @@ export class LocalisationService
      */
     public getRandomTextThatMatchesPartialKey(partialKey: string): string
     {
-        const filteredKeys = Object.keys(this.databaseServer.getTables().locales.server.en).filter(x =>
+        const filteredKeys = Object.keys(this.databaseServer.getTables().locales.server.en).filter((x) =>
             x.startsWith(partialKey),
         );
         const chosenKey = this.randomUtil.getArrayValue(filteredKeys);

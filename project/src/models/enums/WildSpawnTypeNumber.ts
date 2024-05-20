@@ -50,6 +50,8 @@ export enum WildSpawnTypeNumber
     SPIRITSPRING = 48,
     PMCBEAR = 49,
     PMCUSEC = 50,
-    SPTUSEC = 51,
-    SPTBEAR = 52,
+    skier = 51,
+    peacemaker = 52,
+    SPTUSEC = 100,
+    SPTBEAR = 101,
 }

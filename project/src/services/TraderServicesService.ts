@@ -46,7 +46,7 @@ export class TraderServicesService
             {
                 for (const questId of service.requirements.completedQuests)
                 {
-                    const quest = pmcData.Quests.find(x => x.qid === questId);
+                    const quest = pmcData.Quests.find((x) => x.qid === questId);
                     if (!quest || quest.status !== QuestStatus.Success)
                     {
                         servicesToDelete.push(service.serviceType);
@@ -57,7 +57,7 @@ export class TraderServicesService
         }
 
         // Clear any unavailable services from the list
-        traderServices = traderServices.filter(x => !servicesToDelete.includes(x.serviceType));
+        traderServices = traderServices.filter((x) => !servicesToDelete.includes(x.serviceType));
 
         return traderServices;
     }

@@ -58,7 +58,7 @@ export class PaymentService
         for (const index in request.scheme_items)
         {
             // Find the corresponding item in the player's inventory.
-            const item = pmcData.Inventory.items.find(i => i._id === request.scheme_items[index].id);
+            const item = pmcData.Inventory.items.find((i) => i._id === request.scheme_items[index].id);
             if (item !== undefined)
             {
                 if (!this.paymentHelper.isMoneyTpl(item._tpl))
@@ -396,7 +396,7 @@ export class PaymentService
      */
     protected isInStash(itemId: string, inventoryItems: Item[], playerStashId: string): boolean
     {
-        const itemParent = inventoryItems.find(x => x._id === itemId);
+        const itemParent = inventoryItems.find((x) => x._id === itemId);
 
         if (itemParent)
         {

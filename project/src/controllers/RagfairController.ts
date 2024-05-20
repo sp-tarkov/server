@@ -27,7 +27,6 @@ import { ISearchRequestData } from "@spt-aki/models/eft/ragfair/ISearchRequestDa
 import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { RagfairSort } from "@spt-aki/models/enums/RagfairSort";
 import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
 import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
@@ -159,7 +158,7 @@ export class RagfairController
     public getOfferById(sessionId: string, request: IGetRagfairOfferByIdRequest): IRagfairOffer
     {
         const offers = this.ragfairOfferService.getOffers();
-        const offerToReturn = offers.find(x => x.intId === request.id);
+        const offerToReturn = offers.find((x) => x.intId === request.id);
 
         return offerToReturn;
     }
@@ -207,12 +206,8 @@ export class RagfairController
     ): Record<string, number>
     {
         // Linked/required search categories
-        const playerHasFleaUnlocked = pmcProfile.Info.Level >= this.databaseServer
-            .getTables()
-            .globals
-            .config
-            .RagFair
-            .minUserLevel;
+        const playerHasFleaUnlocked
+            = pmcProfile.Info.Level >= this.databaseServer.getTables().globals.config.RagFair.minUserLevel;
         let offerPool = [];
         if (this.isLinkedSearch(searchRequest) || this.isRequiredSearch(searchRequest))
         {
@@ -263,7 +258,7 @@ export class RagfairController
 
         const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(offer.user.id).items;
         const assortId = offer.items[0]._id;
-        const assortData = traderAssorts.find(x => x._id === assortId);
+        const assortData = traderAssorts.find((x) => x._id === assortId);
 
         // Use value stored in profile, otherwise use value directly from in-memory trader assort data
         offer.buyRestrictionCurrent = fullProfile.traderPurchases[offer.user.id][assortId]
@@ -282,7 +277,7 @@ export class RagfairController
         const firstItem = offer.items[0];
         const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(offer.user.id).items;
 
-        const assortPurchased = traderAssorts.find(x => x._id === offer.items[0]._id);
+        const assortPurchased = traderAssorts.find((x) => x._id === offer.items[0]._id);
         if (!assortPurchased)
         {
             this.logger.warning(
@@ -357,31 +352,34 @@ export class RagfairController
 
             // Get the average offer price, excluding barter offers
             let avgOfferCount = 0;
-            const avg = offers.reduce((sum, offer) =>
-            {
-                // Exclude barter items, they tend to have outrageous equivalent prices
-                if (offer.requirements.some(req => !this.paymentHelper.isMoneyTpl(req._tpl)))
+            const avg
+                = offers.reduce((sum, offer) =>
                 {
-                    return sum;
-                }
+                    // Exclude barter items, they tend to have outrageous equivalent prices
+                    if (offer.requirements.some((req) => !this.paymentHelper.isMoneyTpl(req._tpl)))
+                    {
+                        return sum;
+                    }
 
-                // Figure out how many items the requirementsCost is applying to, and what the per-item price is
-                const offerItemCount = Math.max(offer.sellInOnePiece ? offer.items[0].upd?.StackObjectsCount ?? 1 : 1);
-                const perItemPrice = offer.requirementsCost / offerItemCount;
+                    // Figure out how many items the requirementsCost is applying to, and what the per-item price is
+                    const offerItemCount = Math.max(
+                        offer.sellInOnePiece ? offer.items[0].upd?.StackObjectsCount ?? 1 : 1,
+                    );
+                    const perItemPrice = offer.requirementsCost / offerItemCount;
 
-                // Handle min/max calculations based on the per-item price
-                if (perItemPrice < min)
-                {
-                    min = perItemPrice;
-                }
-                else if (perItemPrice > max)
-                {
-                    max = perItemPrice;
-                }
+                    // Handle min/max calculations based on the per-item price
+                    if (perItemPrice < min)
+                    {
+                        min = perItemPrice;
+                    }
+                    else if (perItemPrice > max)
+                    {
+                        max = perItemPrice;
+                    }
 
-                avgOfferCount++;
-                return sum + perItemPrice;
-            }, 0) / Math.max(avgOfferCount, 1);
+                    avgOfferCount++;
+                    return sum + perItemPrice;
+                }, 0) / Math.max(avgOfferCount, 1);
 
             // If no items were actually counted, min will still be MAX_VALUE, so set it to 0
             if (min === Number.MAX_VALUE)
@@ -428,8 +426,8 @@ export class RagfairController
         }
 
         // Get an array of items from player inventory to list on flea
-        const { items: itemsInInventoryToList, errorMessage: itemsInInventoryError } = this
-            .getItemsToListOnFleaFromInventory(pmcData, offerRequest.items);
+        const { items: itemsInInventoryToList, errorMessage: itemsInInventoryError }
+            = this.getItemsToListOnFleaFromInventory(pmcData, offerRequest.items);
         if (!itemsInInventoryToList || itemsInInventoryError)
         {
             this.httpResponse.appendErrorToOutput(output, itemsInInventoryError);
@@ -605,8 +603,8 @@ export class RagfairController
             }
             else
             {
-                requirementsPriceInRub += this.ragfairPriceService
-                    .getDynamicPriceForItem(requestedItemTpl) * item.count;
+                requirementsPriceInRub
+                    += this.ragfairPriceService.getDynamicPriceForItem(requestedItemTpl) * item.count;
             }
         }
 
@@ -630,7 +628,7 @@ export class RagfairController
         // Count how many items are being sold and multiply the requested amount accordingly
         for (const itemId of itemIdsFromFleaOfferRequest)
         {
-            let item = pmcData.Inventory.items.find(i => i._id === itemId);
+            let item = pmcData.Inventory.items.find((i) => i._id === itemId);
             if (!item)
             {
                 errorMessage = this.localisationService.getText("ragfair-unable_to_find_item_in_inventory", {
@@ -666,7 +664,7 @@ export class RagfairController
         const loyalLevel = 1;
         const formattedItems: Item[] = items.map((item) =>
         {
-            const isChild = items.find(it => it._id === item.parentId);
+            const isChild = items.find((it) => it._id === item.parentId);
 
             return {
                 _id: item._id,
@@ -727,7 +725,7 @@ export class RagfairController
             pmcData.RagfairInfo.offers = [];
         }
 
-        const playerOfferIndex = playerProfileOffers.findIndex(offer => offer._id === removeRequest.offerId);
+        const playerOfferIndex = playerProfileOffers.findIndex((offer) => offer._id === removeRequest.offerId);
         if (playerOfferIndex === -1)
         {
             this.logger.error(
@@ -764,7 +762,7 @@ export class RagfairController
 
         const pmcData = this.saveServer.getProfile(sessionId).characters.pmc;
         const playerOffers = pmcData.RagfairInfo.offers;
-        const playerOfferIndex = playerOffers.findIndex(offer => offer._id === extendRequest.offerId);
+        const playerOfferIndex = playerOffers.findIndex((offer) => offer._id === extendRequest.offerId);
         const secondsToAdd = extendRequest.renewalTime * TimeUtil.ONE_HOUR_AS_SECONDS;
 
         if (playerOfferIndex === -1)

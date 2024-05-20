@@ -48,7 +48,11 @@ export class BotCallbacks
      * Handle singleplayer/settings/bot/difficulties
      * @returns dictionary of every bot and its diffiulty settings
      */
-    public getAllBotDifficulties(url: string, info: IEmptyRequestData, sessionID: string): Record<string, Difficulties>
+    public getAllBotDifficulties(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): Record<string, Difficulties>
     {
         return this.httpResponse.noBody(this.botController.getAllBotDifficulties());
     }

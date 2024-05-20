@@ -42,7 +42,7 @@
   ],
   "BossLocationSpawn": [
     {
-      "BossChance": 35,
+      "BossChance": 37,
       "BossDifficult": "normal",
       "BossEscortAmount": "2",
       "BossEscortDifficult": "normal",
@@ -86,7 +86,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 35,
+      "BossChance": 37,
       "BossDifficult": "normal",
       "BossEscortAmount": "6",
       "BossEscortDifficult": "normal",
@@ -185,6 +185,7 @@
   "Enabled": true,
   "EscapeTimeLimit": 50,
   "EscapeTimeLimitCoop": 30,
+  "EscapeTimeLimitPVE": 30,
   "ExitZones": {
     "$oid": "5c82534488a45046451a2386"
   },
@@ -283,7 +284,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "010b0da2-f753-43e3-8b0f-a83ae86e6f4e",
       "Infiltration": "",
@@ -373,7 +374,7 @@
           "Radius": 55
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "0312f9fe-9566-40e4-8ceb-681703da27af",
       "Infiltration": "",
@@ -4765,7 +4766,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "5631f698-bbc6-48ca-9794-b4f9ffaa844f",
       "Infiltration": "",
@@ -5638,7 +5639,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "66816fda-2ae8-4b0a-9452-3177cd74bcd5",
       "Infiltration": "",
@@ -6060,7 +6061,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "6e8ffcae-9065-4bec-8a45-1323f038d52a",
       "Infiltration": "",
@@ -8528,7 +8529,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "9ead0db7-f999-4582-a518-9bb612621df4",
       "Infiltration": "",
@@ -8769,7 +8770,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "a4125a80-2cb6-499a-83ca-076543ef10ff",
       "Infiltration": "",
@@ -10604,7 +10605,7 @@
           "Radius": 50
         }
       },
-      "CorePointId": 2,
+      "CorePointId": 24,
       "DelayToCanSpawnSec": 40,
       "Id": "caa72953-e3fa-4dac-874c-ee5f4e14635d",
       "Infiltration": "",
@@ -12500,7 +12501,7 @@
           "Radius": 55
         }
       },
-      "CorePointId": 7,
+      "CorePointId": 6,
       "DelayToCanSpawnSec": 40,
       "Id": "edab5daf-ca3c-450d-85d1-2a89a2840fe2",
       "Infiltration": "",

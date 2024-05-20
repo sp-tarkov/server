@@ -1857,3 +1857,9 @@ export interface IPreset
     /** Default presets have this property */
     _encyclopedia?: string
 }
+
+export interface IQuestSettings
+{
+    GlobalRewardRepModifierDailyQuestPvE: number
+    GlobalRewardRepModifierQuestPvE: number    
+}

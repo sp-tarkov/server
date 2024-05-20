@@ -365,9 +365,8 @@ export class MailSendService
             hasRewards: false, // The default dialog message has no rewards, can be added later via addRewardItemsToMessage()
             rewardCollected: false, // The default dialog message has no rewards, can be added later via addRewardItemsToMessage()
             systemData: messageDetails.systemData ? messageDetails.systemData : undefined, // Used by ragfair / localised messages that need "location" or "time"
-            profileChangeEvents: messageDetails.profileChangeEvents?.length === 0
-                ? messageDetails.profileChangeEvents
-                : undefined, // no one knows, its never been used in any dumps
+            profileChangeEvents:
+                messageDetails.profileChangeEvents?.length === 0 ? messageDetails.profileChangeEvents : undefined, // no one knows, its never been used in any dumps
         };
 
         // Clean up empty system data
@@ -412,7 +411,10 @@ export class MailSendService
      * @param messageDetails
      * @returns Sanitised items
      */
-    protected processItemsBeforeAddingToMail(dialogType: MessageType, messageDetails: ISendMessageDetails): MessageItems
+    protected processItemsBeforeAddingToMail(
+        dialogType: MessageType,
+        messageDetails: ISendMessageDetails,
+    ): MessageItems
     {
         const db = this.databaseServer.getTables().templates.items;
 
@@ -512,7 +514,7 @@ export class MailSendService
         }
 
         // Find first item with slotId that indicates its a 'base' item
-        let item = items.find(x => ["hideout", "main"].includes(x.slotId));
+        let item = items.find((x) => ["hideout", "main"].includes(x.slotId));
         if (item)
         {
             return item;
@@ -520,7 +522,7 @@ export class MailSendService
 
         // Not a singlular item + no items have a hideout/main slotid
         // Look for first item without parent id
-        item = items.find(x => !x.parentId);
+        item = items.find((x) => !x.parentId);
         if (item)
         {
             return item;

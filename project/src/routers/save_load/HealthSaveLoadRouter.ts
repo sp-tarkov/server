@@ -13,7 +13,8 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
     public override handleLoad(profile: IAkiProfile): IAkiProfile
     {
         if (!profile.vitality)
-        { // Occurs on newly created profiles
+        {
+            // Occurs on newly created profiles
             profile.vitality = { health: null, effects: null };
         }
         profile.vitality.health = {

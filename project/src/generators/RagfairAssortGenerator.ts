@@ -72,7 +72,7 @@ export class RagfairAssortGenerator
         const results: Item[][] = [];
 
         /** Get cloned items from db */
-        const dbItemsClone = this.itemHelper.getItems().filter(item => item._type !== "Node");
+        const dbItemsClone = this.itemHelper.getItems().filter((item) => item._type !== "Node");
 
         /** Store processed preset tpls so we dont add them when procesing non-preset items */
         const processedArmorItems: string[] = [];
@@ -105,7 +105,8 @@ export class RagfairAssortGenerator
 
             // Skip seasonal items when not in-season
             if (
-                this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent && !seasonalEventActive
+                this.ragfairConfig.dynamic.removeSeasonalItemsWhenNotInEvent
+                && !seasonalEventActive
                 && seasonalItemTplBlacklist.includes(item._id)
             )
             {

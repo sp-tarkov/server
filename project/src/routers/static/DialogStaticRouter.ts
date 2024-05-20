@@ -1,11 +1,15 @@
 import { inject, injectable } from "tsyringe";
 import { DialogueCallbacks } from "@spt-aki/callbacks/DialogueCallbacks";
 import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
+import { IAddUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IAddUserGroupMailRequest";
+import { IChangeGroupMailOwnerRequest } from "@spt-aki/models/eft/dialog/IChangeGroupMailOwnerRequest";
 import { IChatServer } from "@spt-aki/models/eft/dialog/IChatServer";
+import { ICreateGroupMailRequest } from "@spt-aki/models/eft/dialog/ICreateGroupMailRequest";
 import { IFriendRequestSendResponse } from "@spt-aki/models/eft/dialog/IFriendRequestSendResponse";
 import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
 import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
 import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
+import { IRemoveUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IRemoveUserGroupMailRequest";
 import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
 import { DialogueInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
@@ -158,6 +162,54 @@ export class DialogStaticRouter extends StaticRouter
                 ): Promise<IGetBodyResponseData<any[]>> =>
                 {
                     return this.dialogueCallbacks.clearMail(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/mail/dialog/group/create",
+                async (
+                    url: string,
+                    info: ICreateGroupMailRequest,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
+                {
+                    return this.dialogueCallbacks.createGroupMail(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/mail/dialog/group/owner/change",
+                async (
+                    url: string,
+                    info: IChangeGroupMailOwnerRequest,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
+                {
+                    return this.dialogueCallbacks.changeMailGroupOwner(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/mail/dialog/group/users/add",
+                async (
+                    url: string,
+                    info: IAddUserGroupMailRequest,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
+                {
+                    return this.dialogueCallbacks.addUserToMail(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/mail/dialog/group/users/remove",
+                async (
+                    url: string,
+                    info: IRemoveUserGroupMailRequest,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<any[]>> =>
+                {
+                    return this.dialogueCallbacks.removeUserFromMail(url, info, sessionID);
                 },
             ),
             new RouteAction(

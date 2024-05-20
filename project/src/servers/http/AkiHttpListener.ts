@@ -21,8 +21,7 @@ export class AkiHttpListener implements IHttpListener
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
     )
-    {
-    }
+    {}
 
     public canHandle(_: string, req: IncomingMessage): boolean
     {
@@ -153,7 +152,7 @@ export class AkiHttpListener implements IHttpListener
         {
             this.logger.error(this.localisationService.getText("unhandled_response", req.url));
             this.logger.info(info);
-            output = <string><unknown> this.httpResponse.getBody(null, 404, `UNHANDLED RESPONSE: ${req.url}`);
+            output = <string>(<unknown> this.httpResponse.getBody(null, 404, `UNHANDLED RESPONSE: ${req.url}`));
         }
         return output;
     }
@@ -180,18 +179,28 @@ export class AkiHttpListener implements IHttpListener
 
 class RequestData
 {
-    constructor(public url: string, public headers: IncomingHttpHeaders, public data?: any)
+    constructor(
+        public url: string,
+        public headers: IncomingHttpHeaders,
+        public data?: any,
+    )
     {}
 }
 
 class Request
 {
-    constructor(public type: string, public req: RequestData)
+    constructor(
+        public type: string,
+        public req: RequestData,
+    )
     {}
 }
 
 class Response
 {
-    constructor(public type: string, public response: any)
+    constructor(
+        public type: string,
+        public response: any,
+    )
     {}
 }

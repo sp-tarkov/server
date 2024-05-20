@@ -56,7 +56,11 @@ export class GameCallbacks implements OnLoad
      * Handle client/game/start
      * @returns IGameStartResponse
      */
-    public gameStart(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGameStartResponse>
+    public gameStart(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGameStartResponse>
     {
         const today = new Date().toUTCString();
         const startTimeStampMS = Date.parse(today);

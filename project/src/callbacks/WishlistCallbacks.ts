@@ -17,7 +17,11 @@ export class WishlistCallbacks
     }
 
     /** Handle RemoveFromWishList event */
-    public removeFromWishlist(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse
+    public removeFromWishlist(
+        pmcData: IPmcData,
+        body: IWishlistActionData,
+        sessionID: string,
+    ): IItemEventRouterResponse
     {
         return this.wishlistController.removeFromWishList(pmcData, body, sessionID);
     }

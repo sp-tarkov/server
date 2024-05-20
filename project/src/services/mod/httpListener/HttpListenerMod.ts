@@ -7,8 +7,7 @@ export class HttpListenerMod implements IHttpListener
         private canHandleOverride: (sessionId: string, req: IncomingMessage) => boolean,
         private handleOverride: (sessionId: string, req: IncomingMessage, resp: ServerResponse) => void,
     )
-    {
-    }
+    {}
 
     public canHandle(sessionId: string, req: IncomingMessage): boolean
     {

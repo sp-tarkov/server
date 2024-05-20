@@ -1,6 +1,6 @@
 import { RaidMode } from "@spt-aki/models/enums/RaidMode";
 
-export interface IGetGroupStatusRequestData
+export interface IMatchGroupStatusRequest
 {
     location: string
     savage: boolean

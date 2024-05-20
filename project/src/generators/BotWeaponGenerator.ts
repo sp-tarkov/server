@@ -199,7 +199,7 @@ export class BotWeaponGenerator
         }
 
         // Fill existing magazines to full and sync ammo type
-        for (const magazine of weaponWithModsArray.filter(item => item.slotId === this.modMagazineSlotId))
+        for (const magazine of weaponWithModsArray.filter((item) => item.slotId === this.modMagazineSlotId))
         {
             this.fillExistingMagazines(weaponWithModsArray, magazine, ammoTpl);
         }
@@ -211,12 +211,12 @@ export class BotWeaponGenerator
         )
         {
             // Guns have variety of possible Chamber ids, patron_in_weapon/patron_in_weapon_000/patron_in_weapon_001
-            const chamberSlotNames = weaponItemTemplate._props.Chambers.map(x => x._name);
+            const chamberSlotNames = weaponItemTemplate._props.Chambers.map((x) => x._name);
             this.addCartridgeToChamber(weaponWithModsArray, ammoTpl, chamberSlotNames);
         }
 
         // Fill UBGL if found
-        const ubglMod = weaponWithModsArray.find(x => x.slotId === "mod_launcher");
+        const ubglMod = weaponWithModsArray.find((x) => x.slotId === "mod_launcher");
         let ubglAmmoTpl: string = undefined;
         if (ubglMod)
         {
@@ -245,7 +245,7 @@ export class BotWeaponGenerator
     {
         for (const slotId of chamberSlotIds)
         {
-            const existingItemWithSlot = weaponWithModsArray.find(x => x.slotId === slotId);
+            const existingItemWithSlot = weaponWithModsArray.find((x) => x.slotId === slotId);
             if (!existingItemWithSlot)
             {
                 // Not found, add new slot to weapon
@@ -284,13 +284,15 @@ export class BotWeaponGenerator
         botRole: string,
     ): Item[]
     {
-        return [{
-            _id: this.hashUtil.generate(),
-            _tpl: weaponTpl,
-            parentId: weaponParentId,
-            slotId: equipmentSlot,
-            ...this.botGeneratorHelper.generateExtraPropertiesForItem(weaponItemTemplate, botRole),
-        }];
+        return [
+            {
+                _id: this.hashUtil.generate(),
+                _tpl: weaponTpl,
+                parentId: weaponParentId,
+                slotId: equipmentSlot,
+                ...this.botGeneratorHelper.generateExtraPropertiesForItem(weaponItemTemplate, botRole),
+            },
+        ];
     }
 
     /**
@@ -366,11 +368,11 @@ export class BotWeaponGenerator
             }
 
             // Iterate over required slots in db item, check mod exists for that slot
-            for (const modSlotTemplate of modTemplate._props.Slots.filter(slot => slot._required))
+            for (const modSlotTemplate of modTemplate._props.Slots.filter((slot) => slot._required))
             {
                 const slotName = modSlotTemplate._name;
-                const weaponSlotItem = weaponItemArray.find(weaponItem =>
-                    weaponItem.parentId === mod._id && weaponItem.slotId === slotName,
+                const weaponSlotItem = weaponItemArray.find(
+                    (weaponItem) => weaponItem.parentId === mod._id && weaponItem.slotId === slotName,
                 );
                 if (!weaponSlotItem)
                 {
@@ -441,9 +443,9 @@ export class BotWeaponGenerator
             ammoTemplate,
             inventory,
         );
-        this.inventoryMagGenComponents.find(v => v.canHandleInventoryMagGen(inventoryMagGenModel)).process(
-            inventoryMagGenModel,
-        );
+        this.inventoryMagGenComponents
+            .find((v) => v.canHandleInventoryMagGen(inventoryMagGenModel))
+            .process(inventoryMagGenModel);
 
         // Add x stacks of bullets to SecuredContainer (bots use a magic mag packing skill to reload instantly)
         this.addAmmoToSecureContainer(
@@ -467,7 +469,7 @@ export class BotWeaponGenerator
     ): void
     {
         // Find ubgl mod item + get details of it from db
-        const ubglMod = weaponMods.find(x => x.slotId === "mod_launcher");
+        const ubglMod = weaponMods.find((x) => x.slotId === "mod_launcher");
         const ubglDbTemplate = this.itemHelper.getItem(ubglMod._tpl)[1];
 
         // Define min/max of how many grenades bot will have
@@ -488,9 +490,9 @@ export class BotWeaponGenerator
             ubglAmmoDbTemplate,
             inventory,
         );
-        this.inventoryMagGenComponents.find(v => v.canHandleInventoryMagGen(ubglAmmoGenModel)).process(
-            ubglAmmoGenModel,
-        );
+        this.inventoryMagGenComponents
+            .find((v) => v.canHandleInventoryMagGen(ubglAmmoGenModel))
+            .process(ubglAmmoGenModel);
 
         // Store extra grenades in secure container
         this.addAmmoToSecureContainer(5, generatedWeaponResult.chosenUbglAmmoTpl, 20, inventory);
@@ -536,7 +538,7 @@ export class BotWeaponGenerator
         botRole: string,
     ): string
     {
-        const magazine = weaponMods.find(m => m.slotId === this.modMagazineSlotId);
+        const magazine = weaponMods.find((m) => m.slotId === this.modMagazineSlotId);
         if (!magazine)
         {
             // Edge case - magazineless chamber loaded weapons dont have magazines, e.g. mp18
@@ -736,8 +738,8 @@ export class BotWeaponGenerator
         magazineTemplate: ITemplateItem,
     ): void
     {
-        const magazineCartridgeChildItem = weaponWithMods.find(m =>
-            m.parentId === magazine._id && m.slotId === "cartridges",
+        const magazineCartridgeChildItem = weaponWithMods.find(
+            (m) => m.parentId === magazine._id && m.slotId === "cartridges",
         );
         if (magazineCartridgeChildItem)
         {
@@ -766,7 +768,7 @@ export class BotWeaponGenerator
         // for CylinderMagazine we exchange the ammo in the "camoras".
         // This might not be necessary since we already filled the camoras with a random whitelisted and compatible ammo type,
         // but I'm not sure whether this is also used elsewhere
-        const camoras = weaponMods.filter(x => x.parentId === magazineId && x.slotId.startsWith("camora"));
+        const camoras = weaponMods.filter((x) => x.parentId === magazineId && x.slotId.startsWith("camora"));
         for (const camora of camoras)
         {
             camora._tpl = ammoTpl;

@@ -80,7 +80,7 @@ export class RaidTimeAdjustmentService
     {
         // Remove waves that spawned before the player joined
         const originalWaveCount = mapBase.waves.length;
-        mapBase.waves = mapBase.waves.filter(x => x.time_max > raidAdjustments.simulatedRaidStartSeconds);
+        mapBase.waves = mapBase.waves.filter((x) => x.time_max > raidAdjustments.simulatedRaidStartSeconds);
 
         // Adjust wave min/max times to match new simulated start
         for (const wave of mapBase.waves)

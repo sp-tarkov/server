@@ -60,7 +60,7 @@ export class RepairService
         traderId: string,
     ): RepairDetails
     {
-        const itemToRepair = pmcData.Inventory.items.find(x => x._id === repairItemDetails._id);
+        const itemToRepair = pmcData.Inventory.items.find((x) => x._id === repairItemDetails._id);
         if (itemToRepair === undefined)
         {
             throw new Error(`Item ${repairItemDetails._id} not found in profile inventory, unable to repair`);
@@ -121,10 +121,12 @@ export class RepairService
     ): void
     {
         const options: IProcessBuyTradeRequestData = {
-            scheme_items: [{
-                id: "5449016a4bdc2d6f028b456f", // Rouble tpl
-                count: Math.round(repairCost),
-            }],
+            scheme_items: [
+                {
+                    id: "5449016a4bdc2d6f028b456f", // Rouble tpl
+                    count: Math.round(repairCost),
+                },
+            ],
             tid: traderId,
             Action: "SptRepair",
             type: "",
@@ -184,8 +186,8 @@ export class RepairService
 
             const isHeavyArmor = itemDetails[1]._props.ArmorType === "Heavy";
             const vestSkillToLevel = isHeavyArmor ? SkillTypes.HEAVY_VESTS : SkillTypes.LIGHT_VESTS;
-            const pointsToAddToVestSkill = repairDetails.repairPoints
-              * this.repairConfig.armorKitSkillPointGainPerRepairPointMultiplier;
+            const pointsToAddToVestSkill
+                = repairDetails.repairPoints * this.repairConfig.armorKitSkillPointGainPerRepairPointMultiplier;
 
             this.logger.debug(`Added: ${pointsToAddToVestSkill} ${vestSkillToLevel} skill`);
             this.profileHelper.addSkillPointsToPlayer(pmcData, vestSkillToLevel, pointsToAddToVestSkill);
@@ -205,10 +207,12 @@ export class RepairService
         if (repairDetails.repairedByKit)
         {
             // Weapons/armor have different multipliers
-            const intRepairMultiplier
-                = this.itemHelper.isOfBaseclass(repairDetails.repairedItem._tpl, BaseClasses.WEAPON)
-                    ? this.repairConfig.repairKitIntellectGainMultiplier.weapon
-                    : this.repairConfig.repairKitIntellectGainMultiplier.armor;
+            const intRepairMultiplier = this.itemHelper.isOfBaseclass(
+                repairDetails.repairedItem._tpl,
+                BaseClasses.WEAPON,
+            )
+                ? this.repairConfig.repairKitIntellectGainMultiplier.weapon
+                : this.repairConfig.repairKitIntellectGainMultiplier.armor;
 
             // Limit gain to a max value defined in config.maxIntellectGainPerRepair
             return Math.min(
@@ -302,7 +306,7 @@ export class RepairService
         // Find and use repair kit defined in body
         for (const repairKit of repairKits)
         {
-            const repairKitInInventory = pmcData.Inventory.items.find(x => x._id === repairKit._id);
+            const repairKitInInventory = pmcData.Inventory.items.find((x) => x._id === repairKit._id);
             const repairKitDetails = itemsDb[repairKitInInventory._tpl];
             const repairKitReductionAmount = repairKit.count;
 
@@ -336,8 +340,8 @@ export class RepairService
         const globalRepairSettings = globals.config.RepairSettings;
 
         const intellectRepairPointsPerLevel = globals.config.SkillsSettings.Intellect.RepairPointsCostReduction;
-        const profileIntellectLevel = this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.INTELLECT)?.Progress
-          ?? 0;
+        const profileIntellectLevel
+            = this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.INTELLECT)?.Progress ?? 0;
         const intellectPointReduction = intellectRepairPointsPerLevel * Math.trunc(profileIntellectLevel / 100);
 
         if (isArmor)
@@ -370,11 +374,11 @@ export class RepairService
      */
     protected getBonusMultiplierValue(skillBonus: BonusType, pmcData: IPmcData): number
     {
-        const bonusesMatched = pmcData?.Bonuses?.filter(b => b.type === skillBonus);
+        const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonus);
         let value = 1;
         if (bonusesMatched != null)
         {
-            const sumedPercentage = bonusesMatched.map(b => b.value).reduce((v1, v2) => v1 + v2, 0);
+            const sumedPercentage = bonusesMatched.map((b) => b.value).reduce((v1, v2) => v1 + v2, 0);
             value = 1 + sumedPercentage / 100;
         }
 

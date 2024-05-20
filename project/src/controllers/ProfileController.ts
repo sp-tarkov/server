@@ -129,10 +129,8 @@ export class ProfileController
     public createProfile(info: IProfileCreateRequestData, sessionID: string): string
     {
         const account = this.saveServer.getProfile(sessionID).info;
-        const profile: ITemplateSide = this.databaseServer
-            .getTables()
-            .templates
-            .profiles[account.edition][info.side.toLowerCase()];
+        const profile: ITemplateSide
+            = this.databaseServer.getTables().templates.profiles[account.edition][info.side.toLowerCase()];
         const pmcData = profile.character;
 
         // Delete existing profile
@@ -152,7 +150,7 @@ export class ProfileController
         pmcData.Customization.Head = info.headId;
         pmcData.Health.UpdateTime = this.timeUtil.getTimestamp();
         pmcData.Quests = [];
-        pmcData.Hideout.Seed = this.timeUtil.getTimestamp() + (8 * 60 * 60 * 24 * 365); // 8 years in future why? who knows, we saw it in live
+        pmcData.Hideout.Seed = this.timeUtil.getTimestamp() + 8 * 60 * 60 * 24 * 365; // 8 years in future why? who knows, we saw it in live
         pmcData.RepeatableQuests = [];
         pmcData.CarExtractCounts = {};
         pmcData.CoopExtractCounts = {};
@@ -398,16 +396,18 @@ export class ProfileController
         const profile = this.saveServer.getProfile(sessionID);
 
         // return some of the current player info for now
-        return [{
-            _id: profile.characters.pmc._id,
-            aid: profile.characters.pmc.aid,
-            Info: {
-                Nickname: info.nickname,
-                Side: "Bear",
-                Level: 1,
-                MemberCategory: profile.characters.pmc.Info.MemberCategory,
+        return [
+            {
+                _id: profile.characters.pmc._id,
+                aid: profile.characters.pmc.aid,
+                Info: {
+                    Nickname: info.nickname,
+                    Side: "Bear",
+                    Level: 1,
+                    MemberCategory: profile.characters.pmc.Info.MemberCategory,
+                },
             },
-        }];
+        ];
     }
 
     /**
@@ -418,14 +418,17 @@ export class ProfileController
         const account = this.saveServer.getProfile(sessionId).info;
         const response: GetProfileStatusResponseData = {
             maxPveCountExceeded: false,
-            profiles: [{ profileid: account.scavId, profileToken: null, status: "Free", sid: "", ip: "", port: 0 }, {
-                profileid: account.id,
-                profileToken: null,
-                status: "Free",
-                sid: "",
-                ip: "",
-                port: 0,
-            }],
+            profiles: [
+                { profileid: account.scavId, profileToken: null, status: "Free", sid: "", ip: "", port: 0 },
+                {
+                    profileid: account.id,
+                    profileToken: null,
+                    status: "Free",
+                    sid: "",
+                    ip: "",
+                    port: 0,
+                },
+            ],
         };
 
         return response;
@@ -459,7 +462,7 @@ export class ProfileController
             skills: playerPmc.Skills,
             equipment: {
                 // Default inventory tpl
-                Id: playerPmc.Inventory.items.find(x => x._tpl === "55d7217a4bdc2d86028b456d")._id,
+                Id: playerPmc.Inventory.items.find((x) => x._tpl === "55d7217a4bdc2d86028b456d")._id,
                 Items: playerPmc.Inventory.items,
             },
             achievements: playerPmc.Achievements,

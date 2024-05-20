@@ -81,13 +81,13 @@
       "right_side_plate": 75
     },
     "weaponMods": {
-      "mod_barrel": 100,
+      "mod_barrel": 75,
       "mod_bipod": 100,
       "mod_catch": 25,
       "mod_charge": 60,
       "mod_flashlight": 75,
       "mod_foregrip": 65,
-      "mod_gas_block": 100,
+      "mod_gas_block": 75,
       "mod_hammer": 25,
       "mod_handguard": 85,
       "mod_launcher": 20,
@@ -2493,7 +2493,9 @@
     "LuckyCharmT",
     "Rena-chan",
     "HB",
-    "John Pork"
+    "John Pork",
+    "Big Chungus",
+    "Floppa"
   ],
   "generation": {
     "items": {
