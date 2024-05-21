@@ -27,7 +27,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @injectAll("AkiWebSocketMessageHandler") protected akiWebSocketMessageHandlers: ISptWebSocketMessageHandler[],
+        @injectAll("SptWebSocketMessageHandler") protected sptWebSocketMessageHandlers: ISptWebSocketMessageHandler[],
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
@@ -35,7 +35,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
 
     public getSocketId(): string
     {
-        return "AKI WebSocket Handler";
+        return "SPT WebSocket Handler";
     }
 
     public getHookUrl(): string
@@ -61,7 +61,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             clearInterval(this.websocketPingHandler);
         }
 
-        ws.on("message", (msg) => this.akiWebSocketMessageHandlers.forEach((wsmh) => wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg)));
+        ws.on("message", (msg) => this.sptWebSocketMessageHandlers.forEach((wsmh) => wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg)));
 
         this.websocketPingHandler = setInterval(() =>
         {
