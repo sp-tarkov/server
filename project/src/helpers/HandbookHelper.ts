@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { Category } from "@spt-aki/models/eft/common/tables/IHandbookBase";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
-import { IItemConfig } from "@spt-aki/models/spt/config/IItemConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { Category } from "@spt/models/eft/common/tables/IHandbookBase";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IItemConfig } from "@spt/models/spt/config/IItemConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 
 class LookupItem<T, I>
 {

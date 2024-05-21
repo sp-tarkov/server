@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { BotCallbacks } from "@spt-aki/callbacks/BotCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IBotBase } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { BotCallbacks } from "@spt/callbacks/BotCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class BotStaticRouter extends StaticRouter

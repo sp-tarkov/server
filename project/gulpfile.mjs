@@ -23,8 +23,8 @@ console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`);
 const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.9, it's v20.11.1
 const stdio = "inherit";
 const buildDir = "build/";
-const dataDir = path.join(buildDir, "Aki_Data", "Server");
-const serverExeName = "Aki.Server.exe";
+const dataDir = path.join(buildDir, "SPT_Data", "Server");
+const serverExeName = "SPT.Server.exe";
 const serverExe = path.join(buildDir, serverExeName);
 const pkgConfig = "pkgconfig.json";
 const entries = {
@@ -179,7 +179,7 @@ const writeBuildDataToJSON = async () =>
 
         buildInfo.commit = coreParsed.commit;
         buildInfo.buildTime = coreParsed.buildTime;
-        buildInfo.akiVersion = coreParsed.akiVersion;
+        buildInfo.sptVersion = coreParsed.sptVersion;
         await fs.writeFile(buildJsonPath, JSON.stringify(buildInfo, null, 4));
     }
     catch (error)
@@ -357,7 +357,7 @@ gulp.task("build:release", build("release"));
 gulp.task("build:bleeding", build("bleeding"));
 gulp.task("build:bleedingmods", build("bleedingmods"));
 
-gulp.task("run:build", async () => await exec("Aki.Server.exe", { stdio, cwd: buildDir }));
+gulp.task("run:build", async () => await exec(serverExeName, { stdio, cwd: buildDir }));
 gulp.task(
     "run:debug",
     async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }),

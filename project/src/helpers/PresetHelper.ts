@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { IPreset } from "@spt/models/eft/common/IGlobals";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { ItemHelper } from "./ItemHelper";
 
 @injectable()

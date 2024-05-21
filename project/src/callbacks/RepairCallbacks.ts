@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { RepairController } from "@spt-aki/controllers/RepairController";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { IRepairActionDataRequest } from "@spt-aki/models/eft/repair/IRepairActionDataRequest";
-import { ITraderRepairActionDataRequest } from "@spt-aki/models/eft/repair/ITraderRepairActionDataRequest";
+import { RepairController } from "@spt/controllers/RepairController";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IRepairActionDataRequest } from "@spt/models/eft/repair/IRepairActionDataRequest";
+import { ITraderRepairActionDataRequest } from "@spt/models/eft/repair/ITraderRepairActionDataRequest";
 
 @injectable()
 export class RepairCallbacks

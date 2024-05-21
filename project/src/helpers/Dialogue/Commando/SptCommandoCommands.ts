@@ -1,11 +1,11 @@
 import { inject, injectAll, injectable } from "tsyringe";
-import { IChatCommand } from "@spt-aki/helpers/Dialogue/Commando/IChatCommand";
-import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
-import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
-import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { IChatCommand } from "@spt/helpers/Dialogue/Commando/IChatCommand";
+import { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
+import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
+import { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 
 @injectable()
 export class SptCommandoCommands implements IChatCommand

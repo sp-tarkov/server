@@ -1,7 +1,7 @@
-import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
+import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
 export interface IMatchConfig extends IBaseConfig
 {
-    kind: "aki-match"
+    kind: "spt-match"
     enabled: boolean
 }

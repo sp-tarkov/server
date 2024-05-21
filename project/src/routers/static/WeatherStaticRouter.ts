@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { WeatherCallbacks } from "@spt-aki/callbacks/WeatherCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { IWeatherData } from "@spt-aki/models/eft/weather/IWeatherData";
+import { WeatherCallbacks } from "@spt/callbacks/WeatherCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IWeatherData } from "@spt/models/eft/weather/IWeatherData";
 
 @injectable()
 export class WeatherStaticRouter extends StaticRouter

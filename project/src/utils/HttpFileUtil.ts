@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { ServerResponse } from "node:http";
 import { inject, injectable } from "tsyringe";
-import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 
 @injectable()
 export class HttpFileUtil

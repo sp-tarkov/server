@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
 
 @injectable()
 export class WatermarkLocale
@@ -60,7 +60,7 @@ export class WatermarkLocale
 @injectable()
 export class Watermark
 {
-    protected akiConfig: ICoreConfig;
+    protected sptConfig: ICoreConfig;
     protected text: string[] = [];
     protected versionLabel = "";
 
@@ -71,7 +71,7 @@ export class Watermark
         @inject("WatermarkLocale") protected watermarkLocale?: WatermarkLocale,
     )
     {
-        this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+        this.sptConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
     }
 
     public initialize(): void
@@ -81,7 +81,7 @@ export class Watermark
         const modding = this.watermarkLocale.getModding();
         const versionTag = this.getVersionTag();
 
-        this.versionLabel = `${this.akiConfig.projectName} ${versionTag}`;
+        this.versionLabel = `${this.sptConfig.projectName} ${versionTag}`;
 
         this.text = [this.versionLabel];
         this.text = [...this.text, ...description];
@@ -107,14 +107,14 @@ export class Watermark
      */
     public getVersionTag(withEftVersion = false): string
     {
-        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
+        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
         const versionTag = globalThis.G_DEBUG_CONFIGURATION
-            ? `${akiVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
-            : akiVersion;
+            ? `${sptVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
+            : sptVersion;
 
         if (withEftVersion)
         {
-            const tarkovVersion = this.akiConfig.compatibleTarkovVersion.split(".").pop();
+            const tarkovVersion = this.sptConfig.compatibleTarkovVersion.split(".").pop();
             return `${versionTag} (${tarkovVersion})`;
         }
 
@@ -128,12 +128,12 @@ export class Watermark
      */
     public getInGameVersionLabel(): string
     {
-        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
+        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
         const versionTag = globalThis.G_DEBUG_CONFIGURATION
-            ? `${akiVersion} - BLEEDINGEDGE ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`
-            : `${akiVersion} - ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`;
+            ? `${sptVersion} - BLEEDINGEDGE ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`
+            : `${sptVersion} - ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`;
 
-        return `${this.akiConfig.projectName} ${versionTag}`;
+        return `${this.sptConfig.projectName} ${versionTag}`;
     }
 
     /** Set window title */

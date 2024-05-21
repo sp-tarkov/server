@@ -1,31 +1,31 @@
 import { inject, injectable } from "tsyringe";
-import { HideoutHelper } from "@spt-aki/helpers/HideoutHelper";
-import { InventoryHelper } from "@spt-aki/helpers/InventoryHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Bonus, HideoutSlot, IQuestStatus, IHideoutImprovement } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { StageBonus } from "@spt-aki/models/eft/hideout/IHideoutArea";
-import { IAkiProfile, IEquipmentBuild, IMagazineBuild, IWeaponBuild } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { BonusType } from "@spt-aki/models/enums/BonusType";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { HideoutAreas } from "@spt-aki/models/enums/HideoutAreas";
-import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import { Watermark } from "@spt-aki/utils/Watermark";
+import { HideoutHelper } from "@spt/helpers/HideoutHelper";
+import { InventoryHelper } from "@spt/helpers/InventoryHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Bonus, HideoutSlot, IQuestStatus, IHideoutImprovement } from "@spt/models/eft/common/tables/IBotBase";
+import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { StageBonus } from "@spt/models/eft/hideout/IHideoutArea";
+import { ISptProfile, IEquipmentBuild, IMagazineBuild, IWeaponBuild } from "@spt/models/eft/profile/ISptProfile";
+import { BonusType } from "@spt/models/enums/BonusType";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
+import { QuestStatus } from "@spt/models/enums/QuestStatus";
+import { Traders } from "@spt/models/enums/Traders";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
+import { Watermark } from "@spt/utils/Watermark";
 
 @injectable()
 export class ProfileFixerService
@@ -395,12 +395,12 @@ export class ProfileFixerService
      * Add tag to profile to indicate when it was made
      * @param fullProfile
      */
-    public addMissingAkiVersionTagToProfile(fullProfile: IAkiProfile): void
+    public addMissingSptVersionTagToProfile(fullProfile: ISptProfile): void
     {
-        if (!fullProfile.aki)
+        if (!fullProfile.spt)
         {
-            this.logger.debug("Adding aki object to profile");
-            fullProfile.aki = { version: this.watermark.getVersionTag(), receivedGifts: [] };
+            this.logger.debug("Adding spt object to profile");
+            fullProfile.spt = { version: this.watermark.getVersionTag(), receivedGifts: [] };
         }
     }
 
@@ -869,7 +869,7 @@ export class ProfileFixerService
      * @param sessionId Session id
      * @param pmcProfile Profile to check inventory of
      */
-    public checkForOrphanedModdedItems(sessionId: string, fullProfile: IAkiProfile): void
+    public checkForOrphanedModdedItems(sessionId: string, fullProfile: ISptProfile): void
     {
         const itemsDb = this.databaseServer.getTables().templates.items;
         const pmcProfile = fullProfile.characters.pmc;
@@ -1257,7 +1257,7 @@ export class ProfileFixerService
      * Iterate over associated profile template and check all hideout areas exist, add if not
      * @param fullProfile Profile to update
      */
-    public addMissingHideoutAreasToProfile(fullProfile: IAkiProfile): void
+    public addMissingHideoutAreasToProfile(fullProfile: ISptProfile): void
     {
         const pmcProfile = fullProfile.characters.pmc;
         // No profile, probably new account being created
@@ -1309,7 +1309,7 @@ export class ProfileFixerService
      * We store the old AID value in new field `sessionId`
      * @param fullProfile Profile to update
      */
-    public fixIncorrectAidValue(fullProfile: IAkiProfile): void
+    public fixIncorrectAidValue(fullProfile: ISptProfile): void
     {
         // Not a number, regenerate
         // biome-ignore lint/suspicious/noGlobalIsNan: <value can be a valid string, Number.IsNaN() would ignore it>
@@ -1333,7 +1333,7 @@ export class ProfileFixerService
      * Bsg nested `stats` into a sub object called 'eft'
      * @param fullProfile Profile to check for and migrate stats data
      */
-    public migrateStatsToNewStructure(fullProfile: IAkiProfile): void
+    public migrateStatsToNewStructure(fullProfile: ISptProfile): void
     {
         // Data is in old structure, migrate
         if ("OverallCounters" in fullProfile.characters.pmc.Stats)

@@ -1,9 +1,9 @@
 import { container } from "tsyringe";
-import { Container } from "@spt-aki/di/Container";
-import { ErrorHandler } from "@spt-aki/ErrorHandler";
-import type { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
-import { App } from "@spt-aki/utils/App";
-import { Watermark } from "@spt-aki/utils/Watermark";
+import { Container } from "@spt/di/Container";
+import { ErrorHandler } from "@spt/ErrorHandler";
+import type { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
+import { App } from "@spt/utils/App";
+import { Watermark } from "@spt/utils/Watermark";
 
 export class Program
 {
@@ -12,7 +12,7 @@ export class Program
     {
         // set window properties
         process.stdout.setEncoding("utf8");
-        process.title = "SPT-AKI Server";
+        process.title = "SPT Server";
         this.errorHandler = new ErrorHandler();
     }
 
@@ -25,9 +25,9 @@ export class Program
             const watermark = childContainer.resolve<Watermark>("Watermark");
             watermark.initialize();
 
-            const preAkiModLoader = childContainer.resolve<PreAkiModLoader>("PreAkiModLoader");
+            const preSptModLoader = childContainer.resolve<PreSptModLoader>("PreSptModLoader");
             Container.registerListTypes(childContainer);
-            await preAkiModLoader.load(childContainer);
+            await preSptModLoader.load(childContainer);
 
             Container.registerPostLoadTypes(container, childContainer);
             childContainer.resolve<App>("App").load();

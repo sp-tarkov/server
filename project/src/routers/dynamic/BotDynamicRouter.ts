@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { BotCallbacks } from "@spt-aki/callbacks/BotCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { Difficulties } from "@spt-aki/models/eft/common/tables/IBotType";
+import { BotCallbacks } from "@spt/callbacks/BotCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { Difficulties } from "@spt/models/eft/common/tables/IBotType";
 
 @injectable()
 export class BotDynamicRouter extends DynamicRouter

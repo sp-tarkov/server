@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
-import { ContextVariable } from "@spt-aki/context/ContextVariable";
-import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
-import { LinkedList } from "@spt-aki/utils/collections/lists/LinkedList";
+import { ContextVariable } from "@spt/context/ContextVariable";
+import { ContextVariableType } from "@spt/context/ContextVariableType";
+import { LinkedList } from "@spt/utils/collections/lists/LinkedList";
 
 @injectable()
 export class ApplicationContext

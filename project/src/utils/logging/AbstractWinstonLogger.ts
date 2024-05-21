@@ -1,16 +1,16 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import { promisify } from "node:util";
-import winston, { createLogger, format, transports } from "winston";
+import winston, { createLogger, format, transports, addColors } from "winston";
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import DailyRotateFile from "winston-daily-rotate-file";
-import { Daum } from "@spt-aki/models/eft/itemEvent/IItemEventRouterRequest";
-import { LogBackgroundColor } from "@spt-aki/models/spt/logging/LogBackgroundColor";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
-import { SptLogger } from "@spt-aki/models/spt/logging/SptLogger";
-import { IAsyncQueue } from "@spt-aki/models/spt/utils/IAsyncQueue";
-import { ICommand } from "@spt-aki/models/spt/utils/ICommand";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { Daum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
+import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { SptLogger } from "@spt/models/spt/logging/SptLogger";
+import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import { ICommand } from "@spt/models/spt/utils/ICommand";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 
 export abstract class AbstractWinstonLogger implements ILogger
 {
@@ -86,7 +86,7 @@ export abstract class AbstractWinstonLogger implements ILogger
             );
         }
 
-        winston.addColors(this.logLevels.colors);
+        addColors(this.logLevels.colors);
         this.logger = createLogger({ levels: this.logLevels.levels, transports: [...transportsList] });
 
         if (this.isLogExceptions())

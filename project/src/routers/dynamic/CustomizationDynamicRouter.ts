@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { CustomizationCallbacks } from "@spt-aki/callbacks/CustomizationCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { ISuit } from "@spt-aki/models/eft/common/tables/ITrader";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { CustomizationCallbacks } from "@spt/callbacks/CustomizationCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { ISuit } from "@spt/models/eft/common/tables/ITrader";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class CustomizationDynamicRouter extends DynamicRouter

@@ -1,16 +1,16 @@
 import { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "node:http";
 import zlib from "node:zlib";
 import { inject, injectAll, injectable } from "tsyringe";
-import { Serializer } from "@spt-aki/di/Serializer";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { HttpRouter } from "@spt-aki/routers/HttpRouter";
-import { IHttpListener } from "@spt-aki/servers/http/IHttpListener";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { Serializer } from "@spt/di/Serializer";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { HttpRouter } from "@spt/routers/HttpRouter";
+import { IHttpListener } from "@spt/servers/http/IHttpListener";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
 
 @injectable()
-export class AkiHttpListener implements IHttpListener
+export class SptHttpListener implements IHttpListener
 {
     constructor(
         @inject("HttpRouter") protected httpRouter: HttpRouter, // TODO: delay required

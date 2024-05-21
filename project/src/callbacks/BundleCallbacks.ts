@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { BundleLoader } from "@spt-aki/loaders/BundleLoader";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { BundleLoader } from "@spt/loaders/BundleLoader";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 
 @injectable()
 export class BundleCallbacks

@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { ISyncHealthRequestData } from "@spt-aki/models/eft/health/ISyncHealthRequestData";
-import { Effects, IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IHealthConfig } from "@spt-aki/models/spt/config/IHealthConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { ISyncHealthRequestData } from "@spt/models/eft/health/ISyncHealthRequestData";
+import { Effects, ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IHealthConfig } from "@spt/models/spt/config/IHealthConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class HealthHelper
@@ -31,7 +31,7 @@ export class HealthHelper
      * @param sessionID Session Id
      * @returns updated profile
      */
-    public resetVitality(sessionID: string): IAkiProfile
+    public resetVitality(sessionID: string): ISptProfile
     {
         const profile = this.saveServer.getProfile(sessionID);
 

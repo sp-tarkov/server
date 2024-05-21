@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { Item } from "@spt/models/eft/common/tables/IItem";
 
 export interface OwnerInventoryItems
 {

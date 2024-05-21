@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { LocationCallbacks } from "@spt-aki/callbacks/LocationCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { ILocationsGenerateAllResponse } from "@spt-aki/models/eft/common/ILocationsSourceDestinationBase";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { LocationCallbacks } from "@spt/callbacks/LocationCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { ILocationsGenerateAllResponse } from "@spt/models/eft/common/ILocationsSourceDestinationBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class LocationStaticRouter extends StaticRouter

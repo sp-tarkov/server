@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { LocationCallbacks } from "@spt-aki/callbacks/LocationCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { LocationCallbacks } from "@spt/callbacks/LocationCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class LocationDynamicRouter extends DynamicRouter
@@ -27,6 +27,6 @@ export class LocationDynamicRouter extends DynamicRouter
 
     public override getTopLevelRoute(): string
     {
-        return "aki-loot";
+        return "spt-loot";
     }
 }

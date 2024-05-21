@@ -1,15 +1,15 @@
 import os from "node:os";
 import { inject, injectAll, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { OnUpdate } from "@spt-aki/di/OnUpdate";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { HttpServer } from "@spt-aki/servers/HttpServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { OnLoad } from "@spt/di/OnLoad";
+import { OnUpdate } from "@spt/di/OnUpdate";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { HttpServer } from "@spt/servers/HttpServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { EncodingUtil } from "@spt/utils/EncodingUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class App
@@ -41,7 +41,7 @@ export class App
         this.logger.debug(`RAM: ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.argv[0])}`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.execPath)}`);
-        this.logger.debug(`Server: ${globalThis.G_AKIVERSION || this.coreConfig.akiVersion}`);
+        this.logger.debug(`Server: ${globalThis.G_SPTVERSION || this.coreConfig.sptVersion}`);
         if (globalThis.G_BUILDTIME)
         {
             this.logger.debug(`Date: ${globalThis.G_BUILDTIME}`);

@@ -1,13 +1,13 @@
 import { inject, injectAll, injectable } from "tsyringe";
-import { SaveLoadRouter } from "@spt-aki/di/Router";
-import { IAkiProfile, Info } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { VFS } from "@spt-aki/utils/VFS";
+import { SaveLoadRouter } from "@spt/di/Router";
+import { ISptProfile, Info } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { VFS } from "@spt/utils/VFS";
 import { ConfigServer } from "./ConfigServer";
 
 @injectable()
@@ -35,7 +35,7 @@ export class SaveServer
      * @param id Id for save callback
      * @param callback Callback to execute prior to running SaveServer.saveProfile()
      */
-    public addBeforeSaveCallback(id: string, callback: (profile: Partial<IAkiProfile>) => Partial<IAkiProfile>): void
+    public addBeforeSaveCallback(id: string, callback: (profile: Partial<ISptProfile>) => Partial<ISptProfile>): void
     {
         this.onBeforeSaveCallbacks[id] = callback;
     }
@@ -93,9 +93,9 @@ export class SaveServer
     /**
      * Get a player profile from memory
      * @param sessionId Session id
-     * @returns IAkiProfile
+     * @returns ISptProfile
      */
-    public getProfile(sessionId: string): IAkiProfile
+    public getProfile(sessionId: string): ISptProfile
     {
         if (!sessionId)
         {
@@ -117,9 +117,9 @@ export class SaveServer
 
     /**
      * Get all profiles from memory
-     * @returns Dictionary of IAkiProfile
+     * @returns Dictionary of ISptProfile
      */
-    public getProfiles(): Record<string, IAkiProfile>
+    public getProfiles(): Record<string, ISptProfile>
     {
         return this.profiles;
     }
@@ -158,7 +158,7 @@ export class SaveServer
      * Add full profile in memory by key (info.id)
      * @param profileDetails Profile to save
      */
-    public addProfile(profileDetails: IAkiProfile): void
+    public addProfile(profileDetails: ISptProfile): void
     {
         this.profiles[profileDetails.info.id] = profileDetails;
     }

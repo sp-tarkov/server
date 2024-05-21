@@ -1,4 +1,4 @@
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
 
 export class DynamicRouterMod extends DynamicRouter
 {

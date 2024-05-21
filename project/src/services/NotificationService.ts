@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
+import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
 
 @injectable()
 export class NotificationService

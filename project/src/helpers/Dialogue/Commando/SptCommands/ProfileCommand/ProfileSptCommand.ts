@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { SavedCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/GiveCommand/SavedCommand";
-import { ISptCommand } from "@spt-aki/helpers/Dialogue/Commando/SptCommands/ISptCommand";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
-import { IUserDialogInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
-import { IProfileChangeEvent, ProfileChangeEventType } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocaleService } from "@spt-aki/services/LocaleService";
-import { MailSendService } from "@spt-aki/services/MailSendService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { SavedCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/GiveCommand/SavedCommand";
+import { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
+import { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import { SkillTypes } from "@spt/models/enums/SkillTypes";
+import { IProfileChangeEvent, ProfileChangeEventType } from "@spt/models/spt/dialog/ISendMessageDetails";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocaleService } from "@spt/services/LocaleService";
+import { MailSendService } from "@spt/services/MailSendService";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 @injectable()
 export class ProfileSptCommand implements ISptCommand

@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { OnUpdate } from "@spt-aki/di/OnUpdate";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
+import { OnLoad } from "@spt/di/OnLoad";
+import { OnUpdate } from "@spt/di/OnUpdate";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SaveServer } from "@spt/servers/SaveServer";
 
 @injectable()
 export class SaveCallbacks implements OnLoad, OnUpdate
@@ -26,7 +26,7 @@ export class SaveCallbacks implements OnLoad, OnUpdate
 
     public getRoute(): string
     {
-        return "aki-save";
+        return "spt-save";
     }
 
     public async onUpdate(secondsSinceLastRun: number): Promise<boolean>

@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IEliminationConfig, IQuestConfig, IRepeatableQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { MathUtil } from "@spt-aki/utils/MathUtil";
-import { ProbabilityObject, ProbabilityObjectArray } from "@spt-aki/utils/RandomUtil";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IEliminationConfig, IQuestConfig, IRepeatableQuestConfig } from "@spt/models/spt/config/IQuestConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { MathUtil } from "@spt/utils/MathUtil";
+import { ProbabilityObject, ProbabilityObjectArray } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class RepeatableQuestHelper

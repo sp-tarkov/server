@@ -1,10 +1,8 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { InRaidHelper } from "@spt-aki/helpers/InRaidHelper";
-
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { InRaidHelper } from "@spt/helpers/InRaidHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
 
 describe("InRaidHelper", () =>
 {

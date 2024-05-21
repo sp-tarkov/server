@@ -1,10 +1,7 @@
-
-
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { BotDifficultyHelper } from "@spt-aki/helpers/BotDifficultyHelper";
+import { BotDifficultyHelper } from "@spt/helpers/BotDifficultyHelper";
 
 describe("BotHelper", () =>
 {
@@ -40,7 +37,7 @@ describe("BotHelper", () =>
         it("should return randomised value when random passed in", () =>
         {
             vi.spyOn(botDifficultyHelper, "chooseRandomDifficulty").mockReturnValue(
-                "randomValue"
+                "randomValue",
             );
 
             expect(botDifficultyHelper.convertBotDifficultyDropdownToBotDifficulty("random")).toBe("randomValue");
@@ -48,21 +45,20 @@ describe("BotHelper", () =>
     });
 
     describe("getBotDifficultySettings", () =>
+    {
+        it("should return assault bot if invalid bot type provided", () =>
         {
-   
-            it("should return assault bot if invalid bot type provided", () =>
-            {
-                vi.spyOn(botDifficultyHelper, "convertBotDifficultyDropdownToBotDifficulty").mockReturnValue(
-                    "normal"
-                );
-                vi.spyOn(botDifficultyHelper.botHelper, "getBotTemplate").mockReturnValue(
-                    { difficulty: {normal: "test"}}
-                );
-                const warningLogSpy = vi.spyOn(botDifficultyHelper.logger, "warning");
-    
-                const result = botDifficultyHelper.getBotDifficultySettings("INVALID_TYPE", "normal")
-                expect(result).toBe("test");
-                expect(warningLogSpy).toHaveBeenCalledTimes(1);
-            });
+            vi.spyOn(botDifficultyHelper, "convertBotDifficultyDropdownToBotDifficulty").mockReturnValue(
+                "normal",
+            );
+            vi.spyOn(botDifficultyHelper.botHelper, "getBotTemplate").mockReturnValue(
+                { difficulty: { normal: "test" } },
+            );
+            const warningLogSpy = vi.spyOn(botDifficultyHelper.logger, "warning");
+
+            const result = botDifficultyHelper.getBotDifficultySettings("INVALID_TYPE", "normal");
+            expect(result).toBe("test");
+            expect(warningLogSpy).toHaveBeenCalledTimes(1);
         });
+    });
 });

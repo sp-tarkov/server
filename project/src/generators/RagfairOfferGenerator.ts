@@ -1,36 +1,36 @@
 import { inject, injectable } from "tsyringe";
-import { RagfairAssortGenerator } from "@spt-aki/generators/RagfairAssortGenerator";
-import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
-import { IRagfairOffer, OfferRequirement } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { Money } from "@spt-aki/models/enums/Money";
+import { RagfairAssortGenerator } from "@spt/generators/RagfairAssortGenerator";
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { IBarterScheme } from "@spt/models/eft/common/tables/ITrader";
+import { IRagfairOffer, OfferRequirement } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { Money } from "@spt/models/enums/Money";
 import {
     Condition,
     Dynamic,
     IArmorPlateBlacklistSettings,
     IRagfairConfig,
-} from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { FenceService } from "@spt-aki/services/FenceService";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
-import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+} from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { FenceService } from "@spt/services/FenceService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RagfairOfferService } from "@spt/services/RagfairOfferService";
+import { RagfairPriceService } from "@spt/services/RagfairPriceService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class RagfairOfferGenerator
@@ -943,8 +943,8 @@ export class RagfairOfferGenerator
     ): IBarterScheme[]
     {
         const currency = this.ragfairServerHelper.getDynamicOfferCurrency();
-        const price
-            = this.ragfairPriceService.getDynamicOfferPriceForOffer(offerWithChildren, currency, isPackOffer) * multipler;
+        const price = this.ragfairPriceService.getDynamicOfferPriceForOffer(offerWithChildren, currency, isPackOffer)
+          * multipler;
 
         return [{ count: price, _tpl: currency }];
     }

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { Queue } from "@spt-aki/utils/collections/queue/Queue";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { VFS } from "@spt-aki/utils/VFS";
+import { Queue } from "@spt/utils/collections/queue/Queue";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { VFS } from "@spt/utils/VFS";
 
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/brace-style */

@@ -1,19 +1,19 @@
 import { inject, injectable } from "tsyringe";
-import { BotGeneratorHelper } from "@spt-aki/helpers/BotGeneratorHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
-import { Inventory } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { GenerationData } from "@spt-aki/models/eft/common/tables/IBotType";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
-import { ItemAddedResult } from "@spt-aki/models/enums/ItemAddedResult";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { BotGeneratorHelper } from "@spt/helpers/BotGeneratorHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
+import { Inventory } from "@spt/models/eft/common/tables/IBotBase";
+import { GenerationData } from "@spt/models/eft/common/tables/IBotType";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { EquipmentSlots } from "@spt/models/enums/EquipmentSlots";
+import { ItemAddedResult } from "@spt/models/enums/ItemAddedResult";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class BotWeaponGeneratorHelper

@@ -1,24 +1,24 @@
 import { inject, injectable } from "tsyringe";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Common, CounterKeyValue, Stats } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { IValidateNicknameRequestData } from "@spt-aki/models/eft/profile/IValidateNicknameRequestData";
-import { AccountTypes } from "@spt-aki/models/enums/AccountTypes";
-import { BonusType } from "@spt-aki/models/enums/BonusType";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
-import { IInventoryConfig } from "@spt-aki/models/spt/config/IInventoryConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ProfileSnapshotService } from "@spt-aki/services/ProfileSnapshotService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
-import { Watermark } from "@spt-aki/utils/Watermark";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Common, CounterKeyValue, Stats } from "@spt/models/eft/common/tables/IBotBase";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
+import { AccountTypes } from "@spt/models/enums/AccountTypes";
+import { BonusType } from "@spt/models/enums/BonusType";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { SkillTypes } from "@spt/models/enums/SkillTypes";
+import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ProfileSnapshotService } from "@spt/services/ProfileSnapshotService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
+import { Watermark } from "@spt/utils/Watermark";
 
 @injectable()
 export class ProfileHelper
@@ -68,7 +68,7 @@ export class ProfileHelper
      * Get all profiles from server
      * @returns Dictionary of profiles
      */
-    public getProfiles(): Record<string, IAkiProfile>
+    public getProfiles(): Record<string, ISptProfile>
     {
         return this.saveServer.getProfiles();
     }
@@ -170,7 +170,7 @@ export class ProfileHelper
         return false;
     }
 
-    protected profileHasInfoProperty(profile: IAkiProfile): boolean
+    protected profileHasInfoProperty(profile: ISptProfile): boolean
     {
         return !!profile?.characters?.pmc?.Info;
     }
@@ -244,7 +244,7 @@ export class ProfileHelper
         return this.databaseServer.getTables().globals.config.exp.level.exp_table.length - 1;
     }
 
-    public getDefaultAkiDataObject(): any
+    public getDefaultSptDataObject(): any
     {
         return { version: this.getServerVersion() };
     }
@@ -252,9 +252,9 @@ export class ProfileHelper
     /**
      * Get full representation of a players profile json
      * @param sessionID Profile id to get
-     * @returns IAkiProfile object
+     * @returns ISptProfile object
      */
-    public getFullProfile(sessionID: string): IAkiProfile
+    public getFullProfile(sessionID: string): ISptProfile
     {
         if (this.saveServer.getProfile(sessionID) === undefined)
         {
@@ -357,20 +357,20 @@ export class ProfileHelper
 
     /**
      *  Flag a profile as having received a gift
-     * Store giftid in profile aki object
+     * Store giftid in profile spt object
      * @param playerId Player to add gift flag to
      * @param giftId Gift player received
      */
     public addGiftReceivedFlagToProfile(playerId: string, giftId: string): void
     {
         const profileToUpdate = this.getFullProfile(playerId);
-        const giftHistory = profileToUpdate.aki.receivedGifts;
+        const giftHistory = profileToUpdate.spt.receivedGifts;
         if (!giftHistory)
         {
-            profileToUpdate.aki.receivedGifts = [];
+            profileToUpdate.spt.receivedGifts = [];
         }
 
-        profileToUpdate.aki.receivedGifts.push({ giftId: giftId, timestampAccepted: this.timeUtil.getTimestamp() });
+        profileToUpdate.spt.receivedGifts.push({ giftId: giftId, timestampAccepted: this.timeUtil.getTimestamp() });
     }
 
     /**
@@ -388,12 +388,12 @@ export class ProfileHelper
             return false;
         }
 
-        if (!profile.aki.receivedGifts)
+        if (!profile.spt.receivedGifts)
         {
             return false;
         }
 
-        return !!profile.aki.receivedGifts.find((x) => x.giftId === giftId);
+        return !!profile.spt.receivedGifts.find((x) => x.giftId === giftId);
     }
 
     /**

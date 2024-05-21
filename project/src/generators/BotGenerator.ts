@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { BotInventoryGenerator } from "@spt-aki/generators/BotInventoryGenerator";
-import { BotLevelGenerator } from "@spt-aki/generators/BotLevelGenerator";
-import { BotDifficultyHelper } from "@spt-aki/helpers/BotDifficultyHelper";
-import { BotHelper } from "@spt-aki/helpers/BotHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
-import { IWildBody } from "@spt-aki/models/eft/common/IGlobals";
+import { BotInventoryGenerator } from "@spt/generators/BotInventoryGenerator";
+import { BotLevelGenerator } from "@spt/generators/BotLevelGenerator";
+import { BotDifficultyHelper } from "@spt/helpers/BotDifficultyHelper";
+import { BotHelper } from "@spt/helpers/BotHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
+import { IWildBody } from "@spt/models/eft/common/IGlobals";
 import {
     Common,
     IBaseJsonSkills,
@@ -14,25 +14,25 @@ import {
     Info,
     Health as PmcHealth,
     Skills as botSkills,
-} from "@spt-aki/models/eft/common/tables/IBotBase";
-import { Appearance, Health, IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
-import { Item, Upd } from "@spt-aki/models/eft/common/tables/IItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { BotGenerationDetails } from "@spt-aki/models/spt/bots/BotGenerationDetails";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { BotEquipmentFilterService } from "@spt-aki/services/BotEquipmentFilterService";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+} from "@spt/models/eft/common/tables/IBotBase";
+import { Appearance, Health, IBotType } from "@spt/models/eft/common/tables/IBotType";
+import { Item, Upd } from "@spt/models/eft/common/tables/IItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { BotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { SeasonalEventService } from "@spt/services/SeasonalEventService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class BotGenerator

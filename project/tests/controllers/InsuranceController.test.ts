@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import "reflect-metadata";
+
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { InsuranceController } from "@spt-aki/controllers/InsuranceController";
+import { InsuranceController } from "@spt/controllers/InsuranceController";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { Insurance } from "@spt/models/eft/profile/ISptProfile";
+import { MessageType } from "@spt/models/enums/MessageType";
 import { ProfileInsuranceFactory } from "@tests/__factories__/ProfileInsurance.factory";
-
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { Insurance } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
 
 describe("InsuranceController", () =>
 {

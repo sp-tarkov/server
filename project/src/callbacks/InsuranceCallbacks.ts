@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
-import { InsuranceController } from "@spt-aki/controllers/InsuranceController";
-import { OnUpdate } from "@spt-aki/di/OnUpdate";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { IGetInsuranceCostRequestData } from "@spt-aki/models/eft/insurance/IGetInsuranceCostRequestData";
-import { IGetInsuranceCostResponseData } from "@spt-aki/models/eft/insurance/IGetInsuranceCostResponseData";
-import { IInsureRequestData } from "@spt-aki/models/eft/insurance/IInsureRequestData";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IInsuranceConfig } from "@spt-aki/models/spt/config/IInsuranceConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { InsuranceService } from "@spt-aki/services/InsuranceService";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { InsuranceController } from "@spt/controllers/InsuranceController";
+import { OnUpdate } from "@spt/di/OnUpdate";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IGetInsuranceCostRequestData } from "@spt/models/eft/insurance/IGetInsuranceCostRequestData";
+import { IGetInsuranceCostResponseData } from "@spt/models/eft/insurance/IGetInsuranceCostResponseData";
+import { IInsureRequestData } from "@spt/models/eft/insurance/IInsureRequestData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IInsuranceConfig } from "@spt/models/spt/config/IInsuranceConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { InsuranceService } from "@spt/services/InsuranceService";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 
 @injectable()
 export class InsuranceCallbacks implements OnUpdate
@@ -62,6 +62,6 @@ export class InsuranceCallbacks implements OnUpdate
 
     public getRoute(): string
     {
-        return "aki-insurance";
+        return "spt-insurance";
     }
 }

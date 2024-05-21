@@ -1,8 +1,7 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
+import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
 
 describe("ItemBaseClassService", () =>
 {

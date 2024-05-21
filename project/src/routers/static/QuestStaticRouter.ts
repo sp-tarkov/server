@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { QuestCallbacks } from "@spt-aki/callbacks/QuestCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IQuest } from "@spt-aki/models/eft/common/tables/IQuest";
-import { IPmcDataRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { QuestCallbacks } from "@spt/callbacks/QuestCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IQuest } from "@spt/models/eft/common/tables/IQuest";
+import { IPmcDataRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class QuestStaticRouter extends StaticRouter

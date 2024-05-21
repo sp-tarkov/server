@@ -1,6 +1,6 @@
-import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ProfileFixerService } from "@spt/services/ProfileFixerService";
 
 describe("ProfileFixerService", () =>
 {

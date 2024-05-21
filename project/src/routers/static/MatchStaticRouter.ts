@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { MatchCallbacks } from "@spt-aki/callbacks/MatchCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { IGroupCharacter } from "@spt-aki/models/eft/match/IGroupCharacter";
-import { IMatchGroupCurrentResponse } from "@spt-aki/models/eft/match/IMatchGroupCurrentResponse";
-import { IMatchGroupStatusResponse } from "@spt-aki/models/eft/match/IMatchGroupStatusResponse";
-import { IProfileStatusResponse } from "@spt-aki/models/eft/match/IProfileStatusResponse";
+import { MatchCallbacks } from "@spt/callbacks/MatchCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { IGroupCharacter } from "@spt/models/eft/match/IGroupCharacter";
+import { IMatchGroupCurrentResponse } from "@spt/models/eft/match/IMatchGroupCurrentResponse";
+import { IMatchGroupStatusResponse } from "@spt/models/eft/match/IMatchGroupStatusResponse";
+import { IProfileStatusResponse } from "@spt/models/eft/match/IProfileStatusResponse";
 
 @injectable()
 export class MatchStaticRouter extends StaticRouter

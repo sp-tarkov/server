@@ -1,11 +1,11 @@
 import http, { IncomingMessage } from "node:http";
 import { inject, injectAll, injectable } from "tsyringe";
 import { WebSocket, Server } from "ws";
-import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 import { IWebSocketConnectionHandler } from "./ws/IWebSocketConnectionHandler";
 
 @injectable()

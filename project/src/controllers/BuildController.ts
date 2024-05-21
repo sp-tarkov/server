@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { ISetMagazineRequest } from "@spt-aki/models/eft/builds/ISetMagazineRequest";
-import { IPresetBuildActionRequestData } from "@spt-aki/models/eft/presetBuild/IPresetBuildActionRequestData";
-import { IRemoveBuildRequestData } from "@spt-aki/models/eft/presetBuild/IRemoveBuildRequestData";
-import { IEquipmentBuild, IMagazineBuild, IUserBuilds, IWeaponBuild } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { EquipmentBuildType } from "@spt-aki/models/enums/EquipmentBuildType";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { ISetMagazineRequest } from "@spt/models/eft/builds/ISetMagazineRequest";
+import { IPresetBuildActionRequestData } from "@spt/models/eft/presetBuild/IPresetBuildActionRequestData";
+import { IRemoveBuildRequestData } from "@spt/models/eft/presetBuild/IRemoveBuildRequestData";
+import { IEquipmentBuild, IMagazineBuild, IUserBuilds, IWeaponBuild } from "@spt/models/eft/profile/ISptProfile";
+import { EquipmentBuildType } from "@spt/models/enums/EquipmentBuildType";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 @injectable()
 export class BuildController

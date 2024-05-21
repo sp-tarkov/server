@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { InraidCallbacks } from "@spt-aki/callbacks/InraidCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { InraidCallbacks } from "@spt/callbacks/InraidCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 
 @injectable()
 export class InraidStaticRouter extends StaticRouter

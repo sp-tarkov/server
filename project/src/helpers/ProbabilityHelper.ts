@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class ProbabilityHelper

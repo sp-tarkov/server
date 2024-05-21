@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { GameCallbacks } from "@spt-aki/callbacks/GameCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { ICheckVersionResponse } from "@spt-aki/models/eft/game/ICheckVersionResponse";
-import { ICurrentGroupResponse } from "@spt-aki/models/eft/game/ICurrentGroupResponse";
-import { IGameConfigResponse } from "@spt-aki/models/eft/game/IGameConfigResponse";
-import { IGameKeepAliveResponse } from "@spt-aki/models/eft/game/IGameKeepAliveResponse";
-import { IGameLogoutResponseData } from "@spt-aki/models/eft/game/IGameLogoutResponseData";
-import { IGameModeResponse } from "@spt-aki/models/eft/game/IGameModeResponse";
-import { IGameStartResponse } from "@spt-aki/models/eft/game/IGameStartResponse";
-import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeResponse";
-import { ISendReportRequest } from "@spt-aki/models/eft/game/ISendReportRequest";
-import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { GameCallbacks } from "@spt/callbacks/GameCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { ICheckVersionResponse } from "@spt/models/eft/game/ICheckVersionResponse";
+import { ICurrentGroupResponse } from "@spt/models/eft/game/ICurrentGroupResponse";
+import { IGameConfigResponse } from "@spt/models/eft/game/IGameConfigResponse";
+import { IGameKeepAliveResponse } from "@spt/models/eft/game/IGameKeepAliveResponse";
+import { IGameLogoutResponseData } from "@spt/models/eft/game/IGameLogoutResponseData";
+import { IGameModeResponse } from "@spt/models/eft/game/IGameModeResponse";
+import { IGameStartResponse } from "@spt/models/eft/game/IGameStartResponse";
+import { IGetRaidTimeResponse } from "@spt/models/eft/game/IGetRaidTimeResponse";
+import { ISendReportRequest } from "@spt/models/eft/game/ISendReportRequest";
+import { IServerDetails } from "@spt/models/eft/game/IServerDetails";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 
 @injectable()
 export class GameStaticRouter extends StaticRouter

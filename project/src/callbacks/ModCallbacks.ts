@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { PostAkiModLoader } from "@spt-aki/loaders/PostAkiModLoader";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HttpFileUtil } from "@spt-aki/utils/HttpFileUtil";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { OnLoad } from "@spt/di/OnLoad";
+import { PostSptModLoader } from "@spt/loaders/PostSptModLoader";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HttpFileUtil } from "@spt/utils/HttpFileUtil";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 
 @injectable()
 export class ModCallbacks implements OnLoad
@@ -18,7 +18,7 @@ export class ModCallbacks implements OnLoad
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
-        @inject("PostAkiModLoader") protected postAkiModLoader: PostAkiModLoader,
+        @inject("PostSptModLoader") protected postSptModLoader: PostSptModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
@@ -30,12 +30,12 @@ export class ModCallbacks implements OnLoad
     {
         if (globalThis.G_MODS_ENABLED)
         {
-            await this.postAkiModLoader.load();
+            await this.postSptModLoader.load();
         }
     }
 
     public getRoute(): string
     {
-        return "aki-mods";
+        return "spt-mods";
     }
 }

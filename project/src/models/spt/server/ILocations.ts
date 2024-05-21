@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { ILocation } from "@spt-aki/models/eft/common/ILocation";
-import { ILocationsBase } from "@spt-aki/models/eft/common/tables/ILocationsBase";
+import { ILocation } from "@spt/models/eft/common/ILocation";
+import { ILocationsBase } from "@spt/models/eft/common/tables/ILocationsBase";
 
 export interface ILocations
 {

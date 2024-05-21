@@ -1,11 +1,11 @@
 import fixJson from "json-fixer";
-import JSON5 from "json5";
+import { stringify, parse } from "json5";
 import { jsonc } from "jsonc";
 import { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { VFS } from "@spt-aki/utils/VFS";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { VFS } from "@spt/utils/VFS";
 
 @injectable()
 export class JsonUtil
@@ -80,10 +80,10 @@ export class JsonUtil
         {
             if (prettify)
             {
-                return JSON5.stringify(data, null, "\t");
+                return stringify(data, null, "\t");
             }
 
-            return JSON5.stringify(data);
+            return stringify(data);
         }
         catch (error)
         {
@@ -138,7 +138,7 @@ export class JsonUtil
     {
         try
         {
-            return JSON5.parse(jsonString);
+            return parse(jsonString);
         }
         catch (error)
         {

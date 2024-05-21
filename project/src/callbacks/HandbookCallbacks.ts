@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { HandbookController } from "@spt-aki/controllers/HandbookController";
-import { OnLoad } from "@spt-aki/di/OnLoad";
+import { HandbookController } from "@spt/controllers/HandbookController";
+import { OnLoad } from "@spt/di/OnLoad";
 
 @injectable()
 export class HandbookCallbacks implements OnLoad
@@ -15,6 +15,6 @@ export class HandbookCallbacks implements OnLoad
 
     public getRoute(): string
     {
-        return "aki-handbook";
+        return "spt-handbook";
     }
 }

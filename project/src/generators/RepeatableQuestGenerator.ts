@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
-import { RepeatableQuestRewardGenerator } from "@spt-aki/generators/RepeatableQuestRewardGenerator";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { RepeatableQuestHelper } from "@spt-aki/helpers/RepeatableQuestHelper";
-import { Exit } from "@spt-aki/models/eft/common/ILocationBase";
-import { TraderInfo } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { IQuestCondition, IQuestConditionCounterCondition } from "@spt-aki/models/eft/common/tables/IQuest";
-import { IRepeatableQuest } from "@spt-aki/models/eft/common/tables/IRepeatableQuests";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Traders } from "@spt-aki/models/enums/Traders";
+import { RepeatableQuestRewardGenerator } from "@spt/generators/RepeatableQuestRewardGenerator";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { RepeatableQuestHelper } from "@spt/helpers/RepeatableQuestHelper";
+import { Exit } from "@spt/models/eft/common/ILocationBase";
+import { TraderInfo } from "@spt/models/eft/common/tables/IBotBase";
+import { IQuestCondition, IQuestConditionCounterCondition } from "@spt/models/eft/common/tables/IQuest";
+import { IRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Traders } from "@spt/models/enums/Traders";
 import {
     IBossInfo,
     IEliminationConfig,
     IQuestConfig,
     IRepeatableQuestConfig,
-} from "@spt-aki/models/spt/config/IQuestConfig";
-import { IQuestTypePool } from "@spt-aki/models/spt/repeatable/IQuestTypePool";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { MathUtil } from "@spt-aki/utils/MathUtil";
-import { ObjectId } from "@spt-aki/utils/ObjectId";
-import { ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
+} from "@spt/models/spt/config/IQuestConfig";
+import { IQuestTypePool } from "@spt/models/spt/repeatable/IQuestTypePool";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { MathUtil } from "@spt/utils/MathUtil";
+import { ObjectId } from "@spt/utils/ObjectId";
+import { ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class RepeatableQuestGenerator

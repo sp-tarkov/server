@@ -1,20 +1,20 @@
 import { inject, injectable } from "tsyringe";
-import { Dialogue, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { IWsChatMessageReceived } from "@spt-aki/models/eft/ws/IWsChatMessageReceived";
-import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { AkiWebSocketConnectionHandler } from "@spt-aki/servers/ws/AkiWebSocketConnectionHandler";
-import { NotificationService } from "@spt-aki/services/NotificationService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { Dialogue, IUserDialogInfo, Message } from "@spt/models/eft/profile/ISptProfile";
+import { IWsChatMessageReceived } from "@spt/models/eft/ws/IWsChatMessageReceived";
+import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { SptWebSocketConnectionHandler } from "@spt/servers/ws/SptWebSocketConnectionHandler";
+import { NotificationService } from "@spt/services/NotificationService";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 @injectable()
 export class NotificationSendHelper
 {
     constructor(
-        @inject("AkiWebSocketConnectionHandler") protected akiWebSocketConnection: AkiWebSocketConnectionHandler,
+        @inject("SptWebSocketConnectionHandler") protected sptWebSocketConnection: SptWebSocketConnectionHandler,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("NotificationService") protected notificationService: NotificationService,
@@ -28,9 +28,9 @@ export class NotificationSendHelper
      */
     public sendMessage(sessionID: string, notificationMessage: IWsNotificationEvent): void
     {
-        if (this.akiWebSocketConnection.isConnectionWebSocket(sessionID))
+        if (this.sptWebSocketConnection.isConnectionWebSocket(sessionID))
         {
-            this.akiWebSocketConnection.sendMessage(sessionID, notificationMessage);
+            this.sptWebSocketConnection.sendMessage(sessionID, notificationMessage);
         }
         else
         {

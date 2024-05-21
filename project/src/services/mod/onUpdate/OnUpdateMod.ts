@@ -1,4 +1,4 @@
-import { OnUpdate } from "@spt-aki/di/OnUpdate";
+import { OnUpdate } from "@spt/di/OnUpdate";
 
 export class OnUpdateMod implements OnUpdate
 {

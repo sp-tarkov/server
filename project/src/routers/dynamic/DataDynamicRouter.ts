@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { DataCallbacks } from "@spt-aki/callbacks/DataCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { IGetItemPricesResponse } from "@spt-aki/models/eft/game/IGetItemPricesResponse";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { DataCallbacks } from "@spt/callbacks/DataCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { IGetItemPricesResponse } from "@spt/models/eft/game/IGetItemPricesResponse";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class DataDynamicRouter extends DynamicRouter

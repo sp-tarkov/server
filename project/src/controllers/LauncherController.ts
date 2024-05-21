@@ -1,23 +1,23 @@
 import { inject, injectable } from "tsyringe";
-import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
-import { IChangeRequestData } from "@spt-aki/models/eft/launcher/IChangeRequestData";
-import { ILoginRequestData } from "@spt-aki/models/eft/launcher/ILoginRequestData";
-import { IRegisterData } from "@spt-aki/models/eft/launcher/IRegisterData";
-import { Info, ModDetails } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { IConnectResponse } from "@spt-aki/models/eft/profile/IConnectResponse";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { IPackageJsonData } from "@spt-aki/models/spt/mod/IPackageJsonData";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
+import { IChangeRequestData } from "@spt/models/eft/launcher/IChangeRequestData";
+import { ILoginRequestData } from "@spt/models/eft/launcher/ILoginRequestData";
+import { IRegisterData } from "@spt/models/eft/launcher/IRegisterData";
+import { IConnectResponse } from "@spt/models/eft/profile/IConnectResponse";
+import { Info, ModDetails } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { IPackageJsonData } from "@spt/models/spt/mod/IPackageJsonData";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class LauncherController
@@ -34,7 +34,7 @@ export class LauncherController
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
+        @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {
@@ -206,7 +206,7 @@ export class LauncherController
      */
     public getLoadedServerMods(): Record<string, IPackageJsonData>
     {
-        return this.preAkiModLoader.getImportedModDetails();
+        return this.preSptModLoader.getImportedModDetails();
     }
 
     /**
@@ -218,9 +218,9 @@ export class LauncherController
     {
         const profile = this.profileHelper.getFullProfile(sessionId);
 
-        if (profile?.aki?.mods)
+        if (profile?.spt?.mods)
         {
-            return this.preAkiModLoader.getProfileModsGroupedByModName(profile?.aki?.mods);
+            return this.preSptModLoader.getProfileModsGroupedByModName(profile?.spt?.mods);
         }
 
         return [];

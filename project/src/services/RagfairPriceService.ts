@@ -1,24 +1,24 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
-import { MinMax } from "@spt-aki/models/common/MinMax";
-import { IPreset } from "@spt-aki/models/eft/common/IGlobals";
-import { HandbookItem } from "@spt-aki/models/eft/common/tables/IHandbookBase";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { IBarterScheme } from "@spt-aki/models/eft/common/tables/ITrader";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
-import { IRagfairConfig, IUnreasonableModPrices } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { IRagfairServerPrices } from "@spt-aki/models/spt/ragfair/IRagfairServerPrices";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { OnLoad } from "@spt/di/OnLoad";
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { MinMax } from "@spt/models/common/MinMax";
+import { IPreset } from "@spt/models/eft/common/IGlobals";
+import { HandbookItem } from "@spt/models/eft/common/tables/IHandbookBase";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { IBarterScheme } from "@spt/models/eft/common/tables/ITrader";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IRagfairConfig, IUnreasonableModPrices } from "@spt/models/spt/config/IRagfairConfig";
+import { IRagfairServerPrices } from "@spt/models/spt/ragfair/IRagfairServerPrices";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 /**
  * Stores flea prices for items as well as methods to interact with them

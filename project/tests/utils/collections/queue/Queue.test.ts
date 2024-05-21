@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, expect, it } from "vitest";
-
-import { Queue } from "@spt-aki/utils/collections/queue/Queue";
+import { Queue } from "@spt/utils/collections/queue/Queue";
 
 describe("LinkedList", () =>
 {

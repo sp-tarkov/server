@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { IClientLogRequest } from "@spt-aki/models/spt/logging/IClientLogRequest";
-import { LogBackgroundColor } from "@spt-aki/models/spt/logging/LogBackgroundColor";
-import { LogLevel } from "@spt-aki/models/spt/logging/LogLevel";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { IClientLogRequest } from "@spt/models/spt/logging/IClientLogRequest";
+import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
+import { LogLevel } from "@spt/models/spt/logging/LogLevel";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 
 @injectable()
 export class ClientLogController

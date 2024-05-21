@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class PlayerService

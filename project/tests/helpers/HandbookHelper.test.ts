@@ -1,9 +1,8 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
-import { Money } from "@spt-aki/models/enums/Money";
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { Money } from "@spt/models/enums/Money";
 
 describe("HandbookHelper", () =>
 {

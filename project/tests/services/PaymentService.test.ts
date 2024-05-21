@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import "reflect-metadata";
+
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { PaymentService } from "@spt-aki/services/PaymentService";
-
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { IProcessBuyTradeRequestData } from "@spt-aki/models/eft/trade/IProcessBuyTradeRequestData";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IProcessBuyTradeRequestData } from "@spt/models/eft/trade/IProcessBuyTradeRequestData";
+import { PaymentService } from "@spt/services/PaymentService";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 describe("PaymentService", () =>
 {

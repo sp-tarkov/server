@@ -1,4 +1,4 @@
-import { OnLoad } from "@spt-aki/di/OnLoad";
+import { OnLoad } from "@spt/di/OnLoad";
 
 export class OnLoadMod implements OnLoad
 {

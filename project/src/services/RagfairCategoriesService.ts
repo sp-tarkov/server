@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
-import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
-import { ISearchRequestData, OfferOwnerType } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ISearchRequestData, OfferOwnerType } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 
 @injectable()
 export class RagfairCategoriesService

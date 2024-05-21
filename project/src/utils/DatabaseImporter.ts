@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
-import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ImageRouter } from "@spt-aki/routers/ImageRouter";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { EncodingUtil } from "@spt-aki/utils/EncodingUtil";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { ImporterUtil } from "@spt-aki/utils/ImporterUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { VFS } from "@spt-aki/utils/VFS";
+import { OnLoad } from "@spt/di/OnLoad";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ImageRouter } from "@spt/routers/ImageRouter";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { EncodingUtil } from "@spt/utils/EncodingUtil";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { ImporterUtil } from "@spt/utils/ImporterUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { VFS } from "@spt/utils/VFS";
 
 @injectable()
 export class DatabaseImporter implements OnLoad
@@ -39,12 +39,12 @@ export class DatabaseImporter implements OnLoad
     }
 
     /**
-     * Get path to aki data
+     * Get path to spt data
      * @returns path to data
      */
     public getSptDataPath(): string
     {
-        return globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/" : "./assets/";
+        return globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/" : "./assets/";
     }
 
     public async onLoad(): Promise<void>
@@ -124,7 +124,7 @@ export class DatabaseImporter implements OnLoad
 
     public getRoute(): string
     {
-        return "aki-database";
+        return "spt-database";
     }
 
     protected validateFile(filePathAndName: string, fileData: any): boolean

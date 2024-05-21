@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { DataCallbacks } from "@spt-aki/callbacks/DataCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGlobals } from "@spt-aki/models/eft/common/IGlobals";
-import { ICustomizationItem } from "@spt-aki/models/eft/common/tables/ICustomizationItem";
-import { IHandbookBase } from "@spt-aki/models/eft/common/tables/IHandbookBase";
-import { IHideoutArea } from "@spt-aki/models/eft/hideout/IHideoutArea";
-import { IHideoutProduction } from "@spt-aki/models/eft/hideout/IHideoutProduction";
-import { IHideoutScavCase } from "@spt-aki/models/eft/hideout/IHideoutScavCase";
-import { IHideoutSettingsBase } from "@spt-aki/models/eft/hideout/IHideoutSettingsBase";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { ISettingsBase } from "@spt-aki/models/spt/server/ISettingsBase";
+import { DataCallbacks } from "@spt/callbacks/DataCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGlobals } from "@spt/models/eft/common/IGlobals";
+import { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomizationItem";
+import { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
+import { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
+import { IHideoutProduction } from "@spt/models/eft/hideout/IHideoutProduction";
+import { IHideoutScavCase } from "@spt/models/eft/hideout/IHideoutScavCase";
+import { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { ISettingsBase } from "@spt/models/spt/server/ISettingsBase";
 
 @injectable()
 export class DataStaticRouter extends StaticRouter

@@ -1,20 +1,20 @@
 import { IncomingMessage } from "http";
 import { inject, injectAll, injectable } from "tsyringe";
 import { WebSocket } from "ws";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { IWsNotificationEvent } from "@spt-aki/models/eft/ws/IWsNotificationEvent";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { NotificationEventType } from "@spt-aki/models/enums/NotificationEventType";
-import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { IWebSocketConnectionHandler } from "@spt-aki/servers/ws/IWebSocketConnectionHandler";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { IAkiWebSocketMessageHandler } from "./message/IAkiWebSocketMessageHandler";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
+import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { ISptWebSocketMessageHandler } from "./message/ISptWebSocketMessageHandler";
 
 @injectable()
-export class AkiWebSocketConnectionHandler implements IWebSocketConnectionHandler
+export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandler
 {
     protected httpConfig: IHttpConfig;
     protected webSockets: Map<string, WebSocket> = new Map<string, WebSocket>();
@@ -27,7 +27,7 @@ export class AkiWebSocketConnectionHandler implements IWebSocketConnectionHandle
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @injectAll("AkiWebSocketMessageHandler") protected akiWebSocketMessageHandlers: IAkiWebSocketMessageHandler[],
+        @injectAll("AkiWebSocketMessageHandler") protected akiWebSocketMessageHandlers: ISptWebSocketMessageHandler[],
     )
     {
         this.httpConfig = this.configServer.getConfig(ConfigTypes.HTTP);
@@ -61,7 +61,7 @@ export class AkiWebSocketConnectionHandler implements IWebSocketConnectionHandle
             clearInterval(this.websocketPingHandler);
         }
 
-        ws.on("message", (msg) => this.akiWebSocketMessageHandlers.forEach((wsmh) => wsmh.onAkiMessage(sessionID, this.webSockets.get(sessionID), msg)));
+        ws.on("message", (msg) => this.akiWebSocketMessageHandlers.forEach((wsmh) => wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg)));
 
         this.websocketPingHandler = setInterval(() =>
         {

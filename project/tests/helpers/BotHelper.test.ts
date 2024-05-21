@@ -1,8 +1,7 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { BotHelper } from "@spt-aki/helpers/BotHelper";
+import { BotHelper } from "@spt/helpers/BotHelper";
 
 describe("BotHelper", () =>
 {

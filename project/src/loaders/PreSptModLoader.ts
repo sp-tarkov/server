@@ -3,24 +3,24 @@ import os from "node:os";
 import path from "node:path";
 import { maxSatisfying, valid, validRange, satisfies } from "semver";
 import { DependencyContainer, inject, injectable } from "tsyringe";
-import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
-import { ModTypeCheck } from "@spt-aki/loaders/ModTypeCheck";
-import { ModDetails } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IPreAkiLoadMod } from "@spt-aki/models/external/IPreAkiLoadMod";
-import { IPreAkiLoadModAsync } from "@spt-aki/models/external/IPreAkiLoadModAsync";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { IModLoader } from "@spt-aki/models/spt/mod/IModLoader";
-import { IPackageJsonData } from "@spt-aki/models/spt/mod/IPackageJsonData";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ModCompilerService } from "@spt-aki/services/ModCompilerService";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { VFS } from "@spt-aki/utils/VFS";
+import { ModLoadOrder } from "@spt/loaders/ModLoadOrder";
+import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
+import { ModDetails } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
+import { IPreSptLoadModAsync } from "@spt/models/external/IPreSptLoadModAsync";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { IModLoader } from "@spt/models/spt/mod/IModLoader";
+import { IPackageJsonData } from "@spt/models/spt/mod/IPackageJsonData";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ModCompilerService } from "@spt/services/ModCompilerService";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { VFS } from "@spt/utils/VFS";
 
 @injectable()
-export class PreAkiModLoader implements IModLoader
+export class PreSptModLoader implements IModLoader
 {
     protected container: DependencyContainer;
 
@@ -28,7 +28,7 @@ export class PreAkiModLoader implements IModLoader
     protected readonly modOrderPath = "user/mods/order.json";
     protected order: Record<string, number> = {};
     protected imported: Record<string, IPackageJsonData> = {};
-    protected akiConfig: ICoreConfig;
+    protected sptConfig: ICoreConfig;
     protected serverDependencies: Record<string, string>;
     protected skippedMods: Set<string>;
 
@@ -43,7 +43,7 @@ export class PreAkiModLoader implements IModLoader
         @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,
     )
     {
-        this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+        this.sptConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
 
         const packageJsonPath: string = path.join(__dirname, "../../package.json");
         this.serverDependencies = JSON.parse(this.vfs.readFile(packageJsonPath)).dependencies;
@@ -194,8 +194,8 @@ export class PreAkiModLoader implements IModLoader
                 errorsFound = true;
             }
 
-            // Returns if mod isnt compatible with this verison of aki
-            if (!this.isModCombatibleWithAki(modToValidate))
+            // Returns if mod isnt compatible with this verison of spt
+            if (!this.isModCombatibleWithSpt(modToValidate))
             {
                 errorsFound = true;
             }
@@ -324,34 +324,34 @@ export class PreAkiModLoader implements IModLoader
 
     /**
      * Is the passed in mod compatible with the running server version
-     * @param mod Mod to check compatibiltiy with AKI
+     * @param mod Mod to check compatibiltiy with SPT
      * @returns True if compatible
      */
-    protected isModCombatibleWithAki(mod: IPackageJsonData): boolean
+    protected isModCombatibleWithSpt(mod: IPackageJsonData): boolean
     {
-        const akiVersion = globalThis.G_AKIVERSION || this.akiConfig.akiVersion;
+        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
         const modName = `${mod.author}-${mod.name}`;
 
-        // Error and prevent loading If no akiVersion property exists
-        if (!mod.akiVersion)
+        // Error and prevent loading If no sptVersion property exists
+        if (!mod.sptVersion)
         {
-            this.logger.error(this.localisationService.getText("modloader-missing_akiversion_field", modName));
+            this.logger.error(this.localisationService.getText("modloader-missing_sptversion_field", modName));
 
             return false;
         }
 
-        // Error and prevent loading if akiVersion property is not a valid semver string
-        if (!(valid(mod.akiVersion) || validRange(mod.akiVersion)))
+        // Error and prevent loading if sptVersion property is not a valid semver string
+        if (!(valid(mod.sptVersion) || validRange(mod.sptVersion)))
         {
-            this.logger.error(this.localisationService.getText("modloader-invalid_akiversion_field", modName));
+            this.logger.error(this.localisationService.getText("modloader-invalid_sptversion_field", modName));
 
             return false;
         }
 
         // Warning and allow loading if semver is not satisfied
-        if (!satisfies(akiVersion, mod.akiVersion))
+        if (!satisfies(sptVersion, mod.sptVersion))
         {
-            this.logger.warning(this.localisationService.getText("modloader-outdated_akiversion_field", modName));
+            this.logger.warning(this.localisationService.getText("modloader-outdated_sptversion_field", modName));
 
             return true;
         }
@@ -394,11 +394,11 @@ export class PreAkiModLoader implements IModLoader
             }
 
             // Perform async load of mod
-            if (this.modTypeCheck.isPreAkiLoadAsync(requiredMod.mod))
+            if (this.modTypeCheck.isPreSptLoadAsync(requiredMod.mod))
             {
                 try
                 {
-                    await (requiredMod.mod as IPreAkiLoadModAsync).preAkiLoadAsync(this.container);
+                    await (requiredMod.mod as IPreSptLoadModAsync).preSptLoadAsync(this.container);
                     globalThis[mod] = requiredMod;
                 }
                 catch (err)
@@ -415,9 +415,9 @@ export class PreAkiModLoader implements IModLoader
             }
 
             // Perform sync load of mod
-            if (this.modTypeCheck.isPreAkiLoad(requiredMod.mod))
+            if (this.modTypeCheck.isPreSptLoad(requiredMod.mod))
             {
-                (requiredMod.mod as IPreAkiLoadMod).preAkiLoad(this.container);
+                (requiredMod.mod as IPreSptLoadMod).preSptLoad(this.container);
                 globalThis[mod] = requiredMod;
             }
         }
@@ -513,14 +513,14 @@ export class PreAkiModLoader implements IModLoader
         }
 
         // If this feature flag is set to false, we warn the user he has a mod that requires extra dependencies and might not work, point them in the right direction on how to enable this feature.
-        if (!this.akiConfig.features.autoInstallModDependencies)
+        if (!this.sptConfig.features.autoInstallModDependencies)
         {
             this.logger.warning(
                 this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
                     name: pkg.name,
                     author: pkg.author,
                     configPath: path.join(
-                        globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/configs" : "assets/configs",
+                        globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/configs" : "assets/configs",
                         "core.json",
                     ),
                     configOption: "autoInstallModDependencies",
@@ -544,7 +544,7 @@ export class PreAkiModLoader implements IModLoader
 
         const pnpmPath = path.join(
             process.cwd(),
-            globalThis.G_RELEASE_CONFIGURATION ? "Aki_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
+            globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
             os.platform() === "win32" ? "pnpm.exe" : "pnpm",
         );
 

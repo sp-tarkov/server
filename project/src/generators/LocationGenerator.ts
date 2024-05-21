@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { ContainerHelper } from "@spt-aki/helpers/ContainerHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
+import { ContainerHelper } from "@spt/helpers/ContainerHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
 import {
     IContainerMinMax,
     ILocation,
@@ -10,23 +10,23 @@ import {
     IStaticContainerData,
     IStaticForcedProps,
     IStaticLootDetails,
-} from "@spt-aki/models/eft/common/ILocation";
-import { ILocationBase } from "@spt-aki/models/eft/common/ILocationBase";
-import { ILooseLoot, Spawnpoint, SpawnpointTemplate, SpawnpointsForced } from "@spt-aki/models/eft/common/ILooseLoot";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
-import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { MathUtil } from "@spt-aki/utils/MathUtil";
-import { ObjectId } from "@spt-aki/utils/ObjectId";
-import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
+} from "@spt/models/eft/common/ILocation";
+import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
+import { ILooseLoot, Spawnpoint, SpawnpointTemplate, SpawnpointsForced } from "@spt/models/eft/common/ILooseLoot";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { SeasonalEventService } from "@spt/services/SeasonalEventService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { MathUtil } from "@spt/utils/MathUtil";
+import { ObjectId } from "@spt/utils/ObjectId";
+import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
 
 export interface IContainerItem
 {

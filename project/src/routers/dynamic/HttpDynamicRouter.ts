@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { ImageRouter } from "@spt-aki/routers/ImageRouter";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { ImageRouter } from "@spt/routers/ImageRouter";
 
 @injectable()
 export class HttpDynamicRouter extends DynamicRouter

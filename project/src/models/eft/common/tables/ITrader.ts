@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITraderServiceModel } from "@spt/models/spt/services/ITraderServiceModel";
 
 export interface ITrader
 {

@@ -1,4 +1,4 @@
-import { Insurance } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { Insurance } from "@spt/models/eft/profile/ISptProfile";
 
 export const profileInsuranceFixture: Insurance[] = [{
     scheduledTime: 1712950044.4,

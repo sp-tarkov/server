@@ -1,11 +1,11 @@
-import { MinMax } from "@spt-aki/models/common/MinMax";
-import { ELocationName } from "@spt-aki/models/enums/ELocationName";
-import { SeasonalEventType } from "@spt-aki/models/enums/SeasonalEventType";
-import { IBaseConfig } from "@spt-aki/models/spt/config/IBaseConfig";
+import { MinMax } from "@spt/models/common/MinMax";
+import { ELocationName } from "@spt/models/enums/ELocationName";
+import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
+import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
 export interface IQuestConfig extends IBaseConfig
 {
-    kind: "aki-quest"
+    kind: "spt-quest"
     // Hours to get/redeem items from quest mail keyed by profile type
     mailRedeemTimeHours: Record<string, number>
     questTemplateIds: IPlayerTypeQuestIds

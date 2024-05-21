@@ -1,10 +1,10 @@
 import path from "node:path";
 import { I18n } from "i18n";
 import { inject, injectable } from "tsyringe";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocaleService } from "@spt-aki/services/LocaleService";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocaleService } from "@spt/services/LocaleService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 /**
  * Handles translating server text into different langauges
@@ -24,7 +24,7 @@ export class LocalisationService
         const localeFileDirectory = path.join(
             process.cwd(),
             globalThis.G_RELEASE_CONFIGURATION
-                ? "Aki_Data/Server/database/locales/server"
+                ? "SPT_Data/Server/database/locales/server"
                 : "./assets/database/locales/server",
         );
         this.i18n = new I18n({

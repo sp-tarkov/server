@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import "reflect-metadata";
+
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { HealthController } from "@spt-aki/controllers/HealthController";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IHealthTreatmentRequestData } from "@spt-aki/models/eft/health/IHealthTreatmentRequestData";
+import { HealthController } from "@spt/controllers/HealthController";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IHealthTreatmentRequestData } from "@spt/models/eft/health/IHealthTreatmentRequestData";
 
 describe("HealthController", () =>
 {
@@ -56,13 +56,13 @@ describe("HealthController", () =>
             // Mock output generation
             vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             // Mock payment
             vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             const result = healthController.healthTreatment(
@@ -111,13 +111,13 @@ describe("HealthController", () =>
             // Mock output generation
             vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             // Mock payment
             vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             const result = healthController.healthTreatment(
@@ -167,13 +167,13 @@ describe("HealthController", () =>
             // Mock output generation
             vi.spyOn((healthController as any).eventOutputHolder, "getOutput").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             // Mock payment
             vi.spyOn((healthController as any).paymentService, "payMoney").mockReturnValue({
                 warnings: {},
-                profileChanges: { "12345": { health: {} } },
+                profileChanges: { 12345: { health: {} } },
             });
 
             const result = healthController.healthTreatment(

@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { NotifierController } from "@spt-aki/controllers/NotifierController";
-import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
-import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
-import { IUIDRequestData } from "@spt-aki/models/eft/common/request/IUIDRequestData";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INotifierChannel } from "@spt-aki/models/eft/notifier/INotifier";
-import { ISelectProfileResponse } from "@spt-aki/models/eft/notifier/ISelectProfileResponse";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
+import { NotifierController } from "@spt/controllers/NotifierController";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IUIDRequestData } from "@spt/models/eft/common/request/IUIDRequestData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
+import { ISelectProfileResponse } from "@spt/models/eft/notifier/ISelectProfileResponse";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
 
 @injectable()
 export class NotifierCallbacks

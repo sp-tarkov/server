@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
-import { WeightedRandomHelper } from "@spt-aki/helpers/WeightedRandomHelper";
-import { IWeather, IWeatherData } from "@spt-aki/models/eft/weather/IWeatherData";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { WindDirection } from "@spt-aki/models/enums/WindDirection";
-import { IWeatherConfig } from "@spt-aki/models/spt/config/IWeatherConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ApplicationContext } from "@spt/context/ApplicationContext";
+import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
+import { IWeather, IWeatherData } from "@spt/models/eft/weather/IWeatherData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { WindDirection } from "@spt/models/enums/WindDirection";
+import { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SeasonalEventService } from "@spt/services/SeasonalEventService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class WeatherGenerator

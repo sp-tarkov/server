@@ -21,6 +21,6 @@ export default defineConfig({
         },
         pool: "threads",
         poolOptions: { threads: { singleThread: true, isolate: false } },
-        alias: { "@spt-aki": path.resolve(__dirname, "src"), "@tests": path.resolve(__dirname, "tests") },
+        alias: { "@spt": path.resolve(__dirname, "src"), "@tests": path.resolve(__dirname, "tests") },
     },
 });

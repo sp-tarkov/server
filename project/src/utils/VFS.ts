@@ -5,9 +5,9 @@ import fs from "node:fs";
 import path, { resolve } from "node:path";
 import { promisify } from "node:util";
 import { writeFileSync } from "atomically";
-import lockfile from "proper-lockfile";
+import { lockSync, checkSync, unlockSync } from "proper-lockfile";
 import { inject, injectable } from "tsyringe";
-import { IAsyncQueue } from "@spt-aki/models/spt/utils/IAsyncQueue";
+import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
 
 @injectable()
 export class VFS
@@ -307,17 +307,17 @@ export class VFS
 
     protected lockFileSync(filepath: any): () => void
     {
-        return lockfile.lockSync(filepath);
+        return lockSync(filepath);
     }
 
     protected checkFileSync(filepath: any): boolean
     {
-        return lockfile.checkSync(filepath);
+        return checkSync(filepath);
     }
 
     protected unlockFileSync(filepath: any): void
     {
-        lockfile.unlockSync(filepath);
+        unlockSync(filepath);
     }
 
     public getFileExtension(filepath: string): string

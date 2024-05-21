@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { BundleCallbacks } from "@spt-aki/callbacks/BundleCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
+import { BundleCallbacks } from "@spt/callbacks/BundleCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
 
 @injectable()
 export class BundleStaticRouter extends StaticRouter

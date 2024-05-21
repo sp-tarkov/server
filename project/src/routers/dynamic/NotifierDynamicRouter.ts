@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { NotifierCallbacks } from "@spt-aki/callbacks/NotifierCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
+import { NotifierCallbacks } from "@spt/callbacks/NotifierCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
 @injectable()
 export class NotifierDynamicRouter extends DynamicRouter

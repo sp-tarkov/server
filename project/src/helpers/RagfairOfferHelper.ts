@@ -1,38 +1,38 @@
 import { inject, injectable } from "tsyringe";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PaymentHelper } from "@spt-aki/helpers/PaymentHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { RagfairHelper } from "@spt-aki/helpers/RagfairHelper";
-import { RagfairServerHelper } from "@spt-aki/helpers/RagfairServerHelper";
-import { RagfairSortHelper } from "@spt-aki/helpers/RagfairSortHelper";
-import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { IAkiProfile, ISystemData } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
-import { ISearchRequestData, OfferOwnerType } from "@spt-aki/models/eft/ragfair/ISearchRequestData";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { RagfairSort } from "@spt-aki/models/enums/RagfairSort";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { IQuestConfig } from "@spt-aki/models/spt/config/IQuestConfig";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { EventOutputHolder } from "@spt-aki/routers/EventOutputHolder";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { LocaleService } from "@spt-aki/services/LocaleService";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { MailSendService } from "@spt-aki/services/MailSendService";
-import { RagfairOfferService } from "@spt-aki/services/RagfairOfferService";
-import { RagfairRequiredItemsService } from "@spt-aki/services/RagfairRequiredItemsService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { RagfairHelper } from "@spt/helpers/RagfairHelper";
+import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
+import { RagfairSortHelper } from "@spt/helpers/RagfairSortHelper";
+import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ISptProfile, ISystemData } from "@spt/models/eft/profile/ISptProfile";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ISearchRequestData, OfferOwnerType } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { RagfairSort } from "@spt/models/enums/RagfairSort";
+import { Traders } from "@spt/models/enums/Traders";
+import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocaleService } from "@spt/services/LocaleService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { MailSendService } from "@spt/services/MailSendService";
+import { RagfairOfferService } from "@spt/services/RagfairOfferService";
+import { RagfairRequiredItemsService } from "@spt/services/RagfairRequiredItemsService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 import { QuestHelper } from "./QuestHelper";
 
 @injectable()
@@ -350,7 +350,7 @@ export class RagfairOfferHelper
      * @param sessionId Profile to update
      * @param amountToIncrementBy Raw amount to add to players ragfair rating (excluding the reputation gain multiplier)
      */
-    public increaseProfileRagfairRating(profile: IAkiProfile, amountToIncrementBy: number): void
+    public increaseProfileRagfairRating(profile: ISptProfile, amountToIncrementBy: number): void
     {
         const ragfairConfig = this.databaseServer.getTables().globals.config.RagFair;
 

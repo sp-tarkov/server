@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import crc32 from "buffer-crc32";
 import { inject, injectable } from "tsyringe";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class HashUtil

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { InsuranceCallbacks } from "@spt-aki/callbacks/InsuranceCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { IGetInsuranceCostResponseData } from "@spt-aki/models/eft/insurance/IGetInsuranceCostResponseData";
+import { InsuranceCallbacks } from "@spt/callbacks/InsuranceCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IGetInsuranceCostResponseData } from "@spt/models/eft/insurance/IGetInsuranceCostResponseData";
 
 @injectable()
 export class InsuranceStaticRouter extends StaticRouter

@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "@spt-aki/di/OnLoad";
-import { HttpServer } from "@spt-aki/servers/HttpServer";
+import { OnLoad } from "@spt/di/OnLoad";
+import { HttpServer } from "@spt/servers/HttpServer";
 
 @injectable()
 export class HttpCallbacks implements OnLoad
@@ -15,7 +15,7 @@ export class HttpCallbacks implements OnLoad
 
     public getRoute(): string
     {
-        return "aki-http";
+        return "spt-http";
     }
 
     public getImage(): string

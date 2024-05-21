@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IQuestCondition } from "@spt-aki/models/eft/common/tables/IQuest";
+import { IQuestCondition } from "@spt/models/eft/common/tables/IQuest";
 
 @injectable()
 export class QuestConditionHelper

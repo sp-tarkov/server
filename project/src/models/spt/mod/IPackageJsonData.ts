@@ -9,7 +9,7 @@ export interface IPackageJsonData
     url: string
     author: string
     version: string
-    akiVersion: string
+    sptVersion: string
     /** We deliberately purge this data */
     scripts: Record<string, string>
     devDependencies: Record<string, string>

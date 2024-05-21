@@ -1,6 +1,6 @@
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 
 export class Router
 {
@@ -8,7 +8,7 @@ export class Router
 
     public getTopLevelRoute(): string
     {
-        return "aki";
+        return "spt";
     }
 
     protected getHandledRoutes(): HandledRoute[]
@@ -93,7 +93,7 @@ export class ItemEventRouterDefinition extends Router
 
 export class SaveLoadRouter extends Router
 {
-    public handleLoad(profile: IAkiProfile): IAkiProfile
+    public handleLoad(profile: ISptProfile): ISptProfile
     {
         throw new Error("This method needs to be overrode by the router classes");
     }

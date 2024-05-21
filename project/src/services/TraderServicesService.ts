@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { QuestStatus } from "@spt-aki/models/enums/QuestStatus";
-import { ITraderServiceModel } from "@spt-aki/models/spt/services/ITraderServiceModel";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { QuestStatus } from "@spt/models/enums/QuestStatus";
+import { ITraderServiceModel } from "@spt/models/spt/services/ITraderServiceModel";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 
 @injectable()
 export class TraderServicesService

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
-import { IInventoryConfig } from "@spt-aki/models/spt/config/IInventoryConfig";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 
 @injectable()
 export class PaymentHelper

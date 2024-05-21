@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { GiftSenderType } from "@spt-aki/models/enums/GiftSenderType";
-import { GiftSentResult } from "@spt-aki/models/enums/GiftSentResult";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { Gift, IGiftsConfig } from "@spt-aki/models/spt/config/IGiftsConfig";
-import { ISendMessageDetails } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { MailSendService } from "@spt-aki/services/MailSendService";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { GiftSenderType } from "@spt/models/enums/GiftSenderType";
+import { GiftSentResult } from "@spt/models/enums/GiftSentResult";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { Traders } from "@spt/models/enums/Traders";
+import { Gift, IGiftsConfig } from "@spt/models/spt/config/IGiftsConfig";
+import { ISendMessageDetails } from "@spt/models/spt/dialog/ISendMessageDetails";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { MailSendService } from "@spt/services/MailSendService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class GiftService

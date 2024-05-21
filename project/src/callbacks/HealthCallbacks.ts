@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { HealthController } from "@spt-aki/controllers/HealthController";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IHealthTreatmentRequestData } from "@spt-aki/models/eft/health/IHealthTreatmentRequestData";
-import { IOffraidEatRequestData } from "@spt-aki/models/eft/health/IOffraidEatRequestData";
-import { IOffraidHealRequestData } from "@spt-aki/models/eft/health/IOffraidHealRequestData";
-import { ISyncHealthRequestData } from "@spt-aki/models/eft/health/ISyncHealthRequestData";
-import { IWorkoutData } from "@spt-aki/models/eft/health/IWorkoutData";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { HealthController } from "@spt/controllers/HealthController";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IHealthTreatmentRequestData } from "@spt/models/eft/health/IHealthTreatmentRequestData";
+import { IOffraidEatRequestData } from "@spt/models/eft/health/IOffraidEatRequestData";
+import { IOffraidHealRequestData } from "@spt/models/eft/health/IOffraidHealRequestData";
+import { ISyncHealthRequestData } from "@spt/models/eft/health/ISyncHealthRequestData";
+import { IWorkoutData } from "@spt/models/eft/health/IWorkoutData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 
 @injectable()
 export class HealthCallbacks
@@ -22,7 +22,7 @@ export class HealthCallbacks
     {}
 
     /**
-     * Custom aki server request found in modules/HealthSynchronizer.cs
+     * Custom spt server request found in modules/HealthSynchronizer.cs
      * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id
@@ -35,7 +35,7 @@ export class HealthCallbacks
     }
 
     /**
-     * Custom aki server request found in modules/QTEPatch.cs
+     * Custom spt server request found in modules/QTEPatch.cs
      * @param url
      * @param info HealthListener.Instance.CurrentHealth class
      * @param sessionID session id

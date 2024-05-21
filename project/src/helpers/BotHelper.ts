@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { MinMax } from "@spt-aki/models/common/MinMax";
-import { Difficulty, IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { EquipmentFilters, IBotConfig, RandomisationDetails } from "@spt-aki/models/spt/config/IBotConfig";
-import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { MinMax } from "@spt/models/common/MinMax";
+import { Difficulty, IBotType } from "@spt/models/eft/common/tables/IBotType";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { EquipmentFilters, IBotConfig, RandomisationDetails } from "@spt/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class BotHelper

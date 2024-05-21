@@ -1,12 +1,12 @@
 import "reflect-metadata";
+
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { Item, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { Item, Repairable } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { HashUtil } from "@spt/utils/HashUtil";
 
 describe("ItemHelper", () =>
 {

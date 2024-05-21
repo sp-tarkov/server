@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { DialogueCallbacks } from "@spt-aki/callbacks/DialogueCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IAddUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IAddUserGroupMailRequest";
-import { IChangeGroupMailOwnerRequest } from "@spt-aki/models/eft/dialog/IChangeGroupMailOwnerRequest";
-import { IChatServer } from "@spt-aki/models/eft/dialog/IChatServer";
-import { ICreateGroupMailRequest } from "@spt-aki/models/eft/dialog/ICreateGroupMailRequest";
-import { IFriendRequestSendResponse } from "@spt-aki/models/eft/dialog/IFriendRequestSendResponse";
-import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
-import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
-import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
-import { IRemoveUserGroupMailRequest } from "@spt-aki/models/eft/dialog/IRemoveUserGroupMailRequest";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { DialogueInfo } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { DialogueCallbacks } from "@spt/callbacks/DialogueCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IAddUserGroupMailRequest } from "@spt/models/eft/dialog/IAddUserGroupMailRequest";
+import { IChangeGroupMailOwnerRequest } from "@spt/models/eft/dialog/IChangeGroupMailOwnerRequest";
+import { IChatServer } from "@spt/models/eft/dialog/IChatServer";
+import { ICreateGroupMailRequest } from "@spt/models/eft/dialog/ICreateGroupMailRequest";
+import { IFriendRequestSendResponse } from "@spt/models/eft/dialog/IFriendRequestSendResponse";
+import { IGetAllAttachmentsResponse } from "@spt/models/eft/dialog/IGetAllAttachmentsResponse";
+import { IGetFriendListDataResponse } from "@spt/models/eft/dialog/IGetFriendListDataResponse";
+import { IGetMailDialogViewResponseData } from "@spt/models/eft/dialog/IGetMailDialogViewResponseData";
+import { IRemoveUserGroupMailRequest } from "@spt/models/eft/dialog/IRemoveUserGroupMailRequest";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { DialogueInfo } from "@spt/models/eft/profile/ISptProfile";
 
 @injectable()
 export class DialogStaticRouter extends StaticRouter

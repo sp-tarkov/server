@@ -2,9 +2,8 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { PlayerService } from "@spt-aki/services/PlayerService";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { PlayerService } from "@spt/services/PlayerService";
 
 describe("PlayerService", () =>
 {

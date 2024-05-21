@@ -1,12 +1,12 @@
 import "reflect-metadata";
-import { container } from "tsyringe";
 
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { Insurance } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { profileInsuranceFixture } from "@tests/__fixture__/profileInsurance.fixture";
 import { format } from "date-fns";
+import { container } from "tsyringe";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { Insurance } from "@spt/models/eft/profile/ISptProfile";
+import { profileInsuranceFixture } from "@tests/__fixture__/profileInsurance.fixture";
 
-type DateInput = number | number[] | { [index: number]: number; };
+type DateInput = number | number[] | { [index: number]: number };
 
 export class ProfileInsuranceFactory
 {

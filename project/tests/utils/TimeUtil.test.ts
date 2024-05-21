@@ -1,8 +1,7 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 describe("TimeUtil", () =>
 {

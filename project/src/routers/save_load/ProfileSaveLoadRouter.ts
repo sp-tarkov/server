@@ -1,17 +1,17 @@
 import { injectable } from "tsyringe";
-import { HandledRoute, SaveLoadRouter } from "@spt-aki/di/Router";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { HandledRoute, SaveLoadRouter } from "@spt/di/Router";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 
 @injectable()
 export class ProfileSaveLoadRouter extends SaveLoadRouter
 {
     public override getHandledRoutes(): HandledRoute[]
     {
-        return [new HandledRoute("aki-profile", false)];
+        return [new HandledRoute("spt-profile", false)];
     }
 
-    public override handleLoad(profile: IAkiProfile): IAkiProfile
+    public override handleLoad(profile: ISptProfile): ISptProfile
     {
         if (profile.characters === null)
         {

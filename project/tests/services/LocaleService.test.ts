@@ -1,6 +1,6 @@
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { LocaleService } from "@spt-aki/services/LocaleService";
+import type { LocaleService } from "@spt/services/LocaleService";
 
 describe("LocaleService", () =>
 {

@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { RagfairCallbacks } from "@spt-aki/callbacks/RagfairCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { IGetItemPriceResult } from "@spt-aki/models/eft/ragfair/IGetItemPriceResult";
-import { IGetOffersResult } from "@spt-aki/models/eft/ragfair/IGetOffersResult";
-import { IRagfairOffer } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
+import { RagfairCallbacks } from "@spt/callbacks/RagfairCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { IGetItemPriceResult } from "@spt/models/eft/ragfair/IGetItemPriceResult";
+import { IGetOffersResult } from "@spt/models/eft/ragfair/IGetOffersResult";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 
 @injectable()
 export class RagfairStaticRouter extends StaticRouter

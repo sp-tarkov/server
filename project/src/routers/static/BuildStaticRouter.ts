@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { BuildsCallbacks } from "@spt-aki/callbacks/BuildsCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { IUserBuilds } from "@spt-aki/models/eft/profile/IAkiProfile";
+import { BuildsCallbacks } from "@spt/callbacks/BuildsCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { IUserBuilds } from "@spt/models/eft/profile/ISptProfile";
 
 @injectable()
 export class BuildsStaticRouter extends StaticRouter

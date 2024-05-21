@@ -1,25 +1,25 @@
 import { inject, injectable } from "tsyringe";
-import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
-import { IStaticAmmoDetails } from "@spt-aki/models/eft/common/ILocation";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { InsuredItem } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { Item, Location, Repairable, Upd } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { EquipmentSlots } from "@spt-aki/models/enums/EquipmentSlots";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
-import { ItemFilterService } from "@spt-aki/services/ItemFilterService";
-import { LocaleService } from "@spt-aki/services/LocaleService";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { CompareUtil } from "@spt-aki/utils/CompareUtil";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { JsonUtil } from "@spt-aki/utils/JsonUtil";
-import { MathUtil } from "@spt-aki/utils/MathUtil";
-import { ObjectId } from "@spt-aki/utils/ObjectId";
-import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { IStaticAmmoDetails } from "@spt/models/eft/common/ILocation";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { InsuredItem } from "@spt/models/eft/common/tables/IBotBase";
+import { Item, Location, Repairable, Upd } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { EquipmentSlots } from "@spt/models/enums/EquipmentSlots";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
+import { ItemFilterService } from "@spt/services/ItemFilterService";
+import { LocaleService } from "@spt/services/LocaleService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { CompareUtil } from "@spt/utils/CompareUtil";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
+import { MathUtil } from "@spt/utils/MathUtil";
+import { ObjectId } from "@spt/utils/ObjectId";
+import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class ItemHelper

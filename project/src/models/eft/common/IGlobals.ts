@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Ixyz } from "@spt-aki/models/eft/common/Ixyz";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
+import { Ixyz } from "@spt/models/eft/common/Ixyz";
+import { Item } from "@spt/models/eft/common/tables/IItem";
 
 export interface IGlobals
 {
@@ -1861,5 +1861,5 @@ export interface IPreset
 export interface IQuestSettings
 {
     GlobalRewardRepModifierDailyQuestPvE: number
-    GlobalRewardRepModifierQuestPvE: number    
+    GlobalRewardRepModifierQuestPvE: number
 }

@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
-import { HandbookHelper } from "@spt-aki/helpers/HandbookHelper";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { PresetHelper } from "@spt-aki/helpers/PresetHelper";
-import { IFenceLevel } from "@spt-aki/models/eft/common/IGlobals";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item, Repairable } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { IBarterScheme, ITraderAssort } from "@spt-aki/models/eft/common/tables/ITrader";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Money } from "@spt-aki/models/enums/Money";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { IItemDurabilityCurrentMax, ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
-import { ICreateFenceAssortsResult } from "@spt-aki/models/spt/fence/ICreateFenceAssortsResult";
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { IFenceLevel } from "@spt/models/eft/common/IGlobals";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Item, Repairable } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { IBarterScheme, ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { Traders } from "@spt/models/enums/Traders";
+import { IItemDurabilityCurrentMax, ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
+import { ICreateFenceAssortsResult } from "@spt/models/spt/fence/ICreateFenceAssortsResult";
 import {
     IFenceAssortGenerationValues,
     IGenerationAssortValues,
-} from "@spt-aki/models/spt/fence/IFenceAssortGenerationValues";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+} from "@spt/models/spt/fence/IFenceAssortGenerationValues";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 /**
  * Handle actions surrounding Fence

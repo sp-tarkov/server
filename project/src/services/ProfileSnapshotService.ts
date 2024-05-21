@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 
 @injectable()
 export class ProfileSnapshotService
 {
-    protected storedProfileSnapshots: Record<string, IAkiProfile> = {};
+    protected storedProfileSnapshots: Record<string, ISptProfile> = {};
 
     constructor(@inject("RecursiveCloner") protected cloner: ICloner)
     {}
@@ -15,7 +15,7 @@ export class ProfileSnapshotService
      * @param sessionID session id - acts as the key
      * @param profile - profile to save
      */
-    public storeProfileSnapshot(sessionID: string, profile: IAkiProfile): void
+    public storeProfileSnapshot(sessionID: string, profile: ISptProfile): void
     {
         this.storedProfileSnapshots[sessionID] = this.cloner.clone(profile);
     }
@@ -25,7 +25,7 @@ export class ProfileSnapshotService
      * @param sessionID key
      * @returns A player profile object
      */
-    public getProfileSnapshot(sessionID: string): IAkiProfile
+    public getProfileSnapshot(sessionID: string): ISptProfile
     {
         if (this.storedProfileSnapshots[sessionID])
         {

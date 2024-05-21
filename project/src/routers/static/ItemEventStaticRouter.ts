@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ItemEventCallbacks } from "@spt-aki/callbacks/ItemEventCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { IItemEventRouterResponse } from "@spt-aki/models/eft/itemEvent/IItemEventRouterResponse";
+import { ItemEventCallbacks } from "@spt/callbacks/ItemEventCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 
 @injectable()
 export class ItemEventStaticRouter extends StaticRouter

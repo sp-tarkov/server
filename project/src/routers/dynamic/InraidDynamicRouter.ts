@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { InraidCallbacks } from "@spt-aki/callbacks/InraidCallbacks";
-import { DynamicRouter, RouteAction } from "@spt-aki/di/Router";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { InraidCallbacks } from "@spt/callbacks/InraidCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 
 @injectable()
 export class InraidDynamicRouter extends DynamicRouter
@@ -28,6 +28,6 @@ export class InraidDynamicRouter extends DynamicRouter
 
     public override getTopLevelRoute(): string
     {
-        return "aki-name";
+        return "spt-name";
     }
 }

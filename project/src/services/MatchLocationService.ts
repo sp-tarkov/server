@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class MatchLocationService

@@ -11,7 +11,7 @@
         "emitDecoratorMetadata": true,
         "baseUrl": ".",
         "paths": {
-            "@spt-aki/*": [
+            "@spt/*": [
                 "src/*"
             ],
             "@tests/*": [

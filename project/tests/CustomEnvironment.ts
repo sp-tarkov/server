@@ -1,18 +1,18 @@
 import "reflect-metadata";
-import { DependencyContainer, Lifecycle, container } from "tsyringe";
 
 import path from "node:path";
-import { Container } from "@spt-aki/di/Container";
-import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ImporterUtil } from "@spt-aki/utils/ImporterUtil";
+import { DependencyContainer, Lifecycle, container } from "tsyringe";
 import type { Environment } from "vitest";
+import { Container } from "@spt/di/Container";
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ImporterUtil } from "@spt/utils/ImporterUtil";
 
 // Manually mock the logger.
 import { WinstonLogger } from "@tests/__mocks__/WinstonLogger.mock";
 
 export default <Environment>{
-    name: "spt-aki-server",
+    name: "spt-server",
     transformMode: "ssr",
     async setup()
     {

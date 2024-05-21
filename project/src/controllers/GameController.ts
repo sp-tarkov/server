@@ -1,53 +1,53 @@
 import { inject, injectable } from "tsyringe";
-import { ApplicationContext } from "@spt-aki/context/ApplicationContext";
-import { ContextVariableType } from "@spt-aki/context/ContextVariableType";
-import { HideoutHelper } from "@spt-aki/helpers/HideoutHelper";
-import { HttpServerHelper } from "@spt-aki/helpers/HttpServerHelper";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { PreAkiModLoader } from "@spt-aki/loaders/PreAkiModLoader";
-import { IEmptyRequestData } from "@spt-aki/models/eft/common/IEmptyRequestData";
-import { ILocation } from "@spt-aki/models/eft/common/ILocation";
-import { ILooseLoot } from "@spt-aki/models/eft/common/ILooseLoot";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { BodyPartHealth } from "@spt-aki/models/eft/common/tables/IBotBase";
-import { ICheckVersionResponse } from "@spt-aki/models/eft/game/ICheckVersionResponse";
-import { ICurrentGroupResponse } from "@spt-aki/models/eft/game/ICurrentGroupResponse";
-import { IGameConfigResponse } from "@spt-aki/models/eft/game/IGameConfigResponse";
-import { IGameKeepAliveResponse } from "@spt-aki/models/eft/game/IGameKeepAliveResponse";
-import { IGameModeRequestData } from "@spt-aki/models/eft/game/IGameModeRequestData";
-import { ESessionMode } from "@spt-aki/models/eft/game/IGameModeResponse";
-import { IGetRaidTimeRequest } from "@spt-aki/models/eft/game/IGetRaidTimeRequest";
-import { IGetRaidTimeResponse } from "@spt-aki/models/eft/game/IGetRaidTimeResponse";
-import { IServerDetails } from "@spt-aki/models/eft/game/IServerDetails";
-import { IAkiProfile } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { BonusType } from "@spt-aki/models/enums/BonusType";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { SkillTypes } from "@spt-aki/models/enums/SkillTypes";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { IBotConfig } from "@spt-aki/models/spt/config/IBotConfig";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { IHideoutConfig } from "@spt-aki/models/spt/config/IHideoutConfig";
-import { IHttpConfig } from "@spt-aki/models/spt/config/IHttpConfig";
-import { ILocationConfig } from "@spt-aki/models/spt/config/ILocationConfig";
-import { ILootConfig } from "@spt-aki/models/spt/config/ILootConfig";
-import { IPmcConfig } from "@spt-aki/models/spt/config/IPmcConfig";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { CustomLocationWaveService } from "@spt-aki/services/CustomLocationWaveService";
-import { GiftService } from "@spt-aki/services/GiftService";
-import { ItemBaseClassService } from "@spt-aki/services/ItemBaseClassService";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { OpenZoneService } from "@spt-aki/services/OpenZoneService";
-import { ProfileActivityService } from "@spt-aki/services/ProfileActivityService";
-import { ProfileFixerService } from "@spt-aki/services/ProfileFixerService";
-import { RaidTimeAdjustmentService } from "@spt-aki/services/RaidTimeAdjustmentService";
-import { SeasonalEventService } from "@spt-aki/services/SeasonalEventService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { HashUtil } from "@spt-aki/utils/HashUtil";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { ApplicationContext } from "@spt/context/ApplicationContext";
+import { ContextVariableType } from "@spt/context/ContextVariableType";
+import { HideoutHelper } from "@spt/helpers/HideoutHelper";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { ILocation } from "@spt/models/eft/common/ILocation";
+import { ILooseLoot } from "@spt/models/eft/common/ILooseLoot";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { BodyPartHealth } from "@spt/models/eft/common/tables/IBotBase";
+import { ICheckVersionResponse } from "@spt/models/eft/game/ICheckVersionResponse";
+import { ICurrentGroupResponse } from "@spt/models/eft/game/ICurrentGroupResponse";
+import { IGameConfigResponse } from "@spt/models/eft/game/IGameConfigResponse";
+import { IGameKeepAliveResponse } from "@spt/models/eft/game/IGameKeepAliveResponse";
+import { IGameModeRequestData } from "@spt/models/eft/game/IGameModeRequestData";
+import { ESessionMode } from "@spt/models/eft/game/IGameModeResponse";
+import { IGetRaidTimeRequest } from "@spt/models/eft/game/IGetRaidTimeRequest";
+import { IGetRaidTimeResponse } from "@spt/models/eft/game/IGetRaidTimeResponse";
+import { IServerDetails } from "@spt/models/eft/game/IServerDetails";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { BonusType } from "@spt/models/enums/BonusType";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { SkillTypes } from "@spt/models/enums/SkillTypes";
+import { Traders } from "@spt/models/enums/Traders";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
+import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
+import { ILootConfig } from "@spt/models/spt/config/ILootConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { CustomLocationWaveService } from "@spt/services/CustomLocationWaveService";
+import { GiftService } from "@spt/services/GiftService";
+import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { OpenZoneService } from "@spt/services/OpenZoneService";
+import { ProfileActivityService } from "@spt/services/ProfileActivityService";
+import { ProfileFixerService } from "@spt/services/ProfileFixerService";
+import { RaidTimeAdjustmentService } from "@spt/services/RaidTimeAdjustmentService";
+import { SeasonalEventService } from "@spt/services/SeasonalEventService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class GameController
@@ -66,7 +66,7 @@ export class GameController
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
+        @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("HideoutHelper") protected hideoutHelper: HideoutHelper,
@@ -199,7 +199,7 @@ export class GameController
 
             this.profileFixerService.checkForAndFixPmcProfileIssues(pmcProfile);
 
-            this.profileFixerService.addMissingAkiVersionTagToProfile(fullProfile);
+            this.profileFixerService.addMissingSptVersionTagToProfile(fullProfile);
 
             if (pmcProfile.Hideout)
             {
@@ -834,21 +834,21 @@ export class GameController
      * Get a list of installed mods and save their details to the profile being used
      * @param fullProfile Profile to add mod details to
      */
-    protected saveActiveModsToProfile(fullProfile: IAkiProfile): void
+    protected saveActiveModsToProfile(fullProfile: ISptProfile): void
     {
         // Add empty mod array if undefined
-        if (!fullProfile.aki.mods)
+        if (!fullProfile.spt.mods)
         {
-            fullProfile.aki.mods = [];
+            fullProfile.spt.mods = [];
         }
 
         // Get active mods
-        const activeMods = this.preAkiModLoader.getImportedModDetails();
+        const activeMods = this.preSptModLoader.getImportedModDetails();
         for (const modKey in activeMods)
         {
             const modDetails = activeMods[modKey];
             if (
-                fullProfile.aki.mods.some(
+                fullProfile.spt.mods.some(
                     (x) =>
                         x.author === modDetails.author
                         && x.name === modDetails.name
@@ -860,7 +860,7 @@ export class GameController
                 continue;
             }
 
-            fullProfile.aki.mods.push({
+            fullProfile.spt.mods.push({
                 author: modDetails.author,
                 dateAdded: Date.now(),
                 name: modDetails.name,
@@ -940,7 +940,7 @@ export class GameController
      * Check for a dialog with the key 'undefined', and remove it
      * @param fullProfile Profile to check for dialog in
      */
-    protected checkForAndRemoveUndefinedDialogs(fullProfile: IAkiProfile): void
+    protected checkForAndRemoveUndefinedDialogs(fullProfile: ISptProfile): void
     {
         const undefinedDialog = fullProfile.dialogues.undefined;
         if (undefinedDialog)
@@ -980,11 +980,11 @@ export class GameController
         }
     }
 
-    protected logProfileDetails(fullProfile: IAkiProfile): void
+    protected logProfileDetails(fullProfile: ISptProfile): void
     {
-        this.logger.debug(`Profile made with: ${fullProfile.aki.version}`);
+        this.logger.debug(`Profile made with: ${fullProfile.spt.version}`);
         this.logger.debug(
-            `Server version: ${globalThis.G_AKIVERSION || this.coreConfig.akiVersion} ${globalThis.G_COMMIT}`,
+            `Server version: ${globalThis.G_SPTVERSION || this.coreConfig.sptVersion} ${globalThis.G_COMMIT}`,
         );
         this.logger.debug(`Debug enabled: ${globalThis.G_DEBUG_CONFIGURATION}`);
         this.logger.debug(`Mods enabled: ${globalThis.G_MODS_ENABLED}`);

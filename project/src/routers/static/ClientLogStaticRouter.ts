@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { ClientLogCallbacks } from "@spt-aki/callbacks/ClientLogCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
+import { ClientLogCallbacks } from "@spt/callbacks/ClientLogCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 
 @injectable()
 export class ClientLogStaticRouter extends StaticRouter

@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { ClientLogController } from "@spt-aki/controllers/ClientLogController";
-import { ModLoadOrder } from "@spt-aki/loaders/ModLoadOrder";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IBsgLogging, ICoreConfig, IRelease } from "@spt-aki/models/spt/config/ICoreConfig";
-import { IClientLogRequest } from "@spt-aki/models/spt/logging/IClientLogRequest";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { HttpResponseUtil } from "@spt-aki/utils/HttpResponseUtil";
+import { ClientLogController } from "@spt/controllers/ClientLogController";
+import { ModLoadOrder } from "@spt/loaders/ModLoadOrder";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IBsgLogging, ICoreConfig, IRelease } from "@spt/models/spt/config/ICoreConfig";
+import { IClientLogRequest } from "@spt/models/spt/logging/IClientLogRequest";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 
 /** Handle client logging related events */
 @injectable()

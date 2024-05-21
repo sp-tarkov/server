@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IItemConfig } from "@spt-aki/models/spt/config/IItemConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IItemConfig } from "@spt/models/spt/config/IItemConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
 
 /** Centralise the handling of blacklisting items, uses blacklist found in config/item.json, stores items that should not be used by players / broken items */
 @injectable()

@@ -15,7 +15,7 @@
         "keepClassNames": true,
         "baseUrl": "./",
         "paths": {
-            "@spt-aki/*": [
+            "@spt/*": [
                 "src/*"
             ]
         }

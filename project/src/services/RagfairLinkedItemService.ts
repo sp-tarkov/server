@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
 
 @injectable()
 export class RagfairLinkedItemService

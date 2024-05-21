@@ -1,11 +1,11 @@
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { EquipmentBuildType } from "@spt-aki/models/enums/EquipmentBuildType";
-import { MemberCategory } from "@spt-aki/models/enums/MemberCategory";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { IProfileChangeEvent } from "@spt-aki/models/spt/dialog/ISendMessageDetails";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { EquipmentBuildType } from "@spt/models/enums/EquipmentBuildType";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { IProfileChangeEvent } from "@spt/models/spt/dialog/ISendMessageDetails";
 
-export interface IAkiProfile
+export interface ISptProfile
 {
     info: Info
     characters: Characters
@@ -13,7 +13,7 @@ export interface IAkiProfile
     suits: string[]
     userbuilds: IUserBuilds
     dialogues: Record<string, Dialogue>
-    aki: Aki
+    spt: Spt
     vitality: Vitality
     inraid: Inraid
     insurance: Insurance[]
@@ -205,7 +205,7 @@ export interface DateTime
     time: string
 }
 
-export interface Aki
+export interface Spt
 {
     version: string
     mods?: ModDetails[]

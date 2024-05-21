@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { Item } from "@spt-aki/models/eft/common/tables/IItem";
-import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IRepairConfig } from "@spt-aki/models/spt/config/IRepairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
+import { Item } from "@spt/models/eft/common/tables/IItem";
+import { ITemplateItem, Props } from "@spt/models/eft/common/tables/ITemplateItem";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IRepairConfig } from "@spt/models/spt/config/IRepairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
 export class RepairHelper

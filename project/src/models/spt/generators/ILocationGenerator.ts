@@ -3,8 +3,8 @@ import {
     IStaticContainerProps,
     IStaticForcedProps,
     IStaticLootDetails,
-} from "@spt-aki/models/eft/common/ILocation";
-import { ILooseLoot, SpawnpointTemplate } from "@spt-aki/models/eft/common/ILooseLoot";
+} from "@spt/models/eft/common/ILocation";
+import { ILooseLoot, SpawnpointTemplate } from "@spt/models/eft/common/ILooseLoot";
 
 export interface ILocationGenerator
 {

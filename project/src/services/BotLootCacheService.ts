@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
-import { PMCLootGenerator } from "@spt-aki/generators/PMCLootGenerator";
-import { ItemHelper } from "@spt-aki/helpers/ItemHelper";
-import { IBotType } from "@spt-aki/models/eft/common/tables/IBotType";
-import { ITemplateItem, Props } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses";
-import { IBotLootCache, LootCacheType } from "@spt-aki/models/spt/bots/IBotLootCache";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
+import { PMCLootGenerator } from "@spt/generators/PMCLootGenerator";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { IBotType } from "@spt/models/eft/common/tables/IBotType";
+import { ITemplateItem, Props } from "@spt/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { IBotLootCache, LootCacheType } from "@spt/models/spt/bots/IBotLootCache";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RagfairPriceService } from "@spt/services/RagfairPriceService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 
 @injectable()
 export class BotLootCacheService

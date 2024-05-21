@@ -1,11 +1,11 @@
 import "reflect-metadata";
+
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { BotLevelGenerator } from "@spt-aki/generators/BotLevelGenerator";
-import { MinMax } from "@spt-aki/models/common/MinMax";
-import { BotGenerationDetails } from "@spt-aki/models/spt/bots/BotGenerationDetails";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
+import { BotLevelGenerator } from "@spt/generators/BotLevelGenerator";
+import { MinMax } from "@spt/models/common/MinMax";
+import { BotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
 
 describe("BotLevelGenerator", () =>
 {
@@ -61,7 +61,7 @@ describe("BotLevelGenerator", () =>
                 playerLevel: 5,
                 botCountToGenerate: 0,
                 botDifficulty: "",
-                isPlayerScav: false
+                isPlayerScav: false,
             };
 
             const result = botLevelGenerator.getHighestRelativeBotLevel(botGenDetails, levelDetails, 79);
@@ -81,13 +81,13 @@ describe("BotLevelGenerator", () =>
                 playerLevel: 100,
                 botCountToGenerate: 0,
                 botDifficulty: "",
-                isPlayerScav: false
+                isPlayerScav: false,
             };
 
             const result = botLevelGenerator.getHighestRelativeBotLevel(
                 botGenDetails,
                 levelDetails,
-                79
+                79,
             );
 
             expect(result).toBe(79);

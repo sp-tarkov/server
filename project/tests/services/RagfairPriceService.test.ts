@@ -2,11 +2,8 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { RagfairPriceService } from "@spt-aki/services/RagfairPriceService";
-
-import { MinMax } from "@spt-aki/models/common/MinMax";
-import { Money } from "@spt-aki/models/enums/Money";
+import { Money } from "@spt/models/enums/Money";
+import { RagfairPriceService } from "@spt/services/RagfairPriceService";
 
 describe("RagfairPriceService", () =>
 {
@@ -408,8 +405,8 @@ describe("RagfairPriceService", () =>
             };
 
             // Mock the Disable unreasonableModPrices config. Disable other adjustments for isolation.
-            ragfairPriceService.ragfairConfig.dynamic.unreasonableModPrices[mockBaseClassTemplateId] =
-                mockUnreasonableModPrices;
+            ragfairPriceService.ragfairConfig.dynamic.unreasonableModPrices[mockBaseClassTemplateId]
+                = mockUnreasonableModPrices;
             ragfairPriceService.ragfairConfig.dynamic.offerAdjustment.adjustPriceWhenBelowHandbookPrice = false;
             ragfairPriceService.ragfairConfig.dynamic.useTraderPriceForOffersIfHigher = false;
             ragfairPriceService.ragfairConfig.dynamic.itemPriceMultiplier[itemTemplateId] = null;

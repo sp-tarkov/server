@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import { inject, injectable } from "tsyringe";
-import { Serializer } from "@spt-aki/di/Serializer";
-import { BundleLoader } from "@spt-aki/loaders/BundleLoader";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { HttpFileUtil } from "@spt-aki/utils/HttpFileUtil";
+import { Serializer } from "@spt/di/Serializer";
+import { BundleLoader } from "@spt/loaders/BundleLoader";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { HttpFileUtil } from "@spt/utils/HttpFileUtil";
 
 @injectable()
 export class BundleSerializer extends Serializer

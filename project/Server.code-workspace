@@ -5,7 +5,7 @@
         },
     ],
     "settings": {
-        "window.title": "SPT-AKI Server",
+        "window.title": "SPT Server",
         "editor.formatOnSave": false, // We use an extension to format on save.
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],

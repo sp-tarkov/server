@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { inject, injectable } from "tsyringe";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class ObjectId

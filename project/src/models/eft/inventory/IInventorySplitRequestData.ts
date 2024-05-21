@@ -1,7 +1,7 @@
 import {
     Container,
     IInventoryBaseActionRequestData,
-} from "@spt-aki/models/eft/inventory/IInventoryBaseActionRequestData";
+} from "@spt/models/eft/inventory/IInventoryBaseActionRequestData";
 
 export interface IInventorySplitRequestData extends IInventoryBaseActionRequestData
 {

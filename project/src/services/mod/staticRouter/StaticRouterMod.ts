@@ -1,4 +1,4 @@
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
 
 export class StaticRouterMod extends StaticRouter
 {

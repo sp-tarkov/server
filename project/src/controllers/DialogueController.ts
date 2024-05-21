@@ -1,23 +1,23 @@
 import { inject, injectAll, injectable } from "tsyringe";
-import { IDialogueChatBot } from "@spt-aki/helpers/Dialogue/IDialogueChatBot";
-import { DialogueHelper } from "@spt-aki/helpers/DialogueHelper";
-import { IFriendRequestData } from "@spt-aki/models/eft/dialog/IFriendRequestData";
-import { IFriendRequestSendResponse } from "@spt-aki/models/eft/dialog/IFriendRequestSendResponse";
-import { IGetAllAttachmentsResponse } from "@spt-aki/models/eft/dialog/IGetAllAttachmentsResponse";
-import { IGetFriendListDataResponse } from "@spt-aki/models/eft/dialog/IGetFriendListDataResponse";
-import { IGetMailDialogViewRequestData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewRequestData";
-import { IGetMailDialogViewResponseData } from "@spt-aki/models/eft/dialog/IGetMailDialogViewResponseData";
-import { ISendMessageRequest } from "@spt-aki/models/eft/dialog/ISendMessageRequest";
-import { Dialogue, DialogueInfo, IAkiProfile, IUserDialogInfo, Message } from "@spt-aki/models/eft/profile/IAkiProfile";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { MessageType } from "@spt-aki/models/enums/MessageType";
-import { ICoreConfig } from "@spt-aki/models/spt/config/ICoreConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { SaveServer } from "@spt-aki/servers/SaveServer";
-import { LocalisationService } from "@spt-aki/services/LocalisationService";
-import { MailSendService } from "@spt-aki/services/MailSendService";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { IDialogueChatBot } from "@spt/helpers/Dialogue/IDialogueChatBot";
+import { DialogueHelper } from "@spt/helpers/DialogueHelper";
+import { IFriendRequestData } from "@spt/models/eft/dialog/IFriendRequestData";
+import { IFriendRequestSendResponse } from "@spt/models/eft/dialog/IFriendRequestSendResponse";
+import { IGetAllAttachmentsResponse } from "@spt/models/eft/dialog/IGetAllAttachmentsResponse";
+import { IGetFriendListDataResponse } from "@spt/models/eft/dialog/IGetFriendListDataResponse";
+import { IGetMailDialogViewRequestData } from "@spt/models/eft/dialog/IGetMailDialogViewRequestData";
+import { IGetMailDialogViewResponseData } from "@spt/models/eft/dialog/IGetMailDialogViewResponseData";
+import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
+import { Dialogue, DialogueInfo, ISptProfile, IUserDialogInfo, Message } from "@spt/models/eft/profile/ISptProfile";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { MailSendService } from "@spt/services/MailSendService";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class DialogueController
@@ -195,7 +195,7 @@ export class DialogueController
      * @param request get dialog request (params used when dialog doesnt exist in profile)
      * @returns Dialogue
      */
-    protected getDialogByIdFromProfile(profile: IAkiProfile, request: IGetMailDialogViewRequestData): Dialogue
+    protected getDialogByIdFromProfile(profile: ISptProfile, request: IGetMailDialogViewRequestData): Dialogue
     {
         if (!profile.dialogues[request.dialogId])
         {
@@ -228,7 +228,7 @@ export class DialogueController
      * @param dialogUsers The participants of the mail
      * @returns IUserDialogInfo array
      */
-    protected getProfilesForMail(fullProfile: IAkiProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
+    protected getProfilesForMail(fullProfile: ISptProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
     {
         const result: IUserDialogInfo[] = [];
         if (dialogUsers)

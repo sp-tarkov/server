@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { ProfileCallbacks } from "@spt-aki/callbacks/ProfileCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt-aki/models/eft/httpResponse/INullResponseData";
-import { GetProfileStatusResponseData } from "@spt-aki/models/eft/profile/GetProfileStatusResponseData";
-import { ICreateProfileResponse } from "@spt-aki/models/eft/profile/ICreateProfileResponse";
-import { IGetOtherProfileResponse } from "@spt-aki/models/eft/profile/IGetOtherProfileResponse";
-import { ISearchFriendResponse } from "@spt-aki/models/eft/profile/ISearchFriendResponse";
+import { ProfileCallbacks } from "@spt/callbacks/ProfileCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { GetProfileStatusResponseData } from "@spt/models/eft/profile/GetProfileStatusResponseData";
+import { ICreateProfileResponse } from "@spt/models/eft/profile/ICreateProfileResponse";
+import { IGetOtherProfileResponse } from "@spt/models/eft/profile/IGetOtherProfileResponse";
+import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
 
 @injectable()
 export class ProfileStaticRouter extends StaticRouter

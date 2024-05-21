@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { SellResult } from "@spt-aki/models/eft/ragfair/IRagfairOffer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { IRagfairConfig } from "@spt-aki/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { RandomUtil } from "@spt-aki/utils/RandomUtil";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { SellResult } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class RagfairSellHelper

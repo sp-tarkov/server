@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { AchievementCallbacks } from "@spt-aki/callbacks/AchievementCallbacks";
-import { RouteAction, StaticRouter } from "@spt-aki/di/Router";
-import { IGetBodyResponseData } from "@spt-aki/models/eft/httpResponse/IGetBodyResponseData";
-import { ICompletedAchievementsResponse } from "@spt-aki/models/eft/profile/ICompletedAchievementsResponse";
-import { IGetAchievementsResponse } from "@spt-aki/models/eft/profile/IGetAchievementsResponse";
+import { AchievementCallbacks } from "@spt/callbacks/AchievementCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { ICompletedAchievementsResponse } from "@spt/models/eft/profile/ICompletedAchievementsResponse";
+import { IGetAchievementsResponse } from "@spt/models/eft/profile/IGetAchievementsResponse";
 
 @injectable()
 export class AchievementStaticRouter extends StaticRouter

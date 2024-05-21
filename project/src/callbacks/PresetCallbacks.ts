@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { PresetController } from "@spt-aki/controllers/PresetController";
-import { OnLoad } from "@spt-aki/di/OnLoad";
+import { PresetController } from "@spt/controllers/PresetController";
+import { OnLoad } from "@spt/di/OnLoad";
 
 @injectable()
 export class PresetCallbacks implements OnLoad
@@ -15,6 +15,6 @@ export class PresetCallbacks implements OnLoad
 
     public getRoute(): string
     {
-        return "aki-presets";
+        return "spt-presets";
     }
 }

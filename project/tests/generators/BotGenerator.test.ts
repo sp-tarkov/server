@@ -1,9 +1,8 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { BotGenerator } from "@spt-aki/generators/BotGenerator";
-import { IPmcData } from "@spt-aki/models/eft/common/IPmcData";
+import { BotGenerator } from "@spt/generators/BotGenerator";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
 
 describe("BotGenerator", () =>
 {

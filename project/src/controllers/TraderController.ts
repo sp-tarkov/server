@@ -1,20 +1,20 @@
 import { inject, injectable } from "tsyringe";
-import { FenceBaseAssortGenerator } from "@spt-aki/generators/FenceBaseAssortGenerator";
-import { ProfileHelper } from "@spt-aki/helpers/ProfileHelper";
-import { TraderAssortHelper } from "@spt-aki/helpers/TraderAssortHelper";
-import { TraderHelper } from "@spt-aki/helpers/TraderHelper";
-import { ITraderAssort, ITraderBase } from "@spt-aki/models/eft/common/tables/ITrader";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { Traders } from "@spt-aki/models/enums/Traders";
-import { ITraderConfig } from "@spt-aki/models/spt/config/ITraderConfig";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { FenceService } from "@spt-aki/services/FenceService";
-import { TraderAssortService } from "@spt-aki/services/TraderAssortService";
-import { TraderPurchasePersisterService } from "@spt-aki/services/TraderPurchasePersisterService";
-import { ICloner } from "@spt-aki/utils/cloners/ICloner";
-import { TimeUtil } from "@spt-aki/utils/TimeUtil";
+import { FenceBaseAssortGenerator } from "@spt/generators/FenceBaseAssortGenerator";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { TraderAssortHelper } from "@spt/helpers/TraderAssortHelper";
+import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { ITraderAssort, ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Traders } from "@spt/models/enums/Traders";
+import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { FenceService } from "@spt/services/FenceService";
+import { TraderAssortService } from "@spt/services/TraderAssortService";
+import { TraderPurchasePersisterService } from "@spt/services/TraderPurchasePersisterService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 
 @injectable()
 export class TraderController
