@@ -149,6 +149,7 @@ export class RagfairOfferGenerator
                 rating: this.getRating(userID),
                 isRatingGrowing: this.getRatingGrowing(userID),
                 avatar: this.getAvatarUrl(isTrader, userID),
+                aid: this.hashUtil.generateAccountId(),
             },
             root: items[0]._id,
             items: itemsClone,

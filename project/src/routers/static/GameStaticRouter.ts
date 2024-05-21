@@ -146,7 +146,7 @@ export class GameStaticRouter extends StaticRouter
                     output: string,
                 ): Promise<INullResponseData> =>
                 {
-                    return null;
+                    return this.gameCallbacks.reportNickname(url, info, sessionID);
                 },
             ),
             new RouteAction(

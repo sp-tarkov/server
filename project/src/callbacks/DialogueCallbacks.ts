@@ -277,7 +277,7 @@ export class DialogueCallbacks implements OnUpdate
 
     public createGroupMail(url: string, info: ICreateGroupMailRequest, sessionID: string): IGetBodyResponseData<any[]>
     {
-        throw new Error("Method not implemented.");
+        return this.httpResponse.emptyArrayResponse();
     }
 
     public changeMailGroupOwner(
