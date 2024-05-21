@@ -4,7 +4,7 @@
     "author": "SPT Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
-    "repository": "https://dev.sp-tarkov.com/SPT-AKI/Server",
+    "repository": "https://dev.sp-tarkov.com/SPT/Server",
     "description": "The single-player modding framework for Escape From Tarkov.",
     "icon": "assets/images/icon.ico",
     "engines": {

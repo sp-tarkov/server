@@ -71,7 +71,7 @@
 	"modloader-cyclic_dependency": "發現Cyclic dependency(循環依賴). 此錯誤必須修復. 修復前伺服器無法啟動, 伺服器將關閉",
 	"modloader-load_order_conflict": "模組 `{{modOneName}}` 和模組 `{{modTwoName}}` 發現載入順序的衝突, 修復前伺服器無法啟動, 伺服器將關閉",
 	"modloader-loading_mods": "ModLoader: 載入伺服器模組 %s 中...",
-	"modloader-mod_incompatible": "ModLoader: 模組 (%s) 不相容. 必須為 IPostAkiLoadMod, IPostDBLoadMod, IPreAkiLoadMod 其中一個",
+	"modloader-mod_incompatible": "ModLoader: 模組 (%s) 不相容. 必須為 IPostSptLoadMod, IPostDBLoadMod, IPreSptLoadMod 其中一個",
 	"modloader-mod_has_no_main_property": "ModLoader: 模組 (%s) 不相容. 缺少一個 'main' 屬性",
 	"modloader-async_mod_error": "ModLoader: 載入async模組: %s 發生錯誤",
 	"modloader-user_mod_folder_missing": "ModLoader: 沒找到 user/mod 資料夾, 建立中...",

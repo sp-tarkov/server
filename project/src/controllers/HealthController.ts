@@ -233,7 +233,7 @@ export class HealthController
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public applyWorkoutChanges(pmcData: IPmcData, info: IWorkoutData, sessionId: string): void
     {
-        // https://dev.sp-tarkov.com/SPT-AKI/Server/issues/2674
+        // https://dev.sp-tarkov.com/SPT/Server/issues/2674
         // TODO:
         // Health effects (fractures etc) are handled in /player/health/sync.
         pmcData.Skills.Common = info.skills.Common;
