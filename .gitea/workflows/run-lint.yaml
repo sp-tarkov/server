@@ -14,16 +14,16 @@ jobs:
     steps:
     - name: Clone
       run: |
-        rm -rf /workspace/SPT-AKI/Build/server
-        git clone https://dev.sp-tarkov.com/${GITHUB_REPOSITORY}.git --branch master /workspace/SPT-AKI/Build/server
+        rm -rf /workspace/SPT/Build/server
+        git clone https://dev.sp-tarkov.com/${GITHUB_REPOSITORY}.git --branch master /workspace/SPT/Build/server
 
-        cd /workspace/SPT-AKI/Build/server
+        cd /workspace/SPT/Build/server
         git checkout ${GITHUB_SHA}
       shell: bash
 
     - name: Pull LFS Files
       run: |
-        cd /workspace/SPT-AKI/Build/server
+        cd /workspace/SPT/Build/server
         git lfs pull
         git lfs ls-files
       shell: bash
@@ -32,13 +32,13 @@ jobs:
       id: cache-npm-dependencies
       uses: actions/cache@v4
       with:
-        path: /workspace/SPT-AKI/Build/server/project/node_modules
-        key: npm-dependencies-${{ hashFiles('/workspace/SPT-AKI/Build/server/project/package.json') }}
+        path: /workspace/SPT/Build/server/project/node_modules
+        key: npm-dependencies-${{ hashFiles('/workspace/SPT/Build/server/project/package.json') }}
 
     - name: Install NPM Dependencies
       if: steps.cache-npm-dependencies.outputs.cache-hit != 'true'
       run: |
-        cd /workspace/SPT-AKI/Build/server/project
+        cd /workspace/SPT/Build/server/project
         rm -rf node_modules
         npm install
       shell: bash
@@ -46,7 +46,7 @@ jobs:
     - name: Run Linter
       id: run-tests
       run: |
-        cd /workspace/SPT-AKI/Build/server/project
+        cd /workspace/SPT/Build/server/project
         npm run lint
       shell: bash
 

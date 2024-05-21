@@ -17,7 +17,7 @@ jobs:
     - name: Clone Build Repository
       run: |
         rm -rf ../Build
-        git clone https://${{ secrets.BUILD_USERNAME }}:${{ secrets.BUILD_ACCESS_TOKEN }}@dev.sp-tarkov.com/SPT-AKI/Build.git ../Build
+        git clone https://${{ secrets.BUILD_USERNAME }}:${{ secrets.BUILD_ACCESS_TOKEN }}@dev.sp-tarkov.com/SPT/Build.git ../Build
 
     - name: Trigger Branch
       working-directory: ../Build
