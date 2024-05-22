@@ -251,6 +251,14 @@ export class InsuranceService
             // equipment slot.
             const equipmentParentItem = this.itemHelper.getEquipmentParent(preRaidItem._id, preRaidGearMap);
 
+            const offraidDataitem = offraidData.insurance?.find(
+                (insuranceItem) => insuranceItem.id === insuredItem.itemId);
+
+            if (offraidDataitem?.usedInQuest)
+            {
+                continue;
+            }
+
             // Now that we have the equipment parent item, we can check to see if that item is located in an equipment
             // slot that is flagged as lost on death. If it is, then the itemShouldBeLostOnDeath.
             const itemShouldBeLostOnDeath = this.lostOnDeathConfig.equipment[equipmentParentItem?.slotId] ?? true;
