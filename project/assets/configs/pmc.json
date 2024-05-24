@@ -398,6 +398,28 @@
                 "arenaFighterEvent": 1,
                 "crazyAssaultEvent": 1,
                 "pmcBot": 7
+            },
+            "sandbox_high": {
+                "bossKilla": 2,
+                "bossKnight": 0,
+                "bossGluhar": 0,
+                "bossSanitar": 1,
+                "bossTagilla": 0,
+                "bossZryachiy": 0,
+                "bossBoar": 0,
+                "followerGluharAssault": 0,
+                "followerBully": 2,
+                "followerBigPipe": 0,
+                "followerSanitar": 0,
+                "followerKolontayAssault": 0,
+                "followerKolontaySecurity": 0,
+                "assault": 3,
+                "cursedAssault": 0,
+                "exUsec": 0,
+                "arenaFighter": 0,
+                "arenaFighterEvent": 1,
+                "crazyAssaultEvent": 1,
+                "pmcBot": 7
             }
         },
         "sptusec": {
@@ -603,6 +625,28 @@
                 "pmcBot": 5
             },
             "sandbox": {
+                "bossKilla": 2,
+                "bossKnight": 0,
+                "bossGluhar": 0,
+                "bossSanitar": 1,
+                "bossTagilla": 0,
+                "bossZryachiy": 0,
+                "bossBoar": 0,
+                "followerGluharAssault": 0,
+                "followerBully": 2,
+                "followerBigPipe": 0,
+                "followerSanitar": 0,
+                "followerKolontayAssault": 0,
+                "followerKolontaySecurity": 0,
+                "assault": 3,
+                "cursedAssault": 0,
+                "exUsec": 0,
+                "arenaFighter": 0,
+                "arenaFighterEvent": 1,
+                "crazyAssaultEvent": 1,
+                "pmcBot": 7
+            },
+            "sandbox_high": {
                 "bossKilla": 2,
                 "bossKnight": 0,
                 "bossGluhar": 0,

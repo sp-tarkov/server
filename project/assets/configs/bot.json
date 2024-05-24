@@ -2518,6 +2518,26 @@
             "arenaFighterEvent": 0,
             "crazyAssaultEvent": 0,
             "pmcBot": 0
+        },
+        "sandbox_high": {
+            "bossKilla": 0,
+            "bossKnight": 0,
+            "bossGluhar": 0,
+            "bossSanitar": 0,
+            "bossTagilla": 0,
+            "bossZryachiy": 0,
+            "bossBoar": 0,
+            "followerGluharAssault": 0,
+            "followerBully": 0,
+            "followerBigPipe": 0,
+            "followerSanitar": 0,
+            "assault": 1,
+            "cursedAssault": 0,
+            "exUsec": 0,
+            "arenaFighter": 0,
+            "arenaFighterEvent": 0,
+            "crazyAssaultEvent": 0,
+            "pmcBot": 0
         }
     },
     "playerScavBrainType": {
@@ -2572,6 +2592,10 @@
             "pmcBot": 1
         },
         "sandbox": {
+            "assault": 2,
+            "pmcBot": 1
+        },
+        "sandbox_high": {
             "assault": 2,
             "pmcBot": 1
         }
