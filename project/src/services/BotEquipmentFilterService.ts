@@ -152,13 +152,13 @@ export class BotEquipmentFilterService
      * @param botEquipmentRole equipment role of bot to look up
      * @returns Dictionary of weapon type and their whitelisted scope types
      */
-    public getBotWeaponSightWhitelist(botEquipmentRole: string): Record<string, string[]>
+    public getBotWeaponSightWhitelist(botEquipmentRole: string): Record<string, string[]> | undefined
     {
         const botEquipmentSettings = this.botEquipmentConfig[botEquipmentRole];
 
         if (!botEquipmentSettings)
         {
-            return null;
+            return undefined;
         }
 
         return botEquipmentSettings.weaponSightWhitelist;
@@ -170,7 +170,7 @@ export class BotEquipmentFilterService
      * @param playerLevel Level of the player
      * @returns EquipmentBlacklistDetails object
      */
-    public getBotEquipmentBlacklist(botRole: string, playerLevel: number): EquipmentFilterDetails
+    public getBotEquipmentBlacklist(botRole: string, playerLevel: number): EquipmentFilterDetails | undefined
     {
         const blacklistDetailsForBot = this.botEquipmentConfig[botRole];
 
@@ -181,7 +181,7 @@ export class BotEquipmentFilterService
             || !blacklistDetailsForBot.blacklist
         )
         {
-            return null;
+            return undefined;
         }
 
         return blacklistDetailsForBot.blacklist.find(
@@ -195,14 +195,14 @@ export class BotEquipmentFilterService
      * @param playerLevel Players level
      * @returns EquipmentFilterDetails object
      */
-    protected getBotEquipmentWhitelist(botRole: string, playerLevel: number): EquipmentFilterDetails
+    protected getBotEquipmentWhitelist(botRole: string, playerLevel: number): EquipmentFilterDetails | undefined
     {
         const botEquipmentConfig = this.botEquipmentConfig[botRole];
 
         // No equipment blacklist found, skip
         if (!botEquipmentConfig || Object.keys(botEquipmentConfig).length === 0 || !botEquipmentConfig.whitelist)
         {
-            return null;
+            return undefined;
         }
 
         return botEquipmentConfig.whitelist.find(
@@ -216,7 +216,7 @@ export class BotEquipmentFilterService
      * @param botLevel Level of bot
      * @returns Weighting adjustments for bot items
      */
-    protected getBotWeightingAdjustments(botRole: string, botLevel: number): WeightingAdjustmentDetails
+    protected getBotWeightingAdjustments(botRole: string, botLevel: number): WeightingAdjustmentDetails | undefined
     {
         const botEquipmentConfig = this.botEquipmentConfig[botRole];
 
@@ -227,7 +227,7 @@ export class BotEquipmentFilterService
             || !botEquipmentConfig.weightingAdjustmentsByBotLevel
         )
         {
-            return null;
+            return undefined;
         }
 
         return botEquipmentConfig.weightingAdjustmentsByBotLevel.find(
@@ -244,7 +244,7 @@ export class BotEquipmentFilterService
     protected getBotWeightingAdjustmentsByPlayerLevel(
         botRole: string,
         playerlevel: number,
-    ): WeightingAdjustmentDetails
+    ): WeightingAdjustmentDetails | undefined
     {
         const botEquipmentConfig = this.botEquipmentConfig[botRole];
 
@@ -255,7 +255,7 @@ export class BotEquipmentFilterService
             || !botEquipmentConfig.weightingAdjustmentsByPlayerLevel
         )
         {
-            return null;
+            return undefined;
         }
 
         return botEquipmentConfig.weightingAdjustmentsByPlayerLevel.find(

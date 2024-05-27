@@ -155,7 +155,7 @@ export class ProfileSptCommand implements ISptCommand
             _id: this.hashUtil.generate(),
             Type: ProfileChangeEventType.PROFILE_LEVEL,
             value: exp,
-            entity: null,
+            entity: undefined,
         };
         return event;
     }

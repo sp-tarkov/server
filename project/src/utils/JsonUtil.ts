@@ -31,7 +31,7 @@ export class JsonUtil
     {
         if (prettify)
         {
-            return JSON.stringify(data, null, "\t");
+            return JSON.stringify(data, undefined, "\t");
         }
 
         return JSON.stringify(data);
@@ -60,7 +60,11 @@ export class JsonUtil
      * @param options Stringify options or a replacer.
      * @returns The string converted from the JavaScript value
      */
-    public serializeJsonC(data: any, filename?: string | null, options?: IStringifyOptions | Reviver): string | undefined
+    public serializeJsonC(
+        data: any,
+        filename?: string | undefined,
+        options?: IStringifyOptions | Reviver,
+    ): string | undefined
     {
         try
         {
@@ -74,13 +78,13 @@ export class JsonUtil
         }
     }
 
-    public serializeJson5(data: any, filename?: string | null, prettify = false): string | undefined
+    public serializeJson5(data: any, filename?: string | undefined, prettify = false): string | undefined
     {
         try
         {
             if (prettify)
             {
-                return stringify(data, null, "\t");
+                return stringify(data, undefined, "\t");
             }
 
             return stringify(data);

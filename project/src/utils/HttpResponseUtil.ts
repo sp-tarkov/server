@@ -61,7 +61,7 @@ export class HttpResponseUtil
 
     public nullResponse(): INullResponseData
     {
-        return this.clearString(this.getUnclearedBody(null, 0, undefined));
+        return this.clearString(this.getUnclearedBody(undefined, 0, undefined));
     }
 
     public emptyArrayResponse(): IGetBodyResponseData<any[]>

@@ -138,11 +138,11 @@ export class PresetHelper
      * @param templateId Item id to get preset for
      * @returns Null if no default preset, otherwise IPreset
      */
-    public getDefaultPreset(templateId: string): IPreset
+    public getDefaultPreset(templateId: string): IPreset | undefined
     {
         if (!this.hasPreset(templateId))
         {
-            return null;
+            return undefined;
         }
 
         const allPresets = this.getPresets(templateId);

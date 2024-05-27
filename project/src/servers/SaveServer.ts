@@ -46,7 +46,7 @@ export class SaveServer
      */
     public removeBeforeSaveCallback(id: string): void
     {
-        this.onBeforeSaveCallbacks[id] = null;
+        this.onBeforeSaveCallbacks[id] = undefined;
     }
 
     /**
@@ -102,12 +102,12 @@ export class SaveServer
             throw new Error("session id provided was empty, did you restart the server while the game was running?");
         }
 
-        if (this.profiles === null)
+        if (!this.profiles)
         {
             throw new Error(`no profiles found in saveServer with id: ${sessionId}`);
         }
 
-        if (this.profiles[sessionId] === null)
+        if (!this.profiles[sessionId])
         {
             throw new Error(`no profile found for sessionId: ${sessionId}`);
         }
@@ -131,7 +131,7 @@ export class SaveServer
      */
     public deleteProfileById(sessionID: string): boolean
     {
-        if (this.profiles[sessionID] != null)
+        if (this.profiles[sessionID])
         {
             delete this.profiles[sessionID];
             return true;
@@ -146,7 +146,7 @@ export class SaveServer
      */
     public createProfile(profileInfo: Info): void
     {
-        if (this.profiles[profileInfo.id] != null)
+        if (this.profiles[profileInfo.id])
         {
             throw new Error(`profile already exists for sessionId: ${profileInfo.id}`);
         }

@@ -92,9 +92,9 @@ export class MatchController
             location: "TODO get location",
             raidMode: "Online",
             mode: "deathmatch",
-            shortId: null,
+            shortId: undefined,
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            additional_info: null,
+            additional_info: undefined,
         });
 
         return output;
@@ -268,7 +268,7 @@ export class MatchController
      */
     protected extractWasViaCar(extractName: string): boolean
     {
-        // exit name is null on death
+        // exit name is undefined on death
         if (!extractName)
         {
             return false;

@@ -167,7 +167,7 @@ export class ProfileController
         pmcData.Inventory.items = this.itemHelper.replaceIDs(
             pmcData.Inventory.items,
             pmcData,
-            null,
+            undefined,
             pmcData.Inventory.fastPanel,
         );
         pmcData.Inventory.hideoutAreaStashes = {};
@@ -419,10 +419,10 @@ export class ProfileController
         const response: GetProfileStatusResponseData = {
             maxPveCountExceeded: false,
             profiles: [
-                { profileid: account.scavId, profileToken: null, status: "Free", sid: "", ip: "", port: 0 },
+                { profileid: account.scavId, profileToken: undefined, status: "Free", sid: "", ip: "", port: 0 },
                 {
                     profileid: account.id,
-                    profileToken: null,
+                    profileToken: undefined,
                     status: "Free",
                     sid: "",
                     ip: "",

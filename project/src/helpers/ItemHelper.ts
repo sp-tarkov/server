@@ -184,7 +184,7 @@ export class ItemHelper
      * @param    {string}  tpl  the template id / tpl
      * @returns                 boolean; true for items that may be in player possession and not quest items
      */
-    public isValidItem(tpl: string, invalidBaseTypes: string[] = null): boolean
+    public isValidItem(tpl: string, invalidBaseTypes?: string[]): boolean
     {
         const baseTypes = invalidBaseTypes || this.defaultInvalidBaseTypes;
         const itemDetails = this.getItem(tpl);
@@ -496,12 +496,12 @@ export class ItemHelper
 
         if (item.upd)
         {
-            const medkit = item.upd.MedKit ? item.upd.MedKit : null;
-            const repairable = item.upd.Repairable ? item.upd.Repairable : null;
-            const foodDrink = item.upd.FoodDrink ? item.upd.FoodDrink : null;
-            const key = item.upd.Key ? item.upd.Key : null;
-            const resource = item.upd.Resource ? item.upd.Resource : null;
-            const repairKit = item.upd.RepairKit ? item.upd.RepairKit : null;
+            const medkit = item.upd.MedKit ? item.upd.MedKit : undefined;
+            const repairable = item.upd.Repairable ? item.upd.Repairable : undefined;
+            const foodDrink = item.upd.FoodDrink ? item.upd.FoodDrink : undefined;
+            const key = item.upd.Key ? item.upd.Key : undefined;
+            const resource = item.upd.Resource ? item.upd.Resource : undefined;
+            const repairKit = item.upd.RepairKit ? item.upd.RepairKit : undefined;
 
             const itemDetails = this.getItem(item._tpl)[1];
 
@@ -725,7 +725,7 @@ export class ItemHelper
      */
     public splitStack(itemToSplit: Item): Item[]
     {
-        if (!(itemToSplit?.upd?.StackObjectsCount != null))
+        if (!itemToSplit?.upd?.StackObjectsCount)
         {
             return [itemToSplit];
         }
@@ -834,9 +834,9 @@ export class ItemHelper
      */
     public replaceIDs(
         originalItems: Item[],
-        pmcData: IPmcData | null = null,
-        insuredItems: InsuredItem[] | null = null,
-        fastPanel = null,
+        pmcData?: IPmcData,
+        insuredItems?: InsuredItem[],
+        fastPanel?: any,
     ): Item[]
     {
         let items = this.cloner.clone(originalItems); // Deep-clone the items to avoid mutation.
@@ -844,7 +844,7 @@ export class ItemHelper
 
         for (const item of items)
         {
-            if (pmcData !== null)
+            if (pmcData)
             {
                 // Insured items should not be renamed. Only works for PMCs.
                 if (insuredItems?.find((insuredItem) => insuredItem.itemId === item._id))
@@ -871,7 +871,7 @@ export class ItemHelper
             serialisedInventory = serialisedInventory.replace(new RegExp(oldId, "g"), newId);
 
             // Also replace in quick slot if the old ID exists.
-            if (fastPanel !== null)
+            if (fastPanel)
             {
                 for (const itemSlot in fastPanel)
                 {
@@ -1031,14 +1031,14 @@ export class ItemHelper
      *
      * @param item The item to be checked
      * @param parent The parent of the item to be checked
-     * @returns True if the item is actually moddable, false if it is not, and null if the check cannot be performed.
+     * @returns True if the item is actually moddable, false if it is not, and undefined if the check cannot be performed.
      */
-    public isRaidModdable(item: Item, parent: Item): boolean | null
+    public isRaidModdable(item: Item, parent: Item): boolean | undefined
     {
         // This check requires the item to have the slotId property populated.
         if (!item.slotId)
         {
-            return null;
+            return undefined;
         }
 
         const itemTemplate = this.getItem(item._tpl);
@@ -1077,9 +1077,9 @@ export class ItemHelper
      *
      * @param itemId - The unique identifier of the item for which to find the main parent.
      * @param itemsMap - A Map containing item IDs mapped to their corresponding Item objects for quick lookup.
-     * @returns The Item object representing the top-most parent of the given item, or `null` if no such parent exists.
+     * @returns The Item object representing the top-most parent of the given item, or `undefined` if no such parent exists.
      */
-    public getAttachmentMainParent(itemId: string, itemsMap: Map<string, Item>): Item | null
+    public getAttachmentMainParent(itemId: string, itemsMap: Map<string, Item>): Item | undefined
     {
         let currentItem = itemsMap.get(itemId);
         while (currentItem && this.isAttachmentAttached(currentItem))
@@ -1087,7 +1087,7 @@ export class ItemHelper
             currentItem = itemsMap.get(currentItem.parentId);
             if (!currentItem)
             {
-                return null;
+                return undefined;
             }
         }
         return currentItem;
@@ -1123,9 +1123,9 @@ export class ItemHelper
      *
      * @param itemId - The unique identifier of the item for which to find the equipment parent.
      * @param itemsMap - A Map containing item IDs mapped to their corresponding Item objects for quick lookup.
-     * @returns The Item object representing the equipment parent of the given item, or `null` if no such parent exists.
+     * @returns The Item object representing the equipment parent of the given item, or `undefined` if no such parent exists.
      */
-    public getEquipmentParent(itemId: string, itemsMap: Map<string, Item>): Item | null
+    public getEquipmentParent(itemId: string, itemsMap: Map<string, Item>): Item | undefined
     {
         let currentItem = itemsMap.get(itemId);
         const equipmentSlots = Object.values(EquipmentSlots).map((value) => value as string);
@@ -1135,7 +1135,7 @@ export class ItemHelper
             currentItem = itemsMap.get(currentItem.parentId);
             if (!currentItem)
             {
-                return null;
+                return undefined;
             }
         }
         return currentItem;
@@ -1197,14 +1197,14 @@ export class ItemHelper
      * @param item Db item template to look up Cartridge filter values from
      * @returns Caliber of cartridge
      */
-    public getRandomCompatibleCaliberTemplateId(item: ITemplateItem): string | null
+    public getRandomCompatibleCaliberTemplateId(item: ITemplateItem): string | undefined
     {
         const cartridges = item?._props?.Cartridges[0]?._props?.filters[0]?.Filter;
 
         if (!cartridges)
         {
             this.logger.warning(`Failed to find cartridge for item: ${item?._id} ${item?._name}`);
-            return null;
+            return undefined;
         }
 
         return this.randomUtil.getArrayValue(cartridges);
@@ -1467,8 +1467,8 @@ export class ItemHelper
         caliber: string,
         staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
         fallbackCartridgeTpl: string,
-        cartridgeWhitelist: string[] = null,
-    ): string
+        cartridgeWhitelist?: string[],
+    ): string | undefined
     {
         const ammos = staticAmmoDist[caliber];
         if (!ammos && fallbackCartridgeTpl)
@@ -1581,7 +1581,7 @@ export class ItemHelper
     public addChildSlotItems(
         itemToAdd: Item[],
         itemToAddTemplate: ITemplateItem,
-        modSpawnChanceDict: Record<string, number> = null,
+        modSpawnChanceDict?: Record<string, number>,
         requiredOnly = false,
     ): Item[]
     {
@@ -1641,16 +1641,16 @@ export class ItemHelper
      * Get a compatible tpl from the array provided where it is not found in the provided incompatible mod tpls parameter
      * @param possibleTpls Tpls to randomly choose from
      * @param incompatibleModTpls Incompatible tpls to not allow
-     * @returns Chosen tpl or null
+     * @returns Chosen tpl or undefined
      */
-    public getCompatibleTplFromArray(possibleTpls: string[], incompatibleModTpls: Set<string>): string
+    public getCompatibleTplFromArray(possibleTpls: string[], incompatibleModTpls: Set<string>): string | undefined
     {
         if (possibleTpls.length === 0)
         {
-            return null;
+            return undefined;
         }
 
-        let chosenTpl = null;
+        let chosenTpl: string | undefined = undefined;
         let count = 0;
         while (!chosenTpl)
         {
@@ -1662,7 +1662,7 @@ export class ItemHelper
                 count++;
                 if (count >= possibleTpls.length)
                 {
-                    return null;
+                    return undefined;
                 }
                 continue;
             }
@@ -1818,7 +1818,7 @@ export class ItemHelper
      * @param warningMessageWhenMissing text to write to log when upd object was not found
      * @returns True when upd object was added
      */
-    public addUpdObjectToItem(item: Item, warningMessageWhenMissing: string = null): boolean
+    public addUpdObjectToItem(item: Item, warningMessageWhenMissing?: string): boolean
     {
         if (!item.upd)
         {

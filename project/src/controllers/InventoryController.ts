@@ -345,7 +345,7 @@ export class InventoryController
         const sourceItem = inventoryItems.from.find((item) => item._id === body.item);
         const destinationItem = inventoryItems.to.find((item) => item._id === body.with);
 
-        if (sourceItem === null)
+        if (!sourceItem)
         {
             const errorMessage = `Unable to transfer stack, cannot find source: ${body.item}`;
             this.logger.error(errorMessage);
@@ -355,7 +355,7 @@ export class InventoryController
             return output;
         }
 
-        if (destinationItem === null)
+        if (!destinationItem)
         {
             const errorMessage = `Unable to transfer stack, cannot find destination: ${body.with} `;
             this.logger.error(errorMessage);
@@ -939,7 +939,7 @@ export class InventoryController
         const addItemsRequest: IAddItemsDirectRequest = {
             itemsWithModsToAdd: rewards,
             foundInRaid: foundInRaid,
-            callback: null,
+            callback: undefined,
             useSortingTable: true,
         };
         this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);

@@ -15,7 +15,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
         if (!profile.vitality)
         {
             // Occurs on newly created profiles
-            profile.vitality = { health: null, effects: null };
+            profile.vitality = { health: undefined!, effects: undefined! };
         }
         profile.vitality.health = {
             Hydration: 0,

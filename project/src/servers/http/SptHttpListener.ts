@@ -34,8 +34,8 @@ export class SptHttpListener implements IHttpListener
         {
             case "GET":
             {
-                const response = await this.getResponse(sessionId, req, null);
-                this.sendResponse(sessionId, req, resp, null, response);
+                const response = await this.getResponse(sessionId, req, undefined);
+                this.sendResponse(sessionId, req, resp, undefined, response);
                 break;
             }
             // these are handled almost identically.
@@ -152,12 +152,12 @@ export class SptHttpListener implements IHttpListener
         {
             this.logger.error(this.localisationService.getText("unhandled_response", req.url));
             this.logger.info(info);
-            output = <string>(<unknown> this.httpResponse.getBody(null, 404, `UNHANDLED RESPONSE: ${req.url}`));
+            output = <string>(<unknown> this.httpResponse.getBody(undefined, 404, `UNHANDLED RESPONSE: ${req.url}`));
         }
         return output;
     }
 
-    protected getBodyInfo(body: Buffer, requestUrl = null): any
+    protected getBodyInfo(body: Buffer, requestUrl = undefined): any
     {
         const text = body ? body.toString() : "{}";
         const info = text ? this.jsonUtil.deserialize<any>(text, requestUrl) : {};

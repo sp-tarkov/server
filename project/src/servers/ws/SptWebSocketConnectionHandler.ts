@@ -20,7 +20,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
     protected webSockets: Map<string, WebSocket> = new Map<string, WebSocket>();
     protected defaultNotification: IWsNotificationEvent = { type: NotificationEventType.PING, eventId: "ping" };
 
-    protected websocketPingHandler = null;
+    protected websocketPingHandler: NodeJS.Timeout | undefined;
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,

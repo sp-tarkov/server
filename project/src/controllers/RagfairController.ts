@@ -620,10 +620,10 @@ export class RagfairController
     protected getItemsToListOnFleaFromInventory(
         pmcData: IPmcData,
         itemIdsFromFleaOfferRequest: string[],
-    ): { items: Item[] | null, errorMessage: string | null }
+    ): { items: Item[] | undefined, errorMessage: string | undefined }
     {
         const itemsToReturn = [];
-        let errorMessage: string | null = null;
+        let errorMessage: string | undefined = undefined;
 
         // Count how many items are being sold and multiply the requested amount accordingly
         for (const itemId of itemIdsFromFleaOfferRequest)
@@ -636,7 +636,7 @@ export class RagfairController
                 });
                 this.logger.error(errorMessage);
 
-                return { items: null, errorMessage };
+                return { items: undefined, errorMessage };
             }
 
             item = this.itemHelper.fixItemStackCount(item);
@@ -648,7 +648,7 @@ export class RagfairController
             errorMessage = this.localisationService.getText("ragfair-unable_to_find_requested_items_in_inventory");
             this.logger.error(errorMessage);
 
-            return { items: null, errorMessage };
+            return { items: undefined, errorMessage };
         }
 
         return { items: itemsToReturn, errorMessage };

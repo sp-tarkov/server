@@ -56,25 +56,28 @@ export class HandbookHelper
         // Add handbook overrides found in items.json config into db
         for (const itemTpl in this.itemConfig.handbookPriceOverride)
         {
-            let itemToUpdate = this.databaseServer
-                .getTables()
-                .templates.handbook.Items.find((item) => item.Id === itemTpl);
+            let itemToUpdate = this.databaseServer.getTables()
+                .templates!
+                .handbook
+                .Items.find((item) => item.Id === itemTpl);
             if (!itemToUpdate)
             {
-                this.databaseServer.getTables().templates.handbook.Items.push({
+                this.databaseServer.getTables().templates!.handbook.Items.push({
                     Id: itemTpl,
-                    ParentId: this.databaseServer.getTables().templates.items[itemTpl]._parent,
+                    ParentId: this.databaseServer.getTables().templates!.items[itemTpl]._parent,
                     Price: this.itemConfig.handbookPriceOverride[itemTpl],
                 });
                 itemToUpdate = this.databaseServer
                     .getTables()
-                    .templates.handbook.Items.find((item) => item.Id === itemTpl);
+                    .templates!
+                    .handbook
+                    .Items.find((item) => item.Id === itemTpl);
             }
 
             itemToUpdate.Price = this.itemConfig.handbookPriceOverride[itemTpl];
         }
 
-        const handbookDbClone = this.cloner.clone(this.databaseServer.getTables().templates.handbook);
+        const handbookDbClone = this.cloner.clone(this.databaseServer.getTables().templates!.handbook);
         for (const handbookItem of handbookDbClone.Items)
         {
             this.handbookPriceCache.items.byId.set(handbookItem.Id, handbookItem.Price);
@@ -87,7 +90,7 @@ export class HandbookHelper
 
         for (const handbookCategory of handbookDbClone.Categories)
         {
-            this.handbookPriceCache.categories.byId.set(handbookCategory.Id, handbookCategory.ParentId || null);
+            this.handbookPriceCache.categories.byId.set(handbookCategory.Id, handbookCategory.ParentId || undefined);
             if (handbookCategory.ParentId)
             {
                 if (!this.handbookPriceCache.categories.byParent.has(handbookCategory.ParentId))
@@ -118,7 +121,7 @@ export class HandbookHelper
             return this.handbookPriceCache.items.byId.get(tpl);
         }
 
-        const handbookItem = this.databaseServer.getTables().templates.handbook.Items.find((x) => x.Id === tpl);
+        const handbookItem = this.databaseServer.getTables().templates!.handbook.Items.find((x) => x.Id === tpl);
         if (!handbookItem)
         {
             const newValue = 0;

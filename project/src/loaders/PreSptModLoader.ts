@@ -136,7 +136,7 @@ export class PreSptModLoader implements IModLoader
             this.logger.info(this.localisationService.getText("modloader-mod_order_missing"));
 
             // Write file with empty order array to disk
-            this.vfs.writeFile(this.modOrderPath, this.jsonUtil.serializeAdvanced({ order: [] }, null, 4));
+            this.vfs.writeFile(this.modOrderPath, this.jsonUtil.serializeAdvanced({ order: [] }, undefined, 4));
         }
         else
         {

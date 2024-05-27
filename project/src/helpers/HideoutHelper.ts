@@ -266,13 +266,13 @@ export class HideoutHelper
             const craft = pmcData.Hideout.Production[prodId];
             if (!craft)
             {
-                // Craft value is null, get rid of it (could be from cancelling craft that needs cleaning up)
+                // Craft value is undefined, get rid of it (could be from cancelling craft that needs cleaning up)
                 delete pmcData.Hideout.Production[prodId];
 
                 continue;
             }
 
-            if (craft.Progress === undefined || craft.Progress === null)
+            if (!craft.Progress)
             {
                 this.logger.warning(this.localisationService.getText("hideout-craft_has_undefined_progress_value_defaulting", prodId));
                 craft.Progress = 0;
@@ -692,7 +692,7 @@ export class HideoutHelper
                 // How many units of filter are left
                 let resourceValue = waterFilterItemInSlot.upd?.Resource
                     ? waterFilterItemInSlot.upd.Resource.Value
-                    : null;
+                    : undefined;
                 if (!resourceValue)
                 {
                     // Missing, is new filter, add default and subtract usage
@@ -853,7 +853,7 @@ export class HideoutHelper
             {
                 let resourceValue = airFilterArea.slots[i].item[0].upd?.Resource
                     ? airFilterArea.slots[i].item[0].upd.Resource.Value
-                    : null;
+                    : undefined;
                 if (!resourceValue)
                 {
                     resourceValue = 300 - filterDrainRate;
@@ -891,12 +891,13 @@ export class HideoutHelper
         }
     }
 
-    protected updateBitcoinFarm(pmcData: IPmcData, btcFarmCGs: number, isGeneratorOn: boolean): Production
+    protected updateBitcoinFarm(pmcData: IPmcData, btcFarmCGs: number, isGeneratorOn: boolean): Production | undefined
     {
         const btcProd = pmcData.Hideout.Production[HideoutHelper.bitcoinFarm];
         const bitcoinProdData = this.databaseServer
             .getTables()
-            .hideout.production.find((production) => production._id === HideoutHelper.bitcoinProductionId);
+            .hideout!
+            .production.find((production) => production._id === HideoutHelper.bitcoinProductionId);
         const coinSlotCount = this.getBTCSlots(pmcData);
 
         // Full on bitcoins, halt progress
@@ -973,7 +974,7 @@ export class HideoutHelper
             return btcProd;
         }
 
-        return null;
+        return undefined;
     }
 
     /**
@@ -1003,7 +1004,7 @@ export class HideoutHelper
     protected getTimeElapsedSinceLastServerTick(
         pmcData: IPmcData,
         isGeneratorOn: boolean,
-        recipe: IHideoutProduction = null,
+        recipe?: IHideoutProduction,
     ): number
     {
         // Reduce time elapsed (and progress) when generator is off
@@ -1017,7 +1018,7 @@ export class HideoutHelper
 
         if (!isGeneratorOn)
         {
-            timeElapsed *= this.databaseServer.getTables().hideout.settings.generatorSpeedWithoutFuel;
+            timeElapsed *= this.databaseServer.getTables().hideout!.settings.generatorSpeedWithoutFuel;
         }
 
         return timeElapsed;
@@ -1169,7 +1170,7 @@ export class HideoutHelper
             itemsWithModsToAdd: itemsToAdd,
             foundInRaid: true,
             useSortingTable: false,
-            callback: null,
+            callback: undefined,
         };
 
         // Add FiR coins to player inventory

@@ -90,7 +90,7 @@ export class PlayerScavGenerator
         this.botLootCacheService.clearCache();
 
         // Add scav metadata
-        scavData.savage = null;
+        scavData.savage = undefined;
         scavData.aid = pmcDataClone.aid;
         scavData.TradersInfo = pmcDataClone.TradersInfo;
         scavData.Info.Settings = {} as Settings;
@@ -311,7 +311,7 @@ export class PlayerScavGenerator
 
     protected getScavLevel(scavProfile: IPmcData): number
     {
-        // Info can be null on initial account creation
+        // Info can be undefined on initial account creation
         if (!scavProfile.Info?.Level)
         {
             return 1;
@@ -322,7 +322,7 @@ export class PlayerScavGenerator
 
     protected getScavExperience(scavProfile: IPmcData): number
     {
-        // Info can be null on initial account creation
+        // Info can be undefined on initial account creation
         if (!scavProfile.Info?.Experience)
         {
             return 0;

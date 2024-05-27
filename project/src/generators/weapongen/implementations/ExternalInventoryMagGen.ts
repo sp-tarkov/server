@@ -150,13 +150,13 @@ export class ExternalInventoryMagGen implements IInventoryMagGen
     protected getRandomExternalMagazineForInternalMagazineGun(
         weaponTpl: string,
         magazineBlacklist: string[],
-    ): ITemplateItem
+    ): ITemplateItem | undefined
     {
         // The mag Slot data for the weapon
         const magSlot = this.itemHelper.getItem(weaponTpl)[1]._props.Slots.find((x) => x._name === "mod_magazine");
         if (!magSlot)
         {
-            return null;
+            return undefined;
         }
 
         // All possible mags that fit into the weapon excluding blacklisted
@@ -165,14 +165,14 @@ export class ExternalInventoryMagGen implements IInventoryMagGen
         );
         if (!magazinePool)
         {
-            return null;
+            return undefined;
         }
 
         // Non-internal magazines that fit into the weapon
         const externalMagazineOnlyPool = magazinePool.filter((x) => x._props.ReloadMagType !== "InternalMagazine");
         if (!externalMagazineOnlyPool || externalMagazineOnlyPool?.length === 0)
         {
-            return null;
+            return undefined;
         }
 
         // Randomly chosen external magazine

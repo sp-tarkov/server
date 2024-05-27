@@ -510,7 +510,7 @@ export class RagfairOfferHelper
             itemsToSend,
             this.timeUtil.getHoursAsSeconds(
                 this.questHelper.getMailItemRedeemTimeHoursForProfile(this.profileHelper.getPmcProfile(sessionID))),
-            null,
+            undefined,
             ragfairDetails,
         );
 
@@ -755,7 +755,7 @@ export class RagfairOfferHelper
 
         if (Number.isNaN(offer.requirementsCost))
         {
-            // don't include offers with null or NaN in it
+            // don't include offers with undefined or NaN in it
             return false;
         }
 

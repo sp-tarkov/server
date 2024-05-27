@@ -116,9 +116,9 @@ export class ModLoadOrder
             // Additional info to help debug
             this.logger.debug(this.localisationService.getText("modloader-checking_mod", mod));
             this.logger.debug(`${this.localisationService.getText("modloader-checked")}:`);
-            this.logger.debug(JSON.stringify(this.loadOrder, null, "\t"));
+            this.logger.debug(JSON.stringify(this.loadOrder, undefined, "\t"));
             this.logger.debug(`${this.localisationService.getText("modloader-visited")}:`);
-            this.logger.debug(JSON.stringify(visited, null, "\t"));
+            this.logger.debug(JSON.stringify(visited, undefined, "\t"));
 
             throw new Error(this.localisationService.getText("modloader-cyclic_dependency"));
         }

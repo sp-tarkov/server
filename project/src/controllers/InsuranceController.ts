@@ -628,14 +628,14 @@ export class InsuranceController
      *
      * @param traderId The ID of the trader who insured the item.
      * @param insuredItem Optional. The item to roll for. Only used for logging.
-     * @returns true if the insured item should be removed from inventory, false otherwise, or null on error.
+     * @returns true if the insured item should be removed from inventory, false otherwise, or undefined on error.
      */
-    protected rollForDelete(traderId: string, insuredItem?: Item): boolean | null
+    protected rollForDelete(traderId: string, insuredItem?: Item): boolean | undefined
     {
         const trader = this.traderHelper.getTraderById(traderId);
         if (!trader)
         {
-            return null;
+            return undefined;
         }
 
         const maxRoll = 9999;

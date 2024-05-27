@@ -163,7 +163,7 @@ export abstract class AbstractWinstonLogger implements ILogger
         {
             command = {
                 uuid: crypto.randomUUID(),
-                cmd: async () => await tmpLogger.log("custom", JSON.stringify(data, null, 4)),
+                cmd: async () => await tmpLogger.log("custom", JSON.stringify(data, undefined, 4)),
             };
         }
 

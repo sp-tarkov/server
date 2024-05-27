@@ -176,7 +176,7 @@ export class BotGenerator
         // Remove hideout data if bot is not a PMC or pscav
         if (!(botGenerationDetails.isPmc || botGenerationDetails.isPlayerScav))
         {
-            bot.Hideout = null;
+            bot.Hideout = undefined;
         }
 
         bot.Info.Experience = botLevel.exp;
@@ -436,7 +436,7 @@ export class BotGenerator
                 const skill = skills[skillKey];
                 if (!skill)
                 {
-                    return null;
+                    return undefined;
                 }
 
                 // All skills have id and progress props
@@ -451,7 +451,7 @@ export class BotGenerator
 
                 return skillToAdd;
             })
-            .filter((x) => x !== null);
+            .filter((x) => x !== undefined);
     }
 
     /**

@@ -147,7 +147,7 @@ export class RepeatableQuestController
                     // Add daily quests
                     for (let i = 0; i < this.getQuestCount(repeatableConfig, pmcData); i++)
                     {
-                        let quest = null;
+                        let quest: IRepeatableQuest | undefined = undefined;
                         let lifeline = 0;
                         while (!quest && questTypePool.types.length > 0)
                         {
@@ -535,7 +535,7 @@ export class RepeatableQuestController
         repeatableConfig: IRepeatableQuestConfig,
     ): IRepeatableQuest
     {
-        let newRepeatableQuest: IRepeatableQuest = null;
+        let newRepeatableQuest: IRepeatableQuest = undefined;
         let attemptsToGenerateQuest = 0;
         while (!newRepeatableQuest && questTypePool.types.length > 0)
         {

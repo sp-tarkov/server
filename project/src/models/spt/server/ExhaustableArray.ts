@@ -14,11 +14,11 @@ export class ExhaustableArray<T> implements IExhaustableArray<T>
         this.pool = this.cloner.clone(itemPool);
     }
 
-    public getRandomValue(): T
+    public getRandomValue(): T | undefined
     {
         if (!this.pool?.length)
         {
-            return null;
+            return undefined;
         }
 
         const index = this.randomUtil.getInt(0, this.pool.length - 1);
@@ -27,11 +27,11 @@ export class ExhaustableArray<T> implements IExhaustableArray<T>
         return toReturn;
     }
 
-    public getFirstValue(): T
+    public getFirstValue(): T | undefined
     {
         if (!this.pool?.length)
         {
-            return null;
+            return undefined;
         }
 
         const toReturn = this.cloner.clone(this.pool[0]);
@@ -52,7 +52,7 @@ export class ExhaustableArray<T> implements IExhaustableArray<T>
 
 export interface IExhaustableArray<T>
 {
-    getRandomValue(): T
-    getFirstValue(): T
+    getRandomValue(): T | undefined
+    getFirstValue(): T | undefined
     hasValues(): boolean
 }

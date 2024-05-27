@@ -199,7 +199,7 @@ export class FenceBaseAssortGenerator
     protected isAmmoAbovePenetrationLimit(rootItemDb: ITemplateItem): boolean
     {
         const ammoPenetrationPower = this.getAmmoPenetrationPower(rootItemDb);
-        if (ammoPenetrationPower === null)
+        if (!ammoPenetrationPower)
         {
             this.logger.warning(this.localisationService.getText("fence-unable_to_get_ammo_penetration_value", rootItemDb._id));
 
@@ -212,9 +212,9 @@ export class FenceBaseAssortGenerator
     /**
      * Get the penetration power value of an ammo, works with ammo boxes and raw ammos
      * @param rootItemDb Ammo box or ammo item from items.db
-     * @returns Penetration power of passed in item, null if it doesnt have a power
+     * @returns Penetration power of passed in item, undefined if it doesnt have a power
      */
-    protected getAmmoPenetrationPower(rootItemDb: ITemplateItem): number
+    protected getAmmoPenetrationPower(rootItemDb: ITemplateItem): number | undefined
     {
         if (this.itemHelper.isOfBaseclass(rootItemDb._id, BaseClasses.AMMO_BOX))
         {
@@ -227,7 +227,7 @@ export class FenceBaseAssortGenerator
             {
                 this.logger.warning(this.localisationService.getText("fence-ammo_not_found_in_db", cartridgeTplInBox));
 
-                return null;
+                return undefined;
             }
 
             return ammoItemDb[1]._props.PenetrationPower;
@@ -240,7 +240,7 @@ export class FenceBaseAssortGenerator
         }
 
         // Not an ammobox or ammo
-        return null;
+        return undefined;
     }
 
     /**

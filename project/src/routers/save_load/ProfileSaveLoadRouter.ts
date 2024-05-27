@@ -13,7 +13,7 @@ export class ProfileSaveLoadRouter extends SaveLoadRouter
 
     public override handleLoad(profile: ISptProfile): ISptProfile
     {
-        if (profile.characters === null)
+        if (!profile.characters)
         {
             profile.characters = { pmc: {} as IPmcData, scav: {} as IPmcData };
         }

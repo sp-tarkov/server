@@ -37,9 +37,9 @@ export class RecursiveCloner implements ICloner
             {
                 // If the value of the original property is null, ensure the cloned value is also null
                 // This fixes an issue where null arrays were incorrectly being converted to empty objects
-                if (obj[propOf1] === null)
+                if (obj[propOf1] === null || obj[propOf1] === undefined)
                 {
-                    newObj[propOf1.toString()] = null;
+                    newObj[propOf1.toString()] = undefined;
                     continue;
                 }
 

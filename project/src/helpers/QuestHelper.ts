@@ -374,7 +374,7 @@ export class QuestHelper
         const itemDbData = this.itemHelper.getItem(originalRewardRootItem._tpl)[1];
 
         // Hydrate reward with only 'required' mods - necessary for things like helmets otherwise you end up with nvgs/visors etc
-        questReward.items = this.itemHelper.addChildSlotItems(questReward.items, itemDbData, null, true);
+        questReward.items = this.itemHelper.addChildSlotItems(questReward.items, itemDbData, undefined, true);
     }
 
     /**
@@ -716,7 +716,7 @@ export class QuestHelper
         pmcData: IPmcData,
         failRequest: IFailQuestRequestData,
         sessionID: string,
-        output: IItemEventRouterResponse = null,
+        output?: IItemEventRouterResponse,
     ): void
     {
         let updatedOutput = output;
@@ -751,7 +751,7 @@ export class QuestHelper
             {
                 this.mailSendService.sendLocalisedNpcMessageToPlayer(
                     sessionID,
-                    this.traderHelper.getTraderById(quest?.traderId ?? matchingRepeatableQuest?.traderId), // Can be null when repeatable quest has been moved to inactiveQuests
+                    this.traderHelper.getTraderById(quest?.traderId ?? matchingRepeatableQuest?.traderId), // Can be undefined when repeatable quest has been moved to inactiveQuests
                     MessageType.QUEST_FAIL,
                     quest.failMessageText,
                     questRewards,

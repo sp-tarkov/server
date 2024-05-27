@@ -152,12 +152,15 @@ export class BotHelper
      * @param botEquipConfig bot equipment json
      * @returns RandomisationDetails
      */
-    public getBotRandomizationDetails(botLevel: number, botEquipConfig: EquipmentFilters): RandomisationDetails
+    public getBotRandomizationDetails(
+        botLevel: number,
+        botEquipConfig: EquipmentFilters,
+    ): RandomisationDetails | undefined
     {
         // No randomisation details found, skip
         if (!botEquipConfig || Object.keys(botEquipConfig).length === 0 || !botEquipConfig.randomisation)
         {
-            return null;
+            return undefined;
         }
 
         return botEquipConfig.randomisation.find((x) => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);

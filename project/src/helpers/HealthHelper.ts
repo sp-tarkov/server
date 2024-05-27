@@ -38,7 +38,7 @@ export class HealthHelper
         if (!profile.vitality)
         {
             // Occurs on newly created profiles
-            profile.vitality = { health: null, effects: null };
+            profile.vitality = { health: undefined!, effects: undefined! };
         }
         profile.vitality.health = {
             Hydration: 0,
@@ -87,9 +87,9 @@ export class HealthHelper
         const profileHealth = profile.vitality.health;
         const profileEffects = profile.vitality.effects;
 
-        profileHealth.Hydration = request.Hydration;
-        profileHealth.Energy = request.Energy;
-        profileHealth.Temperature = request.Temperature;
+        profileHealth.Hydration = request.Hydration!;
+        profileHealth.Energy = request.Energy!;
+        profileHealth.Temperature = request.Temperature!;
 
         // Transfer properties from request to profile
         for (const bodyPart in postRaidBodyParts)

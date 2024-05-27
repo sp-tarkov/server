@@ -896,7 +896,7 @@ export class LocationGenerator
                     magazineItem,
                     itemTemplate, // Magazine template
                     staticAmmoDist,
-                    null,
+                    undefined,
                     this.locationConfig.minFillLooseMagazinePercent / 100,
                 );
             }
@@ -1108,7 +1108,7 @@ export class LocationGenerator
                     magazineWithCartridges,
                     itemTemplate,
                     staticAmmoDist,
-                    null,
+                    undefined,
                     this.locationConfig.minFillStaticMagazinePercent / 100,
                 );
 

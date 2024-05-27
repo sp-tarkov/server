@@ -518,9 +518,9 @@ export class ProfileFixerService
         for (const traderId in pmcProfile.TradersInfo)
         {
             const trader = pmcProfile.TradersInfo[traderId];
-            if (trader && trader.salesSum === null)
+            if (!(trader?.salesSum))
             {
-                this.logger.warning(`trader ${traderId} has a null salesSum value, resetting to 0`);
+                this.logger.warning(`trader ${traderId} has a undefined salesSum value, resetting to 0`);
                 trader.salesSum = 0;
             }
         }
@@ -1096,7 +1096,7 @@ export class ProfileFixerService
     {
         for (const item of magazineBuild.Items)
         {
-            // Magazine builds can have null items in them, skip those
+            // Magazine builds can have undefined items in them, skip those
             if (!item)
             {
                 continue;
@@ -1187,10 +1187,10 @@ export class ProfileFixerService
                 item.upd.Tag.Name = item.upd.Tag.Name.replace(regxp, "");
             }
 
-            // Check items with StackObjectsCount (null)
-            if (item.upd.StackObjectsCount === null)
+            // Check items with StackObjectsCount (undefined)
+            if (!item.upd?.StackObjectsCount)
             {
-                this.logger.warning(`Fixed item: ${item._id}s null StackObjectsCount value, now set to 1`);
+                this.logger.warning(`Fixed item: ${item._id}s undefined StackObjectsCount value, now set to 1`);
                 item.upd.StackObjectsCount = 1;
             }
         }
@@ -1449,13 +1449,13 @@ export class ProfileFixerService
 
     /**
      * If someone has run a mod from pre-3.8.0, it results in an invalid `nextResupply` value
-     * Resolve this by setting the nextResupply to 0 if it's null
+     * Resolve this by setting the nextResupply to 0 if it's undefined
      */
     protected fixNullTraderNextResupply(pmcProfile: IPmcData): void
     {
         for (const [traderId, trader] of Object.entries(pmcProfile.TradersInfo))
         {
-            if (trader && trader.nextResupply === null)
+            if (!(trader?.nextResupply))
             {
                 this.logger.warning(`trader ${traderId} has a null nextResupply value, resetting to 0`);
                 trader.nextResupply = 0;

@@ -223,7 +223,7 @@ export class BotEquipmentModGenerator
         armorItem: ITemplateItem,
     ): IFilterPlateModsForSlotByLevelResult
     {
-        const result: IFilterPlateModsForSlotByLevelResult = { result: Result.UNKNOWN_FAILURE, plateModTpls: null };
+        const result: IFilterPlateModsForSlotByLevelResult = { result: Result.UNKNOWN_FAILURE, plateModTpls: undefined };
 
         // Not pmc or not a plate slot, return original mod pool array
         if (!this.itemHelper.isRemovablePlateSlot(modSlot))
@@ -796,7 +796,7 @@ export class BotEquipmentModGenerator
         {
             // Nothing in mod pool + item not required
             this.logger.debug(`Mod pool for slot: ${request.modSlot} on item: ${request.parentTemplate._name} was empty, skipping mod`);
-            return null;
+            return undefined;
         }
 
         // Filter out non-whitelisted scopes, use full modpool if filtered pool would have no elements
@@ -844,7 +844,7 @@ export class BotEquipmentModGenerator
         if (chosenModResult.slotBlocked && !parentSlot._required)
         {
             // Don't bother trying to fit mod, slot is completely blocked
-            return null;
+            return undefined;
         }
 
         // Log if mod chosen was incompatible
@@ -864,7 +864,7 @@ export class BotEquipmentModGenerator
         // Compatible item not found + not required
         if (!chosenModResult.found && parentSlot !== undefined && !parentSlot._required)
         {
-            return null;
+            return undefined;
         }
 
         if (!chosenModResult.found && parentSlot !== undefined)
@@ -876,7 +876,7 @@ export class BotEquipmentModGenerator
                 );
             }
 
-            return null;
+            return undefined;
         }
 
         return this.itemHelper.getItem(chosenModResult.chosenTpl);
@@ -1141,7 +1141,7 @@ export class BotEquipmentModGenerator
         }
 
         // No mod found
-        return null;
+        return undefined;
     }
 
     /**
@@ -1336,7 +1336,7 @@ export class BotEquipmentModGenerator
             itemModPool = modPool[parentTemplate._id];
         }
 
-        let exhaustableModPool = null;
+        let exhaustableModPool = undefined;
         let modSlot = "cartridges";
         const camoraFirstSlot = "camora_000";
         if (modSlot in itemModPool)

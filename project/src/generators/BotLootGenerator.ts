@@ -170,7 +170,7 @@ export class BotLootGenerator
             healingItemCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -183,7 +183,7 @@ export class BotLootGenerator
             drugItemCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -196,7 +196,7 @@ export class BotLootGenerator
             foodItemCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -209,7 +209,7 @@ export class BotLootGenerator
             drinkItemCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -222,7 +222,7 @@ export class BotLootGenerator
             currencyItemCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -248,7 +248,7 @@ export class BotLootGenerator
             grenadeCount,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             isPmc,
             containersIdFull,
@@ -327,7 +327,7 @@ export class BotLootGenerator
                 50,
                 botInventory,
                 botRole,
-                null,
+                undefined,
                 -1,
                 isPmc,
                 containersIdFull,
@@ -372,7 +372,7 @@ export class BotLootGenerator
             1,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             true,
         );
@@ -385,7 +385,7 @@ export class BotLootGenerator
             10,
             botInventory,
             botRole,
-            null,
+            undefined,
             0,
             true,
         );
@@ -421,7 +421,7 @@ export class BotLootGenerator
         totalItemCount: number,
         inventoryToAddItemsTo: PmcInventory,
         botRole: string,
-        itemSpawnLimits: IItemSpawnLimitSettings = null,
+        itemSpawnLimits: IItemSpawnLimitSettings = undefined,
         totalValueLimitRub = 0,
         isPmc = false,
         containersIdFull = new Set<string>(),
@@ -628,7 +628,7 @@ export class BotLootGenerator
         // Must add soft inserts/plates
         else if (this.itemHelper.itemRequiresSoftInserts(itemToAddTemplate._id))
         {
-            this.itemHelper.addChildSlotItems(itemToAddChildrenTo, itemToAddTemplate, null, false);
+            this.itemHelper.addChildSlotItems(itemToAddChildrenTo, itemToAddTemplate, undefined, false);
         }
     }
 

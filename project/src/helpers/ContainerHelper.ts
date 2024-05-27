@@ -2,17 +2,8 @@ import { injectable } from "tsyringe";
 
 export class FindSlotResult
 {
-    success: boolean;
-    x: any;
-    y: any;
-    rotation: boolean;
-    constructor(success = false, x = null, y = null, rotation = false)
-    {
-        this.success = success;
-        this.x = x;
-        this.y = y;
-        this.rotation = rotation;
-    }
+    constructor(public success = false, public x?: number, public y?: number, public rotation = false)
+    {}
 }
 
 @injectable()

@@ -602,7 +602,7 @@ export class QuestController
     protected getQuestsWithDifferentStatuses(
         preQuestStatusus: IQuestStatus[],
         postQuestStatuses: IQuestStatus[],
-    ): IQuestStatus[]
+    ): IQuestStatus[] | undefined
     {
         const result: IQuestStatus[] = [];
 
@@ -618,7 +618,7 @@ export class QuestController
 
         if (result.length === 0)
         {
-            return null;
+            return undefined;
         }
 
         return result;

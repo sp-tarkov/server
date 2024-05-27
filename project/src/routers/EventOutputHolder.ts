@@ -144,7 +144,7 @@ export class EventOutputHolder
      */
     protected getProductionsFromProfileAndFlagComplete(
         productions: Record<string, Productive>,
-    ): Record<string, Productive>
+    ): Record<string, Productive> | undefined
     {
         for (const productionKey in productions)
         {
@@ -182,8 +182,8 @@ export class EventOutputHolder
             }
         }
 
-        // Return null if there's no crafts to send to client to match live behaviour
-        return Object.keys(productions).length > 0 ? productions : null;
+        // Return undefined if there's no crafts to send to client to match live behaviour
+        return Object.keys(productions).length > 0 ? productions : undefined;
     }
 
     /**

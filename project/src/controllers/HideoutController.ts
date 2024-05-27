@@ -529,7 +529,7 @@ export class HideoutController
         const request: IAddItemDirectRequest = {
             itemWithModsToAdd: [itemToReturn],
             foundInRaid: !!itemToReturn.upd?.SpawnedInSession,
-            callback: null,
+            callback: undefined,
             useSortingTable: false,
         };
 
@@ -824,7 +824,7 @@ export class HideoutController
         let prodId: string;
         for (const [productionId, production] of productionDict)
         {
-            // Skip null production objects
+            // Skip undefined production objects
             if (!production)
             {
                 continue;
@@ -981,7 +981,7 @@ export class HideoutController
                 itemsWithModsToAdd: [toolItem],
                 foundInRaid: toolItem[0].upd?.SpawnedInSession ?? false,
                 useSortingTable: false,
-                callback: null,
+                callback: undefined,
             };
 
             this.inventoryHelper.addItemsToStash(sessionID, addToolsRequest, pmcData, output);
@@ -996,7 +996,7 @@ export class HideoutController
             itemsWithModsToAdd: itemAndChildrenToSendToPlayer,
             foundInRaid: true,
             useSortingTable: false,
-            callback: null,
+            callback: undefined,
         };
         this.inventoryHelper.addItemsToStash(sessionID, addItemsRequest, pmcData, output);
         if (output.warnings.length > 0)
@@ -1118,7 +1118,7 @@ export class HideoutController
         const addItemsRequest: IAddItemsDirectRequest = {
             itemsWithModsToAdd: scavCaseRewards,
             foundInRaid: true,
-            callback: null,
+            callback: undefined,
             useSortingTable: false,
         };
 
@@ -1320,7 +1320,7 @@ export class HideoutController
         }
 
         // Null out production data so client gets informed when response send back
-        pmcData.Hideout.Production[request.recipeId] = null;
+        pmcData.Hideout.Production[request.recipeId] = undefined;
 
         // TODO - handle timestamp somehow?
 

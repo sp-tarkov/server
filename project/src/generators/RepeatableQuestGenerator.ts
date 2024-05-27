@@ -153,7 +153,7 @@ export class RepeatableQuestGenerator
             dist: number,
             kill: number,
             weaponRequirement: number,
-        ): number
+        ): number | undefined
         {
             return Math.sqrt(Math.sqrt(target) + bodyPart + dist + weaponRequirement) * kill;
         }
@@ -167,7 +167,7 @@ export class RepeatableQuestGenerator
             // also if only bosses are left we need to leave otherwise it's a guaranteed boss elimination
             // -> then it would not be a quest with low probability anymore
             questTypePool.types = questTypePool.types.filter((t) => t !== "Elimination");
-            return null;
+            return undefined;
         }
 
         const targetKey = targetsConfig.draw()[0];
@@ -208,7 +208,7 @@ export class RepeatableQuestGenerator
         }
 
         // draw the target body part and calculate the difficulty factor
-        let bodyPartsToClient = null;
+        let bodyPartsToClient = undefined;
         let bodyPartDifficulty = 0;
         if (eliminationConfig.bodyPartProb > Math.random())
         {
@@ -231,7 +231,7 @@ export class RepeatableQuestGenerator
         }
 
         // Draw a distance condition
-        let distance = null;
+        let distance = undefined;
         let distanceDifficulty = 0;
         let isDistanceRequirementAllowed = !eliminationConfig.distLocationBlacklist.includes(locationKey);
 
@@ -555,7 +555,7 @@ export class RepeatableQuestGenerator
                 ),
             );
 
-            return null;
+            return undefined;
         }
 
         // Draw items to ask player to retrieve
@@ -698,7 +698,7 @@ export class RepeatableQuestGenerator
         {
             // there are no more locations left for exploration; delete it as a possible quest type
             questTypePool.types = questTypePool.types.filter((t) => t !== "Exploration");
-            return null;
+            return undefined;
         }
 
         // If location drawn is factory, it's possible to either get factory4_day and factory4_night or only one

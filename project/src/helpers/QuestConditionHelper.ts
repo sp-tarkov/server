@@ -6,7 +6,7 @@ export class QuestConditionHelper
 {
     public getQuestConditions(
         q: IQuestCondition[],
-        furtherFilter: (a: IQuestCondition) => IQuestCondition[] = null,
+        furtherFilter?: (a: IQuestCondition) => IQuestCondition[],
     ): IQuestCondition[]
     {
         return this.filterConditions(q, "Quest", furtherFilter);
@@ -14,7 +14,7 @@ export class QuestConditionHelper
 
     public getLevelConditions(
         q: IQuestCondition[],
-        furtherFilter: (a: IQuestCondition) => IQuestCondition[] = null,
+        furtherFilter?: (a: IQuestCondition) => IQuestCondition[],
     ): IQuestCondition[]
     {
         return this.filterConditions(q, "Level", furtherFilter);
@@ -22,7 +22,7 @@ export class QuestConditionHelper
 
     public getLoyaltyConditions(
         q: IQuestCondition[],
-        furtherFilter: (a: IQuestCondition) => IQuestCondition[] = null,
+        furtherFilter?: (a: IQuestCondition) => IQuestCondition[],
     ): IQuestCondition[]
     {
         return this.filterConditions(q, "TraderLoyalty", furtherFilter);
@@ -30,7 +30,7 @@ export class QuestConditionHelper
 
     public getStandingConditions(
         q: IQuestCondition[],
-        furtherFilter: (a: IQuestCondition) => IQuestCondition[] = null,
+        furtherFilter?: (a: IQuestCondition) => IQuestCondition[],
     ): IQuestCondition[]
     {
         return this.filterConditions(q, "TraderStanding", furtherFilter);
@@ -39,7 +39,7 @@ export class QuestConditionHelper
     protected filterConditions(
         q: IQuestCondition[],
         questType: string,
-        furtherFilter: (a: IQuestCondition) => IQuestCondition[] = null,
+        furtherFilter?: (a: IQuestCondition) => IQuestCondition[],
     ): IQuestCondition[]
     {
         const filteredQuests = q.filter((c) =>

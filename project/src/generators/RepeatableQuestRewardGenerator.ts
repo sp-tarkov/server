@@ -391,7 +391,7 @@ export class RepeatableQuestRewardGenerator
      * @param   {integer}   index           All rewards will be appended to a list, for unknown reasons the client wants the index
      * @returns {object}                    Object of "Reward"-item-type
      */
-    protected generateRewardItem(tpl: string, value: number, index: number, preset: Item[] = null): IQuestReward
+    protected generateRewardItem(tpl: string, value: number, index: number, preset?: Item[]): IQuestReward
     {
         const id = this.objectId.generate();
         const rewardItem: IQuestReward = { target: id, value: value, type: QuestRewardType.ITEM, index: index };

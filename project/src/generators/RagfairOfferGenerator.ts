@@ -195,7 +195,7 @@ export class RagfairOfferGenerator
                 nickname: playerProfile.Info.Nickname,
                 rating: playerProfile.RagfairInfo.rating,
                 isRatingGrowing: playerProfile.RagfairInfo.isRatingGrowing,
-                avatar: null,
+                avatar: undefined,
                 aid: playerProfile.aid,
             };
         }
@@ -209,7 +209,7 @@ export class RagfairOfferGenerator
                 this.ragfairConfig.dynamic.rating.min,
                 this.ragfairConfig.dynamic.rating.max),
             isRatingGrowing: this.randomUtil.getBool(),
-            avatar: null,
+            avatar: undefined,
             aid: this.hashUtil.generateAccountId(),
         };
     }
@@ -362,14 +362,14 @@ export class RagfairOfferGenerator
      * Create multiple offers for items by using a unique list of items we've generated previously
      * @param expiredOffers optional, expired offers to regenerate
      */
-    public async generateDynamicOffers(expiredOffers: Item[][] = null): Promise<void>
+    public async generateDynamicOffers(expiredOffers?: Item[][]): Promise<void>
     {
-        const replacingExpiredOffers = expiredOffers?.length > 0;
+        const replacingExpiredOffers = (expiredOffers?.length ?? 0) > 0;
         const config = this.ragfairConfig.dynamic;
 
         // get assort items from param if they exist, otherwise grab freshly generated assorts
         const assortItemsToProcess: Item[][] = replacingExpiredOffers
-            ? expiredOffers
+            ? expiredOffers!
             : this.ragfairAssortGenerator.getAssortItems();
 
         // Store all functions to create an offer for every item and pass into Promise.all to run async

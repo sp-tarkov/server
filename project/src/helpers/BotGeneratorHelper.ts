@@ -194,7 +194,7 @@ export class BotGeneratorHelper
      * Get the chance for the weapon attachment or helmet equipment to be set as activated
      * @param botRole role of bot with weapon/helmet
      * @param setting the setting of the weapon attachment/helmet equipment to be activated
-     * @param defaultValue default value for the chance of activation if the botrole or bot equipment role is null
+     * @param defaultValue default value for the chance of activation if the botrole or bot equipment role is undefined
      * @returns Percent chance to be active
      */
     protected getBotEquipmentSettingFromConfig(

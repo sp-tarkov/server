@@ -292,7 +292,7 @@ export class TraderAssortHelper
             items: this.ragfairAssortGenerator.getAssortItems().flat(),
             barter_scheme: {},
             loyal_level_items: {},
-            nextResupply: null,
+            nextResupply: undefined,
         };
     }
 }
