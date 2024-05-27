@@ -1241,7 +1241,7 @@ describe("InsuranceController", () =>
         let body: any;
         let sessionId: string;
         let insuranceController: any;
-        let mockGetPremium: any;
+        let mockGetRoublePriceToInsureItemWithTrader: any;
         let mockPayMoney: any;
         let mockGetOutput: any;
 
@@ -1258,7 +1258,7 @@ describe("InsuranceController", () =>
             sessionId = "session-id";
 
             // Setup shared mocks.
-            mockGetPremium = vi.spyOn(insuranceController.insuranceService, "getPremium").mockReturnValue(100);
+            mockGetRoublePriceToInsureItemWithTrader = vi.spyOn(insuranceController.insuranceService, "getRoublePriceToInsureItemWithTrader").mockReturnValue(100);
             mockPayMoney = vi.spyOn(insuranceController.paymentService, "payMoney").mockReturnValue({
                 warnings: [],
                 otherProperty: "property-value",
@@ -1300,14 +1300,14 @@ describe("InsuranceController", () =>
             // Execute the method.
             insuranceController.insure(pmcData, body, sessionId);
 
-            // Verify that getPremium is called with each item from the pmcData.Inventory.items array.
+            // Verify that getRoublePriceToInsureItemWithTrader is called with each item from the pmcData.Inventory.items array.
             for (const item of pmcData.Inventory.items)
             {
-                expect(mockGetPremium).toHaveBeenCalledWith(pmcData, item, body.tid);
+                expect(mockGetRoublePriceToInsureItemWithTrader).toHaveBeenCalledWith(pmcData, item, body.tid);
             }
 
-            // Verify that getPremium was called the correct number of times.
-            expect(mockGetPremium).toHaveBeenCalledTimes(body.items.length);
+            // Verify that getRoublePriceToInsureItemWithTrader was called the correct number of times.
+            expect(mockGetRoublePriceToInsureItemWithTrader).toHaveBeenCalledTimes(body.items.length);
         });
 
         it("should call the payment service with the correct parameters", () =>
@@ -1456,8 +1456,8 @@ describe("InsuranceController", () =>
                 therapist: { itemTpl1: 150, itemTpl2: 250, itemTpl3: 350 },
             };
 
-            // Mock the InsuranceService.getPremium method to return the expected values.
-            vi.spyOn(insuranceController.insuranceService, "getPremium").mockReturnValueOnce(100).mockReturnValueOnce(
+            // Mock the InsuranceService.getRoublePriceToInsureItemWithTrader method to return the expected values.
+            vi.spyOn(insuranceController.insuranceService, "getRoublePriceToInsureItemWithTrader").mockReturnValueOnce(100).mockReturnValueOnce(
                 200,
             ).mockReturnValueOnce(300).mockReturnValueOnce(150).mockReturnValueOnce(250).mockReturnValueOnce(350);
 
@@ -1478,8 +1478,8 @@ describe("InsuranceController", () =>
             };
             const expected = { prapor: { itemTpl1: 100, itemTpl2: 200 } };
 
-            // Mock the InsuranceService.getPremium method to return the expected values.
-            vi.spyOn(insuranceController.insuranceService, "getPremium").mockReturnValueOnce(100).mockReturnValueOnce(
+            // Mock the InsuranceService.getRoublePriceToInsureItemWithTrader method to return the expected values.
+            vi.spyOn(insuranceController.insuranceService, "getRoublePriceToInsureItemWithTrader").mockReturnValueOnce(100).mockReturnValueOnce(
                 200,
             );
 
