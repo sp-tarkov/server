@@ -110,7 +110,7 @@ export class GiftService
             {
                 this.mailSendService.sendLocalisedNpcMessageToPlayer(
                     playerId,
-                    giftData.trader,
+                    giftData.trader!,
                     MessageType.MESSAGE_WITH_ITEMS,
                     giftData.localeTextId,
                     giftData.items,
@@ -121,7 +121,7 @@ export class GiftService
             {
                 this.mailSendService.sendDirectNpcMessageToPlayer(
                     playerId,
-                    giftData.trader,
+                    giftData.trader!,
                     MessageType.MESSAGE_WITH_ITEMS,
                     giftData.messageText,
                     giftData.items,
@@ -135,11 +135,11 @@ export class GiftService
             // Trader / ragfair
             const details: ISendMessageDetails = {
                 recipientId: playerId,
-                sender: this.getMessageType(giftData),
+                sender: this.getMessageType(giftData)!,
                 senderDetails: {
-                    _id: this.getSenderId(giftData),
+                    _id: this.getSenderId(giftData)!,
                     aid: 1234567, // TODO - pass proper aid value
-                    Info: null,
+                    Info: undefined,
                 },
                 messageText: giftData.messageText,
                 items: giftData.items,
@@ -164,11 +164,11 @@ export class GiftService
      * @param giftData Gift to send player
      * @returns trader/user/system id
      */
-    protected getSenderId(giftData: Gift): string
+    protected getSenderId(giftData: Gift): string | undefined
     {
         if (giftData.sender === GiftSenderType.TRADER)
         {
-            return Traders[giftData.trader];
+            return Traders[giftData.trader!];
         }
 
         if (giftData.sender === GiftSenderType.USER)
@@ -182,7 +182,7 @@ export class GiftService
      * @param giftData Gift to send player
      * @returns MessageType enum value
      */
-    protected getMessageType(giftData: Gift): MessageType
+    protected getMessageType(giftData: Gift): MessageType | undefined
     {
         switch (giftData.sender)
         {

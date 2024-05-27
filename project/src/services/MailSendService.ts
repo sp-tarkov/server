@@ -52,9 +52,9 @@ export class MailSendService
         messageType: MessageType,
         message: string,
         items: Item[] = [],
-        maxStorageTimeSeconds = null,
-        systemData = null,
-        ragfair = null,
+        maxStorageTimeSeconds?: number,
+        systemData?: ISystemData,
+        ragfair?: MessageContentRagfair,
     ): void
     {
         if (!trader)
@@ -242,7 +242,7 @@ export class MailSendService
         senderDetails: IUserDialogInfo,
         message: string,
         items: Item[] = [],
-        maxStorageTimeSeconds = null,
+        maxStorageTimeSeconds?: number,
     ): void
     {
         const details: ISendMessageDetails = {

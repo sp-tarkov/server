@@ -112,7 +112,7 @@ export interface IUserDialogInfo
 {
     _id: string
     aid: number
-    Info: IUserDialogDetails
+    Info?: IUserDialogDetails
 }
 
 export interface IUserDialogDetails

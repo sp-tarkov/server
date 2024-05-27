@@ -61,13 +61,17 @@ export class RepairService
     ): RepairDetails
     {
         const itemToRepair = pmcData.Inventory.items.find((x) => x._id === repairItemDetails._id);
-        if (itemToRepair === undefined)
+        if (!itemToRepair)
         {
             throw new Error(`Item ${repairItemDetails._id} not found in profile inventory, unable to repair`);
         }
 
         const priceCoef = this.traderHelper.getLoyaltyLevel(traderId, pmcData).repair_price_coef;
-        const traderRepairDetails = this.traderHelper.getTrader(traderId, sessionID).repair;
+        const traderRepairDetails = this.traderHelper.getTrader(traderId, sessionID)?.repair;
+        if (!traderRepairDetails)
+        {
+            throw new Error(`Trader details for ${traderId} was not found`);
+        }
         const repairQualityMultiplier = Number(traderRepairDetails.quality);
         const repairRate = priceCoef <= 0 ? 1 : priceCoef / 100 + 1;
 
