@@ -1,3 +1,4 @@
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
 import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 
@@ -10,6 +11,7 @@ export class RagfairOfferHolder
     constructor(
         protected maxOffersPerTemplate: number,
         protected ragfairServerHelper: RagfairServerHelper,
+        protected profileHelper: ProfileHelper,
     )
     {
         this.offersById = new Map();
@@ -69,7 +71,7 @@ export class RagfairOfferHolder
         // If its an NPC PMC offer AND we have already reached the maximum amount of possible offers
         // for this template, just dont add in more
         if (
-            !(this.ragfairServerHelper.isTrader(trader) || this.ragfairServerHelper.isPlayer(trader))
+            !(this.ragfairServerHelper.isTrader(trader) || this.profileHelper.isPlayer(trader))
             && (this.getOffersByTemplate(itemTpl)?.length ?? 0) >= this.maxOffersPerTemplate
         )
         {

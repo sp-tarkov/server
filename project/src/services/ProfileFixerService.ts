@@ -518,7 +518,7 @@ export class ProfileFixerService
         for (const traderId in pmcProfile.TradersInfo)
         {
             const trader = pmcProfile.TradersInfo[traderId];
-            if (!(trader?.salesSum))
+            if (trader?.salesSum === undefined)
             {
                 this.logger.warning(`trader ${traderId} has a undefined salesSum value, resetting to 0`);
                 trader.salesSum = 0;
@@ -1188,7 +1188,7 @@ export class ProfileFixerService
             }
 
             // Check items with StackObjectsCount (undefined)
-            if (!item.upd?.StackObjectsCount)
+            if (item.upd?.StackObjectsCount === undefined)
             {
                 this.logger.warning(`Fixed item: ${item._id}s undefined StackObjectsCount value, now set to 1`);
                 item.upd.StackObjectsCount = 1;
@@ -1455,9 +1455,9 @@ export class ProfileFixerService
     {
         for (const [traderId, trader] of Object.entries(pmcProfile.TradersInfo))
         {
-            if (!(trader?.nextResupply))
+            if (trader?.nextResupply === undefined)
             {
-                this.logger.warning(`trader ${traderId} has a null nextResupply value, resetting to 0`);
+                this.logger.warning(`trader ${traderId} has a undefined nextResupply value, resetting to 0`);
                 trader.nextResupply = 0;
             }
         }

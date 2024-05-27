@@ -199,7 +199,7 @@ export class FenceBaseAssortGenerator
     protected isAmmoAbovePenetrationLimit(rootItemDb: ITemplateItem): boolean
     {
         const ammoPenetrationPower = this.getAmmoPenetrationPower(rootItemDb);
-        if (!ammoPenetrationPower)
+        if (ammoPenetrationPower === undefined)
         {
             this.logger.warning(this.localisationService.getText("fence-unable_to_get_ammo_penetration_value", rootItemDb._id));
 

@@ -218,7 +218,7 @@ export class ProfileHelper
     public getExperience(level: number): number
     {
         let playerLevel = level;
-        const expTable = this.databaseServer.getTables().globals.config.exp.level.exp_table;
+        const expTable = this.databaseServer.getTables().globals!.config.exp.level.exp_table;
         let exp = 0;
 
         if (playerLevel >= expTable.length)
@@ -241,7 +241,7 @@ export class ProfileHelper
      */
     public getMaxLevel(): number
     {
-        return this.databaseServer.getTables().globals.config.exp.level.exp_table.length - 1;
+        return this.databaseServer.getTables().globals!.config.exp.level.exp_table.length - 1;
     }
 
     public getDefaultSptDataObject(): any
@@ -254,14 +254,11 @@ export class ProfileHelper
      * @param sessionID Profile id to get
      * @returns ISptProfile object
      */
-    public getFullProfile(sessionID: string): ISptProfile
+    public getFullProfile(sessionID: string): ISptProfile | undefined
     {
-        if (this.saveServer.getProfile(sessionID) === undefined)
-        {
-            return undefined;
-        }
-
-        return this.saveServer.getProfile(sessionID);
+        return this.saveServer.profileExists(sessionID)
+            ? this.saveServer.getProfile(sessionID)
+            : undefined;
     }
 
     /**
@@ -269,15 +266,25 @@ export class ProfileHelper
      * @param sessionID Profile id to return
      * @returns IPmcData object
      */
-    public getPmcProfile(sessionID: string): IPmcData
+    public getPmcProfile(sessionID: string): IPmcData | undefined
     {
         const fullProfile = this.getFullProfile(sessionID);
-        if (fullProfile === undefined || fullProfile.characters.pmc === undefined)
+        if (!fullProfile?.characters?.pmc)
         {
             return undefined;
         }
 
         return this.saveServer.getProfile(sessionID).characters.pmc;
+    }
+
+    /**
+     * Is this user id the logged in player
+     * @param userId Id to test
+     * @returns True is the current player
+     */
+    public isPlayer(userId: string): boolean
+    {
+        return this.saveServer.profileExists(userId);
     }
 
     /**
@@ -299,7 +306,7 @@ export class ProfileHelper
         return {
             Eft: {
                 CarriedQuestItems: [],
-                DamageHistory: { LethalDamagePart: "Head", LethalDamage: undefined, BodyParts: <any>[] },
+                DamageHistory: { LethalDamagePart: "Head", LethalDamage: undefined!, BodyParts: <any>[] },
                 DroppedItems: [],
                 ExperienceBonusMult: 0,
                 FoundInRaidItems: [],

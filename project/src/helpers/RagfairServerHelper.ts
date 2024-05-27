@@ -148,20 +148,6 @@ export class RagfairServerHelper
     }
 
     /**
-     * Is this user id the logged in player
-     * @param userId Id to test
-     * @returns True is the current player
-     */
-    public isPlayer(userId: string): boolean
-    {
-        if (this.profileHelper.getPmcProfile(userId) !== undefined)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Send items back to player
      * @param sessionID Player to send items to
      * @param returnedItems Items to send to player

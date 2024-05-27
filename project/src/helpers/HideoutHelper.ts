@@ -272,7 +272,7 @@ export class HideoutHelper
                 continue;
             }
 
-            if (!craft.Progress)
+            if (craft.Progress === undefined)
             {
                 this.logger.warning(this.localisationService.getText("hideout-craft_has_undefined_progress_value_defaulting", prodId));
                 craft.Progress = 0;

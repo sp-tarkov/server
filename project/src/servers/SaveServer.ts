@@ -115,6 +115,11 @@ export class SaveServer
         return this.profiles[sessionId];
     }
 
+    public profileExists(id: string): boolean
+    {
+        return !!this.profiles[id];
+    }
+
     /**
      * Get all profiles from memory
      * @returns Dictionary of ISptProfile

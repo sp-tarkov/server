@@ -725,7 +725,7 @@ export class ItemHelper
      */
     public splitStack(itemToSplit: Item): Item[]
     {
-        if (!itemToSplit?.upd?.StackObjectsCount)
+        if (itemToSplit?.upd?.StackObjectsCount === undefined)
         {
             return [itemToSplit];
         }

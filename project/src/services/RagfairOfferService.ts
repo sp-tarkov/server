@@ -42,6 +42,7 @@ export class RagfairOfferService
         this.ragfairOfferHandler = new RagfairOfferHolder(
             this.ragfairConfig.dynamic.offerItemCount.max,
             ragfairServerHelper,
+            profileHelper,
         );
     }
 
@@ -221,7 +222,7 @@ export class RagfairOfferService
     {
         const staleOfferUserId = staleOffer.user.id;
         const isTrader = this.ragfairServerHelper.isTrader(staleOfferUserId);
-        const isPlayer = this.ragfairServerHelper.isPlayer(staleOfferUserId.replace(/^pmc/, ""));
+        const isPlayer = this.profileHelper.isPlayer(staleOfferUserId.replace(/^pmc/, ""));
 
         // Skip trader offers, managed by RagfairServer.update()
         if (isTrader)

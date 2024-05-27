@@ -185,10 +185,10 @@ export class RagfairOfferGenerator
             };
         }
 
-        const isPlayerOffer = this.ragfairServerHelper.isPlayer(userID);
+        const isPlayerOffer = this.profileHelper.isPlayer(userID);
         if (isPlayerOffer)
         {
-            const playerProfile = this.profileHelper.getPmcProfile(userID);
+            const playerProfile = this.profileHelper.getPmcProfile(userID)!;
             return {
                 id: playerProfile._id,
                 memberType: MemberCategory.DEFAULT,
@@ -271,7 +271,7 @@ export class RagfairOfferGenerator
      */
     protected getTraderId(userId: string): string
     {
-        if (this.ragfairServerHelper.isPlayer(userId))
+        if (this.profileHelper.isPlayer(userId))
         {
             return this.saveServer.getProfile(userId).characters.pmc._id;
         }
@@ -286,7 +286,7 @@ export class RagfairOfferGenerator
      */
     protected getRating(userId: string): number
     {
-        if (this.ragfairServerHelper.isPlayer(userId))
+        if (this.profileHelper.isPlayer(userId))
         {
             // Player offer
             return this.saveServer.getProfile(userId).characters.pmc.RagfairInfo.rating;
@@ -309,7 +309,7 @@ export class RagfairOfferGenerator
      */
     protected getRatingGrowing(userID: string): boolean
     {
-        if (this.ragfairServerHelper.isPlayer(userID))
+        if (this.profileHelper.isPlayer(userID))
         {
             // player offer
             return this.saveServer.getProfile(userID).characters.pmc.RagfairInfo.isRatingGrowing;
@@ -334,18 +334,18 @@ export class RagfairOfferGenerator
      */
     protected getOfferEndTime(userID: string, time: number): number
     {
-        if (this.ragfairServerHelper.isPlayer(userID))
+        if (this.profileHelper.isPlayer(userID))
         {
             // Player offer = current time + offerDurationTimeInHour;
             const offerDurationTimeHours
-                = this.databaseServer.getTables().globals.config.RagFair.offerDurationTimeInHour;
+                = this.databaseServer.getTables().globals!.config.RagFair.offerDurationTimeInHour;
             return this.timeUtil.getTimestamp() + Math.round(offerDurationTimeHours * TimeUtil.ONE_HOUR_AS_SECONDS);
         }
 
         if (this.ragfairServerHelper.isTrader(userID))
         {
             // Trader offer
-            return this.databaseServer.getTables().traders[userID].base.nextResupply;
+            return this.databaseServer.getTables().traders![userID].base.nextResupply;
         }
 
         // Generated fake-player offer
@@ -658,7 +658,7 @@ export class RagfairOfferGenerator
         // Add any missing properties to first item in array
         this.addMissingConditions(itemWithMods[0]);
 
-        if (!(this.ragfairServerHelper.isPlayer(userID) || this.ragfairServerHelper.isTrader(userID)))
+        if (!(this.profileHelper.isPlayer(userID) || this.ragfairServerHelper.isTrader(userID)))
         {
             const parentId = this.getDynamicConditionIdForTpl(itemDetails._id);
             if (!parentId)

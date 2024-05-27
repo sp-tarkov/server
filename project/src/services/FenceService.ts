@@ -428,7 +428,7 @@ export class FenceService
                 )
                 {
                     // Guard against a missing stack count
-                    if (!existingRootItem.upd?.StackObjectsCount)
+                    if (existingRootItem.upd?.StackObjectsCount === undefined)
                     {
                         existingRootItem.upd!.StackObjectsCount = 1;
                     }
