@@ -36760,6 +36760,9 @@
 				"fleaBlockedDays": 365,
 				"lockedByDefaultOverride": [
 					"579dc571d53a0658a154fbec"
+				],
+				"purchaseAlllClothingByDefaultForTrader":[
+					"5ac3b934156ae10c4430e83c"
 				]
             },
             "weaponbuilds": {}
@@ -37697,7 +37700,13 @@
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
                 "jaegerUnlocked": false,
-				"fleaBlockedDays": 365
+				"fleaBlockedDays": 365,
+				"lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				],
+				"purchaseAlllClothingByDefaultForTrader":[
+					"5ac3b934156ae10c4430e83c"
+				]
             },
             "weaponbuilds": {}
         }

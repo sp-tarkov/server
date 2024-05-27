@@ -14,8 +14,8 @@ import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
-import { SaveServer } from "@spt/servers/SaveServer";
 import { FenceService } from "@spt/services/FenceService";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { PlayerService } from "@spt/services/PlayerService";
 import { RandomUtil } from "@spt/utils/RandomUtil";
@@ -33,7 +33,6 @@ export class TraderHelper
     constructor(
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("SaveServer") protected saveServer: SaveServer,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
@@ -129,10 +128,10 @@ export class TraderHelper
     public resetTrader(sessionID: string, traderID: string): void
     {
         const db = this.databaseServer.getTables();
-        const account = this.saveServer.getProfile(sessionID);
-        const pmcData = this.profileHelper.getPmcProfile(sessionID);
+        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        const pmcData = fullProfile.characters.pmc;
         const rawProfileTemplate: ProfileTraderTemplate
-            = db.templates.profiles[account.info.edition][pmcData.Info.Side.toLowerCase()]
+            = db.templates.profiles[fullProfile.info.edition][pmcData.Info.Side.toLowerCase()]
                 .trader;
 
         pmcData.TradersInfo[traderID] = {
@@ -149,6 +148,16 @@ export class TraderHelper
         {
             pmcData.TradersInfo[traderID].unlocked = false;
         }
+
+        if (rawProfileTemplate.purchaseAlllClothingByDefaultForTrader?.includes(traderID))
+            {
+                //Get traders clothing
+                const clothing = this.databaseServer.getTables().traders[traderID].suits;
+
+                // Force suit ids into profile
+                this.addSuitsToProfile(fullProfile, clothing.map(x => x.suiteId));
+                
+            }
 
         if (rawProfileTemplate.fleaBlockedDays > 0)
         {
@@ -189,6 +198,28 @@ export class TraderHelper
         }
 
         return rawProfileTemplate.initialStanding;
+    }
+
+    /**
+     * Add an array of suit ids to a profiles suit array, no duplicates
+     * @param fullProfile Profile to add to
+     * @param suitIds Suit Ids to add
+     */
+    protected addSuitsToProfile(fullProfile: ISptProfile, suitIds: string[]): void
+    {
+        if (!fullProfile.suits)
+        {
+            fullProfile.suits = [];
+        }
+
+        for (const suitId of suitIds)
+        {
+            // Don't add dupes
+            if (!fullProfile.suits.includes(suitId))
+            {
+                fullProfile.suits.push(suitId);
+            }
+        }
     }
 
     /**
