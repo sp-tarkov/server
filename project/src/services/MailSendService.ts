@@ -5,7 +5,7 @@ import { NotificationSendHelper } from "@spt/helpers/NotificationSendHelper";
 import { NotifierHelper } from "@spt/helpers/NotifierHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { Item } from "@spt/models/eft/common/tables/IItem";
-import { Dialogue, IUserDialogInfo, Message, MessageItems } from "@spt/models/eft/profile/ISptProfile";
+import { Dialogue, ISystemData, IUserDialogInfo, Message, MessageContentRagfair, MessageItems } from "@spt/models/eft/profile/ISptProfile";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { Traders } from "@spt/models/enums/Traders";
@@ -112,9 +112,9 @@ export class MailSendService
         messageType: MessageType,
         messageLocaleId: string,
         items: Item[] = [],
-        maxStorageTimeSeconds = null,
-        systemData = null,
-        ragfair = null,
+        maxStorageTimeSeconds?: number,
+        systemData?: ISystemData,
+        ragfair?: MessageContentRagfair,
     ): void
     {
         if (!trader)
@@ -283,7 +283,7 @@ export class MailSendService
         const itemsToSendToPlayer = this.processItemsBeforeAddingToMail(senderDialog.type, messageDetails);
 
         // If there's items to send to player, flag dialog as containing attachments
-        if (itemsToSendToPlayer.data?.length > 0)
+        if ((itemsToSendToPlayer.data?.length ?? 0) > 0)
         {
             senderDialog.attachmentsNew += 1;
         }
@@ -392,11 +392,11 @@ export class MailSendService
      */
     protected addRewardItemsToMessage(
         message: Message,
-        itemsToSendToPlayer: MessageItems,
-        maxStorageTimeSeconds: number,
+        itemsToSendToPlayer: MessageItems | undefined,
+        maxStorageTimeSeconds: number | undefined,
     ): void
     {
-        if (itemsToSendToPlayer?.data?.length > 0)
+        if ((itemsToSendToPlayer?.data?.length ?? 0) > 0)
         {
             message.items = itemsToSendToPlayer;
             message.hasRewards = true;
@@ -416,13 +416,13 @@ export class MailSendService
         messageDetails: ISendMessageDetails,
     ): MessageItems
     {
-        const db = this.databaseServer.getTables().templates.items;
+        const db = this.databaseServer.getTables().templates!.items;
 
         let itemsToSendToPlayer: MessageItems = {};
-        if (messageDetails.items?.length > 0)
+        if ((messageDetails.items?.length ?? 0) > 0)
         {
             // Find base item that should be the 'primary' + have its parent id be used as the dialogs 'stash' value
-            const parentItem = this.getBaseItemFromRewards(messageDetails.items);
+            const parentItem = this.getBaseItemFromRewards(messageDetails.items!);
             if (!parentItem)
             {
                 this.localisationService.getText("mailsend-missing_parent", {
@@ -442,7 +442,7 @@ export class MailSendService
             itemsToSendToPlayer = { stash: parentItem.parentId, data: [] };
 
             // Ensure Ids are unique and cont collide with items in player inventory later
-            messageDetails.items = this.itemHelper.replaceIDs(messageDetails.items);
+            messageDetails.items = this.itemHelper.replaceIDs(messageDetails.items!);
 
             for (const reward of messageDetails.items)
             {
@@ -476,7 +476,7 @@ export class MailSendService
                     this.itemHelper.addCartridgesToAmmoBox(boxAndCartridges, itemTemplate);
 
                     // Push box + cartridge children into array
-                    itemsToSendToPlayer.data.push(...boxAndCartridges);
+                    itemsToSendToPlayer.data!.push(...boxAndCartridges);
                 }
                 else
                 {
@@ -486,12 +486,12 @@ export class MailSendService
                     }
 
                     // Item is sanitised and ready to be pushed into holding array
-                    itemsToSendToPlayer.data.push(reward);
+                    itemsToSendToPlayer.data!.push(reward);
                 }
             }
 
             // Remove empty data property if no rewards
-            if (itemsToSendToPlayer.data.length === 0)
+            if (itemsToSendToPlayer.data!.length === 0)
             {
                 delete itemsToSendToPlayer.data;
             }
@@ -514,7 +514,7 @@ export class MailSendService
         }
 
         // Find first item with slotId that indicates its a 'base' item
-        let item = items.find((x) => ["hideout", "main"].includes(x.slotId));
+        let item = items.find((x) => ["hideout", "main"].includes(x.slotId ?? ""));
         if (item)
         {
             return item;
@@ -542,7 +542,10 @@ export class MailSendService
     {
         const dialogsInProfile = this.dialogueHelper.getDialogsForProfile(messageDetails.recipientId);
         const senderId = this.getMessageSenderIdByType(messageDetails);
-
+        if (!senderId)
+        {
+            throw new Error(`Unable to find sender id for details ${messageDetails.sender}`);
+        }
         // Does dialog exist
         let senderDialog = dialogsInProfile[senderId];
         if (!senderDialog)
@@ -568,7 +571,7 @@ export class MailSendService
      * @param messageDetails
      * @returns gets an id of the individual sending it
      */
-    protected getMessageSenderIdByType(messageDetails: ISendMessageDetails): string
+    protected getMessageSenderIdByType(messageDetails: ISendMessageDetails): string | undefined
     {
         if (messageDetails.sender === MessageType.SYSTEM_MESSAGE)
         {
@@ -577,7 +580,9 @@ export class MailSendService
 
         if (messageDetails.sender === MessageType.NPC_TRADER || messageDetails.dialogType === MessageType.NPC_TRADER)
         {
-            return this.traderHelper.getValidTraderIdByEnumValue(messageDetails.trader);
+            return messageDetails.trader
+                ? this.traderHelper.getValidTraderIdByEnumValue(messageDetails.trader)
+                : undefined;
         }
 
         if (messageDetails.sender === MessageType.USER_MESSAGE)

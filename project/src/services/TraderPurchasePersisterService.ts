@@ -35,13 +35,13 @@ export class TraderPurchasePersisterService
      * @param traderId Trader to loop up purchases for
      * @returns Dict of assort id and count purchased
      */
-    public getProfileTraderPurchases(sessionId: string, traderId: string): Record<string, TraderPurchaseData>
+    public getProfileTraderPurchases(sessionId: string, traderId: string): Record<string, TraderPurchaseData> | undefined
     {
         const profile = this.profileHelper.getFullProfile(sessionId);
 
         if (!profile.traderPurchases)
         {
-            return null;
+            return undefined;
         }
 
         return profile.traderPurchases[traderId];
@@ -54,19 +54,20 @@ export class TraderPurchasePersisterService
      * @param assortId Id of assort to get data for
      * @returns TraderPurchaseData
      */
-    public getProfileTraderPurchase(sessionId: string, traderId: string, assortId: string): TraderPurchaseData
+    public getProfileTraderPurchase(sessionId: string, traderId: string, assortId: string):
+        TraderPurchaseData | undefined
     {
         const profile = this.profileHelper.getFullProfile(sessionId);
 
         if (!profile.traderPurchases)
         {
-            return null;
+            return undefined;
         }
 
         const traderPurchases = profile.traderPurchases[traderId];
         if (!traderPurchases)
         {
-            return null;
+            return undefined;
         }
 
         return traderPurchases[assortId];

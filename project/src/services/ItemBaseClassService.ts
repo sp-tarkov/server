@@ -30,7 +30,7 @@ export class ItemBaseClassService
         // Clear existing cache
         this.itemBaseClassesCache = {};
 
-        this.items = this.databaseServer.getTables().templates.items;
+        this.items = this.databaseServer.getTables().templates!.items;
         if (!this.items)
         {
             this.logger.warning(this.localisationService.getText("baseclass-missing_db_no_cache"));

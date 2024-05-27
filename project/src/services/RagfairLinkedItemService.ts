@@ -55,7 +55,7 @@ export class RagfairLinkedItemService
             return linkedItems[id];
         };
 
-        for (const item of Object.values(this.databaseServer.getTables().templates.items))
+        for (const item of Object.values(this.databaseServer.getTables().templates!.items))
         {
             const itemLinkedSet = getLinkedItems(item._id);
 
@@ -94,7 +94,7 @@ export class RagfairLinkedItemService
         applyLinkedItems: (items: string[]) => void,
     ): void
     {
-        const cylinderMod = cylinder._props.Slots.find((x) => x._name === "mod_magazine");
+        const cylinderMod = cylinder._props.Slots?.find((x) => x._name === "mod_magazine");
         if (cylinderMod)
         {
             // Get the first cylinder filter tpl
@@ -122,7 +122,7 @@ export class RagfairLinkedItemService
             return [];
         }
 
-        const filters = [];
+        const filters: string[] = [];
         for (const sub of item._props[slot])
         {
             if (!("_props" in sub && "filters" in sub._props))

@@ -71,7 +71,7 @@ export class RepairService
         const repairQualityMultiplier = Number(traderRepairDetails.quality);
         const repairRate = priceCoef <= 0 ? 1 : priceCoef / 100 + 1;
 
-        const itemToRepairDetails = this.databaseServer.getTables().templates.items[itemToRepair._tpl];
+        const itemToRepairDetails = this.databaseServer.getTables().templates!.items[itemToRepair._tpl];
         const repairItemIsArmor = !!itemToRepairDetails._props.ArmorMaterial;
 
         this.repairHelper.updateItemDurability(
@@ -85,7 +85,11 @@ export class RepairService
         );
 
         // get repair price
-        const itemRepairCost = this.databaseServer.getTables().templates.items[itemToRepair._tpl]._props.RepairCost;
+        const itemRepairCost = this.databaseServer.getTables().templates!.items[itemToRepair._tpl]._props.RepairCost;
+        if (!itemRepairCost)
+        {
+            throw new Error(`Item with tpl ${itemToRepair._tpl} has no repair cost`);
+        }
         const repairCost = Math.round(
             itemRepairCost * repairItemDetails.count * repairRate * this.repairConfig.priceMultiplier,
         );
@@ -186,6 +190,10 @@ export class RepairService
 
             const isHeavyArmor = itemDetails[1]._props.ArmorType === "Heavy";
             const vestSkillToLevel = isHeavyArmor ? SkillTypes.HEAVY_VESTS : SkillTypes.LIGHT_VESTS;
+            if (!repairDetails.repairPoints)
+            {
+                throw new Error(`Repair for ${repairDetails.repairedItem._tpl} has no repair points`);
+            }
             const pointsToAddToVestSkill
                 = repairDetails.repairPoints * this.repairConfig.armorKitSkillPointGainPerRepairPointMultiplier;
 
@@ -215,6 +223,10 @@ export class RepairService
                 : this.repairConfig.repairKitIntellectGainMultiplier.armor;
 
             // Limit gain to a max value defined in config.maxIntellectGainPerRepair
+            if (!repairDetails.repairPoints)
+            {
+                throw new Error(`Repair for ${repairDetails.repairedItem._tpl} has no repair points`);
+            }
             return Math.min(
                 repairDetails.repairPoints * intRepairMultiplier,
                 this.repairConfig.maxIntellectGainPerRepair.kit,
@@ -284,7 +296,7 @@ export class RepairService
             throw new Error(`Item ${itemToRepairId} not found, unable to repair`);
         }
 
-        const itemsDb = this.databaseServer.getTables().templates.items;
+        const itemsDb = this.databaseServer.getTables().templates!.items;
         const itemToRepairDetails = itemsDb[itemToRepair._tpl];
         const repairItemIsArmor = !!itemToRepairDetails._props.ArmorMaterial;
         const repairAmount = repairKits[0].count / this.getKitDivisor(itemToRepairDetails, repairItemIsArmor, pmcData);
@@ -307,13 +319,17 @@ export class RepairService
         for (const repairKit of repairKits)
         {
             const repairKitInInventory = pmcData.Inventory.items.find((x) => x._id === repairKit._id);
+            if (!repairKitInInventory)
+            {
+                throw new Error(`Repair kit with id ${repairKit._id} was not found in the inventory`);
+            }
             const repairKitDetails = itemsDb[repairKitInInventory._tpl];
             const repairKitReductionAmount = repairKit.count;
 
             this.addMaxResourceToKitIfMissing(repairKitDetails, repairKitInInventory);
 
             // reduce usages on repairkit used
-            repairKitInInventory.upd.RepairKit.Resource -= repairKitReductionAmount;
+            repairKitInInventory.upd!.RepairKit!.Resource -= repairKitReductionAmount;
 
             output.profileChanges[sessionId].items.change.push(repairKitInInventory);
         }
@@ -336,7 +352,7 @@ export class RepairService
      */
     protected getKitDivisor(itemToRepairDetails: ITemplateItem, isArmor: boolean, pmcData: IPmcData): number
     {
-        const globals = this.databaseServer.getTables().globals;
+        const globals = this.databaseServer.getTables().globals!;
         const globalRepairSettings = globals.config.RepairSettings;
 
         const intellectRepairPointsPerLevel = globals.config.SkillsSettings.Intellect.RepairPointsCostReduction;
@@ -376,10 +392,10 @@ export class RepairService
     {
         const bonusesMatched = pmcData?.Bonuses?.filter((b) => b.type === skillBonus);
         let value = 1;
-        if (bonusesMatched != null)
+        if (bonusesMatched)
         {
-            const sumedPercentage = bonusesMatched.map((b) => b.value).reduce((v1, v2) => v1 + v2, 0);
-            value = 1 + sumedPercentage / 100;
+            const summedPercentage = bonusesMatched.map((b) => b.value ?? 0).reduce((v1, v2) => v1 + v2, 0);
+            value = 1 + summedPercentage / 100;
         }
 
         return value;
@@ -415,7 +431,7 @@ export class RepairService
      */
     protected addMaxResourceToKitIfMissing(repairKitDetails: ITemplateItem, repairKitInInventory: Item): void
     {
-        const maxRepairAmount = repairKitDetails._props.MaxRepairResource;
+        const maxRepairAmount = repairKitDetails._props.MaxRepairResource!;
         if (!repairKitInInventory.upd)
         {
             this.logger.debug(`Repair kit: ${repairKitInInventory._id} in inventory lacks upd object, adding`);
@@ -478,13 +494,13 @@ export class RepairService
         const bonusThresholdPercents = itemConfig[bonusRarity][bonusType].activeDurabilityPercentMinMax;
         const bonusThresholdPercent = this.randomUtil.getInt(bonusThresholdPercents.min, bonusThresholdPercents.max);
 
-        item.upd.Buff = {
+        item.upd!.Buff = {
             rarity: bonusRarity,
             buffType: bonusType,
             value: bonusValue,
             thresholdDurability: this.randomUtil.getPercentOfValue(
                 bonusThresholdPercent,
-                item.upd.Repairable.Durability,
+                item.upd!.Repairable!.Durability,
             ),
         };
     }
@@ -498,7 +514,7 @@ export class RepairService
      */
     protected shouldBuffItem(repairDetails: RepairDetails, pmcData: IPmcData): boolean
     {
-        const globals = this.databaseServer.getTables().globals;
+        const globals = this.databaseServer.getTables().globals!;
 
         const hasTemplate = this.itemHelper.getItem(repairDetails.repairedItem._tpl);
         if (!hasTemplate[0])
@@ -542,7 +558,11 @@ export class RepairService
             (this.profileHelper.getSkillFromProfile(pmcData, itemSkillType)?.Progress ?? 0) / 100,
         );
 
-        const durabilityToRestorePercent = repairDetails.repairPoints / template._props.MaxDurability;
+        if (!repairDetails.repairPoints)
+        {
+            throw new Error(`Repair for ${repairDetails.repairedItem._tpl} has no repair points`);
+        }
+        const durabilityToRestorePercent = repairDetails.repairPoints / template._props.MaxDurability!;
         const durabilityMultiplier = this.getDurabilityMultiplier(
             receivedDurabilityMaxPercent,
             durabilityToRestorePercent,

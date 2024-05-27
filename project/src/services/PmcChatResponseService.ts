@@ -51,12 +51,15 @@ export class PmcChatResponseService
 
             const victimDetails = this.getVictimDetails(victim);
             const message = this.chooseMessage(true, pmcData);
-            this.notificationSendHelper.sendMessageToPlayer(
-                sessionId,
-                victimDetails,
-                message,
-                MessageType.USER_MESSAGE,
-            );
+            if (message)
+            {
+                this.notificationSendHelper.sendMessageToPlayer(
+                    sessionId,
+                    victimDetails,
+                    message,
+                    MessageType.USER_MESSAGE,
+                );
+            }
         }
     }
 
@@ -120,7 +123,7 @@ export class PmcChatResponseService
      * @param pmcData Player profile
      * @returns Message from PMC to player
      */
-    protected chooseMessage(isVictim: boolean, pmcData: IPmcData): string
+    protected chooseMessage(isVictim: boolean, pmcData: IPmcData): string | undefined
     {
         // Positive/negative etc
         const responseType = this.chooseResponseType(isVictim);

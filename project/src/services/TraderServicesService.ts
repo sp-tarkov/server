@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { QuestStatus } from "@spt/models/enums/QuestStatus";
+import { TraderServiceType } from "@spt/models/enums/TraderServiceType";
 import { ITraderServiceModel } from "@spt/models/spt/services/ITraderServiceModel";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
@@ -20,14 +21,14 @@ export class TraderServicesService
     public getTraderServices(sessionId: string, traderId: string): ITraderServiceModel[]
     {
         const pmcData = this.profileHelper.getPmcProfile(sessionId);
-        let traderServices = this.cloner.clone(this.databaseServer.getTables().traders[traderId]?.services);
+        let traderServices = this.cloner.clone(this.databaseServer.getTables().traders![traderId]?.services);
         if (!traderServices)
         {
             return [];
         }
 
         // Filter out any service the user doesn't meet the conditions for
-        const servicesToDelete = [];
+        const servicesToDelete: TraderServiceType[] = [];
         for (const service of traderServices)
         {
             if (service.requirements?.standings)

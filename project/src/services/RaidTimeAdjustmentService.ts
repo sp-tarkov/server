@@ -107,15 +107,15 @@ export class RaidTimeAdjustmentService
     {
         const db = this.databaseServer.getTables();
 
-        const mapBase: ILocationBase = db.locations[request.Location.toLowerCase()].base;
+        const mapBase: ILocationBase = db.locations![request.Location.toLowerCase()].base;
         const baseEscapeTimeMinutes = mapBase.EscapeTimeLimit;
 
         // Prep result object to return
         const result: IGetRaidTimeResponse = {
             RaidTimeMinutes: baseEscapeTimeMinutes,
             ExitChanges: [],
-            NewSurviveTimeSeconds: null,
-            OriginalSurvivalTimeSeconds: db.globals.config.exp.match_end.survived_seconds_requirement,
+            NewSurviveTimeSeconds: undefined,
+            OriginalSurvivalTimeSeconds: db.globals!.config.exp.match_end.survived_seconds_requirement,
         };
 
         // Pmc raid, send default
@@ -203,9 +203,9 @@ export class RaidTimeAdjustmentService
      * @param newRaidTimeMinutes How long raid is in minutes
      * @returns List of  exit changes to send to client
      */
-    protected getExitAdjustments(mapBase: ILocationBase, newRaidTimeMinutes: number): ExtractChange[]
+    protected getExitAdjustments(mapBase: ILocationBase, newRaidTimeMinutes: number): ExtractChange[] | undefined
     {
-        const result = [];
+        const result: ExtractChange[] = [];
         // Adjust train exits only
         for (const exit of mapBase.exits)
         {
@@ -215,7 +215,12 @@ export class RaidTimeAdjustmentService
             }
 
             // Prepare train adjustment object
-            const exitChange: ExtractChange = { Name: exit.Name, MinTime: null, MaxTime: null, Chance: null };
+            const exitChange: ExtractChange = {
+                Name: exit.Name,
+                MinTime: undefined,
+                MaxTime: undefined,
+                Chance: undefined,
+            };
 
             // At what minute we simulate the player joining the raid
             const simulatedRaidEntryTimeMinutes = mapBase.EscapeTimeLimit - newRaidTimeMinutes;
@@ -270,6 +275,6 @@ export class RaidTimeAdjustmentService
             result.push(exitChange);
         }
 
-        return result.length > 0 ? result : null;
+        return result.length > 0 ? result : undefined;
     }
 }

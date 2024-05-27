@@ -32,7 +32,7 @@ export class ModCompilerService
     public async compileMod(modName: string, modPath: string, modTypeScriptFiles: string[]): Promise<void>
     {
         // Concatenate TS files into one string
-        let tsFileContents: string;
+        let tsFileContents = "";
         let fileExists = true; // does every js file exist (been compiled before)
         for (const file of modTypeScriptFiles)
         {

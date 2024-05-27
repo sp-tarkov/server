@@ -202,7 +202,7 @@ export interface Mastering extends IBaseSkill
 
 export interface Stats
 {
-    Eft: IEftStats
+    Eft?: IEftStats
 }
 
 export interface IEftStats

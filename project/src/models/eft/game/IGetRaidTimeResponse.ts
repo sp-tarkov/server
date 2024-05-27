@@ -1,7 +1,7 @@
 export interface IGetRaidTimeResponse
 {
     RaidTimeMinutes: number
-    NewSurviveTimeSeconds: number
+    NewSurviveTimeSeconds?: number
     OriginalSurvivalTimeSeconds: number
     ExitChanges: ExtractChange[]
 }

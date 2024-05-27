@@ -64,7 +64,7 @@ export class RagfairPriceService implements OnLoad
      */
     public refreshStaticPrices(): void
     {
-        for (const item of Object.values(this.databaseServer.getTables().templates.items).filter(
+        for (const item of Object.values(this.databaseServer.getTables().templates!.items).filter(
             (x) => x._type === "Item",
         ))
         {
@@ -77,7 +77,7 @@ export class RagfairPriceService implements OnLoad
      */
     public refreshDynamicPrices(): void
     {
-        const pricesTable = this.databaseServer.getTables().templates.prices;
+        const pricesTable = this.databaseServer.getTables().templates!.prices;
         this.prices.dynamic = { ...this.prices.dynamic, ...pricesTable };
     }
 
@@ -138,7 +138,7 @@ export class RagfairPriceService implements OnLoad
         // If the price doesn't exist in the cache yet, try to find it
         if (!this.prices.dynamic[itemTpl])
         {
-            this.prices.dynamic[itemTpl] = this.databaseServer.getTables().templates.prices[itemTpl];
+            this.prices.dynamic[itemTpl] = this.databaseServer.getTables().templates!.prices[itemTpl];
         }
 
         return this.prices.dynamic[itemTpl];
@@ -328,7 +328,7 @@ export class RagfairPriceService implements OnLoad
                 if (unreasonableModifier.enabled)
                 {
                     price = this.adjustUnreasonablePrice(
-                        this.databaseServer.getTables().templates.handbook.Items,
+                        this.databaseServer.getTables().templates!.handbook.Items,
                         unreasonableModifier,
                         itemTemplateId,
                         price,
@@ -338,7 +338,7 @@ export class RagfairPriceService implements OnLoad
         }
 
         // Vary the price based on the type of offer.
-        const range = this.getOfferTypeRangeValues(isPreset, isPackOffer);
+        const range = this.getOfferTypeRangeValues(isPreset, isPackOffer ?? false);
         price = this.randomiseOfferPrice(price, range);
 
         // Convert to different currency if required.

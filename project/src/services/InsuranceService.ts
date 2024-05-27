@@ -109,28 +109,42 @@ export class InsuranceService
         for (const traderId in this.getInsurance(sessionID))
         {
             const traderBase = this.traderHelper.getTrader(traderId, sessionID);
+            if (!traderBase)
+            {
+                throw new Error(`The trader id ${traderId} was not found!`);
+            }
             let insuranceReturnTimestamp = this.getInsuranceReturnTimestamp(pmcData, traderBase);
             if (markOfTheUnheardOnPlayer)
             {
                 insuranceReturnTimestamp *= this.databaseServer.getTables()
-                    .globals.config.Insurance.CoefOfHavingMarkOfUnknown;
+                    .globals!.config.Insurance.CoefOfHavingMarkOfUnknown;
             }
-            const dialogueTemplates = this.databaseServer.getTables().traders[traderId].dialogue;
+            const dialogueTemplates = this.databaseServer.getTables().traders![traderId].dialogue;
+
+            if (!dialogueTemplates)
+            {
+                throw new Error(`The trader id ${traderId} does not have dialogues for insurance`);
+            }
 
             const systemData = {
                 date: this.timeUtil.getDateMailFormat(),
                 time: this.timeUtil.getTimeMailFormat(),
                 location: mapId,
             };
+            const traderEnum = this.traderHelper.getTraderById(traderId);
+            if (!traderEnum)
+            {
+                throw new Error(`The trader id ${traderId} is missing from Traders enum`);
+            }
             // Send "i will go look for your stuff" message from trader to player
             this.mailSendService.sendLocalisedNpcMessageToPlayer(
                 sessionID,
-                this.traderHelper.getTraderById(traderId),
+                traderEnum,
                 MessageType.NPC_TRADER,
-                this.randomUtil.getArrayValue(dialogueTemplates.insuranceStart),
-                null,
+                this.randomUtil.getArrayValue(dialogueTemplates?.insuranceStart),
+                undefined,
                 this.timeUtil.getHoursAsSeconds(
-                    this.databaseServer.getTables().globals.config.Insurance.MaxStorageTimeInHour,
+                    this.databaseServer.getTables().globals!.config.Insurance.MaxStorageTimeInHour,
                 ),
                 systemData,
             );
@@ -192,7 +206,7 @@ export class InsuranceService
 
         const insuranceReturnTimeBonus = pmcData.Bonuses.find((b) => b.type === BonusType.INSURANCE_RETURN_TIME);
         const insuranceReturnTimeBonusPercent
-            = 1.0 - (insuranceReturnTimeBonus ? Math.abs(insuranceReturnTimeBonus.value) : 0) / 100;
+            = 1.0 - (insuranceReturnTimeBonus ? Math.abs(insuranceReturnTimeBonus!.value ?? 0) : 0) / 100;
 
         const traderMinReturnAsSeconds = trader.insurance.min_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
         const traderMaxReturnAsSeconds = trader.insurance.max_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
@@ -238,10 +252,10 @@ export class InsuranceService
                 continue;
             }
 
-            const preRaidItem = preRaidGearMap.get(insuredItem.itemId);
+            const preRaidItem = preRaidGearMap.get(insuredItem.itemId)!;
 
             // Skip slots we should never return as they're never lost on death
-            if (this.insuranceConfig.blacklistedEquipment.includes(preRaidItem.slotId))
+            if (this.insuranceConfig.blacklistedEquipment.includes(preRaidItem.slotId!))
             {
                 continue;
             }
@@ -261,7 +275,9 @@ export class InsuranceService
 
             // Now that we have the equipment parent item, we can check to see if that item is located in an equipment
             // slot that is flagged as lost on death. If it is, then the itemShouldBeLostOnDeath.
-            const itemShouldBeLostOnDeath = this.lostOnDeathConfig.equipment[equipmentParentItem?.slotId] ?? true;
+            const itemShouldBeLostOnDeath = equipmentParentItem?.slotId
+                ? this.lostOnDeathConfig.equipment[equipmentParentItem?.slotId] ?? true
+                : true;
 
             // Was the item found in the player inventory post-raid?
             const itemOnPlayerPostRaid = offRaidGearMap.has(insuredItem.itemId);
@@ -270,12 +286,18 @@ export class InsuranceService
             // Catches both events: player died with item on + player survived but dropped item in raid
             if (!itemOnPlayerPostRaid || (playerDied && itemShouldBeLostOnDeath))
             {
+                const inventoryInsuredItem = offraidData.insurance
+                    ?.find((insuranceItem) => insuranceItem.id === insuredItem.itemId);
+                if (!inventoryInsuredItem)
+                {
+                    throw new Error(`Inventory insured item id ${insuredItem.itemId} was not found`);
+                }
                 equipmentPkg.push({
                     pmcData: pmcData,
                     itemToReturnToPlayer: this.getInsuredItemDetails(
                         pmcData,
                         preRaidItem,
-                        offraidData.insurance?.find((insuranceItem) => insuranceItem.id === insuredItem.itemId),
+                        inventoryInsuredItem,
                     ),
                     traderId: insuredItem.tid,
                     sessionID: sessionID,
@@ -291,21 +313,31 @@ export class InsuranceService
                             .filter(
                                 (item) =>
                                     item.parentId === preRaidItem._id
-                                    && this.itemHelper.getSoftInsertSlotIds().includes(item.slotId.toLowerCase()),
+                                    && this.itemHelper.getSoftInsertSlotIds().includes(item.slotId!.toLowerCase()),
                             )
                             .map((x) => x._id);
 
                         // Add all items found above to return data
                         for (const softInsertChildModId of softInsertChildIds)
                         {
+                            const preRaidInventoryItem = preRaidGear.find((item) => item._id === softInsertChildModId);
+                            if (!preRaidInventoryItem)
+                            {
+                                throw new Error(`Preraid inventory item ${softInsertChildModId} was not found`);
+                            }
+                            const inventoryInsuredItem = offraidData.insurance?.find(
+                                (insuranceItem) => insuranceItem.id === softInsertChildModId,
+                            );
+                            if (!inventoryInsuredItem)
+                            {
+                                throw new Error(`Inventory insured item ${softInsertChildModId} was not found`);
+                            }
                             equipmentPkg.push({
                                 pmcData: pmcData,
                                 itemToReturnToPlayer: this.getInsuredItemDetails(
                                     pmcData,
-                                    preRaidGear.find((item) => item._id === softInsertChildModId),
-                                    offraidData.insurance?.find(
-                                        (insuranceItem) => insuranceItem.id === softInsertChildModId,
-                                    ),
+                                    preRaidInventoryItem,
+                                    inventoryInsuredItem,
                                 ),
                                 traderId: insuredItem.tid,
                                 sessionID: sessionID,
@@ -381,7 +413,7 @@ export class InsuranceService
         }
 
         // Remove found in raid status when upd exists + SpawnedInSession value exists
-        if ("SpawnedInSession" in itemToReturnClone.upd)
+        if ("SpawnedInSession" in itemToReturnClone.upd!)
         {
             itemToReturnClone.upd.SpawnedInSession = false;
         }
@@ -390,17 +422,17 @@ export class InsuranceService
         if (insuredItemFromClient?.durability)
         {
             // Item didnt have Repairable object pre-raid, add it
-            if (!itemToReturnClone.upd.Repairable)
+            if (!itemToReturnClone.upd?.Repairable)
             {
-                itemToReturnClone.upd.Repairable = {
+                itemToReturnClone.upd!.Repairable = {
                     Durability: insuredItemFromClient.durability,
-                    MaxDurability: insuredItemFromClient.maxDurability,
+                    MaxDurability: insuredItemFromClient.maxDurability!,
                 };
             }
             else
             {
                 itemToReturnClone.upd.Repairable.Durability = insuredItemFromClient.durability;
-                itemToReturnClone.upd.Repairable.MaxDurability = insuredItemFromClient.maxDurability;
+                itemToReturnClone.upd.Repairable.MaxDurability = insuredItemFromClient.maxDurability!;
             }
         }
 
@@ -408,9 +440,9 @@ export class InsuranceService
         if (insuredItemFromClient?.hits)
         {
             // Item didnt have faceshield object pre-raid, add it
-            if (!itemToReturnClone.upd.FaceShield)
+            if (!itemToReturnClone.upd?.FaceShield)
             {
-                itemToReturnClone.upd.FaceShield = { Hits: insuredItemFromClient.hits };
+                itemToReturnClone.upd!.FaceShield = { Hits: insuredItemFromClient.hits };
             }
             else
             {
@@ -431,7 +463,7 @@ export class InsuranceService
         const pocketSlots = ["pocket1", "pocket2", "pocket3", "pocket4"];
 
         // Some pockets can lose items with player death, some don't
-        if (!("slotId" in itemToReturn) || pocketSlots.includes(itemToReturn.slotId))
+        if (!("slotId" in itemToReturn) || pocketSlots.includes(itemToReturn.slotId!))
         {
             itemToReturn.slotId = "hideout";
         }

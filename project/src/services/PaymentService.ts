@@ -182,7 +182,7 @@ export class PaymentService
         const trader = this.traderHelper.getTrader(request.tid, sessionID);
         const currency = this.paymentHelper.getCurrency(trader.currency);
         let calcAmount = this.handbookHelper.fromRUB(this.handbookHelper.inRUB(amountToSend, currency), currency);
-        const currencyMaxStackSize = this.databaseServer.getTables().templates.items[currency]._props.StackMaxSize;
+        const currencyMaxStackSize = this.databaseServer.getTables().templates!.items[currency]._props.StackMaxSize!;
         let skipSendingMoneyToStash = false;
 
         for (const item of pmcData.Inventory.items)
@@ -200,18 +200,18 @@ export class PaymentService
             }
 
             // Found currency item
-            if (item.upd.StackObjectsCount < currencyMaxStackSize)
+            if (item.upd!.StackObjectsCount! < currencyMaxStackSize)
             {
-                if (item.upd.StackObjectsCount + calcAmount > currencyMaxStackSize)
+                if (item.upd!.StackObjectsCount! + calcAmount > currencyMaxStackSize)
                 {
                     // calculate difference
-                    calcAmount -= currencyMaxStackSize - item.upd.StackObjectsCount;
-                    item.upd.StackObjectsCount = currencyMaxStackSize;
+                    calcAmount -= currencyMaxStackSize - item.upd!.StackObjectsCount!;
+                    item.upd!.StackObjectsCount! = currencyMaxStackSize;
                 }
                 else
                 {
                     skipSendingMoneyToStash = true;
-                    item.upd.StackObjectsCount = item.upd.StackObjectsCount + calcAmount;
+                    item.upd!.StackObjectsCount! = item.upd!.StackObjectsCount! + calcAmount;
                 }
 
                 // Inform client of change to items StackObjectsCount
@@ -239,7 +239,7 @@ export class PaymentService
             const addItemToStashRequest: IAddItemsDirectRequest = {
                 itemsWithModsToAdd: rewards,
                 foundInRaid: false,
-                callback: null,
+                callback: undefined,
                 useSortingTable: true,
             };
             this.inventoryHelper.addItemsToStash(sessionID, addItemToStashRequest, pmcData, output);
@@ -274,7 +274,7 @@ export class PaymentService
             pmcData.Inventory.stash,
         );
         const amountAvailable = moneyItemsInInventory.reduce(
-            (accumulator, item) => accumulator + item.upd.StackObjectsCount,
+            (accumulator, item) => accumulator + item.upd!.StackObjectsCount!,
             0,
         );
 
@@ -299,7 +299,7 @@ export class PaymentService
         let leftToPay = amountToPay;
         for (const profileMoneyItem of moneyItemsInInventory)
         {
-            const itemAmount = profileMoneyItem.upd.StackObjectsCount;
+            const itemAmount = profileMoneyItem.upd!.StackObjectsCount!;
             if (leftToPay >= itemAmount)
             {
                 leftToPay -= itemAmount;
@@ -307,7 +307,7 @@ export class PaymentService
             }
             else
             {
-                profileMoneyItem.upd.StackObjectsCount -= leftToPay;
+                profileMoneyItem.upd!.StackObjectsCount! -= leftToPay;
                 leftToPay = 0;
                 output.profileChanges[sessionID].items.change.push(profileMoneyItem);
             }
@@ -394,7 +394,7 @@ export class PaymentService
      * @param playerStashId Players stash id
      * @returns true if its in inventory
      */
-    protected isInStash(itemId: string, inventoryItems: Item[], playerStashId: string): boolean
+    protected isInStash(itemId: string | undefined, inventoryItems: Item[], playerStashId: string): boolean
     {
         const itemParent = inventoryItems.find((x) => x._id === itemId);
 

@@ -25,14 +25,14 @@ export class ProfileSnapshotService
      * @param sessionID key
      * @returns A player profile object
      */
-    public getProfileSnapshot(sessionID: string): ISptProfile
+    public getProfileSnapshot(sessionID: string): ISptProfile | undefined
     {
         if (this.storedProfileSnapshots[sessionID])
         {
             return this.storedProfileSnapshots[sessionID];
         }
 
-        return null;
+        return undefined;
     }
 
     /**

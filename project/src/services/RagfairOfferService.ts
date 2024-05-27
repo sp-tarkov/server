@@ -54,12 +54,12 @@ export class RagfairOfferService
         return this.ragfairOfferHandler.getOffers();
     }
 
-    public getOfferByOfferId(offerId: string): IRagfairOffer
+    public getOfferByOfferId(offerId: string): IRagfairOffer | undefined
     {
         return this.ragfairOfferHandler.getOfferById(offerId);
     }
 
-    public getOffersOfType(templateId: string): IRagfairOffer[]
+    public getOffersOfType(templateId: string): IRagfairOffer[] | undefined
     {
         return this.ragfairOfferHandler.getOffersByTemplate(templateId);
     }
@@ -145,10 +145,13 @@ export class RagfairOfferService
     public removeOfferStack(offerId: string, amount: number): void
     {
         const offer = this.ragfairOfferHandler.getOfferById(offerId);
-        offer.items[0].upd.StackObjectsCount -= amount;
-        if (offer.items[0].upd.StackObjectsCount <= 0)
+        if (offer)
         {
-            this.processStaleOffer(offer);
+            offer.items[0].upd!.StackObjectsCount! -= amount;
+            if (offer.items[0].upd!.StackObjectsCount! <= 0)
+            {
+                this.processStaleOffer(offer);
+            }
         }
     }
 
@@ -164,7 +167,7 @@ export class RagfairOfferService
      */
     public traderOffersNeedRefreshing(traderID: string): boolean
     {
-        const trader = this.databaseServer.getTables().traders[traderID];
+        const trader = this.databaseServer.getTables().traders![traderID];
         if (!trader || !trader.base)
         {
             this.logger.error(this.localisationService.getText("ragfair-trader_missing_base_file", traderID));
@@ -259,15 +262,15 @@ export class RagfairOfferService
         }
 
         // Reduce player ragfair rep
-        profile.RagfairInfo.rating -= this.databaseServer.getTables().globals.config.RagFair.ratingDecreaseCount;
+        profile.RagfairInfo.rating -= this.databaseServer.getTables().globals!.config.RagFair.ratingDecreaseCount;
         profile.RagfairInfo.isRatingGrowing = false;
 
         const firstOfferItem = playerOffer.items[0];
-        if (firstOfferItem.upd.StackObjectsCount > firstOfferItem.upd.OriginalStackObjectsCount)
+        if (firstOfferItem.upd!.StackObjectsCount! > firstOfferItem.upd!.OriginalStackObjectsCount!)
         {
-            playerOffer.items[0].upd.StackObjectsCount = firstOfferItem.upd.OriginalStackObjectsCount;
+            playerOffer.items[0].upd!.StackObjectsCount = firstOfferItem.upd!.OriginalStackObjectsCount;
         }
-        delete playerOffer.items[0].upd.OriginalStackObjectsCount;
+        delete playerOffer.items[0].upd!.OriginalStackObjectsCount;
         // Remove player offer from flea
         this.ragfairOfferHandler.removeOffer(playerOffer);
 

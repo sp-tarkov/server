@@ -45,5 +45,5 @@ export interface ProfileTraderTemplate
     /** What traders default to being locked on profile creation */
     lockedByDefaultOverride?: string[]
     /** What traders should have their clothing unlocked/purchased on creation */
-    purchaseAlllClothingByDefaultForTrader?: string[]
+    purchaseAllClothingByDefaultForTrader?: string[]
 }

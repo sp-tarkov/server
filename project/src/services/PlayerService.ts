@@ -25,7 +25,7 @@ export class PlayerService
     {
         let accExp = 0;
 
-        for (const [level, { exp }] of this.databaseServer.getTables().globals.config.exp.level.exp_table.entries())
+        for (const [level, { exp }] of this.databaseServer.getTables().globals!.config.exp.level.exp_table.entries())
         {
             accExp += exp;
 

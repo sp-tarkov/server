@@ -27,8 +27,8 @@ export class SeasonalEventService
     protected httpConfig: IHttpConfig;
     protected weatherConfig: IWeatherConfig;
 
-    protected halloweenEventActive: boolean = undefined;
-    protected christmasEventActive: boolean = undefined;
+    protected halloweenEventActive?: boolean = undefined;
+    protected christmasEventActive?: boolean = undefined;
 
     /** All events active at this point in time */
     protected currentlyActiveEvents: SeasonalEventType[] = [];
@@ -128,7 +128,7 @@ export class SeasonalEventService
      */
     public getInactiveSeasonalEventItems(): string[]
     {
-        const items = [];
+        const items: string[] = [];
         if (!this.christmasEventEnabled())
         {
             items.push(...this.christmasEventItems);
@@ -157,7 +157,7 @@ export class SeasonalEventService
      */
     public christmasEventEnabled(): boolean
     {
-        return this.christmasEventActive;
+        return this.christmasEventActive ?? false;
     }
 
     /**
@@ -166,7 +166,7 @@ export class SeasonalEventService
      */
     public halloweenEventEnabled(): boolean
     {
-        return this.halloweenEventActive;
+        return this.halloweenEventActive ?? false;
     }
 
     /**
@@ -222,7 +222,7 @@ export class SeasonalEventService
     {
         if (this.currentlyActiveEvents)
         {
-            const globalConfig = this.databaseServer.getTables().globals.config;
+            const globalConfig = this.databaseServer.getTables().globals!.config;
             for (const event of this.currentlyActiveEvents)
             {
                 this.updateGlobalEvents(sessionId, globalConfig, event);
@@ -405,12 +405,12 @@ export class SeasonalEventService
 
     protected adjustZryachiyMeleeChance(): void
     {
-        this.databaseServer.getTables().bots.types.bosszryachiy.chances.equipment.Scabbard = 100;
+        this.databaseServer.getTables().bots!.types.bosszryachiy.chances.equipment.Scabbard = 100;
     }
 
     protected enableHalloweenSummonEvent(): void
     {
-        this.databaseServer.getTables().globals.config.EventSettings.EventActive = true;
+        this.databaseServer.getTables().globals!.config.EventSettings.EventActive = true;
     }
 
     protected addEventBossesToMaps(eventType: SeasonalEventType): void
@@ -434,10 +434,10 @@ export class SeasonalEventService
             for (const boss of bossesToAdd)
             {
                 const mapBosses: BossLocationSpawn[]
-                    = this.databaseServer.getTables().locations[mapKey].base.BossLocationSpawn;
+                    = this.databaseServer.getTables().locations![mapKey].base.BossLocationSpawn;
                 if (!mapBosses.find((x) => x.BossName === boss.BossName))
                 {
-                    this.databaseServer.getTables().locations[mapKey].base.BossLocationSpawn.push(...bossesToAdd);
+                    this.databaseServer.getTables().locations![mapKey].base.BossLocationSpawn.push(...bossesToAdd);
                 }
             }
         }
@@ -486,7 +486,7 @@ export class SeasonalEventService
      */
     protected addLootItemsToGifterDropItemsList(): void
     {
-        const gifterBot = this.databaseServer.getTables().bots.types.gifter;
+        const gifterBot = this.databaseServer.getTables().bots!.types.gifter;
         for (const difficulty in gifterBot.difficulty)
         {
             gifterBot.difficulty[difficulty].Patrol.ITEMS_TO_DROP = Object.keys(
@@ -512,7 +512,7 @@ export class SeasonalEventService
         // Iterate over bots with changes to apply
         for (const bot in botGearChanges)
         {
-            const botToUpdate = this.databaseServer.getTables().bots.types[bot.toLowerCase()];
+            const botToUpdate = this.databaseServer.getTables().bots!.types[bot.toLowerCase()];
             if (!botToUpdate)
             {
                 this.logger.warning(this.localisationService.getText("gameevent-bot_not_found", bot));
@@ -541,7 +541,7 @@ export class SeasonalEventService
 
     protected addPumpkinsToScavBackpacks(): void
     {
-        this.databaseServer.getTables().bots.types.assault.inventory.items.Backpack["634959225289190e5e773b3b"] = 400;
+        this.databaseServer.getTables().bots!.types.assault.inventory.items.Backpack["634959225289190e5e773b3b"] = 400;
     }
 
     /**
@@ -572,7 +572,7 @@ export class SeasonalEventService
     protected addGifterBotToMaps(): void
     {
         const gifterSettings = this.seasonalEventConfig.gifterSettings;
-        const maps = this.databaseServer.getTables().locations;
+        const maps = this.databaseServer.getTables().locations!;
         for (const gifterMapSettings of gifterSettings)
         {
             const mapData: ILocation = maps[gifterMapSettings.map];

@@ -49,7 +49,7 @@ export class OpenZoneService
      */
     public applyZoneChangesToAllMaps(): void
     {
-        const dbLocations = this.databaseServer.getTables().locations;
+        const dbLocations = this.databaseServer.getTables().locations!;
         for (const mapKey in this.locationConfig.openZones)
         {
             if (!dbLocations[mapKey])
