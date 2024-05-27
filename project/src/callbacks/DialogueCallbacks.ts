@@ -95,7 +95,7 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<DialogueInfo[]>
     {
-        return this.httpResponse.getBody(this.dialogueController.generateDialogueList(sessionID), 0, null, false);
+        return this.httpResponse.getBody(this.dialogueController.generateDialogueList(sessionID), 0, undefined, false);
     }
 
     /** Handle client/mail/dialog/view */
@@ -105,7 +105,12 @@ export class DialogueCallbacks implements OnUpdate
         sessionID: string,
     ): IGetBodyResponseData<IGetMailDialogViewResponseData>
     {
-        return this.httpResponse.getBody(this.dialogueController.generateDialogueView(info, sessionID), 0, null, false);
+        return this.httpResponse.getBody(
+            this.dialogueController.generateDialogueView(info, sessionID),
+            0,
+            undefined,
+            false,
+        );
     }
 
     /** Handle client/mail/dialog/info */
@@ -154,7 +159,7 @@ export class DialogueCallbacks implements OnUpdate
         url: string,
         info: IGetAllAttachmentsRequestData,
         sessionID: string,
-    ): IGetBodyResponseData<IGetAllAttachmentsResponse>
+    ): IGetBodyResponseData<IGetAllAttachmentsResponse | undefined>
     {
         return this.httpResponse.getBody(this.dialogueController.getAllAttachments(info.dialogId, sessionID));
     }

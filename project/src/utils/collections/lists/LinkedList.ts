@@ -66,15 +66,18 @@ export class LinkedList<T>
         let ref = this.head;
         for (let i = 0; i <= idx; ++i)
         {
-            ref = ref.next;
+            ref = ref?.next;
         }
 
         const node = new LinkedListNode(value);
         this.length++;
 
         node.next = ref;
-        node.prev = ref.prev;
-        ref.prev = node;
+        node.prev = ref?.prev;
+        if (ref)
+        {
+            ref.prev = node;
+        }
 
         if (node.prev)
         {
@@ -104,7 +107,7 @@ export class LinkedList<T>
     /**
      * Returns the first element's value.
      */
-    public getHead(): T
+    public getHead(): T | undefined
     {
         return this.head?.value;
     }
@@ -112,7 +115,7 @@ export class LinkedList<T>
     /**
      * Finds the element from the list at the given index and returns it's value.
      */
-    public get(idx: number): T
+    public get(idx: number): T | undefined
     {
         if (idx < 0 || idx >= this.length)
         {
@@ -141,7 +144,7 @@ export class LinkedList<T>
     /**
      * Returns the last element's value.
      */
-    public getTail(): T
+    public getTail(): T | undefined
     {
         return this.tail?.value;
     }
@@ -149,7 +152,7 @@ export class LinkedList<T>
     /**
      * Finds and removes the first element from a list that has a value equal to the given value, returns it's value if it successfully removed it.
      */
-    public remove(value: T): T
+    public remove(value: T): T | undefined
     {
         let ref = this.head;
         for (let i = 0; ref && i < this.length; ++i)
@@ -170,7 +173,7 @@ export class LinkedList<T>
 
         if (this.length === 0)
         {
-            const out = this.head.value;
+            const out = this.head?.value;
             this.head = this.tail = undefined;
             return out;
         }
@@ -202,7 +205,7 @@ export class LinkedList<T>
     /**
      * Removes the first element from the list and returns it's value. If the list is empty, undefined is returned and the list is not modified.
      */
-    public shift(): T
+    public shift(): T | undefined
     {
         if (!this.head)
         {
@@ -227,7 +230,7 @@ export class LinkedList<T>
     /**
      * Removes the element from the list at the given index and returns it's value.
      */
-    public removeAt(idx: number): T
+    public removeAt(idx: number): T | undefined
     {
         if (idx < 0 || idx >= this.length)
         {
@@ -249,25 +252,25 @@ export class LinkedList<T>
 
         for (let i = 0; i < idx; ++i)
         {
-            ref = ref.next;
+            ref = ref?.next;
         }
 
-        if (ref.prev)
+        if (ref?.prev)
         {
             ref.prev.next = ref.next;
         }
-        if (ref.next)
+        if (ref?.next)
         {
             ref.next.prev = ref.prev;
         }
 
-        return ref.value;
+        return ref?.value;
     }
 
     /**
      * Removes the last element from the list and returns it's value. If the list is empty, undefined is returned and the list is not modified.
      */
-    public pop(): T
+    public pop(): T | undefined
     {
         if (!this.tail)
         {
@@ -292,13 +295,13 @@ export class LinkedList<T>
     /**
      * Returns an iterable of index, value pairs for every entry in the list.
      */
-    public *entries(): IterableIterator<[number, T]>
+    public *entries(): IterableIterator<[number, T | undefined]>
     {
         let node = this.head;
         for (let i = 0; i < this.length; ++i)
         {
-            yield [i, node.value];
-            node = node.next;
+            yield [i, node?.value];
+            node = node?.next;
         }
     }
 

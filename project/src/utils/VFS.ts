@@ -14,7 +14,11 @@ export class VFS
 {
     accessFilePromisify: (path: fs.PathLike, mode?: number) => Promise<void>;
     copyFilePromisify: (src: fs.PathLike, dst: fs.PathLike, flags?: number) => Promise<void>;
-    mkdirPromisify: (path: fs.PathLike, options: fs.MakeDirectoryOptions & { recursive: true }) => Promise<string>;
+    mkdirPromisify: (
+        path: fs.PathLike,
+        options: fs.MakeDirectoryOptions & { recursive: true }
+    ) => Promise<string | undefined>;
+
     readFilePromisify: (path: fs.PathLike) => Promise<Buffer>;
     writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>;
     readdirPromisify: (
@@ -91,7 +95,7 @@ export class VFS
         await this.asyncQueue.waitFor(command);
     }
 
-    public copyDir(filepath: string, target: string, fileExtensions: string | string[] = undefined): void
+    public copyDir(filepath: string, target: string, fileExtensions?: string | string[]): void
     {
         const files = this.getFiles(filepath);
         const dirs = this.getDirs(filepath);
@@ -109,7 +113,7 @@ export class VFS
         for (const file of files)
         {
             // copy all if fileExtension is not set, copy only those with fileExtension if set
-            if (!fileExtensions || fileExtensions.includes(file.split(".").pop()))
+            if (!fileExtensions || fileExtensions.includes(file.split(".").pop() ?? ""))
             {
                 this.copyFile(path.join(filepath, file), path.join(target, file));
             }
@@ -134,7 +138,7 @@ export class VFS
         for (const file of files)
         {
             // copy all if fileExtension is not set, copy only those with fileExtension if set
-            if (!fileExtensions || fileExtensions.includes(file.split(".").pop()))
+            if (!fileExtensions || fileExtensions.includes(file.split(".").pop() ?? ""))
             {
                 await this.copyAsync(path.join(filepath, file), path.join(target, file));
             }
@@ -279,7 +283,7 @@ export class VFS
         const files = this.getFiles(filepath);
         const dirs = this.getDirs(filepath);
 
-        const promises = [];
+        const promises: Promise<void>[] = [];
 
         for (const dir of dirs)
         {
@@ -288,7 +292,7 @@ export class VFS
 
         for (const file of files)
         {
-            promises.push(this.removeFile(path.join(filepath, file)));
+            promises.push(this.removeFileAsync(path.join(filepath, file)));
         }
 
         await Promise.all(promises);
@@ -320,7 +324,7 @@ export class VFS
         unlockSync(filepath);
     }
 
-    public getFileExtension(filepath: string): string
+    public getFileExtension(filepath: string): string | undefined
     {
         return filepath.split(".").pop();
     }

@@ -46,7 +46,7 @@ export class ItemEventCallbacks
 
         for (const warning of warnings)
         {
-            if (!nonCriticalErrorCodes.includes(+warning.code))
+            if (!nonCriticalErrorCodes.includes(+(warning?.code ?? "0")))
             {
                 return true;
             }

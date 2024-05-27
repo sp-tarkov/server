@@ -27,6 +27,6 @@ export class AsyncQueue implements IAsyncQueue
         }
 
         // When the command is ready, execute it
-        return this.commandsQueue.shift().cmd();
+        return this.commandsQueue.shift()!.cmd();
     }
 }

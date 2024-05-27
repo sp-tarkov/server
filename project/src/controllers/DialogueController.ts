@@ -37,14 +37,12 @@ export class DialogueController
         // if give command is disabled or commando commands are disabled
         if (!coreConfigs.features?.chatbotFeatures?.commandoEnabled)
         {
-            const sptCommando = this.dialogueChatBots.find(
-                (c) => c.getChatBot()._id.toLocaleLowerCase() === "sptcommando",
-            );
+            const sptCommando = this.dialogueChatBots.find((c) => c.getChatBot()._id.toLocaleLowerCase() === "sptcommando")!;
             this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptCommando), 1);
         }
         if (!coreConfigs.features?.chatbotFeatures?.sptFriendEnabled)
         {
-            const sptFriend = this.dialogueChatBots.find((c) => c.getChatBot()._id.toLocaleLowerCase() === "sptFriend");
+            const sptFriend = this.dialogueChatBots.find((c) => c.getChatBot()._id.toLocaleLowerCase() === "sptFriend")!;
             this.dialogueChatBots.splice(this.dialogueChatBots.indexOf(sptFriend), 1);
         }
     }
@@ -128,7 +126,7 @@ export class DialogueController
      * @param sessionID Player id
      * @returns IUserDialogInfo array
      */
-    public getDialogueUsers(dialog: Dialogue, messageType: MessageType, sessionID: string): IUserDialogInfo[]
+    public getDialogueUsers(dialog: Dialogue, messageType: MessageType, sessionID: string): IUserDialogInfo[] | undefined
     {
         const profile = this.saveServer.getProfile(sessionID);
 
@@ -214,7 +212,11 @@ export class DialogueController
                 const chatBot = this.dialogueChatBots.find((cb) => cb.getChatBot()._id === request.dialogId);
                 if (chatBot)
                 {
-                    profile.dialogues[request.dialogId].Users.push(chatBot.getChatBot());
+                    if (!profile.dialogues[request.dialogId].Users)
+                    {
+                        profile.dialogues[request.dialogId].Users = [];
+                    }
+                    profile.dialogues[request.dialogId].Users!.push(chatBot.getChatBot());
                 }
             }
         }
@@ -228,7 +230,7 @@ export class DialogueController
      * @param dialogUsers The participants of the mail
      * @returns IUserDialogInfo array
      */
-    protected getProfilesForMail(fullProfile: ISptProfile, dialogUsers: IUserDialogInfo[]): IUserDialogInfo[]
+    protected getProfilesForMail(fullProfile: ISptProfile, dialogUsers?: IUserDialogInfo[]): IUserDialogInfo[]
     {
         const result: IUserDialogInfo[] = [];
         if (dialogUsers)
@@ -283,7 +285,7 @@ export class DialogueController
      */
     protected messagesHaveUncollectedRewards(messages: Message[]): boolean
     {
-        return messages.some((message) => message.items?.data?.length > 0);
+        return messages.some((message) => (message.items?.data?.length ?? 0) > 0);
     }
 
     /**
@@ -350,7 +352,7 @@ export class DialogueController
      * @param sessionId Session id
      * @returns IGetAllAttachmentsResponse
      */
-    public getAllAttachments(dialogueId: string, sessionId: string): IGetAllAttachmentsResponse
+    public getAllAttachments(dialogueId: string, sessionId: string): IGetAllAttachmentsResponse | undefined
     {
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
         const dialog = dialogs[dialogueId];
@@ -358,7 +360,7 @@ export class DialogueController
         {
             this.logger.error(this.localisationService.getText("dialogue-unable_to_find_in_profile", { sessionId: sessionId, dialogueId: dialogueId }));
 
-            return;
+            return undefined;
         }
 
         // Removes corner 'new messages' tag
@@ -397,7 +399,7 @@ export class DialogueController
     {
         const timeNow = this.timeUtil.getTimestamp();
         const dialogs = this.dialogueHelper.getDialogsForProfile(sessionId);
-        return dialogs[dialogueId].messages.filter((message) => timeNow < message.dt + message.maxStorageTime);
+        return dialogs[dialogueId].messages.filter((message) => timeNow < message.dt + (message.maxStorageTime ?? 0));
     }
 
     /**
@@ -407,7 +409,7 @@ export class DialogueController
      */
     protected getMessagesWithAttachments(messages: Message[]): Message[]
     {
-        return messages.filter((message) => message.items?.data?.length > 0);
+        return messages.filter((message) => (message.items?.data?.length ?? 0) > 0);
     }
 
     /**
@@ -452,7 +454,7 @@ export class DialogueController
      */
     protected messageHasExpired(message: Message): boolean
     {
-        return this.timeUtil.getTimestamp() > message.dt + message.maxStorageTime;
+        return this.timeUtil.getTimestamp() > message.dt + (message.maxStorageTime ?? 0);
     }
 
     /** Handle client/friend/request/send  */

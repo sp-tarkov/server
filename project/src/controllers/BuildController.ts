@@ -42,7 +42,7 @@ export class BuildController
 
         // Ensure the secure container in the default presets match what the player has equipped
         const defaultEquipmentPresetsClone = this.cloner.clone(
-            this.databaseServer.getTables().templates.defaultEquipmentPresets,
+            this.databaseServer.getTables().templates!.defaultEquipmentPresets,
         );
         const playerSecureContainer = profile.characters.pmc.Inventory.items?.find(
             (x) => x.slotId === secureContainerSlotId,

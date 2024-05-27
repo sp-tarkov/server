@@ -36,7 +36,7 @@ export class DataCallbacks
      */
     public getSettings(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISettingsBase>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().settings);
+        return this.httpResponse.getBody(this.databaseServer.getTables().settings!);
     }
 
     /**
@@ -45,8 +45,8 @@ export class DataCallbacks
      */
     public getGlobals(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGlobals>
     {
-        this.databaseServer.getTables().globals.time = Date.now() / 1000;
-        return this.httpResponse.getBody(this.databaseServer.getTables().globals);
+        this.databaseServer.getTables().globals!.time = Date.now() / 1000;
+        return this.httpResponse.getBody(this.databaseServer.getTables().globals!);
     }
 
     /**
@@ -55,7 +55,7 @@ export class DataCallbacks
      */
     public getTemplateItems(url: string, info: IEmptyRequestData, sessionID: string): string
     {
-        return this.httpResponse.getUnclearedBody(this.databaseServer.getTables().templates.items);
+        return this.httpResponse.getUnclearedBody(this.databaseServer.getTables().templates!.items);
     }
 
     /**
@@ -68,7 +68,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<IHandbookBase>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().templates.handbook);
+        return this.httpResponse.getBody(this.databaseServer.getTables().templates!.handbook);
     }
 
     /**
@@ -81,7 +81,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<Record<string, ICustomizationItem>>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().templates.customization);
+        return this.httpResponse.getBody(this.databaseServer.getTables().templates!.customization);
     }
 
     /**
@@ -94,7 +94,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<string[]>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().templates.character);
+        return this.httpResponse.getBody(this.databaseServer.getTables().templates!.character);
     }
 
     /**
@@ -107,7 +107,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<IHideoutSettingsBase>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().hideout.settings);
+        return this.httpResponse.getBody(this.databaseServer.getTables().hideout!.settings);
     }
 
     public getHideoutAreas(
@@ -116,7 +116,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<IHideoutArea[]>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().hideout.areas);
+        return this.httpResponse.getBody(this.databaseServer.getTables().hideout!.areas);
     }
 
     public gethideoutProduction(
@@ -125,7 +125,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<IHideoutProduction[]>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().hideout.production);
+        return this.httpResponse.getBody(this.databaseServer.getTables().hideout!.production);
     }
 
     public getHideoutScavcase(
@@ -134,7 +134,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<IHideoutScavCase[]>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().hideout.scavcase);
+        return this.httpResponse.getBody(this.databaseServer.getTables().hideout!.scavcase);
     }
 
     /**
@@ -146,7 +146,7 @@ export class DataCallbacks
         sessionID: string,
     ): IGetBodyResponseData<Record<string, string>>
     {
-        return this.httpResponse.getBody(this.databaseServer.getTables().locales.languages);
+        return this.httpResponse.getBody(this.databaseServer.getTables().locales!.languages);
     }
 
     /**
@@ -156,12 +156,15 @@ export class DataCallbacks
     {
         const localeId = url.replace("/client/menu/locale/", "");
         const tables = this.databaseServer.getTables();
-        let result = tables.locales.menu[localeId];
+        let result = tables.locales?.menu[localeId];
 
         if (result === undefined)
         {
-            result = tables.locales.menu.en;
+            result = tables.locales?.menu.en;
         }
+
+        if (result === undefined)
+            throw new Error(`Unable to determine locale for request with '${localeId}'`);
 
         return this.httpResponse.getBody(result);
     }
@@ -173,11 +176,11 @@ export class DataCallbacks
     {
         const localeId = url.replace("/client/locale/", "");
         const tables = this.databaseServer.getTables();
-        let result = tables.locales.global[localeId];
+        let result = tables.locales?.global[localeId];
 
         if (result === undefined)
         {
-            result = tables.locales.global["en"];
+            result = tables.locales?.global["en"];
         }
 
         return this.httpResponse.getUnclearedBody(result);

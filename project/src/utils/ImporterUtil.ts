@@ -57,7 +57,7 @@ export class ImporterUtil
         }
 
         // set all loadRecursive to be executed asynchronously
-        const resEntries = Object.entries(result);
+        const resEntries = Object.entries(result!);
         const resResolved = await Promise.all(resEntries.map((ent) => ent[1]));
         for (let resIdx = 0; resIdx < resResolved.length; resIdx++)
         {
@@ -136,6 +136,8 @@ export class ImporterUtil
         while (directoriesToRead.length !== 0)
         {
             const directory = directoriesToRead.dequeue();
+            if (!directory)
+                continue;
             filesToProcess.enqueueAll(this.vfs.getFiles(directory).map((f) => new VisitNode(`${directory}/`, f)));
             directoriesToRead.enqueueAll(this.vfs.getDirs(directory).map((d) => `${directory}/${d}`));
         }
@@ -143,6 +145,8 @@ export class ImporterUtil
         while (filesToProcess.length !== 0)
         {
             const fileNode = filesToProcess.dequeue();
+            if (!fileNode)
+                continue;
             if (this.vfs.getFileExtension(fileNode.fileName) === "json")
             {
                 const filePathAndName = `${fileNode.filePath}${fileNode.fileName}`;

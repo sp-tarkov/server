@@ -22,7 +22,7 @@ export class MathUtil
      */
     public arrayCumsum(values: number[]): number[]
     {
-        const cumsumArray = [];
+        const cumsumArray: number[] = [];
         let sum = 0;
         for (let i = 0; i < values.length; i++)
         {
@@ -85,7 +85,7 @@ export class MathUtil
      * @param   {array}     y               support points in y (of same length as x)
      * @return  {number}                    y(xp)
      */
-    public interp1(xp: number, x: number[], y: number[]): number
+    public interp1(xp: number, x: number[], y: number[]): number | undefined
     {
         if (xp > x[x.length - 1])
         {
@@ -104,5 +104,6 @@ export class MathUtil
                 return y[i] + ((xp - x[i]) * (y[i + 1] - y[i])) / (x[i + 1] - x[i]);
             }
         }
+        return undefined;
     }
 }

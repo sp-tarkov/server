@@ -19,27 +19,29 @@ export class ApplicationContext
      * const matchInfo = this.applicationContext.getLatestValue(ContextVariableType.RAID_CONFIGURATION).getValue<IGetRaidConfigurationRequestData>();
      * ```
      */
-    public getLatestValue(type: ContextVariableType): ContextVariable
+    public getLatestValue(type: ContextVariableType): ContextVariable | undefined
     {
         if (this.variables.has(type))
         {
             return this.variables.get(type)?.getTail();
         }
+        return undefined;
     }
 
-    public getValues(type: ContextVariableType): ContextVariable[]
+    public getValues(type: ContextVariableType): ContextVariable[] | undefined
     {
         if (this.variables.has(type))
         {
             const res: ContextVariable[] = [];
 
-            for (const value of this.variables.get(type).values())
+            for (const value of this.variables.get(type)!.values())
             {
                 res.push(value);
             }
 
             return res;
         }
+        return undefined;
     }
 
     public addValue(type: ContextVariableType, value: any): void
@@ -47,7 +49,7 @@ export class ApplicationContext
         let list: LinkedList<ContextVariable>;
         if (this.variables.has(type))
         {
-            list = this.variables.get(type);
+            list = this.variables.get(type)!;
         }
         else
         {

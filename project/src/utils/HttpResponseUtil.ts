@@ -42,14 +42,14 @@ export class HttpResponseUtil
      * @param errmsg
      * @returns
      */
-    public getBody<T>(data: T, err = 0, errmsg = null, sanitize = true): IGetBodyResponseData<T>
+    public getBody<T>(data: T, err: number = 0, errmsg?: string, sanitize = true): IGetBodyResponseData<T>
     {
         return sanitize
             ? this.clearString(this.getUnclearedBody(data, err, errmsg))
             : (this.getUnclearedBody(data, err, errmsg) as any);
     }
 
-    public getUnclearedBody(data: any, err = 0, errmsg = null): string
+    public getUnclearedBody(data: any, err: number = 0, errmsg?: string): string
     {
         return this.jsonUtil.serialize({ err: err, errmsg: errmsg, data: data });
     }
@@ -61,7 +61,7 @@ export class HttpResponseUtil
 
     public nullResponse(): INullResponseData
     {
-        return this.clearString(this.getUnclearedBody(null, 0, null));
+        return this.clearString(this.getUnclearedBody(null, 0, undefined));
     }
 
     public emptyArrayResponse(): IGetBodyResponseData<any[]>

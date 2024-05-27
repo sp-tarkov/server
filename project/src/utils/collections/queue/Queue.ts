@@ -36,7 +36,7 @@ export class Queue<T>
     /**
      * Removes the first element from the queue and returns it's value. If the queue is empty, undefined is returned and the queue is not modified.
      */
-    public dequeue(): T
+    public dequeue(): T | undefined
     {
         return this.list.shift();
     }
@@ -44,7 +44,7 @@ export class Queue<T>
     /**
      * Returns the first element's value.
      */
-    public peek(): T
+    public peek(): T | undefined
     {
         return this.list.getHead();
     }

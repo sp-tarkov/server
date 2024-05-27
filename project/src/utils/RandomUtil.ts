@@ -81,7 +81,7 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
      * @param       {string}                        key                     The key of the element whose data shall be retrieved
      * @returns     {object}                                                The data object
      */
-    data(key: K): V
+    data(key: K): V | undefined
     {
         return this.filter((r) => r.key === key)[0]?.data;
     }
@@ -151,11 +151,11 @@ export class ProbabilityObjectArray<K, V = undefined> extends Array<ProbabilityO
                 acc.keyArray.push(x.key);
                 return acc;
             },
-            { probArray: [], keyArray: [] },
+            { probArray: new Array<number>(), keyArray: new Array<K>() },
         );
         let probCumsum = this.cumulativeProbability(probArray);
 
-        const drawnKeys = [];
+        const drawnKeys: K[] = [];
         for (let i = 0; i < count; i++)
         {
             const rand = Math.random();
@@ -193,14 +193,14 @@ export class ProbabilityObject<K, V = undefined>
 {
     key: K;
     relativeProbability: number;
-    data: V;
+    data?: V;
     /**
      * Constructor for the ProbabilityObject
      * @param       {string}                        key                         The key of the element
      * @param       {number}                        relativeProbability         The relative probability of this element
      * @param       {any}                           data                        Optional data attached to the element
      */
-    constructor(key: K, relativeProbability: number, data: V = null)
+    constructor(key: K, relativeProbability: number, data?: V)
     {
         this.key = key;
         this.relativeProbability = relativeProbability;
@@ -354,7 +354,7 @@ export class RandomUtil
             list = this.cloner.clone(originalList);
         }
 
-        const results = [];
+        const results: T[] = [];
         for (let i = 0; i < count; i++)
         {
             const randomIndex = this.randInt(list.length);

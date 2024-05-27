@@ -80,7 +80,7 @@ export class BotController
      */
     public getBotCoreDifficulty(): IBotCore
     {
-        return this.databaseServer.getTables().bots.core;
+        return this.databaseServer.getTables().bots!.core;
     }
 
     /**
@@ -146,7 +146,7 @@ export class BotController
     {
         const result = {};
 
-        const botDb = this.databaseServer.getTables().bots.types;
+        const botDb = this.databaseServer.getTables().bots!.types;
         const botTypes = Object.keys(WildSpawnTypeNumber).filter((v) => Number.isNaN(Number(v)));
         for (let botType of botTypes)
         {
@@ -212,8 +212,12 @@ export class BotController
             .getLatestValue(ContextVariableType.RAID_CONFIGURATION)
             ?.getValue<IGetRaidConfigurationRequestData>();
 
+        if (raidSettings === undefined)
+        {
+            throw new Error("Raid settings could not be loaded from ApplicationContext");
+        }
         const pmcLevelRangeForMap
-            = this.pmcConfig.locationSpecificPmcLevelOverride[raidSettings?.location.toLowerCase()];
+            = this.pmcConfig.locationSpecificPmcLevelOverride[raidSettings.location.toLowerCase()];
 
         const allPmcsHaveSameNameAsPlayer = this.randomUtil.getChance100(
             this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance,
@@ -369,6 +373,11 @@ export class BotController
         const raidSettings = this.applicationContext
             .getLatestValue(ContextVariableType.RAID_CONFIGURATION)
             ?.getValue<IGetRaidConfigurationRequestData>();
+
+        if (raidSettings === undefined)
+        {
+            throw new Error("Raid settings could not be loaded from ApplicationContext");
+        }
         const pmcLevelRangeForMap
             = this.pmcConfig.locationSpecificPmcLevelOverride[raidSettings.location.toLowerCase()];
 
@@ -482,7 +491,7 @@ export class BotController
         const defaultMapCapId = "default";
         const raidConfig = this.applicationContext
             .getLatestValue(ContextVariableType.RAID_CONFIGURATION)
-            .getValue<IGetRaidConfigurationRequestData>();
+            ?.getValue<IGetRaidConfigurationRequestData>();
 
         if (!raidConfig)
         {
@@ -497,7 +506,7 @@ export class BotController
             this.logger.warning(
                 this.localisationService.getText(
                     "bot-no_bot_cap_found_for_location",
-                    raidConfig.location.toLowerCase(),
+                    raidConfig?.location.toLowerCase(),
                 ),
             );
             botCap = this.botConfig.maxBotCap[defaultMapCapId];

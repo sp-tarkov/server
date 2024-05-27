@@ -264,7 +264,7 @@ export class GameController
             return;
         }
 
-        for (const craft of this.databaseServer.getTables().hideout.production)
+        for (const craft of this.databaseServer.getTables().hideout!.production)
         {
             // Only adjust crafts ABOVE the override
             if (craft.productionTime > craftTimeOverrideSeconds)
@@ -282,7 +282,7 @@ export class GameController
             return;
         }
 
-        for (const area of this.databaseServer.getTables().hideout.areas)
+        for (const area of this.databaseServer.getTables().hideout!.areas)
         {
             for (const stageKey of Object.keys(area.stages))
             {
@@ -298,7 +298,7 @@ export class GameController
 
     protected adjustLocationBotValues(): void
     {
-        const mapsDb = this.databaseServer.getTables().locations;
+        const mapsDb = this.databaseServer.getTables().locations!;
 
         for (const locationKey in this.botConfig.maxBotCap)
         {
@@ -322,12 +322,12 @@ export class GameController
     {
         for (const traderKey in this.databaseServer.getTables().traders)
         {
-            const trader = this.databaseServer.getTables().traders[traderKey];
+            const trader = this.databaseServer.getTables().traders![traderKey];
             if (!trader?.base?.repair)
             {
                 this.logger.warning(this.localisationService.getText("trader-missing_repair_property_using_default",
                     { traderId: trader.base._id, nickname: trader.base.nickname }));
-                trader.base.repair = this.cloner.clone(this.databaseServer.getTables().traders.ragfair.base.repair);
+                trader.base.repair = this.cloner.clone(this.databaseServer.getTables().traders!.ragfair.base.repair);
 
                 return;
             }
@@ -337,9 +337,9 @@ export class GameController
                 this.logger.warning(this.localisationService.getText("trader-missing_repair_quality_property_using_default",
                     { traderId: trader.base._id, nickname: trader.base.nickname }));
                 trader.base.repair.quality = this.cloner.clone(
-                    this.databaseServer.getTables().traders.ragfair.base.repair.quality,
+                    this.databaseServer.getTables().traders!.ragfair.base.repair.quality,
                 );
-                trader.base.repair.quality = this.databaseServer.getTables().traders.ragfair.base.repair.quality;
+                trader.base.repair.quality = this.databaseServer.getTables().traders!.ragfair.base.repair.quality;
             }
         }
     }
@@ -356,7 +356,7 @@ export class GameController
                 continue;
             }
 
-            const mapLooseLoot: ILooseLoot = this.databaseServer.getTables().locations[mapId]?.looseLoot;
+            const mapLooseLoot: ILooseLoot = this.databaseServer.getTables().locations![mapId]?.looseLoot;
             if (!mapLooseLoot)
             {
                 this.logger.warning(this.localisationService.getText("location-map_has_no_loose_loot_data", mapId));
@@ -391,7 +391,7 @@ export class GameController
         const adjustments = this.lootConfig.looseLootSpawnPointAdjustments;
         for (const mapId in adjustments)
         {
-            const mapLooseLootData: ILooseLoot = this.databaseServer.getTables().locations[mapId]?.looseLoot;
+            const mapLooseLootData: ILooseLoot = this.databaseServer.getTables().locations![mapId]?.looseLoot;
             if (!mapLooseLootData)
             {
                 this.logger.warning(this.localisationService.getText("location-map_has_no_loose_loot_data", mapId));
@@ -418,7 +418,7 @@ export class GameController
     /** Apply custom limits on bot types as defined in configs/location.json/botTypeLimits */
     protected adjustMapBotLimits(): void
     {
-        const mapsDb = this.databaseServer.getTables().locations;
+        const mapsDb = this.databaseServer.getTables().locations!;
         if (!this.locationConfig.botTypeLimits)
         {
             return;
@@ -470,7 +470,7 @@ export class GameController
             )?.Value ?? 0;
 
         const config: IGameConfigResponse = {
-            languages: this.databaseServer.getTables().locales.languages,
+            languages: this.databaseServer.getTables().locales!.languages,
             ndaFree: false,
             reportAvailable: false,
             twitchEventMember: false,
@@ -552,7 +552,7 @@ export class GameController
      */
     protected fixShotgunDispersions(): void
     {
-        const itemDb = this.databaseServer.getTables().templates.items;
+        const itemDb = this.databaseServer.getTables().templates!.items;
 
         // Saiga 12ga
         // Toz 106
@@ -582,7 +582,7 @@ export class GameController
 
     protected flagAllItemsInDbAsSellableOnFlea(): void
     {
-        const dbItems = Object.values(this.databaseServer.getTables().templates.items);
+        const dbItems = Object.values(this.databaseServer.getTables().templates!.items);
         for (const item of dbItems)
         {
             if (item._type === "Item" && !item._props?.CanSellOnRagfair)
@@ -613,12 +613,12 @@ export class GameController
             // Set new values, whatever is smallest
             energyRegenPerHour += pmcProfile.Bonuses.filter(
                 (bonus) => bonus.type === BonusType.ENERGY_REGENERATION,
-            ).reduce((sum, curr) => sum + curr.value, 0);
+            ).reduce((sum, curr) => sum + (curr.value ?? 0), 0);
             hydrationRegenPerHour += pmcProfile.Bonuses.filter(
                 (bonus) => bonus.type === BonusType.HYDRATION_REGENERATION,
-            ).reduce((sum, curr) => sum + curr.value, 0);
+            ).reduce((sum, curr) => sum + (curr.value ?? 0), 0);
             hpRegenPerHour += pmcProfile.Bonuses.filter((bonus) => bonus.type === BonusType.HEALTH_REGENERATION).reduce(
-                (sum, curr) => sum + curr.value,
+                (sum, curr) => sum + (curr.value ?? 0),
                 0,
             );
 
@@ -703,7 +703,7 @@ export class GameController
             }
 
             // Loop over all of the locations waves and look for waves with identical min and max slots
-            const location: ILocation = this.databaseServer.getTables().locations[locationKey];
+            const location: ILocation = this.databaseServer.getTables().locations![locationKey];
             if (!location.base)
             {
                 this.logger.warning(
@@ -730,7 +730,7 @@ export class GameController
      */
     protected fixRoguesSpawningInstantlyOnLighthouse(): void
     {
-        const lighthouse = this.databaseServer.getTables().locations.lighthouse.base;
+        const lighthouse = this.databaseServer.getTables().locations!.lighthouse!.base;
         for (const wave of lighthouse.BossLocationSpawn)
         {
             // Find Rogues that spawn instantly
@@ -778,7 +778,7 @@ export class GameController
             }
 
             // Iterate over all maps
-            const location: ILocation = this.databaseServer.getTables().locations[locationKey];
+            const location: ILocation = this.databaseServer.getTables().locations![locationKey];
             for (const wave of location.base.waves)
             {
                 // Wave has size that makes it candidate for splitting
@@ -883,8 +883,8 @@ export class GameController
     protected validateQuestAssortUnlocksExist(): void
     {
         const db = this.databaseServer.getTables();
-        const traders = db.traders;
-        const quests = db.templates.quests;
+        const traders = db.traders!;
+        const quests = db.templates!.quests;
         for (const traderId of Object.values(Traders))
         {
             const traderData = traders[traderId];
@@ -896,9 +896,9 @@ export class GameController
 
             // Merge started/success/fail quest assorts into one dictionary
             const mergedQuestAssorts = {
-                ...traderData.questassort.started,
-                ...traderData.questassort.success,
-                ...traderData.questassort.fail,
+                ...traderData.questassort?.started,
+                ...traderData.questassort?.success,
+                ...traderData.questassort?.fail,
             };
 
             // Loop over all assorts for trader
@@ -929,7 +929,7 @@ export class GameController
         const playerName = pmcProfile.Info.Nickname;
         if (playerName)
         {
-            const bots = this.databaseServer.getTables().bots.types;
+            const bots = this.databaseServer.getTables().bots!.types;
 
             if (bots.bear)
             {
@@ -962,9 +962,9 @@ export class GameController
     protected removePraporTestMessage(): void
     {
         // Iterate over all languages (e.g. "en", "fr")
-        for (const localeKey in this.databaseServer.getTables().locales.global)
+        for (const localeKey in this.databaseServer.getTables().locales!.global)
         {
-            this.databaseServer.getTables().locales.global[localeKey]["61687e2c3e526901fa76baf9"] = "";
+            this.databaseServer.getTables().locales!.global[localeKey]["61687e2c3e526901fa76baf9"] = "";
         }
     }
 
@@ -973,7 +973,7 @@ export class GameController
      */
     protected adjustLabsRaiderSpawnRate(): void
     {
-        const labsBase = this.databaseServer.getTables().locations.laboratory.base;
+        const labsBase = this.databaseServer.getTables().locations!.laboratory!.base;
         const nonTriggerLabsBossSpawns = labsBase.BossLocationSpawn.filter(
             (x) => x.TriggerId === "" && x.TriggerName === "",
         );

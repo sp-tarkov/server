@@ -17,29 +17,29 @@ export class RagfairOfferHolder
         this.offersByTrader = new Map();
     }
 
-    public getOfferById(id: string): IRagfairOffer
+    public getOfferById(id: string): IRagfairOffer | undefined
     {
         if (this.offersById.has(id))
         {
-            return this.offersById.get(id);
+            return this.offersById.get(id)!;
         }
         return undefined;
     }
 
-    public getOffersByTemplate(templateId: string): Array<IRagfairOffer>
+    public getOffersByTemplate(templateId: string): Array<IRagfairOffer> | undefined
     {
         if (this.offersByTemplate.has(templateId))
         {
-            return [...this.offersByTemplate.get(templateId).values()];
+            return [...this.offersByTemplate.get(templateId)!.values()];
         }
         return undefined;
     }
 
-    public getOffersByTrader(traderId: string): Array<IRagfairOffer>
+    public getOffersByTrader(traderId: string): Array<IRagfairOffer> | undefined
     {
         if (this.offersByTrader.has(traderId))
         {
-            return [...this.offersByTrader.get(traderId).values()];
+            return [...this.offersByTrader.get(traderId)!.values()];
         }
         return undefined;
     }
@@ -70,7 +70,7 @@ export class RagfairOfferHolder
         // for this template, just dont add in more
         if (
             !(this.ragfairServerHelper.isTrader(trader) || this.ragfairServerHelper.isPlayer(trader))
-            && this.getOffersByTemplate(itemTpl)?.length >= this.maxOffersPerTemplate
+            && (this.getOffersByTemplate(itemTpl)?.length ?? 0) >= this.maxOffersPerTemplate
         )
         {
             return;
@@ -89,17 +89,23 @@ export class RagfairOfferHolder
         if (this.offersById.has(offer._id))
         {
             this.offersById.delete(offer._id);
-            const traderOffers = this.offersByTrader.get(offer.user.id);
-            traderOffers.delete(offer._id);
-            // This was causing a memory leak, we need to make sure that we remove
-            // the user ID from the cached offers after they dont have anything else
-            // on the flea placed. We regenerate the ID for the NPC users, making it
-            // continously grow otherwise
-            if (traderOffers.size === 0)
+            if (this.offersByTrader.has(offer.user.id))
             {
-                this.offersByTrader.delete(offer.user.id);
+                this.offersByTrader.get(offer.user.id)!.delete(offer._id);
+                // This was causing a memory leak, we need to make sure that we remove
+                // the user ID from the cached offers after they dont have anything else
+                // on the flea placed. We regenerate the ID for the NPC users, making it
+                // continously grow otherwise
+                if (this.offersByTrader.get(offer.user.id)!.size === 0)
+                {
+                    this.offersByTrader.delete(offer.user.id);
+                }
             }
-            this.offersByTemplate.get(offer.items[0]._tpl).delete(offer._id);
+
+            if (this.offersByTemplate.has(offer.items[0]._tpl))
+            {
+                this.offersByTemplate.get(offer.items[0]._tpl)!.delete(offer._id);
+            }
         }
     }
 
@@ -115,7 +121,7 @@ export class RagfairOfferHolder
     {
         if (this.offersByTrader.has(traderId))
         {
-            this.removeOffers([...this.offersByTrader.get(traderId).values()]);
+            this.removeOffers([...this.offersByTrader.get(traderId)!.values()]);
         }
     }
 
@@ -132,7 +138,7 @@ export class RagfairOfferHolder
     {
         if (this.offersByTemplate.has(template))
         {
-            this.offersByTemplate.get(template).set(offer._id, offer);
+            this.offersByTemplate.get(template)!.set(offer._id, offer);
         }
         else
         {
@@ -146,7 +152,7 @@ export class RagfairOfferHolder
     {
         if (this.offersByTrader.has(trader))
         {
-            this.offersByTrader.get(trader).set(offer._id, offer);
+            this.offersByTrader.get(trader)!.set(offer._id, offer);
         }
         else
         {
@@ -158,6 +164,6 @@ export class RagfairOfferHolder
 
     protected isStale(offer: IRagfairOffer, time: number): boolean
     {
-        return offer.endTime < time || offer.items[0].upd.StackObjectsCount < 1;
+        return offer.endTime < time || (offer.items[0].upd?.StackObjectsCount ?? 0) < 1;
     }
 }

@@ -10,7 +10,7 @@ import { VFS } from "@spt/utils/VFS";
 @injectable()
 export class JsonUtil
 {
-    protected fileHashes = null;
+    protected fileHashes?: Map<string, string> = undefined;
     protected jsonCacheExists = false;
     protected jsonCachePath = "./user/cache/jsonCache.json";
 
@@ -60,7 +60,7 @@ export class JsonUtil
      * @param options Stringify options or a replacer.
      * @returns The string converted from the JavaScript value
      */
-    public serializeJsonC(data: any, filename?: string | null, options?: IStringifyOptions | Reviver): string
+    public serializeJsonC(data: any, filename?: string | null, options?: IStringifyOptions | Reviver): string | undefined
     {
         try
         {
@@ -74,7 +74,7 @@ export class JsonUtil
         }
     }
 
-    public serializeJson5(data: any, filename?: string | null, prettify = false): string
+    public serializeJson5(data: any, filename?: string | null, prettify = false): string | undefined
     {
         try
         {
@@ -99,7 +99,7 @@ export class JsonUtil
      * @param filename Name of file being deserialized
      * @returns object
      */
-    public deserialize<T>(jsonString: string, filename = ""): T
+    public deserialize<T>(jsonString: string, filename = ""): T | undefined
     {
         try
         {
@@ -120,7 +120,7 @@ export class JsonUtil
      * @param options Parsing options
      * @returns object
      */
-    public deserializeJsonC<T>(jsonString: string, filename = "", options?: IParseOptions): T
+    public deserializeJsonC<T>(jsonString: string, filename = "", options?: IParseOptions): T | undefined
     {
         try
         {
@@ -134,7 +134,7 @@ export class JsonUtil
         }
     }
 
-    public deserializeJson5<T>(jsonString: string, filename = ""): T
+    public deserializeJson5<T>(jsonString: string, filename = ""): T | undefined
     {
         try
         {
@@ -148,7 +148,7 @@ export class JsonUtil
         }
     }
 
-    public async deserializeWithCacheCheckAsync<T>(jsonString: string, filePath: string): Promise<T>
+    public async deserializeWithCacheCheckAsync<T>(jsonString: string, filePath: string): Promise<T | undefined>
     {
         return new Promise((resolve) =>
         {
@@ -162,7 +162,7 @@ export class JsonUtil
      * @param filePath Path to json file being processed
      * @returns Object
      */
-    public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T
+    public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T | undefined
     {
         this.ensureJsonCacheExists(this.jsonCachePath);
         this.hydrateJsonCache(this.jsonCachePath);
@@ -170,6 +170,10 @@ export class JsonUtil
         // Generate hash of string
         const generatedHash = this.hashUtil.generateSha1ForData(jsonString);
 
+        if (!this.fileHashes)
+        {
+            throw new Error("Unable to deserialize with Cache, file hashes have not been hydrated yet");
+        }
         // Get hash of file and check if missing or hash mismatch
         let savedHash = this.fileHashes[filePath];
         if (!savedHash || savedHash !== generatedHash)

@@ -38,14 +38,17 @@ export class CustomizationController
     public getTraderSuits(traderID: string, sessionID: string): ISuit[]
     {
         const pmcData: IPmcData = this.profileHelper.getPmcProfile(sessionID);
-        const templates = this.databaseServer.getTables().templates.customization;
-        const suits = this.databaseServer.getTables().traders[traderID].suits;
+        const templates = this.databaseServer.getTables().templates!.customization;
+        const suits = this.databaseServer.getTables().traders![traderID].suits;
 
         // Get an inner join of clothing from templates.customization and Ragman's suits array
-        const matchingSuits = suits.filter((x) => x.suiteId in templates);
+        const matchingSuits = suits?.filter((x) => x.suiteId in templates);
 
         // Return all suits that have a side array containing the players side (usec/bear)
-        return matchingSuits.filter((x) => templates[x.suiteId]._props.Side.includes(pmcData.Info.Side));
+        const matchedSuits = matchingSuits?.filter((x) => templates[x.suiteId]._props.Side.includes(pmcData.Info.Side));
+        if (matchingSuits === undefined)
+            throw new Error(`Unable to get trader suits for trader ${traderID}`);
+        return matchedSuits!;
     }
 
     /**
@@ -61,7 +64,7 @@ export class CustomizationController
         for (const suitId of wearClothingRequest.suites)
         {
             // Find desired clothing item in db
-            const dbSuit = this.databaseServer.getTables().templates.customization[suitId];
+            const dbSuit = this.databaseServer.getTables().templates!.customization[suitId];
 
             // Legs
             if (dbSuit._parent === this.clothingIds.lowerParentId)
@@ -110,7 +113,7 @@ export class CustomizationController
         const suitId = traderOffer.suiteId;
         if (this.outfitAlreadyPurchased(suitId, sessionId))
         {
-            const suitDetails = db.templates.customization[suitId];
+            const suitDetails = db.templates!.customization[suitId];
             this.logger.error(
                 this.localisationService.getText("customisation-item_already_purchased", {
                     itemId: suitDetails._id,
@@ -132,7 +135,12 @@ export class CustomizationController
 
     protected getTraderClothingOffer(sessionId: string, offerId: string): ISuit
     {
-        return this.getAllTraderSuits(sessionId).find((x) => x._id === offerId);
+        const foundSuit = this.getAllTraderSuits(sessionId).find((x) => x._id === offerId);
+        if (foundSuit === undefined)
+        {
+            throw new Error(`Unable to find suit with offer id ${offerId}`);
+        }
+        return foundSuit;
     }
 
     /**
@@ -197,6 +205,11 @@ export class CustomizationController
         {
             output.profileChanges[sessionId].items.del.push(relatedItem);
             pmcData.Inventory.items.splice(pmcData.Inventory.items.indexOf(relatedItem), 1);
+        }
+
+        if (!relatedItem.upd || !relatedItem.upd.StackObjectsCount)
+        {
+            throw new Error(`Suit with tpl id ${relatedItem._tpl} does not have upd or stack object count properties`);
         }
 
         if (relatedItem.upd.StackObjectsCount > clothingItem.count)

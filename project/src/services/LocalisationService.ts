@@ -44,9 +44,9 @@ export class LocalisationService
      * @param args optional arguments
      * @returns Localised string
      */
-    public getText(key: string, args = undefined): string
+    public getText(key: string, args?: any): string
     {
-        return this.i18n.__(key.toLowerCase(), args);
+        return args ? this.i18n.__(key.toLowerCase(), args) : this.i18n.__(key.toLowerCase());
     }
 
     /**
@@ -55,7 +55,7 @@ export class LocalisationService
      */
     public getKeys(): string[]
     {
-        return Object.keys(this.databaseServer.getTables().locales.server.en);
+        return Object.keys(this.databaseServer.getTables().locales!.server.en);
     }
 
     /**
@@ -65,7 +65,7 @@ export class LocalisationService
      */
     public getRandomTextThatMatchesPartialKey(partialKey: string): string
     {
-        const filteredKeys = Object.keys(this.databaseServer.getTables().locales.server.en).filter((x) =>
+        const filteredKeys = Object.keys(this.databaseServer.getTables().locales!.server.en).filter((x) =>
             x.startsWith(partialKey),
         );
         const chosenKey = this.randomUtil.getArrayValue(filteredKeys);

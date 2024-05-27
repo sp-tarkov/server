@@ -68,7 +68,7 @@ export class Watermark
         @inject("WinstonLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("WatermarkLocale") protected watermarkLocale?: WatermarkLocale,
+        @inject("WatermarkLocale") protected watermarkLocale: WatermarkLocale,
     )
     {
         this.sptConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
@@ -95,11 +95,14 @@ export class Watermark
             this.text = this.text.concat([...modding]);
         }
 
-        if (this.sptConfig.customWatermarkLocaleKeys?.length > 0)
+        if (this.sptConfig.customWatermarkLocaleKeys)
         {
-            for (const key of this.sptConfig.customWatermarkLocaleKeys)
+            if (this.sptConfig.customWatermarkLocaleKeys.length > 0)
             {
-                this.text.push(...["", this.localisationService.getText(key)]);
+                for (const key of this.sptConfig.customWatermarkLocaleKeys)
+                {
+                    this.text.push(...["", this.localisationService.getText(key)]);
+                }
             }
         }
 
@@ -159,7 +162,7 @@ export class Watermark
     /** Draw the watermark */
     protected draw(): void
     {
-        const result = [];
+        const result: string[] = [];
 
         // Calculate size, add 10% for spacing to the right
         const longestLength

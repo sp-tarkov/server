@@ -94,6 +94,7 @@ export class MatchCallbacks
     ): IGetBodyResponseData<IGroupCharacter[]>
     {
         const result = [];
+        // eslint-disable-next-line strict-null-checks/all
         result.push({});
 
         return this.httpResponse.getBody(result);
@@ -165,7 +166,7 @@ export class MatchCallbacks
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getMetrics(url: string, info: any, sessionID: string): IGetBodyResponseData<string>
     {
-        return this.httpResponse.getBody(this.jsonUtil.serialize(this.databaseServer.getTables().match.metrics));
+        return this.httpResponse.getBody(this.jsonUtil.serialize(this.databaseServer.getTables().match!.metrics));
     }
 
     /**
