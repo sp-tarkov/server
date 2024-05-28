@@ -35,7 +35,7 @@ export class InsuranceService
     protected lostOnDeathConfig: ILostOnDeathConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("SecureContainerHelper") protected secureContainerHelper: SecureContainerHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -50,7 +50,7 @@ export class InsuranceService
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);

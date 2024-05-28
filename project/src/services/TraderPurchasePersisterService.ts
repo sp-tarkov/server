@@ -18,7 +18,7 @@ export class TraderPurchasePersisterService
     protected traderConfig: ITraderConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,

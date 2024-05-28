@@ -20,7 +20,7 @@ export class RagfairServer
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RagfairOfferGenerator") protected ragfairOfferGenerator: RagfairOfferGenerator,
         @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
         @inject("RagfairCategoriesService") protected ragfairCategoriesService: RagfairCategoriesService,

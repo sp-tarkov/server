@@ -16,7 +16,7 @@ export class EventOutputHolder
     constructor(
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

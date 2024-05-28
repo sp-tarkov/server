@@ -22,7 +22,7 @@ export class BotEquipmentModPoolService
     protected armorPoolGenerated = false;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("VFS") protected vfs: VFS,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,

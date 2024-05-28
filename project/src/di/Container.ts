@@ -132,6 +132,7 @@ import { PostDBModLoader } from "@spt/loaders/PostDBModLoader";
 import { PostSptModLoader } from "@spt/loaders/PostSptModLoader";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { BotDynamicRouter } from "@spt/routers/dynamic/BotDynamicRouter";
 import { BundleDynamicRouter } from "@spt/routers/dynamic/BundleDynamicRouter";
 import { CustomizationDynamicRouter } from "@spt/routers/dynamic/CustomizationDynamicRouter";
@@ -297,6 +298,16 @@ export class Container
         Container.registerServices(depContainer);
 
         Container.registerControllers(depContainer);
+
+        Container.registerPrimaryDependencies(depContainer);
+    }
+
+    public static registerPrimaryDependencies(depContainer: DependencyContainer): void
+    {
+        depContainer.register<ILogger>("PrimaryLogger", { useToken: "WinstonLogger" },
+            { lifecycle: Lifecycle.Singleton });
+        depContainer.register<ICloner>("PrimaryCloner", { useToken: "RecursiveCloner" },
+            { lifecycle: Lifecycle.Singleton });
     }
 
     public static registerListTypes(depContainer: DependencyContainer): void

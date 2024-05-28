@@ -49,7 +49,7 @@ export class InventoryHelper
     protected inventoryConfig: IInventoryConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("FenceService") protected fenceService: FenceService,
@@ -63,7 +63,7 @@ export class InventoryHelper
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);

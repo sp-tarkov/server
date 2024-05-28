@@ -52,7 +52,7 @@ export class RagfairController
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,

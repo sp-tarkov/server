@@ -49,7 +49,7 @@ export class LocationGenerator
     protected locationConfig: ILocationConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ObjectId") protected objectId: ObjectId,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -60,7 +60,7 @@ export class LocationGenerator
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);

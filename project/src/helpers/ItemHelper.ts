@@ -35,7 +35,7 @@ export class ItemHelper
     ];
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -48,7 +48,7 @@ export class ItemHelper
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("CompareUtil") protected compareUtil: CompareUtil,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

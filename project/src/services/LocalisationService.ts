@@ -15,7 +15,7 @@ export class LocalisationService
     protected i18n: I18n;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocaleService") protected localeService: LocaleService,
@@ -46,7 +46,7 @@ export class LocalisationService
      */
     public getText(key: string, args?: any): string
     {
-        return args ? this.i18n.__(key.toLowerCase(), args) : this.i18n.__(key.toLowerCase());
+        return args === undefined ? this.i18n.__(key.toLowerCase()) : this.i18n.__(key.toLowerCase(), args);
     }
 
     /**

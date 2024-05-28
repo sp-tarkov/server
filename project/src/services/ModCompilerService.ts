@@ -13,7 +13,7 @@ export class ModCompilerService
     protected serverDependencies: string[];
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ModHashCacheService") protected modHashCacheService: ModHashCacheService,
         @inject("VFS") protected vfs: VFS,
     )

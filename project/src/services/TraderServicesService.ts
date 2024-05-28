@@ -12,9 +12,9 @@ export class TraderServicesService
 {
     constructor(
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

@@ -32,7 +32,7 @@ export class BundleLoader
         @inject("VFS") protected vfs: VFS,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("BundleHashCacheService") protected bundleHashCacheService: BundleHashCacheService,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

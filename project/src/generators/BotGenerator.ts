@@ -41,7 +41,7 @@ export class BotGenerator
     protected pmcConfig: IPmcConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
@@ -56,7 +56,7 @@ export class BotGenerator
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);

@@ -61,7 +61,7 @@ export class HideoutController
     protected hideoutConfig: IHideoutConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseService") protected databaseService: DatabaseService,
@@ -81,7 +81,7 @@ export class HideoutController
         @inject("ProfileActivityService") protected profileActivityService: ProfileActivityService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("FenceService") protected fenceService: FenceService,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);

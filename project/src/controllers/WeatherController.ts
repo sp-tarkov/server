@@ -13,7 +13,7 @@ export class WeatherController
 
     constructor(
         @inject("WeatherGenerator") protected weatherGenerator: WeatherGenerator,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
     )
     {

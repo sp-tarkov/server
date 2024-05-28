@@ -20,7 +20,7 @@ export class RepairController
     protected repairConfig: IRepairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("QuestHelper") protected questHelper: QuestHelper,

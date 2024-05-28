@@ -22,7 +22,7 @@ export class TraderController
     protected traderConfig: ITraderConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("TraderAssortHelper") protected traderAssortHelper: TraderAssortHelper,
@@ -34,7 +34,7 @@ export class TraderController
         @inject("FenceService") protected fenceService: FenceService,
         @inject("FenceBaseAssortGenerator") protected fenceBaseAssortGenerator: FenceBaseAssortGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);

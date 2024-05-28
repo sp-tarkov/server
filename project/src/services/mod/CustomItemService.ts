@@ -18,12 +18,12 @@ import { HashUtil } from "@spt/utils/HashUtil";
 export class CustomItemService
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseService") protected databaseServer: DatabaseService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ItemBaseClassService") protected itemBaseClassService: ItemBaseClassService,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
     }

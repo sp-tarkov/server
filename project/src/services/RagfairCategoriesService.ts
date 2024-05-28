@@ -9,7 +9,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 export class RagfairCategoriesService
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
     )
     {}

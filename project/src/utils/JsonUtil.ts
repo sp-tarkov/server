@@ -17,7 +17,7 @@ export class JsonUtil
     constructor(
         @inject("VFS") protected vfs: VFS,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
     )
     {}
 

@@ -27,7 +27,7 @@ export class BotEquipmentFilterService
     protected botEquipmentConfig: Record<string, EquipmentFilters>;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("BotHelper") protected botHelper: BotHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,

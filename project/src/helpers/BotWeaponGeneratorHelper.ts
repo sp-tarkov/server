@@ -19,7 +19,7 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 export class BotWeaponGeneratorHelper
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,

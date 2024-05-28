@@ -32,7 +32,7 @@ export class TradeHelper
     protected inventoryConfig: IInventoryConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
@@ -46,7 +46,7 @@ export class TradeHelper
         @inject("TraderPurchasePersisterService")
         protected traderPurchasePersisterService: TraderPurchasePersisterService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);

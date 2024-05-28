@@ -39,7 +39,7 @@ export class QuestController
     protected questConfig: IQuestConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("HttpResponseUtil") protected httpResponseUtil: HttpResponseUtil,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
@@ -56,7 +56,7 @@ export class QuestController
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);

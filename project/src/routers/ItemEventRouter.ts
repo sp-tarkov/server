@@ -12,12 +12,12 @@ import { ICloner } from "@spt/utils/cloners/ICloner";
 export class ItemEventRouter
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @injectAll("IERouters") protected itemEventRouters: ItemEventRouterDefinition[],
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

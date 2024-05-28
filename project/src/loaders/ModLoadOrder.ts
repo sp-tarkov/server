@@ -11,7 +11,7 @@ export class ModLoadOrder
     protected loadOrder = new Set<string>();
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("LocalisationService") protected localisationService: LocalisationService,
     )
     {}

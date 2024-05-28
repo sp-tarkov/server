@@ -31,7 +31,7 @@ export class RepeatableQuestGenerator
     protected questConfig: IQuestConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
@@ -42,7 +42,7 @@ export class RepeatableQuestGenerator
         @inject("RepeatableQuestRewardGenerator")
         protected repeatableQuestRewardGenerator: RepeatableQuestRewardGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);

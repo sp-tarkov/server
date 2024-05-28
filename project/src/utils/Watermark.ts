@@ -65,7 +65,7 @@ export class Watermark
     protected versionLabel = "";
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WatermarkLocale") protected watermarkLocale: WatermarkLocale,

@@ -22,7 +22,7 @@ export class WeatherGenerator
 
     constructor(
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,

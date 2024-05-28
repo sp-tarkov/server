@@ -9,7 +9,7 @@ import { TimeUtil } from "@spt/utils/TimeUtil";
 export class PlayerService
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,

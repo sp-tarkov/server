@@ -10,7 +10,7 @@ import { MailSendService } from "@spt/services/MailSendService";
 export class CommandoDialogueChatBot extends AbstractDialogueChatBot
 {
     public constructor(
-    @inject("WinstonLogger") logger: ILogger,
+    @inject("PrimaryLogger") logger: ILogger,
         @inject("MailSendService") mailSendService: MailSendService,
         @injectAll("CommandoCommand") chatCommands: IChatCommand[],
     )

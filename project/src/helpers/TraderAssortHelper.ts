@@ -29,7 +29,7 @@ export class TraderAssortHelper
     protected createdMergedQuestAssorts = false;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
@@ -45,7 +45,7 @@ export class TraderAssortHelper
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("FenceService") protected fenceService: FenceService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);

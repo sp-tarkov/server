@@ -13,7 +13,7 @@ export class PostSptModLoader implements IModLoader
     protected container: DependencyContainer;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,

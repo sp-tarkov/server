@@ -22,7 +22,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
 
     protected websocketPingHandler: NodeJS.Timeout | undefined;
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,

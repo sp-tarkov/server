@@ -34,7 +34,7 @@ export class SeasonalEventService
     protected currentlyActiveEvents: SeasonalEventType[] = [];
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("DatabaseImporter") protected databaseImporter: DatabaseImporter,
         @inject("GiftService") protected giftService: GiftService,

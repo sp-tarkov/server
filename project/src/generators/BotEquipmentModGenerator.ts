@@ -39,7 +39,7 @@ export class BotEquipmentModGenerator
     protected botConfig: IBotConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ProbabilityHelper") protected probabilityHelper: ProbabilityHelper,
@@ -57,7 +57,7 @@ export class BotEquipmentModGenerator
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotEquipmentModPoolService") protected botEquipmentModPoolService: BotEquipmentModPoolService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);

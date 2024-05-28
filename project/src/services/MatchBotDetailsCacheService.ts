@@ -10,7 +10,7 @@ export class MatchBotDetailsCacheService
     protected botDetailsCache: Record<string, IBotBase> = {};
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("LocalisationService") protected localisationService: LocalisationService,
     )
     {}

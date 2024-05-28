@@ -21,7 +21,7 @@ import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 export class PaymentService
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,

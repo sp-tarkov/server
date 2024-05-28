@@ -33,7 +33,7 @@ export class PreSptModLoader implements IModLoader
     protected skippedMods: Set<string>;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("VFS") protected vfs: VFS,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("ModCompilerService") protected modCompilerService: ModCompilerService,

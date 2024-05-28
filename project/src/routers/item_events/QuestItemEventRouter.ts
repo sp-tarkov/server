@@ -9,7 +9,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 export class QuestItemEventRouter extends ItemEventRouterDefinition
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("QuestCallbacks") protected questCallbacks: QuestCallbacks,
     )
     {

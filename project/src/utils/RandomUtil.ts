@@ -212,8 +212,8 @@ export class ProbabilityObject<K, V = undefined>
 export class RandomUtil
 {
     constructor(
-        @inject("RecursiveCloner") protected cloner: ICloner,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryCloner") protected cloner: ICloner,
+        @inject("PrimaryLogger") protected logger: ILogger,
     )
     {}
 

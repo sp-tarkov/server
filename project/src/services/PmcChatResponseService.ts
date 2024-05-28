@@ -21,7 +21,7 @@ export class PmcChatResponseService
     protected pmcResponsesConfig: IPmcChatResponse;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,

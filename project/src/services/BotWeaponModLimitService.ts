@@ -29,7 +29,7 @@ export class BotWeaponModLimitService
     protected botConfig: IBotConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
     )

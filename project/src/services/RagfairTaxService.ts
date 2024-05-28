@@ -15,7 +15,7 @@ export class RagfairTaxService
     protected playerOfferTaxCache: Record<string, IStorePlayerOfferTaxAmountRequestData> = {};
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,

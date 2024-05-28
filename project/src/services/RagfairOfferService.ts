@@ -26,7 +26,7 @@ export class RagfairOfferService
     protected ragfairOfferHandler: RagfairOfferHolder;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("SaveServer") protected saveServer: SaveServer,

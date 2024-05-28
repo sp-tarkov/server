@@ -11,7 +11,7 @@ import { DatabaseService } from "@spt/services/DatabaseService";
 export class AchievementController
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseService") protected databaseService: DatabaseService,
     )
     {}

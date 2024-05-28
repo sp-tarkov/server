@@ -15,7 +15,7 @@ export class SptHttpListener implements IHttpListener
     constructor(
         @inject("HttpRouter") protected httpRouter: HttpRouter, // TODO: delay required
         @injectAll("Serializer") protected serializers: Serializer[],
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RequestsLogger") protected requestsLogger: ILogger,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,

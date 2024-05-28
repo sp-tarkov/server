@@ -38,7 +38,7 @@ export class InsuranceController
     protected roubleTpl = "5449016a4bdc2d6f028b456f";
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
@@ -57,7 +57,7 @@ export class InsuranceController
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);

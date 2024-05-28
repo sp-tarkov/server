@@ -6,7 +6,7 @@ import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSock
 @injectable()
 export class DefaultSptWebSocketMessageHandler implements ISptWebSocketMessageHandler
 {
-    constructor(@inject("WinstonLogger") protected logger: ILogger)
+    constructor(@inject("PrimaryLogger") protected logger: ILogger)
     {}
 
     public onSptMessage(sessionId: string, client: WebSocket, message: RawData): void

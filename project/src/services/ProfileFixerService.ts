@@ -34,7 +34,7 @@ export class ProfileFixerService
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("Watermark") protected watermark: Watermark,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("HideoutHelper") protected hideoutHelper: HideoutHelper,
@@ -47,7 +47,7 @@ export class ProfileFixerService
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.coreConfig = this.configServer.getConfig(ConfigTypes.CORE);

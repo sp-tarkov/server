@@ -28,7 +28,7 @@ export class ProfileSptCommand implements ISptCommand
     protected savedCommand: SavedCommand;
 
     public constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("PresetHelper") protected presetHelper: PresetHelper,

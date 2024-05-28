@@ -7,7 +7,7 @@ export class ProfileSnapshotService
 {
     protected storedProfileSnapshots: Record<string, ISptProfile> = {};
 
-    constructor(@inject("RecursiveCloner") protected cloner: ICloner)
+    constructor(@inject("PrimaryCloner") protected cloner: ICloner)
     {}
 
     /**

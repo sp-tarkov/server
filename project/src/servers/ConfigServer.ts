@@ -11,7 +11,7 @@ export class ConfigServer
     protected readonly acceptableFileExtensions: string[] = ["json", "jsonc"];
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("VFS") protected vfs: VFS,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
     )

@@ -33,7 +33,7 @@ export class RagfairPriceService implements OnLoad
     constructor(
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,

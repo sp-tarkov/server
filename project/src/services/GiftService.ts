@@ -20,7 +20,7 @@ export class GiftService
     protected giftConfig: IGiftsConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("HashUtil") protected hashUtil: HashUtil,

@@ -14,7 +14,7 @@ export class BundleHashCacheService
         @inject("VFS") protected vfs: VFS,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
     )
     {
         if (!this.vfs.exists(this.bundleHashCachePath))

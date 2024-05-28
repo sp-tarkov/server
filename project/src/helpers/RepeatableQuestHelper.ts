@@ -14,7 +14,7 @@ export class RepeatableQuestHelper
     constructor(
         @inject("MathUtil") protected mathUtil: MathUtil,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);

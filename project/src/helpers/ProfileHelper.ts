@@ -26,7 +26,7 @@ export class ProfileHelper
     protected inventoryConfig: IInventoryConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("Watermark") protected watermark: Watermark,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
@@ -36,7 +36,7 @@ export class ProfileHelper
         @inject("ProfileSnapshotService") protected profileSnapshotService: ProfileSnapshotService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);

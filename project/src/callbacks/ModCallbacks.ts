@@ -15,7 +15,7 @@ export class ModCallbacks implements OnLoad
     protected httpConfig: IHttpConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
         @inject("PostSptModLoader") protected postSptModLoader: PostSptModLoader,

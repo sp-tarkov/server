@@ -15,7 +15,7 @@ export class ItemBaseClassService
     protected cacheGenerated = false;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
     )

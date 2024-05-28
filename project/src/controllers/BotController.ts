@@ -34,7 +34,7 @@ export class BotController
     protected pmcConfig: IPmcConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("BotGenerator") protected botGenerator: BotGenerator,
         @inject("BotHelper") protected botHelper: BotHelper,
@@ -47,7 +47,7 @@ export class BotController
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);

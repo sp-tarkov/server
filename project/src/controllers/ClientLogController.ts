@@ -8,7 +8,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 @injectable()
 export class ClientLogController
 {
-    constructor(@inject("WinstonLogger") protected logger: ILogger)
+    constructor(@inject("PrimaryLogger") protected logger: ILogger)
     {}
 
     /**

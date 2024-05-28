@@ -32,7 +32,7 @@ export class PlayerScavGenerator
     protected playerScavConfig: IPlayerScavConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HashUtil") protected hashUtil: HashUtil,
@@ -46,7 +46,7 @@ export class PlayerScavGenerator
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("BotGenerator") protected botGenerator: BotGenerator,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.playerScavConfig = this.configServer.getConfig(ConfigTypes.PLAYERSCAV);

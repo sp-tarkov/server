@@ -22,7 +22,7 @@ import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 export class HealthController
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PaymentService") protected paymentService: PaymentService,
@@ -30,7 +30,7 @@ export class HealthController
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("HealthHelper") protected healthHelper: HealthHelper,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

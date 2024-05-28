@@ -19,7 +19,7 @@ export class HttpServer
     protected started: boolean;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,

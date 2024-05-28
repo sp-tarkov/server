@@ -8,7 +8,7 @@ import { DatabaseService } from "@spt/services/DatabaseService";
 export class PresetController
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("DatabaseService") protected databaseService: DatabaseService,
     )

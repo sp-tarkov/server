@@ -42,7 +42,7 @@ export class HandbookHelper
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.itemConfig = this.configServer.getConfig(ConfigTypes.ITEM);

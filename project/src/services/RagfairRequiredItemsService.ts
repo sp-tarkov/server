@@ -10,7 +10,7 @@ export class RagfairRequiredItemsService
     protected requiredItemsCache = {};
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
         @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
     )

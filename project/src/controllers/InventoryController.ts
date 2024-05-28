@@ -52,7 +52,7 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 export class InventoryController
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -71,7 +71,7 @@ export class InventoryController
         @inject("LootGenerator") protected lootGenerator: LootGenerator,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("HttpResponseUtil") protected httpResponseUtil: HttpResponseUtil,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

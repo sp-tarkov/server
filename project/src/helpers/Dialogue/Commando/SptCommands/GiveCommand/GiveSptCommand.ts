@@ -40,7 +40,7 @@ export class GiveSptCommand implements ISptCommand
     protected savedCommand: Map<string, SavedCommand> = new Map<string, SavedCommand>();
 
     public constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
@@ -48,7 +48,7 @@ export class GiveSptCommand implements ISptCommand
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {}
 

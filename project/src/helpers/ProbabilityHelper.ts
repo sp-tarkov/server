@@ -6,7 +6,7 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 export class ProbabilityHelper
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
     )
     {}

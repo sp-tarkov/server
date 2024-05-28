@@ -45,7 +45,7 @@ export class TradeController
     protected traderConfig: ITraderConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("TradeHelper") protected tradeHelper: TradeHelper,

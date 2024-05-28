@@ -31,7 +31,7 @@ export class InRaidHelper
     protected inRaidConfig: IInRaidConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
@@ -44,7 +44,7 @@ export class InRaidHelper
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);

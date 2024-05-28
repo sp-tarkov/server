@@ -37,7 +37,7 @@ export class BotWeaponGenerator
     protected repairConfig: IRepairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
@@ -51,7 +51,7 @@ export class BotWeaponGenerator
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("RepairService") protected repairService: RepairService,
         @injectAll("InventoryMagGen") protected inventoryMagGenComponents: IInventoryMagGen[],
-        @inject("RecursiveCloner") protected cloner: ICloner,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);

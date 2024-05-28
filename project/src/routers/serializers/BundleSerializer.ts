@@ -9,7 +9,7 @@ import { HttpFileUtil } from "@spt/utils/HttpFileUtil";
 export class BundleSerializer extends Serializer
 {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("BundleLoader") protected bundleLoader: BundleLoader,
         @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
     )
