@@ -157,15 +157,15 @@ export class BotEquipmentModGenerator
             }
 
             // Find random mod and check its compatible
-            let modTpl: string;
+            let modTpl: string | undefined;
             let found = false;
             const exhaustableModPool = new ExhaustableArray(modPoolToChooseFrom, this.randomUtil, this.cloner);
             while (exhaustableModPool.hasValues())
             {
                 modTpl = exhaustableModPool.getRandomValue();
-                if (
-                    !this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(equipment, modTpl, modSlotName)
-                        .incompatible
+                if (modTpl
+                  && !this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(equipment, modTpl, modSlotName)
+                      .incompatible
                 )
                 {
                     found = true;
@@ -770,10 +770,10 @@ export class BotEquipmentModGenerator
      */
     protected chooseModToPutIntoSlot(
         request: IModToSpawnRequest,
-    ): [boolean, ITemplateItem]
+    ): [boolean, ITemplateItem] | undefined
     {
         /** Slot mod will fill */
-        const parentSlot = request.parentTemplate._props.Slots.find((i) => i._name === request.modSlot);
+        const parentSlot = request.parentTemplate._props.Slots?.find((i) => i._name === request.modSlot);
         const weaponTemplate = this.itemHelper.getItem(request.weapon[0]._tpl)[1];
 
         // It's ammo, use predefined ammo parameter
@@ -792,7 +792,7 @@ export class BotEquipmentModGenerator
             request.botEquipBlacklist,
             request.isRandomisableSlot,
         );
-        if (!(modPool || parentSlot._required))
+        if (!(modPool || parentSlot?._required))
         {
             // Nothing in mod pool + item not required
             this.logger.debug(`Mod pool for slot: ${request.modSlot} on item: ${request.parentTemplate._name} was empty, skipping mod`);
@@ -836,19 +836,19 @@ export class BotEquipmentModGenerator
         // Pick random mod that's compatible
         const chosenModResult = this.pickWeaponModTplForSlotFromPool(
             modPool,
-            parentSlot,
+            parentSlot!,
             request.modSpawnResult,
             request.weapon,
             request.modSlot,
         );
-        if (chosenModResult.slotBlocked && !parentSlot._required)
+        if (chosenModResult.slotBlocked && !parentSlot!._required)
         {
             // Don't bother trying to fit mod, slot is completely blocked
             return undefined;
         }
 
         // Log if mod chosen was incompatible
-        if (chosenModResult.incompatible && parentSlot._required)
+        if (chosenModResult.incompatible && parentSlot!._required)
         {
             this.logger.debug(chosenModResult.reason);
             // this.logger.debug(`Weapon: ${weapon.map(x => `${x._tpl} ${x.slotId ?? ""}`).join(",")}`)
@@ -879,7 +879,7 @@ export class BotEquipmentModGenerator
             return undefined;
         }
 
-        return this.itemHelper.getItem(chosenModResult.chosenTpl);
+        return this.itemHelper.getItem(chosenModResult.chosenTpl!);
     }
 
     protected pickWeaponModTplForSlotFromPool(
@@ -900,7 +900,7 @@ export class BotEquipmentModGenerator
         let blockedAttemptCount = 0;
         while (exhaustableModPool.hasValues())
         {
-            chosenTpl = exhaustableModPool.getRandomValue();
+            chosenTpl = exhaustableModPool.getRandomValue()!;
             if (modSpawnResult === ModSpawn.DEFAULT_MOD && modPool.length === 1)
             {
                 // Default mod wanted and only one choice in pool
@@ -1003,12 +1003,12 @@ export class BotEquipmentModGenerator
                 // Check the filter of the slot to ensure a chosen mod fits
                 const parentSlotCompatibleItems = parentTemplate._props.Slots?.find(
                     (slot) => slot._name.toLowerCase() === modSlot.toLowerCase(),
-                )._props.filters[0].Filter;
+                )?._props.filters[0].Filter;
 
                 // Mod isnt in existing pool, only add if it has no children and matches parent filter
                 if (
-                    parentSlotCompatibleItems.includes(matchingModFromPreset._tpl)
-                    && this.itemHelper.getItem(matchingModFromPreset._tpl)[1]._props.Slots.length === 0
+                    parentSlotCompatibleItems?.includes(matchingModFromPreset._tpl)
+                    && this.itemHelper.getItem(matchingModFromPreset._tpl)[1]._props.Slots?.length === 0
                 )
                 {
                     // Mod has no children and matches parent filters, can be used
@@ -1042,7 +1042,7 @@ export class BotEquipmentModGenerator
      * @param parentItemTpl
      * @returns Default preset found
      */
-    protected getMatchingPreset(weaponTemplate: ITemplateItem, parentItemTpl: string): IPreset
+    protected getMatchingPreset(weaponTemplate: ITemplateItem, parentItemTpl: string): IPreset | undefined
     {
         // Edge case - using mp5sd reciever means default mp5 handguard doesnt fit
         const isMp5sd = parentItemTpl === "5926f2e086f7745aae644231";
@@ -1123,7 +1123,12 @@ export class BotEquipmentModGenerator
      * @param items items to ensure picked mod is compatible with
      * @returns item tpl
      */
-    protected getRandomModTplFromItemDb(modTpl: string, parentSlot: Slot, modSlot: string, items: Item[]): string
+    protected getRandomModTplFromItemDb(
+        modTpl: string,
+        parentSlot: Slot,
+        modSlot: string,
+        items: Item[],
+    ): string | undefined
     {
         // Find compatible mods and make an array of them
         const allowedItems = parentSlot._props.filters[0].Filter;
@@ -1133,7 +1138,7 @@ export class BotEquipmentModGenerator
         let tmpModTpl = modTpl;
         while (exhaustableModPool.hasValues())
         {
-            tmpModTpl = exhaustableModPool.getRandomValue();
+            tmpModTpl = exhaustableModPool.getRandomValue()!;
             if (!this.botGeneratorHelper.isItemIncompatibleWithCurrentItems(items, tmpModTpl, modSlot).incompatible)
             {
                 return tmpModTpl;
@@ -1213,7 +1218,7 @@ export class BotEquipmentModGenerator
         botEquipBlacklist: EquipmentFilterDetails,
     ): void
     {
-        const desiredSlotObject = modTemplate._props.Slots.find((slot) => slot._name.includes(desiredSlotName));
+        const desiredSlotObject = modTemplate._props.Slots?.find((slot) => slot._name.includes(desiredSlotName));
         if (desiredSlotObject)
         {
             const supportedSubMods = desiredSlotObject._props.filters[0].Filter;

@@ -459,8 +459,8 @@ export class LocationGenerator
 
             this.containerHelper.fillContainerMapWithItem(
                 containerMap,
-                result.x,
-                result.y,
+                result.x!,
+                result.y!,
                 width,
                 height,
                 result.rotation,
@@ -468,7 +468,7 @@ export class LocationGenerator
             const rotation = result.rotation ? 1 : 0;
 
             items[0].slotId = "main";
-            items[0].location = { x: result.x, y: result.y, r: rotation };
+            items[0].location = { x: result.x!, y: result.y!, r: rotation };
 
             // Add loot to container before returning
             for (const item of items)
@@ -491,8 +491,8 @@ export class LocationGenerator
         const containerTemplate = this.itemHelper.getItem(containerTpl)[1];
 
         // Get height/width
-        const height = containerTemplate._props.Grids[0]._props.cellsV;
-        const width = containerTemplate._props.Grids[0]._props.cellsH;
+        const height = containerTemplate._props.Grids![0]._props.cellsV;
+        const width = containerTemplate._props.Grids![0]._props.cellsH;
 
         // Calcualte 2d array and return
         return Array(height)
@@ -553,7 +553,7 @@ export class LocationGenerator
         const seasonalEventActive = this.seasonalEventService.seasonalEventEnabled();
         const seasonalItemTplBlacklist = this.seasonalEventService.getInactiveSeasonalEventItems();
 
-        const itemDistribution = new ProbabilityObjectArray<string>(this.mathUtil, this.cloner);
+        const itemDistribution = new ProbabilityObjectArray<string, number>(this.mathUtil, this.cloner);
 
         const itemContainerDistribution = staticLootDist[containerTypeId]?.itemDistribution;
         if (!itemContainerDistribution)
@@ -661,7 +661,7 @@ export class LocationGenerator
             // Add randomly chosen spawn points
             for (const si of spawnpointArray.draw(randomSpawnpointCount, false))
             {
-                chosenSpawnpoints.push(spawnpointArray.data(si));
+                chosenSpawnpoints.push(spawnpointArray.data(si)!);
             }
         }
 
@@ -712,7 +712,7 @@ export class LocationGenerator
                 if (
                     !seasonalEventActive
                     && seasonalItemTplBlacklist.includes(
-                        spawnPoint.template.Items.find((item) => item._id === itemDist.composedKey.key)._tpl,
+                        spawnPoint.template.Items.find((item) => item._id === itemDist.composedKey.key)?._tpl ?? "",
                     )
                 )
                 {
@@ -789,7 +789,12 @@ export class LocationGenerator
                 for (const spawnPointLocationId of spawnpointArray.draw(1, false))
                 {
                     const itemToAdd = items.find((item) => item.locationId === spawnPointLocationId);
-                    const lootItem = itemToAdd.template;
+                    const lootItem = itemToAdd?.template;
+                    if (!lootItem)
+                    {
+                        this.logger.warning(`Item with spawn point id ${spawnPointLocationId} could not be found, skipping`);
+                        continue;
+                    }
                     lootItem.Root = this.objectId.generate();
                     lootItem.Items[0]._id = lootItem.Root;
                     lootLocationTemplates.push(lootItem);
@@ -854,7 +859,11 @@ export class LocationGenerator
     ): IContainerItem
     {
         const chosenItem = spawnPoint.template.Items.find((item) => item._id === chosenComposedKey);
-        const chosenTpl = chosenItem._tpl;
+        const chosenTpl = chosenItem?._tpl;
+        if (!chosenTpl)
+        {
+            throw new Error(`Item for tpl ${chosenComposedKey} was not found in the spawn point`);
+        }
         const itemTemplate = this.itemHelper.getItem(chosenTpl)[1];
 
         // Item array to return
@@ -866,7 +875,7 @@ export class LocationGenerator
             const stackCount
                 = itemTemplate._props.StackMaxSize === 1
                     ? 1
-                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
+                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom!, itemTemplate._props.StackMaxRandom!);
 
             itemWithMods.push({
                 _id: this.objectId.generate(),
@@ -950,7 +959,7 @@ export class LocationGenerator
      * @param chosenTpl Tpl we want to get item with
      * @returns Item object
      */
-    protected getItemInArray(items: Item[], chosenTpl: string): Item
+    protected getItemInArray(items: Item[], chosenTpl: string): Item | undefined
     {
         if (this.itemHelper.isOfBaseclass(chosenTpl, BaseClasses.WEAPON))
         {
@@ -964,12 +973,12 @@ export class LocationGenerator
     protected createStaticLootItem(
         chosenTpl: string,
         staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
-        parentId: string = undefined,
+        parentId?: string,
     ): IContainerItem
     {
         const itemTemplate = this.itemHelper.getItem(chosenTpl)[1];
-        let width = itemTemplate._props.Width;
-        let height = itemTemplate._props.Height;
+        let width = itemTemplate._props.Width!;
+        let height = itemTemplate._props.Height!;
         let items: Item[] = [{ _id: this.objectId.generate(), _tpl: chosenTpl }];
         const rootItem = items[0];
 
@@ -988,7 +997,7 @@ export class LocationGenerator
             const stackCount
                 = itemTemplate._props.StackMaxSize === 1
                     ? 1
-                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom, itemTemplate._props.StackMaxRandom);
+                    : this.randomUtil.getInt(itemTemplate._props.StackMinRandom!, itemTemplate._props.StackMaxRandom!);
 
             rootItem.upd = { StackObjectsCount: stackCount };
         }
@@ -1128,7 +1137,7 @@ export class LocationGenerator
             else
             {
                 // We make base item above, at start of function, no need to do it here
-                if (itemTemplate._props.Slots?.length > 0)
+                if ((itemTemplate._props.Slots?.length ?? 0) > 0)
                 {
                     items = this.itemHelper.addChildSlotItems(
                         items,

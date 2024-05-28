@@ -102,7 +102,7 @@ export class BotGeneratorHelper
             itemProperties.MedKit = {
                 HpResource: this.getRandomizedResourceValue(
                     itemTemplate._props.MaxHpResource,
-                    this.botConfig.lootItemResourceRandomization[botRole]?.meds,
+                    this.botConfig.lootItemResourceRandomization[botRole!]?.meds,
                 ),
             };
         }
@@ -112,7 +112,7 @@ export class BotGeneratorHelper
             itemProperties.FoodDrink = {
                 HpPercent: this.getRandomizedResourceValue(
                     itemTemplate._props.MaxResource,
-                    this.botConfig.lootItemResourceRandomization[botRole]?.food,
+                    this.botConfig.lootItemResourceRandomization[botRole!]?.food,
                 ),
             };
         }
@@ -198,7 +198,7 @@ export class BotGeneratorHelper
      * @returns Percent chance to be active
      */
     protected getBotEquipmentSettingFromConfig(
-        botRole: string,
+        botRole: string | undefined,
         setting: keyof EquipmentFilters,
         defaultValue: number,
     ): number
@@ -242,7 +242,7 @@ export class BotGeneratorHelper
      * @param botRole type of bot being generated for
      * @returns Repairable object
      */
-    protected generateWeaponRepairableProperties(itemTemplate: ITemplateItem, botRole: string): Repairable
+    protected generateWeaponRepairableProperties(itemTemplate: ITemplateItem, botRole?: string): Repairable
     {
         const maxDurability = this.durabilityLimitsHelper.getRandomizedMaxWeaponDurability(itemTemplate, botRole);
         const currentDurability = this.durabilityLimitsHelper.getRandomizedWeaponDurability(
@@ -260,14 +260,14 @@ export class BotGeneratorHelper
      * @param botRole type of bot being generated for
      * @returns Repairable object
      */
-    protected generateArmorRepairableProperties(itemTemplate: ITemplateItem, botRole: string): Repairable
+    protected generateArmorRepairableProperties(itemTemplate: ITemplateItem, botRole?: string): Repairable
     {
         let maxDurability: number;
         let currentDurability: number;
         if (Number.parseInt(`${itemTemplate._props.armorClass}`) === 0)
         {
-            maxDurability = itemTemplate._props.MaxDurability;
-            currentDurability = itemTemplate._props.MaxDurability;
+            maxDurability = itemTemplate._props.MaxDurability!;
+            currentDurability = itemTemplate._props.MaxDurability!;
         }
         else
         {
@@ -629,14 +629,14 @@ export class BotGeneratorHelper
                 // Open slot found, add item to inventory
                 if (findSlotResult.success)
                 {
-                    const parentItem = itemWithChildren.find((i) => i._id === rootItemId);
+                    const parentItem = itemWithChildren.find((i) => i._id === rootItemId)!;
 
                     // Set items parent to container id
                     parentItem.parentId = container._id;
                     parentItem.slotId = slotGrid._name;
                     parentItem.location = {
-                        x: findSlotResult.x,
-                        y: findSlotResult.y,
+                        x: findSlotResult.x!,
+                        y: findSlotResult.y!,
                         r: findSlotResult.rotation ? 1 : 0,
                     };
 

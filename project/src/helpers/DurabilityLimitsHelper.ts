@@ -26,7 +26,7 @@ export class DurabilityLimitsHelper
      * @param botRole Role of bot to get max durability for
      * @returns Max durability of weapon
      */
-    public getRandomizedMaxWeaponDurability(itemTemplate: ITemplateItem, botRole: string): number
+    public getRandomizedMaxWeaponDurability(itemTemplate: ITemplateItem, botRole?: string): number
     {
         if (botRole && this.botHelper.isBotPmc(botRole))
         {
@@ -52,9 +52,9 @@ export class DurabilityLimitsHelper
      * @param botRole Role of bot to get max durability for
      * @returns max durability
      */
-    public getRandomizedMaxArmorDurability(itemTemplate: ITemplateItem, botRole: string): number
+    public getRandomizedMaxArmorDurability(itemTemplate: ITemplateItem, botRole?: string): number
     {
-        const itemMaxDurability = itemTemplate._props.MaxDurability;
+        const itemMaxDurability = itemTemplate._props.MaxDurability!;
 
         if (botRole && this.botHelper.isBotPmc(botRole))
         {
@@ -81,7 +81,11 @@ export class DurabilityLimitsHelper
      * @param maxDurability Max durability of weapon
      * @returns Current weapon durability
      */
-    public getRandomizedWeaponDurability(itemTemplate: ITemplateItem, botRole: string, maxDurability: number): number
+    public getRandomizedWeaponDurability(
+        itemTemplate: ITemplateItem,
+        botRole: string | undefined,
+        maxDurability: number,
+    ): number
     {
         if (botRole && this.botHelper.isBotPmc(botRole))
         {
@@ -108,7 +112,11 @@ export class DurabilityLimitsHelper
      * @param maxDurability Max durability of armor
      * @returns Current armor durability
      */
-    public getRandomizedArmorDurability(itemTemplate: ITemplateItem, botRole: string, maxDurability: number): number
+    public getRandomizedArmorDurability(
+        itemTemplate: ITemplateItem,
+        botRole: string | undefined,
+        maxDurability: number,
+    ): number
     {
         if (botRole && this.botHelper.isBotPmc(botRole))
         {
@@ -128,7 +136,7 @@ export class DurabilityLimitsHelper
         return this.generateArmorDurability(botRole, maxDurability);
     }
 
-    protected generateMaxWeaponDurability(botRole: string): number
+    protected generateMaxWeaponDurability(botRole?: string): number
     {
         const lowestMax = this.getLowestMaxWeaponFromConfig(botRole);
         const highestMax = this.getHighestMaxWeaponDurabilityFromConfig(botRole);
@@ -145,27 +153,27 @@ export class DurabilityLimitsHelper
         return itemMaxDurability * (multiplier / 100);
     }
 
-    protected getLowestMaxWeaponFromConfig(botRole: string): number
+    protected getLowestMaxWeaponFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].weapon.lowestMax;
+            return this.botConfig.durability[botRole!].weapon.lowestMax;
         }
 
         return this.botConfig.durability.default.weapon.lowestMax;
     }
 
-    protected getHighestMaxWeaponDurabilityFromConfig(botRole: string): number
+    protected getHighestMaxWeaponDurabilityFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].weapon.highestMax;
+            return this.botConfig.durability[botRole!].weapon.highestMax;
         }
 
         return this.botConfig.durability.default.weapon.highestMax;
     }
 
-    protected generateWeaponDurability(botRole: string, maxDurability: number): number
+    protected generateWeaponDurability(botRole: string | undefined, maxDurability: number): number
     {
         const minDelta = this.getMinWeaponDeltaFromConfig(botRole);
         const maxDelta = this.getMaxWeaponDeltaFromConfig(botRole);
@@ -179,7 +187,7 @@ export class DurabilityLimitsHelper
         return result >= durabilityValueMinLimit ? result : durabilityValueMinLimit;
     }
 
-    protected generateArmorDurability(botRole: string, maxDurability: number): number
+    protected generateArmorDurability(botRole: string | undefined, maxDurability: number): number
     {
         const minDelta = this.getMinArmorDeltaFromConfig(botRole);
         const maxDelta = this.getMaxArmorDeltaFromConfig(botRole);
@@ -193,61 +201,61 @@ export class DurabilityLimitsHelper
         return result >= durabilityValueMinLimit ? result : durabilityValueMinLimit;
     }
 
-    protected getMinWeaponDeltaFromConfig(botRole: string): number
+    protected getMinWeaponDeltaFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].weapon.minDelta;
+            return this.botConfig.durability[botRole!].weapon.minDelta;
         }
 
         return this.botConfig.durability.default.weapon.minDelta;
     }
 
-    protected getMaxWeaponDeltaFromConfig(botRole: string): number
+    protected getMaxWeaponDeltaFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].weapon.maxDelta;
+            return this.botConfig.durability[botRole!].weapon.maxDelta;
         }
 
         return this.botConfig.durability.default.weapon.maxDelta;
     }
 
-    protected getMinArmorDeltaFromConfig(botRole: string): number
+    protected getMinArmorDeltaFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].armor.minDelta;
+            return this.botConfig.durability[botRole!].armor.minDelta;
         }
 
         return this.botConfig.durability.default.armor.minDelta;
     }
 
-    protected getMaxArmorDeltaFromConfig(botRole: string): number
+    protected getMaxArmorDeltaFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].armor.maxDelta;
+            return this.botConfig.durability[botRole!].armor.maxDelta;
         }
 
         return this.botConfig.durability.default.armor.maxDelta;
     }
 
-    protected getMinArmorLimitPercentFromConfig(botRole: string): number
+    protected getMinArmorLimitPercentFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].armor.minLimitPercent;
+            return this.botConfig.durability[botRole!].armor.minLimitPercent;
         }
 
         return this.botConfig.durability.default.armor.minLimitPercent;
     }
 
-    protected getMinWeaponLimitPercentFromConfig(botRole: string): number
+    protected getMinWeaponLimitPercentFromConfig(botRole?: string): number
     {
-        if (this.botConfig.durability[botRole])
+        if (this.botConfig.durability[botRole!])
         {
-            return this.botConfig.durability[botRole].weapon.minLimitPercent;
+            return this.botConfig.durability[botRole!].weapon.minLimitPercent;
         }
 
         return this.botConfig.durability.default.weapon.minLimitPercent;
