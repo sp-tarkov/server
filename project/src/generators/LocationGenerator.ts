@@ -4,7 +4,6 @@ import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
 import {
     IContainerMinMax,
-    ILocation,
     IStaticAmmoDetails,
     IStaticContainer,
     IStaticContainerData,
@@ -20,7 +19,7 @@ import { Money } from "@spt/models/enums/Money";
 import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
@@ -50,7 +49,7 @@ export class LocationGenerator
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ObjectId") protected objectId: ObjectId,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
@@ -81,8 +80,7 @@ export class LocationGenerator
         const result: SpawnpointTemplate[] = [];
         const locationId = locationBase.Id.toLowerCase();
 
-        const db = this.databaseServer.getTables();
-        const mapData: ILocation = db.locations[locationId];
+        const mapData = this.databaseService.getLocation(locationId);
 
         const staticWeaponsOnMapClone = this.cloner.clone(mapData.staticContainers.staticWeapons);
         if (!staticWeaponsOnMapClone)
@@ -165,14 +163,13 @@ export class LocationGenerator
         }
 
         // Group containers by their groupId
-        const staticContainerGroupData: IStaticContainer = db.locations[locationId].statics;
-        if (!staticContainerGroupData)
+        if (!mapData.statics)
         {
             this.logger.warning(this.localisationService.getText("location-unable_to_generate_static_loot", locationId));
 
             return result;
         }
-        const mapping = this.getGroupIdToContainerMappings(staticContainerGroupData, staticRandomisableContainersOnMap);
+        const mapping = this.getGroupIdToContainerMappings(mapData.statics, staticRandomisableContainersOnMap);
 
         // For each of the container groups, choose from the pool of containers, hydrate container with loot and add to result array
         for (const groupId in mapping)

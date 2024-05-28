@@ -21,17 +21,17 @@ import { EquipmentFilterDetails, EquipmentFilters, IBotConfig } from "@spt/model
 import { ExhaustableArray } from "@spt/models/spt/server/ExhaustableArray";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
 import { BotEquipmentModPoolService } from "@spt/services/BotEquipmentModPoolService";
 import { BotWeaponModLimitService } from "@spt/services/BotWeaponModLimitService";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
+import { IFilterPlateModsForSlotByLevelResult, Result } from "../models/spt/bots/IFilterPlateModsForSlotByLevelResult";
 import { IGenerateEquipmentProperties } from "./BotInventoryGenerator";
-import { IFilterPlateModsForSlotByLevelResult, Result } from "./IFilterPlateModsForSlotByLevelResult";
 
 @injectable()
 export class BotEquipmentModGenerator
@@ -43,7 +43,7 @@ export class BotEquipmentModGenerator
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ProbabilityHelper") protected probabilityHelper: ProbabilityHelper,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("BotEquipmentFilterService") protected botEquipmentFilterService: BotEquipmentFilterService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
@@ -514,7 +514,7 @@ export class BotEquipmentModGenerator
             // However, the recursion doesn't go over the slots of the parent mod but over the modPool which is given by the bot config
             // where we decided to keep cartridges instead of camoras. And since a CylinderMagazine only has one cartridge entry and
             // this entry is not to be filled, we need a special handling for the CylinderMagazine
-            const modParentItem = this.databaseServer.getTables().templates.items[modToAddTemplate._parent];
+            const modParentItem = this.databaseService.getItems()[modToAddTemplate._parent];
             if (this.botWeaponGeneratorHelper.magazineIsCylinderRelated(modParentItem._name))
             {
                 // We don't have child mods, we need to create the camoras for the magazines instead

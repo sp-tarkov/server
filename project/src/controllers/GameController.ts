@@ -7,7 +7,6 @@ import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
 import { ILocation } from "@spt/models/eft/common/ILocation";
-import { ILooseLoot } from "@spt/models/eft/common/ILooseLoot";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { BodyPartHealth } from "@spt/models/eft/common/tables/IBotBase";
 import { ICheckVersionResponse } from "@spt/models/eft/game/ICheckVersionResponse";
@@ -357,7 +356,7 @@ export class GameController
                 continue;
             }
 
-            const mapLooseLoot: ILooseLoot = this.databaseService.getLocation(mapId).looseLoot;
+            const mapLooseLoot = this.databaseService.getLocation(mapId).looseLoot;
             if (!mapLooseLoot)
             {
                 this.logger.warning(this.localisationService.getText("location-map_has_no_loose_loot_data", mapId));
@@ -392,7 +391,7 @@ export class GameController
         const adjustments = this.lootConfig.looseLootSpawnPointAdjustments;
         for (const mapId in adjustments)
         {
-            const mapLooseLootData: ILooseLoot = this.databaseService.getLocation(mapId).looseLoot;
+            const mapLooseLootData = this.databaseService.getLocation(mapId).looseLoot;
             if (!mapLooseLootData)
             {
                 this.logger.warning(this.localisationService.getText("location-map_has_no_loose_loot_data", mapId));

@@ -4,7 +4,7 @@ import { IRandomisedBotLevelResult } from "@spt/models/eft/bot/IRandomisedBotLev
 import { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
 import { BotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 
 @injectable()
@@ -13,7 +13,7 @@ export class BotLevelGenerator
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
     )
     {}
 
@@ -30,7 +30,7 @@ export class BotLevelGenerator
         bot: IBotBase,
     ): IRandomisedBotLevelResult
     {
-        const expTable = this.databaseServer.getTables().globals.config.exp.level.exp_table;
+        const expTable = this.databaseService.getGlobals().config.exp.level.exp_table;
         const highestLevel = this.getHighestRelativeBotLevel(botGenerationDetails, levelDetails, expTable.length);
         const lowestLevel = this.getLowestRelativeBotLevel(botGenerationDetails, levelDetails, expTable.length);
 

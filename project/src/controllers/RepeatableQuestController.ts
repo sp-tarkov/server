@@ -4,7 +4,6 @@ import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { QuestHelper } from "@spt/helpers/QuestHelper";
 import { RepeatableQuestHelper } from "@spt/helpers/RepeatableQuestHelper";
 import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
-import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import {
     IChangeRequirement,
@@ -394,7 +393,7 @@ export class RepeatableQuestController
             return true;
         }
 
-        const locationBase: ILocationBase = this.databaseService.getLocation(location.toLowerCase()).base;
+        const locationBase = this.databaseService.getLocation(location.toLowerCase()).base;
         if (!locationBase)
         {
             return true;

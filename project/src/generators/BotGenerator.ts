@@ -25,8 +25,8 @@ import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
@@ -46,7 +46,7 @@ export class BotGenerator
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("BotInventoryGenerator") protected botInventoryGenerator: BotInventoryGenerator,
         @inject("BotLevelGenerator") protected botLevelGenerator: BotLevelGenerator,
         @inject("BotEquipmentFilterService") protected botEquipmentFilterService: BotEquipmentFilterService,
@@ -124,7 +124,7 @@ export class BotGenerator
      */
     protected getCloneOfBotBase(): IBotBase
     {
-        return this.cloner.clone(this.databaseServer.getTables().bots.base);
+        return this.cloner.clone(this.databaseService.getBots().base);
     }
 
     /**
@@ -243,9 +243,8 @@ export class BotGenerator
         bot.Customization.Feet = this.weightedRandomHelper.getWeightedValue<string>(appearance.feet);
         bot.Customization.Hands = this.weightedRandomHelper.getWeightedValue<string>(appearance.hands);
 
-        const tables = this.databaseServer.getTables();
-        const bodyGlobalDict = tables.globals.config.Customization.SavageBody;
-        const chosenBodyTemplate = tables.templates.customization[bot.Customization.Body];
+        const bodyGlobalDict = this.databaseService.getGlobals().config.Customization.SavageBody;
+        const chosenBodyTemplate = this.databaseService.getCustomization()[bot.Customization.Body];
 
         // Find the body/hands mapping
         const matchingBody: IWildBody = bodyGlobalDict[chosenBodyTemplate?._name];
@@ -288,9 +287,10 @@ export class BotGenerator
                 return name;
             }
 
+            const botTypes = this.databaseService.getBots().types; ;
             const pmcNames = [
-                ...this.databaseServer.getTables().bots.types.usec.firstName,
-                ...this.databaseServer.getTables().bots.types.bear.firstName,
+                ...botTypes.usec.firstName,
+                ...botTypes.bear.firstName,
             ];
 
             return `${name} (${this.randomUtil.getArrayValue(pmcNames)})`;

@@ -12,7 +12,7 @@ import { Traders } from "@spt/models/enums/Traders";
 import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { FenceService } from "@spt/services/FenceService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";
@@ -27,7 +27,7 @@ export class FenceBaseAssortGenerator
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
@@ -47,7 +47,7 @@ export class FenceBaseAssortGenerator
     public generateFenceBaseAssorts(): void
     {
         const blockedSeasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
-        const baseFenceAssort = this.databaseServer.getTables().traders[Traders.FENCE].assort;
+        const baseFenceAssort = this.databaseService.getTrader(Traders.FENCE).assort;
 
         for (const rootItemDb of this.itemHelper.getItems().filter((item) => this.isValidFenceItem(item)))
         {

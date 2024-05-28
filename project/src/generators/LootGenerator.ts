@@ -11,7 +11,7 @@ import { ISealedAirdropContainerSettings, RewardDetails } from "@spt/models/spt/
 import { LootItem } from "@spt/models/spt/services/LootItem";
 import { LootRequest } from "@spt/models/spt/services/LootRequest";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RagfairLinkedItemService } from "@spt/services/RagfairLinkedItemService";
@@ -26,7 +26,7 @@ export class LootGenerator
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
@@ -49,7 +49,7 @@ export class LootGenerator
 
         const itemTypeCounts = this.initItemLimitCounter(options.itemLimits);
 
-        const tables = this.databaseServer.getTables();
+        const itemsDb = this.databaseService.getItems();
         const itemBlacklist = new Set<string>([
             ...this.itemFilterService.getBlacklistedItems(),
             ...options.itemBlacklist,
@@ -70,8 +70,8 @@ export class LootGenerator
         if (desiredWeaponCrateCount > 0)
         {
             // Get list of all sealed containers from db
-            const sealedWeaponContainerPool = Object.values(tables.templates.items).filter((x) =>
-                x._name.includes("event_container_airdrop"),
+            const sealedWeaponContainerPool = Object.values(itemsDb).filter((item) =>
+                item._name.includes("event_container_airdrop"),
             );
 
             for (let index = 0; index < desiredWeaponCrateCount; index++)
@@ -88,12 +88,12 @@ export class LootGenerator
         }
 
         // Get items from items.json that have a type of item + not in global blacklist + basetype is in whitelist
-        const items = Object.entries(tables.templates.items).filter(
-            (x) =>
-                !itemBlacklist.has(x[1]._id)
-                && x[1]._type.toLowerCase() === "item"
-                && !x[1]._props.QuestItem
-                && options.itemTypeWhitelist.includes(x[1]._parent),
+        const items = Object.entries(itemsDb).filter(
+            (item) =>
+                !itemBlacklist.has(item[1]._id)
+                && item[1]._type.toLowerCase() === "item"
+                && !item[1]._props.QuestItem
+                && options.itemTypeWhitelist.includes(item[1]._parent),
         );
 
         if (items.length > 0)
@@ -490,13 +490,13 @@ export class LootGenerator
             }
 
             // Get all items of the desired type + not quest items + not globally blacklisted
-            const rewardItemPool = Object.values(this.databaseServer.getTables().templates.items).filter(
-                (x) =>
-                    x._parent === rewardTypeId
-                    && x._type.toLowerCase() === "item"
-                    && !this.itemFilterService.isItemBlacklisted(x._id)
-                    && !(containerSettings.allowBossItems || this.itemFilterService.isBossItem(x._id))
-                    && !x._props.QuestItem,
+            const rewardItemPool = Object.values(this.databaseService.getItems()).filter(
+                (item) =>
+                    item._parent === rewardTypeId
+                    && item._type.toLowerCase() === "item"
+                    && !this.itemFilterService.isItemBlacklisted(item._id)
+                    && !(containerSettings.allowBossItems || this.itemFilterService.isBossItem(item._id))
+                    && !item._props.QuestItem,
             );
 
             if (rewardItemPool.length === 0)

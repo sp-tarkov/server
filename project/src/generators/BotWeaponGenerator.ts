@@ -20,8 +20,8 @@ import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
 import { IRepairConfig } from "@spt/models/spt/config/IRepairConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { BotWeaponModLimitService } from "@spt/services/BotWeaponModLimitService";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RepairService } from "@spt/services/RepairService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
@@ -39,7 +39,7 @@ export class BotWeaponGenerator
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("BotGeneratorHelper") protected botGeneratorHelper: BotGeneratorHelper,
@@ -325,7 +325,7 @@ export class BotWeaponGenerator
 
         // TODO: Right now, preset weapons trigger a lot of warnings regarding missing ammo in magazines & such
         let preset: IPreset;
-        for (const presetObj of Object.values(this.databaseServer.getTables().globals.ItemPresets))
+        for (const presetObj of Object.values(this.databaseService.getGlobals().ItemPresets))
         {
             if (presetObj._items[0]._tpl === weaponTpl)
             {
