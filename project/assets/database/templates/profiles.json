@@ -26969,6 +26969,10 @@
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
                         "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
+                        "type": "StashSize"
                     }
                 ],
                 "Customization": {
@@ -31293,6 +31297,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -35841,6 +35849,10 @@
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
                         "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
+                        "type": "StashSize"
                     }
                 ],
                 "Customization": {
@@ -36328,7 +36340,7 @@
                     "LastTimePlayedAsSavage": 0,
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -36785,6 +36797,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -37273,7 +37289,7 @@
                     "LastTimePlayedAsSavage": 0,
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -37731,6 +37747,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -40226,12 +40246,12 @@
                     "BannedUntil": 0,
                     "Bans": [],
                     "Experience": 19926895,
-                    "GameVersion": "edge_of_darkness",
+                    "GameVersion": "unheard_edition",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
                     "Level": 69,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -40771,6 +40791,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -43265,12 +43289,12 @@
                     "BannedUntil": 0,
                     "Bans": [],
                     "Experience": 19926895,
-                    "GameVersion": "edge_of_darkness",
+                    "GameVersion": "unheard_edition",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
                     "Level": 69,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -43780,6 +43804,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -46256,12 +46284,12 @@
                     "BannedUntil": 0,
                     "Bans": [],
                     "Experience": 161140,
-                    "GameVersion": "edge_of_darkness",
+                    "GameVersion": "unheard_edition",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
                     "Level": 15,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -47129,6 +47157,10 @@
                     }, {
                         "id": "64f5b9e5fa34f11b380756c6",
                         "templateId": "5811ce772459770e9e5f9532",
+                        "type": "StashSize"
+                    }, {
+                        "id": "64f5b9e5fa34f11b380756c8",
+                        "templateId": "6602bcf19cc643f44a04274b",
                         "type": "StashSize"
                     }
                 ],
@@ -49605,12 +49637,12 @@
                     "BannedUntil": 0,
                     "Bans": [],
                     "Experience": 161140,
-                    "GameVersion": "edge_of_darkness",
+                    "GameVersion": "unheard_edition",
                     "IsStreamerModeAvailable": false,
                     "LastTimePlayedAsSavage": 0,
                     "Level": 15,
                     "LowerNickname": "__REPLACEME__",
-                    "MemberCategory": 2,
+                    "MemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
