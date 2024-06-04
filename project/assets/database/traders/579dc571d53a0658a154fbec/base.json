@@ -184,5 +184,5 @@
   ],
   "sell_modifier_for_prohibited_items": 0,
   "surname": "Fence",
-  "unlockedByDefault": true
+  "unlockedByDefault": false
 }
