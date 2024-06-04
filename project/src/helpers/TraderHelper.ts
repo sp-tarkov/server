@@ -154,7 +154,7 @@ export class TraderHelper
         // Check if trader should be locked by default
         if (rawProfileTemplate.lockedByDefaultOverride?.includes(traderID))
         {
-            pmcData.TradersInfo[traderID].unlocked = false;
+            pmcData.TradersInfo[traderID].unlocked = true;
         }
 
         if (rawProfileTemplate.purchaseAllClothingByDefaultForTrader?.includes(traderID))

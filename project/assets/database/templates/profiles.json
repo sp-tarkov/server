@@ -2624,7 +2624,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -5444,7 +5447,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
@@ -8633,7 +8639,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -11921,7 +11930,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
@@ -15568,7 +15580,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -19412,7 +19427,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
@@ -23099,7 +23117,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -26943,7 +26964,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
@@ -31271,7 +31295,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -35815,7 +35842,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0.2,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
@@ -36758,9 +36788,6 @@
                 "initialStanding": 0.2,
                 "jaegerUnlocked": false,
 				"fleaBlockedDays": 365,
-				"lockedByDefaultOverride": [
-					"579dc571d53a0658a154fbec"
-				],
 				"purchaseAllClothingByDefaultForTrader":[
 					"5ac3b934156ae10c4430e83c"
 				]
@@ -37701,9 +37728,6 @@
                 "initialStanding": 0.2,
                 "jaegerUnlocked": false,
 				"fleaBlockedDays": 365,
-				"lockedByDefaultOverride": [
-					"579dc571d53a0658a154fbec"
-				],
 				"purchaseAllClothingByDefaultForTrader":[
 					"5ac3b934156ae10c4430e83c"
 				]
@@ -40748,6 +40772,9 @@
                 "initialSalesSum": 2600000,
                 "initialStanding": 6,
                 "jaegerUnlocked": true,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				],
                 "setQuestsAvailableForFinish": true,
                 "setQuestsAvailableForStart": false
             },
@@ -43755,6 +43782,9 @@
                 "initialSalesSum": 2600000,
                 "initialStanding": 6,
                 "jaegerUnlocked": true,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				],
                 "setQuestsAvailableForStart": true
             },
             "weaponbuilds": {}
@@ -47107,6 +47137,9 @@
                 "initialSalesSum": 2600000,
                 "initialStanding": 1,
                 "jaegerUnlocked": true,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				],
                 "setQuestsAvailableForStart": false
             },
             "weaponbuilds": {}
@@ -50456,6 +50489,9 @@
                 "initialSalesSum": 2600000,
                 "initialStanding": 1,
                 "jaegerUnlocked": true,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				],
                 "setQuestsAvailableForStart": false
             },
             "weaponbuilds": {}
@@ -51367,7 +51403,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         },
@@ -52286,7 +52325,10 @@
                 },
                 "initialSalesSum": 0,
                 "initialStanding": 0,
-                "jaegerUnlocked": false
+                "jaegerUnlocked": false,
+                "lockedByDefaultOverride": [
+					"579dc571d53a0658a154fbec"
+				]
             },
             "weaponbuilds": {}
         }
