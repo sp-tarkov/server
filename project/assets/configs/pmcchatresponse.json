@@ -15,7 +15,8 @@
         "responseTypeWeights": {
             "positive": 5,
             "negative": 2,
-            "plead": 2
+            "plead": 2,
+            "pity": 1
         },
         "stripCapitalisationChancePercent": 20,
         "allCapsChancePercent": 15,
