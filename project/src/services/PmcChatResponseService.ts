@@ -1,4 +1,3 @@
-import { inject, injectable } from "tsyringe";
 import { NotificationSendHelper } from "@spt/helpers/NotificationSendHelper";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -7,6 +6,7 @@ import { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { MessageType } from "@spt/models/enums/MessageType";
+import { IGiftsConfig } from "@spt/models/spt/config/IGiftsConfig";
 import { IPmcChatResponse } from "@spt/models/spt/config/IPmChatResponse";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -14,11 +14,12 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { MatchBotDetailsCacheService } from "@spt/services/MatchBotDetailsCacheService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class PmcChatResponseService
-{
+export class PmcChatResponseService {
     protected pmcResponsesConfig: IPmcChatResponse;
+    protected giftConfig: IGiftsConfig;
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
@@ -29,9 +30,9 @@ export class PmcChatResponseService
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
-    )
-    {
+    ) {
         this.pmcResponsesConfig = this.configServer.getConfig(ConfigTypes.PMC_CHAT_RESPONSE);
+        this.giftConfig = this.configServer.getConfig(ConfigTypes.GIFTS);
     }
 
     /**
@@ -40,19 +41,16 @@ export class PmcChatResponseService
      * @param pmcVictims Array of bots killed by player
      * @param pmcData Player profile
      */
-    public sendVictimResponse(sessionId: string, pmcVictims: Victim[], pmcData: IPmcData): void
-    {
-        for (const victim of pmcVictims)
-        {
-            if (!this.randomUtil.getChance100(this.pmcResponsesConfig.victim.responseChancePercent))
-            {
+    public sendVictimResponse(sessionId: string, pmcVictims: Victim[], pmcData: IPmcData): void {
+        for (const victim of pmcVictims) {
+            if (!this.randomUtil.getChance100(100)) {
+                // MAKE SURE THIS GETS CHANGED BACK this.pmcResponsesConfig.victim.responseChancePercent)
                 continue;
             }
 
             const victimDetails = this.getVictimDetails(victim);
             const message = this.chooseMessage(true, pmcData);
-            if (message)
-            {
+            if (message) {
                 this.notificationSendHelper.sendMessageToPlayer(
                     sessionId,
                     victimDetails,
@@ -69,15 +67,12 @@ export class PmcChatResponseService
      * @param pmcData Players profile
      * @param killer The bot who killed the player
      */
-    public sendKillerResponse(sessionId: string, pmcData: IPmcData, killer: Aggressor): void
-    {
-        if (!killer)
-        {
+    public sendKillerResponse(sessionId: string, pmcData: IPmcData, killer: Aggressor): void {
+        if (!killer) {
             return;
         }
 
-        if (!this.randomUtil.getChance100(this.pmcResponsesConfig.killer.responseChancePercent))
-        {
+        if (!this.randomUtil.getChance100(this.pmcResponsesConfig.killer.responseChancePercent)) {
             return;
         }
 
@@ -86,14 +81,12 @@ export class PmcChatResponseService
             killer.Name.trim(),
             killer.Side,
         );
-        if (!killerDetailsInCache)
-        {
+        if (!killerDetailsInCache) {
             return;
         }
 
         // If kill was not a PMC, skip
-        if (!["sptUsec", "sptBear"].includes(killerDetailsInCache.Info.Settings.Role))
-        {
+        if (!["sptUsec", "sptBear"].includes(killerDetailsInCache.Info.Settings.Role)) {
             return;
         }
 
@@ -109,9 +102,14 @@ export class PmcChatResponseService
         };
 
         const message = this.chooseMessage(false, pmcData);
-        if (!message)
-        {
+        if (!message) {
             return;
+        }
+        if (message.includes("{{giftcode}}")) {
+            const giftKeys = Object.keys(this.giftConfig.gifts);
+            const randomGiftKey = this.randomUtil.getStringArrayValue(giftKeys);
+
+            message.replace("{{giftcode}}", randomGiftKey);
         }
 
         this.notificationSendHelper.sendMessageToPlayer(sessionId, killerDetails, message, MessageType.USER_MESSAGE);
@@ -123,15 +121,13 @@ export class PmcChatResponseService
      * @param pmcData Player profile
      * @returns Message from PMC to player
      */
-    protected chooseMessage(isVictim: boolean, pmcData: IPmcData): string | undefined
-    {
+    protected chooseMessage(isVictim: boolean, pmcData: IPmcData): string | undefined {
         // Positive/negative etc
         const responseType = this.chooseResponseType(isVictim);
 
         // Get all locale keys
         const possibleResponseLocaleKeys = this.getResponseLocaleKeys(responseType, isVictim);
-        if (possibleResponseLocaleKeys.length === 0)
-        {
+        if (possibleResponseLocaleKeys.length === 0) {
             this.logger.warning(this.localisationService.getText("pmcresponse-unable_to_find_key", responseType));
 
             return undefined;
@@ -144,21 +140,18 @@ export class PmcChatResponseService
             playerSide: pmcData.Info.Side,
         });
 
-        if (this.appendSuffixToMessageEnd(isVictim))
-        {
+        if (this.appendSuffixToMessageEnd(isVictim)) {
             const suffixText = this.localisationService.getText(
                 this.randomUtil.getArrayValue(this.getResponseSuffixLocaleKeys()),
             );
             responseText += ` ${suffixText}`;
         }
 
-        if (this.stripCapitalistion(isVictim))
-        {
+        if (this.stripCapitalistion(isVictim)) {
             responseText = responseText.toLowerCase();
         }
 
-        if (this.allCaps(isVictim))
-        {
+        if (this.allCaps(isVictim)) {
             responseText = responseText.toUpperCase();
         }
 
@@ -170,8 +163,7 @@ export class PmcChatResponseService
      * @param isVictim Was responder a victim of player
      * @returns true = should be stripped
      */
-    protected stripCapitalistion(isVictim: boolean): boolean
-    {
+    protected stripCapitalistion(isVictim: boolean): boolean {
         const chance = isVictim
             ? this.pmcResponsesConfig.victim.stripCapitalisationChancePercent
             : this.pmcResponsesConfig.killer.stripCapitalisationChancePercent;
@@ -184,8 +176,7 @@ export class PmcChatResponseService
      * @param isVictim Was responder a victim of player
      * @returns true = should be stripped
      */
-    protected allCaps(isVictim: boolean): boolean
-    {
+    protected allCaps(isVictim: boolean): boolean {
         const chance = isVictim
             ? this.pmcResponsesConfig.victim.allCapsChancePercent
             : this.pmcResponsesConfig.killer.allCapsChancePercent;
@@ -198,8 +189,7 @@ export class PmcChatResponseService
      * @param isVictim Was responder a victim of player
      * @returns true = should be stripped
      */
-    appendSuffixToMessageEnd(isVictim: boolean): boolean
-    {
+    appendSuffixToMessageEnd(isVictim: boolean): boolean {
         const chance = isVictim
             ? this.pmcResponsesConfig.victim.appendBroToMessageEndChancePercent
             : this.pmcResponsesConfig.killer.appendBroToMessageEndChancePercent;
@@ -212,8 +202,7 @@ export class PmcChatResponseService
      * @param isVictim Was responder killed by player
      * @returns Response type (positive/negative)
      */
-    protected chooseResponseType(isVictim = true): string
-    {
+    protected chooseResponseType(isVictim = true): string {
         const responseWeights = isVictim
             ? this.pmcResponsesConfig.victim.responseTypeWeights
             : this.pmcResponsesConfig.killer.responseTypeWeights;
@@ -227,8 +216,7 @@ export class PmcChatResponseService
      * @param isVictim Was responder killed by player
      * @returns
      */
-    protected getResponseLocaleKeys(keyType: string, isVictim = true): string[]
-    {
+    protected getResponseLocaleKeys(keyType: string, isVictim = true): string[] {
         const keyBase = isVictim ? "pmcresponse-victim_" : "pmcresponse-killer_";
         const keys = this.localisationService.getKeys();
 
@@ -239,8 +227,7 @@ export class PmcChatResponseService
      * Get all locale keys that start with `pmcresponse-suffix`
      * @returns array of keys
      */
-    protected getResponseSuffixLocaleKeys(): string[]
-    {
+    protected getResponseSuffixLocaleKeys(): string[] {
         const keys = this.localisationService.getKeys();
 
         return keys.filter((x) => x.startsWith("pmcresponse-suffix"));
@@ -251,8 +238,7 @@ export class PmcChatResponseService
      * @param pmcVictims Possible victims to choose from
      * @returns IUserDialogInfo
      */
-    protected chooseRandomVictim(pmcVictims: Victim[]): IUserDialogInfo
-    {
+    protected chooseRandomVictim(pmcVictims: Victim[]): IUserDialogInfo {
         const randomVictim = this.randomUtil.getArrayValue(pmcVictims);
 
         return this.getVictimDetails(randomVictim);
@@ -263,8 +249,7 @@ export class PmcChatResponseService
      * @param pmcVictim victim to convert
      * @returns IUserDialogInfo
      */
-    protected getVictimDetails(pmcVictim: Victim): IUserDialogInfo
-    {
+    protected getVictimDetails(pmcVictim: Victim): IUserDialogInfo {
         const categories = [
             MemberCategory.UNIQUE_ID,
             MemberCategory.DEFAULT,
