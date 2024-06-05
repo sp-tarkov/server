@@ -42,7 +42,7 @@ export class MatchBotDetailsCacheService
         const botInCache = this.botDetailsCache[`${botName}${botSide}`];
         if (!botInCache)
         {
-            this.logger.warning(`bot not found in match bot cache: ${botName} ${botSide}`);
+            this.logger.warning(`bot not found in match bot cache: ${botName.toLowerCase()} ${botSide}`);
         }
 
         return botInCache;

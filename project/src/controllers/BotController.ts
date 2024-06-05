@@ -343,7 +343,7 @@ export class BotController
     }
 
     /**
-     * Generate a single bot and store it in the cache
+     * Generate a single bot and store in the cache
      * @param botGenerationDetails the bot details to generate the bot with
      * @param sessionId Session id
      * @param cacheKey the cache key to store the bot with
@@ -357,6 +357,9 @@ export class BotController
     {
         const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, botGenerationDetails);
         this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
+
+        // Store bot details in cache so post-raid PMC messages can use data
+        this.matchBotDetailsCacheService.cacheBot(botToCache);
     }
 
     /**
