@@ -47,9 +47,8 @@ export class PmcChatResponseService
     {
         for (const victim of pmcVictims)
         {
-            if (!this.randomUtil.getChance100(100))
+            if (!this.randomUtil.getChance100(this.pmcResponsesConfig.victim.responseChancePercent))
             {
-                // MAKE SURE THIS GETS CHANGED BACK this.pmcResponsesConfig.victim.responseChancePercent)
                 continue;
             }
 
@@ -86,10 +85,7 @@ export class PmcChatResponseService
         }
 
         // find bot by name in cache
-        const killerDetailsInCache = this.matchBotDetailsCacheService.getBotByNameAndSide(
-            killer.Name,
-            killer.Side,
-        );
+        const killerDetailsInCache = this.matchBotDetailsCacheService.getBotByNameAndSide(killer.Name, killer.Side);
         if (!killerDetailsInCache)
         {
             return;
@@ -112,17 +108,20 @@ export class PmcChatResponseService
             },
         };
 
-        const message = this.chooseMessage(false, pmcData);
+        let message = this.chooseMessage(false, pmcData);
         if (!message)
         {
             return;
         }
-        if (message.includes("{{giftcode}}"))
+
+        // Give the player a gift code if they were killed.
+        const giftCodeString = "%giftcode%";
+        if (message.toLocaleLowerCase().includes(giftCodeString))
         {
             const giftKeys = Object.keys(this.giftConfig.gifts);
             const randomGiftKey = this.randomUtil.getStringArrayValue(giftKeys);
 
-            message.replace("{{giftcode}}", randomGiftKey);
+            message = message.replace(giftCodeString, randomGiftKey);
         }
 
         this.notificationSendHelper.sendMessageToPlayer(sessionId, killerDetails, message, MessageType.USER_MESSAGE);
