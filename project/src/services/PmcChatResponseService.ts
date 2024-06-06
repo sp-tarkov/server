@@ -115,13 +115,13 @@ export class PmcChatResponseService
         }
 
         // Give the player a gift code if they were killed.
-        const giftCodeString = "%giftcode%";
-        if (message.toLocaleLowerCase().includes(giftCodeString))
+        const regex: RegExp = /(%giftcode%)/gi;
+        if (regex.test(message))
         {
             const giftKeys = Object.keys(this.giftConfig.gifts);
             const randomGiftKey = this.randomUtil.getStringArrayValue(giftKeys);
 
-            message = message.replace(giftCodeString, randomGiftKey);
+            message = message.replace(regex, randomGiftKey);
         }
 
         this.notificationSendHelper.sendMessageToPlayer(sessionId, killerDetails, message, MessageType.USER_MESSAGE);
