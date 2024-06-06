@@ -41,6 +41,8 @@ export class PaymentHelper
                 return Money.DOLLARS;
             case "RUB":
                 return Money.ROUBLES;
+            case "GP":
+                return Money.GP;
             default:
                 return "";
         }

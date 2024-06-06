@@ -66,6 +66,20 @@
                 "min": 900,
                 "max": 2000
             }
+        },
+        "gpCount": {
+            "common": {
+                "min": 1,
+                "max": 2
+            },
+            "rare": {
+                "min": 2,
+                "max": 5
+            },
+            "superrare": {
+                "min": 5,
+                "max": 15
+            }
         }
     },
     "ammoRewards": {

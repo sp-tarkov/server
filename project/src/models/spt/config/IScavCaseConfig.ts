@@ -20,6 +20,7 @@ export interface MoneyRewards
     rubCount: MoneyLevels
     usdCount: MoneyLevels
     eurCount: MoneyLevels
+    gpCount: MoneyLevels
 }
 
 export interface MoneyLevels

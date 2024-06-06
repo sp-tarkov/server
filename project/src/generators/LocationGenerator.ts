@@ -426,7 +426,7 @@ export class LocationGenerator
         // Draw random loot
         // Money spawn more than once in container
         let failedToFitCount = 0;
-        const locklist = [Money.ROUBLES, Money.DOLLARS, Money.EUROS];
+        const locklist = [Money.ROUBLES, Money.DOLLARS, Money.EUROS, Money.GP];
 
         // Choose items to add to container, factor in weighting + lock money down
         // Filter out items picked that're already in the above `tplsForced` array
