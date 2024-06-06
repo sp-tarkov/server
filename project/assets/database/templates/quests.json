@@ -62984,7 +62984,8 @@
           "index": 1,
           "parentId": "",
           "status": [
-            4
+            4,
+            5
           ],
           "target": "597a0f5686f774273b74f676",
           "visibilityConditions": []
@@ -87426,6 +87427,262 @@
     "traderId": "5ac3b934156ae10c4430e83c",
     "type": "Discover"
   },
+  "65e851a98f0b5f70ff393d90": {
+    "QuestName": "Unknown quest",
+    "_id": "65e851a98f0b5f70ff393d90",
+    "acceptPlayerMessage": "65e851a98f0b5f70ff393d90 acceptPlayerMessage",
+    "canShowNotificationsInGame": true,
+    "changeQuestMessageText": "65e851a98f0b5f70ff393d90 changeQuestMessageText",
+    "completePlayerMessage": "65e851a98f0b5f70ff393d90 completePlayerMessage",
+    "conditions": {
+      "AvailableForFinish": [
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "65e86c8d6f37b61f9188f850",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "spiritSpring",
+                  "spiritWinter"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              }
+            ],
+            "id": "65e86c7f3816f5eb6c616b28"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "65e86c7f40eb7a553a55e805",
+          "index": 0,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 50,
+          "visibilityConditions": []
+        }
+      ],
+      "AvailableForStart": [
+        {
+          "availableAfter": 0,
+          "conditionType": "Quest",
+          "dispersion": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "65e9c2174341a11df600bdf7",
+          "index": 0,
+          "parentId": "",
+          "status": [
+            4
+          ],
+          "target": "65e85198e32da31f2b30978e",
+          "visibilityConditions": []
+        }
+      ],
+      "Fail": []
+    },
+    "declinePlayerMessage": "65e851a98f0b5f70ff393d90 declinePlayerMessage",
+    "description": "65e851a98f0b5f70ff393d90 description",
+    "failMessageText": "65e851a98f0b5f70ff393d90 failMessageText",
+    "image": "/files/quest/icon/65f77467dc590c28aa443875.jpg",
+    "instantComplete": false,
+    "isKey": false,
+    "location": "any",
+    "name": "65e851a98f0b5f70ff393d90 name",
+    "note": "65e851a98f0b5f70ff393d90 note",
+    "restartable": false,
+    "rewards": {
+      "Fail": [],
+      "Started": [],
+      "Success": [
+        {
+          "id": "65e85cc875ea99590e6fc9a1",
+          "index": 0,
+          "type": "Experience",
+          "value": "22000"
+        },
+        {
+          "id": "65e9c6f7f44fc40f623cd796",
+          "index": 1,
+          "target": "54cb50c76803fa8b248b4571",
+          "type": "TraderStanding",
+          "value": "0.05"
+        },
+        {
+          "findInRaid": true,
+          "id": "65e9c71a109d5440b03a3f19",
+          "index": 2,
+          "items": [
+            {
+              "_id": "6607343337202496420e44fc",
+              "_tpl": "5449016a4bdc2d6f028b456f",
+              "upd": {
+                "StackObjectsCount": 165000
+              }
+            }
+          ],
+          "target": "6607343337202496420e44fc",
+          "type": "Item",
+          "value": "165000"
+        },
+        {
+          "findInRaid": true,
+          "id": "65e9c758f7a2123f32101392",
+          "index": 3,
+          "items": [
+            {
+              "_id": "6607343337202496420e44fd",
+              "_tpl": "657023b1cfc010a0f50069e5",
+              "upd": {
+                "StackObjectsCount": 3
+              }
+            }
+          ],
+          "target": "6607343337202496420e44fd",
+          "type": "Item",
+          "value": "3"
+        },
+        {
+          "findInRaid": true,
+          "id": "65e9c76e3e1cb842de6227ac",
+          "index": 4,
+          "items": [
+            {
+              "_id": "6607343337202496420e44fe",
+              "_tpl": "55d4887d4bdc2d962f8b4570",
+              "upd": {
+                "StackObjectsCount": 3
+              }
+            }
+          ],
+          "target": "6607343337202496420e44fe",
+          "type": "Item",
+          "value": "3"
+        },
+        {
+          "findInRaid": true,
+          "id": "65e9c8237cd8ac481c662724",
+          "index": 5,
+          "items": [
+            {
+              "_id": "6607343337202496420e44ff",
+              "_tpl": "5fbcc1d9016cce60e8341ab3",
+              "upd": {
+                "FireMode": {
+                  "FireMode": "single"
+                },
+                "StackObjectsCount": 2
+              }
+            },
+            {
+              "_id": "6607343337202496420e4500",
+              "_tpl": "5fbcbd6c187fea44d52eda14",
+              "parentId": "6607343337202496420e44ff",
+              "slotId": "mod_pistol_grip"
+            },
+            {
+              "_id": "6607343337202496420e4501",
+              "_tpl": "55d4887d4bdc2d962f8b4570",
+              "parentId": "6607343337202496420e44ff",
+              "slotId": "mod_magazine"
+            },
+            {
+              "_id": "6607343337202496420e4502",
+              "_tpl": "5fbcc3e4d6fa9c00c571bb58",
+              "parentId": "6607343337202496420e44ff",
+              "slotId": "mod_reciever"
+            },
+            {
+              "_id": "6607343337202496420e4503",
+              "_tpl": "5fbbfacda56d053a3543f799",
+              "parentId": "6607343337202496420e4502",
+              "slotId": "mod_barrel"
+            },
+            {
+              "_id": "6607343337202496420e4504",
+              "_tpl": "5fbc22ccf24b94483f726483",
+              "parentId": "6607343337202496420e4503",
+              "slotId": "mod_muzzle"
+            },
+            {
+              "_id": "6607343337202496420e4505",
+              "_tpl": "5fbcbd10ab884124df0cd563",
+              "parentId": "6607343337202496420e4504",
+              "slotId": "mod_muzzle_000"
+            },
+            {
+              "_id": "6607343337202496420e4506",
+              "_tpl": "5fbc210bf24b94483f726481",
+              "parentId": "6607343337202496420e4503",
+              "slotId": "mod_gas_block"
+            },
+            {
+              "_id": "6607343337202496420e4507",
+              "_tpl": "5fbc226eca32ed67276c155d",
+              "parentId": "6607343337202496420e4502",
+              "slotId": "mod_handguard"
+            },
+            {
+              "_id": "6607343337202496420e4508",
+              "_tpl": "5fc0fa362770a0045c59c677",
+              "parentId": "6607343337202496420e4507",
+              "slotId": "mod_sight_front"
+            },
+            {
+              "_id": "6607343337202496420e4509",
+              "_tpl": "5fc0fa957283c4046c58147e",
+              "parentId": "6607343337202496420e4502",
+              "slotId": "mod_sight_rear"
+            },
+            {
+              "_id": "6607343337202496420e450a",
+              "_tpl": "5fbcc437d724d907e2077d5c",
+              "parentId": "6607343337202496420e44ff",
+              "slotId": "mod_stock"
+            },
+            {
+              "_id": "6607343337202496420e450b",
+              "_tpl": "5fbcc640016cce60e8341acc",
+              "parentId": "6607343337202496420e44ff",
+              "slotId": "mod_charge"
+            }
+          ],
+          "target": "6607343337202496420e44ff",
+          "type": "Item",
+          "value": "2"
+        }
+      ]
+    },
+    "secretQuest": false,
+    "side": "Pmc",
+    "startedMessageText": "65e851a98f0b5f70ff393d90 startedMessageText",
+    "successMessageText": "65e851a98f0b5f70ff393d90 successMessageText",
+    "traderId": "54cb50c76803fa8b248b4571",
+    "type": "Elimination"
+  },
   "6603fe74e773dcf3b0099f88": {
     "QuestName": "The Tarkov Mystery",
     "_id": "6603fe74e773dcf3b0099f88",
@@ -87977,5 +88234,1153 @@
     "successMessageText": "6613f307fca4f2f386029409 successMessageText",
     "traderId": "5ac3b934156ae10c4430e83c",
     "type": "Completion"
+  },
+  "6658a15615cbb1b2c6014d5b": {
+    "QuestName": "Hustle2",
+    "_id": "6658a15615cbb1b2c6014d5b",
+    "acceptPlayerMessage": "6658a15615cbb1b2c6014d5b acceptPlayerMessage",
+    "canShowNotificationsInGame": true,
+    "changeQuestMessageText": "6658a15615cbb1b2c6014d5b changeQuestMessageText",
+    "completePlayerMessage": "6658a15615cbb1b2c6014d5b completePlayerMessage",
+    "conditions": {
+      "AvailableForFinish": [
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "647712dfa243be48547d6b95",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossBully"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6658ae762c659d6a1e4e9732",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d5d"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d5c",
+          "index": 0,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "647712f3a791a06f316e06e5",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossGluhar"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6658ae89a1d502179b2ab4bc",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d5f"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d5e",
+          "index": 1,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771be2a243be48547d6b96",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossKilla"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb5601076c5c1da32b0c",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d61"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d60",
+          "index": 2,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771c6aa791a06f316e06e6",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossKojaniy"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb60462d15dba1833c12",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d63"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d62",
+          "index": 3,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771ca3a243be48547d6b97",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossKnight"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb6956cdc466291806d0",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d65"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d64",
+          "index": 4,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771d4acc52a45a39338676",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "followerBigPipe"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb70a0ac99f705dcd860",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d67"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d66",
+          "index": 5,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771d60ac21bb41ed1fc8e5",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "followerBirdEye"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb7900130ff47611545e",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d69"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d68",
+          "index": 6,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771e8dcc52a45a39338677",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossSanitar"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb825c7d56e676847f71",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d6b"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d6a",
+          "index": 7,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "64771ecbac21bb41ed1fc8e6",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossTagilla",
+                  "followerTagilla"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb8a970cb17152eedf34",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a15615cbb1b2c6014d6d"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a15615cbb1b2c6014d6c",
+          "index": 8,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "6658a22f65b8a32e2398d0fa",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossBoar"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb9178fcaa1a43f4604b",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a2203e205a38167b419d"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a220a4dc74f102c355ce",
+          "index": 9,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "completeInSeconds": 0,
+          "conditionType": "CounterCreator",
+          "counter": {
+            "conditions": [
+              {
+                "bodyPart": [],
+                "compareMethod": ">=",
+                "conditionType": "Kills",
+                "daytime": {
+                  "from": 0,
+                  "to": 0
+                },
+                "distance": {
+                  "compareMethod": ">=",
+                  "value": 0
+                },
+                "dynamicLocale": false,
+                "enemyEquipmentExclusive": [],
+                "enemyEquipmentInclusive": [],
+                "enemyHealthEffects": [],
+                "id": "6658a24c2ab45574bede1eaf",
+                "resetOnSessionEnd": false,
+                "savageRole": [
+                  "bossKolontay"
+                ],
+                "target": "Savage",
+                "value": 0,
+                "weapon": [],
+                "weaponCaliber": [],
+                "weaponModsExclusive": [],
+                "weaponModsInclusive": []
+              },
+              {
+                "conditionType": "Location",
+                "dynamicLocale": false,
+                "id": "6659bb9730b88f9d307a673f",
+                "target": [
+                  "Shoreline"
+                ]
+              }
+            ],
+            "id": "6658a2383fb719e856172e20"
+          },
+          "doNotResetIfCounterCompleted": false,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6658a2387aed962d75700786",
+          "index": 10,
+          "oneSessionOnly": false,
+          "parentId": "",
+          "type": "Elimination",
+          "value": 1,
+          "visibilityConditions": []
+        }
+      ],
+      "AvailableForStart": [
+        {
+          "availableAfter": 0,
+          "conditionType": "Quest",
+          "dispersion": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6659e8764dc03267823dadd1",
+          "index": 0,
+          "parentId": "",
+          "status": [
+            2,
+            4
+          ],
+          "target": "5d24b81486f77439c92d6ba8",
+          "visibilityConditions": []
+        }
+      ],
+      "Fail": []
+    },
+    "declinePlayerMessage": "6658a15615cbb1b2c6014d5b declinePlayerMessage",
+    "description": "6658a15615cbb1b2c6014d5b description",
+    "failMessageText": "6658a15615cbb1b2c6014d5b failMessageText",
+    "image": "/files/quest/icon/6659f1d081610f6b9003ba57.png",
+    "instantComplete": false,
+    "isKey": false,
+    "location": "5704e554d2720bac5b8b456e",
+    "name": "6658a15615cbb1b2c6014d5b name",
+    "note": "6658a15615cbb1b2c6014d5b note",
+    "restartable": false,
+    "rewards": {
+      "Fail": [],
+      "Started": [],
+      "Success": [
+        {
+          "id": "6659f21137bfe7097601d4d1",
+          "index": 0,
+          "target": "5c0647fdd443bc2504c2d371",
+          "type": "TraderStanding",
+          "value": "0.15"
+        },
+        {
+          "id": "6659f223217781551805139e",
+          "index": 1,
+          "type": "Experience",
+          "value": "50000"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659f372e04f1a8b93047548",
+          "index": 2,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b8fe",
+              "_tpl": "5d235bb686f77443f4331278",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b8fe",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659acbb18261cc6950ef953",
+          "index": 3,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b8ff",
+              "_tpl": "5a0dc45586f7742f6b0b73e3",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b8ff",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659accc37bfe70976019e69",
+          "index": 4,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b900",
+              "_tpl": "5a0dc95c86f77452440fc675",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b900",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659acda87b89aaabd0787e2",
+          "index": 5,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b901",
+              "_tpl": "5a144dfd86f77445cb5a0982",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b901",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659acf0217781551804f59e",
+          "index": 6,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b902",
+              "_tpl": "5a0ec6d286f7742c0b518fb5",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b902",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659acfb7ed43df9510f0de7",
+          "index": 7,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b903",
+              "_tpl": "5a0ee30786f774023b6ee08f",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b903",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad0dd66f47aaea0e0827",
+          "index": 8,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b904",
+              "_tpl": "5a13eebd86f7746fd639aa93",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b904",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad141b7d0bc6bb08c353",
+          "index": 9,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b905",
+              "_tpl": "5a13ef0686f7746e5a411744",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b905",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad1cd66f47aaea0e0829",
+          "index": 10,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b906",
+              "_tpl": "5a0ee34586f774023b6ee092",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b906",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad26217781551804f59f",
+          "index": 11,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b907",
+              "_tpl": "5a0ee37f86f774023657a86f",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b907",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad3022f0e9470806f597",
+          "index": 12,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b908",
+              "_tpl": "5a1452ee86f7746f33111763",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b908",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad4437bfe70976019e6a",
+          "index": 13,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b909",
+              "_tpl": "5a13ef7e86f7741290491063",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b909",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad4db7c9a638a80f2f93",
+          "index": 14,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90a",
+              "_tpl": "5a13f46386f7741dd7384b04",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90a",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ad5a37bfe70976019e6c",
+          "index": 15,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90b",
+              "_tpl": "5a0ea79b86f7741d4a35298e",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90b",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae1237bfe70976019f97",
+          "index": 16,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90c",
+              "_tpl": "5a0ea64786f7741707720468",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90c",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae1a22f0e9470806f59b",
+          "index": 17,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90d",
+              "_tpl": "5a0ea69f86f7741cd5406619",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90d",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae2887b89aaabd0787ea",
+          "index": 18,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90e",
+              "_tpl": "5eff09cd30a7dc22fd1ddfed",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90e",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae37b7c9a638a80f2f9c",
+          "index": 19,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b90f",
+              "_tpl": "5a144bdb86f7741d374bbde0",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b90f",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae3f1b7d0bc6bb08c375",
+          "index": 20,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b910",
+              "_tpl": "5a0ee4b586f7743698200d22",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b910",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae58b7c9a638a80f2f9d",
+          "index": 21,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b911",
+              "_tpl": "5a13f24186f77410e57c5626",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b911",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae6218261cc6950efb2d",
+          "index": 22,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b912",
+              "_tpl": "5a13f35286f77413ef1436b0",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b912",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae700d7147ff1f0b18fd",
+          "index": 23,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b913",
+              "_tpl": "5a145d4786f7744cbb6f4a12",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b913",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae7822f0e9470806f7d6",
+          "index": 24,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b914",
+              "_tpl": "5a145d7b86f7744cbb6f4a13",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b914",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae8a21c5828cdc08841b",
+          "index": 25,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b915",
+              "_tpl": "5a0eec9686f77402ac5c39f2",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b915",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae93217781551804f5a2",
+          "index": 26,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b916",
+              "_tpl": "5a0eecf686f7740350630097",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b916",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659ae9c21c5828cdc08841c",
+          "index": 27,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b917",
+              "_tpl": "5a0eed4386f77405112912aa",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b917",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659aeaf1b7d0bc6bb08c376",
+          "index": 28,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b918",
+              "_tpl": "5a145ebb86f77458f1796f05",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b918",
+          "type": "Item",
+          "value": "1"
+        },
+        {
+          "findInRaid": true,
+          "id": "6659aebb0d7147ff1f0b18fe",
+          "index": 29,
+          "items": [
+            {
+              "_id": "666090fba76b99ac1c06b919",
+              "_tpl": "5a0eee1486f77402aa773226",
+              "upd": {
+                "StackObjectsCount": 1
+              }
+            }
+          ],
+          "target": "666090fba76b99ac1c06b919",
+          "type": "Item",
+          "value": "1"
+        }
+      ]
+    },
+    "secretQuest": false,
+    "side": "Pmc",
+    "startedMessageText": "6658a15615cbb1b2c6014d5b startedMessageText",
+    "successMessageText": "6658a15615cbb1b2c6014d5b successMessageText",
+    "traderId": "5c0647fdd443bc2504c2d371",
+    "type": "Elimination"
   }
 }
