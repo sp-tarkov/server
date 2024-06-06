@@ -458,6 +458,11 @@ export class ScavCaseRewardGenerator
                         this.scavCaseConfig.moneyRewards.usdCount[rarity].max,
                     );
                     break;
+                case Money.GP:
+                    amountToGive = this.randomUtil.getInt(
+                        this.scavCaseConfig.moneyRewards.gpCount[rarity].min,
+                        this.scavCaseConfig.moneyRewards.gpCount[rarity].max,
+                    );
             }
         }
         return amountToGive;
