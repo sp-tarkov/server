@@ -19,6 +19,7 @@
     "min_payment": 0,
     "min_return_hour": 30
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "5661632d4bdc2d903d8b456b",
@@ -116,7 +117,8 @@
       "660312cc4d6cdfa6f500c703",
       "660bbc98c38b837877075e4a",
       "660bc341c38b837877075e4c",
-      "6638a5474e92f038531e210e"
+      "6638a5474e92f038531e210e",
+      "5d235b4d86f7742e017bc88a"
     ]
   },
   "location": "unknown",
@@ -146,6 +148,10 @@
   "name": "<Настоящее имя неизвестно>",
   "nextResupply": 1631484143,
   "nickname": "Fence",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": false,
     "currency": "5449016a4bdc2d6f028b456f",
@@ -187,5 +193,9 @@
   ],
   "sell_modifier_for_prohibited_items": 0,
   "surname": "Fence",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": false
 }

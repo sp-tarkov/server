@@ -41,6 +41,7 @@ export interface Props
     IsUngivable?: boolean
     IsUnremovable?: boolean
     IsLockedafterEquip?: boolean
+    IsRagfairCurrency?: boolean
     IsSpecialSlotOnly?: boolean
     IsStationaryWeapon?: boolean
     QuestItem?: boolean

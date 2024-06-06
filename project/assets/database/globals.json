@@ -21564,6 +21564,20 @@
         "z": 1
       }
     },
+    "ArenaEftTransferSettings": {
+      "ArenaManagerReputationTaxMultiplier": 0.04,
+      "CharismaTaxMultiplier": 0.005,
+      "CreditPriceTaxMultiplier": 0.05,
+      "RubTaxMultiplier": 0.1,
+      "TransferLimitsByGameEdition": {
+        "default": 700000,
+        "edge_of_darkness": 1000000,
+        "unheard_edition": 1000000
+      },
+      "TransferLimitsSettings": {
+        "ResetInterval": 86400
+      }
+    },
     "ArmorMaterials": {
       "Aluminium": {
         "Destructibility": 0.45,
@@ -23503,7 +23517,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 1.25,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 1.25,
           "PriceModCleanUp": -2000,
@@ -23511,8 +23525,8 @@
           "PriceModTaxi": -200,
           "PriceModifier": 1.05,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 1.25,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 1.25,
           "ScavEquipmentSpawnChanceModifier": 0
         },
@@ -23531,7 +23545,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 1.5,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 1.5,
           "PriceModCleanUp": -4000,
@@ -23539,8 +23553,8 @@
           "PriceModTaxi": -400,
           "PriceModifier": 1.08,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 1.5,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 1.5,
           "ScavEquipmentSpawnChanceModifier": -1
         },
@@ -23559,7 +23573,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 2,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 2,
           "PriceModCleanUp": -6000,
@@ -23567,8 +23581,8 @@
           "PriceModTaxi": -600,
           "PriceModifier": 1.1,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 2,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 2,
           "ScavEquipmentSpawnChanceModifier": -2
         },
@@ -23587,7 +23601,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 2.5,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 2.5,
           "PriceModCleanUp": -8000,
@@ -23595,8 +23609,8 @@
           "PriceModTaxi": -800,
           "PriceModifier": 1.12,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 2.5,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 3,
           "ScavEquipmentSpawnChanceModifier": -2
         },
@@ -23615,7 +23629,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 3,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 3,
           "PriceModCleanUp": -10000,
@@ -23623,8 +23637,8 @@
           "PriceModTaxi": -1000,
           "PriceModifier": 1.15,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 3,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 3.5,
           "ScavEquipmentSpawnChanceModifier": -3
         },
@@ -23643,16 +23657,16 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 3.5,
-          "HostileBosses": true,
-          "HostileScavs": true,
+          "HostileBosses": false,
+          "HostileScavs": false,
           "PaidExitCostModifier": 3.5,
           "PriceModCleanUp": -10000,
           "PriceModDelivery": -2000,
           "PriceModTaxi": -1000,
           "PriceModifier": 1.17,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 4,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 5.5,
           "ScavEquipmentSpawnChanceModifier": -4
         },
@@ -23671,16 +23685,16 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 4,
-          "HostileBosses": true,
-          "HostileScavs": true,
+          "HostileBosses": false,
+          "HostileScavs": false,
           "PaidExitCostModifier": 4,
           "PriceModCleanUp": -10000,
           "PriceModDelivery": -2000,
           "PriceModTaxi": -1000,
           "PriceModifier": 1.2,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 6,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 9,
           "ScavEquipmentSpawnChanceModifier": -5
         },
@@ -23699,7 +23713,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 1,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 1,
           "PriceModCleanUp": 0,
@@ -23707,8 +23721,8 @@
           "PriceModTaxi": 0,
           "PriceModifier": 1,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 1,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 1,
           "ScavEquipmentSpawnChanceModifier": 0
         },
@@ -23727,7 +23741,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.95,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 0.95,
           "PriceModCleanUp": 1000,
@@ -23735,8 +23749,8 @@
           "PriceModTaxi": 100,
           "PriceModifier": 0.97,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 0.9,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.95,
           "ScavEquipmentSpawnChanceModifier": 2
         },
@@ -23755,7 +23769,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.9,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 0.9,
           "PriceModCleanUp": 2000,
@@ -23763,8 +23777,8 @@
           "PriceModTaxi": 200,
           "PriceModifier": 0.95,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 0.8,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.9,
           "ScavEquipmentSpawnChanceModifier": 6
         },
@@ -23783,7 +23797,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.7,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 0.8,
           "PriceModCleanUp": 4000,
@@ -23791,8 +23805,8 @@
           "PriceModTaxi": 400,
           "PriceModifier": 0.92,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 0.7,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.8,
           "ScavEquipmentSpawnChanceModifier": 9
         },
@@ -23811,7 +23825,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.5,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 0.7,
           "PriceModCleanUp": 6000,
@@ -23819,8 +23833,8 @@
           "PriceModTaxi": 600,
           "PriceModifier": 0.9,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 0.6,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.7,
           "ScavEquipmentSpawnChanceModifier": 12
         },
@@ -23839,7 +23853,7 @@
             "z": 0
           },
           "ExfiltrationPriceModifier": 0.4,
-          "HostileBosses": true,
+          "HostileBosses": false,
           "HostileScavs": false,
           "PaidExitCostModifier": 0.6,
           "PriceModCleanUp": 8000,
@@ -23847,8 +23861,8 @@
           "PriceModTaxi": 800,
           "PriceModifier": 0.85,
           "ReactOnMarkOnUnknowns": false,
-          "SavageCooldownModifier": 0.5,
-          "ScavAttackSupport": false,
+          "SavageCooldownModifier": 0.2,
+          "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.6,
           "ScavEquipmentSpawnChanceModifier": 15
         },
@@ -23875,7 +23889,7 @@
           "PriceModTaxi": 1000,
           "PriceModifier": 0.8,
           "ReactOnMarkOnUnknowns": true,
-          "SavageCooldownModifier": 0.4,
+          "SavageCooldownModifier": 0.2,
           "ScavAttackSupport": true,
           "ScavCaseTimeModifier": 0.5,
           "ScavEquipmentSpawnChanceModifier": 17
@@ -23898,7 +23912,6 @@
     "GameSearchingTimeout": 45,
     "GlobalItemPriceModifier": 1,
     "GlobalLootChanceModifier": 0.2,
-    "GlobalLootChanceModifierPvE": 0.2,
     "GraphicSettings": {
       "ExperimentalFogInCity": true
     },
@@ -27774,6 +27787,146 @@
         "MaxInLobby": 0,
         "MaxInRaid": 1,
         "TemplateId": "6638a5474e92f038531e210e"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66571bf06a723f7f005a0619"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572bb3ac60f009f270d1df"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572b88ac60f009f270d1dc"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572b3f6a723f7f005a066c"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665730fa4de4820934746c48"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66573310a1657263d816a139"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665732f4464c4b4ba4670fa9"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665732e7ac60f009f270d1ef"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572c82ad599021091c6118"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572cbdad599021091c611a"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572be36a723f7f005a066e"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66572b8d80b1cd4b6a67847f"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "6658285190486915542256c4"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665828f490486915542256c6"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665828c44de4820934746ce4"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66582889efd94e2d665b14a2"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "6658291eefd94e2d665b14a4"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665829a6efd94e2d665b14a8"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66582972ac60f009f270d2aa"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665829424de4820934746ce6"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66588b514de4820934746dc6"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66588bb047fbd536a674240e"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66588ba291f6e93c4c06efef"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "66588b6dcb48a73e674b2649"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "6658876e146af22739040fad"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665886abdaadd1069736c539"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "6658892e6e007c6f33662002"
+      },
+      {
+        "MaxInLobby": 0,
+        "MaxInRaid": 0,
+        "TemplateId": "665888282c4a1b73af576b77"
       }
     ],
     "SavagePlayCooldown": 1500,
@@ -28365,6 +28518,14 @@
     "TimeBeforeDeployLocal": 10,
     "TradingSetting": 0,
     "TradingSettings": {
+      "BuyRestrictionMaxBonus": {
+        "edge_of_darkness": {
+          "multiplier": 1.2
+        },
+        "eod_tue_edition": {
+          "multiplier": 1.2
+        }
+      },
       "BuyoutRestrictions": {
         "MinDurability": 0.6,
         "MinFoodDrinkResource": 0.01,

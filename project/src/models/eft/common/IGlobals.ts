@@ -36,7 +36,6 @@ export interface IConfig
     TradingUnlimitedItems: boolean
     MaxLoyaltyLevelForAll: boolean
     GlobalLootChanceModifier: number
-    GlobalLootChanceModifierPvE: number
     GraphicSettings: IGraphicSettings
     TimeBeforeDeploy: number
     TimeBeforeDeployLocal: number
@@ -54,6 +53,7 @@ export interface IConfig
     BotsEnabled: boolean
     BufferZone: IBufferZone
     ArmorMaterials: IArmorMaterials
+    ArenaEftTransferSettings: IArenaEftTransferSettings
     LegsOverdamage: number
     HandsOverdamage: number
     StomachOverdamage: number
@@ -212,7 +212,13 @@ export interface IItemsCommonSettings
 
 export interface ITradingSettings
 {
+    BuyRestrictionMaxBonus: Record<string, IBuyRestrictionMaxBonus>
     BuyoutRestrictions: IBuyoutRestrictions
+}
+
+export interface IBuyRestrictionMaxBonus
+{
+    multiplier: number
 }
 
 export interface IBuyoutRestrictions
@@ -458,6 +464,21 @@ export interface IBodyParts
     Body: string
     Feet: string
     Hands: string
+}
+
+export interface IArenaEftTransferSettings
+{
+    ArenaEftTransferSettings: ArenaEftTransferSettings
+}
+
+export interface ArenaEftTransferSettings
+{
+    ArenaManagerReputationTaxMultiplier: number
+    CharismaTaxMultiplier: number
+    CreditPriceTaxMultiplier: number
+    RubTaxMultiplier: number
+    TransferLimitsByGameEdition: Record<string, number>
+    TransferLimitsSettings: Record<string, number>
 }
 
 export interface IArmorMaterials

@@ -1,0 +1,94 @@
+{
+            "_id": "6617beeaa9cfa777ca915b7c",
+            "customization_seller": false,
+            "name": "Распорядитель Арены",
+            "surname": "Arena",
+            "nickname": "Arena",
+            "location": "Arena",
+            "avatar": "/files/trader/avatar/6617beeaa9cfa777ca915b7c.png",
+            "balance_rub": 7000000,
+            "balance_dol": 0,
+            "balance_eur": 0,
+            "unlockedByDefault": false,
+            "discount": 0,
+            "discount_end": 0,
+            "buyer_up": false,
+            "currency": "RUB",
+            "nextResupply": 1717707106,
+            "repair": {
+                "availability": false,
+                "quality": 0,
+                "excluded_id_list": [],
+                "excluded_category": [],
+                "currency": "5449016a4bdc2d6f028b456f",
+                "currency_coefficient": 1
+            },
+            "insurance": {
+                "availability": false,
+                "min_payment": 0,
+                "min_return_hour": 0,
+                "max_return_hour": 0,
+                "max_storage_time": 48,
+                "excluded_category": []
+            },
+            "medic": false,
+            "gridHeight": 120,
+            "availableInRaid": false,
+            "sell_modifier_for_prohibited_items": 0,
+            "loyaltyLevels": [{
+                    "minLevel": 1,
+                    "minSalesSum": 0,
+                    "minStanding": 0,
+                    "buy_price_coef": 50,
+                    "repair_price_coef": 0,
+                    "insurance_price_coef": "0",
+                    "exchange_price_coef": 0,
+                    "heal_price_coef": 0
+                }, {
+                    "minLevel": 15,
+                    "minSalesSum": 0,
+                    "minStanding": 0.25,
+                    "buy_price_coef": 44,
+                    "repair_price_coef": 0,
+                    "insurance_price_coef": "0",
+                    "exchange_price_coef": 0,
+                    "heal_price_coef": 0
+                }, {
+                    "minLevel": 25,
+                    "minSalesSum": 0,
+                    "minStanding": 0.5,
+                    "buy_price_coef": 44,
+                    "repair_price_coef": 0,
+                    "insurance_price_coef": "0",
+                    "exchange_price_coef": 0,
+                    "heal_price_coef": 0
+                }, {
+                    "minLevel": 35,
+                    "minSalesSum": 0,
+                    "minStanding": 1.2,
+                    "buy_price_coef": 38,
+                    "repair_price_coef": 0,
+                    "insurance_price_coef": "0",
+                    "exchange_price_coef": 0,
+                    "heal_price_coef": 0
+                }
+            ],
+            "items_buy": {
+                "id_list": [],
+                "category": ["5422acb9af1c889c16000029", "5448fe124bdc2da5018b4567", "5485a8684bdc2da71d8b4567"]
+            },
+            "items_buy_prohibited": {
+                "id_list": ["64d0b40fbe2eed70e254e2d4", "62e910aaf957f2915e0a5e36", "65ddcc9cfa85b9f17d0dfb07"],
+                "category": []
+            },
+            "sell_category": [],
+            "isCanTransferItems": false,
+            "transferableItems": {
+                "id_list": ["5d235b4d86f7742e017bc88a", "5449016a4bdc2d6f028b456f"],
+                "category": []
+            },
+            "prohibitedTransferableItems": {
+                "id_list": [],
+                "category": []
+            }
+        }

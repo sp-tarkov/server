@@ -19,6 +19,7 @@
     "min_payment": 1000,
     "min_return_hour": 10
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "5448fe124bdc2da5018b4567",
@@ -94,6 +95,10 @@
   "name": "Тадеуш",
   "nextResupply": 1631483587,
   "nickname": "Peacekeeper",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": false,
     "excluded_category": [],
@@ -129,5 +134,9 @@
   ],
   "sell_modifier_for_prohibited_items": 0,
   "surname": "Пилсудский",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

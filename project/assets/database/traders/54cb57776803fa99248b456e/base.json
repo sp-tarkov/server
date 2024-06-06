@@ -21,6 +21,7 @@
     "min_payment": 0,
     "min_return_hour": 10
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "543be5664bdc2dd4348b4569",
@@ -89,8 +90,12 @@
   ],
   "medic": true,
   "name": "Эльвира",
-  "nextResupply": 1631488848,
+  "nextResupply": 1717705452,
   "nickname": "Therapist",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": false,
     "currency": "5449016a4bdc2d6f028b456f",
@@ -114,5 +119,9 @@
   ],
   "sell_modifier_for_prohibited_items": 0,
   "surname": "Хабибуллина",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

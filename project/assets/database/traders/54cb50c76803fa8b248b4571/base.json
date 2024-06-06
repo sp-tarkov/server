@@ -21,6 +21,7 @@
     "min_payment": 0,
     "min_return_hour": 24
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "5422acb9af1c889c16000029",
@@ -101,6 +102,10 @@
   "name": "Павел Егорович",
   "nextResupply": 1631489718,
   "nickname": "Prapor",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": true,
     "currency": "5449016a4bdc2d6f028b456f",
@@ -135,5 +140,9 @@
   ],
   "sell_modifier_for_prohibited_items": 0,
   "surname": "Романенко",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

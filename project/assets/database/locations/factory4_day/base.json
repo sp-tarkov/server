@@ -130,7 +130,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.3,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.3,
   "IconX": 470,
   "IconY": 510,
   "Id": "factory4_day",

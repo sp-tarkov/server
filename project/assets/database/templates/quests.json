@@ -27358,11 +27358,65 @@
             {
               "_id": "65ba7538bf3fc35a9a09fec2",
               "_tpl": "5b44d0de86f774503d30cba8"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d2",
+              "_tpl": "6575c342efc786cd9101a5e5",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Soft_armor_front"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d3",
+              "_tpl": "6575c34bc6700bd6b40e8a84",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Soft_armor_back"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d4",
+              "_tpl": "6575c35bc6700bd6b40e8a88",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Soft_armor_left"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d5",
+              "_tpl": "6575c366c6700bd6b40e8a8c",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "soft_armor_right"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d6",
+              "_tpl": "6575c373dc9932aed601c5ec",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Collar"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d7",
+              "_tpl": "6575c385dc9932aed601c5f0",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Groin"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d8",
+              "_tpl": "6575c390efc786cd9101a5e9",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Groin_back"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575d9",
+              "_tpl": "656fa8d700d62bcd2e024084",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Front_plate"
+            },
+            {
+              "_id": "6661f92a0c6e99358a0575da",
+              "_tpl": "656fa8d700d62bcd2e024084",
+              "parentId": "6661f92a0c6e99358a0575d1",
+              "slotId": "Back_plate"
             }
           ],
           "loyaltyLevel": 4,
           "target": "65ba7538bf3fc35a9a09fec2",
-          "traderId": "5ac3b934156ae10c4430e83c",
+          "traderId": "6617beeaa9cfa777ca915b7c",
           "type": "AssortmentUnlock"
         }
       ]
@@ -60816,9 +60870,9 @@
               "slotId": "mod_charge"
             }
           ],
-          "loyaltyLevel": 2,
+          "loyaltyLevel": 3,
           "target": "6492e44bf4287b13040fcb63",
-          "traderId": "5a7c2eca46aef81a7ca2145d",
+          "traderId": "6617beeaa9cfa777ca915b7c",
           "type": "AssortmentUnlock"
         },
         {
@@ -61105,9 +61159,9 @@
               "slotId": "mod_magazine"
             }
           ],
-          "loyaltyLevel": 1,
+          "loyaltyLevel": 2,
           "target": "6492e44bf4287b13040fcb78",
-          "traderId": "5a7c2eca46aef81a7ca2145d",
+          "traderId": "6617beeaa9cfa777ca915b7c",
           "type": "AssortmentUnlock"
         },
         {
@@ -73078,7 +73132,7 @@
           ],
           "loyaltyLevel": 1,
           "target": "6492e44af4287b13040fc6e4",
-          "traderId": "5a7c2eca46aef81a7ca2145d",
+          "traderId": "6617beeaa9cfa777ca915b7c",
           "type": "AssortmentUnlock"
         }
       ]
@@ -73653,7 +73707,7 @@
           ],
           "loyaltyLevel": 2,
           "target": "6492e44af4287b13040fc627",
-          "traderId": "5a7c2eca46aef81a7ca2145d",
+          "traderId": "6617beeaa9cfa777ca915b7c",
           "type": "AssortmentUnlock"
         }
       ]
@@ -76232,7 +76286,8 @@
                   "5c010e350db83400232feec7",
                   "57cd379a24597778e7682ecf",
                   "5c012ffc0db834001d23f03f",
-                  "5bead2e00db834001c062938"
+                  "5bead2e00db834001c062938",
+                  "5bc9c1e2d4351e00367fbcf0"
                 ],
                 "weaponCaliber": [],
                 "weaponModsExclusive": [],
@@ -82737,7 +82792,7 @@
     "type": "Exploration"
   },
   "64f83bb69878a0569d6ecfbe": {
-    "QuestName": "Gunsmith P23",
+    "QuestName": "Gunsmith Part 23",
     "_id": "64f83bb69878a0569d6ecfbe",
     "acceptPlayerMessage": "64f83bb69878a0569d6ecfbe acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -82913,7 +82968,7 @@
     "type": "WeaponAssembly"
   },
   "64f83bcdde58fc437700d8fa": {
-    "QuestName": "Gunsmith P24",
+    "QuestName": "Gunsmith Part 24",
     "_id": "64f83bcdde58fc437700d8fa",
     "acceptPlayerMessage": "64f83bcdde58fc437700d8fa acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -83125,7 +83180,7 @@
     "type": "WeaponAssembly"
   },
   "64f83bd983cfca080a362c82": {
-    "QuestName": "Gunsmith P25",
+    "QuestName": "Gunsmith Part 25",
     "_id": "64f83bd983cfca080a362c82",
     "acceptPlayerMessage": "64f83bd983cfca080a362c82 acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -85254,7 +85309,7 @@
     "type": "PickUp"
   },
   "65733403eefc2c312a759ddb": {
-    "QuestName": "Developers Secrets P1",
+    "QuestName": "Developers Secrets Part 1",
     "_id": "65733403eefc2c312a759ddb",
     "acceptPlayerMessage": "65733403eefc2c312a759ddb acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -85511,7 +85566,7 @@
     "type": "Discover"
   },
   "6573382e557ff128bf3da536": {
-    "QuestName": "Developers Secrets P2",
+    "QuestName": "Developers Secrets Part 2",
     "_id": "6573382e557ff128bf3da536",
     "acceptPlayerMessage": "6573382e557ff128bf3da536 acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -85705,7 +85760,7 @@
     "type": "Discover"
   },
   "6573387d0b26ed4fde798de3": {
-    "QuestName": "Pets Wont Need It P2",
+    "QuestName": "Pets Wont Need It Part 2",
     "_id": "6573387d0b26ed4fde798de3",
     "acceptPlayerMessage": "6573387d0b26ed4fde798de3 acceptPlayerMessage",
     "canShowNotificationsInGame": true,
@@ -87987,6 +88042,215 @@
     "side": "Pmc",
     "startedMessageText": "6603fe74e773dcf3b0099f88 startedMessageText",
     "successMessageText": "6603fe74e773dcf3b0099f88 successMessageText",
+    "traderId": "58330581ace78e27b8b10cee",
+    "type": "PickUp"
+  },
+  "66058cb22cee99303f1ba067": {
+    "QuestName": "EasyMoney Part 1",
+    "_id": "66058cb22cee99303f1ba067",
+    "acceptPlayerMessage": "66058cb22cee99303f1ba067 acceptPlayerMessage",
+    "canShowNotificationsInGame": true,
+    "changeQuestMessageText": "66058cb22cee99303f1ba067 changeQuestMessageText",
+    "completePlayerMessage": "66058cb22cee99303f1ba067 completePlayerMessage",
+    "conditions": {
+      "AvailableForFinish": [
+        {
+          "conditionType": "FindItem",
+          "countInRaid": false,
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "664bbad8d5057479ac4b8002",
+          "index": 0,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "target": [
+            "664a5775f3d3570fba06be64"
+          ],
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "conditionType": "FindItem",
+          "countInRaid": false,
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "664bbb5f217c767c35ae3d51",
+          "index": 1,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "target": [
+            "664b69c5a082271bc46c4e11"
+          ],
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "conditionType": "FindItem",
+          "countInRaid": false,
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "664bbb73c71d456fd03714ca",
+          "index": 2,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "target": [
+            "664b69e8e1238e506d3630af"
+          ],
+          "value": 1,
+          "visibilityConditions": []
+        },
+        {
+          "conditionType": "LeaveItemAtLocation",
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6606b709f7ce34bb26221cab",
+          "index": 4,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "plantTime": 30,
+          "target": [
+            "664a5775f3d3570fba06be64"
+          ],
+          "value": 1,
+          "visibilityConditions": [],
+          "zoneId": "place_flyers1"
+        },
+        {
+          "conditionType": "LeaveItemAtLocation",
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6606b74ebce4c3e0bda438fd",
+          "index": 5,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "plantTime": 30,
+          "target": [
+            "664b69c5a082271bc46c4e11"
+          ],
+          "value": 1,
+          "visibilityConditions": [],
+          "zoneId": "place_flaers2"
+        },
+        {
+          "conditionType": "LeaveItemAtLocation",
+          "dogtagLevel": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6606b752a6c704c4333a804d",
+          "index": 7,
+          "isEncoded": false,
+          "maxDurability": 100,
+          "minDurability": 0,
+          "onlyFoundInRaid": false,
+          "parentId": "",
+          "plantTime": 30,
+          "target": [
+            "664b69e8e1238e506d3630af"
+          ],
+          "value": 1,
+          "visibilityConditions": [],
+          "zoneId": "place_flyers4"
+        }
+      ],
+      "AvailableForStart": [
+        {
+          "compareMethod": ">=",
+          "conditionType": "Level",
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "6606b66ee1308e471611c49a",
+          "index": 0,
+          "parentId": "",
+          "value": 3,
+          "visibilityConditions": []
+        },
+        {
+          "availableAfter": 0,
+          "conditionType": "Quest",
+          "dispersion": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "66562ec0157f9f20000eea05",
+          "index": 1,
+          "parentId": "",
+          "status": [
+            4
+          ],
+          "target": "657315e270bb0b8dba00cc48",
+          "visibilityConditions": []
+        }
+      ],
+      "Fail": []
+    },
+    "declinePlayerMessage": "66058cb22cee99303f1ba067 declinePlayerMessage",
+    "description": "66058cb22cee99303f1ba067 description",
+    "failMessageText": "66058cb22cee99303f1ba067 failMessageText",
+    "image": "/files/quest/icon/66562a95dadbac1a541f638f.png",
+    "instantComplete": false,
+    "isKey": false,
+    "location": "any",
+    "name": "66058cb22cee99303f1ba067 name",
+    "note": "66058cb22cee99303f1ba067 note",
+    "restartable": false,
+    "rewards": {
+      "Fail": [],
+      "Started": [],
+      "Success": [
+        {
+          "findInRaid": true,
+          "id": "6606b8ff06ef1d50a60c1f59",
+          "index": 0,
+          "items": [
+            {
+              "_id": "6661f92a0c6e99358a057ccb",
+              "_tpl": "5449016a4bdc2d6f028b456f",
+              "upd": {
+                "StackObjectsCount": 35000
+              }
+            }
+          ],
+          "target": "6661f92a0c6e99358a057ccb",
+          "type": "Item",
+          "value": "35000"
+        },
+        {
+          "id": "6606b9159f59e625462accb1",
+          "index": 1,
+          "type": "Experience",
+          "value": "4500"
+        },
+        {
+          "id": "6606b92cda30b620a34e6ea9",
+          "index": 2,
+          "target": "6617beeaa9cfa777ca915b7c",
+          "type": "TraderUnlock"
+        }
+      ]
+    },
+    "secretQuest": false,
+    "side": "Pmc",
+    "startedMessageText": "66058cb22cee99303f1ba067 startedMessageText",
+    "successMessageText": "66058cb22cee99303f1ba067 successMessageText",
     "traderId": "58330581ace78e27b8b10cee",
     "type": "PickUp"
   },

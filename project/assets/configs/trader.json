@@ -71,6 +71,14 @@
                 "min": 3000,
                 "max": 7500
             }
+        },,
+        {
+            "_name": "Ref",
+            "traderId": "6617beeaa9cfa777ca915b7c",
+            "seconds": {
+                "min": 3000,
+                "max": 7500
+            }
         },
         {
             "traderId": "ragfair",
