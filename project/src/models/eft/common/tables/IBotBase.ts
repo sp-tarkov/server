@@ -37,8 +37,19 @@ export interface IBotBase
     CoopExtractCounts: Record<string, number>
     SurvivorClass: SurvivorClass
     WishList: string[]
+    moneyTransferLimitData: IMoneyTransferLimits
     /** SPT specific property used during bot generation in raid */
     sptIsPmc?: boolean
+}
+
+export interface IMoneyTransferLimits
+{
+    // Resets every 24 hours in live
+    /** TODO: Implement */
+    nextResetTime: number
+    remainingLimit: number
+    totalLimit: number
+    resetInterval: number
 }
 
 export interface ITaskConditionCounter
@@ -82,6 +93,8 @@ export interface Info
     BannedUntil: number
     IsStreamerModeAvailable: boolean
     lastCompletedEvent?: LastCompleted
+    SelectedMemberCategory: number
+    isMigratedSkills: boolean
 }
 
 export interface Settings
@@ -125,6 +138,7 @@ export interface Health
     Temperature: CurrentMax
     BodyParts: BodyPartsHealth
     UpdateTime: number
+    Immortal?: boolean
 }
 
 export interface BodyPartsHealth
