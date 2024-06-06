@@ -109,9 +109,8 @@ export class TraderController
                 continue;
             }
 
-            const trader = this.databaseService.getTables().traders[traderId];
-
-            // trader needs to be refreshed
+            // Trader needs to be refreshed
+            const trader = this.databaseService.getTrader(traderId);
             if (this.traderAssortHelper.traderAssortsHaveExpired(traderId))
             {
                 this.traderAssortHelper.resetExpiredTrader(trader);
