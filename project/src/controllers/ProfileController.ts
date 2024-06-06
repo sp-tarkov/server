@@ -29,6 +29,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { MailSendService } from "@spt/services/MailSendService";
 import { ProfileFixerService } from "@spt/services/ProfileFixerService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 
@@ -40,6 +41,7 @@ export class ProfileController
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
+        @inject("PrimaryCloner") protected cloner: ICloner,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("DatabaseService") protected databaseService: DatabaseService,
@@ -131,9 +133,9 @@ export class ProfileController
     public createProfile(info: IProfileCreateRequestData, sessionID: string): string
     {
         const account = this.saveServer.getProfile(sessionID).info;
-        const profile: ITemplateSide
-            = this.databaseService.getProfiles()[account.edition][info.side.toLowerCase()];
-        const pmcData = profile.character;
+        const profileTemplate: ITemplateSide
+            = this.cloner.clone(this.databaseService.getProfiles()[account.edition][info.side.toLowerCase()]);
+        const pmcData = profileTemplate.character;
 
         // Delete existing profile
         this.deleteProfileBySessionId(sessionID);
@@ -178,9 +180,9 @@ export class ProfileController
         const profileDetails: ISptProfile = {
             info: account,
             characters: { pmc: pmcData, scav: {} as IPmcData },
-            suits: profile.suits,
-            userbuilds: profile.userbuilds,
-            dialogues: profile.dialogues,
+            suits: profileTemplate.suits,
+            userbuilds: profileTemplate.userbuilds,
+            dialogues: profileTemplate.dialogues,
             spt: this.profileHelper.getDefaultSptDataObject(),
             vitality: {} as Vitality,
             inraid: {} as Inraid,
@@ -194,13 +196,13 @@ export class ProfileController
 
         this.saveServer.addProfile(profileDetails);
 
-        if (profile.trader.setQuestsAvailableForStart)
+        if (profileTemplate.trader.setQuestsAvailableForStart)
         {
             this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [QuestStatus.AvailableForStart]);
         }
 
         // Profile is flagged as wanting quests set to ready to hand in and collect rewards
-        if (profile.trader.setQuestsAvailableForFinish)
+        if (profileTemplate.trader.setQuestsAvailableForFinish)
         {
             this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [
                 QuestStatus.AvailableForStart,

@@ -380,6 +380,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -2599,6 +2601,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -3030,6 +3038,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -5422,6 +5432,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -5861,6 +5877,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -8614,6 +8632,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -9070,6 +9094,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -11905,6 +11931,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -12369,6 +12401,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -15555,6 +15589,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -16048,6 +16088,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -19402,6 +19444,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -19944,6 +19992,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -23092,6 +23142,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -23631,6 +23687,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -26939,6 +26997,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -27481,6 +27545,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 1024,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -31270,6 +31336,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -31809,6 +31881,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 1024,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 1024,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -35817,6 +35891,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -36359,6 +36439,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -36761,6 +36843,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -37301,6 +37389,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -37701,6 +37791,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -40256,6 +40352,8 @@
                     "Level": 69,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -40746,6 +40844,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -43298,6 +43402,8 @@
                     "Level": 69,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -43756,6 +43862,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -46292,6 +46404,8 @@
                     "Level": 15,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -47111,6 +47225,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -49644,6 +49764,8 @@
                     "Level": 15,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 2,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 2,
                     "NeedWipeOptions": [],
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
@@ -50463,6 +50585,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -50973,6 +51101,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -51378,6 +51508,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
@@ -51895,6 +52031,8 @@
                     "Level": 1,
                     "LowerNickname": "__REPLACEME__",
                     "MemberCategory": 0,
+					"isMigratedSkills": false,
+					"SelectedMemberCategory": 0,
                     "Nickname": "__REPLACEME__",
                     "NicknameChangeDate": 0,
                     "RegistrationDate": "__REPLACEME__",
@@ -52300,6 +52438,12 @@
                 "UnlockedInfo": {
                     "unlockedProductionRecipe": []
                 },
+				"moneyTransferLimitData": {
+					"nextResetTime": 1717779074,
+					"remainingLimit": 1000000,
+					"totalLimit": 1000000,
+					"resetInterval": 86400
+				},
                 "WishList": [],
                 "_id": "__REPLACEME__",
                 "aid": "__REPLACEME__",
