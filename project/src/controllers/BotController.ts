@@ -151,7 +151,7 @@ export class BotController
         for (let botType of botTypes)
         {
             const enumType = botType.toLowerCase();
-            // sptBear/sptUsec need to be converted into `usec`/`bear` so we can read difficulty settings from bots/types
+            // pmcBEAR/pmcUSEC need to be converted into `usec`/`bear` so we can read difficulty settings from bots/types
             botType = this.botHelper.isBotPmc(botType)
                 ? this.botHelper.getPmcSideByRole(botType).toLowerCase()
                 : botType.toLowerCase();
@@ -315,7 +315,7 @@ export class BotController
         }
 
         // Custom map waves can have spt roles in them
-        // Is bot type sptusec/sptbear, set is pmc true and set side
+        // Is bot type pmcUSEC/pmcBEAR, set is pmc true and set side
         if (this.botHelper.botRoleIsPmc(condition.Role))
         {
             botGenerationDetails.isPmc = true;

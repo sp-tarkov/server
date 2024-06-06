@@ -48,7 +48,7 @@ export class PMCLootGenerator
         {
             const items = this.databaseService.getItems();
             const pmcPriceOverrides
-                = this.databaseService.getBots().types[botRole === "sptBear" ? "bear" : "usec"].inventory.items
+                = this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items
                     .Pockets;
 
             const allowedItemTypes = this.pmcConfig.pocketLoot.whitelist;
@@ -108,7 +108,7 @@ export class PMCLootGenerator
         {
             const items = this.databaseService.getItems();
             const pmcPriceOverrides
-                = this.databaseService.getBots().types[botRole === "sptBear" ? "bear" : "usec"].inventory.items
+                = this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items
                     .TacticalVest;
 
             const allowedItemTypes = this.pmcConfig.vestLoot.whitelist;
@@ -178,7 +178,7 @@ export class PMCLootGenerator
         {
             const items = this.databaseService.getItems();
             const pmcPriceOverrides
-                = this.databaseService.getBots().types[botRole === "sptBear" ? "bear" : "usec"].inventory.items
+                = this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items
                     .Backpack;
 
             const allowedItemTypes = this.pmcConfig.backpackLoot.whitelist;

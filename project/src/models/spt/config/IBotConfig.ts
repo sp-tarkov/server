@@ -8,7 +8,7 @@ export interface IBotConfig extends IBaseConfig
     kind: "spt-bot"
     /** How many variants of each bot should be generated on raid start */
     presetBatch: PresetBatch
-    /** Bot roles that should not have PMC types (sptBear/sptUsec) added as enemies to */
+    /** Bot roles that should not have PMC types (pmcBEAR/pmcUSEC) added as enemies to */
     botsToNotAddPMCsAsEnemiesTo: string[]
     /** What bot types should be classified as bosses */
     bosses: string[]
@@ -84,8 +84,8 @@ export interface PresetBatch
     crazyAssaultEvent: number
     bossBoar: number
     bossBoarSniper: number
-    sptUsec: number
-    sptBear: number
+    pmcUSEC: number
+    pmcBEAR: number
 }
 
 export interface IWalletLootSettings

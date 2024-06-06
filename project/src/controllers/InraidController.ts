@@ -248,8 +248,8 @@ export class InraidController
             }
         }
 
-        const victims = postRaidRequest.profile.Stats.Eft.Victims.filter((x) =>
-            ["sptbear", "sptusec"].includes(x.Role.toLowerCase()),
+        const victims = postRaidRequest.profile.Stats.Eft.Victims.filter((victim) =>
+            ["pmcbear", "pmcusec"].includes(victim.Role.toLowerCase()),
         );
         if (victims?.length > 0)
         {

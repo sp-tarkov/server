@@ -27,7 +27,7 @@ describe("BotHelper", () =>
 
         it("should return true when uppercase PMC role is provided", () =>
         {
-            const result = botHelper.isBotPmc("SPTBEAR");
+            const result = botHelper.isBotPmc("pmcBEAR");
             expect(result).toBe(true);
         });
 
@@ -91,15 +91,15 @@ describe("BotHelper", () =>
 
     describe("getPmcSideByRole", () =>
     {
-        it("should return `Bear` when sptBear role is provided", () =>
+        it("should return `Bear` when pmcBEAR role is provided", () =>
         {
-            const result = botHelper.getPmcSideByRole("sptBear");
+            const result = botHelper.getPmcSideByRole("pmcBEAR");
             expect(result).toBe("Bear");
         });
 
-        it("should return `Usec` when sptBear role is provided", () =>
+        it("should return `Usec` when pmcUSEC role is provided", () =>
         {
-            const result = botHelper.getPmcSideByRole("sptUsec");
+            const result = botHelper.getPmcSideByRole("pmcUSEC");
             expect(result).toBe("Usec");
         });
 

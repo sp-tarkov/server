@@ -43,7 +43,7 @@ export class BotHelper
      */
     public isBotPmc(botRole: string): boolean
     {
-        return ["usec", "bear", "pmc", "sptbear", "sptusec"].includes(botRole?.toLowerCase());
+        return ["usec", "bear", "pmc", "pmcbear", "pmcusec"].includes(botRole?.toLowerCase());
     }
 
     public isBotBoss(botRole: string): boolean
@@ -167,7 +167,7 @@ export class BotHelper
     }
 
     /**
-     * Choose between sptBear and sptUsec at random based on the % defined in pmcConfig.isUsec
+     * Choose between pmcBEAR and pmcUSEC at random based on the % defined in pmcConfig.isUsec
      * @returns pmc role
      */
     public getRandomizedPmcRole(): string
@@ -176,7 +176,7 @@ export class BotHelper
     }
 
     /**
-     * Get the corresponding side when sptBear or sptUsec is passed in
+     * Get the corresponding side when pmcBEAR or pmcUSEC is passed in
      * @param botRole role to get side for
      * @returns side (usec/bear)
      */

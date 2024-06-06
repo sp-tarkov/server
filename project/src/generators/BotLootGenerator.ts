@@ -360,7 +360,7 @@ export class BotLootGenerator
     /**
      * Force healing items onto bot to ensure they can heal in-raid
      * @param botInventory Inventory to add items to
-     * @param botRole Role of bot (sptBear/sptUsec)
+     * @param botRole Role of bot (pmcBEAR/pmcUSEC)
      */
     protected addForcedMedicalItemsToPmcSecure(botInventory: PmcInventory, botRole: string): void
     {

@@ -175,7 +175,7 @@
     "chanceSameSideIsHostilePercent": 90,
     "_pmcType": "Controls what bot brain can be chosen for each PMC bot type, the number is the weighting to be picked",
     "pmcType": {
-        "sptbear": {
+        "pmcbear": {
             "factory4_day": {
                 "bossKilla": 2,
                 "bossKnight": 2,
@@ -422,7 +422,7 @@
                 "pmcBot": 7
             }
         },
-        "sptusec": {
+        "pmcusec": {
             "factory4_day": {
                 "bossKilla": 2,
                 "bossKnight": 2,
@@ -670,8 +670,8 @@
             }
         }
     },
-    "usecType": "sptUsec",
-    "bearType": "sptBear",
+    "usecType": "pmcUSEC",
+    "bearType": "pmcBEAR",
     "looseWeaponInBackpackChancePercent": 15,
     "weaponHasEnhancementChancePercent": 5,
     "looseWeaponInBackpackLootMinMax": {

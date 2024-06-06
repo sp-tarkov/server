@@ -92,7 +92,7 @@ export class PmcChatResponseService
         }
 
         // If kill was not a PMC, skip
-        if (!["sptUsec", "sptBear"].includes(killerDetailsInCache.Info.Settings.Role))
+        if (!["pmcUSEC", "pmcBEAR"].includes(killerDetailsInCache.Info.Settings.Role))
         {
             return;
         }

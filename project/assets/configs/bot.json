@@ -1,6 +1,6 @@
 {
     "presetBatch": {
-        "assault": 50,
+        "assault": 45,
         "bossBully": 5,
         "bossGluhar": 5,
         "bossKilla": 5,
@@ -45,8 +45,8 @@
         "peacefullZryachiyEvent": 5,
         "ravangeZryachiyEvent": 5,
         "sectactPriestEvent": 10,
-        "sptUsec": 15,
-        "sptBear": 15
+        "pmcUSEC": 15,
+        "pmcBEAR": 15
     },
     "bosses": [
         "bossbully",
@@ -276,8 +276,8 @@
     "chanceAssaultScavHasPlayerScavName": 10,
     "secureContainerAmmoStackCount": 20,
     "botRolesWithDogTags": [
-        "sptbear",
-        "sptusec"
+        "pmcbear",
+        "pmcusec"
     ],
     "revenge": {
         "assault": [
