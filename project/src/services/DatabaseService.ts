@@ -145,7 +145,7 @@ export class DatabaseService
     {
         if (!this.databaseServer.getTables().locales)
         {
-            throw new Error(this.localisationService.getText("database-data_at_path_missing", "assets/database/locales"));
+            throw new Error(this.localisationService.getText("database-data_at_path_missing", "assets/database/server"));
         }
 
         return this.databaseServer.getTables().server!;
@@ -158,7 +158,7 @@ export class DatabaseService
     {
         if (!this.databaseServer.getTables().locales)
         {
-            throw new Error(this.localisationService.getText("database-data_at_path_missing", "assets/database/locales"));
+            throw new Error(this.localisationService.getText("database-data_at_path_missing", "assets/database/settings"));
         }
 
         return this.databaseServer.getTables().settings!;
