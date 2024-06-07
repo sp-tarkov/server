@@ -347,7 +347,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.26,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.26,
   "IconX": 120,
   "IconY": 450,
   "Id": "Lighthouse",

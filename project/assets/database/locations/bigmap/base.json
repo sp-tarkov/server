@@ -256,7 +256,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.9,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.9,
   "IconX": 550,
   "IconY": 460,
   "Id": "bigmap",

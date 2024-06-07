@@ -33,29 +33,7 @@
         "regular",
         "pve"
       ],
-      "Supports": [
-        {
-          "BossEscortAmount": "2",
-          "BossEscortDifficult": [
-            "normal"
-          ],
-          "BossEscortType": "followerKolontayAssault"
-        },
-        {
-          "BossEscortAmount": "2",
-          "BossEscortDifficult": [
-            "normal"
-          ],
-          "BossEscortType": "followerKolontaySecurity"
-        },
-        {
-          "BossEscortAmount": "0",
-          "BossEscortDifficult": [
-            "normal"
-          ],
-          "BossEscortType": "followerGluharScout"
-        }
-      ],
+      "Supports": null,
       "Time": -1,
       "TriggerId": "",
       "TriggerName": ""
@@ -120,7 +98,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.95,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.95,
   "IconX": 760,
   "IconY": 740,
   "Id": "Sandbox_high",

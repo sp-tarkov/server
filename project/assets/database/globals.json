@@ -27149,7 +27149,7 @@
       "delaySinceOfferAdd": 0,
       "enabled": true,
       "includePveTraderSales": false,
-      "isOnlyFoundInRaidAllowed": true,
+      "isOnlyFoundInRaidAllowed": false,
       "maxActiveOfferCount": [
         {
           "count": 1,

@@ -185,7 +185,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.95,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.95,
   "IconX": 460,
   "IconY": 660,
   "Id": "Woods",

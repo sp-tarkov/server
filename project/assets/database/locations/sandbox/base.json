@@ -59,7 +59,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.72,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.72,
   "IconX": 760,
   "IconY": 740,
   "Id": "Sandbox",

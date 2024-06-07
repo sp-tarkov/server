@@ -103,7 +103,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.74,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.74,
   "IconX": 660,
   "IconY": 360,
   "Id": "Interchange",

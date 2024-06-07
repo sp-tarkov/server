@@ -192,7 +192,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.37,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.37,
   "IconX": 670,
   "IconY": 620,
   "Id": "TarkovStreets",

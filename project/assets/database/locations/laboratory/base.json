@@ -383,7 +383,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.77,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.77,
   "IconX": 700,
   "IconY": 800,
   "Id": "laboratory",

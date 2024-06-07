@@ -215,7 +215,7 @@
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.4,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.4,
   "IconX": 360,
   "IconY": 410,
   "Id": "RezervBase",

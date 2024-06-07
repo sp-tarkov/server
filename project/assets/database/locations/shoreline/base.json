@@ -71,11 +71,11 @@
       "BossEscortType": "exUsec",
       "BossName": "bossKnight",
       "BossPlayer": false,
-      "BossZone": "ZoneMeteoStation",
+      "BossZone": "ZoneSanatorium1,ZoneSanatorium2",
       "Delay": 0,
       "ForceSpawn": false,
       "IgnoreMaxBots": true,
-      "RandomTimeSpawn": true,
+      "RandomTimeSpawn": false,
       "SpawnMode": [
         "regular",
         "pve"
@@ -94,13 +94,6 @@
             "normal"
           ],
           "BossEscortType": "followerBirdEye"
-        },
-        {
-          "BossEscortAmount": "0",
-          "BossEscortDifficult": [
-            "normal"
-          ],
-          "BossEscortType": "followerGluharScout"
         }
       ],
       "Time": -1,
@@ -191,7 +184,7 @@
     "VisibleDistance": 1.2
   },
   "BotMarksman": 20,
-  "BotMax": 17,
+  "BotMax": 18,
   "BotMaxPlayer": 9,
   "BotMaxPvE": 32,
   "BotMaxTimePlayer": 1000,
@@ -202,7 +195,7 @@
   "BotSpawnTimeOffMin": 20,
   "BotSpawnTimeOnMax": 320,
   "BotSpawnTimeOnMin": 260,
-  "BotStart": 10,
+  "BotStart": 20,
   "BotStartPlayer": 220,
   "BotStop": 2700,
   "Description": "The coastline that leads to the port.",
@@ -212,11 +205,11 @@
   "Enabled": true,
   "EscapeTimeLimit": 45,
   "EscapeTimeLimitCoop": 35,
-  "EscapeTimeLimitPVE": 30,
+  "EscapeTimeLimitPVE": 40,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.55,
-  "GlobalLootChanceModifierPvE": 1,
+  "GlobalLootChanceModifierPvE": 0.55,
   "IconX": 220,
   "IconY": 300,
   "Id": "Shoreline",
