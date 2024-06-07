@@ -79,6 +79,7 @@ export class RepeatableQuestRewardGenerator
         // difficulty could go from 0.2 ... -> for lowest difficulty receive 0.2*nominal reward
         const levelsConfig = repeatableConfig.rewardScaling.levels;
         const roublesConfig = repeatableConfig.rewardScaling.roubles;
+        const gpCoinConfig = repeatableConfig.rewardScaling.gpCoins;
         const xpConfig = repeatableConfig.rewardScaling.experience;
         const itemsConfig = repeatableConfig.rewardScaling.items;
         const rewardSpreadConfig = repeatableConfig.rewardScaling.rewardSpread;
@@ -98,6 +99,13 @@ export class RepeatableQuestRewardGenerator
             * this.mathUtil.interp1(pmcLevel, levelsConfig, xpConfig)
             * this.randomUtil.getFloat(1 - rewardSpreadConfig, 1 + rewardSpreadConfig),
         );
+
+        const gpCoinRewardCount = Math.floor(
+            effectiveDifficulty
+            * this.mathUtil.interp1(pmcLevel, levelsConfig, gpCoinConfig)
+            * this.randomUtil.getFloat(1 - rewardSpreadConfig, 1 + rewardSpreadConfig),
+        );
+
         const rewardRoubles = Math.floor(
             effectiveDifficulty
             * this.mathUtil.interp1(pmcLevel, levelsConfig, roublesConfig)
@@ -138,6 +146,14 @@ export class RepeatableQuestRewardGenerator
         this.addMoneyReward(traderId, rewards, rewardRoubles, rewardIndex);
         rewardIndex++;
 
+        rewards.Success.push(this.generateRewardItem(
+            Money.GP,
+            gpCoinRewardCount,
+            rewardIndex,
+        ));
+        rewardIndex++;
+
+        // Add preset weapon to reward
         const traderWhitelistDetails = repeatableConfig.traderWhitelist.find((x) => x.traderId === traderId);
         if (
             traderWhitelistDetails.rewardCanBeWeapon
