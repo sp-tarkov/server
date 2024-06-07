@@ -301,22 +301,24 @@ export class RepeatableQuestRewardGenerator
     /**
      * Get a randomised number a reward items stack size should be based on its handbook price
      * @param item Reward item to get stack size for
-     * @returns Stack size value
+     * @returns matching stack size for the passed in items price
      */
     protected getRandomisedRewardItemStackSizeByPrice(item: ITemplateItem): number
     {
         const rewardItemPrice = this.presetHelper.getDefaultPresetOrItemPrice(item._id);
-        if (rewardItemPrice < 3000)
-        {
-            return this.randomUtil.getArrayValue([2, 3, 4]);
-        }
 
-        if (rewardItemPrice < 10000)
-        {
-            return this.randomUtil.getArrayValue([2, 3]);
-        }
+        // Define price tiers and corresponding stack size options
+        const priceTiers: {
+            priceThreshold: number
+            stackSizes: number[] }[] = [
+            { priceThreshold: 3000, stackSizes: [2, 3, 4] },
+            { priceThreshold: 10000, stackSizes: [2, 3] },
+            { priceThreshold: Infinity, stackSizes: [2] }, // Default for prices 10001+ RUB
+        ];
 
-        return 2;
+        // Find the appropriate price tier and return a random stack size from its options
+        const tier = priceTiers.find((tier) => rewardItemPrice < tier.priceThreshold);
+        return this.randomUtil.getArrayValue(tier?.stackSizes || [2]); // Default to 2 if no tier matches
     }
 
     /**
