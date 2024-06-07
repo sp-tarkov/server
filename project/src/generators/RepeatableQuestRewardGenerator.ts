@@ -216,7 +216,7 @@ export class RepeatableQuestRewardGenerator
                 }
 
                 // 25% chance to double, triple quadruple reward stack (Only occurs when item is stackable and not weapon, armor or ammo)
-                if (this.canIncreaseRewardItemStackSize(itemSelected, 70000))
+                if (this.canIncreaseRewardItemStackSize(itemSelected, 70000, 25))
                 {
                     rewardItemStackCount = this.getRandomisedRewardItemStackSizeByPrice(itemSelected);
                 }
@@ -323,31 +323,43 @@ export class RepeatableQuestRewardGenerator
 
     /**
      * Should reward item have stack size increased (25% chance)
-     * @param item Item to possibly increase stack size of
+     * @param item Item to increase reward stack size of
      * @param maxRoublePriceToStack Maximum rouble price an item can be to still be chosen for stacking
-     * @returns True if it should
+     * @param randomChanceToPass Additional randomised chance of passing
+     * @returns True if items stack size can be increased
      */
-    protected canIncreaseRewardItemStackSize(item: ITemplateItem, maxRoublePriceToStack: number): boolean
+    protected canIncreaseRewardItemStackSize(
+        item: ITemplateItem,
+        maxRoublePriceToStack: number,
+        randomChanceToPass?: number): boolean
     {
-        return (
-            this.presetHelper.getDefaultPresetOrItemPrice(item._id) < maxRoublePriceToStack
+        const isEligibleForStackSizeIncrease
+            = this.presetHelper.getDefaultPresetOrItemPrice(item._id) < maxRoublePriceToStack
             && !this.itemHelper.isOfBaseclasses(item._id, [
                 BaseClasses.WEAPON,
                 BaseClasses.ARMORED_EQUIPMENT,
                 BaseClasses.AMMO,
             ])
-            && !this.itemHelper.itemRequiresSoftInserts(item._id)
-            && this.randomUtil.getChance100(25)
-        );
+            && !this.itemHelper.itemRequiresSoftInserts(item._id);
+
+        return isEligibleForStackSizeIncrease && this.randomUtil.getChance100(randomChanceToPass ?? 100);
     }
 
+    /**
+     * Get a count of cartridges that fits the rouble budget amount provided
+     * e.g. how many M80s for 50,000 roubles
+     * @param itemSelected Cartridge
+     * @param roublesBudget Rouble budget
+     * @param rewardNumItems
+     * @returns Count that fits budget (min 1)
+     */
     protected calculateAmmoStackSizeThatFitsBudget(
         itemSelected: ITemplateItem,
         roublesBudget: number,
         rewardNumItems: number,
     ): number
     {
-        // The budget for this ammo stack
+        // Calculate budget per reward item
         const stackRoubleBudget = roublesBudget / rewardNumItems;
 
         const singleCartridgePrice = this.handbookHelper.getTemplatePrice(itemSelected._id);
@@ -358,7 +370,7 @@ export class RepeatableQuestRewardGenerator
         // Get itemDbs max stack size for ammo - don't go above 100 (some mods mess around with stack sizes)
         const stackMaxCount = Math.min(itemSelected._props.StackMaxSize, 100);
 
-        // Don't let result fall below 1
+        // Ensure stack size is at least 1 + is no larger than the max possible stack size
         return Math.max(1, Math.min(stackSizeThatFitsBudget, stackMaxCount));
     }
 
@@ -366,6 +378,7 @@ export class RepeatableQuestRewardGenerator
      * Select a number of items that have a colelctive value of the passed in parameter
      * @param repeatableConfig Config
      * @param roublesBudget Total value of items to return
+     * @param traderId Id of the trader who will give player reward
      * @returns Array of reward items that fit budget
      */
     protected chooseRewardItemsWithinBudget(
@@ -378,12 +391,12 @@ export class RepeatableQuestRewardGenerator
         const rewardableItemPool = this.getRewardableItems(repeatableConfig, traderId);
         const minPrice = Math.min(25000, 0.5 * roublesBudget);
 
-        let rewardableItemPoolWithinBudget = rewardableItemPool.map((x) => x[1]);
-        rewardableItemPoolWithinBudget = this.filterRewardPoolWithinBudget(
-            rewardableItemPoolWithinBudget,
+        let rewardableItemPoolWithinBudget = this.filterRewardPoolWithinBudget(
+            rewardableItemPool.map((item) => item[1]),
             roublesBudget,
             minPrice,
         );
+
         if (rewardableItemPoolWithinBudget.length === 0)
         {
             this.logger.warning(
@@ -407,30 +420,48 @@ export class RepeatableQuestRewardGenerator
      * @param   {string}    tpl             ItemId of the rewarded item
      * @param   {integer}   value           Amount of items to give
      * @param   {integer}   index           All rewards will be appended to a list, for unknown reasons the client wants the index
+     * @param preset Optional array of preset items
      * @returns {object}                    Object of "Reward"-item-type
      */
     protected generateRewardItem(tpl: string, value: number, index: number, preset?: Item[]): IQuestReward
     {
         const id = this.objectId.generate();
-        const rewardItem: IQuestReward = { target: id, value: value, type: QuestRewardType.ITEM, index: index };
+        const questRewardItem: IQuestReward = {
+            target: id,
+            value: value,
+            type: QuestRewardType.ITEM,
+            index: index,
+            items: [] };
 
         if (preset)
         {
-            const rootItem = preset.find((x) => x._tpl === tpl);
-            rewardItem.items = this.itemHelper.reparentItemAndChildren(rootItem, preset);
-            rewardItem.target = rootItem._id; // Target property and root items id must match
+            // Get presets root item
+            const rootItem = preset.find((item) => item._tpl === tpl);
+            if (!rootItem)
+            {
+                this.logger.warning(`Root item of preset: ${tpl} not found`);
+            }
+
+            questRewardItem.items = this.itemHelper.reparentItemAndChildren(rootItem, preset);
+            questRewardItem.target = rootItem._id; // Target property and root items id must match
         }
         else
         {
             const rootItem = { _id: id, _tpl: tpl, upd: { StackObjectsCount: value, SpawnedInSession: true } };
-            rewardItem.items = [rootItem];
+            questRewardItem.items = [rootItem];
         }
-        return rewardItem;
+
+        return questRewardItem;
     }
 
     /**
-     * Picks rewardable items from items.json. This means they need to fit into the inventory and they shouldn't be keys (debatable)
+     * Picks rewardable items from items.json
+     * This means they must:
+     * - Fit into the inventory
+     * - Shouldn't be keys
+     * - Have a price greater than 0
      * @param repeatableQuestConfig Config file
+     * @param traderId Id of trader who will give reward to player
      * @returns List of rewardable items [[_tpl, itemTemplate],...]
      */
     public getRewardableItems(
@@ -441,11 +472,10 @@ export class RepeatableQuestRewardGenerator
         // Get an array of seasonal items that should not be shown right now as seasonal event is not active
         const seasonalItems = this.seasonalEventService.getInactiveSeasonalEventItems();
 
-        // check for specific baseclasses which don't make sense as reward item
+        // Check for specific baseclasses which don't make sense as reward item
         // also check if the price is greater than 0; there are some items whose price can not be found
         // those are not in the game yet (e.g. AGS grenade launcher)
         return Object.entries(this.databaseService.getItems()).filter(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ([tpl, itemTemplate]) =>
             {
                 // Base "Item" item has no parent, ignore it
