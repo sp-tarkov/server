@@ -479,30 +479,22 @@ export class RepeatableQuestRewardGenerator
         itemBaseWhitelist: string[],
     ): boolean
     {
+        // Return early if not valid item to give as reward
         if (!this.itemHelper.isValidItem(tpl))
         {
             return false;
         }
 
-        // Check global blacklist
-        if (this.itemFilterService.isItemBlacklisted(tpl))
+        // Check item is not blacklisted
+        if (this.itemFilterService.isItemBlacklisted(tpl)
+          || this.itemFilterService.isItemRewardBlacklisted(tpl)
+          || repeatableQuestConfig.rewardBlacklist.includes(tpl)
+          || this.itemFilterService.isItemBlacklisted(tpl))
         {
             return false;
         }
 
-        // item is reward blacklisted
-        if (this.itemFilterService.isItemRewardBlacklisted(tpl))
-        {
-            return false;
-        }
-
-        // Item is on repeatable or global blacklist
-        if (repeatableQuestConfig.rewardBlacklist.includes(tpl) || this.itemFilterService.isItemBlacklisted(tpl))
-        {
-            return false;
-        }
-
-        // Item has blacklisted base type
+        // Item has blacklisted base types
         if (this.itemHelper.isOfBaseclasses(tpl, [...repeatableQuestConfig.rewardBaseTypeBlacklist]))
         {
             return false;
@@ -515,12 +507,10 @@ export class RepeatableQuestRewardGenerator
         }
 
         // Trader has specific item base types they can give as rewards to player
-        if (itemBaseWhitelist !== undefined)
+        if (itemBaseWhitelist !== undefined
+          && !this.itemHelper.isOfBaseclasses(tpl, [...itemBaseWhitelist]))
         {
-            if (!this.itemHelper.isOfBaseclasses(tpl, [...itemBaseWhitelist]))
-            {
-                return false;
-            }
+            return false;
         }
 
         return true;
