@@ -2,7 +2,6 @@ import { inject, injectable } from "tsyringe";
 import { HandbookHelper } from "@spt/helpers/HandbookHelper";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
-import { IPreset } from "@spt/models/eft/common/IGlobals";
 import { Item } from "@spt/models/eft/common/tables/IItem";
 import { IQuestReward, IQuestRewards } from "@spt/models/eft/common/tables/IQuest";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
@@ -111,6 +110,8 @@ export class RepeatableQuestRewardGenerator
             * this.mathUtil.interp1(pmcLevel, levelsConfig, roublesConfig)
             * this.randomUtil.getFloat(1 - rewardSpreadConfig, 1 + rewardSpreadConfig),
         );
+        // Get budget to spend on item rewards
+        let itemRewardBudget = rewardRoubles;
         const rewardNumItems = this.randomUtil.randInt(
             1,
             Math.round(this.mathUtil.interp1(pmcLevel, levelsConfig, itemsConfig)) + 1,
@@ -126,15 +127,11 @@ export class RepeatableQuestRewardGenerator
         const skillPointReward = this.mathUtil.interp1(pmcLevel, levelsConfig, skillPointRewardConfig);
 
         // Possible improvement -> draw trader-specific items e.g. with this.itemHelper.isOfBaseclass(val._id, ItemHelper.BASECLASS.FoodDrink)
-        let roublesBudget = rewardRoubles;
-        let rewardItemPool = this.chooseRewardItemsWithinBudget(repeatableConfig, roublesBudget, traderId);
-        this.logger.debug(
-            `Generating daily quest for ${traderId} with budget ${roublesBudget} for ${rewardNumItems} items`,
-        );
-
         const rewards: IQuestRewards = { Started: [], Success: [], Fail: [] };
 
+        // Start reward index to keep track
         let rewardIndex = 0;
+
         // Add xp reward
         if (rewardXP > 0)
         {
@@ -143,9 +140,10 @@ export class RepeatableQuestRewardGenerator
         }
 
         // Add money reward
-        this.addMoneyReward(traderId, rewards, rewardRoubles, rewardIndex);
+        rewards.Success.push(this.getMoneyReward(traderId, rewardRoubles, rewardIndex));
         rewardIndex++;
 
+        // Add GP coin reward
         rewards.Success.push(this.generateRewardItem(
             Money.GP,
             gpCoinRewardCount,
@@ -153,50 +151,36 @@ export class RepeatableQuestRewardGenerator
         ));
         rewardIndex++;
 
-        // Add preset weapon to reward
-        const traderWhitelistDetails = repeatableConfig.traderWhitelist.find((x) => x.traderId === traderId);
+        // Add preset weapon to reward if checks pass
+        const traderWhitelistDetails = repeatableConfig.traderWhitelist
+            .find((traderWhitelist) => traderWhitelist.traderId === traderId);
         if (
-            traderWhitelistDetails.rewardCanBeWeapon
+            traderWhitelistDetails?.rewardCanBeWeapon
             && this.randomUtil.getChance100(traderWhitelistDetails.weaponRewardChancePercent)
         )
         {
-            // Add a random default preset weapon as reward
-            const defaultPresetPool = new ExhaustableArray(
-                Object.values(this.presetHelper.getDefaultWeaponPresets()),
-                this.randomUtil,
-                this.cloner,
-            );
-            let chosenPreset: IPreset;
-            while (defaultPresetPool.hasValues())
+            const chosenWeapon = this.getRandomWeaponPresetWithinBudget(itemRewardBudget, rewardIndex);
+            if (chosenWeapon)
             {
-                const randomPreset = defaultPresetPool.getRandomValue();
-                const tpls = randomPreset._items.map((item) => item._tpl);
-                const presetPrice = this.itemHelper.getItemAndChildrenPrice(tpls);
-                if (presetPrice <= roublesBudget)
-                {
-                    this.logger.debug(`  Added weapon ${tpls[0]} with price ${presetPrice}`);
-                    roublesBudget -= presetPrice;
-                    chosenPreset = this.cloner.clone(randomPreset);
-                    break;
-                }
-            }
+                rewards.Success.push(chosenWeapon.weapon);
 
-            if (chosenPreset)
-            {
-                // use _encyclopedia as its always the base items _tpl, items[0] isn't guaranteed to be base item
-                rewards.Success.push(
-                    this.generateRewardItem(chosenPreset._encyclopedia, 1, rewardIndex, chosenPreset._items),
-                );
+                // Subtract price of preset from item budget so we dont give player too much stuff
+                itemRewardBudget -= chosenWeapon.price;
                 rewardIndex++;
             }
         }
 
-        if (rewardItemPool.length > 0)
+        let inBudgetRewardItemPool = this.chooseRewardItemsWithinBudget(repeatableConfig, itemRewardBudget, traderId);
+        this.logger.debug(
+            `Generating daily quest for: ${traderId} with budget: ${itemRewardBudget} totalling: ${rewardNumItems} items`,
+        );
+        if (inBudgetRewardItemPool.length > 0)
         {
             for (let i = 0; i < rewardNumItems; i++)
             {
                 let rewardItemStackCount = 1;
-                const itemSelected = rewardItemPool[this.randomUtil.randInt(rewardItemPool.length)];
+                // TODO: replace with use of ExhaustableArray
+                const itemSelected = inBudgetRewardItemPool[this.randomUtil.randInt(inBudgetRewardItemPool.length)];
 
                 if (this.itemHelper.isOfBaseclass(itemSelected._id, BaseClasses.AMMO))
                 {
@@ -210,32 +194,34 @@ export class RepeatableQuestRewardGenerator
                     // Choose smallest value between budget fitting size and stack max
                     rewardItemStackCount = this.calculateAmmoStackSizeThatFitsBudget(
                         itemSelected,
-                        roublesBudget,
+                        itemRewardBudget,
                         rewardNumItems,
                     );
                 }
 
-                // 25% chance to double, triple quadruple reward stack (Only occurs when item is stackable and not weapon, armor or ammo)
+                // 25% chance to double, triple or quadruple reward stack
+                // (Only occurs when item is stackable and not weapon, armor or ammo)
                 if (this.canIncreaseRewardItemStackSize(itemSelected, 70000, 25))
                 {
                     rewardItemStackCount = this.getRandomisedRewardItemStackSizeByPrice(itemSelected);
                 }
 
+                // Add item reward
                 rewards.Success.push(this.generateRewardItem(itemSelected._id, rewardItemStackCount, rewardIndex));
                 rewardIndex++;
 
                 const itemCost = this.presetHelper.getDefaultPresetOrItemPrice(itemSelected._id);
-                roublesBudget -= rewardItemStackCount * itemCost;
+                itemRewardBudget -= rewardItemStackCount * itemCost;
                 this.logger.debug(`  Added item ${itemSelected._id} with price ${rewardItemStackCount * itemCost}`);
 
                 // If we still have budget narrow down possible items
-                if (roublesBudget > 0)
+                if (itemRewardBudget > 0)
                 {
                     // Filter possible reward items to only items with a price below the remaining budget
-                    rewardItemPool = this.filterRewardPoolWithinBudget(rewardItemPool, roublesBudget, 0);
-                    if (rewardItemPool.length === 0)
+                    inBudgetRewardItemPool = this.filterRewardPoolWithinBudget(inBudgetRewardItemPool, itemRewardBudget, 0);
+                    if (inBudgetRewardItemPool.length === 0)
                     {
-                        this.logger.debug(`  Reward pool empty with ${roublesBudget} remaining`);
+                        this.logger.debug(`  Reward pool empty with ${itemRewardBudget} remaining`);
                         break; // No reward items left, exit
                     }
                 }
@@ -277,6 +263,51 @@ export class RepeatableQuestRewardGenerator
         }
 
         return rewards;
+    }
+
+    /**
+     * Choose a random Weapon preset that fits inside of a rouble amount limit
+     * @param roublesBudget
+     * @param rewardIndex
+     * @returns IQuestReward
+     */
+    protected getRandomWeaponPresetWithinBudget(
+        roublesBudget: number,
+        rewardIndex: number,
+    ): { weapon: IQuestReward, price: number } | undefined
+    {
+        // Add a random default preset weapon as reward
+        const defaultPresetPool = new ExhaustableArray(
+            Object.values(this.presetHelper.getDefaultWeaponPresets()),
+            this.randomUtil,
+            this.cloner,
+        );
+
+        while (defaultPresetPool.hasValues())
+        {
+            const randomPreset = defaultPresetPool.getRandomValue();
+            if (!randomPreset)
+            {
+                continue;
+            }
+
+            // Gather all tpls so we can get prices of them
+            const tpls = randomPreset._items.map((item) => item._tpl);
+
+            // Does preset items fit our budget
+            const presetPrice = this.itemHelper.getItemAndChildrenPrice(tpls);
+            if (presetPrice <= roublesBudget)
+            {
+                this.logger.debug(`Added weapon: ${tpls[0]} with price: ${presetPrice}`);
+                const chosenPreset = this.cloner.clone(randomPreset);
+
+                return {
+                    weapon: this.generateRewardItem(chosenPreset._encyclopedia, 1, rewardIndex, chosenPreset._items),
+                    price: presetPrice };
+            }
+        }
+
+        return undefined;
     }
 
     /**
@@ -546,28 +577,26 @@ export class RepeatableQuestRewardGenerator
         return true;
     }
 
-    protected addMoneyReward(
+    protected getMoneyReward(
         traderId: string,
-        rewards: IQuestRewards,
         rewardRoubles: number,
         rewardIndex: number,
-    ): void
+    ): IQuestReward
     {
-        // PK and Fence use euros
-        if (traderId === Traders.PEACEKEEPER || traderId === Traders.FENCE)
-        {
-            rewards.Success.push(
-                this.generateRewardItem(
-                    Money.EUROS,
-                    this.handbookHelper.fromRUB(rewardRoubles, Money.EUROS),
-                    rewardIndex,
-                ),
-            );
-        }
-        else
-        {
-            // Everyone else uses roubles
-            rewards.Success.push(this.generateRewardItem(Money.ROUBLES, rewardRoubles, rewardIndex));
-        }
+        // Determine currency based on trader
+        // PK and Fence use Euros, everyone else is Roubles
+        const currency
+        = traderId === Traders.PEACEKEEPER || traderId === Traders.FENCE
+            ? Money.EUROS
+            : Money.ROUBLES;
+
+        // Convert reward amount to Euros if necessary
+        const rewardAmountToGivePlayer
+        = currency === Money.EUROS
+            ? this.handbookHelper.fromRUB(rewardRoubles, Money.EUROS)
+            : rewardRoubles;
+
+        // Get chosen currency + amount and return
+        return this.generateRewardItem(currency, rewardAmountToGivePlayer, rewardIndex);
     }
 }
