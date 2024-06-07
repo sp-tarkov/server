@@ -10,4 +10,5 @@ export enum Traders
     JAEGER = "5c0647fdd443bc2504c2d371",
     LIGHTHOUSEKEEPER = "638f541a29ffd1183d187f57",
     BTR = "656f0f98d80a697f855d34b1",
+    REF = "6617beeaa9cfa777ca915b7c",
 }
