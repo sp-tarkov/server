@@ -21,7 +21,7 @@ export class PaymentHelper
      */
     public isMoneyTpl(tpl: string): boolean
     {
-        return [Money.DOLLARS, Money.EUROS, Money.ROUBLES, ...this.inventoryConfig.customMoneyTpls].some(
+        return [Money.DOLLARS, Money.EUROS, Money.ROUBLES, Money.GP, ...this.inventoryConfig.customMoneyTpls].some(
             (element) => element === tpl,
         );
     }
