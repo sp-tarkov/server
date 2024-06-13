@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { Money } from "@spt/models/enums/Money";
 import { RagfairSort } from "@spt/models/enums/RagfairSort";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocaleService } from "@spt/services/LocaleService";
@@ -7,13 +8,6 @@ import { LocaleService } from "@spt/services/LocaleService";
 @injectable()
 export class RagfairSortHelper
 {
-    protected currencyTpls = [
-        "5449016a4bdc2d6f028b456f", // rub
-        "569668774bdc2da2298b4568", // euro
-        "5696686a4bdc2da3298b456a", // dollar
-        "5d235b4d86f7742e017bc88a", // GP
-    ];
-
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocaleService") protected localeService: LocaleService,
@@ -37,7 +31,7 @@ export class RagfairSortHelper
                 break;
 
             case RagfairSort.BARTER:
-                offers.sort((a, b) => this.sortOffersByBarter(a, b));
+                offers.sort(this.sortOffersByBarter);
                 break;
 
             case RagfairSort.RATING:
@@ -73,8 +67,9 @@ export class RagfairSortHelper
 
     protected sortOffersByBarter(a: IRagfairOffer, b: IRagfairOffer): number
     {
-        const aIsOnlyMoney = a.requirements.length == 1 && this.currencyTpls.includes(a.requirements[0]._tpl) ? 1 : 0;
-        const bIsOnlyMoney = b.requirements.length == 1 && this.currencyTpls.includes(b.requirements[0]._tpl) ? 1 : 0;
+        const moneyTpls = Object.values<string>(Money);
+        const aIsOnlyMoney = a.requirements.length == 1 && moneyTpls.includes(a.requirements[0]._tpl) ? 1 : 0;
+        const bIsOnlyMoney = b.requirements.length == 1 && moneyTpls.includes(b.requirements[0]._tpl) ? 1 : 0;
         return aIsOnlyMoney - bIsOnlyMoney;
     }
 
