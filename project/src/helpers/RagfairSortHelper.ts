@@ -7,6 +7,13 @@ import { LocaleService } from "@spt/services/LocaleService";
 @injectable()
 export class RagfairSortHelper
 {
+    protected currencyTpls = [
+        "5449016a4bdc2d6f028b456f", // rub
+        "569668774bdc2da2298b4568", // euro
+        "5696686a4bdc2da3298b456a", // dollar
+        "5d235b4d86f7742e017bc88a", // GP
+    ];
+
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("LocaleService") protected localeService: LocaleService,
@@ -27,6 +34,10 @@ export class RagfairSortHelper
         {
             case RagfairSort.ID:
                 offers.sort(this.sortOffersByID);
+                break;
+
+            case RagfairSort.BARTER:
+                offers.sort((a, b) => this.sortOffersByBarter(a, b));
                 break;
 
             case RagfairSort.RATING:
@@ -58,6 +69,13 @@ export class RagfairSortHelper
     protected sortOffersByID(a: IRagfairOffer, b: IRagfairOffer): number
     {
         return a.intId - b.intId;
+    }
+
+    protected sortOffersByBarter(a: IRagfairOffer, b: IRagfairOffer): number
+    {
+        const aIsOnlyMoney = a.requirements.length == 1 && this.currencyTpls.includes(a.requirements[0]._tpl) ? 1 : 0;
+        const bIsOnlyMoney = b.requirements.length == 1 && this.currencyTpls.includes(b.requirements[0]._tpl) ? 1 : 0;
+        return aIsOnlyMoney - bIsOnlyMoney;
     }
 
     protected sortOffersByRating(a: IRagfairOffer, b: IRagfairOffer): number
