@@ -4,7 +4,7 @@
         "left_behind": 1,
         "prepare_for_escape": 1,
         "edge_of_darkness": 4,
-		"unheard_edition": 1
+        "unheard_edition": 1
     },
     "accountTypeWeight": {
         "0": 75,
@@ -52,7 +52,11 @@
             "543be5dd4bdc2deb348b4569",
             "5fca13ca637ee0341a484f46",
             "59f32c3b86f77472a31742f0",
+            "6662e9f37fa79a6d83730fa0",
+            "6662ea05f6259762c56f3189",
             "59f32bb586f774757e1e8442",
+            "6662e9aca7e0b43baa3d5f74",
+            "6662e9cda7e0b43baa3d5f76",
             "617aa4dd8166f034d57de9c5",
             "5a2a57cfc4a2826c6e06d44a",
             "619256e5f8af2c1a4e1f5d92",
@@ -103,7 +107,11 @@
             "543be5cb4bdc2deb348b4568",
             "5fca13ca637ee0341a484f46",
             "59f32c3b86f77472a31742f0",
+            "6662e9f37fa79a6d83730fa0",
+            "6662ea05f6259762c56f3189",
             "59f32bb586f774757e1e8442",
+            "6662e9aca7e0b43baa3d5f74",
+            "6662e9cda7e0b43baa3d5f76",
             "617aa4dd8166f034d57de9c5",
             "5a2a57cfc4a2826c6e06d44a",
             "619256e5f8af2c1a4e1f5d92",
@@ -154,7 +162,11 @@
             "5e99711486f7744bfc4af328",
             "5fca13ca637ee0341a484f46",
             "59f32c3b86f77472a31742f0",
+            "6662e9f37fa79a6d83730fa0",
+            "6662ea05f6259762c56f3189",
             "59f32bb586f774757e1e8442",
+            "6662e9aca7e0b43baa3d5f74",
+            "6662e9cda7e0b43baa3d5f76",
             "617aa4dd8166f034d57de9c5",
             "5a2a57cfc4a2826c6e06d44a",
             "619256e5f8af2c1a4e1f5d92",
@@ -751,7 +763,7 @@
     "addPrefixToSameNamePMCAsPlayerChance": 40,
     "allPMCsHavePlayerNameWithRandomPrefixChance": 1,
     "locationSpecificPmcLevelOverride": {
-		"sandbox": {
+        "sandbox": {
             "min": 1,
             "max": 20
         },
@@ -760,5 +772,5 @@
             "max": 100
         }
     },
-	"addSecureContainerLootFromBotConfig": false
+    "addSecureContainerLootFromBotConfig": false
 }
