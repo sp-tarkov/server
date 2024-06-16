@@ -109,11 +109,11 @@ export class BotInventoryGenerator
 
         return {
             items: [
-                { _id: equipmentId, _tpl: ItemTpl.DEFAULT_INVENTORY },
-                { _id: stashId, _tpl: ItemTpl.STASH },
-                { _id: questRaidItemsId, _tpl: ItemTpl.STASH_QUEST_RAID_ITEMS },
-                { _id: questStashItemsId, _tpl: ItemTpl.STASH_QUEST_ITEMS },
-                { _id: sortingTableId, _tpl: ItemTpl.SORTING_TABLE },
+                { _id: equipmentId, _tpl: ItemTpl.INVENTORY_DEFAULT },
+                { _id: stashId, _tpl: ItemTpl.STASH_STANDARD_STASH_10X30 },
+                { _id: questRaidItemsId, _tpl: ItemTpl.STASH_QUESTRAID },
+                { _id: questStashItemsId, _tpl: ItemTpl.STASH_QUESTOFFLINE },
+                { _id: sortingTableId, _tpl: ItemTpl.SORTINGTABLE_SORTING_TABLE },
             ],
             equipment: equipmentId,
             stash: stashId,

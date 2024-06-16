@@ -722,12 +722,12 @@ export class ItemHelper
     public isDogtag(tpl: string): boolean
     {
         const dogTagTpls = [
-            ItemTpl.DOG_TAG_BEAR,
-            ItemTpl.DOG_TAG_BEAR_EOD,
-            ItemTpl.DOG_TAG_BEAR_UNHEARD,
-            ItemTpl.DOG_TAG_USEC,
-            ItemTpl.DOG_TAG_USEC_EOD,
-            ItemTpl.DOG_TAG_USEC_UNHEARD,
+            ItemTpl.BARTER_DOGTAG_BEAR,
+            ItemTpl.BARTER_DOGTAG_BEAR_EOD,
+            ItemTpl.BARTER_DOGTAG_BEAR_TUE,
+            ItemTpl.BARTER_DOGTAG_USEC,
+            ItemTpl.BARTER_DOGTAG_USEC_EOD,
+            ItemTpl.BARTER_DOGTAG_USEC_TUE,
         ];
 
         return dogTagTpls.includes(<any>tpl);

@@ -86,8 +86,8 @@ export class BotWeaponModLimitService
     ): boolean
     {
         // If mod or mods parent is the NcSTAR MPR45 Backup mount, allow it as it looks cool
-        if (modsParent._id === ItemTpl.NCSTAR_MPR45_BACKUP_MOUNT
-          || modTemplate._id === ItemTpl.NCSTAR_MPR45_BACKUP_MOUNT)
+        if (modsParent._id === ItemTpl.MOUNT_NCSTAR_MPR45_BACKUP
+          || modTemplate._id === ItemTpl.MOUNT_NCSTAR_MPR45_BACKUP)
         {
             // If weapon already has a longer ranged scope on it, allow ncstar to be spawned
             if (

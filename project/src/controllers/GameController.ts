@@ -23,7 +23,7 @@ import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { Traders } from "@spt/models/enums/Traders";
-import { Weapons12Gauge, Weapons20Gauge } from "@spt/models/enums/WeaponTypes";
+import { Weapons } from "@spt/models/enums/Weapons";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
@@ -552,7 +552,11 @@ export class GameController
     {
         const itemDb = this.databaseService.getItems();
 
-        const shotguns = [Weapons12Gauge.SAIGA_12GA, Weapons20Gauge.TOZ_106, Weapons12Gauge.M870];
+        const shotguns = [
+            Weapons.SHOTGUN_12G_SAIGA_12K,
+            Weapons.SHOTGUN_20G_TOZ_106,
+            Weapons.SHOTGUN_12G_M870,
+        ];
         for (const shotgunId of shotguns)
         {
             if (itemDb[shotgunId]._props.ShotgunDispersion)

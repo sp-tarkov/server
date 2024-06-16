@@ -56,30 +56,30 @@ export class SeasonalEventService
     protected get christmasEventItems(): string[]
     {
         return [
-            ItemTpl.FAKE_WHITE_BEARD,
-            ItemTpl.CHRISTMAS_TREE_ORNAMENT_RED,
-            ItemTpl.CHRISTMAS_TREE_ORNAMENT_VIOLET,
-            ItemTpl.CHRISTMAS_TREE_ORNAMENT_SILVER,
-            ItemTpl.DED_MOROZ_HAT,
-            ItemTpl.SANTA_HAT,
-            ItemTpl.SANTAS_BAG,
+            ItemTpl.FACECOVER_FAKE_WHITE_BEARD,
+            ItemTpl.BARTER_CHRISTMAS_TREE_ORNAMENT_RED,
+            ItemTpl.BARTER_CHRISTMAS_TREE_ORNAMENT_VIOLET,
+            ItemTpl.BARTER_CHRISTMAS_TREE_ORNAMENT_SILVER,
+            ItemTpl.HEADWEAR_DED_MOROZ_HAT,
+            ItemTpl.HEADWEAR_SANTA_HAT,
+            ItemTpl.BACKPACK_SANTAS_BAG,
         ];
     }
 
     protected get halloweenEventItems(): string[]
     {
         return [
-            ItemTpl.SPOOKY_SKULL_MASK,
-            ItemTpl.PUMPKIN_WITH_SWEETS,
-            ItemTpl.JACK_LANTERN_PUMPKIN_HELMET,
-            ItemTpl.FACELESS_MASK,
-            ItemTpl.JASON_MASK,
-            ItemTpl.MISHA_MAYOROV_MASK,
-            ItemTpl.SLENDER_MASK,
-            ItemTpl.GHOUL_MASK,
-            ItemTpl.HOCKEY_CAPTAIN_MASK,
-            ItemTpl.HOCKEY_BRAWLER_MASK,
-            ItemTpl.HOCKEY_QUIET_MASK,
+            ItemTpl.FACECOVER_SPOOKY_SKULL_MASK,
+            ItemTpl.RANDOMLOOTCONTAINER_PUMPKIN_RAND_LOOT_CONTAINER,
+            ItemTpl.HEADWEAR_JACKOLANTERN_TACTICAL_PUMPKIN_HELMET,
+            ItemTpl.FACECOVER_FACELESS_MASK,
+            ItemTpl.FACECOVER_JASON_MASK,
+            ItemTpl.FACECOVER_MISHA_MAYOROV_MASK,
+            ItemTpl.FACECOVER_SLENDER_MASK,
+            ItemTpl.FACECOVER_GHOUL_MASK,
+            ItemTpl.FACECOVER_HOCKEY_PLAYER_MASK_CAPTAIN,
+            ItemTpl.FACECOVER_HOCKEY_PLAYER_MASK_BRAWLER,
+            ItemTpl.FACECOVER_HOCKEY_PLAYER_MASK_QUIET,
         ];
     }
 
@@ -547,7 +547,7 @@ export class SeasonalEventService
 
     protected addPumpkinsToScavBackpacks(): void
     {
-        this.databaseService.getBots().types.assault.inventory.items.Backpack[ItemTpl.PUMPKIN_WITH_SWEETS] = 400;
+        this.databaseService.getBots().types.assault.inventory.items.Backpack[ItemTpl.RANDOMLOOTCONTAINER_PUMPKIN_RAND_LOOT_CONTAINER] = 400;
     }
 
     /**

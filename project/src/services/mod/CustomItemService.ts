@@ -224,7 +224,7 @@ export class CustomItemService
     protected addToWeaponShelf(newItemId: string): void
     {
         // Ids for wall stashes in db
-        const wallStashIds = [ItemTpl.WEAPON_STAND_STASH_1, ItemTpl.WEAPON_STAND_STASH_2, ItemTpl.WEAPON_STAND_STASH_3];
+        const wallStashIds = [ItemTpl.HIDEOUTAREACONTAINER_WEAPONSTAND_STASH_1, ItemTpl.HIDEOUTAREACONTAINER_WEAPONSTAND_STASH_2, ItemTpl.HIDEOUTAREACONTAINER_WEAPONSTAND_STASH_3];
         for (const wallId of wallStashIds)
         {
             const wall = this.itemHelper.getItem(wallId);

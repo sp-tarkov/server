@@ -536,7 +536,7 @@ export class BotGenerator
         for (const item of profile.Inventory.items)
         {
             // Root item found, update its _id value to newly generated id
-            if (item._tpl === ItemTpl.DEFAULT_INVENTORY)
+            if (item._tpl === ItemTpl.INVENTORY_DEFAULT)
             {
                 item._id = newInventoryItemId;
 
@@ -633,22 +633,22 @@ export class BotGenerator
             switch (gameVersion)
             {
                 case "edge_of_darkness":
-                    return ItemTpl.DOG_TAG_USEC_EOD;
+                    return ItemTpl.BARTER_DOGTAG_USEC_EOD;
                 case "unheard_edition":
-                    return ItemTpl.DOG_TAG_USEC_UNHEARD;
+                    return ItemTpl.BARTER_DOGTAG_USEC_TUE;
                 default:
-                    return ItemTpl.DOG_TAG_USEC;
+                    return ItemTpl.BARTER_DOGTAG_USEC;
             }
         }
 
         switch (gameVersion)
         {
             case "edge_of_darkness":
-                return ItemTpl.DOG_TAG_BEAR_EOD;
+                return ItemTpl.BARTER_DOGTAG_BEAR_EOD;
             case "unheard_edition":
-                return ItemTpl.DOG_TAG_BEAR_UNHEARD;
+                return ItemTpl.BARTER_DOGTAG_BEAR_TUE;
             default:
-                return ItemTpl.DOG_TAG_BEAR;
+                return ItemTpl.BARTER_DOGTAG_BEAR;
         }
     }
 

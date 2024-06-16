@@ -29,7 +29,8 @@
         "run:debug": "gulp run:debug",
         "run:profiler": "gulp run:profiler",
         "gen:types": "tsc -p tsconfig.typedef.json --resolveJsonModule",
-        "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src"
+        "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
+        "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts"
     },
     "dependencies": {
         "atomically": "~1.7",
@@ -64,10 +65,8 @@
         "@types/ws": "~8.5",
         "@typescript-eslint/eslint-plugin": "~7.11",
         "@typescript-eslint/parser": "~7.11",
-        "typescript-eslint": "~7.11",
         "@vitest/coverage-istanbul": "~1.6",
         "@vitest/ui": "~1.6",
-        "vitest": "~1.6",
         "@yao-pkg/pkg": "5.11.5",
         "@yao-pkg/pkg-fetch": "3.5.9",
         "cross-env": "~7.0",
@@ -93,7 +92,9 @@
         "tsconfig-paths": "~4.2",
         "tslint-config-prettier": "~1.18",
         "typedoc": "~0.25",
-        "typemoq": "~2.1"
+        "typemoq": "~2.1",
+        "typescript-eslint": "~7.11",
+        "vitest": "~1.6"
     },
     "targets": {
         "default": {

@@ -209,7 +209,7 @@ export class InsuranceService
         const globals = this.databaseService.getGlobals();
         const hasMarkOfUnheard = this.itemHelper.hasItemWithTpl(
             pmcData.Inventory.items,
-            ItemTpl.MARK_OF_UNHEARD,
+            ItemTpl.MARKOFUNKNOWN_MARK_OF_THE_UNHEARD,
             "SpecialSlot");
         if (hasMarkOfUnheard)
         {

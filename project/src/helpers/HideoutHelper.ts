@@ -979,7 +979,7 @@ export class HideoutHelper
     {
         btcProd.Products.push({
             _id: this.hashUtil.generate(),
-            _tpl: ItemTpl.BITCOIN,
+            _tpl: ItemTpl.BARTER_PHYSICAL_BITCOIN,
             upd: { StackObjectsCount: 1 },
         });
 
@@ -1151,7 +1151,7 @@ export class HideoutHelper
             itemsToAdd.push([
                 {
                     _id: this.hashUtil.generate(),
-                    _tpl: ItemTpl.BITCOIN,
+                    _tpl: ItemTpl.BARTER_PHYSICAL_BITCOIN,
                     upd: { StackObjectsCount: 1 },
                 },
             ]);

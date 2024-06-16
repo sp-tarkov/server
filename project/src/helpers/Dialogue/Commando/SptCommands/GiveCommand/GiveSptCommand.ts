@@ -33,9 +33,9 @@ export class GiveSptCommand implements ISptCommand
     private static acceptableConfidence = 0.9;
     // exception for flares
     private static excludedPresetItems = new Set<string>([
-        ItemTpl.RSP30_SIGNAL_CARTRIDGE_RED,
-        ItemTpl.RSP30_SIGNAL_CARTRIDGE_GREEN,
-        ItemTpl.RSP30_SIGNAL_CARTRIDGE_YELLOW,
+        ItemTpl.FLARE_RSP30_REACTIVE_SIGNAL_CARTRIDGE_RED,
+        ItemTpl.FLARE_RSP30_REACTIVE_SIGNAL_CARTRIDGE_GREEN,
+        ItemTpl.FLARE_RSP30_REACTIVE_SIGNAL_CARTRIDGE_YELLOW,
     ]);
 
     protected savedCommand: Map<string, SavedCommand> = new Map<string, SavedCommand>();
