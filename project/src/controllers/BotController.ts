@@ -434,6 +434,21 @@ export class BotController
                 botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
             }
         }
+        // Only runs if bot didnt get picked to be PMC & Boss Convert is enabled
+        if (this.botConfig.assaultToBossConversion.bossConvertEnabled && !botGenerationDetails.isPmc) {
+            const bossConvertPercent = this.botConfig.assaultToBossConversion.bossConvertMinMax[requestedBot.Role.toLowerCase()];
+            // Only Pass if role exists
+            if (bossConvertPercent) {
+                const convertToBoss = this.botHelper.rollChanceToBePmc(requestedBot.Role, bossConvertPercent);
+                // Should become Boss
+                if (convertToBoss) {
+                    // Seems Actual bosses have the same Brain issues like PMC gaining Boss Brains We cant use all bosses
+                    botGenerationDetails.role = this.randomUtil.drawRandomFromList(this.botConfig.assaultToBossConversion.bossesToConvertTo)[0];
+                    botGenerationDetails.botDifficulty = this.getPMCDifficulty(requestedBot.Difficulty);
+                    botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
+                }
+            }
+        }
 
         // Construct cache key
         const cacheKey = `${
