@@ -2706,7 +2706,7 @@
     },
 	"lowProfileGasBlockTpls": ["61702f1b67085e45ef140b26", "5dfa3d45dfc58d14537c20b0", "5bb20dcad4351e3bac1212da", "56eabcd4d2720b66698b4574", "6065dc8a132d4d12c81fd8e3", "55d4af3a4bdc2d972f8b456f"],
     "disableLootOnBotTypes": [],
-    "assaultToBossConvertion": {
+    "assaultToBossConversion": {
         "bossConvertEnabled": false,
         "bossesToConvertTo": [
             "bossKilla",
