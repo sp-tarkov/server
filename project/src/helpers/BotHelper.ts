@@ -139,6 +139,11 @@ export class BotHelper
         );
     }
 
+    /**
+     * is the provided role a PMC, case-agnostic
+     * @param botRole Role to check
+     * @returns True if role is PMC
+     */
     public botRoleIsPmc(botRole: string): boolean
     {
         return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(
