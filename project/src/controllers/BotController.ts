@@ -444,14 +444,14 @@ export class BotController
             // Only Pass if role exists
             if (bossConvertPercent)
             {
-                const convertToBoss = this.botHelper.rollChanceToBePmc(requestedBot.Role, bossConvertPercent);
+                const convertToBoss = this.botHelper.rollChanceToBePmc(
+                    requestedBot.Role,
+                    bossConvertPercent);
                 if (convertToBoss)
                 {
-                    // Seems Actual bosses have the same Brain issues like PMC gaining Boss Brains We cant use all bosses
-                    botGenerationDetails.role
-                        = this.weightedRandomHelper.getWeightedValue(toBossSettings.bossesToConvertToWeights);
-                    botGenerationDetails.botDifficulty = this.getPMCDifficulty(requestedBot.Difficulty);
-                    botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
+                    this.convertBotGenerationDetailsToRandomBoss(
+                        botGenerationDetails,
+                        toBossSettings.bossesToConvertToWeights);
                 }
             }
         }
@@ -485,6 +485,19 @@ export class BotController
         this.botGenerationCacheService.storeUsedBot(desiredBot);
 
         return [desiredBot];
+    }
+
+    protected convertBotGenerationDetailsToRandomBoss(
+        botGenerationDetails: BotGenerationDetails,
+        possibleBossTypeWeights: Record<string, number>): void
+    {
+        // Seems Actual bosses have the same Brain issues like PMC gaining Boss Brains We cant use all bosses
+        botGenerationDetails.role
+                        = this.weightedRandomHelper.getWeightedValue(possibleBossTypeWeights);
+
+        // Bosses are only ever 'normal'
+        botGenerationDetails.botDifficulty = "normal";
+        botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
     }
 
     /**
