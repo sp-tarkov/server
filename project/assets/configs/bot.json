@@ -2711,6 +2711,10 @@
         "bossesToConvertToWeights": {
             "bossKilla": 1,
             "bossSanitar": 1,
+            "bossTagilla": 1,
+            "bossBully": 1,
+            "bossGluhar": 1,
+            "bossKojaniy": 1,
             "bossKolontay": 1,
             "bossKnight": 1,
             "followerBigPipe": 1,
