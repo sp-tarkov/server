@@ -5,6 +5,7 @@ import { BotGenerator } from "@spt/generators/BotGenerator";
 import { BotDifficultyHelper } from "@spt/helpers/BotDifficultyHelper";
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
 import { MinMax } from "@spt/models/common/MinMax";
 import { Condition, IGenerateBotsRequestData } from "@spt/models/eft/bot/IGenerateBotsRequestData";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -39,6 +40,7 @@ export class BotController
         @inject("BotGenerator") protected botGenerator: BotGenerator,
         @inject("BotHelper") protected botHelper: BotHelper,
         @inject("BotDifficultyHelper") protected botDifficultyHelper: BotDifficultyHelper,
+        @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
         @inject("BotGenerationCacheService") protected botGenerationCacheService: BotGenerationCacheService,
         @inject("MatchBotDetailsCacheService") protected matchBotDetailsCacheService: MatchBotDetailsCacheService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -434,16 +436,20 @@ export class BotController
                 botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
             }
         }
-        // Only runs if bot didnt get picked to be PMC & Boss Convert is enabled
-        if (this.botConfig.assaultToBossConversion.bossConvertEnabled && !botGenerationDetails.isPmc) {
-            const bossConvertPercent = this.botConfig.assaultToBossConversion.bossConvertMinMax[requestedBot.Role.toLowerCase()];
+        // Only convert to boss when not already converted to PMC & Boss Convert is enabled
+        const toBossSettings = this.botConfig.assaultToBossConversion;
+        if (toBossSettings.bossConvertEnabled && !botGenerationDetails.isPmc)
+        {
+            const bossConvertPercent = toBossSettings.bossConvertMinMax[requestedBot.Role.toLowerCase()];
             // Only Pass if role exists
-            if (bossConvertPercent) {
+            if (bossConvertPercent)
+            {
                 const convertToBoss = this.botHelper.rollChanceToBePmc(requestedBot.Role, bossConvertPercent);
-                // Should become Boss
-                if (convertToBoss) {
+                if (convertToBoss)
+                {
                     // Seems Actual bosses have the same Brain issues like PMC gaining Boss Brains We cant use all bosses
-                    botGenerationDetails.role = this.randomUtil.drawRandomFromList(this.botConfig.assaultToBossConversion.bossesToConvertTo)[0];
+                    botGenerationDetails.role
+                        = this.weightedRandomHelper.getWeightedValue(toBossSettings.bossesToConvertToWeights);
                     botGenerationDetails.botDifficulty = this.getPMCDifficulty(requestedBot.Difficulty);
                     botGenerationDetails.botCountToGenerate = this.botConfig.presetBatch[botGenerationDetails.role];
                 }

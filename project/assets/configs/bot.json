@@ -2708,14 +2708,14 @@
     "disableLootOnBotTypes": [],
     "assaultToBossConversion": {
         "bossConvertEnabled": false,
-        "bossesToConvertTo": [
-            "bossKilla",
-            "bossSanitar",
-            "bossKolontay",
-            "bossKnight",
-            "followerBigPipe",
-            "followerBirdEye"
-        ],
+        "bossesToConvertToWeights": {
+            "bossKilla": 1,
+            "bossSanitar": 1,
+            "bossKolontay": 1,
+            "bossKnight": 1,
+            "followerBigPipe": 1,
+            "followerBirdEye": 1
+        },
         "bossConvertMinMax": {
             "assault": {
                 "min": 100,

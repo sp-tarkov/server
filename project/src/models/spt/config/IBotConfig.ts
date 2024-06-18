@@ -51,7 +51,7 @@ export interface IBotConfig extends IBaseConfig
 export interface IAssaultToBossConversion
 {
     bossConvertEnabled: boolean
-    bossesToConvertTo: string[]
+    bossesToConvertToWeights: Record<string, MinMax>
     bossConvertMinMax: Record<string, MinMax>
 }
 
