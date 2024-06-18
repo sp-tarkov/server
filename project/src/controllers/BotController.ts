@@ -437,21 +437,22 @@ export class BotController
             }
         }
         // Only convert to boss when not already converted to PMC & Boss Convert is enabled
-        const toBossSettings = this.botConfig.assaultToBossConversion;
-        if (toBossSettings.bossConvertEnabled && !botGenerationDetails.isPmc)
+        const {
+            bossConvertEnabled,
+            bossConvertMinMax,
+            bossesToConvertToWeights } = this.botConfig.assaultToBossConversion;
+        if (bossConvertEnabled && !botGenerationDetails.isPmc)
         {
-            const bossConvertPercent = toBossSettings.bossConvertMinMax[requestedBot.Role.toLowerCase()];
-            // Only Pass if role exists
+            const bossConvertPercent = bossConvertMinMax[requestedBot.Role.toLowerCase()];
             if (bossConvertPercent)
             {
-                const convertToBoss = this.botHelper.rollChanceToBePmc(
-                    requestedBot.Role,
-                    bossConvertPercent);
-                if (convertToBoss)
+                // Roll a percentage check if we should convert scav to boss
+                if (this.randomUtil.getChance100(
+                    this.randomUtil.getInt(bossConvertPercent.min, bossConvertPercent.max)))
                 {
-                    this.convertBotGenerationDetailsToRandomBoss(
+                    this.updateBotGenerationDetailsToRandomBoss(
                         botGenerationDetails,
-                        toBossSettings.bossesToConvertToWeights);
+                        bossesToConvertToWeights);
                 }
             }
         }
@@ -487,7 +488,7 @@ export class BotController
         return [desiredBot];
     }
 
-    protected convertBotGenerationDetailsToRandomBoss(
+    protected updateBotGenerationDetailsToRandomBoss(
         botGenerationDetails: BotGenerationDetails,
         possibleBossTypeWeights: Record<string, number>): void
     {
