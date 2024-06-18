@@ -612,6 +612,9 @@ export class BotGenerator
                 );
         }
 
+        // Ensure selected category matches
+        botInfo.SelectedMemberCategory = botInfo.MemberCategory;
+
         return botInfo.GameVersion;
     }
 
