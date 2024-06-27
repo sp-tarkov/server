@@ -4,7 +4,7 @@ import { GiftSenderType } from "@spt/models/enums/GiftSenderType";
 import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
 import { Traders } from "@spt/models/enums/Traders";
 import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
-import { IProfileChangeEvent } from "../dialog/ISendMessageDetails";
+import { IProfileChangeEvent } from "@spt/models/spt/dialog/ISendMessageDetails";
 
 export interface IGiftsConfig extends IBaseConfig
 {

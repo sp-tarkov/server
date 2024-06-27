@@ -460,7 +460,7 @@ export class TraderHelper
      */
     public getAccountTypeAdjustedTraderPurchaseLimit(buyRestrictionMax: number, gameVersion: string): number
     {
-        if ([GameEditions.EDGE_OF_DARKNESS, GameEditions.UNHEARD].includes(<any>gameVersion))
+        if (([GameEditions.EDGE_OF_DARKNESS, GameEditions.UNHEARD] as string[]).includes(gameVersion))
         {
             return Math.floor(buyRestrictionMax * 1.2);
         }

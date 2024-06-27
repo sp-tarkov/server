@@ -7,17 +7,16 @@ import { BotHelper } from "@spt/helpers/BotHelper";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
 import { Inventory as PmcInventory } from "@spt/models/eft/common/tables/IBotBase";
-import { Chances, Generation, IBotType, Inventory, Mods } from "@spt/models/eft/common/tables/IBotType";
+import { Chances, Equipment, Generation, IBotType, Inventory } from "@spt/models/eft/common/tables/IBotType";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { EquipmentSlots } from "@spt/models/enums/EquipmentSlots";
 import { GameEditions } from "@spt/models/enums/GameEditions";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
+import { IGenerateEquipmentProperties } from "@spt/models/spt/bots/IGenerateEquipmentProperties";
 import {
     EquipmentFilterDetails,
-    EquipmentFilters,
     IBotConfig,
-    RandomisationDetails,
 } from "@spt/models/spt/config/IBotConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -253,14 +252,14 @@ export class BotInventoryGenerator
         if (botEquipConfig.forceOnlyArmoredRigWhenNoArmor && !hasArmorVest)
         {
             // Filter rigs down to only those with armor
-            this.filterRigsToThoseWithProtection(templateInventory);
+            this.filterRigsToThoseWithProtection(templateInventory.equipment);
         }
 
         // Optimisation - Remove armored rigs from pool
         if (hasArmorVest)
         {
             // Filter rigs down to only those with armor
-            this.filterRigsToThoseWithoutProtection(templateInventory);
+            this.filterRigsToThoseWithoutProtection(templateInventory.equipment);
         }
 
         this.generateEquipment({
@@ -278,44 +277,44 @@ export class BotInventoryGenerator
 
     /**
      * Remove non-armored rigs from parameter data
-     * @param templateInventory
+     * @param templateEquipment Equpiment to filter TacticalVest of
      */
-    protected filterRigsToThoseWithProtection(templateInventory: Inventory): void
+    protected filterRigsToThoseWithProtection(templateEquipment: Equipment): void
     {
-        const tacVestsWithArmor = Object.entries(templateInventory.equipment.TacticalVest).reduce(
+        const tacVestsWithArmor = Object.entries(templateEquipment.TacticalVest).reduce(
             (newVestDictionary, [tplKey]) =>
             {
                 if (this.itemHelper.itemHasSlots(tplKey))
                 {
-                    newVestDictionary[tplKey] = templateInventory.equipment.TacticalVest[tplKey];
+                    newVestDictionary[tplKey] = templateEquipment.TacticalVest[tplKey];
                 }
                 return newVestDictionary;
             },
             {},
         );
 
-        templateInventory.equipment.TacticalVest = tacVestsWithArmor;
+        templateEquipment.TacticalVest = tacVestsWithArmor;
     }
 
     /**
      * Remove armored rigs from parameter data
-     * @param templateInventory
+     * @param templateEquipment Equpiment to filter TacticalVest of
      */
-    protected filterRigsToThoseWithoutProtection(templateInventory: Inventory): void
+    protected filterRigsToThoseWithoutProtection(templateEquipment: Equipment): void
     {
-        const tacVestsWithoutArmor = Object.entries(templateInventory.equipment.TacticalVest).reduce(
+        const tacVestsWithoutArmor = Object.entries(templateEquipment.TacticalVest).reduce(
             (newVestDictionary, [tplKey]) =>
             {
                 if (!this.itemHelper.itemHasSlots(tplKey))
                 {
-                    newVestDictionary[tplKey] = templateInventory.equipment.TacticalVest[tplKey];
+                    newVestDictionary[tplKey] = templateEquipment.TacticalVest[tplKey];
                 }
                 return newVestDictionary;
             },
             {},
         );
 
-        templateInventory.equipment.TacticalVest = tacVestsWithoutArmor;
+        templateEquipment.TacticalVest = tacVestsWithoutArmor;
     }
 
     /**
@@ -480,8 +479,8 @@ export class BotInventoryGenerator
      * @param botInventory Inventory to add weapons to
      * @param botRole assault/pmcBot/bossTagilla etc
      * @param isPmc Is the bot being generated as a pmc
-     * @param botLevel level of bot having weapon generated
      * @param itemGenerationLimitsMinMax Limits for items the bot can have
+     * @param botLevel level of bot having weapon generated
      */
     protected generateAndAddWeaponsToBot(
         templateInventory: Inventory,
@@ -583,25 +582,4 @@ export class BotInventoryGenerator
             botRole,
         );
     }
-}
-
-export interface IGenerateEquipmentProperties
-{
-    /** Root Slot being generated */
-    rootEquipmentSlot: string
-    /** Equipment pool for root slot being generated */
-    rootEquipmentPool: Record<string, number>
-    modPool: Mods
-    /** Dictionary of mod items and their chance to spawn for this bot type */
-    spawnChances: Chances
-    /** Role being generated for */
-    botRole: string
-    /** Level of bot being generated */
-    botLevel: number
-    inventory: PmcInventory
-    botEquipmentConfig: EquipmentFilters
-    /** Settings from bot.json to adjust how item is generated */
-    randomisationDetails: RandomisationDetails
-    /** OPTIONAL - Do not generate mods for tpls in this array */
-    generateModsBlacklist?: string[]
 }

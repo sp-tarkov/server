@@ -6,6 +6,7 @@
     "baseclass-item_not_found_failed": "Przedmiot %s nadal nie został znaleziony w pamięci podręcznej bazy danych po odzyskaniu",
     "baseclass-missing_db_no_cache": "Baza danych była pusta, nie można wygenerować pamięci podręcznej bazy przedmiotów",
     "bleeding_edge_build": "BLEEDINGEDGE",
+    "bot-bot-cache_has_zero_bots_of_requested_type": "OSTRZEŻENIE-Pamięć podręczna bota nie ma wstępnie wygenerowanego typu %s, typ musi zostać wygenerowany, zmień w pliku bot.JSON właściwość (presetBatch) na wyższą",
     "bot-bot_preset_count_value_missing": "Brak możliwości znalezienia licznika presetu do wygenerowania dla bota: %s, zmiana to wartości domyślnej 30",
     "bot-compatibility_check_missing_props": "Nie można zweryfikować przedmiotu: {{id}} {{name}} w slocie {{slot}} może zostać założony, brakuje mu wartości _props",
     "bot-generation_failed": "Wygenerowanie bota nie powiodło się. Szczegóły znajdziesz w logach serwera",

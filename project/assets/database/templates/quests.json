@@ -56948,7 +56948,9 @@
           "onlyFoundInRaid": true,
           "parentId": "",
           "target": [
-            "59f32bb586f774757e1e8442"
+            "59f32bb586f774757e1e8442",
+            "6662e9cda7e0b43baa3d5f76",
+            "6662e9aca7e0b43baa3d5f74"
           ],
           "value": 20,
           "visibilityConditions": []
@@ -56966,7 +56968,9 @@
           "onlyFoundInRaid": true,
           "parentId": "",
           "target": [
-            "59f32c3b86f77472a31742f0"
+            "59f32c3b86f77472a31742f0",
+            "6662ea05f6259762c56f3189",
+            "6662e9f37fa79a6d83730fa0"
           ],
           "value": 20,
           "visibilityConditions": []

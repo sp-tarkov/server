@@ -15,6 +15,8 @@ import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ModSpawn } from "@spt/models/enums/ModSpawn";
 import { IChooseRandomCompatibleModResult } from "@spt/models/spt/bots/IChooseRandomCompatibleModResult";
+import { IFilterPlateModsForSlotByLevelResult, Result } from "@spt/models/spt/bots/IFilterPlateModsForSlotByLevelResult";
+import { IGenerateEquipmentProperties } from "@spt/models/spt/bots/IGenerateEquipmentProperties";
 import { IGenerateWeaponRequest } from "@spt/models/spt/bots/IGenerateWeaponRequest";
 import { IModToSpawnRequest } from "@spt/models/spt/bots/IModToSpawnRequest";
 import { EquipmentFilterDetails, EquipmentFilters, IBotConfig } from "@spt/models/spt/config/IBotConfig";
@@ -30,8 +32,6 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { IFilterPlateModsForSlotByLevelResult, Result } from "../models/spt/bots/IFilterPlateModsForSlotByLevelResult";
-import { IGenerateEquipmentProperties } from "./BotInventoryGenerator";
 
 @injectable()
 export class BotEquipmentModGenerator
@@ -159,7 +159,7 @@ export class BotEquipmentModGenerator
             // Find random mod and check its compatible
             let modTpl: string | undefined;
             let found = false;
-            const exhaustableModPool = new ExhaustableArray(modPoolToChooseFrom, this.randomUtil, this.cloner);
+            const exhaustableModPool = new ExhaustableArray<string>(modPoolToChooseFrom, this.randomUtil, this.cloner);
             while (exhaustableModPool.hasValues())
             {
                 modTpl = exhaustableModPool.getRandomValue();
@@ -629,16 +629,28 @@ export class BotEquipmentModGenerator
         }
     }
 
-    protected modSlotCanHoldMuzzleDevices(modSlot: string, modsParentId: string): boolean
+    /**
+     * Does the provided modSlot allow muzzle-related items
+     * @param modSlot Slot id to check
+     * @param modsParentId OPTIONAL: parent id of modslot being checked
+     * @returns True if modSlot can have muzzle-related items
+     */
+    protected modSlotCanHoldMuzzleDevices(modSlot: string, modsParentId?: string): boolean
     {
         return ["mod_muzzle", "mod_muzzle_000", "mod_muzzle_001"].includes(modSlot.toLowerCase());
     }
 
-    protected sortModKeys(unsortedKeys: string[]): string[]
+    /**
+     * Sort mod slots into an ordering that maximises chance of a successful weapon generation
+     * @param unsortedSlotKeys Array of mod slot strings to sort
+     * @returns Sorted array
+     */
+    protected sortModKeys(unsortedSlotKeys: string[]): string[]
     {
-        if (unsortedKeys.length <= 1)
+        // No need to sort with only 1 item in array
+        if (unsortedSlotKeys.length <= 1)
         {
-            return unsortedKeys;
+            return unsortedSlotKeys;
         }
 
         const sortedKeys: string[] = [];
@@ -652,61 +664,61 @@ export class BotEquipmentModGenerator
         const modMountKey = "mod_mount";
         const modScopeKey = "mod_scope";
 
-        if (unsortedKeys.includes(modHandguardKey))
+        if (unsortedSlotKeys.includes(modHandguardKey))
         {
             sortedKeys.push(modHandguardKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modHandguardKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modHandguardKey), 1);
         }
 
-        if (unsortedKeys.includes(modBarrelKey))
+        if (unsortedSlotKeys.includes(modBarrelKey))
         {
             sortedKeys.push(modBarrelKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modBarrelKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modBarrelKey), 1);
         }
 
-        if (unsortedKeys.includes(modMount001Key))
+        if (unsortedSlotKeys.includes(modMount001Key))
         {
             sortedKeys.push(modMount001Key);
-            unsortedKeys.splice(unsortedKeys.indexOf(modMount001Key), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMount001Key), 1);
         }
 
-        if (unsortedKeys.includes(modRecieverKey))
+        if (unsortedSlotKeys.includes(modRecieverKey))
         {
             sortedKeys.push(modRecieverKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modRecieverKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modRecieverKey), 1);
         }
 
-        if (unsortedKeys.includes(modPistolGrip))
+        if (unsortedSlotKeys.includes(modPistolGrip))
         {
             sortedKeys.push(modPistolGrip);
-            unsortedKeys.splice(unsortedKeys.indexOf(modPistolGrip), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modPistolGrip), 1);
         }
 
-        if (unsortedKeys.includes(modGasBlockKey))
+        if (unsortedSlotKeys.includes(modGasBlockKey))
         {
             sortedKeys.push(modGasBlockKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modGasBlockKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modGasBlockKey), 1);
         }
 
-        if (unsortedKeys.includes(modStockKey))
+        if (unsortedSlotKeys.includes(modStockKey))
         {
             sortedKeys.push(modStockKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modStockKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modStockKey), 1);
         }
 
-        if (unsortedKeys.includes(modMountKey))
+        if (unsortedSlotKeys.includes(modMountKey))
         {
             sortedKeys.push(modMountKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modMountKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMountKey), 1);
         }
 
-        if (unsortedKeys.includes(modScopeKey))
+        if (unsortedSlotKeys.includes(modScopeKey))
         {
             sortedKeys.push(modScopeKey);
-            unsortedKeys.splice(unsortedKeys.indexOf(modScopeKey), 1);
+            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modScopeKey), 1);
         }
 
-        sortedKeys.push(...unsortedKeys);
+        sortedKeys.push(...unsortedSlotKeys);
 
         return sortedKeys;
     }
@@ -882,12 +894,21 @@ export class BotEquipmentModGenerator
         return this.itemHelper.getItem(chosenModResult.chosenTpl!);
     }
 
+    /**
+     *
+     * @param modPool Pool of mods that can be picked from
+     * @param parentSlot Slot the picked mod will have as a parent
+     * @param choiceTypeEnum How should chosen tpl be treated: DEFAULT_MOD/SPAWN/SKIP
+     * @param weapon Array of weapon items chosen item will be added to
+     * @param modSlotName Name of slot picked mod will be placed into
+     * @returns Chosen weapon details
+     */
     protected pickWeaponModTplForSlotFromPool(
         modPool: string[],
         parentSlot: Slot,
-        modSpawnResult: ModSpawn,
+        choiceTypeEnum: ModSpawn,
         weapon: Item[],
-        modSlotname: string,
+        modSlotName: string,
     ): IChooseRandomCompatibleModResult
     {
         let chosenTpl: string;
@@ -901,7 +922,7 @@ export class BotEquipmentModGenerator
         while (exhaustableModPool.hasValues())
         {
             chosenTpl = exhaustableModPool.getRandomValue()!;
-            if (modSpawnResult === ModSpawn.DEFAULT_MOD && modPool.length === 1)
+            if (choiceTypeEnum === ModSpawn.DEFAULT_MOD && modPool.length === 1)
             {
                 // Default mod wanted and only one choice in pool
                 chosenModResult.found = true;
@@ -922,7 +943,7 @@ export class BotEquipmentModGenerator
             chosenModResult = this.botGeneratorHelper.isWeaponModIncompatibleWithCurrentMods(
                 weapon,
                 chosenTpl,
-                modSlotname,
+                modSlotName,
             );
 
             if (chosenModResult.slotBlocked)
@@ -961,17 +982,17 @@ export class BotEquipmentModGenerator
      * Is slot required
      * Is slot flagged as default mod only
      * @param itemModPool Existing pool of mods to choose
-     * @param modSpawnResult outcome of random roll to select if mod should be added
+     * @param itemSpawnCategory How should slot be handled
      * @param parentTemplate Mods parent
      * @param weaponTemplate Mods root parent (weapon/equipment)
      * @param modSlot name of mod slot to choose for
-     * @param botEquipBlacklist
-     * @param isRandomisableSlot is flagged as a randomisable slot
-     * @returns
+     * @param botEquipBlacklist A blacklist of items not allowed to be picked
+     * @param isRandomisableSlot Slot is flagged as a randomisable slot
+     * @returns Array of mod tpls
      */
     protected getModPoolForSlot(
         itemModPool: Record<string, string[]>,
-        modSpawnResult: ModSpawn,
+        itemSpawnCategory: ModSpawn,
         parentTemplate: ITemplateItem,
         weaponTemplate: ITemplateItem,
         modSlot: string,
@@ -980,7 +1001,7 @@ export class BotEquipmentModGenerator
     ): string[]
     {
         // Mod is flagged as being default only, try and find it in globals
-        if (modSpawnResult === ModSpawn.DEFAULT_MOD)
+        if (itemSpawnCategory === ModSpawn.DEFAULT_MOD)
         {
             const matchingPreset = this.getMatchingPreset(weaponTemplate, parentTemplate._id);
             const matchingModFromPreset = matchingPreset?._items.find(
@@ -1037,9 +1058,9 @@ export class BotEquipmentModGenerator
     }
 
     /**
-     * Get default preset for weapon, get specific weapon presets for edge cases (mp5/silenced dvl)
-     * @param weaponTemplate
-     * @param parentItemTpl
+     * Get default preset for weapon OR get specific weapon presets for edge cases (mp5/silenced dvl)
+     * @param weaponTemplate Weapons db template
+     * @param parentItemTpl Tpl of the parent item
      * @returns Default preset found
      */
     protected getMatchingPreset(weaponTemplate: ITemplateItem, parentItemTpl: string): IPreset | undefined
@@ -1063,7 +1084,7 @@ export class BotEquipmentModGenerator
 
     /**
      * Temp fix to prevent certain combinations of weapons with mods that are known to be incompatible
-     * @param weapon Weapon
+     * @param weapon Array of items that make up a weapon
      * @param modTpl Mod to check compatibility with weapon
      * @returns True if incompatible
      */
@@ -1079,12 +1100,13 @@ export class BotEquipmentModGenerator
     }
 
     /**
-     * Create a mod item with parameters as properties
+     * Create a mod item with provided parameters as properties + add upd property
      * @param modId _id
      * @param modTpl _tpl
      * @param parentId parentId
      * @param modSlot slotId
      * @param modTemplate Used to add additional properties in the upd object
+     * @param botRole The bots role mod is being created for
      * @returns Item object
      */
     protected createModItem(
@@ -1117,14 +1139,14 @@ export class BotEquipmentModGenerator
 
     /**
      * Get a random mod from an items compatible mods Filter array
-     * @param modTpl ???? default value to return if nothing found
-     * @param parentSlot item mod will go into, used to get compatible items
+     * @param fallbackModTpl Default value to return if parentSlot Filter is empty
+     * @param parentSlot Item mod will go into, used to get compatible items
      * @param modSlot Slot to get mod to fill
-     * @param items items to ensure picked mod is compatible with
-     * @returns item tpl
+     * @param items Items to ensure picked mod is compatible with
+     * @returns Item tpl
      */
     protected getRandomModTplFromItemDb(
-        modTpl: string,
+        fallbackModTpl: string,
         parentSlot: Slot,
         modSlot: string,
         items: Item[],
@@ -1135,7 +1157,7 @@ export class BotEquipmentModGenerator
 
         // Find mod item that fits slot from sorted mod array
         const exhaustableModPool = new ExhaustableArray(allowedItems, this.randomUtil, this.cloner);
-        let tmpModTpl = modTpl;
+        let tmpModTpl = fallbackModTpl;
         while (exhaustableModPool.hasValues())
         {
             tmpModTpl = exhaustableModPool.getRandomValue()!;
@@ -1155,8 +1177,8 @@ export class BotEquipmentModGenerator
      * @param slotAddedToTemplate Slot object the item will be placed as child into
      * @param modSlot Slot the mod will fill
      * @param parentTemplate Db template of the mods being added
-     * @param botRole Bots wildspawntype (assault/pmcBot etc)
-     * @returns true if valid
+     * @param botRole Bots wildspawntype (assault/pmcBot/exUsec etc)
+     * @returns True if valid for slot
      */
     protected isModValidForSlot(
         modToAdd: [boolean, ITemplateItem],
@@ -1207,9 +1229,10 @@ export class BotEquipmentModGenerator
 
     /**
      * Find mod tpls of a provided type and add to modPool
-     * @param desiredSlotName slot to look up and add we are adding tpls for (e.g mod_scope)
+     * @param desiredSlotName Slot to look up and add we are adding tpls for (e.g mod_scope)
      * @param modTemplate db object for modItem we get compatible mods from
      * @param modPool Pool of mods we are adding to
+     * @param botEquipBlacklist A blacklist of items that cannot be picked
      */
     protected addCompatibleModsForProvidedMod(
         desiredSlotName: string,
@@ -1255,8 +1278,8 @@ export class BotEquipmentModGenerator
      * Get the possible items that fit a slot
      * @param parentItemId item tpl to get compatible items for
      * @param modSlot Slot item should fit in
-     * @param botEquipBlacklist equipment that should not be picked
-     * @returns array of compatible items for that slot
+     * @param botEquipBlacklist Equipment that should not be picked
+     * @returns Array of compatible items for that slot
      */
     protected getDynamicModPool(
         parentItemId: string,
@@ -1282,9 +1305,9 @@ export class BotEquipmentModGenerator
 
     /**
      * Take a list of tpls and filter out blacklisted values using itemFilterService + botEquipmentBlacklist
-     * @param allowedMods base mods to filter
-     * @param botEquipBlacklist equipment blacklist
-     * @param modSlot slot mods belong to
+     * @param allowedMods Base mods to filter
+     * @param botEquipBlacklist Equipment blacklist
+     * @param modSlot Slot mods belong to
      * @returns Filtered array of mod tpls
      */
     protected filterWeaponModsByBlacklist(
@@ -1293,6 +1316,7 @@ export class BotEquipmentModGenerator
         modSlot: string,
     ): string[]
     {
+        // No blacklist, nothing to filter out
         if (!botEquipBlacklist)
         {
             return allowedMods;
@@ -1315,30 +1339,34 @@ export class BotEquipmentModGenerator
      * Ammo is not put into the magazine directly but assigned to the magazine's slots: The "camora_xxx" slots.
      * This function is a helper called by generateModsForItem for mods with parent type "CylinderMagazine"
      * @param items The items where the CylinderMagazine's camora are appended to
-     * @param modPool modPool which should include available cartridges
-     * @param parentId The CylinderMagazine's UID
-     * @param parentTemplate The CylinderMagazine's template
+     * @param modPool ModPool which should include available cartridges
+     * @param cylinderMagParentId The CylinderMagazine's UID
+     * @param cylinderMagTemplate The CylinderMagazine's template
      */
-    protected fillCamora(items: Item[], modPool: Mods, parentId: string, parentTemplate: ITemplateItem): void
+    protected fillCamora(
+        items: Item[],
+        modPool: Mods,
+        cylinderMagParentId: string,
+        cylinderMagTemplate: ITemplateItem): void
     {
-        let itemModPool = modPool[parentTemplate._id];
+        let itemModPool = modPool[cylinderMagTemplate._id];
         if (!itemModPool)
         {
             this.logger.warning(
                 this.localisationService.getText("bot-unable_to_fill_camora_slot_mod_pool_empty", {
-                    weaponId: parentTemplate._id,
-                    weaponName: parentTemplate._name,
+                    weaponId: cylinderMagTemplate._id,
+                    weaponName: cylinderMagTemplate._name,
                 }),
             );
-            const camoraSlots = parentTemplate._props.Slots.filter((slot) => slot._name.startsWith("camora"));
+            const camoraSlots = cylinderMagTemplate._props.Slots.filter((slot) => slot._name.startsWith("camora"));
 
             // Attempt to generate camora slots for item
-            modPool[parentTemplate._id] = {};
+            modPool[cylinderMagTemplate._id] = {};
             for (const camora of camoraSlots)
             {
-                modPool[parentTemplate._id][camora._name] = camora._props.filters[0].Filter;
+                modPool[cylinderMagTemplate._id][camora._name] = camora._props.filters[0].Filter;
             }
-            itemModPool = modPool[parentTemplate._id];
+            itemModPool = modPool[cylinderMagTemplate._id];
         }
 
         let exhaustableModPool = undefined;
@@ -1352,14 +1380,14 @@ export class BotEquipmentModGenerator
         {
             modSlot = camoraFirstSlot;
             exhaustableModPool = new ExhaustableArray(
-                this.mergeCamoraPoolsTogether(itemModPool),
+                this.mergeCamoraPools(itemModPool),
                 this.randomUtil,
                 this.cloner,
             );
         }
         else
         {
-            this.logger.error(this.localisationService.getText("bot-missing_cartridge_slot", parentTemplate._id));
+            this.logger.error(this.localisationService.getText("bot-missing_cartridge_slot", cylinderMagTemplate._id));
 
             return;
         }
@@ -1383,36 +1411,29 @@ export class BotEquipmentModGenerator
             return;
         }
 
-        for (const slot of parentTemplate._props.Slots)
+        for (const slot of cylinderMagTemplate._props.Slots)
         {
             const modSlotId = slot._name;
             const modId = this.hashUtil.generate();
-            items.push({ _id: modId, _tpl: modTpl, parentId: parentId, slotId: modSlotId });
+            items.push({ _id: modId, _tpl: modTpl, parentId: cylinderMagParentId, slotId: modSlotId });
         }
     }
 
     /**
      * Take a record of camoras and merge the compatible shells into one array
-     * @param camorasWithShells camoras we want to merge into one array
-     * @returns string array of shells for multiple camora sources
+     * @param camorasWithShells Dictionary of camoras we want to merge into one array
+     * @returns String array of shells for multiple camora sources
      */
-    protected mergeCamoraPoolsTogether(camorasWithShells: Record<string, string[]>): string[]
+    protected mergeCamoraPools(camorasWithShells: Record<string, string[]>): string[]
     {
-        const poolResult: string[] = [];
-        for (const camoraKey in camorasWithShells)
+        const uniqueShells = new Set<string>();
+        for (const shells of Object.values(camorasWithShells))
         {
-            const shells = camorasWithShells[camoraKey];
-            for (const shell of shells)
-            {
-                // Only add distinct shells
-                if (!poolResult.includes(shell))
-                {
-                    poolResult.push(shell);
-                }
-            }
+            // Add all shells to the set.
+            shells.forEach((shell) => uniqueShells.add(shell));
         }
 
-        return poolResult;
+        return Array.from(uniqueShells);
     }
 
     /**

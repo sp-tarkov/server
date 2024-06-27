@@ -1010,6 +1010,7 @@ export class QuestHelper
         const matchingProductions = hideoutProductions.filter(
             (prod) =>
                 prod.areaType === Number.parseInt(craftUnlockReward.traderId)
+                && prod.requirements.some((requirement) => requirement.questId === questDetails._id)
                 && prod.requirements.some((x) => x.requiredLevel === craftUnlockReward.loyaltyLevel)
                 && prod.endProduct === craftUnlockReward.items[0]._tpl
                 && prod.count === (craftUnlockReward.items[0].upd?.StackObjectsCount ?? 1),

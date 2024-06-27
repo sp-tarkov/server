@@ -1240,11 +1240,20 @@
         "PraporGiftDay2": {
             "items": [
                 {
+                    "_id": "a89275c1b18874ed7452a6d6",
+                    "_tpl": "5751a25924597722c463c472",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "64b996c9d0de4697180359b6"
+                },
+				{
                     "_id": "a89275c1b18874ed7452a6d7",
                     "_tpl": "5751a25924597722c463c472",
                     "slotId": "main",
                     "upd": {
-                        "StackObjectsCount": 2
+                        "StackObjectsCount": 1
                     },
                     "parentId": "64b996c9d0de4697180359b6"
                 },
@@ -1258,11 +1267,29 @@
                     "parentId": "64b996c9d0de4697180359b6"
                 },
                 {
+                    "_id": "a8927tgyb15674ed6d02oyj5",
+                    "_tpl": "5755356824597772cb798962",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "64b996c9d0de4697180359b6"
+                },
+                {
+                    "_id": "a8927tgyb15674ed6d02oyj6",
+                    "_tpl": "5755356824597772cb798962",
+                    "slotId": "main",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "64b996c9d0de4697180359b6"
+                },
+                {
                     "_id": "a8927tgyb15674ed6d02oyj7",
                     "_tpl": "5755356824597772cb798962",
                     "slotId": "main",
                     "upd": {
-                        "StackObjectsCount": 3
+                        "StackObjectsCount": 1
                     },
                     "parentId": "64b996c9d0de4697180359b6"
                 }

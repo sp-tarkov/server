@@ -1,4 +1,4 @@
-import { LinkedList } from "../lists/LinkedList";
+import { LinkedList } from "@spt/utils/collections/lists/LinkedList";
 
 export class Queue<T>
 {

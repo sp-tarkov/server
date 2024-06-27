@@ -50,10 +50,17 @@ export class LootGenerator
         const itemTypeCounts = this.initItemLimitCounter(options.itemLimits);
 
         const itemsDb = this.databaseService.getItems();
-        const itemBlacklist = new Set<string>([
+        let itemBlacklist = new Set<string>([
             ...this.itemFilterService.getBlacklistedItems(),
             ...options.itemBlacklist,
         ]);
+
+        if (options.useRewarditemBlacklist)
+        {
+            const itemsToAdd = this.itemFilterService.getItemRewardBlacklist();
+            itemBlacklist = new Set([...itemBlacklist, ...itemsToAdd]);
+        }
+
         if (!options.allowBossItems)
         {
             for (const bossItem of this.itemFilterService.getBossItems())

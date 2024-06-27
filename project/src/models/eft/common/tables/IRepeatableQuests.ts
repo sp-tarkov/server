@@ -1,4 +1,4 @@
-import { IQuest, IQuestConditionTypes, IQuestRewards } from "./IQuest";
+import { IQuest, IQuestConditionTypes, IQuestRewards } from "@spt/models/eft/common/tables/IQuest";
 
 export interface IRepeatableQuest extends IQuest
 {

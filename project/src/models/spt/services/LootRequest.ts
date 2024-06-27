@@ -13,4 +13,5 @@ export interface LootRequest
     itemStackLimits: Record<string, MinMax>
     armorLevelWhitelist: number[]
     allowBossItems: boolean
+    useRewarditemBlacklist?: boolean
 }

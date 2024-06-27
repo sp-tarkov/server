@@ -420,7 +420,7 @@ export class RagfairController
             return this.httpResponse.appendErrorToOutput(output, validationMessage);
         }
 
-        // Get an array of items from player inventory to list on flea
+        // Find items to be listed on flea from player inventory
         const { items: itemsInInventoryToList, errorMessage: itemsInInventoryError }
             = this.getItemsToListOnFleaFromInventory(pmcData, offerRequest.items);
         if (!itemsInInventoryToList || itemsInInventoryError)
@@ -439,7 +439,7 @@ export class RagfairController
         const rootItem = offer.items[0];
 
         // Get average of items quality+children
-        const qualityMultiplier = this.itemHelper.getItemQualityModifierForOfferItems(offer.items);
+        const qualityMultiplier = this.itemHelper.getItemQualityModifierForItems(offer.items, true);
         let averageOfferPrice = this.ragfairPriceService.getFleaPriceForOfferItems(offer.items);
 
         // Check for and apply item price modifer if it exists

@@ -447,6 +447,24 @@
                     ],
                     "rewardCanBeWeapon": false,
                     "weaponRewardChancePercent": 0
+                },
+				{
+                    "traderId": "6617beeaa9cfa777ca915b7c",
+                    "name": "ref",
+                    "questTypes": [
+                        "Completion",
+                        "Exploration",
+                        "Elimination"
+                    ],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5485a8684bdc2da71d8b4567",
+                        "590c745b86f7743cc433c5f2",
+                        "57864c322459775490116fbf",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
                 }
             ],
             "questConfig": {

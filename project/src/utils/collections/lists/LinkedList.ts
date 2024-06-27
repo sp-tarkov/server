@@ -1,4 +1,4 @@
-import { LinkedListNode } from "./Nodes";
+import { LinkedListNode } from "@spt/utils/collections/lists/Nodes";
 
 export class LinkedList<T>
 {

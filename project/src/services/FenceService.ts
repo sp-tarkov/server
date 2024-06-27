@@ -1035,7 +1035,7 @@ export class FenceService
                 const priceLimitRouble = this.traderConfig.fence.itemCategoryRoublePriceLimit[rootItemDb._parent];
                 const itemPrice
                     = this.handbookHelper.getTemplatePriceForItems(presetWithChildrenClone)
-                    * this.itemHelper.getItemQualityModifierForOfferItems(presetWithChildrenClone);
+                    * this.itemHelper.getItemQualityModifierForItems(presetWithChildrenClone);
                 if (priceLimitRouble)
                 {
                     if (itemPrice > priceLimitRouble)
@@ -1100,7 +1100,7 @@ export class FenceService
             const priceLimitRouble = this.traderConfig.fence.itemCategoryRoublePriceLimit[rootItemDb._parent];
             const itemPrice
                 = this.handbookHelper.getTemplatePriceForItems(presetWithChildrenClone)
-                * this.itemHelper.getItemQualityModifierForOfferItems(presetWithChildrenClone);
+                * this.itemHelper.getItemQualityModifierForItems(presetWithChildrenClone);
             if (priceLimitRouble)
             {
                 if (itemPrice > priceLimitRouble)

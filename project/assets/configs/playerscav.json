@@ -762,7 +762,7 @@
             },
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 3,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         },
         "2": {
@@ -849,7 +849,7 @@
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 6,
                 "62178c4d4ecf221597654e3d": 3,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         },
         "3": {
@@ -948,7 +948,7 @@
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 11,
                 "62178c4d4ecf221597654e3d": 8,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         },
         "4": {
@@ -1049,7 +1049,7 @@
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 17,
                 "62178c4d4ecf221597654e3d": 13,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         },
         "5": {
@@ -1150,7 +1150,7 @@
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 22,
                 "62178c4d4ecf221597654e3d": 18,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         },
         "6": {
@@ -1267,7 +1267,7 @@
             "lootItemsToAddChancePercent": {
                 "5c94bbff86f7747ee735c08f": 27,
                 "62178c4d4ecf221597654e3d": 23,
-                "64d4b23dc1b37504b41ac2b6": 10
+                "64d4b23dc1b37504b41ac2b6": 3
             }
         }
     }

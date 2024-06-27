@@ -105,7 +105,7 @@
     "VisibleDistance": 1
   },
   "BotMarksman": 0,
-  "BotMax": 0,
+  "BotMax": 20,
   "BotMaxPlayer": 0,
   "BotMaxPvE": 20,
   "BotMaxTimePlayer": 0,
@@ -124,7 +124,7 @@
   "DisabledScavExits": "Cellars,Gate 0",
   "EnableCoop": true,
   "Enabled": true,
-  "EscapeTimeLimit": 20,
+  "EscapeTimeLimit": 19,
   "EscapeTimeLimitCoop": 15,
   "EscapeTimeLimitPVE": 19,
   "GenerateLocalLootCache": true,
@@ -3866,6 +3866,7 @@
     {
       "Chance": 100,
       "ChancePVE": 100,
+      "Count": 0,
       "CountPVE": 0,
       "EntryPoints": "Factory",
       "EventAvailable": false,
@@ -3883,6 +3884,7 @@
     {
       "Chance": 100,
       "ChancePVE": 100,
+      "Count": 0,
       "CountPVE": 0,
       "EntryPoints": "Factory",
       "EventAvailable": false,
@@ -3900,6 +3902,7 @@
     {
       "Chance": 100,
       "ChancePVE": 100,
+      "Count": 0,
       "CountPVE": 0,
       "EntryPoints": "Factory",
       "EventAvailable": false,
@@ -3917,6 +3920,7 @@
     {
       "Chance": 100,
       "ChancePVE": 100,
+      "Count": 0,
       "CountPVE": 0,
       "EntryPoints": "Factory",
       "EventAvailable": false,

@@ -75,6 +75,11 @@ export class ProfileController
     public getMiniProfile(sessionID: string): IMiniProfile
     {
         const profile = this.saveServer.getProfile(sessionID);
+        if (!profile || !profile.characters)
+        {
+            throw new Error(`Unable to find character data for id: ${sessionID}. Profile may be corrupt`);
+        }
+
         const pmc = profile.characters.pmc;
         const maxlvl = this.profileHelper.getMaxLevel();
 

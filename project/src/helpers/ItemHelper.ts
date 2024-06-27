@@ -503,9 +503,10 @@ export class ItemHelper
     /**
      * Calcualte the average quality of an item and its children
      * @param items An offers item to process
+     * @param skipArmorItemsWithoutDurability Skip over armor items without durability
      * @returns % quality modifer between 0 and 1
      */
-    public getItemQualityModifierForOfferItems(items: Item[]): number
+    public getItemQualityModifierForItems(items: Item[], skipArmorItemsWithoutDurability?: boolean): number
     {
         if (this.isOfBaseclass(items[0]._tpl, BaseClasses.WEAPON))
         {
@@ -513,23 +514,42 @@ export class ItemHelper
         }
 
         let qualityModifier = 0;
+        let itemsWithQualityCount = 0;
         for (const item of items)
         {
-            qualityModifier += this.getItemQualityModifier(item);
+            const result = this.getItemQualityModifier(item, skipArmorItemsWithoutDurability);
+            if (result === -1)
+            {
+                continue;
+            }
+
+            qualityModifier += result;
+            itemsWithQualityCount++;
         }
 
-        return Math.min(qualityModifier / items.length, 1);
+        return Math.min(qualityModifier / itemsWithQualityCount, 1);
     }
 
     /**
      * get normalized value (0-1) based on item condition
+     * Will return -1 for base armor items with 0 durability
      * @param item
-     * @returns number between 0 and 1
+     * @param skipArmorItemsWithoutDurability return -1 for armor items that have maxdurability of 0
+     * @returns Number between 0 and 1
      */
-    public getItemQualityModifier(item: Item): number
+    public getItemQualityModifier(item: Item, skipArmorItemsWithoutDurability?: boolean): number
     {
         // Default to 100%
         let result = 1;
+
+        // Is armor and has 0 max durability
+        const itemDetails = this.getItem(item._tpl)[1];
+        if (skipArmorItemsWithoutDurability
+          && this.isOfBaseclass(item._tpl, BaseClasses.ARMOR)
+          && itemDetails._props.MaxDurability === 0)
+        {
+            return -1;
+        }
 
         if (item.upd)
         {
@@ -539,8 +559,6 @@ export class ItemHelper
             const key = item.upd.Key ? item.upd.Key : undefined;
             const resource = item.upd.Resource ? item.upd.Resource : undefined;
             const repairKit = item.upd.RepairKit ? item.upd.RepairKit : undefined;
-
-            const itemDetails = this.getItem(item._tpl)[1];
 
             if (medkit)
             {
@@ -582,7 +600,7 @@ export class ItemHelper
             return result;
         }
 
-        return 1;
+        return result;
     }
 
     /**

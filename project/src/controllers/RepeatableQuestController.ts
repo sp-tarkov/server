@@ -178,6 +178,10 @@ export class RepeatableQuestController
                 };
             }
 
+            // Reset free repeatable values in player profile to defaults
+            generatedRepeatables.freeChanges = repeatableConfig.freeChanges;
+            generatedRepeatables.freeChangesAvailable = repeatableConfig.freeChanges;
+
             returnData.push({
                 id: repeatableConfig.id,
                 name: generatedRepeatables.name,
@@ -186,8 +190,7 @@ export class RepeatableQuestController
                 inactiveQuests: generatedRepeatables.inactiveQuests,
                 changeRequirement: generatedRepeatables.changeRequirement,
                 freeChanges: generatedRepeatables.freeChanges,
-                freeChangesAvailable: generatedRepeatables.freeChanges
-                - (fullProfile.spt.freeRepeatableRefreshUsedCount[repeatableTypeLower] ?? 0), // Total minus how many used, could return 0 as we just reset them
+                freeChangesAvailable: generatedRepeatables.freeChanges,
             });
         }
 

@@ -9,9 +9,9 @@ import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
+import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { ISptWebSocketMessageHandler } from "./message/ISptWebSocketMessageHandler";
 
 @injectable()
 export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandler

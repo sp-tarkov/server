@@ -90,7 +90,7 @@
   "BotSpawnTimeOnMax": 350,
   "BotSpawnTimeOnMin": 340,
   "BotStart": 20,
-  "BotStartPlayer": 200,
+  "BotStartPlayer": 0,
   "BotStop": 2400,
   "Description": "The South-Eastern highway interchange is a critical point in the transportation system of the city. Essentially, it is a strategical node connecting the port and harbour infrastructure with the industrial outskirts of Tarkov. ",
   "DisabledForScav": false,
