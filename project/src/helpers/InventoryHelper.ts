@@ -232,7 +232,7 @@ export class InventoryHelper
         const stashFS2D = this.cloner.clone(this.getStashSlotMap(pmcData, sessionId));
         for (const itemWithChildren of itemsWithChildren)
         {
-            if (this.canPlaceItemInContainer(stashFS2D, itemWithChildren))
+            if (!this.canPlaceItemInContainer(stashFS2D, itemWithChildren))
             {
                 return false;
             }
@@ -251,7 +251,7 @@ export class InventoryHelper
     {
         for (const itemWithChildren of itemsWithChildren)
         {
-            if (this.canPlaceItemInContainer(containerFS2D, itemWithChildren))
+            if (!this.canPlaceItemInContainer(containerFS2D, itemWithChildren))
             {
                 return false;
             }
@@ -296,10 +296,10 @@ export class InventoryHelper
             }
 
             // Success! exit
-            return;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
