@@ -41,6 +41,7 @@ import { PmcChatResponseService } from "@spt/services/PmcChatResponseService";
 import { TraderServicesService } from "@spt/services/TraderServicesService";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 
 /**
  * Logic for handling In Raid callbacks
@@ -55,6 +56,7 @@ export class InraidController
     protected locationConfig: ILocationConfig;
     protected ragfairConfig: IRagfairConfig;
     protected hideoutConfig: IHideoutConfig;
+    protected botConfig: IBotConfig;
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
@@ -86,6 +88,7 @@ export class InraidController
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
         this.hideoutConfig = this.configServer.getConfig(ConfigTypes.HIDEOUT);
+        this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
     }
 
     /**
@@ -711,5 +714,10 @@ export class InraidController
     public getSandboxMaxPatrolValue(url: string, sessionID: string): number
     {
         return this.locationConfig.sandboxMaxPatrolvalue;
+    }
+
+    public getBossConvertSettings(url: string, sessionId: string): string[]
+    {
+        return Object.keys(this.botConfig.assaultToBossConversion.bossesToConvertToWeights);
     }
 }

@@ -110,4 +110,9 @@ export class InraidCallbacks
     {
         return this.httpResponse.noBody(this.inraidController.getSandboxMaxPatrolValue(url, sessionId));
     }
+
+    public getBossConvertSettings(url: string, info: IEmptyRequestData, sessionId: string): string
+    {
+        return this.httpResponse.noBody(this.inraidController.getBossConvertSettings(url, sessionId))
+    }
 }

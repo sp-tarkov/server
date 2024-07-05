@@ -65,6 +65,13 @@ export class InraidStaticRouter extends StaticRouter
                     return this.inraidCallbacks.getSandboxMaxPatrolValue(url, info, sessionID);
                 },
             ),
+            new RouteAction(
+                "/singleplayer/BossConvert",
+                async (url: string, info: any, sessionID: string, output: string): Promise<string> =>
+                {
+                    return this.inraidCallbacks.getBossConvertSettings(url, info, sessionID);
+                },
+            ),
         ]);
     }
 }
