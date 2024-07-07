@@ -167,10 +167,10 @@ export class ProfileCallbacks
         url: string,
         info: IGetProfileSettingsRequest,
         sessionId: string,
-    ): IGetBodyResponseData<string>
+    ): IGetBodyResponseData<boolean>
     {
-        this.profileController.setChosenProfileIcon(sessionId, info);
-        return this.httpResponse.emptyResponse();
+        
+        return this.httpResponse.getBody(this.profileController.setChosenProfileIcon(sessionId, info));
     }
 
     /**

@@ -489,14 +489,15 @@ export class ProfileController
     /**
      * Handle client/profile/settings
      */
-    public setChosenProfileIcon(sessionId: string, request: IGetProfileSettingsRequest): void
+    public setChosenProfileIcon(sessionId: string, request: IGetProfileSettingsRequest): boolean
     {
         const profileToUpdate = this.profileHelper.getPmcProfile(sessionId);
         if (!profileToUpdate)
         {
-            return;
+            return false;
         }
 
         profileToUpdate.Info.SelectedMemberCategory = request.memberCategory;
+        return true;
     }
 }

@@ -126,7 +126,7 @@ export class ProfileStaticRouter extends StaticRouter
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<string>> =>
+                ): Promise<IGetBodyResponseData<boolean>> =>
                 {
                     return this.profileCallbacks.getProfileSettings(url, info, sessionID);
                 },
