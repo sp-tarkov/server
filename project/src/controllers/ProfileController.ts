@@ -497,7 +497,16 @@ export class ProfileController
             return false;
         }
 
-        profileToUpdate.Info.SelectedMemberCategory = request.memberCategory;
+        if (request.memberCategory !== null)
+        {
+            profileToUpdate.Info.SelectedMemberCategory = request.memberCategory;
+        }
+        
+        if(request.squadInviteRestriction !== null)
+        {
+            profileToUpdate.Info.SquadInviteRestriction = request.squadInviteRestriction;
+        }
+
         return true;
     }
 }
