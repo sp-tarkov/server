@@ -121,6 +121,7 @@ export interface IUserDialogDetails
     Side: string
     Level: number
     MemberCategory: MemberCategory
+    SelectedMemberCategory: MemberCategory
 }
 
 // @Cleanup: Maybe the same as Dialogue?
