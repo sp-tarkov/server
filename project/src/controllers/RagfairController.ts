@@ -536,7 +536,7 @@ export class RagfairController
         let total = 0;
         for (const item of itemsInInventoryToList)
         {
-            if (item.parentId === "hideout")
+            if (item.slotId === "hideout")
             {
                 total += item.upd?.StackObjectsCount ?? 1;
             }
