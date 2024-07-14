@@ -472,6 +472,8 @@ export class RagfairController
 
         // Get average of items quality+children
         const qualityMultiplier = this.itemHelper.getItemQualityModifierForItems(offer.items, true);
+
+        // Average offer price for single item (or whole weapon)
         let averageOfferPrice = this.ragfairPriceService.getFleaPriceForOfferItems(offer.items);
 
         // Check for and apply item price modifer if it exists in config
@@ -719,12 +721,7 @@ export class RagfairController
         const loyalLevel = 1;
         const formattedItems: Item[] = items.map((item) =>
         {
-            const isChild = items.some((it) => it._id === item.parentId);
-            if (!isChild && !sellInOnePiece)
-            {
-                // Ensure offer with multiple of an item has its stack count reset
-                item.upd.StackObjectsCount = 1;
-            }
+            const isChild = items.some((item) => item._id === item.parentId);
 
             return {
                 _id: item._id,
