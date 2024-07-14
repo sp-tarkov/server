@@ -122,7 +122,7 @@ export class RagfairPriceService implements OnLoad
         let totalPrice = 0;
         for (const item of offerItems)
         {
-            totalPrice += this.getFleaPriceForItem(item._tpl);
+            totalPrice += this.getFleaPriceForItem(item._tpl) * item.upd?.StackObjectsCount ?? 1;
         }
 
         return totalPrice;
