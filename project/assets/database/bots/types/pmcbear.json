@@ -509,7 +509,8 @@
         "TIME_TO_FIND_ENEMY": 8,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 180,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
-        "WARN_BOT_TYPES": []
+        "WARN_BOT_TYPES": [],
+        "BOSS_IGNORE_LOYALTY": true
       },
       "Move": {
         "BASESTART_SLOW_DIST": 1.1,
@@ -1011,7 +1012,8 @@
         "TIME_TO_FIND_ENEMY": 8,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 180,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
-        "WARN_BOT_TYPES": []
+        "WARN_BOT_TYPES": [],
+        "BOSS_IGNORE_LOYALTY": true
       },
       "Move": {
         "BASESTART_SLOW_DIST": 1.1,
@@ -1514,7 +1516,8 @@
         "TIME_TO_FIND_ENEMY": 8,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 180,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
-        "WARN_BOT_TYPES": []
+        "WARN_BOT_TYPES": [],
+        "BOSS_IGNORE_LOYALTY": true
       },
       "Move": {
         "BASESTART_SLOW_DIST": 1.1,
@@ -2019,7 +2022,8 @@
         "TIME_TO_FIND_ENEMY": 8,
         "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 180,
         "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
-        "WARN_BOT_TYPES": []
+        "WARN_BOT_TYPES": [],
+        "BOSS_IGNORE_LOYALTY": true
       },
       "Move": {
         "BASESTART_SLOW_DIST": 1.1,
