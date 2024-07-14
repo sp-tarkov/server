@@ -474,24 +474,21 @@ export class RagfairController
         const qualityMultiplier = this.itemHelper.getItemQualityModifierForItems(offer.items, true);
 
         // Average offer price for single item (or whole weapon)
-        let averageOfferPrice = this.ragfairPriceService.getFleaPriceForOfferItems(offer.items);
+        let averageOfferPriceSingleItem = this.ragfairPriceService.getFleaPriceForOfferItems(offer.items);
 
         // Check for and apply item price modifer if it exists in config
         const itemPriceModifer = this.ragfairConfig.dynamic.itemPriceMultiplier[rootItem._tpl];
         if (itemPriceModifer)
         {
-            averageOfferPrice *= itemPriceModifer;
+            averageOfferPriceSingleItem *= itemPriceModifer;
         }
 
         // Multiply single item price by quality
-        averageOfferPrice *= qualityMultiplier;
-
-        // Normal offer, single items can be purchased from listing
-        const averageSingleItemPrice = averageOfferPrice / totalItemsToList;
+        averageOfferPriceSingleItem *= qualityMultiplier;
 
         // Packs are reduced to the average price of a single item in the pack vs the averaged single price of an item
         const sellChancePercent = this.ragfairSellHelper.calculateSellChance(
-            averageSingleItemPrice,
+            averageOfferPriceSingleItem,
             playerListedPriceInRub,
             qualityMultiplier,
         );
