@@ -458,7 +458,7 @@ export class RagfairController
         }
 
         // Total count of items summed using their stack counts
-        const totalItemsToList = this.getTotalStackCountSize(itemsInInventoryToList);
+        const stackCountTotal = this.getTotalStackCountSize(itemsInInventoryToList);
 
         // Checks are done, create the offer
         const playerListedPriceInRub = this.calculateRequirementsPriceInRub(offerRequest.requirements);
@@ -502,7 +502,7 @@ export class RagfairController
                 rootItem,
                 pmcData,
                 playerListedPriceInRub,
-                totalItemsToList,
+                stackCountTotal,
                 offerRequest,
                 output,
             );
