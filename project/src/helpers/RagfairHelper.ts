@@ -147,7 +147,7 @@ export class RagfairHelper
     }
 
     /**
-     * Merges Root Items
+     * Iterate over array of identical items and merge stack count
      * Ragfair allows abnormally large stacks.
      */
     public mergeStackable(items: Item[]): Item[]

@@ -65,9 +65,10 @@ export class RagfairSellHelper
      * Get array of item count and sell time (empty array = no sell)
      * @param sellChancePercent chance item will sell
      * @param itemSellCount count of items to sell
+     * @param sellInOneGo All items listed get sold at once
      * @returns Array of purchases of item(s) listed
      */
-    public rollForSale(sellChancePercent: number, itemSellCount: number): SellResult[]
+    public rollForSale(sellChancePercent: number, itemSellCount: number, sellInOneGo = false): SellResult[]
     {
         const startTime = this.timeUtil.getTimestamp();
 
@@ -103,7 +104,9 @@ export class RagfairSellHelper
 
         while (remainingCount > 0 && sellTime < endTime)
         {
-            const boughtAmount = this.randomUtil.getInt(1, remainingCount);
+            const boughtAmount = (sellInOneGo)
+                ? remainingCount
+                : this.randomUtil.getInt(1, remainingCount);
             if (this.randomUtil.getChance100(effectiveSellChance))
             {
                 // Passed roll check, item will be sold

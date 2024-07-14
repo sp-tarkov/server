@@ -333,7 +333,8 @@ export class RagfairOfferHelper
 
         for (const offer of profileOffers.values())
         {
-            if (offer.sellResult && offer.sellResult.length > 0 && timestamp >= offer.sellResult[0].sellTime)
+            if (offer.sellResult?.length > 0
+              && timestamp >= offer.sellResult[0].sellTime)
             {
                 // Item sold
                 let totalItemsCount = 1;
@@ -341,7 +342,8 @@ export class RagfairOfferHelper
 
                 if (!offer.sellInOnePiece)
                 {
-                    totalItemsCount = offer.items.reduce((sum: number, item) => sum + item.upd.StackObjectsCount, 0);
+                    // offer.items.reduce((sum, item) => sum + item.upd?.StackObjectsCount ?? 0, 0);
+                    totalItemsCount = this.getTotalStackCountSize([offer.items]);
                     boughtAmount = offer.sellResult[0].amount;
                 }
 
@@ -356,6 +358,28 @@ export class RagfairOfferHelper
         }
 
         return true;
+    }
+
+    /**
+     * Count up all rootitem StackObjectsCount properties of an array of items
+     * @param itemsInInventoryToList items to sum up
+     * @returns Total count
+     */
+    public getTotalStackCountSize(itemsInInventoryToList: Item[][]): number
+    {
+        let total = 0;
+        for (const itemAndChildren of itemsInInventoryToList)
+        {
+            for (const item of itemAndChildren)
+            {
+                if (item.slotId === "hideout")
+                {
+                    total += item.upd?.StackObjectsCount ?? 1;
+                }
+            }
+        }
+
+        return total;
     }
 
     /**
