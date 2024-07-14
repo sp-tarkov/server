@@ -432,10 +432,9 @@ export class RagfairController
             case FleaOfferType.SINGLE:
                 return this.createSingleOffer(sessionID, offerRequest, fullProfile, output);
             case FleaOfferType.MULTI:
-
-                break;
+                return this.createMultiOffer(sessionID, offerRequest, fullProfile, output);
             case FleaOfferType.PACK:
-
+                return this.createPackOffer(sessionID, offerRequest, fullProfile, output);
                 break;
         }
     }
@@ -523,6 +522,24 @@ export class RagfairController
         }
 
         return output;
+    }
+
+    protected createMultiOffer(
+        sessionID: string,
+        offerRequest: IAddOfferRequestData,
+        fullProfile: ISptProfile,
+        output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        throw new Error("Method not implemented.");
+    }
+
+    protected createPackOffer(
+        sessionID: string,
+        offerRequest: IAddOfferRequestData,
+        fullProfile: ISptProfile,
+        output: IItemEventRouterResponse): IItemEventRouterResponse
+    {
+        throw new Error("Method not implemented.");
     }
 
     /**
