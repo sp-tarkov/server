@@ -907,7 +907,7 @@ export class RagfairController
         const loyalLevel = 1;
         const formattedItems: Item[] = items.map((item) =>
         {
-            const isChild = items.some((item) => item._id === item.parentId);
+            const isChild = items.some((subItem) => subItem._id === item.parentId);
 
             return {
                 _id: item._id,

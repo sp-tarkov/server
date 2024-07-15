@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
 import { Item } from "@spt/models/eft/common/tables/IItem";
@@ -11,6 +12,7 @@ import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { RagfairOfferHolder } from "@spt/utils/RagfairOfferHolder";
 import { TimeUtil } from "@spt/utils/TimeUtil";
@@ -31,11 +33,13 @@ export class RagfairOfferService
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("RagfairServerHelper") protected ragfairServerHelper: RagfairServerHelper,
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     )
     {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
@@ -276,7 +280,60 @@ export class RagfairOfferService
         this.ragfairOfferHandler.removeOffer(playerOffer);
 
         // Send failed offer items to player in mail
-        this.ragfairServerHelper.returnItems(profile.sessionId, playerOffer.items);
+        const unstackedItems = this.unstackOfferItems(playerOffer.items);
+        this.ragfairServerHelper.returnItems(profile.sessionId, unstackedItems);
         profile.RagfairInfo.offers.splice(offerinProfileIndex, 1);
+    }
+
+    /**
+     * Flea offer items are stacked up often beyond the StackMaxSize limit
+     * Un stack the items into an array of root items and their children
+     * Will create new items equal to the
+     * @param items Offer items to unstack
+     * @returns Unstacked array of items
+     */
+    protected unstackOfferItems(items: Item[]): Item[]
+    {
+        const result: Item[] = [];
+        const rootItem = items[0];
+        const itemDetails = this.itemHelper.getItem(rootItem._tpl);
+        const itemMaxStackSize = itemDetails[1]._props.StackMaxSize ?? 1;
+
+        const totalItemCount = rootItem.upd?.StackObjectsCount ?? 1;
+
+        // Items within stack tolerance, return existing data - no changes needed
+        if (totalItemCount <= itemMaxStackSize)
+        {
+            return items;
+        }
+
+        // Single item with no children e.g. ammo, use existing de-stacking code
+        if (items.length === 1)
+        {
+            return this.itemHelper.splitStack(rootItem);
+        }
+
+        // Item with children, needs special handling
+        // Force new item to have stack size of 1
+        for (let index = 0; index < totalItemCount; index++)
+        {
+            const itemAndChildrenClone = this.cloner.clone(items);
+
+            // Ensure upd object exits
+            itemAndChildrenClone[0].upd ||= {};
+
+            // Force item to be singular
+            itemAndChildrenClone[0].upd.StackObjectsCount = 1;
+
+            // Ensure items IDs are unique to prevent collisions when added to player inventory
+            const reparentedItemAndChildren = this.itemHelper.reparentItemAndChildren(
+                itemAndChildrenClone[0],
+                itemAndChildrenClone);
+            this.itemHelper.remapRootItemId(reparentedItemAndChildren);
+
+            result.push(...reparentedItemAndChildren);
+        }
+
+        return result;
     }
 }
