@@ -204,7 +204,7 @@ export class BotController
      * @param sessionId Session id
      * @returns
      */
-    protected async generateBotsFirstTime(
+    public async generateBotsFirstTime(
         request: IGenerateBotsRequestData,
         pmcProfile: IPmcData,
         sessionId: string,
@@ -370,7 +370,7 @@ export class BotController
      * @param request Bot generation request object
      * @returns Single IBotBase object
      */
-    protected async returnSingleBotFromCache(
+    public async returnSingleBotFromCache(
         sessionId: string,
         request: IGenerateBotsRequestData,
     ): Promise<IBotBase[]>
