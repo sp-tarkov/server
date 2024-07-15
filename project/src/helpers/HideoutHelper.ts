@@ -643,6 +643,12 @@ export class HideoutHelper
             modifiedProductionTime = 40;
         }
 
+        // Sanity check, don't let anything craft in less than 5 seconds
+        if (modifiedProductionTime < 5)
+        {
+            modifiedProductionTime = 5;
+        }
+
         return modifiedProductionTime;
     }
 
