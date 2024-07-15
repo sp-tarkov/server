@@ -157,6 +157,11 @@ export class ProfileFixerService
             }
         }
 
+        if (pmcProfile.Skills)
+        {
+            this.checkForSkillsOverMaxLevel(pmcProfile);
+        }
+
         this.fixNullTraderSalesSums(pmcProfile);
         this.fixNullTraderNextResupply(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
@@ -169,6 +174,23 @@ export class ProfileFixerService
     public checkForAndFixScavProfileIssues(scavProfile: IPmcData): void
     {
         this.updateProfileQuestDataValues(scavProfile);
+    }
+
+    /**
+    * Check for and cap profile skills at 5100.
+    * @param pmcProfile profile to check and fix
+    */
+    protected checkForSkillsOverMaxLevel(pmcProfile: IPmcData): void
+    {
+        const skills = pmcProfile.Skills.Common;
+
+        for (let skill of skills)
+        {
+            if (skill.Progress > 5100)
+            {
+                skill.Progress = 5100;
+            }
+        }
     }
 
     protected addMissingGunStandContainerImprovements(pmcProfile: IPmcData): void
