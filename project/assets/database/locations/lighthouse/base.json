@@ -343,7 +343,7 @@
   "Enabled": true,
   "EscapeTimeLimit": 40,
   "EscapeTimeLimitCoop": 30,
-  "EscapeTimeLimitPVE": 31,
+  "EscapeTimeLimitPVE": 40,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
   "GlobalLootChanceModifier": 0.26,

@@ -185,7 +185,7 @@
   "Enabled": true,
   "EscapeTimeLimit": 50,
   "EscapeTimeLimitCoop": 30,
-  "EscapeTimeLimitPVE": 34,
+  "EscapeTimeLimitPVE": 50,
   "ExitZones": {
     "$oid": "5c82534488a45046451a2386"
   },
