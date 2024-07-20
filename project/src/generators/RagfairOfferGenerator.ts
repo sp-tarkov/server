@@ -115,11 +115,23 @@ export class RagfairOfferGenerator
     {
         const isTrader = this.ragfairServerHelper.isTrader(userID);
 
-        const offerRequirements = barterScheme.map((barter) => ({
-            _tpl: barter._tpl,
-            count: +barter.count.toFixed(2),
-            onlyFunctional: barter.onlyFunctional ?? false,
-        } as OfferRequirement));
+        const offerRequirements = barterScheme.map((barter) =>
+        {
+            const offerRequirement: OfferRequirement = {
+                _tpl: barter._tpl,
+                count: +barter.count.toFixed(2),
+                onlyFunctional: barter.onlyFunctional ?? false,
+            };
+
+            // Dogtags define level and side
+            if (barter.level !== undefined)
+            {
+                offerRequirement.level = barter.level;
+                offerRequirement.side = barter.side;
+            }
+
+            return offerRequirement;
+        });
 
         // Clone to avoid modifying original array
         const itemsClone = this.cloner.clone(items);
