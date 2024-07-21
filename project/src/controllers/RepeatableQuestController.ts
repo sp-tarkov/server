@@ -595,6 +595,9 @@ export class RepeatableQuestController
         const isFreeToReplace = this.useFreeRefreshIfAvailable(fullProfile, repeatablesInProfile, repeatableTypeLower);
         if (!isFreeToReplace)
         {
+            // Reduce standing with trader for not doing their quest
+            const traderOfReplacedQuest = pmcData.TradersInfo[replacedQuestTraderId];
+            traderOfReplacedQuest.standing -= previousChangeRequirement.changeStandingCost;
             // not free, Charge player
             for (const cost of previousChangeRequirement.changeCost)
             {
@@ -620,10 +623,6 @@ export class RepeatableQuestController
 
             return this.httpResponse.appendErrorToOutput(output, message);
         }
-
-        // Reduce standing with trader for not doing their quest
-        const traderOfReplacedQuest = pmcData.TradersInfo[replacedQuestTraderId];
-        traderOfReplacedQuest.standing -= previousChangeRequirement.changeStandingCost;
 
         // Nullguard
         output.profileChanges[sessionID].repeatableQuests ||= [];
