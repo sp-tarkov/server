@@ -1,7 +1,4 @@
 {
-    "parserOptions": {
-        "project": "./tsconfig.strictNullChecks.json"
-    },
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:@stylistic/recommended-extends",
@@ -9,7 +6,7 @@
         "plugin:import/typescript",
         "prettier"
     ],
-    "plugins": ["@typescript-eslint", "@stylistic", "import", "unused-imports", "switch-allman", "strict-null-checks"],
+    "plugins": ["@typescript-eslint", "@stylistic", "import", "unused-imports", "switch-allman"],
     "settings": {
         "import/resolver": {
             "typescript": {
@@ -102,8 +99,7 @@
             }
         ],
         "unused-imports/no-unused-imports-ts": "error",
-        "switch-allman/case-allman": "error",
-        "strict-null-checks/all": "warn"
+        "switch-allman/case-allman": "error"
     },
     "overrides": [
         {
