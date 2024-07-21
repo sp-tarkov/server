@@ -601,6 +601,7 @@ export class RepeatableQuestController
             // not free, Charge player
             for (const cost of previousChangeRequirement.changeCost)
             {
+                cost.count = Math.trunc(cost.count * (1-(Math.trunc((this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.CHARISMA)?.Progress ?? 0)/100)*0.001)) ??1)
                 this.paymentService.addPaymentToOutput(pmcData, cost.templateId, cost.count, sessionID, output);
                 if (output.warnings.length > 0)
                 {
