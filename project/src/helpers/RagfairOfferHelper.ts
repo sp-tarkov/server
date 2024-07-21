@@ -441,7 +441,7 @@ export class RagfairOfferHelper
      * @param boughtAmount Amount item was purchased for
      * @returns IItemEventRouterResponse
      */
-    protected completeOffer(sessionID: string, offer: IRagfairOffer, boughtAmount: number): IItemEventRouterResponse
+    public completeOffer(sessionID: string, offer: IRagfairOffer, boughtAmount: number): IItemEventRouterResponse
     {
         const itemTpl = offer.items[0]._tpl;
         let paymentItemsToSendToPlayer: Item[] = [];

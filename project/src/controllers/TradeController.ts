@@ -3,6 +3,7 @@ import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { TradeHelper } from "@spt/helpers/TradeHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { RagfairOfferHelper } from "@spt/helpers/RagfairOfferHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { Item } from "@spt/models/eft/common/tables/IItem";
 import { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
@@ -53,6 +54,7 @@ export class TradeController
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("ragfairOfferHelper") protected ragfairOfferHelper: RagfairOfferHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
@@ -230,6 +232,19 @@ export class TradeController
         if (output.warnings.length > 0)
         {
             return;
+        }
+        //resolve when a profile buy another profile's offer
+        const OfferID = fleaOffer._id
+        const OfferOwnerID = fleaOffer.user?.id
+        const OfferBuyCount = requestOffer.count
+        //resolve offer
+        if(this.profileHelper.getFullProfile(OfferOwnerID)!=null){
+            if(this.profileHelper.getFullProfile(OfferOwnerID).characters.pmc.RagfairInfo.offers.length>0){
+                if(this.profileHelper.getFullProfile(OfferOwnerID).characters.pmc.RagfairInfo.offers.some(offer=>offer._id == OfferID)){
+                    this.ragfairOfferHelper.completeOffer(OfferOwnerID, fleaOffer, OfferBuyCount)
+                    return;
+                }
+            }
         }
 
         // Remove/lower stack count of item purchased from flea offer
