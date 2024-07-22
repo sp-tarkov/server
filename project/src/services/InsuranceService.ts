@@ -110,7 +110,7 @@ export class InsuranceService
                 sessionID,
                 traderEnum,
                 MessageType.NPC_TRADER,
-                this.randomUtil.getArrayValue(dialogueTemplates?.insuranceStart),
+                this.randomUtil.getArrayValue(dialogueTemplates?.insuranceStart ?? ["INSURANCE START MESSAGE MISSING"]),
                 undefined,
                 this.timeUtil.getHoursAsSeconds(
                     globals.config.Insurance.MaxStorageTimeInHour,

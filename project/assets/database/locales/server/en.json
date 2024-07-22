@@ -66,6 +66,7 @@
     "customisation-unable_to_find_suit_with_id": "Unable to find suit with offer id: %s",
     "customisation-unable_to_get_trader_suits": "Unable to get suits from trader: %s",
     "database-data_at_path_missing": "The database was unable to retrieve data from: [%s] Please ensure your configs are valid and the data at the location exists",
+    "database-no_location_found_with_id": "No location found with an Id of: %s in database",
     "database-no_trader_found_with_id": "Unable to find trader: %s in database",
     "dialog-chatbot_id_already_exists": "Chat bot: %s being registered already exists, unable to register bot",
     "dialog-missing_item_template": "Unable to find item tpl {{tpl}} in db, cannot send message of type {{type}}, skipping",
