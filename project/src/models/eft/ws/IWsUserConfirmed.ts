@@ -15,6 +15,5 @@ export interface IWsUserConfirmed extends IWsNotificationEvent
     raidMode: RaidMode
     mode: string
     shortId: string
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     additional_info: any[]
 }

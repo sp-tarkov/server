@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 export interface IBotCore
 {
     SAVAGE_KILL_DIST: number

@@ -366,7 +366,6 @@ export class BotLootGenerator
     {
         // surv12
         this.addLootFromPool(
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             { "5d02797c86f774203f38e30a": 1 },
             [EquipmentSlots.SECURED_CONTAINER],
             1,
@@ -379,7 +378,6 @@ export class BotLootGenerator
 
         // AFAK
         this.addLootFromPool(
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             { "60098ad7c2240c0fe85c570a": 1 },
             [EquipmentSlots.SECURED_CONTAINER],
             10,

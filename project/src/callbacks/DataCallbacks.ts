@@ -222,11 +222,9 @@ export class DataCallbacks
             supplyNextTime: this.traderHelper.getNextUpdateTimestamp(traderId),
             prices: handbookPrices,
             currencyCourses: {
-                /* eslint-disable @typescript-eslint/naming-convention */
                 "5449016a4bdc2d6f028b456f": handbookPrices[Money.ROUBLES],
                 "569668774bdc2da2298b4568": handbookPrices[Money.EUROS],
                 "5696686a4bdc2da3298b456a": handbookPrices[Money.DOLLARS],
-                /* eslint-enable @typescript-eslint/naming-convention */
             },
         };
 

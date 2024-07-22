@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 
 /**
  * An object containing item name overrides for use with ItemTplGenerator

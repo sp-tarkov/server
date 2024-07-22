@@ -56,7 +56,6 @@ export class HttpServerHelper
 
     public sendTextJson(resp: any, output: any): void
     {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         resp.writeHead(200, "OK", { "Content-Type": this.mime.json });
         resp.end(output);
     }

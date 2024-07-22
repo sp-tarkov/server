@@ -21,7 +21,6 @@ export class BuildsCallbacks
     /**
      * Handle client/builds/list
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getBuilds(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IUserBuilds>
     {
         return this.httpResponse.getBody(this.buildController.getUserBuilds(sessionID));
@@ -30,7 +29,6 @@ export class BuildsCallbacks
     /**
      * Handle client/builds/magazine/save
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public createMagazineTemplate(url: string, request: ISetMagazineRequest, sessionID: string): INullResponseData
     {
         this.buildController.createMagazineTemplate(sessionID, request);
@@ -41,7 +39,6 @@ export class BuildsCallbacks
     /**
      * Handle client/builds/weapon/save
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public setWeapon(url: string, info: IPresetBuildActionRequestData, sessionID: string): INullResponseData
     {
         this.buildController.saveWeaponBuild(sessionID, info);
@@ -52,7 +49,6 @@ export class BuildsCallbacks
     /**
      * Handle client/builds/equipment/save
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public setEquipment(url: string, info: IPresetBuildActionRequestData, sessionID: string): INullResponseData
     {
         this.buildController.saveEquipmentBuild(sessionID, info);
@@ -63,7 +59,6 @@ export class BuildsCallbacks
     /**
      * Handle client/builds/delete
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public deleteBuild(url: string, info: IRemoveBuildRequestData, sessionID: string): INullResponseData
     {
         this.buildController.removeBuild(sessionID, info);

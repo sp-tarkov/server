@@ -2,7 +2,6 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import { promisify } from "node:util";
 import winston, { createLogger, format, transports, addColors } from "winston";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import DailyRotateFile from "winston-daily-rotate-file";
 import { Daum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
 import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";

@@ -70,7 +70,6 @@ export class DialogueController
      * Handle client/friend/list
      * @returns IGetFriendListDataResponse
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getFriendList(sessionID: string): IGetFriendListDataResponse
     {
         // Force a fake friend called SPT into friend list
@@ -379,7 +378,6 @@ export class DialogueController
     }
 
     /** client/mail/msg/send */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public sendMessage(sessionId: string, request: ISendMessageRequest): string
     {
         this.mailSendService.sendPlayerMessageToNpc(sessionId, request.dialogId, request.text);

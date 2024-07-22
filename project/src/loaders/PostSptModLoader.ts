@@ -44,7 +44,6 @@ export class PostSptModLoader implements IModLoader
                 this.preSptModLoader.getImportedModDetails()[modName].main
             }`;
             const modpath = `${process.cwd()}/${filepath}`;
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const mod = require(modpath);
 
             if (this.modTypeCheck.isPostSptLoadAsync(mod.mod))

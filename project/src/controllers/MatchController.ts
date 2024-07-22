@@ -53,7 +53,6 @@ export class MatchController
     }
 
     /** Handle match/group/start_game */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public joinMatch(info: IMatchGroupStartGameRequest, sessionId: string): IProfileStatusResponse
     {
         const output: IProfileStatusResponse = { maxPveCountExceeded: false, profiles: [] };
@@ -71,7 +70,6 @@ export class MatchController
             raidMode: "Online",
             mode: "deathmatch",
             shortId: undefined,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             additional_info: undefined,
         });
 
@@ -79,7 +77,6 @@ export class MatchController
     }
 
     /** Handle client/match/group/status */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getGroupStatus(info: IMatchGroupStatusRequest): IMatchGroupStatusResponse
     {
         return { players: [], maxPveCountExceeded: false };

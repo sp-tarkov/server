@@ -9,7 +9,6 @@ import download from "gulp-download";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
 import minimist from "minimist";
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 

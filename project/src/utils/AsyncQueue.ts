@@ -17,7 +17,6 @@ export class AsyncQueue implements IAsyncQueue
         // Add to the queue
         this.commandsQueue.push(command);
 
-        // eslint-disable-next-line no-constant-condition
         while (this.commandsQueue[0].uuid !== command.uuid)
         {
             await new Promise<void>((resolve) =>

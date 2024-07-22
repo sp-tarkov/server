@@ -13,7 +13,6 @@ export class BuildsStaticRouter extends StaticRouter
         super([
             new RouteAction(
                 "/client/builds/list",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -26,7 +25,6 @@ export class BuildsStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/builds/magazine/save",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.buildsCallbacks.createMagazineTemplate(url, info, sessionID);
@@ -34,7 +32,6 @@ export class BuildsStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/builds/weapon/save",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.buildsCallbacks.setWeapon(url, info, sessionID);
@@ -42,7 +39,6 @@ export class BuildsStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/builds/equipment/save",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.buildsCallbacks.setEquipment(url, info, sessionID);
@@ -50,7 +46,6 @@ export class BuildsStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/builds/delete",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.buildsCallbacks.deleteBuild(url, info, sessionID);

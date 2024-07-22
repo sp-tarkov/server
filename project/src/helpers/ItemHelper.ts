@@ -1928,7 +1928,6 @@ export class ItemHelper
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace ItemHelper
 {
     export interface ItemSize

@@ -1,7 +1,6 @@
 import { MinMax } from "@spt/models/common/MinMax";
 import { Ixyz } from "@spt/models/eft/common/Ixyz";
 
-/* eslint-disable @typescript-eslint/naming-convention */
 export interface ILocationBase
 {
     AccessKeys: string[]

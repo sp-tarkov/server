@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { ILocation } from "@spt/models/eft/common/ILocation";
 import { ILocationsBase } from "@spt/models/eft/common/tables/ILocationsBase";
 

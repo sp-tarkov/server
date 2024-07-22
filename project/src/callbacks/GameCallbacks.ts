@@ -167,7 +167,6 @@ export class GameCallbacks implements OnLoad
      * Handle /client/report/send & /client/reports/lobby/send
      * @returns INullResponseData
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public reportNickname(url: string, info: IUIDRequestData, sessionID: string): INullResponseData
     {
         return this.httpResponse.nullResponse();
@@ -177,7 +176,6 @@ export class GameCallbacks implements OnLoad
      * Handle singleplayer/settings/getRaidTime
      * @returns string
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getRaidTime(url: string, request: IGetRaidTimeRequest, sessionID: string): IGetRaidTimeResponse
     {
         return this.httpResponse.noBody(this.gameController.getRaidTime(sessionID, request));
@@ -187,7 +185,6 @@ export class GameCallbacks implements OnLoad
      * Handle /client/survey
      * @returns INullResponseData
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getSurvey(url: string, request: IEmptyRequestData, sessionID: string): INullResponseData
     {
         return this.httpResponse.nullResponse();

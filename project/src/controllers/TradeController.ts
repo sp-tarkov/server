@@ -212,12 +212,9 @@ export class TradeController
             Action: "TradingConfirm",
             type: "buy_from_ragfair",
             tid: "ragfair",
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             item_id: fleaOffer._id, // Store ragfair offerId in buyRequestData.item_id
             count: requestOffer.count,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_id: 0,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             scheme_items: requestOffer.items,
         };
 

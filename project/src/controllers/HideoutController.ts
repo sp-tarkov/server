@@ -1150,7 +1150,6 @@ export class HideoutController
      * @param sessionId Session id
      * @returns IQteData array
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public getQteList(sessionId: string): IQteData[]
     {
         return this.databaseService.getHideout().qte;
@@ -1163,7 +1162,6 @@ export class HideoutController
      * @param pmcData Profile to adjust
      * @param request QTE result object
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public handleQTEEventOutcome(
         sessionId: string,
         pmcData: IPmcData,

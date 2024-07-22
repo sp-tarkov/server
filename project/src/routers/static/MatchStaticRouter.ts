@@ -259,7 +259,6 @@ export class MatchStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/raid/configuration-by-profile",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.matchCallbacks.getConfigurationByProfile(url, info, sessionID);

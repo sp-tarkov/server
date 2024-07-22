@@ -108,7 +108,6 @@ export class ProfileStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/profile/view",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,

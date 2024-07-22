@@ -3,7 +3,6 @@ import { Dialogue, IUserBuilds } from "@spt/models/eft/profile/ISptProfile";
 
 export interface IProfileTemplates
 {
-    /* eslint-disable @typescript-eslint/naming-convention */
     "Standard": IProfileSides
     "Left Behind": IProfileSides
     "Prepare To Escape": IProfileSides
@@ -13,7 +12,6 @@ export interface IProfileTemplates
     "SPT Developer": IProfileSides
     "SPT Easy start": IProfileSides
     "SPT Zero to hero": IProfileSides
-    /* eslint-enable @typescript-eslint/naming-convention */
 }
 
 export interface IProfileSides

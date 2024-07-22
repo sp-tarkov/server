@@ -659,7 +659,6 @@ export class QuestController
                     startTime: 0,
                     status: QuestStatus.AvailableAfter,
                     statusTimers: {
-                        // eslint-disable-next-line @typescript-eslint/naming-convention
                         9: this.timeUtil.getTimestamp(),
                     },
                     availableAfter: availableAfterTimestamp,

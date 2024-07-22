@@ -15,7 +15,6 @@ export class RagfairStaticRouter extends StaticRouter
         super([
             new RouteAction(
                 "/client/ragfair/search",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -28,7 +27,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/ragfair/find",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -41,7 +39,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/ragfair/itemMarketPrice",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -54,7 +51,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/ragfair/offerfees",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.ragfairCallbacks.storePlayerOfferTaxAmount(url, info, sessionID);
@@ -62,7 +58,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/reports/ragfair/send",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> =>
                 {
                     return this.ragfairCallbacks.sendReport(url, info, sessionID);
@@ -70,7 +65,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/items/prices",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -83,7 +77,6 @@ export class RagfairStaticRouter extends StaticRouter
             ),
             new RouteAction(
                 "/client/ragfair/offer/findbyid",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,

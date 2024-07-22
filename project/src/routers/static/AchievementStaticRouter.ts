@@ -13,7 +13,6 @@ export class AchievementStaticRouter extends StaticRouter
         super([
             new RouteAction(
                 "/client/achievement/list",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
@@ -27,7 +26,6 @@ export class AchievementStaticRouter extends StaticRouter
 
             new RouteAction(
                 "/client/achievement/statistic",
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 async (
                     url: string,
                     info: any,
