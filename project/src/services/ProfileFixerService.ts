@@ -25,8 +25,6 @@ import { ICloner } from "@spt/utils/cloners/ICloner";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { Watermark } from "@spt/utils/Watermark";
-import { off } from "node:process";
 
 @injectable()
 export class ProfileFixerService
