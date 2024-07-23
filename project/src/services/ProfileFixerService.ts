@@ -26,6 +26,7 @@ import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { Watermark } from "@spt/utils/Watermark";
+import { off } from "node:process";
 
 @injectable()
 export class ProfileFixerService
@@ -157,6 +158,7 @@ export class ProfileFixerService
             }
         }
 
+        this.fixNullRagfairRatings(pmcProfile);
         this.fixNullTraderSalesSums(pmcProfile);
         this.fixNullTraderNextResupply(pmcProfile);
         this.updateProfileQuestDataValues(pmcProfile);
@@ -517,6 +519,33 @@ export class ProfileFixerService
         }
 
         return activeQuests;
+    }
+
+    protected fixNullRagfairRatings(pmcProfile: IPmcData): void
+    {
+        // Don't run on partial profiles
+        if (!pmcProfile?.RagfairInfo)
+        {
+            return;
+        }
+
+        // Reset null rating back to 0.0
+        if (pmcProfile.RagfairInfo.rating === null)
+        {
+            this.logger.debug("Fixing primary null ragfair rating on profile");
+            pmcProfile.RagfairInfo.rating = 0.0;
+        }
+
+
+        // Now check all active offers for offers created when rating was null and correct them.
+        for (const offer of pmcProfile.RagfairInfo.offers)
+        {
+            if (offer.user.rating === null)
+            {
+                this.logger.debug(`Fixing ragfair null offer rating on offer ${offer._id}`);
+                offer.user.rating = 0.0;
+            }
+        }
     }
 
     protected fixNullTraderSalesSums(pmcProfile: IPmcData): void
