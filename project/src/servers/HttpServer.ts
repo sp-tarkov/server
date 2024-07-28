@@ -39,8 +39,8 @@ export class HttpServer {
         /* create server */
         const httpServer: Server = http.createServer();
 
-        httpServer.on("request", (req, res) => {
-            this.handleRequest(req, res);
+        httpServer.on("request", async (req, res) => {
+            await this.handleRequest(req, res);
         });
 
         /* Config server to listen on a port */
@@ -65,7 +65,7 @@ export class HttpServer {
         this.webSocketServer.setupWebSocket(httpServer);
     }
 
-    protected handleRequest(req: IncomingMessage, resp: ServerResponse): void {
+    protected async handleRequest(req: IncomingMessage, resp: ServerResponse): Promise<void> {
         // Pull sessionId out of cookies and store inside app context
         const sessionId = this.getCookies(req).PHPSESSID;
         this.applicationContext.addValue(ContextVariableType.SESSION_ID, sessionId);
@@ -93,7 +93,7 @@ export class HttpServer {
 
         for (const listener of this.httpListeners) {
             if (listener.canHandle(sessionId, req)) {
-                listener.handle(sessionId, req, resp);
+                await listener.handle(sessionId, req, resp);
                 break;
             }
         }
