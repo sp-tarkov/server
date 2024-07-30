@@ -30,12 +30,11 @@ export class BotLevelGenerator {
         bot: IBotBase,
     ): IRandomisedBotLevelResult {
         const expTable = this.databaseService.getGlobals().config.exp.level.exp_table;
-        const highestLevel = this.getHighestRelativeBotLevel(botGenerationDetails, levelDetails, expTable.length);
-        const lowestLevel = this.getLowestRelativeBotLevel(botGenerationDetails, levelDetails, expTable.length);
+        const botLevelRange = this.getRelativeBotLevelRange(botGenerationDetails, levelDetails, expTable.length);
 
         // Get random level based on the exp table.
         let exp = 0;
-        const level = this.chooseBotLevel(lowestLevel, highestLevel, 1, 1.15);
+        const level = this.chooseBotLevel(botLevelRange.min, botLevelRange.max, 1, 1.15);
         for (let i = 0; i < level; i++) {
             exp += expTable[i].exp;
         }
@@ -53,55 +52,40 @@ export class BotLevelGenerator {
     }
 
     /**
-     * Get the highest level a bot can be relative to the players level, but no further than the max size from globals.exp_table
-     * @param botGenerationDetails Details to help generate a bot
-     * @param levelDetails
-     * @param maxLevel Max possible level
-     * @returns Highest level possible for bot
-     */
-    protected getHighestRelativeBotLevel(
-        botGenerationDetails: BotGenerationDetails,
-        levelDetails: MinMax,
-        maxLevel: number,
-    ): number {
-        const maxPossibleLevel =
-            botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
-                ? Math.min(botGenerationDetails.locationSpecificPmcLevelOverride.max, maxLevel) // Was a PMC and they have a level override
-                : Math.min(levelDetails.max, maxLevel); // Not pmc with override or non-pmc
-
-        let level = botGenerationDetails.playerLevel + botGenerationDetails.botRelativeLevelDeltaMax;
-        if (level > maxPossibleLevel) {
-            level = maxPossibleLevel;
-        }
-
-        return level;
-    }
-
-    /**
-     * Get the lowest level a bot can be relative to the players level, but no lower than 1
+     * Return the min and max bot level based on a relative delta from the PMC level
      * @param botGenerationDetails Details to help generate a bot
      * @param levelDetails
      * @param maxlevel Max level allowed
-     * @returns Lowest level possible for bot
+     * @returns A MinMax of the lowest and highest level to generate the bots
      */
-    protected getLowestRelativeBotLevel(
+    protected getRelativeBotLevelRange(
         botGenerationDetails: BotGenerationDetails,
         levelDetails: MinMax,
-        maxlevel: number,
-    ): number {
+        maxAvailableLevel: number,
+    ): MinMax {
         const minPossibleLevel =
             botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
                 ? Math.min(
-                      Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
-                      maxlevel, // Fallback if value above is crazy (default is 79)
-                  )
-                : Math.min(levelDetails.min, maxlevel); // Not pmc with override or non-pmc
+                    Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
+                    maxAvailableLevel, // Fallback if value above is crazy (default is 79)
+                )
+                : Math.min(levelDetails.min, maxAvailableLevel); // Not pmc with override or non-pmc
 
-        let level = botGenerationDetails.playerLevel - botGenerationDetails.botRelativeLevelDeltaMin;
-        if (level < minPossibleLevel) {
-            level = minPossibleLevel;
+        const maxPossibleLevel =
+            botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
+                ? Math.min(botGenerationDetails.locationSpecificPmcLevelOverride.max, maxAvailableLevel) // Was a PMC and they have a level override
+                : Math.min(levelDetails.max, maxAvailableLevel); // Not pmc with override or non-pmc
+
+        let minLevel = botGenerationDetails.playerLevel - botGenerationDetails.botRelativeLevelDeltaMin;
+        let maxLevel = botGenerationDetails.playerLevel + botGenerationDetails.botRelativeLevelDeltaMax;
+
+        // Bound the level to the min/max possible
+        maxLevel = Math.min(Math.max(maxLevel, minPossibleLevel), maxPossibleLevel);
+        minLevel = Math.min(Math.max(minLevel, minPossibleLevel), maxPossibleLevel);
+
+        return {
+            min: minLevel,
+            max: maxLevel,
         }
-
-        return level;
     }
 }
