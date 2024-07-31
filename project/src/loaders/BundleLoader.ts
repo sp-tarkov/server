@@ -55,7 +55,7 @@ export class BundleLoader {
         ).manifest;
 
         for (const bundleManifest of bundleManifestArr) {
-            const absoluteModPath = path.join(process.cwd(), modpath).slice(0, -1).replace(/\\/g, "/");
+            const relativeModPath = modpath.slice(0, -1).replace(/\\/g, "/");
             const bundleLocalPath = `${modpath}bundles/${bundleManifest.key}`.replace(/\\/g, "/");
 
             if (!this.bundleHashCacheService.calculateAndMatchHash(bundleLocalPath)) {
@@ -64,7 +64,7 @@ export class BundleLoader {
 
             const bundleHash = this.bundleHashCacheService.getStoredValue(bundleLocalPath);
 
-            this.addBundle(bundleManifest.key, new BundleInfo(absoluteModPath, bundleManifest, bundleHash));
+            this.addBundle(bundleManifest.key, new BundleInfo(relativeModPath, bundleManifest, bundleHash));
         }
     }
 
