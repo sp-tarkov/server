@@ -180,16 +180,7 @@ export class GameController {
                 this.splitBotWavesIntoSingleWaves();
             }
 
-            this.profileFixerService.removeLegacyScavCaseProductionCrafts(pmcProfile);
-
-            this.profileFixerService.addMissingHideoutAreasToProfile(fullProfile);
-
             if (pmcProfile.Inventory) {
-                // MUST occur prior to `profileFixerService.checkForAndFixPmcProfileIssues()`
-                this.profileFixerService.fixIncorrectAidValue(fullProfile);
-
-                this.profileFixerService.migrateStatsToNewStructure(fullProfile);
-
                 this.sendPraporGiftsToNewProfiles(pmcProfile);
 
                 this.profileFixerService.checkForOrphanedModdedItems(sessionID, fullProfile);
@@ -197,15 +188,9 @@ export class GameController {
 
             this.profileFixerService.checkForAndFixPmcProfileIssues(pmcProfile);
 
-            this.profileFixerService.addMissingSptVersionTagToProfile(fullProfile);
-
             if (pmcProfile.Hideout) {
-                this.profileFixerService.addMissingHideoutBonusesToProfile(pmcProfile);
-                this.profileFixerService.addMissingUpgradesPropertyToHideout(pmcProfile);
                 this.hideoutHelper.setHideoutImprovementsToCompleted(pmcProfile);
                 this.hideoutHelper.unlockHideoutWallInProfile(pmcProfile);
-                this.profileFixerService.addMissingIdsToBonuses(pmcProfile);
-                this.profileFixerService.fixBitcoinProductionTime(pmcProfile);
             }
 
             this.logProfileDetails(fullProfile);
