@@ -1,3 +1,4 @@
+import path from "node:path";
 import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
 import { AbstractWinstonLogger } from "@spt/utils/logging/AbstractWinstonLogger";
 import { inject, injectable } from "tsyringe";
@@ -21,7 +22,7 @@ export class WinstonMainLogger extends AbstractWinstonLogger {
     }
 
     protected getFilePath(): string {
-        return "./user/logs/";
+        return path.join("user" ,"logs");
     }
 
     protected getFileName(): string {

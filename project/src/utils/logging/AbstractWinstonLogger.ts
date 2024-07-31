@@ -1,3 +1,4 @@
+import path from "node:path";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import { promisify } from "node:util";
@@ -34,7 +35,7 @@ export abstract class AbstractWinstonLogger implements ILogger {
     protected writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>;
 
     constructor(protected asyncQueue: IAsyncQueue) {
-        this.filePath = `${this.getFilePath()}${this.getFileName()}`;
+        this.filePath = path.join(this.getFilePath(), this.getFileName());
         this.writeFilePromisify = promisify(fs.writeFile);
         this.showDebugInConsole = globalThis.G_DEBUG_CONFIGURATION;
         if (!fs.existsSync(this.getFilePath())) {
