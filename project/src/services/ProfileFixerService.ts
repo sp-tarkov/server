@@ -58,56 +58,7 @@ export class ProfileFixerService {
         this.removeOrphanedQuests(pmcProfile);
 
         if (pmcProfile.Hideout) {
-            const globals = this.databaseService.getGlobals();
-
-            if (
-                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.GENERATOR).slots.length <
-                6 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.Generator.Slots
-            ) {
-                this.logger.debug("Updating generator area slots to a size of 6 + hideout management skill");
-                this.addEmptyObjectsToHideoutAreaSlots(
-                    HideoutAreas.GENERATOR,
-                    6 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.Generator.Slots,
-                    pmcProfile,
-                );
-            }
-
-            if (
-                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WATER_COLLECTOR).slots.length <
-                1 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.WaterCollector.Slots
-            ) {
-                this.logger.debug("Updating water collector area slots to a size of 1 + hideout management skill");
-                this.addEmptyObjectsToHideoutAreaSlots(
-                    HideoutAreas.WATER_COLLECTOR,
-                    1 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.WaterCollector.Slots,
-                    pmcProfile,
-                );
-            }
-
-            if (
-                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.AIR_FILTERING).slots.length <
-                3 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.AirFilteringUnit.Slots
-            ) {
-                this.logger.debug("Updating air filter area slots to a size of 3 + hideout management skill");
-                this.addEmptyObjectsToHideoutAreaSlots(
-                    HideoutAreas.AIR_FILTERING,
-                    3 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.AirFilteringUnit.Slots,
-                    pmcProfile,
-                );
-            }
-
-            // BTC Farm doesnt have extra slots for hideout management, but we still check for modded stuff!!
-            if (
-                pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.BITCOIN_FARM).slots.length <
-                50 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.BitcoinFarm.Slots
-            ) {
-                this.logger.debug("Updating bitcoin farm area slots to a size of 50 + hideout management skill");
-                this.addEmptyObjectsToHideoutAreaSlots(
-                    HideoutAreas.BITCOIN_FARM,
-                    50 + globals.config.SkillsSettings.HideoutManagement.EliteSlots.BitcoinFarm.Slots,
-                    pmcProfile,
-                );
-            }
+            this.addHideoutEliteSlots(pmcProfile);
         }
 
         if (pmcProfile.Skills) {
@@ -122,16 +73,103 @@ export class ProfileFixerService {
     public checkForAndFixScavProfileIssues(scavProfile: IPmcData): void {}
 
     /**
-     * Check for and cap profile skills at 5100.
-     * @param pmcProfile profile to check and fix
+     * Attempt to fix common item issues that corrupt profiles
+     * @param pmcProfile Profile to check items of
      */
-    protected checkForSkillsOverMaxLevel(pmcProfile: IPmcData): void {
-        const skills = pmcProfile.Skills.Common;
+    public fixProfileBreakingInventoryItemIssues(pmcProfile: IPmcData): void {
+        // Create a mapping of all inventory items, keyed by _id value
+        const itemMapping = pmcProfile.Inventory.items.reduce((acc, curr) => {
+            acc[curr._id] = acc[curr._id] || [];
+            acc[curr._id].push(curr);
 
-        for (const skill of skills) {
-            if (skill.Progress > 5100) {
-                skill.Progress = 5100;
+            return acc;
+        }, {});
+
+        for (const key in itemMapping) {
+            // Only one item for this id, not a dupe
+            if (itemMapping[key].length === 1) {
+                continue;
             }
+
+            this.logger.warning(`${itemMapping[key].length - 1} duplicate(s) found for item: ${key}`);
+            const itemAJson = this.jsonUtil.serialize(itemMapping[key][0]);
+            const itemBJson = this.jsonUtil.serialize(itemMapping[key][1]);
+            if (itemAJson === itemBJson) {
+                // Both items match, we can safely delete one
+                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex((x) => x._id === key);
+                pmcProfile.Inventory.items.splice(indexOfItemToRemove, 1);
+                this.logger.warning(`Deleted duplicate item: ${key}`);
+            } else {
+                // Items are different, replace ID with unique value
+                // Only replace ID if items have no children, we dont want orphaned children
+                const itemsHaveChildren = pmcProfile.Inventory.items.some((x) => x.parentId === key);
+                if (!itemsHaveChildren) {
+                    const itemToAdjust = pmcProfile.Inventory.items.find((x) => x._id === key);
+                    itemToAdjust._id = this.hashUtil.generate();
+                    this.logger.warning(`Replace duplicate item Id: ${key} with ${itemToAdjust._id}`);
+                }
+            }
+        }
+
+        // Iterate over all inventory items
+        for (const item of pmcProfile.Inventory.items.filter((x) => x.slotId)) {
+            if (!item.upd) {
+                // Ignore items without a upd object
+                continue;
+            }
+
+            // Check items with a tag that contains non alphanumeric characters
+            const regxp = /([/w"\\'])/g;
+            if (item.upd.Tag?.Name && regxp.test(item.upd.Tag?.Name)) {
+                this.logger.warning(`Fixed item: ${item._id}s Tag value, removed invalid characters`);
+                item.upd.Tag.Name = item.upd.Tag.Name.replace(regxp, "");
+            }
+
+            // Check items with StackObjectsCount (undefined)
+            if (item.upd?.StackObjectsCount === undefined) {
+                this.logger.warning(`Fixed item: ${item._id}s undefined StackObjectsCount value, now set to 1`);
+                item.upd.StackObjectsCount = 1;
+            }
+        }
+
+        // Iterate over clothing
+        const customizationDb = this.databaseService.getTemplates().customization;
+        const customizationDbArray = Object.values(customizationDb);
+        const playerIsUsec = pmcProfile.Info.Side.toLowerCase() === "usec";
+
+        // Check Head
+        if (!customizationDb[pmcProfile.Customization.Head]) {
+            const defaultHead = playerIsUsec
+                ? customizationDbArray.find((x) => x._name === "DefaultUsecHead")
+                : customizationDbArray.find((x) => x._name === "DefaultBearHead");
+            pmcProfile.Customization.Head = defaultHead._id;
+        }
+
+        // check Body
+        if (!customizationDb[pmcProfile.Customization.Body]) {
+            const defaultBody =
+                pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecBody")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearBody");
+            pmcProfile.Customization.Body = defaultBody._id;
+        }
+
+        // check Hands
+        if (!customizationDb[pmcProfile.Customization.Hands]) {
+            const defaultHands =
+                pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecHands")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearHands");
+            pmcProfile.Customization.Hands = defaultHands._id;
+        }
+
+        // check Hands
+        if (!customizationDb[pmcProfile.Customization.Feet]) {
+            const defaultFeet =
+                pmcProfile.Info.Side.toLowerCase() === "usec"
+                    ? customizationDbArray.find((x) => x._name === "DefaultUsecFeet")
+                    : customizationDbArray.find((x) => x._name === "DefaultBearFeet");
+            pmcProfile.Customization.Feet = defaultFeet._id;
         }
     }
 
@@ -141,12 +179,14 @@ export class ProfileFixerService {
      * @param pmcProfile profile to remove old counters from
      */
     public removeDanglingConditionCounters(pmcProfile: IPmcData): void {
-        if (pmcProfile.TaskConditionCounters) {
-            for (const counterId in pmcProfile.TaskConditionCounters) {
-                const counter = pmcProfile.TaskConditionCounters[counterId];
-                if (!counter.sourceId) {
-                    delete pmcProfile.TaskConditionCounters[counterId];
-                }
+        if (!pmcProfile.TaskConditionCounters) {
+            return;
+        }
+
+        for (const counterId in pmcProfile.TaskConditionCounters) {
+            const counter = pmcProfile.TaskConditionCounters[counterId];
+            if (!counter.sourceId) {
+                delete pmcProfile.TaskConditionCounters[counterId];
             }
         }
     }
@@ -202,6 +242,70 @@ export class ProfileFixerService {
     }
 
     /**
+     * After removing mods that add quests, the quest panel will break without removing these
+     * @param pmcProfile Profile to remove dead quests from
+     */
+    protected removeOrphanedQuests(pmcProfile: IPmcData): void {
+        const quests = this.databaseService.getQuests();
+        const profileQuests = pmcProfile.Quests;
+
+        const repeatableQuests: IRepeatableQuest[] = [];
+        for (const repeatableQuestType of pmcProfile.RepeatableQuests) {
+            repeatableQuests.push(...repeatableQuestType.activeQuests);
+        }
+
+        for (let i = profileQuests.length - 1; i >= 0; i--) {
+            if (!(quests[profileQuests[i].qid] || repeatableQuests.some((x) => x._id === profileQuests[i].qid))) {
+                profileQuests.splice(i, 1);
+                this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");
+            }
+        }
+    }
+
+    /**
+     * If the profile has elite Hideout Managment skill, add the additional slots from globals
+     * NOTE: This seems redundant, but we will leave it here just incase.
+     * @param pmcProfile profile to add slots to
+     */
+    protected addHideoutEliteSlots(pmcProfile: IPmcData): void {
+        const globals = this.databaseService.getGlobals();
+
+        const genSlots = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.GENERATOR).slots.length;
+        const extraGenSlots = globals.config.SkillsSettings.HideoutManagement.EliteSlots.Generator.Slots;
+
+        if (genSlots < 6 + extraGenSlots) {
+            this.logger.debug("Updating generator area slots to a size of 6 + hideout management skill");
+            this.addEmptyObjectsToHideoutAreaSlots(HideoutAreas.GENERATOR, 6 + extraGenSlots, pmcProfile);
+        }
+
+        const waterCollSlots = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.WATER_COLLECTOR).slots
+            .length;
+        const extraWaterCollSlots = globals.config.SkillsSettings.HideoutManagement.EliteSlots.WaterCollector.Slots;
+
+        if (waterCollSlots < 1 + extraWaterCollSlots) {
+            this.logger.debug("Updating water collector area slots to a size of 1 + hideout management skill");
+            this.addEmptyObjectsToHideoutAreaSlots(HideoutAreas.WATER_COLLECTOR, 1 + extraWaterCollSlots, pmcProfile);
+        }
+
+        const filterSlots = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.AIR_FILTERING).slots.length;
+        const extraFilterSlots = globals.config.SkillsSettings.HideoutManagement.EliteSlots.AirFilteringUnit.Slots;
+
+        if (filterSlots < 3 + extraFilterSlots) {
+            this.logger.debug("Updating air filter area slots to a size of 3 + hideout management skill");
+            this.addEmptyObjectsToHideoutAreaSlots(HideoutAreas.AIR_FILTERING, 3 + extraFilterSlots, pmcProfile);
+        }
+
+        const btcFarmSlots = pmcProfile.Hideout.Areas.find((x) => x.type === HideoutAreas.BITCOIN_FARM).slots.length;
+        const extraBtcSlots = globals.config.SkillsSettings.HideoutManagement.EliteSlots.BitcoinFarm.Slots;
+
+        // BTC Farm doesnt have extra slots for hideout management, but we still check for modded stuff!!
+        if (btcFarmSlots < 50 + extraBtcSlots) {
+            this.logger.debug("Updating bitcoin farm area slots to a size of 50 + hideout management skill");
+            this.addEmptyObjectsToHideoutAreaSlots(HideoutAreas.BITCOIN_FARM, 50 + extraBtcSlots, pmcProfile);
+        }
+    }
+
+    /**
      * add in objects equal to the number of slots
      * @param areaType area to check
      * @param pmcProfile profile to update
@@ -223,6 +327,20 @@ export class ProfileFixerService {
         }
 
         return slots;
+    }
+
+    /**
+     * Check for and cap profile skills at 5100.
+     * @param pmcProfile profile to check and fix
+     */
+    protected checkForSkillsOverMaxLevel(pmcProfile: IPmcData): void {
+        const skills = pmcProfile.Skills.Common;
+
+        for (const skill of skills) {
+            if (skill.Progress > 5100) {
+                skill.Progress = 5100;
+            }
+        }
     }
 
     /**
@@ -442,127 +560,5 @@ export class ProfileFixerService {
         }
 
         return false;
-    }
-
-    /**
-     * Attempt to fix common item issues that corrupt profiles
-     * @param pmcProfile Profile to check items of
-     */
-    public fixProfileBreakingInventoryItemIssues(pmcProfile: IPmcData): void {
-        // Create a mapping of all inventory items, keyed by _id value
-        const itemMapping = pmcProfile.Inventory.items.reduce((acc, curr) => {
-            acc[curr._id] = acc[curr._id] || [];
-            acc[curr._id].push(curr);
-
-            return acc;
-        }, {});
-
-        for (const key in itemMapping) {
-            // Only one item for this id, not a dupe
-            if (itemMapping[key].length === 1) {
-                continue;
-            }
-
-            this.logger.warning(`${itemMapping[key].length - 1} duplicate(s) found for item: ${key}`);
-            const itemAJson = this.jsonUtil.serialize(itemMapping[key][0]);
-            const itemBJson = this.jsonUtil.serialize(itemMapping[key][1]);
-            if (itemAJson === itemBJson) {
-                // Both items match, we can safely delete one
-                const indexOfItemToRemove = pmcProfile.Inventory.items.findIndex((x) => x._id === key);
-                pmcProfile.Inventory.items.splice(indexOfItemToRemove, 1);
-                this.logger.warning(`Deleted duplicate item: ${key}`);
-            } else {
-                // Items are different, replace ID with unique value
-                // Only replace ID if items have no children, we dont want orphaned children
-                const itemsHaveChildren = pmcProfile.Inventory.items.some((x) => x.parentId === key);
-                if (!itemsHaveChildren) {
-                    const itemToAdjust = pmcProfile.Inventory.items.find((x) => x._id === key);
-                    itemToAdjust._id = this.hashUtil.generate();
-                    this.logger.warning(`Replace duplicate item Id: ${key} with ${itemToAdjust._id}`);
-                }
-            }
-        }
-
-        // Iterate over all inventory items
-        for (const item of pmcProfile.Inventory.items.filter((x) => x.slotId)) {
-            if (!item.upd) {
-                // Ignore items without a upd object
-                continue;
-            }
-
-            // Check items with a tag that contains non alphanumeric characters
-            const regxp = /([/w"\\'])/g;
-            if (item.upd.Tag?.Name && regxp.test(item.upd.Tag?.Name)) {
-                this.logger.warning(`Fixed item: ${item._id}s Tag value, removed invalid characters`);
-                item.upd.Tag.Name = item.upd.Tag.Name.replace(regxp, "");
-            }
-
-            // Check items with StackObjectsCount (undefined)
-            if (item.upd?.StackObjectsCount === undefined) {
-                this.logger.warning(`Fixed item: ${item._id}s undefined StackObjectsCount value, now set to 1`);
-                item.upd.StackObjectsCount = 1;
-            }
-        }
-
-        // Iterate over clothing
-        const customizationDb = this.databaseService.getTemplates().customization;
-        const customizationDbArray = Object.values(customizationDb);
-        const playerIsUsec = pmcProfile.Info.Side.toLowerCase() === "usec";
-
-        // Check Head
-        if (!customizationDb[pmcProfile.Customization.Head]) {
-            const defaultHead = playerIsUsec
-                ? customizationDbArray.find((x) => x._name === "DefaultUsecHead")
-                : customizationDbArray.find((x) => x._name === "DefaultBearHead");
-            pmcProfile.Customization.Head = defaultHead._id;
-        }
-
-        // check Body
-        if (!customizationDb[pmcProfile.Customization.Body]) {
-            const defaultBody =
-                pmcProfile.Info.Side.toLowerCase() === "usec"
-                    ? customizationDbArray.find((x) => x._name === "DefaultUsecBody")
-                    : customizationDbArray.find((x) => x._name === "DefaultBearBody");
-            pmcProfile.Customization.Body = defaultBody._id;
-        }
-
-        // check Hands
-        if (!customizationDb[pmcProfile.Customization.Hands]) {
-            const defaultHands =
-                pmcProfile.Info.Side.toLowerCase() === "usec"
-                    ? customizationDbArray.find((x) => x._name === "DefaultUsecHands")
-                    : customizationDbArray.find((x) => x._name === "DefaultBearHands");
-            pmcProfile.Customization.Hands = defaultHands._id;
-        }
-
-        // check Hands
-        if (!customizationDb[pmcProfile.Customization.Feet]) {
-            const defaultFeet =
-                pmcProfile.Info.Side.toLowerCase() === "usec"
-                    ? customizationDbArray.find((x) => x._name === "DefaultUsecFeet")
-                    : customizationDbArray.find((x) => x._name === "DefaultBearFeet");
-            pmcProfile.Customization.Feet = defaultFeet._id;
-        }
-    }
-
-    /**
-     * After removing mods that add quests, the quest panel will break without removing these
-     * @param pmcProfile Profile to remove dead quests from
-     */
-    protected removeOrphanedQuests(pmcProfile: IPmcData): void {
-        const quests = this.databaseService.getQuests();
-        const profileQuests = pmcProfile.Quests;
-
-        const repeatableQuests: IRepeatableQuest[] = [];
-        for (const repeatableQuestType of pmcProfile.RepeatableQuests) {
-            repeatableQuests.push(...repeatableQuestType.activeQuests);
-        }
-
-        for (let i = profileQuests.length - 1; i >= 0; i--) {
-            if (!(quests[profileQuests[i].qid] || repeatableQuests.some((x) => x._id === profileQuests[i].qid))) {
-                profileQuests.splice(i, 1);
-                this.logger.success("Successfully removed orphaned quest that doesnt exist in our quest data");
-            }
-        }
     }
 }
