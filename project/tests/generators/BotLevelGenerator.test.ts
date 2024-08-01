@@ -42,43 +42,22 @@ describe("BotLevelGenerator", () => {
         });
     });
 
-    describe("getHighestRelativeBotLevel", () => {
+    describe("chooseBotLevel", () => {
         it("should return 10 when player level is 5 and delta is 5", () => {
             const levelDetails: MinMax = { min: 5, max: 10 };
-            const botGenDetails: BotGenerationDetails = {
-                isPmc: false,
-                role: "",
-                side: "",
-                botRelativeLevelDeltaMax: 5,
-                botRelativeLevelDeltaMin: 5,
-                playerLevel: 5,
-                botCountToGenerate: 0,
-                botDifficulty: "",
-                isPlayerScav: false,
-            };
 
-            const result = botLevelGenerator.getHighestRelativeBotLevel(botGenDetails, levelDetails, 79);
+            const result = botLevelGenerator.chooseBotLevel(levelDetails.min, levelDetails.max, 1, 1.15);
 
-            expect(result).toBe(10);
+            expect(result).greaterThanOrEqual(5);
+            expect(result).lessThanOrEqual(10);
         });
 
         it("should return 79 when player level is above possible max (100), desired max is 100 and delta is 5", () => {
             const levelDetails: MinMax = { min: 100, max: 100 };
-            const botGenDetails: BotGenerationDetails = {
-                isPmc: false,
-                role: "",
-                side: "",
-                botRelativeLevelDeltaMax: 5,
-                botRelativeLevelDeltaMin: 5,
-                playerLevel: 100,
-                botCountToGenerate: 0,
-                botDifficulty: "",
-                isPlayerScav: false,
-            };
 
-            const result = botLevelGenerator.getHighestRelativeBotLevel(botGenDetails, levelDetails, 79);
+            const result = botLevelGenerator.chooseBotLevel(levelDetails.min, levelDetails.max, 1, 1.15);
 
-            expect(result).toBe(79);
+            expect(result).toBe(100);
         });
     });
 });

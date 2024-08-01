@@ -40540,6 +40540,21 @@
                             "upd": {
                                 "StackObjectsCount": 5000
                             }
+                        },
+                        {
+                            "_id": "66ab4053def889433c02e8f9",
+                            "_tpl": "5d1b36a186f7742523398433",
+                            "parentId": "5fe49444ae6628187a2e78b8",
+                            "slotId": "hideout",
+                            "upd": {
+                                "StackObjectsCount": 1
+                            },
+                            "location": {
+                                "x": 8,
+                                "y": 0,
+                                "r": 0,
+                                "rotation": false
+                            }
                         }
                     ],
                     "questRaidItems": "5fe49444ae6628187a2e78b9",
@@ -43607,6 +43622,21 @@
                             },
                             "upd": {
                                 "StackObjectsCount": 5000
+                            }
+                        },
+                        {
+                            "_id": "66ab4053def889433c02e8f9",
+                            "_tpl": "5d1b36a186f7742523398433",
+                            "parentId": "5fe49444ae6628187a2e78b8",
+                            "slotId": "hideout",
+                            "upd": {
+                                "StackObjectsCount": 1
+                            },
+                            "location": {
+                                "x": 8,
+                                "y": 0,
+                                "r": 0,
+                                "rotation": false
                             }
                         }
                     ],
