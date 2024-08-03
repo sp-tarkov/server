@@ -1193,14 +1193,14 @@ export class ItemHelper {
 
     /**
      * Check if item is stored inside of a container
-     * @param item Item to check is inside of container
+     * @param itemToCheck Item to check is inside of container
      * @param desiredContainerSlotId Name of slot to check item is in e.g. SecuredContainer/Backpack
      * @param items Inventory with child parent items to check
      * @returns True when item is in container
      */
-    public itemIsInsideContainer(item: Item, desiredContainerSlotId: string, items: Item[]): boolean {
+    public itemIsInsideContainer(itemToCheck: Item, desiredContainerSlotId: string, items: Item[]): boolean {
         // Get items parent
-        const parent = items.find((x) => x._id === item.parentId);
+        const parent = items.find((x) => x._id === itemToCheck.parentId);
         if (!parent) {
             // No parent, end of line, not inside container
             return false;

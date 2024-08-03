@@ -1,4 +1,5 @@
 import { InventoryHelper } from "@spt/helpers/InventoryHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { Item } from "@spt/models/eft/common/tables/IItem";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
@@ -15,6 +16,7 @@ export class InRaidHelper {
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("PrimaryCloner") protected cloner: ICloner,
     ) {
@@ -72,6 +74,35 @@ export class InRaidHelper {
 
         // Remove contents of fast panel
         pmcData.Inventory.fastPanel = {};
+    }
+
+    /**
+     * Remove FiR status from designated container
+     * @param sessionId Session id
+     * @param pmcData Player profile
+     * @param secureContainerSlotId Container slot id to find items for and remove FiR from
+     */
+    public removeFiRStatusFromItemsInContainer(
+        sessionId: string,
+        pmcData: IPmcData,
+        secureContainerSlotId: string,
+    ): void {
+        if (!pmcData.Inventory.items.some((item) => item.slotId === secureContainerSlotId)) {
+            return;
+        }
+
+        const itemsInsideContainer = [];
+        for (const inventoryItem of pmcData.Inventory.items.filter((item) => item.upd && item.slotId !== "hideout")) {
+            if (this.itemHelper.itemIsInsideContainer(inventoryItem, secureContainerSlotId, pmcData.Inventory.items)) {
+                itemsInsideContainer.push(inventoryItem);
+            }
+        }
+
+        for (const item of itemsInsideContainer) {
+            if (item.upd.SpawnedInSession) {
+                item.upd.SpawnedInSession = false;
+            }
+        }
     }
 
     /**

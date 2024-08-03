@@ -45,20 +45,20 @@
             "startDay": "2",
             "startMonth": "6",
             "endDay": "1",
-            "endMonth": "8"
+            "endMonth": "10"
         },
         {
             "seasonType": 1,
             "name": "AUTUMN",
-            "startDay": "2",
-            "startMonth": "8",
+            "startDay": "1",
+            "startMonth": "10",
             "endDay": "1",
             "endMonth": "11"
         },
         {
             "seasonType": 2,
             "name": "WINTER_END",
-            "startDay": "2",
+            "startDay": "1",
             "startMonth": "11",
             "endDay": "31",
             "endMonth": "12"
@@ -76,7 +76,7 @@
             "name": "SPRING",
             "startDay": "25",
             "startMonth": "3",
-            "endDay": "1",
+            "endDay": "2",
             "endMonth": "6"
         },
         {

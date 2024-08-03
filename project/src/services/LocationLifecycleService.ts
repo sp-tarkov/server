@@ -464,6 +464,8 @@ export class LocationLifecycleService {
             this.pmcChatResponseService.sendKillerResponse(sessionId, pmcProfile, postRaidProfile.Stats.Eft.Aggressor);
 
             this.inRaidHelper.deleteInventory(pmcProfile, sessionId);
+
+            this.inRaidHelper.removeFiRStatusFromItemsInContainer(sessionId, pmcProfile, "SecuredContainer");
         }
 
         // Must occur AFTER killer messages have been sent
