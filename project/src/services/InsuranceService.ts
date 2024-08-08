@@ -27,6 +27,7 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 
 @injectable()
 export class InsuranceService {
@@ -51,6 +52,7 @@ export class InsuranceService {
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("PrimaryCloner") protected cloner: ICloner,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     ) {
         this.insuranceConfig = this.configServer.getConfig(ConfigTypes.INSURANCE);
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
@@ -179,11 +181,8 @@ export class InsuranceService {
             return this.timeUtil.getTimestamp() + this.insuranceConfig.returnTimeOverrideSeconds;
         }
 
-        const insuranceReturnTimeBonus = pmcData.Bonuses.find(
-            (bonus) => bonus.type === BonusType.INSURANCE_RETURN_TIME,
-        );
-        const insuranceReturnTimeBonusPercent =
-            1.0 - (insuranceReturnTimeBonus ? Math.abs(insuranceReturnTimeBonus!.value ?? 0) : 0) / 100;
+        const insuranceReturnTimeBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.INSURANCE_RETURN_TIME);
+        const insuranceReturnTimeBonusPercent = 1.0 - ((insuranceReturnTimeBonusSum ?? 0) / 100);
 
         const traderMinReturnAsSeconds = trader.insurance.min_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
         const traderMaxReturnAsSeconds = trader.insurance.max_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;

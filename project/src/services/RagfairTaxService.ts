@@ -8,6 +8,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { RagfairPriceService } from "@spt/services/RagfairPriceService";
 import { inject, injectable } from "tsyringe";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 
 @injectable()
 export class RagfairTaxService {
@@ -18,6 +19,7 @@ export class RagfairTaxService {
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
     ) {}
 
     public storeClientOfferTaxValue(sessionId: string, offer: IStorePlayerOfferTaxAmountRequestData): void {
@@ -78,12 +80,12 @@ export class RagfairTaxService {
         itemPriceMult = 4 ** itemPriceMult;
         requirementPriceMult = 4 ** requirementPriceMult;
 
-        const hideoutFleaTaxDiscountBonus = pmcData.Bonuses.find((b) => b.type === BonusType.RAGFAIR_COMMISSION);
-        const taxDiscountPercent = hideoutFleaTaxDiscountBonus ? Math.abs(hideoutFleaTaxDiscountBonus!.value ?? 0) : 0;
+        const hideoutFleaTaxDiscountBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.RAGFAIR_COMMISSION);
+        const taxDiscountPercent = (hideoutFleaTaxDiscountBonusSum ?? 0) / 100.0;
 
         const tax =
             itemWorth * itemTaxMult * itemPriceMult + requirementsPrice * requirementTaxMult * requirementPriceMult;
-        const discountedTax = tax * (1.0 - taxDiscountPercent / 100.0);
+        const discountedTax = tax * (1.0 - taxDiscountPercent);
         const itemComissionMult = itemTemplate._props.RagFairCommissionModifier
             ? itemTemplate._props.RagFairCommissionModifier
             : 1;
