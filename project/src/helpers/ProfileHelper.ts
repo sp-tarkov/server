@@ -501,6 +501,19 @@ export class ProfileHelper {
         }
     }
 
+    /**
+     * Iterate over all bonuses and sum up all bonuses of desired type in provided profile
+     * @param pmcProfile Player profile
+     * @param desiredBonus Bonus to sum up
+     * @returns Summed bonus value or 0 if no bonus found
+     */
+    public getBonusValueFromProfile(pmcProfile: IPmcData, desiredBonus: BonusType): number {
+        const bonuses = pmcProfile.Bonuses.filter((bonus) => bonus.type === desiredBonus);
+
+        // Sum all bonuses found above
+        return bonuses?.reduce((sum, curr) => sum + (curr.value ?? 0), 100) ?? 0;
+    }
+
     public playerIsFleaBanned(pmcProfile: IPmcData): boolean {
         const currentTimestamp = this.timeUtil.getTimestamp();
         return pmcProfile.Info.Bans.some((ban) => ban.banType === BanType.RAGFAIR && currentTimestamp < ban.dateTime);
