@@ -28,6 +28,7 @@ import { IAddItemDirectRequest } from "@spt/models/eft/inventory/IAddItemDirectR
 import { IAddItemsDirectRequest } from "@spt/models/eft/inventory/IAddItemsDirectRequest";
 import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
+import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
@@ -222,6 +223,13 @@ export class HideoutController {
             profileHideoutArea.type === HideoutAreas.MEDSTATION
         ) {
             this.checkAndUpgradeWall(pmcData);
+        }
+
+        // Cleanup temporary fuel usage debuffs if wall is complete
+        if (profileHideoutArea.type === HideoutAreas.EMERGENCY_WALL && profileHideoutArea.level === 6)
+        {
+            // Get everything except specific fuel consumption debuffs
+            pmcData.Bonuses = pmcData.Bonuses.filter(bonus => bonus.type !== BonusType.FUEL_CONSUMPTION && bonus.value === 5);
         }
 
         // Add Skill Points Per Area Upgrade

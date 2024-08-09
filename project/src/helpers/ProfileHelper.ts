@@ -509,9 +509,13 @@ export class ProfileHelper {
      */
     public getBonusValueFromProfile(pmcProfile: IPmcData, desiredBonus: BonusType): number {
         const bonuses = pmcProfile.Bonuses.filter((bonus) => bonus.type === desiredBonus);
+        if (!bonuses)
+        {
+            return 0;
+        }
 
         // Sum all bonuses found above
-        return bonuses?.reduce((sum, curr) => sum + (curr.value ?? 0), 100) ?? 0;
+        return bonuses.reduce((sum, curr) => sum + (curr.value ?? 0), 0);
     }
 
     public playerIsFleaBanned(pmcProfile: IPmcData): boolean {
