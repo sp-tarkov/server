@@ -225,11 +225,11 @@ export class HideoutController {
             this.checkAndUpgradeWall(pmcData);
         }
 
-        // Cleanup temporary fuel usage debuffs if wall is complete
+        // Cleanup temporary fuel usage buffs from mopping floor if wall is complete as it would result in too many bonuses
         if (profileHideoutArea.type === HideoutAreas.EMERGENCY_WALL && profileHideoutArea.level === 6)
         {
-            // Get everything except specific fuel consumption debuffs
-            pmcData.Bonuses = pmcData.Bonuses.filter(bonus => bonus.type !== BonusType.FUEL_CONSUMPTION && bonus.value === 5);
+            // Get everything except specific fuel consumption buffs
+            pmcData.Bonuses = pmcData.Bonuses.filter(bonus => bonus.type !== BonusType.FUEL_CONSUMPTION && bonus.value >= -10 && bonus.value <= 0);
         }
 
         // Add Skill Points Per Area Upgrade

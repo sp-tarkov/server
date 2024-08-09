@@ -419,7 +419,7 @@ export class HideoutHelper {
             this.databaseService.getHideout().settings.generatorFuelFlowRate *
             this.getTimeElapsedSinceLastServerTick(pmcData, isGeneratorOn);
 
-        // Get all fuel consumption bonuses, returns an empty array if none found TODO: If players mop the floor of the Broken wall, they get too many bonuses this way.
+        // Get all fuel consumption bonuses, returns an empty array if none found
         const profileFuelConsomptionBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.FUEL_CONSUMPTION)
 
         // 0 to 1
