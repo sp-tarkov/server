@@ -226,6 +226,7 @@ export class HideoutController {
         }
 
         // Cleanup temporary fuel usage buffs from mopping floor if wall is complete as it would result in too many bonuses
+        // TODO: Clean up all buffs from mopping floor.
         if (profileHideoutArea.type === HideoutAreas.EMERGENCY_WALL && profileHideoutArea.level === 6)
         {
             // Get everything except specific fuel consumption buffs
