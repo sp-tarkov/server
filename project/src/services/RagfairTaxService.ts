@@ -81,7 +81,7 @@ export class RagfairTaxService {
         requirementPriceMult = 4 ** requirementPriceMult;
 
         const hideoutFleaTaxDiscountBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.RAGFAIR_COMMISSION);
-        const taxDiscountPercent = (hideoutFleaTaxDiscountBonusSum ?? 0) / 100.0;
+        const taxDiscountPercent = (hideoutFleaTaxDiscountBonusSum + 100) / 100.0;
 
         const tax =
             itemWorth * itemTaxMult * itemPriceMult + requirementsPrice * requirementTaxMult * requirementPriceMult;

@@ -182,7 +182,7 @@ export class InsuranceService {
         }
 
         const insuranceReturnTimeBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.INSURANCE_RETURN_TIME);
-        const insuranceReturnTimeBonusPercent = 1.0 - ((insuranceReturnTimeBonusSum ?? 0) / 100);
+        const insuranceReturnTimeBonusPercent = 1.0 - ((insuranceReturnTimeBonusSum + 100) / 100);
 
         const traderMinReturnAsSeconds = trader.insurance.min_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
         const traderMaxReturnAsSeconds = trader.insurance.max_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;

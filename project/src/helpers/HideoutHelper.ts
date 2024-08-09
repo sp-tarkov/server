@@ -423,7 +423,7 @@ export class HideoutHelper {
         const profileFuelConsomptionBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.FUEL_CONSUMPTION)
 
         // 0 to 1
-        const fuelConsumptionBonusMultipler = profileFuelConsomptionBonusSum / 100;
+        const fuelConsumptionBonusMultipler = (profileFuelConsomptionBonusSum + 100) / 100;
 
         // 0 to 1
         const hideoutManagementConsumptionBonusMultipler = this.getHideoutManagementConsumptionBonus(pmcData);
