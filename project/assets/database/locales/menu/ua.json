@@ -1,0 +1,28 @@
+{
+    "menu": {
+        "206 - Wrong email or password": "Невірний email або пароль",
+        "213 - Error connecting to auth server": "Авторизація тимчасово неможлива, спробуйте пізніше.",
+        "240 - Servers temporarily unavailable. Please, try later.": "Сервери на техобслуговуванні",
+        "ASSEMBLE": "ЗІБРАТИ",
+        "AUTHORIZATION": "АВТОРИЗАЦІЯ",
+        "BATTLEYE_ANTICHEAT_BadServiceVersion": "Необхідний рестарт гри - запущена застаріла версія античита",
+        "BATTLEYE_ANTICHEAT_ClientNotResponding": "Втрачено з'єднання з античитом",
+        "BATTLEYE_ANTICHEAT_CorruptedData": "Запущена некоректна версія гри. Будь ласка, перевірте цілісність файлів гри",
+        "BATTLEYE_ANTICHEAT_CorruptedMemory": "Запущено некоректну версію античита. Будь ласка, перевстановіть античит",
+        "BATTLEYE_ANTICHEAT_DisallowedProgram": "На клієнті запущено заборонене ПЗ",
+        "BATTLEYE_ANTICHEAT_FailedToLoadAnticheat": "Завантаження античита не вдалося.",
+        "BATTLEYE_ANTICHEAT_GameRestartRequired": "Потрібне перезавантаження гри",
+        "BATTLEYE_ANTICHEAT_GlobalBan": "Гравця було забанено BattlEye",
+        "BATTLEYE_ANTICHEAT_QueryTimeout": "Втрачено з'єднання з античитом. Будь ласка, перезапустіть гру",
+        "BATTLEYE_ANTICHEAT_WinAPIFailure": "Помилка запиту програми від WIndows",
+        "BATTLEYE_ServiceNeedsToBeUpdated": "Запущена застаріла версія античита. Необхідне перезавантаження гри",
+        "BATTLEYE_ServiceNotRunningProperly": "Античит запущено некоректно. Необхідне перезавантаження гри",
+        "BATTLEYE_UnknownRestartReason": "Античит запущено некоректно. Необхідне перезавантаження гри",
+        "EXIT": "ВИХІД",
+        "NEXT": "ДАЛІ",
+        "Place in queue:": "Місце в черзі:",
+        "Profile data loading...": "Завантаження даних профілю... \n \n https://github.com/dyeness/SPT_UA_Lang",
+        "SABER_ANTICHEAT_AnticheatConnectionFailed": "Втрачено з'єднання з античитом",
+        "Servers are currently at full capacity": "На даний момент сервери переповнені"
+    }
+}
