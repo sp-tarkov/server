@@ -519,7 +519,25 @@ export class RepeatableQuestGenerator {
         const randomNumbersUsed = [];
         for (let i = 0; i < distinctItemsToRetrieveCount; i++) {
             let randomNumber = this.randomUtil.randInt(itemSelection.length);
-            while (randomNumbersUsed.includes(randomNumber) && randomNumbersUsed.length !== itemSelection.length) {
+            function alreadyInRandomNumbersUsed(num: any) {
+                return randomNumbersUsed.includes(num);
+            }
+            function allNumbersLowerThanGivenAlreadyUsed(given) {
+                return Array(given)
+                        .fill(0)
+                        .map((_, i) => i)
+                        .every(alreadyInRandomNumbersUsed)
+            }
+            while (alreadyInRandomNumbersUsed(randomNumber) && randomNumbersUsed.length !== itemSelection.length) {
+                if (allNumbersLowerThanGivenAlreadyUsed(itemSelection.length)) {
+                    this.logger.error(
+                        this.localisationService.getText("repeatable-no_reward_item_found_in_price_range", {
+                            minPrice: 0,
+                            roublesBudget: roublesBudget,
+                        }),
+                    );
+                    return undefined;
+                }
                 randomNumber = this.randomUtil.randInt(itemSelection.length);
             }
 
