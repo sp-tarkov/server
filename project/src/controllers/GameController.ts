@@ -524,7 +524,7 @@ export class GameController {
     protected setAllDbItemsAsSellableOnFlea(): void {
         const dbItems = Object.values(this.databaseService.getItems());
         for (const item of dbItems) {
-            if (item._type === "Item" && !item._props?.CanSellOnRagfair) {
+            if (item._type === "Item" && !item._props?.CanSellOnRagfair && !this.ragfairConfig.dynamic.blacklist.custom.includes(item._id)) {
                 item._props.CanSellOnRagfair = true;
             }
         }
