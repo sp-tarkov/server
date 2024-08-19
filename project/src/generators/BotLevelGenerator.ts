@@ -66,9 +66,9 @@ export class BotLevelGenerator {
         const minPossibleLevel =
             botGenerationDetails.isPmc && botGenerationDetails.locationSpecificPmcLevelOverride
                 ? Math.min(
-                    Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
-                    maxAvailableLevel, // Fallback if value above is crazy (default is 79)
-                )
+                      Math.max(levelDetails.min, botGenerationDetails.locationSpecificPmcLevelOverride.min), // Biggest between json min and the botgen min
+                      maxAvailableLevel, // Fallback if value above is crazy (default is 79)
+                  )
                 : Math.min(levelDetails.min, maxAvailableLevel); // Not pmc with override or non-pmc
 
         const maxPossibleLevel =
@@ -86,6 +86,6 @@ export class BotLevelGenerator {
         return {
             min: minLevel,
             max: maxLevel,
-        }
+        };
     }
 }
