@@ -86,7 +86,8 @@ export class RagfairTaxService {
             pmcData,
             BonusType.RAGFAIR_COMMISSION,
         );
-        const taxDiscountPercent = (hideoutFleaTaxDiscountBonusSum + 100) / 100.0;
+        // A negative bonus implies a lower discount, since we subtract later, invert the value here
+        const taxDiscountPercent = -(hideoutFleaTaxDiscountBonusSum / 100.0);
 
         const tax =
             itemWorth * itemTaxMult * itemPriceMult + requirementsPrice * requirementTaxMult * requirementPriceMult;

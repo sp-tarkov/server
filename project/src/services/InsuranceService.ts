@@ -1,6 +1,7 @@
 import { DialogueHelper } from "@spt/helpers/DialogueHelper";
 import { HandbookHelper } from "@spt/helpers/HandbookHelper";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { SecureContainerHelper } from "@spt/helpers/SecureContainerHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -27,7 +28,6 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
-import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 
 @injectable()
 export class InsuranceService {
@@ -181,8 +181,12 @@ export class InsuranceService {
             return this.timeUtil.getTimestamp() + this.insuranceConfig.returnTimeOverrideSeconds;
         }
 
-        const insuranceReturnTimeBonusSum = this.profileHelper.getBonusValueFromProfile(pmcData,BonusType.INSURANCE_RETURN_TIME);
-        const insuranceReturnTimeBonusPercent = 1.0 - ((insuranceReturnTimeBonusSum + 100) / 100);
+        const insuranceReturnTimeBonusSum = this.profileHelper.getBonusValueFromProfile(
+            pmcData,
+            BonusType.INSURANCE_RETURN_TIME,
+        );
+        // A negative bonus implies a faster return, since we subtract later, invert the value here
+        const insuranceReturnTimeBonusPercent = -(insuranceReturnTimeBonusSum / 100);
 
         const traderMinReturnAsSeconds = trader.insurance.min_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
         const traderMaxReturnAsSeconds = trader.insurance.max_return_hour * TimeUtil.ONE_HOUR_AS_SECONDS;
@@ -206,8 +210,9 @@ export class InsuranceService {
             randomisedReturnTimeSeconds *= editionModifier.multiplier;
         }
 
-        // Current time + randomised time calculated above
-        return this.timeUtil.getTimestamp() + randomisedReturnTimeSeconds * insuranceReturnTimeBonusPercent;
+        // Calculate the final return time based on our bonus percent
+        const finalReturnTimeSeconds = randomisedReturnTimeSeconds * (1.0 - insuranceReturnTimeBonusPercent);
+        return this.timeUtil.getTimestamp() + finalReturnTimeSeconds;
     }
 
     /**
