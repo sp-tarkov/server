@@ -16,7 +16,7 @@ globalThis.G_WATERMARK_ENABLED = false;
 
 globalThis.G_SPTVERSION = "";
 globalThis.G_COMMIT = "";
-globalThis.G_BUILDTIME = "";
+globalThis.G_BUILDTIME = 0;
 
 const program = new Program();
 program.start();
