@@ -425,13 +425,19 @@ export class HideoutHelper {
             BonusType.FUEL_CONSUMPTION,
         );
 
-        // 0 to 1
-        const fuelConsumptionBonusMultipler = (profileFuelConsomptionBonusSum + 100) / 100;
+        // An increase in "bonus" consumption is actually an increase in consumption, so invert this for later use
+        const fuelConsumptionBonusRate = -(profileFuelConsomptionBonusSum / 100);
 
-        // 0 to 1
-        const hideoutManagementConsumptionBonusMultipler = this.getHideoutManagementConsumptionBonus(pmcData);
+        // An increase in hideout management bonus is a decrease in consumption
+        const hideoutManagementConsumptionBonusRate = this.getHideoutManagementConsumptionBonus(pmcData);
 
-        const combinedBonus = 1.0 - (fuelConsumptionBonusMultipler + hideoutManagementConsumptionBonusMultipler);
+        let combinedBonus = 1.0 - (fuelConsumptionBonusRate + hideoutManagementConsumptionBonusRate);
+
+        // Sanity check, never let fuel consumption go negative, otherwise it returns fuel to the player
+        if (combinedBonus < 0) {
+            combinedBonus = 0;
+        }
+
         fuelUsedSinceLastTick *= combinedBonus;
 
         let hasFuelRemaining = false;
