@@ -55,6 +55,7 @@ export interface IRepeatableQuestConfig {
     rewardAmmoStackMinSize: number;
     freeChangesAvailable: number;
     freeChanges: number;
+    keepDailyQuestTypeOnReplacement: boolean;
 }
 
 export interface IRewardScaling {

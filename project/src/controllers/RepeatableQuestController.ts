@@ -513,6 +513,10 @@ export class RepeatableQuestController {
             (config) => config.name === repeatablesInProfile.name,
         );
 
+        // If the configuration dictates to replace with the same quest type, adjust the available quest types
+        if (repeatableConfig?.keepDailyQuestTypeOnReplacement) {
+            repeatableConfig.types = [questToReplace.type];
+        }
         // Generate meta-data for what type/levelrange of quests can be generated for player
         const allowedQuestTypes = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
         const newRepeatableQuest = this.attemptToGenerateRepeatableQuest(pmcData, allowedQuestTypes, repeatableConfig);

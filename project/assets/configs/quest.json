@@ -980,7 +980,8 @@
             "rewardBlacklist": ["627bce33f21bc425b06ab967", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
             "rewardAmmoStackMinSize": 5,
             "freeChangesAvailable": 2,
-            "freeChanges": 2
+            "freeChanges": 2,
+            "keepDailyQuestTypeOnReplacement": false
         },
         {
             "id": "618035d38012292db3081bf0",
