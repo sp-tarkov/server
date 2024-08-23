@@ -643,11 +643,31 @@ export class InsuranceController {
         // add items to InsuredItems list once money has been paid
         for (const key of body.items) {
             pmcData.InsuredItems.push({ tid: body.tid, itemId: inventoryItemsHash[key]._id });
+            // If Item is Helmet or Body Armour -> Handle insurance of Softinserts
+            if (this.itemHelper.armorItemHasRemovableOrSoftInsertSlots(inventoryItemsHash[key]._tpl)) {
+                this.insureSoftInserts(inventoryItemsHash[key], pmcData, body);
+            }
         }
 
         this.profileHelper.addSkillPointsToPlayer(pmcData, SkillTypes.CHARISMA, itemsToInsureCount * 0.01);
 
         return output;
+    }
+
+    /**
+     *  Insure softinserts of Armor that has softinsert slots
+     * @param item Armor item to be insured
+     * @param pmcData Player profile
+     * @param body Insurance request data
+     */
+    public insureSoftInserts(item: Item, pmcData: IPmcData, body: IInsureRequestData): void {
+        const softInsertIds = this.itemHelper.getSoftInsertSlotIds();
+        const softInsertSlots = pmcData.Inventory.items.filter((x) => x.parentId === item._id && softInsertIds.includes(x.slotId.toLowerCase()));
+        
+        for (const softInsertSlot of softInsertSlots) {
+            this.logger.debug(`SoftInsertSlots: ${softInsertSlot.slotId}`);
+            pmcData.InsuredItems.push({ tid: body.tid, itemId: softInsertSlot._id });
+        }
     }
 
     /**
