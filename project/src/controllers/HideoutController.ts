@@ -1375,8 +1375,8 @@ export class HideoutController {
     ): IItemEventRouterResponse {
         const output = this.eventOutputHolder.getOutput(sessionId);
 
-        delete pmcData.Hideout.Production[request.recipeId];
-
+        pmcData.Hideout.Production[request.recipeId] = null;
+        output.profileChanges[sessionId].production = null;
         return output;
     }
 
