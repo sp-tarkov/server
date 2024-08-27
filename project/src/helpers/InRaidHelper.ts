@@ -1,3 +1,4 @@
+import { QuestController } from "@spt/controllers/QuestController";
 import { InventoryHelper } from "@spt/helpers/InventoryHelper";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -10,6 +11,8 @@ import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
+import { ProfileHelper } from "./ProfileHelper";
+import { QuestHelper } from "./QuestHelper";
 
 @injectable()
 export class InRaidHelper {
@@ -23,6 +26,9 @@ export class InRaidHelper {
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("PrimaryCloner") protected cloner: ICloner,
         @inject("DatabaseService") protected databaseService: DatabaseService,
+        @inject("QuestController") protected questController: QuestController,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("QuestHelper") protected questHelper: QuestHelper,
     ) {
         this.lostOnDeathConfig = this.configServer.getConfig(ConfigTypes.LOST_ON_DEATH);
         this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
@@ -145,6 +151,23 @@ export class InRaidHelper {
         for (const item of itemsInsideContainer) {
             if (item.upd.SpawnedInSession) {
                 item.upd.SpawnedInSession = false;
+            }
+        }
+    }
+
+    /**
+     * Deletes quest conditions from pickup tasks given a list of quest items being carried by a PMC.
+     * @param carriedQuestItems Items carried by PMC at death, usually gotten from "CarriedQuestItems"
+     * @param sessionId Current sessionId
+     * @param pmcProfile Pre-raid profile that is being handled with raid information
+     */
+    public removePickupQuestConditions(carriedQuestItems: string[], sessionId: string, pmcProfile: IPmcData) {
+        if (carriedQuestItems && this.lostOnDeathConfig.questItems) {
+            const pmcQuests = this.questController.getClientQuests(sessionId);
+            const pmcQuestIds = pmcQuests.map((a) => a._id);
+            for (const item of carriedQuestItems) {
+                const failedQuestId = this.questHelper.getFindItemConditionByQuestItem(item, pmcQuestIds, pmcQuests);
+                this.profileHelper.removeQuestConditionFromProfile(pmcProfile, failedQuestId);
             }
         }
     }

@@ -1,13 +1,11 @@
 import { ApplicationContext } from "@spt/context/ApplicationContext";
 import { ContextVariableType } from "@spt/context/ContextVariableType";
-import { QuestController } from "@spt/controllers/QuestController";
 import { LocationLootGenerator } from "@spt/generators/LocationLootGenerator";
 import { LootGenerator } from "@spt/generators/LootGenerator";
 import { PlayerScavGenerator } from "@spt/generators/PlayerScavGenerator";
 import { HealthHelper } from "@spt/helpers/HealthHelper";
 import { InRaidHelper } from "@spt/helpers/InRaidHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { QuestHelper } from "@spt/helpers/QuestHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -76,8 +74,6 @@ export class LocationLifecycleService {
         @inject("ApplicationContext") protected applicationContext: ApplicationContext,
         @inject("LocationLootGenerator") protected locationLootGenerator: LocationLootGenerator,
         @inject("PrimaryCloner") protected cloner: ICloner,
-        @inject("QuestController") protected questController: QuestController,
-        @inject("QuestHelper") protected questHelper: QuestHelper,
     ) {
         this.inRaidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
         this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
@@ -476,19 +472,11 @@ export class LocationLifecycleService {
         this.healthHelper.updateProfileHealthPostRaid(pmcProfile, postRaidProfile.Health, sessionId, isDead);
 
         if (isDead) {
-            // Remove pickup quest conditions so those quest items can spawn again.
-            if (postRaidProfile.Stats.Eft.CarriedQuestItems) {
-                const pmcQuests = this.questController.getClientQuests(sessionId);
-                const pmcQuestIds = pmcQuests.map((a) => a._id);
-                for (const item of postRaidProfile.Stats.Eft.CarriedQuestItems) {
-                    const failedQuestId = this.questHelper.getFindItemConditionByQuestItem(
-                        item,
-                        pmcQuestIds,
-                        pmcQuests,
-                    );
-                    this.profileHelper.removeQuestConditionFromProfile(pmcProfile, failedQuestId);
-                }
-            }
+            this.inRaidHelper.removePickupQuestConditions(
+                postRaidProfile.Stats.Eft.CarriedQuestItems,
+                sessionId,
+                pmcProfile,
+            );
 
             this.pmcChatResponseService.sendKillerResponse(sessionId, pmcProfile, postRaidProfile.Stats.Eft.Aggressor);
 
