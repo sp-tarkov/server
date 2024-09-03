@@ -140,10 +140,10 @@ export class ProfileHelper {
      * @param clonedProfile A clone of the full player profile
      */
     protected sanitizeProfileForClient(clonedProfile: ISptProfile) {
-        // Reset `loyaltyLevel` from `TradersInfo` to 0, as otherwise it causes the client to not
+        // Remove `loyaltyLevel` from `TradersInfo`, as otherwise it causes the client to not
         // properly calculate the player's `loyaltyLevel`
         for (const traderInfo of Object.values(clonedProfile.characters.pmc.TradersInfo)) {
-            traderInfo.loyaltyLevel = 0;
+            traderInfo.loyaltyLevel = undefined;
         }
     }
 

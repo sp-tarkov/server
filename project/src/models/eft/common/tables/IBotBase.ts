@@ -458,7 +458,7 @@ export interface IQuestStatus {
 }
 
 export interface TraderInfo {
-    loyaltyLevel: number;
+    loyaltyLevel?: number;
     salesSum: number;
     standing: number;
     nextResupply: number;
