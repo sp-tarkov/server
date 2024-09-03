@@ -80,21 +80,24 @@ export class ProfileHelper {
             return output;
         }
 
-        const fullProfile = this.getFullProfile(sessionId);
+        const fullProfileClone = this.cloner.clone(this.getFullProfile(sessionId));
+
+        // Sanitize any data the client can not receive
+        this.sanitizeProfileForClient(fullProfileClone);
 
         // Edge-case, true post raid
         if (this.profileSnapshotService.hasProfileSnapshot(sessionId)) {
             return this.postRaidXpWorkaroundFix(
                 sessionId,
-                fullProfile.characters.pmc,
-                fullProfile.characters.scav,
+                fullProfileClone.characters.pmc,
+                fullProfileClone.characters.scav,
                 output,
             );
         }
 
         // PMC must be at array index 0, scav at 1
-        output.push(fullProfile.characters.pmc);
-        output.push(fullProfile.characters.scav);
+        output.push(fullProfileClone.characters.pmc);
+        output.push(fullProfileClone.characters.scav);
 
         return output;
     }
@@ -113,13 +116,10 @@ export class ProfileHelper {
      */
     protected postRaidXpWorkaroundFix(
         sessionId: string,
-        pmcProfile: IPmcData,
-        scavProfile: IPmcData,
+        clonedPmc: IPmcData,
+        clonedScav: IPmcData,
         output: IPmcData[],
     ): IPmcData[] {
-        const clonedPmc = this.cloner.clone(pmcProfile);
-        const clonedScav = this.cloner.clone(scavProfile);
-
         const profileSnapshot = this.profileSnapshotService.getProfileSnapshot(sessionId);
         clonedPmc.Info.Level = profileSnapshot.characters.pmc.Info.Level;
         clonedPmc.Info.Experience = profileSnapshot.characters.pmc.Info.Experience;
@@ -133,6 +133,18 @@ export class ProfileHelper {
         output.push(clonedScav);
 
         return output;
+    }
+
+    /**
+     * Sanitize any information from the profile that the client does not expect to receive
+     * @param clonedProfile A clone of the full player profile
+     */
+    protected sanitizeProfileForClient(clonedProfile: ISptProfile) {
+        // Reset `loyaltyLevel` from `TradersInfo` to 0, as otherwise it causes the client to not
+        // properly calculate the player's `loyaltyLevel`
+        for (const traderInfo of Object.values(clonedProfile.characters.pmc.TradersInfo)) {
+            traderInfo.loyaltyLevel = 0;
+        }
     }
 
     /**
