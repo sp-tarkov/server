@@ -449,8 +449,6 @@
         "btrDeliveryExpireHours": 240
     },
     "moddedTraders": {
-        "clothingService": [
-            "ArtemTrader"
-        ]
+        "clothingService": []
     }
 }
