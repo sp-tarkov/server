@@ -11,6 +11,7 @@ export interface ITraderConfig extends IBaseConfig {
     updateTimeDefault: number;
     traderPriceMultipler: number;
     fence: FenceConfig;
+    moddedTraders: ModdedTraders;
 }
 
 export interface UpdateTime {
@@ -68,4 +69,10 @@ export interface DiscountOptions {
     presetPriceMult: number;
     weaponPresetMinMax: MinMax;
     equipmentPresetMinMax: MinMax;
+}
+
+/** Custom trader data needed client side for things such as the clothing service */
+export interface ModdedTraders {
+    /** Trader Ids to enable the clothing service for */
+    clothingService: string[];
 }

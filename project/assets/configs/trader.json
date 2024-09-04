@@ -367,7 +367,10 @@
         ],
         "coopExtractGift": {
             "sendGift": true,
-            "messageLocaleIds": ["5da89b1886f77439d7741002 0", "5da89b3a86f7742f9026cb83 0"],
+            "messageLocaleIds": [
+                "5da89b1886f77439d7741002 0",
+                "5da89b3a86f7742f9026cb83 0"
+            ],
             "giftExpiryHours": 168,
             "weaponPresetCount": {
                 "min": 0,
@@ -444,5 +447,10 @@
             "allowBossItems": false
         },
         "btrDeliveryExpireHours": 240
+    },
+    "moddedTraders": {
+        "clothingService": [
+            "ArtemTrader"
+        ]
     }
 }
