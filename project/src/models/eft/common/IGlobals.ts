@@ -96,6 +96,7 @@ export interface IConfig {
     SkillEnduranceWeightThreshold: number;
     TeamSearchingTimeout: number;
     Insurance: IInsurance;
+    IsPveInsurance: boolean;
     SkillExpPerLevel: number;
     GameSearchingTimeout: number;
     WallContusionAbsorption: Ixyz;

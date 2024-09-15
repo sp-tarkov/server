@@ -27983,6 +27983,7 @@
       },
       "MaxStorageTimeInHour": 72
     },
+    "IsPveInsurance": false,
     "ItemsCommonSettings": {
       "ItemRemoveAfterInterruptionTime": 2
     },

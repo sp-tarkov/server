@@ -128,12 +128,15 @@ export class InsuranceController {
 
         // Iterate over each of the insurance packages.
         for (const insured of insuranceDetails) {
-            // Find items that should be deleted from the insured items.
-            const itemsToDelete = this.findItemsToDelete(rootItemParentID, insured);
+            const isPveInsurance =  this.databaseService.getGlobals().config.IsPveInsurance;
+            if (!isPveInsurance) {
+                 // Find items that should be deleted from the insured items.
+                const itemsToDelete = this.findItemsToDelete(rootItemParentID, insured);
 
-            // Actually remove them.
-            this.removeItemsFromInsurance(insured, itemsToDelete);
-
+                // Actually remove them.
+                this.removeItemsFromInsurance(insured, itemsToDelete);
+            }
+            
             // Ensure that all items have a valid parent.
             insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
 
