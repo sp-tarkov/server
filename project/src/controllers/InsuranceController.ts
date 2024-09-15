@@ -128,7 +128,7 @@ export class InsuranceController {
 
         // Iterate over each of the insurance packages.
         for (const insured of insuranceDetails) {
-            const isPveInsurance =  this.databaseService.getGlobals().config.IsPveInsurance;
+            const isPveInsurance = this.insuranceConfig.isPveInsurance;
             if (!isPveInsurance) {
                  // Find items that should be deleted from the insured items.
                 const itemsToDelete = this.findItemsToDelete(rootItemParentID, insured);

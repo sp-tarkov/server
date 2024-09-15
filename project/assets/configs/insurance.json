@@ -8,5 +8,6 @@
     "returnTimeOverrideSeconds": 0,
     "runIntervalSeconds": 600,
     "minAttachmentRoublePriceToBeTaken": 2000,
-    "chanceNoAttachmentsTakenPercent": 10
+    "chanceNoAttachmentsTakenPercent": 10,
+    "isPveInsurance": false
 }
