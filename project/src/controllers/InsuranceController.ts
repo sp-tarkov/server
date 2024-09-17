@@ -667,8 +667,8 @@ export class InsuranceController {
     public insureSoftInserts(item: Item, pmcData: IPmcData, body: IInsureRequestData): void {
         const softInsertIds = this.itemHelper.getSoftInsertSlotIds();
         const softInsertSlots = pmcData.Inventory.items.filter(
-            (item) => item.parentId === item._id && softInsertIds.includes(item.slotId.toLowerCase()),
-        );
+            (_item) => _item.parentId === item._id && softInsertIds.includes(_item.slotId.toLowerCase())
+        ); 
 
         for (const softInsertSlot of softInsertSlots) {
             this.logger.debug(`SoftInsertSlots: ${softInsertSlot.slotId}`);
