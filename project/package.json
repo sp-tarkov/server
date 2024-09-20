@@ -80,8 +80,7 @@
         "ts-node-dev": "~2.0",
         "tsconfig-paths": "~4.2",
         "typedoc": "~0.26",
-        "typemoq": "~2.1",
-        "vitest": "~2.0"
+        "typemoq": "~2.1"
     },
     "targets": {
         "default": {
