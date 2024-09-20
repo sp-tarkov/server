@@ -245,10 +245,14 @@ export class GameController {
     }
 
     protected migrate39xProfile(fullProfile: ISptProfile) {
-        // Karma
+        // Karma & Favorite items
         if (typeof fullProfile.characters.pmc.karmaValue === "undefined") {
             this.logger.warning("Migration: Added karma value of 0.2 to profile");
             fullProfile.characters.pmc.karmaValue = 0.2;
+
+            // Reset the PMC's favorite items, as the previous data was incorrect.
+            this.logger.warning("Migration: Emptied out favoriteItems array on profile.");
+            fullProfile.characters.pmc.Inventory.favoriteItems = [];
         }
 
         // Equipment area

@@ -933,11 +933,18 @@ export class InventoryController {
 
         for (const itemId of request.items) {
             // If id already exists in array, we're removing it
-            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex((x) => x === itemId);
+            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex(x => x._id === itemId);
             if (indexOfItemAlreadyFavorited > -1) {
                 pmcData.Inventory.favoriteItems.splice(indexOfItemAlreadyFavorited, 1);
             } else {
-                pmcData.Inventory.favoriteItems.push(itemId);
+                let item = pmcData.Inventory.items.find(i => i._id === itemId);
+
+                if (item === undefined)
+                {
+                    continue;
+                }
+
+                pmcData.Inventory.favoriteItems.push(item);
             }
         }
     }
