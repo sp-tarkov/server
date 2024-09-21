@@ -231,11 +231,10 @@ export class HideoutController {
         }
 
         // Cleanup temporary fuel usage buffs from mopping floor if wall is complete as it would result in too many bonuses
-        // TODO: Clean up all buffs from mopping floor.
         if (profileHideoutArea.type === HideoutAreas.EMERGENCY_WALL && profileHideoutArea.level === 6) {
             // Get everything except specific fuel consumption buffs
             pmcData.Bonuses = pmcData.Bonuses.filter(
-                (bonus) => bonus.type !== BonusType.FUEL_CONSUMPTION && bonus.value >= -10 && bonus.value <= 0,
+                (bonus) => bonus.type !== BonusType.FUEL_CONSUMPTION || (bonus.value >= -10 && bonus.value <= 0),
             );
         }
 
