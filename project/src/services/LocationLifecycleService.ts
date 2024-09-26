@@ -311,10 +311,8 @@ export class LocationLifecycleService {
         const isDead = this.isPlayerDead(request.results);
         const isSurvived = this.isPlayerSurvived(request.results);
 
-        // Handle items transferred via BTR to player
-        this.handleBTRItemTransferEvent(sessionId, request);
-
-        this.handleTransitItemTransferEvent(sessionId, request);
+        // Handle items transferred via BTR or transit to player
+        this.handleItemTransferEvent(sessionId, request);
 
         if (!isPmc) {
             this.handlePostRaidPlayerScav(sessionId, pmcProfile, scavProfile, isDead, request);
@@ -688,23 +686,28 @@ export class LocationLifecycleService {
     }
 
     /**
-     * Check if player used BTR item sending service and send items to player via mail if found
+     * Check if player used BTR or transit item sending service and send items to player via mail if found
      * @param sessionId Session id
      * @param request End raid request
      */
-    protected handleBTRItemTransferEvent(sessionId: string, request: IEndLocalRaidRequestData): void {
-        const btrId = `${Traders.BTR}_btr`;
-        let itemsToSend = request.transferItems[btrId] ?? [];
-        if (itemsToSend.length === 0) {
-            return;
-        }
+    protected handleItemTransferEvent(sessionId: string, request: IEndLocalRaidRequestData): void {
+        const transferTypes = ["btr", "transit"];
 
-        // Filter out the btr container item from transferred items before delivering
-        itemsToSend = itemsToSend.filter((item) => item._id !== btrId);
-        this.btrItemDelivery(sessionId, Traders.BTR, itemsToSend);
+        for (const trasferType of transferTypes) {
+            const rootId = `${Traders.BTR}_${trasferType}`;
+            let itemsToSend = request.transferItems[rootId] ?? [];
+
+            // Filter out the btr container item from transferred items before delivering
+            itemsToSend = itemsToSend.filter((item) => item._id !== Traders.BTR);
+            if (itemsToSend.length === 0) {
+                continue;
+            }
+
+            this.transferItemDelivery(sessionId, Traders.BTR, itemsToSend);
+        }
     }
 
-    protected btrItemDelivery(sessionId: string, traderId: string, items: IItem[]): void {
+    protected transferItemDelivery(sessionId: string, traderId: string, items: IItem[]): void {
         const serverProfile = this.saveServer.getProfile(sessionId);
         const pmcData = serverProfile.characters.pmc;
 
@@ -735,18 +738,6 @@ export class LocationLifecycleService {
             items,
             messageStoreTime,
         );
-    }
-
-    protected handleTransitItemTransferEvent(sessionId: string, request: IEndLocalRaidRequestData) {
-        const id = "TODO_DUMP";
-        const transitRootId = `${id}_transit`;
-        const itemsToSend = request.transferItems[transitRootId] ?? [];
-        if (itemsToSend.length === 0) {
-            this.logger.error("NOT IMPLEMENTED");
-            return;
-        }
-
-        this.logger.error("NOT IMPLEMENTED");
     }
 
     protected handleInsuredItemLostEvent(
