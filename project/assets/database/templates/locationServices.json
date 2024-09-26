@@ -102,6 +102,16 @@
                 },
                 "ServiceItemCost": [],
                 "UniqueItems": []
+            },
+            "TransitItemsDelivery": {
+                "TraderId": "656f0f98d80a697f855d34b1",
+                "TraderServiceType": "TransitItemsDelivery",
+                "Requirements": {
+                    "CompletedQuests": [],
+                    "Standings": []
+                },
+                "ServiceItemCost": [],
+                "UniqueItems": []
             }
         }
     },
