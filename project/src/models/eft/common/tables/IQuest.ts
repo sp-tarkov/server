@@ -23,14 +23,14 @@ export interface IQuest {
     secretQuest: boolean;
     startedMessageText: string;
     successMessageText: string;
-    acceptPlayerMessage: string;
+    acceptPlayerMessage?: string;
     declinePlayerMessage: string;
-    completePlayerMessage: string;
-    templateId: string;
+    completePlayerMessage?: string;
+    templateId?: string;
     rewards: IQuestRewards;
     /** Becomes 'AppearStatus' inside client */
-    status: string | number;
-    KeyQuest: boolean;
+    status?: string | number;
+    KeyQuest?: boolean;
     changeQuestMessageText: string;
     /** "Pmc" or "Scav" */
     side: string;
@@ -39,10 +39,10 @@ export interface IQuest {
 }
 
 export interface IQuestConditionTypes {
-    Started: IQuestCondition[];
+    Started?: IQuestCondition[];
     AvailableForFinish: IQuestCondition[];
     AvailableForStart: IQuestCondition[];
-    Success: IQuestCondition[];
+    Success?: IQuestCondition[];
     Fail: IQuestCondition[];
 }
 
@@ -54,9 +54,9 @@ export interface IQuestCondition {
     visibilityConditions?: IVisibilityCondition[];
     globalQuestCounterId?: string;
     parentId?: string;
-    target: string[] | string;
+    target?: string[] | string;
     value?: string | number;
-    type?: boolean;
+    type?: boolean | string;
     status?: QuestStatus[];
     availableAfter?: number;
     dispersion?: number;
@@ -65,10 +65,10 @@ export interface IQuestCondition {
     isResetOnConditionFailed?: boolean;
     isNecessary?: boolean;
     doNotResetIfCounterCompleted?: boolean;
-    dogtagLevel?: number;
+    dogtagLevel?: number | string;
     traderId?: string;
-    maxDurability?: number;
-    minDurability?: number;
+    maxDurability?: number | string;
+    minDurability?: number | string;
     counter?: IQuestConditionCounter;
     plantTime?: number;
     zoneId?: string;
@@ -85,7 +85,7 @@ export interface IQuestConditionCounter {
 
 export interface IQuestConditionCounterCondition {
     id: string;
-    dynamicLocale: boolean;
+    dynamicLocale?: boolean;
     target?: string[] | string; // TODO: some objects have an array and some are just strings, thanks bsg very cool
     completeInSeconds?: number;
     energy?: IValueCompare;
@@ -93,7 +93,7 @@ export interface IQuestConditionCounterCondition {
     hydration?: IValueCompare;
     time?: IValueCompare;
     compareMethod?: string;
-    value?: number;
+    value?: number | string;
     weapon?: string[];
     distance?: ICounterConditionDistance;
     equipmentInclusive?: string[][];
@@ -136,7 +136,7 @@ export interface IVisibilityCondition {
     target: string;
     value?: number;
     dynamicLocale?: boolean;
-    oneSessionOnly: boolean;
+    oneSessionOnly?: boolean;
     conditionType: string;
 }
 
