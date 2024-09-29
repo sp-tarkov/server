@@ -56,7 +56,7 @@ export interface IQuestCondition {
     parentId?: string;
     target?: string[] | string;
     value?: string | number;
-    type?: boolean;
+    type?: boolean | string;
     status?: QuestStatus[];
     availableAfter?: number;
     dispersion?: number;
@@ -65,10 +65,10 @@ export interface IQuestCondition {
     isResetOnConditionFailed?: boolean;
     isNecessary?: boolean;
     doNotResetIfCounterCompleted?: boolean;
-    dogtagLevel?: number;
+    dogtagLevel?: number | string;
     traderId?: string;
-    maxDurability?: number;
-    minDurability?: number;
+    maxDurability?: number | string;
+    minDurability?: number | string;
     counter?: IQuestConditionCounter;
     plantTime?: number;
     zoneId?: string;
@@ -93,7 +93,7 @@ export interface IQuestConditionCounterCondition {
     hydration?: IValueCompare;
     time?: IValueCompare;
     compareMethod?: string;
-    value?: number;
+    value?: number | string;
     weapon?: string[];
     distance?: ICounterConditionDistance;
     equipmentInclusive?: string[][];
