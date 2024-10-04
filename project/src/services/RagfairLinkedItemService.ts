@@ -1,6 +1,7 @@
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { inject, injectable } from "tsyringe";
 
@@ -11,6 +12,7 @@ export class RagfairLinkedItemService {
     constructor(
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("PrimaryLogger") protected logger: ILogger,
     ) {}
 
     public getLinkedItems(linkedSearchId: string): Set<string> {
@@ -28,10 +30,12 @@ export class RagfairLinkedItemService {
      */
     public getLinkedDbItems(itemTpl: string): ITemplateItem[] {
         const linkedItemsToWeaponTpls = this.getLinkedItems(itemTpl);
-        return [...linkedItemsToWeaponTpls].reduce((result, x) => {
-            const itemDetails = this.itemHelper.getItem(x);
+        return [...linkedItemsToWeaponTpls].reduce((result, linkedTpl) => {
+            const itemDetails = this.itemHelper.getItem(linkedTpl);
             if (itemDetails[0]) {
                 result.push(itemDetails[1]);
+            } else {
+                this.logger.warning(`Item ${itemTpl} has invalid linked item ${linkedTpl}`);
             }
             return result;
         }, []);
