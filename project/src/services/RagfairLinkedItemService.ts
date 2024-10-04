@@ -28,10 +28,13 @@ export class RagfairLinkedItemService {
      */
     public getLinkedDbItems(itemTpl: string): ITemplateItem[] {
         const linkedItemsToWeaponTpls = this.getLinkedItems(itemTpl);
-        return [...linkedItemsToWeaponTpls].map((x) => {
+        return [...linkedItemsToWeaponTpls].reduce((result, x) => {
             const itemDetails = this.itemHelper.getItem(x);
-            return itemDetails[1];
-        });
+            if (itemDetails[0]) {
+                result.push(itemDetails[1]);
+            }
+            return result;
+        }, []);
     }
 
     /**
