@@ -929,7 +929,16 @@ export class QuestHelper {
 
         // e.g. 'Success' or 'AvailableForFinish'
         const questStateAsString = QuestStatus[state];
+        const gameVersion = pmcProfile.Info.GameVersion;
         for (const reward of <IQuestReward[]>questDetails.rewards[questStateAsString]) {
+            // Handle quest reward availability for different game versions, notAvailableInGameEditions currently not used
+            if (reward.availableInGameEditions?.length > 0 && !reward.availableInGameEditions?.includes(gameVersion)){
+                continue;
+            }
+            if (reward.notAvailableInGameEditions?.length > 0 && reward.notAvailableInGameEditions?.includes(gameVersion)){
+                continue;
+            }
+
             switch (reward.type) {
                 case QuestRewardType.SKILL:
                     this.profileHelper.addSkillPointsToPlayer(
