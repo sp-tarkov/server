@@ -509,7 +509,88 @@
   "EscapeTimeLimit": 50,
   "EscapeTimeLimitCoop": 30,
   "EscapeTimeLimitPVE": 50,
-  "ExitZones": "5c82534488a45046451a2386",
+  "Events": {
+    "Halloween2024": {
+      "CrowdAttackBlockRadius": 100,
+      "CrowdAttackSpawnParams": [
+        {
+          "Difficulty": "easy",
+          "Role": "infectedAssault",
+          "Weight": 20
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedAssault",
+          "Weight": 80
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedAssault",
+          "Weight": 60
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedPmc",
+          "Weight": 5
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedPmc",
+          "Weight": 35
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedPmc",
+          "Weight": 30
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedCivil",
+          "Weight": 15
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedCivil",
+          "Weight": 60
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedCivil",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        }
+      ],
+      "CrowdCooldownPerPlayerSec": 300,
+      "CrowdsLimit": 2,
+      "InfectedLookCoeff": 2,
+      "InfectionPercentage": 0,
+      "MaxCrowdAttackSpawnLimit": 20,
+      "MinInfectionPercentage": 0,
+      "MinSpawnDistToPlayer": 50,
+      "TargetPointSearchRadiusLimit": 200,
+      "ZombieCallDeltaRadius": 20,
+      "ZombieCallPeriodSec": 1,
+      "ZombieCallRadiusLimit": 200,
+      "ZombieMultiplier": 5
+    }
+  },
+  "ExitZones": {
+    "$oid": "5c82534488a45046451a2386"
+  },
   "ForceOnlineRaidInPVE": false,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,

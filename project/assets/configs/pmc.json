@@ -67,7 +67,7 @@
             "614451b71e5874611e2c7ae5",
             "6540d2162ae6d96b540afcaf",
             "65ca457b4aafb5d7fc0dcb5d",
-			"6331ba83f2ab4f3f09502983"
+            "6331ba83f2ab4f3f09502983"
         ]
     },
     "pocketLoot": {
@@ -123,7 +123,7 @@
             "6391fcf5744e45201147080f",
             "65ca457b4aafb5d7fc0dcb5d",
             "660bbc98c38b837877075e4a",
-			"6331ba83f2ab4f3f09502983"
+            "6331ba83f2ab4f3f09502983"
         ]
     },
     "backpackLoot": {
@@ -183,8 +183,8 @@
             "6540d2162ae6d96b540afcaf",
             "65ca457b4aafb5d7fc0dcb5d",
             "660bbc98c38b837877075e4a",
-			"66d9f7256916142b3b02276e",
-			"6331ba83f2ab4f3f09502983"
+            "66d9f7256916142b3b02276e",
+            "6331ba83f2ab4f3f09502983"
         ]
     },
     "useDifficultyOverride": false,
@@ -723,142 +723,156 @@
         "max": 1
     },
     "maxBackpackLootTotalRub": [
-		{
-			"min": 1,
-			"max": 15,
-			"value": 100000
-		},{
-			"min": 16,
-			"max": 35,
-			"value": 250000
-		},{
-			"min": 36,
-			"max": 45,
-			"value": 450000
-		},{
-			"min": 46,
-			"max": 64,
-			"value": 750000
-		},{
-			"min": 65,
-			"max": 100,
-			"value": 2500000
-		}
-	],
+        {
+            "min": 1,
+            "max": 15,
+            "value": 100000
+        },
+        {
+            "min": 16,
+            "max": 35,
+            "value": 250000
+        },
+        {
+            "min": 36,
+            "max": 45,
+            "value": 450000
+        },
+        {
+            "min": 46,
+            "max": 64,
+            "value": 750000
+        },
+        {
+            "min": 65,
+            "max": 100,
+            "value": 2500000
+        }
+    ],
     "maxPocketLootTotalRub": 50000,
     "maxVestLootTotalRub": 50000,
     "convertIntoPmcChance": {
-		"default":{
-			"assault": {
-				"min": 25,
-				"max": 35
-			},
-			"cursedassault": {
-				"min": 15,
-				"max": 30
-			},
-			"pmcbot": {
-				"min": 5,
-				"max": 10
-			},
-			"exusec": {
-				"min": 5,
-				"max": 5
-			},
-			"arenafighter": {
-				"min": 0,
-				"max": 0
-			},
-			"arenafighterevent": {
-				"min": 0,
-				"max": 0
-			},
-			"crazyassaultevent": {
-				"min": 0,
-				"max": 0
-			}
-		},
-		"factory4_day":{
-			"assault": {
-				"min": 10,
-				"max": 15
-			}
-		},
-		"laboratory":{
-			"pmcbot": {
-				"min": 1,
-				"max": 5
-			}
-		},
-		"rezervbase":{
-			"pmcbot": {
-				"min": 0,
-				"max": 0
-			}
-		}
+        "default": {
+            "assault": {
+                "min": 25,
+                "max": 35
+            },
+            "cursedassault": {
+                "min": 15,
+                "max": 30
+            },
+            "pmcbot": {
+                "min": 5,
+                "max": 10
+            },
+            "exusec": {
+                "min": 5,
+                "max": 5
+            },
+            "arenafighter": {
+                "min": 0,
+                "max": 0
+            },
+            "arenafighterevent": {
+                "min": 0,
+                "max": 0
+            },
+            "crazyassaultevent": {
+                "min": 0,
+                "max": 0
+            }
+        },
+        "factory4_day": {
+            "assault": {
+                "min": 10,
+                "max": 15
+            }
+        },
+        "laboratory": {
+            "pmcbot": {
+                "min": 1,
+                "max": 5
+            }
+        },
+        "rezervbase": {
+            "pmcbot": {
+                "min": 0,
+                "max": 0
+            }
+        }
     },
     "hostilitySettings": {
         "pmcusec": {
             "additionalEnemyTypes": [
                 "bossPartisan",
-				"peacemaker",
-				"skier",
-				"ravangeZryachiyEvent"
+                "peacemaker",
+                "skier",
+                "ravangeZryachiyEvent",
+                "infectedAssault",
+                "infectedPmc",
+                "infectedCivil",
+                "infectedLaborant",
+                "infectedTagilla"
             ],
-			"additionalFriendlyTypes": [
-				"shooterBTR",
-				"sectactPriestEvent",
-				"peacefullZryachiyEvent"
-			],
-            "chancedEnemies": [{
+            "additionalFriendlyTypes": ["shooterBTR", "sectactPriestEvent", "peacefullZryachiyEvent"],
+            "chancedEnemies": [
+                {
                     "EnemyChance": 100,
                     "Role": "assault"
-                }, {
+                },
+                {
                     "EnemyChance": 100,
                     "Role": "marksman"
-                }, {
+                },
+                {
                     "EnemyChance": 85,
                     "Role": "pmcUSEC"
-                }, {
+                },
+                {
                     "EnemyChance": 100,
                     "Role": "pmcBEAR"
                 }
             ],
             "bearEnemyChance": 100,
             "usecEnemyChance": 85,
-			"savageEnemyChance": 95,
-			"savagePlayerBehaviour": "AlwaysEnemies"
+            "savageEnemyChance": 95,
+            "savagePlayerBehaviour": "AlwaysEnemies"
         },
         "pmcbear": {
             "additionalEnemyTypes": [
                 "bossPartisan",
-				"peacemaker",
-				"skier",
-				"ravangeZryachiyEvent"
+                "peacemaker",
+                "skier",
+                "ravangeZryachiyEvent",
+                "infectedAssault",
+                "infectedPmc",
+                "infectedCivil",
+                "infectedLaborant",
+                "infectedTagilla"
             ],
-			"additionalFriendlyTypes": [
-				"shooterBTR",
-				"sectactPriestEvent",
-				"peacefullZryachiyEvent"
-			],
-            "chancedEnemies": [{
+            "additionalFriendlyTypes": ["shooterBTR", "sectactPriestEvent", "peacefullZryachiyEvent"],
+            "chancedEnemies": [
+                {
                     "EnemyChance": 100,
                     "Role": "assault"
-                }, {
+                },
+                {
                     "EnemyChance": 100,
                     "Role": "marksman"
-                }, {
+                },
+                {
                     "EnemyChance": 85,
                     "Role": "pmcBEAR"
-                }, {
-					"EnemyChance": 100,
-					"Role": "pmcUSEC"
-				}
+                },
+                {
+                    "EnemyChance": 100,
+                    "Role": "pmcUSEC"
+                }
             ],
             "bearEnemyChance": 85,
             "usecEnemyChance": 100,
-			"savageEnemyChance": 95,
-			"savagePlayerBehaviour": "AlwaysEnemies"
+            "savageEnemyChance": 95,
+            "savagePlayerBehaviour": "AlwaysEnemies"
         }
     },
     "forceHealingItemsIntoSecure": true,

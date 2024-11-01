@@ -159,7 +159,7 @@
       "TriggerName": ""
     },
     {
-      "BossChance": 20,
+      "BossChance": 10,
       "BossDifficult": "normal",
       "BossEscortAmount": "3,4",
       "BossEscortDifficult": "normal",
@@ -539,6 +539,85 @@
   "EscapeTimeLimit": 45,
   "EscapeTimeLimitCoop": 35,
   "EscapeTimeLimitPVE": 45,
+  "Events": {
+    "Halloween2024": {
+      "CrowdAttackBlockRadius": 100,
+      "CrowdAttackSpawnParams": [
+        {
+          "Difficulty": "easy",
+          "Role": "infectedAssault",
+          "Weight": 30
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedAssault",
+          "Weight": 110
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedAssault",
+          "Weight": 60
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedPmc",
+          "Weight": 15
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedPmc",
+          "Weight": 55
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedPmc",
+          "Weight": 30
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedCivil",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedCivil",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedCivil",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "easy",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "normal",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        },
+        {
+          "Difficulty": "hard",
+          "Role": "infectedLaborant",
+          "Weight": 0
+        }
+      ],
+      "CrowdCooldownPerPlayerSec": 300,
+      "CrowdsLimit": 2,
+      "InfectedLookCoeff": 2,
+      "InfectionPercentage": 0,
+      "MaxCrowdAttackSpawnLimit": 20,
+      "MinInfectionPercentage": 0,
+      "MinSpawnDistToPlayer": 50,
+      "TargetPointSearchRadiusLimit": 200,
+      "ZombieCallDeltaRadius": 20,
+      "ZombieCallPeriodSec": 1,
+      "ZombieCallRadiusLimit": 200,
+      "ZombieMultiplier": 5
+    }
+  },
   "ForceOnlineRaidInPVE": false,
   "GenerateLocalLootCache": true,
   "GlobalContainerChanceModifier": 1,
@@ -6442,7 +6521,7 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 20,
+      "CorePointId": 28,
       "DelayToCanSpawnSec": 4,
       "Id": "a31a56f9-193b-4e89-84ab-86ab0f7ff509",
       "Infiltration": "",
@@ -7258,7 +7337,7 @@
           "Radius": 158.9
         }
       },
-      "CorePointId": 20,
+      "CorePointId": 28,
       "DelayToCanSpawnSec": 4,
       "Id": "bc626601-5b59-423c-a3b6-fcaf7f841bd9",
       "Infiltration": "",
@@ -9760,6 +9839,10 @@
     {
       "TemplateId": "57347ca924597744596b4e71",
       "Value": 1
+    },
+    {
+      "TemplateId": "634959225289190e5e773b3b",
+      "Value": 7
     }
   ],
   "sav_summon_seconds": 60,

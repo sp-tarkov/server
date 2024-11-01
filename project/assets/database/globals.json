@@ -7932,8 +7932,8 @@
           "WorkingTime": 480
         },
         "ZombieInfection": {
-          "Dehydration": -0.33,
-          "HearingDebuffPercentage": 0.33,
+          "Dehydration": -2.5,
+          "HearingDebuffPercentage": 0.5,
           "СumulativeTime": 10
         }
       },

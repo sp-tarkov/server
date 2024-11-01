@@ -11,7 +11,7 @@
         "bossZryachiy": 5,
         "bossTest": 10,
         "bossKolontay": 5,
-		"bossPartisan": 5,
+        "bossPartisan": 5,
         "cursedAssault": 50,
         "followerBully": 5,
         "followerGluharAssault": 5,
@@ -50,9 +50,14 @@
         "pmcBEAR": 15,
         "peacemaker": 10,
         "skier": 10,
-		"sectantPredvestnik": 10,
-		"sectantPrizrak" : 10,
-		"sectantOni": 10
+        "sectantPredvestnik": 10,
+        "sectantPrizrak": 10,
+        "sectantOni": 10,
+        "infectedAssault": 30,
+        "infectedPmc": 30,
+        "infectedCivil": 30,
+        "infectedLaborant": 30,
+        "infectedTagilla": 5
     },
     "bosses": [
         "bossBully",
@@ -66,7 +71,7 @@
         "bossBoar",
         "bossBoarSniper",
         "bossKolontay",
-		"bossPartisan"
+        "bossPartisan"
     ],
     "durability": {
         "default": {
@@ -435,9 +440,14 @@
         "shooterbtr": {},
         "skier": {},
         "peacemaker": {},
-		"sectantpredvestnik": {},
-		"sectantprizrak": {},
-		"sectantoni": {}
+        "sectantpredvestnik": {},
+        "sectantprizrak": {},
+        "sectantoni": {},
+        "infectedassault": {},
+        "infectedpmc": {},
+        "infectedcivil": {},
+        "infectedlaborant": {},
+        "infectedtagilla": {}
     },
     "equipment": {
         "assault": {
@@ -502,22 +512,22 @@
             "laserIsActiveChancePercent": 85,
             "forceStock": true,
             "weaponSlotIdsToMakeRequired": ["mod_reciever"],
-			"randomisation": [
-				{
-					"levelRange": {
-						"min": 1,
-						"max": 100
-					},
-					"equipmentMods": {
-						"mod_nvg": 0
-					},
-					"nighttimeChanges": {
-						"equipmentModsModifiers": {
-							"mod_nvg": 90
-						}
-					}
-				}
-			]
+            "randomisation": [
+                {
+                    "levelRange": {
+                        "min": 1,
+                        "max": 100
+                    },
+                    "equipmentMods": {
+                        "mod_nvg": 0
+                    },
+                    "nighttimeChanges": {
+                        "equipmentModsModifiers": {
+                            "mod_nvg": 90
+                        }
+                    }
+                }
+            ]
         },
         "bossbully": {
             "nvgIsActiveChanceDayPercent": 10,
@@ -771,7 +781,7 @@
                 "lightLaserLimit": 1
             }
         },
-		"bosspartisan": {
+        "bosspartisan": {
             "nvgIsActiveChanceDayPercent": 20,
             "nvgIsActiveChanceNightPercent": 95,
             "faceShieldIsActiveChancePercent": 80,
@@ -801,9 +811,14 @@
             "lightIsActiveNightChancePercent": 75,
             "laserIsActiveChancePercent": 95
         },
-		"sectantpredvestnik": {},
-		"sectantprizrak": {},
-		"sectantoni": {},
+        "sectantpredvestnik": {},
+        "sectantprizrak": {},
+        "sectantoni": {},
+        "infectedassault": {},
+        "infectedpmc": {},
+        "infectedcivil": {},
+        "infectedlaborant": {},
+        "infectedtagilla": {},
         "test": {},
         "pmcbot": {
             "nvgIsActiveChanceDayPercent": 20,
@@ -1228,8 +1243,8 @@
                         "mod_tactical_001",
                         "mod_tactical_002",
                         "mod_tactical_003",
-						"mod_tactical001",
-						"mod_tactical002"
+                        "mod_tactical001",
+                        "mod_tactical002"
                     ],
                     "equipmentMods": {
                         "back_plate": 75,
@@ -1277,11 +1292,11 @@
                         "mod_tactical_003": 30,
                         "mod_tactical_2": 15
                     },
-					"nighttimeChanges": {
-						"equipmentModsModifiers": {
-							"mod_nvg": 30
-						}
-					}
+                    "nighttimeChanges": {
+                        "equipmentModsModifiers": {
+                            "mod_nvg": 30
+                        }
+                    }
                 },
                 {
                     "levelRange": {
@@ -1292,9 +1307,9 @@
                         "SecondPrimaryWeapon": 10,
                         "FaceCover": 50
                     },
-					"equipmentMods": {
-						"mod_nvg": 0
-					},
+                    "equipmentMods": {
+                        "mod_nvg": 0
+                    },
                     "randomisedArmorSlots": ["Headwear", "TacticalVest", "ArmorVest"],
                     "randomisedWeaponModSlots": [
                         "mod_scope",
@@ -1336,14 +1351,14 @@
                         "mod_tactical_001",
                         "mod_tactical_002",
                         "mod_tactical_003",
-						"mod_tactical001",
-						"mod_tactical002"
+                        "mod_tactical001",
+                        "mod_tactical002"
                     ],
-					"nighttimeChanges": {
-						"equipmentModsModifiers": {
-							"mod_nvg": 50
-						}
-					}
+                    "nighttimeChanges": {
+                        "equipmentModsModifiers": {
+                            "mod_nvg": 50
+                        }
+                    }
                 },
                 {
                     "levelRange": {
@@ -2836,6 +2851,6 @@
             }
         }
     },
-	"botNameLengthLimit": 19,
-	"botRolesThatMustHaveUniqueName": ["assault", "pmcusec", "pmcbear"]
+    "botNameLengthLimit": 19,
+    "botRolesThatMustHaveUniqueName": ["assault", "pmcusec", "pmcbear"]
 }
