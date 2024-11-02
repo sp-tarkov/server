@@ -30,7 +30,8 @@
         "run:profiler": "gulp run:profiler",
         "gen:types": "tsc -p tsconfig.typedef.json --resolveJsonModule",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
-        "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts"
+        "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
+        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
     },
     "dependencies": {
         "atomically": "~1.7",

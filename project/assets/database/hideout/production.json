@@ -2088,7 +2088,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "6396701b9113f06a7c3b2379"
         }
       ]
     },
@@ -2122,7 +2123,8 @@
           "type": "Area"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "625d700cc48e6c62a440fab5"
         },
         {
           "templateId": "590c2d8786f774245b1f03f3",
@@ -2317,7 +2319,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "63966fbeea19ac7ed845db2e"
         }
       ]
     },
@@ -2392,7 +2395,8 @@
           "type": "Item"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5a27bc8586f7741b543d8ea4"
         }
       ]
     },
@@ -3349,7 +3353,8 @@
           "type": "Item"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5c1141f386f77430ff393792"
         }
       ]
     },
@@ -3701,7 +3706,8 @@
           "type": "Item"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "60e71c11d54b755a3b53eb65"
         }
       ]
     },
@@ -3760,7 +3766,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "60e71b62a0beca400d69efc4"
         }
       ]
     },
@@ -4458,7 +4465,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5a27bb8386f7741c770d2d0a"
         }
       ]
     },
@@ -4499,7 +4507,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "60e71c9ad54b755a3b53eb66"
         }
       ]
     },
@@ -4738,7 +4747,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "625d6ffaf7308432be1d44c5"
         }
       ]
     },
@@ -4783,7 +4793,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5ae4497b86f7744cf402ed00"
         },
         {
           "count": 2,
@@ -6378,7 +6389,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "63966faeea19ac7ed845db2c"
         }
       ]
     },
@@ -6430,7 +6442,8 @@
           "type": "Item"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5c0d4e61d09282029f53920e"
         }
       ]
     },
@@ -6500,7 +6513,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "63966fccac6f8f3c677b9d89"
         }
       ]
     },
@@ -6986,7 +7000,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "6396700fea19ac7ed845db32"
         }
       ]
     },
@@ -7058,7 +7073,8 @@
           "type": "Tool"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "64e7b9bffd30422ed03dad38"
         }
       ]
     },
@@ -7673,7 +7689,8 @@
           "type": "Item"
         },
         {
-          "type": "QuestComplete"
+          "type": "QuestComplete",
+          "questId": "5ae4495086f77443c122bc40"
         },
         {
           "count": 1,
