@@ -529,7 +529,7 @@ export class InventoryController {
         for (const index in pmcData.Inventory.fastPanel) {
             // Find item with existing item in it and remove existing binding, you cant have same item bound to more than 1 slot
             if (pmcData.Inventory.fastPanel[index] === bindRequest.item) {
-                pmcData.Inventory.fastPanel[index] = "";
+                delete pmcData.Inventory.fastPanel[index];
 
                 break;
             }
