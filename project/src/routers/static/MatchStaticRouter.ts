@@ -1,6 +1,7 @@
 import { MatchCallbacks } from "@spt/callbacks/MatchCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
 import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IMetrics } from "@spt/models/eft/common/tables/IMatch";
 import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 import { IGroupCharacter } from "@spt/models/eft/match/IGroupCharacter";
@@ -228,7 +229,7 @@ export class MatchStaticRouter extends StaticRouter {
                     info: any,
                     sessionID: string,
                     output: string,
-                ): Promise<IGetBodyResponseData<string>> => {
+                ): Promise<IGetBodyResponseData<IMetrics>> => {
                     return this.matchCallbacks.getMetrics(url, info, sessionID);
                 },
             ),
