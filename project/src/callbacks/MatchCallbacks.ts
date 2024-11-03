@@ -1,5 +1,6 @@
 import { MatchController } from "@spt/controllers/MatchController";
 import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IMetrics } from "@spt/models/eft/common/tables/IMatch";
 import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 import { IEndLocalRaidRequestData } from "@spt/models/eft/match/IEndLocalRaidRequestData";
@@ -137,8 +138,8 @@ export class MatchCallbacks {
     }
 
     /** Handle client/getMetricsConfig */
-    public getMetrics(url: string, info: any, sessionID: string): IGetBodyResponseData<string> {
-        return this.httpResponse.getBody(this.jsonUtil.serialize(this.databaseService.getMatch().metrics));
+    public getMetrics(url: string, info: any, sessionID: string): IGetBodyResponseData<IMetrics> {
+        return this.httpResponse.getBody(this.databaseService.getMatch().metrics);
     }
 
     /**
