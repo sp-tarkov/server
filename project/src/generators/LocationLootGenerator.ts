@@ -584,7 +584,7 @@ export class LocationLootGenerator {
         dynamicForcedSpawnPoints.push(...dynamicLootDist.spawnpoints.filter((point) => point.template.IsAlwaysSpawn));
 
         // Add forced loot
-        this.addForcedLoot(loot, dynamicForcedSpawnPoints, locationName);
+        this.addForcedLoot(loot, dynamicForcedSpawnPoints, locationName, staticAmmoDist);
 
         const allDynamicSpawnpoints = dynamicLootDist.spawnpoints;
 
@@ -711,7 +711,7 @@ export class LocationLootGenerator {
 
             // Draw a random item from spawn points possible items
             const chosenComposedKey = itemArray.draw(1)[0];
-            const createItemResult = this.createDynamicLootItem(chosenComposedKey, spawnPoint, staticAmmoDist);
+            const createItemResult = this.createDynamicLootItem(chosenComposedKey, spawnPoint.template.Items, staticAmmoDist);
 
             // Root id can change when generating a weapon, ensure ids match
             spawnPoint.template.Root = createItemResult.items[0]._id;
@@ -735,6 +735,7 @@ export class LocationLootGenerator {
         lootLocationTemplates: ISpawnpointTemplate[],
         forcedSpawnPoints: ISpawnpointsForced[],
         locationName: string,
+        staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
     ): void {
         const lootToForceSingleAmountOnMap = this.locationConfig.forcedLootSingleSpawnById[locationName];
         if (lootToForceSingleAmountOnMap) {
@@ -771,8 +772,16 @@ export class LocationLootGenerator {
                         );
                         continue;
                     }
-                    lootItem.Root = this.objectId.generate();
-                    lootItem.Items[0]._id = lootItem.Root;
+
+                    const createItemResult = this.createDynamicLootItem(
+                        lootItem.Items[0]._id,
+                        lootItem.Items,
+                        staticAmmoDist
+                    );
+        
+                    // Update root ID with the dynamically generated ID
+                    lootItem.Root = createItemResult.items[0]._id;
+                    lootItem.Items = createItemResult.items;
                     lootLocationTemplates.push(lootItem);
                 }
             }
@@ -796,10 +805,15 @@ export class LocationLootGenerator {
             }
 
             const locationTemplateToAdd = forcedLootLocation.template;
+            const createItemResult = this.createDynamicLootItem(
+                locationTemplateToAdd.Items[0]._id,
+                forcedLootLocation.template.Items,
+                staticAmmoDist
+            );
 
-            // Ensure root id matches the first items id
-            locationTemplateToAdd.Root = this.objectId.generate();
-            locationTemplateToAdd.Items[0]._id = locationTemplateToAdd.Root;
+            // Update root ID with the dynamically generated ID
+            forcedLootLocation.template.Root = createItemResult.items[0]._id;
+            forcedLootLocation.template.Items = createItemResult.items;
 
             // Push forced location into array as long as it doesnt exist already
             const existingLocation = lootLocationTemplates.some(
@@ -824,10 +838,10 @@ export class LocationLootGenerator {
      */
     protected createDynamicLootItem(
         chosenComposedKey: string,
-        spawnPoint: ISpawnpoint,
+        items: IItem[],
         staticAmmoDist: Record<string, IStaticAmmoDetails[]>,
     ): IContainerItem {
-        const chosenItem = spawnPoint.template.Items.find((item) => item._id === chosenComposedKey);
+        const chosenItem = items.find((item) => item._id === chosenComposedKey);
         const chosenTpl = chosenItem?._tpl;
         if (!chosenTpl) {
             throw new Error(`Item for tpl ${chosenComposedKey} was not found in the spawn point`);
@@ -874,7 +888,7 @@ export class LocationLootGenerator {
             // Also used by armors to get child mods
             // Get item + children and add into array we return
             let itemWithChildren = this.itemHelper.findAndReturnChildrenAsItems(
-                spawnPoint.template.Items,
+                items,
                 chosenItem._id,
             );
 
