@@ -1,0 +1,59 @@
+name: Run Code Linter
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    container:
+      image: refringe/spt-build-node:1.0.7
+    steps:
+    - name: Clone
+      run: |
+        rm -rf /workspace/SPT/Build/server
+        git clone https://dev.sp-tarkov.com/${GITHUB_REPOSITORY}.git --branch master /workspace/SPT/Build/server
+
+        cd /workspace/SPT/Build/server
+        git checkout ${GITHUB_SHA}
+      shell: bash
+
+    - name: Pull LFS Files
+      run: |
+        cd /workspace/SPT/Build/server
+        git lfs pull
+        git lfs ls-files
+      shell: bash
+
+    - name: Cache NPM Dependencies
+      id: cache-npm-dependencies
+      uses: actions/cache@v4
+      with:
+        path: /workspace/SPT/Build/server/project/node_modules
+        key: npm-dependencies-${{ hashFiles('/workspace/SPT/Build/server/project/package.json') }}
+
+    - name: Install NPM Dependencies
+      if: steps.cache-npm-dependencies.outputs.cache-hit != 'true'
+      run: |
+        cd /workspace/SPT/Build/server/project
+        rm -rf node_modules
+        npm install
+      shell: bash
+
+    - name: Run Linter
+      id: run-tests
+      run: |
+        cd /workspace/SPT/Build/server/project
+        npm run lint
+      shell: bash
+
+    - name: Fix Instructions
+      if: failure() && steps.run-tests.outcome == 'failure'
+      run: |
+        echo -e "Code linting has failed. The linter has been configured to look for coding errors, defects, questionable patterns, and code formatting issues. Please look into resolving these errors. The linter may be able to resolve some of these issues automatically. You can launch the automatic fixer by running the following command from within the 'project' directory. Anything not resolved by running this command must be resolved manually.\n\nnpm run lint:fix\n"
+        echo -e "To automatically format code on-save in your IDE, please install the recommended VSCode plugins listed within the 'project/Server.code-workspace' file.\n"
+        echo -e "Consistency is professionalism.™"
+      shell: bash

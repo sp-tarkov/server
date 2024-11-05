@@ -1,0 +1,44 @@
+[
+	{
+		"serviceType": "ZryachiyAid",
+		"itemsToPay": {
+			"62a0a16d0b9d3c46de5b6e97": 3,
+			"5696686a4bdc2da3298b456a": 2000
+		},
+		"requirements": {
+			"completedQuests": [
+				"6396701b9113f06a7c3b2379"
+			]
+		}
+	},
+	{
+		"serviceType": "ExUsecLoyalty",
+		"itemsToPay": {
+			"6389c8c5dbfd5e4b95197e6b": 1,
+			"569668774bdc2da2298b4568": 2500
+		},
+		"requirements": {
+			"completedQuests": [
+				"63966ff54c3ef01b6f3ffad8"
+			]
+		}
+	},
+	{
+		"serviceType": "CultistsAid",
+		"itemsToPay": {
+			"5c12613b86f7743bbe2c3f76": 3,
+			"5696686a4bdc2da3298b456a": 1000
+		},
+		"itemsToReceive": [
+			"64d0b40fbe2eed70e254e2d4"
+		],
+		"requirements": {
+			"completedQuests": [
+				"63966fccac6f8f3c677b9d89"
+			],
+			"standings": {
+				"638f541a29ffd1183d187f57": 0.04
+			}
+		}
+	}
+]

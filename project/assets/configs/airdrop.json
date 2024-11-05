@@ -1,49 +1,31 @@
 {
-    "airdropChancePercent": {
-        "bigmap": 20,
-        "woods": 25,
-        "lighthouse": 20,
-        "shoreline": 20,
-        "interchange": 20,
-        "reserve": 10,
-        "tarkovStreets": 12
-    },
     "airdropTypeWeightings": {
-        "mixed": 2,
-        "weaponArmor": 1,
+        "mixed": 5,
+        "weaponArmor": 4,
         "foodMedical": 1,
-		"barter": 1
+        "barter": 1,
+		"radar": 0
     },
-    "airdropMinStartTimeSeconds": 60,
-    "airdropMaxStartTimeSeconds": 300,
-    "planeMinFlyHeight": 400,
-    "planeMaxFlyHeight": 500,
-    "planeVolume": 0.5,
-    "planeSpeed": 65,
-    "crateFallSpeed": 3,
     "loot": {
         "mixed": {
-            "presetCount": {
+			"icon": "Common",
+            "weaponPresetCount": {
                 "min": 3,
                 "max": 5
             },
-            "itemCount": {
-                "min": 12,
-                "max": 25
+            "armorPresetCount": {
+                "min": 1,
+                "max": 5
             },
-            "itemBlacklist": [
-                "5e997f0b86f7741ac73993e2",
-                "5b44abe986f774283e2e3512",
-                "5e99711486f7744bfc4af328",
-                "5e99735686f7744bfc4af32c",
-                "6087e570b998180e9f76dc24",
-                "5d52d479a4b936793d58c76b",
-                "5e85aac65505fa48730d8af2",
-                "63495c500c297e20065a08b1",
-                "5cde8864d7f00c0010373be1",
-                "5b3b713c5acfc4330140bd8d",
-                "60c080eb991ac167ad1c3ad4"
-            ],
+            "itemCount": {
+                "min": 15,
+                "max": 35
+            },
+            "weaponCrateCount": {
+                "min": 1,
+                "max": 2
+            },
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "543be5dd4bdc2deb348b4569",
                 "5485a8684bdc2da71d8b4567",
@@ -118,32 +100,34 @@
                 "5696686a4bdc2da3298b456a": {
                     "min": 100,
                     "max": 500
+                },
+                "5d235b4d86f7742e017bc88a": {
+                    "min": 10,
+                    "max": 50
                 }
             },
-            "armorLevelWhitelist": [0, 4, 5, 6]
+            "armorLevelWhitelist": [0, 4, 5, 6],
+            "allowBossItems": false
         },
         "weaponArmor": {
-            "presetCount": {
+			"icon": "Weapon",
+            "weaponPresetCount": {
                 "min": 6,
                 "max": 8
             },
-            "itemCount": {
-                "min": 10,
-                "max": 20
+            "armorPresetCount": {
+                "min": 3,
+                "max": 6
             },
-            "itemBlacklist": [
-                "5e997f0b86f7741ac73993e2",
-                "5b44abe986f774283e2e3512",
-                "5e99711486f7744bfc4af328",
-                "5e99735686f7744bfc4af32c",
-                "6087e570b998180e9f76dc24",
-                "5d52d479a4b936793d58c76b",
-                "5e85aac65505fa48730d8af2",
-                "63495c500c297e20065a08b1",
-                "5cde8864d7f00c0010373be1",
-                "5b3b713c5acfc4330140bd8d",
-                "60c080eb991ac167ad1c3ad4"
-            ],
+            "itemCount": {
+                "min": 11,
+                "max": 22
+            },
+            "weaponCrateCount": {
+                "min": 0,
+                "max": 2
+            },
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
                 "5485a8684bdc2da71d8b4567",
                 "5448e8d64bdc2dce718b4568",
@@ -163,7 +147,6 @@
                 "550aa4cd4bdc2dd8348b456c",
                 "55818b164bdc2ddc698b456c",
                 "55818ae44bdc2dde698b456c"
-
             ],
             "itemLimits": {
                 "5448e8d04bdc2ddf718b4569": 3,
@@ -190,40 +173,42 @@
                 "59e690b686f7746c9f75e848": {
                     "min": 10,
                     "max": 25
+                },
+                "5d235b4d86f7742e017bc88a": {
+                    "min": 10,
+                    "max": 50
                 }
             },
-            "armorLevelWhitelist": [0, 3, 4, 5, 6]
+            "armorLevelWhitelist": [0, 3, 4, 5, 6],
+            "allowBossItems": false
         },
         "foodMedical": {
-            "presetCount": {
-                "min": 3,
-                "max": 5
+			"icon": "Medical",
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "armorPresetCount": {
+                "min": 0,
+                "max": 0
             },
             "itemCount": {
-                "min": 17,
-                "max": 28
+                "min": 25,
+                "max": 45
             },
-            "itemBlacklist": [
-                "5e997f0b86f7741ac73993e2",
-                "5b44abe986f774283e2e3512",
-                "5e99711486f7744bfc4af328",
-                "5e99735686f7744bfc4af32c",
-                "6087e570b998180e9f76dc24",
-                "5d52d479a4b936793d58c76b",
-                "5e85aac65505fa48730d8af2",
-                "63495c500c297e20065a08b1",
-                "5cde8864d7f00c0010373be1",
-                "5b3b713c5acfc4330140bd8d",
-                "60c080eb991ac167ad1c3ad4"
-            ],
+            "weaponCrateCount": {
+                "min": 0,
+                "max": 0
+            },
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
-				"543be5dd4bdc2deb348b4569",
-				"5448e8d64bdc2dce718b4568",
-				"5448e8d04bdc2ddf718b4569",
-				"5448f3a64bdc2d60728b456a",
-				"5448f3ac4bdc2dce718b4569",
-				"5448f39d4bdc2d0a728b4568",
-				"5448f3a14bdc2d27728b4569"
+                "543be5dd4bdc2deb348b4569",
+                "5448e8d64bdc2dce718b4568",
+                "5448e8d04bdc2ddf718b4569",
+                "5448f3a64bdc2d60728b456a",
+                "5448f3ac4bdc2dce718b4569",
+                "5448f39d4bdc2d0a728b4568",
+                "5448f3a14bdc2d27728b4569"
             ],
             "itemLimits": {
                 "5447b5cf4bdc2d65278b4567": 1,
@@ -269,39 +254,42 @@
                 "5696686a4bdc2da3298b456a": {
                     "min": 100,
                     "max": 500
+                },
+                "5d235b4d86f7742e017bc88a": {
+                    "min": 10,
+                    "max": 50
                 }
-            }
+            },
+            "armorLevelWhitelist": [0],
+            "allowBossItems": false
         },
-		"barter": {
-			"presetCount": {
-                "min": 3,
-                "max": 5
+        "barter": {
+			"icon": "Supply",
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "armorPresetCount": {
+                "min": 0,
+                "max": 0
             },
             "itemCount": {
-                "min": 16,
-                "max": 25
+                "min": 20,
+                "max": 35
             },
-            "itemBlacklist": [
-                "5e997f0b86f7741ac73993e2",
-                "5b44abe986f774283e2e3512",
-                "5e99711486f7744bfc4af328",
-                "5e99735686f7744bfc4af32c",
-                "6087e570b998180e9f76dc24",
-                "5d52d479a4b936793d58c76b",
-                "5e85aac65505fa48730d8af2",
-                "63495c500c297e20065a08b1",
-                "5cde8864d7f00c0010373be1",
-                "5b3b713c5acfc4330140bd8d",
-                "60c080eb991ac167ad1c3ad4"
-            ],
+            "weaponCrateCount": {
+                "min": 0,
+                "max": 0
+            },
+            "itemBlacklist": [],
             "itemTypeWhitelist": [
-				"5d650c3e815116009f6201d2",
-				"57864ee62459775490116fc1",
-				"57864ada245977548638de91",
-				"57864bb7245977548b3b66c2",
-				"57864e4c24597754843f8723",
-				"57864c322459775490116fbf",
-				"57864a66245977548f04a81f"
+                "5d650c3e815116009f6201d2",
+                "57864ee62459775490116fc1",
+                "57864ada245977548638de91",
+                "57864bb7245977548b3b66c2",
+                "57864e4c24597754843f8723",
+                "57864c322459775490116fbf",
+                "57864a66245977548f04a81f"
             ],
             "itemLimits": {
                 "5447b5cf4bdc2d65278b4567": 1,
@@ -348,8 +336,47 @@
                 "5696686a4bdc2da3298b456a": {
                     "min": 100,
                     "max": 500
+                },
+                "5d235b4d86f7742e017bc88a": {
+                    "min": 10,
+                    "max": 50
                 }
-            }
+            },
+            "armorLevelWhitelist": [0],
+            "allowBossItems": false
+        },
+		"radar": {
+			"icon": "Supply",
+			"weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "armorPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+			"itemCount": {
+                "min": 0,
+                "max": 0
+            },
+			"weaponCrateCount": {
+                "min": 0,
+                "max": 0
+            },
+			"itemBlacklist": [],
+			"itemTypeWhitelist": [],
+			"itemLimits": {},
+			"itemStackLimits": {},
+			"armorLevelWhitelist": [],
+			"allowBossItems": false,
+			"useForcedLoot": true,
+			"forcedLoot": {
+				"66d9f7256916142b3b02276e": {"min": 2, "max": 4 }
+			}
 		}
-    }
+    },
+	"customAirdropMapping": {
+		"66da1b49099cf6adcc07a36b": "radar",
+		"66da1b546916142b3b022777": "radar"
+	}
 }

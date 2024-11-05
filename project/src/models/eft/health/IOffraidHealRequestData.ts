@@ -1,16 +1,14 @@
-import { IBaseInteractionRequestData } from "../common/request/IBaseInteractionRequestData"
+import { IBaseInteractionRequestData } from "@spt/models/eft/common/request/IBaseInteractionRequestData";
 
-export interface IOffraidHealRequestData extends IBaseInteractionRequestData 
-{
-    Action: "Heal"
-    item: string
-    part: BodyPart
-    count: number
-    time: number
+export interface IOffraidHealRequestData extends IBaseInteractionRequestData {
+    Action: "Heal";
+    item: string;
+    part: BodyPart;
+    count: number;
+    time: number;
 }
 
-export enum BodyPart 
-    {
+export enum BodyPart {
     HEAD = "Head",
     CHEST = "Chest",
     STOMACH = "Stomach",
@@ -18,5 +16,5 @@ export enum BodyPart
     RIGHT_ARM = "RightArm",
     LEFT_LEG = "LeftLeg",
     RIGHT_LEG = "RightLeg",
-    COMMON = "Common"
+    COMMON = "Common",
 }

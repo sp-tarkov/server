@@ -1,7 +1,6 @@
-import { IGetBodyResponseData } from "../../eft/httpResponse/IGetBodyResponseData";
-import { IEmptyRequestData } from "../../eft/common/IEmptyRequestData";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 
-export interface IWeatherCallbacks
-{
+export interface IWeatherCallbacks {
     getWeather(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<any>;
 }

@@ -1,114 +1,142 @@
+import { DataCallbacks } from "@spt/callbacks/DataCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGlobals } from "@spt/models/eft/common/IGlobals";
+import { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomizationItem";
+import { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
+import { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
+import { IHideoutProductionData } from "@spt/models/eft/hideout/IHideoutProduction";
+import { IHideoutScavCase } from "@spt/models/eft/hideout/IHideoutScavCase";
+import { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { ISettingsBase } from "@spt/models/spt/server/ISettingsBase";
 import { inject, injectable } from "tsyringe";
 
-import { DataCallbacks } from "../../callbacks/DataCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
-
 @injectable()
-export class DataStaticRouter extends StaticRouter 
-{
-    constructor(
-        @inject("DataCallbacks") protected dataCallbacks: DataCallbacks
-    ) 
-    {
-        super(
-            [
-                new RouteAction(
-                    "/client/settings",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getSettings(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/globals",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getGlobals(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/items",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getTemplateItems(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/handbook/templates",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getTemplateHandbook(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/customization",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getTemplateSuits(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/account/customization",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getTemplateCharacter(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/hideout/production/recipes",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.gethideoutProduction(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/hideout/settings",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getHideoutSettings(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/hideout/areas",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getHideoutAreas(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/hideout/production/scavcase/recipes",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getHideoutScavcase(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/languages",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getLocalesLanguages(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/hideout/qte/list",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.dataCallbacks.getQteList(url, info, sessionID);
-                    }
-                )
-            ]
-        );
+export class DataStaticRouter extends StaticRouter {
+    constructor(@inject("DataCallbacks") protected dataCallbacks: DataCallbacks) {
+        super([
+            new RouteAction(
+                "/client/settings",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<ISettingsBase>> => {
+                    return this.dataCallbacks.getSettings(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/globals",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGlobals>> => {
+                    return this.dataCallbacks.getGlobals(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/items",
+                async (url: string, info: any, sessionID: string, output: string): Promise<string> => {
+                    return this.dataCallbacks.getTemplateItems(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/handbook/templates",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IHandbookBase>> => {
+                    return this.dataCallbacks.getTemplateHandbook(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/customization",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<Record<string, ICustomizationItem>>> => {
+                    return this.dataCallbacks.getTemplateSuits(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/account/customization",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<string[]>> => {
+                    return this.dataCallbacks.getTemplateCharacter(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/hideout/production/recipes",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IHideoutProductionData>> => {
+                    return this.dataCallbacks.getHideoutProduction(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/hideout/settings",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IHideoutSettingsBase>> => {
+                    return this.dataCallbacks.getHideoutSettings(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/hideout/areas",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IHideoutArea[]>> => {
+                    return this.dataCallbacks.getHideoutAreas(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/hideout/production/scavcase/recipes",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IHideoutScavCase[]>> => {
+                    return this.dataCallbacks.getHideoutScavcase(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/languages",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<Record<string, string>>> => {
+                    return this.dataCallbacks.getLocalesLanguages(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/hideout/qte/list",
+                async (url: string, info: any, sessionID: string, output: string): Promise<string> => {
+                    return this.dataCallbacks.getQteList(url, info, sessionID);
+                },
+            ),
+        ]);
     }
 }

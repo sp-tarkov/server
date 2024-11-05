@@ -1,0 +1,12 @@
+{
+    "looseLoot": {
+        "woods": [],
+        "bigmap": [],
+        "laboratory": []
+    },
+    "looseLootSpawnPointAdjustments": {
+        "bigmap": {},
+        "rezervbase": {},
+        "tarkovstreets": {}
+    }
+}

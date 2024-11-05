@@ -4,19 +4,48 @@
             "path": "."
         }
     ],
-    "extensions": {
-        "recommendations": ["dbaeumer.vscode-eslint"],
-    },
     "settings": {
-        "window.title": "SPT-AKI Server",
-        "[typescript]": {
-            "editor.formatOnSave": true,
-            "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-        },
-        "eslint.validate": ["typescript"],
+        "window.title": "SPT Server",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome",
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll.eslint": true
+            "source.organizeImports.biome": "explicit",
+            "quickfix.biome": "explicit"
         }
     },
+    "extensions": {
+        "recommendations": [
+            "EditorConfig.EditorConfig", // EditorConfig file support.
+            "vitest.explorer", // ViTest test runner.
+            "refringe.spt-id-highlighter", // SPT ID information of hover.
+            "biomejs.biome" // Biome code formatting, linting, and refactoring.
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Debug",
+                "type": "node",
+                "runtimeVersion": "20.11.1",
+                "runtimeExecutable": "npm",
+                "request": "launch",
+                "sourceMaps": true,
+                "runtimeArgs": ["run", "run:debug"],
+                "outFiles": ["!**/node_modules/**"],
+                "cwd": "${workspaceFolder}",
+                "outputCapture": "std"
+            },
+            {
+                "name": "Run Vitest Tests",
+                "type": "node",
+                "runtimeVersion": "20.11.1",
+                "runtimeExecutable": "npm",
+                "request": "launch",
+                "runtimeArgs": ["run", "test"],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen"
+            }
+        ]
+    }
 }

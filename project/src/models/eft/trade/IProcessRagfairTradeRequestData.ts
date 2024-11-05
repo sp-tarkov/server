@@ -1,18 +1,15 @@
-export interface IProcessRagfairTradeRequestData 
-{
-    Action: string
-    offers: Offer[]
+export interface IProcessRagfairTradeRequestData {
+    Action: string;
+    offers: IOfferRequest[];
 }
 
-export interface Offer 
-{
-    id: string
-    count: number
-    items: Item[]
+export interface IOfferRequest {
+    id: string;
+    count: number;
+    items: IItemReqeust[];
 }
 
-export interface Item 
-{
-    id: string
-    count: number
+export interface IItemReqeust {
+    id: string;
+    count: number;
 }

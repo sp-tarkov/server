@@ -1,158 +1,99 @@
+import { ApplicationContext } from "@spt/context/ApplicationContext";
+import { ContextVariableType } from "@spt/context/ContextVariableType";
+import { IEndLocalRaidRequestData } from "@spt/models/eft/match/IEndLocalRaidRequestData";
+import { IGetRaidConfigurationRequestData } from "@spt/models/eft/match/IGetRaidConfigurationRequestData";
+import { IMatchGroupStartGameRequest } from "@spt/models/eft/match/IMatchGroupStartGameRequest";
+import { IMatchGroupStatusRequest } from "@spt/models/eft/match/IMatchGroupStatusRequest";
+import { IMatchGroupStatusResponse } from "@spt/models/eft/match/IMatchGroupStatusResponse";
+import { IProfileStatusResponse } from "@spt/models/eft/match/IProfileStatusResponse";
+import { IStartLocalRaidRequestData } from "@spt/models/eft/match/IStartLocalRaidRequestData";
+import { IStartLocalRaidResponseData } from "@spt/models/eft/match/IStartLocalRaidResponseData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IMatchConfig } from "@spt/models/spt/config/IMatchConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { LocationLifecycleService } from "@spt/services/LocationLifecycleService";
+import { MatchLocationService } from "@spt/services/MatchLocationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
-import { ApplicationContext } from "../context/ApplicationContext";
-import { ContextVariableType } from "../context/ContextVariableType";
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { TraderHelper } from "../helpers/TraderHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { ICreateGroupRequestData } from "../models/eft/match/ICreateGroupRequestData";
-import { IEndOfflineRaidRequestData } from "../models/eft/match/IEndOfflineRaidRequestData";
-import { IGetGroupStatusRequestData } from "../models/eft/match/IGetGroupStatusRequestData";
-import { IGetProfileRequestData } from "../models/eft/match/IGetProfileRequestData";
-import {
-    IGetRaidConfigurationRequestData
-} from "../models/eft/match/IGetRaidConfigurationRequestData";
-import { IJoinMatchRequestData } from "../models/eft/match/IJoinMatchRequestData";
-import { IJoinMatchResult } from "../models/eft/match/IJoinMatchResult";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Traders } from "../models/enums/Traders";
-import { IBotConfig } from "../models/spt/config/IBotConfig";
-import { IInRaidConfig } from "../models/spt/config/IInRaidConfig";
-import { IMatchConfig } from "../models/spt/config/IMatchConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { SaveServer } from "../servers/SaveServer";
-import { BotGenerationCacheService } from "../services/BotGenerationCacheService";
-import { BotLootCacheService } from "../services/BotLootCacheService";
-import { MatchLocationService } from "../services/MatchLocationService";
-import { ProfileSnapshotService } from "../services/ProfileSnapshotService";
-
 @injectable()
-export class MatchController
-{
+export class MatchController {
     protected matchConfig: IMatchConfig;
-    protected inraidConfig: IInRaidConfig;
-    protected botConfig: IBotConfig;
+    protected pmcConfig: IPmcConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("MatchLocationService") protected matchLocationService: MatchLocationService,
-        @inject("TraderHelper") protected traderHelper: TraderHelper,
-        @inject("BotLootCacheService") protected botLootCacheService: BotLootCacheService,
         @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("ProfileSnapshotService") protected profileSnapshotService: ProfileSnapshotService,
-        @inject("BotGenerationCacheService") protected botGenerationCacheService: BotGenerationCacheService,
-        @inject("ApplicationContext") protected applicationContext: ApplicationContext
-    )
-    {
+        @inject("ApplicationContext") protected applicationContext: ApplicationContext,
+        @inject("LocationLifecycleService") protected locationLifecycleService: LocationLifecycleService,
+        @inject("PrimaryCloner") protected cloner: ICloner,
+    ) {
         this.matchConfig = this.configServer.getConfig(ConfigTypes.MATCH);
-        this.inraidConfig = this.configServer.getConfig(ConfigTypes.IN_RAID);
-        this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
+        this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
 
-    public getEnabled(): boolean
-    {
+    public getEnabled(): boolean {
         return this.matchConfig.enabled;
     }
 
-    public getProfile(info: IGetProfileRequestData): IPmcData[]
-    {
-        if (info.profileId.includes("pmcAID"))
-        {
-            return this.profileHelper.getCompleteProfile(info.profileId.replace("pmcAID", "AID"));
-        }
-
-        if (info.profileId.includes("scavAID"))
-        {
-            return this.profileHelper.getCompleteProfile(info.profileId.replace("scavAID", "AID"));
-        }
-
-        return [];
-    }
-
-    public createGroup(sessionID: string, info: ICreateGroupRequestData): any
-    {
-        return this.matchLocationService.createGroup(sessionID, info);
-    }
-
-    public deleteGroup(info: any): void
-    {
+    /** Handle client/match/group/delete */
+    public deleteGroup(info: any): void {
         this.matchLocationService.deleteGroup(info);
     }
 
-    public joinMatch(info: IJoinMatchRequestData, sessionID: string): IJoinMatchResult[]
-    {
-        const match = this.getMatch(info.location);
-        const output: IJoinMatchResult[] = [];
-
-        // --- LOOP (DO THIS FOR EVERY PLAYER IN GROUP)
-        // get player profile
-        const account = this.saveServer.getProfile(sessionID).info;
-        const profileID = info.savage
-            ? `scav${account.id}`
-            : `pmc${account.id}`;
+    /** Handle match/group/start_game */
+    public joinMatch(info: IMatchGroupStartGameRequest, sessionId: string): IProfileStatusResponse {
+        const output: IProfileStatusResponse = { maxPveCountExceeded: false, profiles: [] };
 
         // get list of players joining into the match
-        output.push({
-            "profileid": profileID,
-            "status": "busy",
-            "sid": "",
-            "ip": match.ip,
-            "port": match.port,
-            "version": "live",
-            "location": info.location,
+        output.profiles.push({
+            profileid: "TODO",
+            profileToken: "TODO",
+            status: "MatchWait",
+            sid: "",
+            ip: "",
+            port: 0,
+            version: "live",
+            location: "TODO get location",
             raidMode: "Online",
-            "mode": "deathmatch",
-            "shortid": match.id,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            additional_info: undefined
+            mode: "deathmatch",
+            shortId: undefined,
+            additional_info: undefined,
         });
 
         return output;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected getMatch(location: string): any
-    {
-        return {
-            "id": "TEST",
-            "ip": "127.0.0.1",
-            "port": 9909
-        };
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getGroupStatus(info: IGetGroupStatusRequestData): any
-    {
-        return {
-            "players": [],
-            "invite": [],
-            "group": []
-        };
+    /** Handle client/match/group/status */
+    public getGroupStatus(info: IMatchGroupStatusRequest): IMatchGroupStatusResponse {
+        return { players: [], maxPveCountExceeded: false };
     }
 
     /**
      * Handle /client/raid/configuration
-     * @param request 
-     * @param sessionID 
+     * @param request Raid config request
+     * @param sessionID Session id
      */
-    public startOfflineRaid(request: IGetRaidConfigurationRequestData, sessionID: string): void
-    {
+    public configureOfflineRaid(request: IGetRaidConfigurationRequestData, sessionID: string): void {
+        // Store request data for access during bot generation
         this.applicationContext.addValue(ContextVariableType.RAID_CONFIGURATION, request);
 
-        //TODO: add code to strip PMC of equipment now they've started the raid
+        // TODO: add code to strip PMC of equipment now they've started the raid
 
         // Set pmcs to difficulty set in pre-raid screen if override in bot config isnt enabled
-        if (!this.botConfig.pmc.useDifficultyOverride)
-        {
-            this.botConfig.pmc.difficulty = this.convertDifficultyDropdownIntoBotDifficulty(request.wavesSettings.botDifficulty);
+        if (!this.pmcConfig.useDifficultyOverride) {
+            this.pmcConfig.difficulty = this.convertDifficultyDropdownIntoBotDifficulty(
+                request.wavesSettings.botDifficulty,
+            );
         }
 
-        // Store the profile as-is for later use on the post-raid exp screen 
+        // Store the profile as-is for later use on the post-raid exp screen
         const currentProfile = this.saveServer.getProfile(sessionID);
-        this.profileSnapshotService.storeProfileSnapshot(sessionID, currentProfile);
     }
 
     /**
@@ -160,51 +101,22 @@ export class MatchController
      * @param botDifficulty dropdown difficulty value
      * @returns bot difficulty
      */
-    protected convertDifficultyDropdownIntoBotDifficulty(botDifficulty: string): string
-    {
+    protected convertDifficultyDropdownIntoBotDifficulty(botDifficulty: string): string {
         // Edge case medium - must be altered
-        if (botDifficulty.toLowerCase() === "medium")
-        {
+        if (botDifficulty.toLowerCase() === "medium") {
             return "normal";
         }
 
         return botDifficulty;
     }
 
-    public endOfflineRaid(info: IEndOfflineRaidRequestData, sessionID: string): void
-    {       
-        const pmcData: IPmcData = this.profileHelper.getPmcProfile(sessionID);
-        const extract = info.exitName;
+    /** Handle client/match/local/start */
+    public startLocalRaid(sessionId: string, request: IStartLocalRaidRequestData): IStartLocalRaidResponseData {
+        return this.locationLifecycleService.startLocalRaid(sessionId, request);
+    }
 
-        // clean up cached bots now raid is over
-        this.botGenerationCacheService.clearStoredBots();
-
-        if (!this.inraidConfig.carExtracts.includes(extract))
-        {
-            return;
-        }
-
-        if (!(extract in pmcData.CarExtractCounts))
-        {
-            pmcData.CarExtractCounts[extract] = 0;
-        }
-
-        pmcData.CarExtractCounts[extract] += 1;
-        const extractCount: number = pmcData.CarExtractCounts[extract];
-
-        const fenceID: string = Traders.FENCE;
-        let fenceStanding = Number(pmcData.TradersInfo[fenceID].standing);
-
-        // Not exact replica of Live behaviour
-        // Simplified for now, no real reason to do the whole (unconfirmed) extra 0.01 standing per day regeneration mechanic
-        const baseGain: number = this.inraidConfig.carExtractBaseStandingGain;
-        fenceStanding += Math.max(baseGain / extractCount, 0.01);
-
-        pmcData.TradersInfo[fenceID].standing = Math.min(Math.max(fenceStanding, -7), 15);
-        this.traderHelper.lvlUp(fenceID, sessionID);
-        pmcData.TradersInfo[fenceID].loyaltyLevel = Math.max(pmcData.TradersInfo[fenceID].loyaltyLevel, 1);
-
-        // clear bot loot cache
-        this.botLootCacheService.clearCache();
+    /** Handle client/match/local/end */
+    public endLocalRaid(sessionId: string, request: IEndLocalRaidRequestData): void {
+        this.locationLifecycleService.endLocalRaid(sessionId, request);
     }
 }

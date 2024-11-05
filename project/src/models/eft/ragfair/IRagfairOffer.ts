@@ -1,54 +1,54 @@
-import { MemberCategory } from "../../enums/MemberCategory";
-import { Item } from "../common/tables/IItem";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
+import { DogtagExchangeSide } from "@spt/models/enums/DogtagExchangeSide";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
 
-export interface IRagfairOffer 
-{
-    sellResult?: SellResult[]
-    _id: string
-    items: Item[]
-    requirements: OfferRequirement[]
-    root: string
-    intId: number
+export interface IRagfairOffer {
+    sellResult?: ISellResult[];
+    _id: string;
+    items: IItem[];
+    requirements: IOfferRequirement[];
+    root: string;
+    intId: number;
     /** Handbook price */
-    itemsCost: number
-    /** Rouble price */
-    requirementsCost: number
-    startTime: number
-    endTime: number
-    sellInOnePiece: boolean
-    loyaltyLevel: number
-    buyRestrictionMax?: number
-    buyRestrictionCurrent?: number
-    locked: boolean
-    unlimitedCount: boolean
-    /** Rouble price */
-    summaryCost: number
-    user: IRagfairOfferUser
-    notAvailable: boolean
-    /** TODO - implement this value - not currently used */
-    CurrentItemCount: number
-    priority: boolean
+    itemsCost: number;
+    /** Rouble price per item */
+    requirementsCost: number;
+    startTime: number;
+    endTime: number;
+    /** True when offer is sold as pack */
+    sellInOnePiece: boolean;
+    /** Rouble price - same as requirementsCost */
+    summaryCost: number;
+    user: IRagfairOfferUser;
+
+    /** Trader only */
+    unlimitedCount?: boolean;
+    loyaltyLevel: number;
+    buyRestrictionMax?: number;
+    buyRestrictionCurrent?: number;
+    locked?: boolean;
 }
 
-export interface OfferRequirement 
-{
-    _tpl: string
-    count: number
-    onlyFunctional: boolean
+export interface IOfferRequirement {
+    _tpl: string;
+    count: number;
+    onlyFunctional: boolean;
+    level?: number;
+    side?: DogtagExchangeSide;
 }
 
-export interface IRagfairOfferUser 
-{
-    id: string
-    nickname?: string
-    rating?: number
-    memberType: MemberCategory
-    avatar?: string
-    isRatingGrowing?: boolean
+export interface IRagfairOfferUser {
+    id: string;
+    nickname?: string;
+    rating?: number;
+    memberType: MemberCategory;
+    selectedMemberCategory?: MemberCategory;
+    avatar?: string;
+    isRatingGrowing?: boolean;
+    aid?: number;
 }
 
-export interface SellResult
-{
-    sellTime: number
-    amount: number
+export interface ISellResult {
+    sellTime: number;
+    amount: number;
 }

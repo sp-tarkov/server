@@ -1,46 +1,43 @@
-export class Queue<T>
-{
-    private elements: Record<number, T>;
-    private head: number;
-    private tail: number;
-    constructor() 
+import { LinkedList } from "@spt/utils/collections/lists/LinkedList";
 
-    {
-        this.elements = {};
-        this.head = 0;
-        this.tail = 0;
-    }
-    
-    public enqueue(element: T): void 
-    {
-        this.elements[this.tail] = element;
-        this.tail++;
+export class Queue<T> {
+    private list: LinkedList<T>;
+
+    public get length(): number {
+        return this.list.length;
     }
 
-    public enqueueAll(elements: T[]): void 
-    {
-        elements.forEach(e => this.enqueue(e));
+    constructor() {
+        this.list = new LinkedList<T>();
     }
 
-    public dequeue(): T 
-    {
-        const item = this.elements[this.head];
-        delete this.elements[this.head];
-        this.head++;
-        return item;
+    /**
+     * Adds an element to the end of the queue.
+     */
+    public enqueue(element: T): void {
+        this.list.append(element);
     }
 
-    public peek():T 
-    {
-        return this.elements[this.head];
-    }
-    public getLength(): number 
-    {
-        return this.tail - this.head;
+    /**
+     * Iterates over the elements received and adds each one to the end of the queue.
+     */
+    public enqueueAll(elements: T[]): void {
+        for (const element of elements) {
+            this.enqueue(element);
+        }
     }
 
-    public isEmpty(): boolean
-    {
-        return this.getLength() === 0;
+    /**
+     * Removes the first element from the queue and returns it's value. If the queue is empty, undefined is returned and the queue is not modified.
+     */
+    public dequeue(): T | undefined {
+        return this.list.shift();
+    }
+
+    /**
+     * Returns the first element's value.
+     */
+    public peek(): T | undefined {
+        return this.list.getHead();
     }
 }

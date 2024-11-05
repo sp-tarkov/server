@@ -1,6 +1,5 @@
-export interface IFailQuestRequestData 
-{
-    Action: "QuestComplete"
-    qid: string
-    removeExcessItems: boolean
+export interface IFailQuestRequestData {
+    Action: "QuestFail";
+    qid: string;
+    removeExcessItems: boolean;
 }

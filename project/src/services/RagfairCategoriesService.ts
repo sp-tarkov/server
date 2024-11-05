@@ -1,113 +1,66 @@
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ISearchRequestData, OfferOwnerType } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { inject, injectable } from "tsyringe";
 
-import { IRagfairOffer } from "../models/eft/ragfair/IRagfairOffer";
-import { ILogger } from "../models/spt/utils/ILogger";
-
 @injectable()
-export class RagfairCategoriesService
-{
-    protected categories: Record<string, number> = {};
-
+export class RagfairCategoriesService {
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger
-    )
-    { }
+        @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
+    ) {}
 
     /**
-     * Get all flea categories and their count of offers
-     * @returns item categories and count
+     * Get a dictionary of each item the play can see in their flea menu, filtered by what is available for them to buy
+     * @param offers All offers in flea
+     * @param searchRequestData Search criteria requested
+     * @param fleaUnlocked Can player see full flea yet (level 15 by default)
+     * @returns KVP of item tpls + count of offers
      */
-    public getAllCategories(): Record<string, number> 
-    {
-        return this.categories;
-    }
+    public getCategoriesFromOffers(
+        offers: IRagfairOffer[],
+        searchRequestData: ISearchRequestData,
+        fleaUnlocked: boolean,
+    ): Record<string, number> {
+        // Get offers valid for search request, then reduce them down to just the counts
+        return offers
+            .filter((offer) => {
+                const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
 
-    /**
-     * With the supplied items, get custom categories
-     * @returns a custom list of categories
-     */
-    public getBespokeCategories(offers: IRagfairOffer[]): Record<string, number> 
-    {
-        return this.processOffersIntoCategories(offers)
-    }
+                // Not level 15 and offer is from player, skip
+                if (!(fleaUnlocked || isTraderOffer)) {
+                    return false;
+                }
 
-    /**
-     * Take an array of ragfair offers and create a dictionary of items with thier corrisponding offer count
-     * @param offers ragfair offers
-     * @returns categories and count
-     */
-    protected processOffersIntoCategories(offers: IRagfairOffer[]): Record<string, number> 
-    {
-        const result = {};
-        for (const offer of offers)
-        {
-            this.addOrIncrementCategory(offer, result);
-        }
+                // Remove items not for money when `removeBartering` is enabled
+                if (
+                    searchRequestData.removeBartering &&
+                    (offer.requirements.length > 1 || !this.paymentHelper.isMoneyTpl(offer.requirements[0]._tpl))
+                ) {
+                    return false;
+                }
 
-        return result;
-    }
+                // Remove when filter set to players only + offer is from trader
+                if (searchRequestData.offerOwnerType === OfferOwnerType.PLAYEROWNERTYPE && isTraderOffer) {
+                    return false;
+                }
 
-    /**
-     * Increment or decrement a category array
-     * @param offer offer to process
-     * @param categories categories to update
-     * @param increment should item be incremented or decremented
-     */
-    protected addOrIncrementCategory(offer: IRagfairOffer, categories: Record<string, number>, increment = true ): void
-    {
-        
-        const itemId = offer.items[0]._tpl;
-        if (increment)
-        {
-            if (!categories[itemId])
-            {
-                categories[itemId] = 1;
-            }
-            else
-            {
-                categories[itemId]++;
-            }
-        }
-        else
-        {
-            
-            // No category, no work to do
-            if (!categories[itemId])
-            {
-                return;
-            }
+                // Remove when filter set to traders only + offer is not from trader
+                if (searchRequestData.offerOwnerType === OfferOwnerType.TRADEROWNERTYPE && !isTraderOffer) {
+                    return false;
+                }
 
-            // Key exists, decrement
-            if (categories[itemId])
-            {
-                categories[itemId]--;
-            }
+                // Passed checks, its a valid offer to process
+                return true;
+            })
+            .reduce((acc, offer) => {
+                const itemTpl = offer.items[0]._tpl;
+                // Increment the category or add if doesnt exist
+                acc[itemTpl] = (acc[itemTpl] || 0) + 1;
 
-            // remove category entirely as its 0 or less
-            if (categories[itemId] < 1)
-            {
-                delete categories[itemId];
-            }
-        }
-    }
-
-    /**
-     * Increase category count by 1
-     * @param offer 
-     */
-    public incrementCategory(offer: IRagfairOffer): void
-    {
-        this.addOrIncrementCategory(offer, this.categories);
-        this.categories[offer.items[0]._tpl]++;
-    }
-
-    /**
-     * Reduce category count by 1
-     * @param offer 
-     */
-    public decrementCategory(offer: IRagfairOffer): void
-    {
-        this.addOrIncrementCategory(offer, this.categories, false);
-        this.categories[offer.items[0]._tpl]--;
+                return acc;
+            }, {});
     }
 }

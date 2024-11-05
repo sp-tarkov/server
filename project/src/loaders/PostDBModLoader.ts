@@ -1,65 +1,78 @@
+import { OnLoad } from "@spt/di/OnLoad";
+import { BundleLoader } from "@spt/loaders/BundleLoader";
+import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
+import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
+import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import { IPostDBLoadModAsync } from "@spt/models/external/IPostDBLoadModAsync";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { LocalisationService } from "@spt/services/LocalisationService";
 import { DependencyContainer, inject, injectable } from "tsyringe";
-import { OnLoad } from "../di/OnLoad";
-import { IPostDBLoadMod } from "../models/external/IPostDBLoadMod";
-import { IPostDBLoadModAsync } from "../models/external/IPostDBLoadModAsync";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { LocalisationService } from "../services/LocalisationService";
-import { ModTypeCheck } from "./ModTypeCheck";
-import { PreAkiModLoader } from "./PreAkiModLoader";
 
 @injectable()
-export class PostDBModLoader implements OnLoad
-{
+export class PostDBModLoader implements OnLoad {
+    protected container: DependencyContainer;
+
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
-        @inject("PreAkiModLoader") protected preAkiModLoader: PreAkiModLoader,
+        @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("BundleLoader") protected bundleLoader: BundleLoader,
+        @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck
-    )
-    { }
-    
-    public async onLoad(): Promise<void>
-    {
-        if (globalThis.G_MODS_ENABLED)
-        {
-            await this.executeMods(this.preAkiModLoader.getContainer());
+        @inject("ModTypeCheck") protected modTypeCheck: ModTypeCheck,
+    ) {}
+
+    public async onLoad(): Promise<void> {
+        if (globalThis.G_MODS_ENABLED) {
+            this.container = this.preSptModLoader.getContainer();
+            await this.executeModsAsync();
+            this.addBundles();
         }
     }
-    
-    public getRoute(): string
-    {
-        return "aki-mods";
+
+    public getRoute(): string {
+        return "spt-mods";
     }
 
-
-    public getModPath(mod: string): string
-    {
-        return this.preAkiModLoader.getModPath(mod);
+    public getModPath(mod: string): string {
+        return this.preSptModLoader.getModPath(mod);
     }
 
-    protected async executeMods(container: DependencyContainer): Promise<void>
-    {
-        const mods = this.preAkiModLoader.sortModsLoadOrder();
-        const promises = new Array<Promise<void>>();
-        for (const modName of mods)
-        {
-            // // import class
-            const filepath = `${this.preAkiModLoader.getModPath(modName)}${this.preAkiModLoader.getImportedModDetails()[modName].main}`;
+    protected async executeModsAsync(): Promise<void> {
+        const mods = this.preSptModLoader.sortModsLoadOrder();
+        for (const modName of mods) {
+            // import class
+            const filepath = `${this.preSptModLoader.getModPath(modName)}${
+                this.preSptModLoader.getImportedModDetails()[modName].main
+            }`;
             const modpath = `${process.cwd()}/${filepath}`;
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const mod = require(modpath);
-            if (this.modTypeCheck.isPostDBAkiLoad(mod.mod))
-            {
-                (mod.mod as IPostDBLoadMod).postDBLoad(container);
+
+            if (this.modTypeCheck.isPostDBLoadAsync(mod.mod)) {
+                try {
+                    await (mod.mod as IPostDBLoadModAsync).postDBLoadAsync(this.container);
+                } catch (err) {
+                    this.logger.error(
+                        this.localisationService.getText(
+                            "modloader-async_mod_error",
+                            `${err?.message ?? ""}\n${err.stack ?? ""}`,
+                        ),
+                    );
+                }
             }
-            if (this.modTypeCheck.isPostDBAkiLoadAsync(mod.mod))
-            {
-                promises.push(
-                    (mod.mod as IPostDBLoadModAsync).postDBLoadAsync(container)
-                        .catch((err) => this.logger.error(this.localisationService.getText("modloader-async_mod_error", `${err?.message ?? ""}\n${err.stack ?? ""}`)))
-                );
+
+            if (this.modTypeCheck.isPostDBLoad(mod.mod)) {
+                (mod.mod as IPostDBLoadMod).postDBLoad(this.container);
             }
         }
-        await Promise.all(promises);
+    }
+
+    protected addBundles(): void {
+        const importedMods = this.preSptModLoader.getImportedModDetails();
+        for (const [mod, pkg] of Object.entries(importedMods)) {
+            const modPath = this.preSptModLoader.getModPath(mod);
+
+            if (pkg.isBundleMod ?? false) {
+                this.bundleLoader.addBundles(modPath);
+            }
+        }
     }
 }

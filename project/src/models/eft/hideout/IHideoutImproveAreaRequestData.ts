@@ -1,16 +1,14 @@
-export interface IHideoutImproveAreaRequestData
-{
-    Action: "HideoutImproveArea"
+export interface IHideoutImproveAreaRequestData {
+    Action: "HideoutImproveArea";
     /** Hideout area id from areas.json */
-    id: string
-    areaType: number
-    items: HideoutItem[]
-    timestamp: number
+    id: string;
+    areaType: number;
+    items: IHideoutItem[];
+    timestamp: number;
 }
 
-export interface HideoutItem
-{
+export interface IHideoutItem {
     /** Hideout inventory id that was used by improvement action */
-    id: string
-    count: number
+    id: string;
+    count: number;
 }

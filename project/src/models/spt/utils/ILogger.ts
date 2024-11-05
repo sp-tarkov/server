@@ -1,12 +1,15 @@
-import { Daum } from "../../eft/itemEvent/IItemEventRouterRequest";
-import { LogBackgroundColor } from "../logging/LogBackgroundColor";
-import { LogTextColor } from "../logging/LogTextColor";
+import { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
+import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
 
-export interface ILogger 
-{
-    writeToLogFile(data: string | Daum): void;
+export interface ILogger {
+    writeToLogFile(data: string | IDaum): void;
     log(data: string | Record<string, unknown> | Error, color: string, backgroundColor?: string): void;
-    logWithColor(data: string | Record<string, unknown>, textColor: LogTextColor, backgroundColor?: LogBackgroundColor): void;
+    logWithColor(
+        data: string | Record<string, unknown>,
+        textColor: LogTextColor,
+        backgroundColor?: LogBackgroundColor,
+    ): void;
 
     error(data: string): void;
 
@@ -14,5 +17,5 @@ export interface ILogger
     success(data: string): void;
 
     info(data: string): void;
-    debug(data: string| Record<string, unknown>, onlyShowInConsole?: boolean): void;
+    debug(data: string | Record<string, unknown>, onlyShowInConsole?: boolean): void;
 }

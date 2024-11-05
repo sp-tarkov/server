@@ -1,29 +1,28 @@
-import { WindDirection } from "../../../models/enums/WindDirection";
+import { Season } from "@spt/models/enums/Season";
+import { WindDirection } from "@spt/models/enums/WindDirection";
 
-export interface IWeatherData
-{
+export interface IWeatherData {
     acceleration: number;
     time: string;
     date: string;
-    weather?: IWeather
+    weather: IWeather;
+    season: Season;
 }
 
-export  interface IWeather 
-{
+export interface IWeather {
     pressure: number;
     temp: number;
     fog: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     rain_intensity: number;
+    /** 1 - 3 light rain, 3+ 'rain' */
     rain: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     wind_gustiness: number;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     wind_direction: WindDirection;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     wind_speed: number;
+    /** < -0.4 = clear day */
     cloud: number;
     time: string;
     date: string;
     timestamp: number;
+    sptInRaidTimestamp: number;
 }

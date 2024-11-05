@@ -1,15 +1,13 @@
 import { injectable } from "tsyringe";
 
 @injectable()
-export class MathUtil
-{
+export class MathUtil {
     /**
      * Helper to create the sum of all array elements
-    * @param   {array}     values          The array with numbers of which to calculate the sum
-    * @return  {number}                    sum(values)
-    */
-    public arraySum(values: number[]): number
-    {
+     * @param   {array}     values          The array with numbers of which to calculate the sum
+     * @return  {number}                    sum(values)
+     */
+    public arraySum(values: number[]): number {
         // sum with initial value being 0
         return values.reduce((sum, x) => sum + x, 0);
     }
@@ -20,11 +18,14 @@ export class MathUtil
      * @param   {array}     values          The array with numbers of which to calculate the cumulative sum
      * @return  {array}                     cumsum(values)
      */
-    public arrayCumsum(values: number[]): number[]
-    {
-        // curried function for cumulative sum: (cum, x) => cum += x
-        // and 0 being the initial value for the map
-        return values.map((cum => x => cum += x)(0));
+    public arrayCumsum(values: number[]): number[] {
+        const cumsumArray: number[] = [];
+        let sum = 0;
+        for (let i = 0; i < values.length; i++) {
+            sum += values[i];
+            cumsumArray[i] = sum;
+        }
+        return cumsumArray;
     }
 
     /**
@@ -32,9 +33,8 @@ export class MathUtil
      * @param   {array}     values          The array of numbers which shall be multiplied by the factor
      * @return  {array}                     array times factor
      */
-    public arrayProd(values: number[], factor: number): number[]
-    {
-        return values.map(x => x * factor);
+    public arrayProd(values: number[], factor: number): number[] {
+        return values.map((x) => x * factor);
     }
 
     /**
@@ -42,9 +42,8 @@ export class MathUtil
      * @param   {array}     values          The array of numbers to which the summand should be added
      * @return  {array}                     array plus summand
      */
-    public arrayAdd(values: number[], summand: number): number[]
-    {
-        return values.map(x => x + summand);
+    public arrayAdd(values: number[], summand: number): number[] {
+        return values.map((x) => x + summand);
     }
 
     /**
@@ -62,8 +61,7 @@ export class MathUtil
      * @param   {number}    maxOut          max of outout range
      * @return  {number}                    the result of the mapping
      */
-    public mapToRange(x: number, minIn: number, maxIn: number, minOut: number, maxOut: number): number
-    {
+    public mapToRange(x: number, minIn: number, maxIn: number, minOut: number, maxOut: number): number {
         const deltaIn = maxIn - minIn;
         const deltaOut = maxOut - minOut;
 
@@ -72,33 +70,28 @@ export class MathUtil
     }
 
     /**
-    * Linear interpolation
-    * e.g. used to do a continuous integration for quest rewards which are defined for specific support centers of pmcLevel
-    *
-    * @param   {string}    xp              the point of x at which to interpolate
-    * @param   {array}     x               support points in x (of same length as y)
-    * @param   {array}     y               support points in y (of same length as x)
-    * @return  {number}                    y(xp)
-    */
-    public interp1(xp: number, x: number[], y: number[]): number
-    {
-        if (xp > x[x.length - 1])
-        {
+     * Linear interpolation
+     * e.g. used to do a continuous integration for quest rewards which are defined for specific support centers of pmcLevel
+     *
+     * @param   {string}    xp              the point of x at which to interpolate
+     * @param   {array}     x               support points in x (of same length as y)
+     * @param   {array}     y               support points in y (of same length as x)
+     * @return  {number}                    y(xp)
+     */
+    public interp1(xp: number, x: number[], y: number[]): number | undefined {
+        if (xp > x[x.length - 1]) {
             return y[y.length - 1];
         }
-        else if (xp < x[0])
-        {
+
+        if (xp < x[0]) {
             return y[0];
         }
-        else
-        {
-            for (let i = 0; i < x.length - 1; i++)
-            {
-                if (xp >= x[i] && xp <= x[i + 1])
-                {
-                    return y[i] + (xp - x[i]) * (y[i + 1] - y[i]) / (x[i + 1] - x[i]);
-                }
+
+        for (let i = 0; i < x.length - 1; i++) {
+            if (xp >= x[i] && xp <= x[i + 1]) {
+                return y[i] + ((xp - x[i]) * (y[i + 1] - y[i])) / (x[i + 1] - x[i]);
             }
         }
+        return undefined;
     }
 }

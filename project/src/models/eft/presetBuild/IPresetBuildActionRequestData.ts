@@ -1,19 +1,10 @@
-import { Upd } from "../common/tables/IItem";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
 
-export interface IPresetBuildActionRequestData 
-{
-    Action: string
-    id: string
-    name: string
-    root: string
-    items: Item[]
-}
-
-export interface Item 
-{
-    _id: string
-    _tpl: string
-    upd?: Upd
-    parentId?: string
-    slotId?: string
+export interface IPresetBuildActionRequestData {
+    Action: string;
+    Id: string;
+    /** name of preset given by player */
+    Name: string;
+    Root: string;
+    Items: IItem[];
 }

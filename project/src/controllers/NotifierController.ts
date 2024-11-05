@@ -1,23 +1,19 @@
-import { NotifierHelper } from "../helpers/NotifierHelper";
-import { NotificationService } from "../services/NotificationService";
-
-import { INotifierChannel } from "../models/eft/notifier/INotifier";
-
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { NotifierHelper } from "@spt/helpers/NotifierHelper";
+import { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
+import { NotificationService } from "@spt/services/NotificationService";
 import { inject, injectable } from "tsyringe";
-import { HttpServerHelper } from "../helpers/HttpServerHelper";
 
 @injectable()
-export class NotifierController
-{
+export class NotifierController {
     protected pollInterval = 300;
     protected timeout = 15000;
 
     constructor(
         @inject("NotifierHelper") protected notifierHelper: NotifierHelper,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
-        @inject("NotificationService") protected notificationService: NotificationService
-    )
-    {}
+        @inject("NotificationService") protected notificationService: NotificationService,
+    ) {}
 
     /**
      * Resolve an array of session notifications.
@@ -26,10 +22,8 @@ export class NotifierController
      * one or more appear or when a timeout expires.
      * If no notifications are available after the timeout, use a default message.
      */
-    public async notifyAsync(sessionID: string): Promise<unknown>
-    {
-        return new Promise((resolve) =>
-        {
+    public async notifyAsync(sessionID: string): Promise<unknown> {
+        return new Promise((resolve) => {
             // keep track of our timeout
             let counter = 0;
 
@@ -37,17 +31,14 @@ export class NotifierController
              * Check for notifications, resolve if any, otherwise poll
              *  intermittently for a period of time.
              */
-            const checkNotifications = () =>
-            {
+            const checkNotifications = () => {
                 /**
                  * If there are no pending messages we should either check again later
                  *  or timeout now with a default response.
                  */
-                if (!this.notificationService.has(sessionID))
-                {
+                if (!this.notificationService.has(sessionID)) {
                     // have we exceeded timeout? if so reply with default ping message
-                    if (counter > this.timeout)
-                    {
+                    if (counter > this.timeout) {
                         return resolve([this.notifierHelper.getDefaultNotification()]);
                     }
 
@@ -73,20 +64,18 @@ export class NotifierController
         });
     }
 
-    public getServer(sessionID: string): string
-    {
+    public getServer(sessionID: string): string {
         return `${this.httpServerHelper.getBackendUrl()}/notifierServer/get/${sessionID}`;
     }
 
-    public getChannel(sessionID: string): INotifierChannel
-    {
+    /** Handle client/notifier/channel/create */
+    public getChannel(sessionID: string): INotifierChannel {
         return {
             server: this.httpServerHelper.buildUrl(),
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             channel_id: sessionID,
-            url: this.getServer(sessionID),
+            url: "",
             notifierServer: this.getServer(sessionID),
-            ws: this.notifierHelper.getWebSocketServer(sessionID)
+            ws: this.notifierHelper.getWebSocketServer(sessionID),
         };
     }
 }

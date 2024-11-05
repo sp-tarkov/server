@@ -1,13 +1,11 @@
-export interface IAddItemRequestData
-{
+export interface IAddItemRequestData {
+    /** Trader id */
     tid: string;
-    items: AddItem[];
+    items: IItemToAdd[];
 }
 
-export interface AddItem
-{
+export interface IItemToAdd {
     count: number;
-    isPreset?: boolean;
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    sptIsPreset?: boolean;
     item_id: string;
 }

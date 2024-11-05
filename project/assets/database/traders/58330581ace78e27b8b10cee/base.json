@@ -19,6 +19,7 @@
     "min_payment": 0,
     "min_return_hour": 0
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "543be5f84bdc2dd4348b456a",
@@ -37,7 +38,19 @@
   "items_buy_prohibited": {
     "category": [],
     "id_list": [
-      "62e910aaf957f2915e0a5e36"
+      "62e910aaf957f2915e0a5e36",
+      "64d0b40fbe2eed70e254e2d4",
+      "65ddcc9cfa85b9f17d0dfb07",
+      "65ca457b4aafb5d7fc0dcb5d",
+      "660312cc4d6cdfa6f500c703",
+      "660bc341c38b837877075e4c",
+      "6638a5474e92f038531e210e",
+      "66bc98a01a47be227a5e956e",
+      "6655e35b6bc645cb7b059912",
+      "666879d498b97e3a8f09f1ae",
+      "6399f54b0a36db13c823ad21",
+      "66687bc89111279d600b5062",
+      "66d98233302686954b0c6f81"
     ]
   },
   "location": "Таможня",
@@ -87,32 +100,24 @@
   "name": "Александр Фёдорович",
   "nextResupply": 1631487786,
   "nickname": "Skier",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": true,
     "currency": "5449016a4bdc2d6f028b456f",
     "currency_coefficient": 1,
     "excluded_category": [],
     "excluded_id_list": [],
-    "price_rate": 0,
     "quality": "1"
   },
-  "sell_category": [
-    "5b5f71b386f774093f2ecf11",
-    "5b5f71c186f77409407a7ec0",
-    "5b5f71de86f774093f2ecf13",
-    "5b5f724186f77447ed5636ad",
-    "5b5f736886f774094242f193",
-    "5b5f73ec86f774093e6cb4fd",
-    "5b5f74cc86f77447ec5d770a",
-    "5b5f750686f774093e6cb503",
-    "5b5f751486f77447ec5d770c",
-    "5b5f752e86f774093e6cb505",
-    "5b5f754a86f774094242f19b",
-    "5b5f755f86f77447ec5d770e",
-    "5b5f757486f774093e6cb507",
-    "5b5f78e986f77447ed5636b1",
-    "5b5f78fc86f77409407a7f90"
-  ],
+  "sell_category": [],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Киселёв",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

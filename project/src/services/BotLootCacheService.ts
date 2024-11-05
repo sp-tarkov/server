@@ -1,40 +1,36 @@
+import { PMCLootGenerator } from "@spt/generators/PMCLootGenerator";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { IBotType } from "@spt/models/eft/common/tables/IBotType";
+import { IProps, ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { IBotLootCache, LootCacheType } from "@spt/models/spt/bots/IBotLootCache";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RagfairPriceService } from "@spt/services/RagfairPriceService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
-import { PMCLootGenerator } from "../generators/PMCLootGenerator";
-import { ItemHelper } from "../helpers/ItemHelper";
-import { IBotType } from "../models/eft/common/tables/IBotType";
-import { ITemplateItem, Props } from "../models/eft/common/tables/ITemplateItem";
-import { BaseClasses } from "../models/enums/BaseClasses";
-import { BotLootCache, LootCacheType } from "../models/spt/bots/BotLootCache";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { JsonUtil } from "../utils/JsonUtil";
-import { LocalisationService } from "./LocalisationService";
-import { RagfairPriceService } from "./RagfairPriceService";
-
 @injectable()
-export class BotLootCacheService
-{
-    protected lootCache: Record<string, BotLootCache>;
+export class BotLootCacheService {
+    protected lootCache: Record<string, IBotLootCache>;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PMCLootGenerator") protected pmcLootGenerator: PMCLootGenerator,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService
-    )
-    {
+        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
+        @inject("PrimaryCloner") protected cloner: ICloner,
+    ) {
         this.clearCache();
     }
 
     /**
-     * Remove all cached bot loot data
+     * Remove cached bot loot data
      */
-    public clearCache(): void
-    {
+    public clearCache(): void {
         this.lootCache = {};
     }
 
@@ -46,38 +42,70 @@ export class BotLootCacheService
      * @param botJsonTemplate Base json db file for the bot having its loot generated
      * @returns ITemplateItem array
      */
-    public getLootFromCache(botRole: string, isPmc: boolean, lootType: LootCacheType, botJsonTemplate: IBotType): ITemplateItem[]
-    {
-        if (!this.botRoleExistsInCache(botRole))
-        {
+    public getLootFromCache(
+        botRole: string,
+        isPmc: boolean,
+        lootType: LootCacheType,
+        botJsonTemplate: IBotType,
+    ): Record<string, number> {
+        if (!this.botRoleExistsInCache(botRole)) {
             this.initCacheForBotRole(botRole);
             this.addLootToCache(botRole, isPmc, botJsonTemplate);
         }
 
-        switch (lootType)
-        {
+        let result = undefined;
+        switch (lootType) {
             case LootCacheType.SPECIAL:
-                return this.lootCache[botRole].specialItems;
+                result = this.lootCache[botRole].specialItems;
+                break;
             case LootCacheType.BACKPACK:
-                return this.lootCache[botRole].backpackLoot;
+                result = this.lootCache[botRole].backpackLoot;
+                break;
             case LootCacheType.POCKET:
-                return this.lootCache[botRole].pocketLoot;
+                result = this.lootCache[botRole].pocketLoot;
+                break;
             case LootCacheType.VEST:
-                return this.lootCache[botRole].vestLoot;
+                result = this.lootCache[botRole].vestLoot;
+                break;
+            case LootCacheType.SECURE:
+                result = this.lootCache[botRole].secureLoot;
+                break;
             case LootCacheType.COMBINED:
-                return this.lootCache[botRole].combinedPoolLoot;
+                result = this.lootCache[botRole].combinedPoolLoot;
+                break;
             case LootCacheType.HEALING_ITEMS:
-                return this.lootCache[botRole].healingItems;
+                result = this.lootCache[botRole].healingItems;
+                break;
             case LootCacheType.GRENADE_ITEMS:
-                return this.lootCache[botRole].grenadeItems;
+                result = this.lootCache[botRole].grenadeItems;
+                break;
             case LootCacheType.DRUG_ITEMS:
-                return this.lootCache[botRole].drugItems;
+                result = this.lootCache[botRole].drugItems;
+                break;
+            case LootCacheType.FOOD_ITEMS:
+                result = this.lootCache[botRole].foodItems;
+                break;
+            case LootCacheType.DRINK_ITEMS:
+                result = this.lootCache[botRole].drinkItems;
+                break;
+            case LootCacheType.CURRENCY_ITEMS:
+                result = this.lootCache[botRole].currencyItems;
+                break;
             case LootCacheType.STIM_ITEMS:
-                return this.lootCache[botRole].stimItems;
+                result = this.lootCache[botRole].stimItems;
+                break;
             default:
-                this.logger.error(this.localisationService.getText("bot-loot_type_not_found", {lootType: lootType, botRole: botRole, isPmc: isPmc}));
+                this.logger.error(
+                    this.localisationService.getText("bot-loot_type_not_found", {
+                        lootType: lootType,
+                        botRole: botRole,
+                        isPmc: isPmc,
+                    }),
+                );
                 break;
         }
+
+        return this.cloner.clone(result);
     }
 
     /**
@@ -86,209 +114,354 @@ export class BotLootCacheService
      * @param isPmc Is the bot a PMC (alteres what loot is cached)
      * @param botJsonTemplate db template for bot having its loot generated
      */
-    protected addLootToCache(botRole: string, isPmc: boolean, botJsonTemplate: IBotType): void
-    {
+    protected addLootToCache(botRole: string, isPmc: boolean, botJsonTemplate: IBotType): void {
         // the full pool of loot we use to create the various sub-categories with
         const lootPool = botJsonTemplate.inventory.items;
 
         // Flatten all individual slot loot pools into one big pool, while filtering out potentially missing templates
-        const specialLootTemplates: ITemplateItem[] = [];
-        const backpackLootTemplates: ITemplateItem[] = [];
-        const pocketLootTemplates: ITemplateItem[] = [];
-        const vestLootTemplates: ITemplateItem[] = [];
-        const combinedPoolTemplates: ITemplateItem[] = [];
+        const specialLootPool: Record<string, number> = {};
+        const backpackLootPool: Record<string, number> = {};
+        const pocketLootPool: Record<string, number> = {};
+        const vestLootPool: Record<string, number> = {};
+        const secureLootTPool: Record<string, number> = {};
+        const combinedLootPool: Record<string, number> = {};
 
-        if (isPmc)
-        {
-            // Replace lootPool passed in with our own generated list if bot is a pmc
-            lootPool.Backpack = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCBackpackLootPool());
-            lootPool.Pockets = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCPocketLootPool());
-            lootPool.TacticalVest = this.jsonUtil.clone(this.pmcLootGenerator.generatePMCVestLootPool());
+        if (isPmc) {
+            // Replace lootPool from bot json with our own generated list for PMCs
+            lootPool.Backpack = this.cloner.clone(this.pmcLootGenerator.generatePMCBackpackLootPool(botRole));
+            lootPool.Pockets = this.cloner.clone(this.pmcLootGenerator.generatePMCPocketLootPool(botRole));
+            lootPool.TacticalVest = this.cloner.clone(this.pmcLootGenerator.generatePMCVestLootPool(botRole));
         }
 
-        for (const [slot, pool] of Object.entries(lootPool))
-        {
+        // Backpack/Pockets etc
+        for (const [slot, pool] of Object.entries(lootPool)) {
             // No items to add, skip
-            if (!pool?.length)
-            {
+            if (Object.keys(pool).length === 0) {
                 continue;
             }
 
             // Sort loot pool into separate buckets
-            let itemsToAdd: ITemplateItem[] = [];
-            const items = this.databaseServer.getTables().templates.items;
-            switch (slot.toLowerCase())
-            {
+            switch (slot.toLowerCase()) {
                 case "specialloot":
-                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
-                    this.addUniqueItemsToPool(specialLootTemplates, itemsToAdd);
+                    this.addItemsToPool(specialLootPool, pool);
                     break;
                 case "pockets":
-                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
-                    this.addUniqueItemsToPool(pocketLootTemplates, itemsToAdd);
+                    this.addItemsToPool(pocketLootPool, pool);
                     break;
                 case "tacticalvest":
-                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
-                    this.addUniqueItemsToPool(vestLootTemplates, itemsToAdd);
+                    this.addItemsToPool(vestLootPool, pool);
                     break;
                 case "securedcontainer":
-                    // Don't add these items to loot pool
+                    this.addItemsToPool(secureLootTPool, pool);
+                    break;
+                case "backpack":
+                    this.addItemsToPool(backpackLootPool, pool);
                     break;
                 default:
-                    itemsToAdd = pool.map((lootTpl: string) => items[lootTpl]);
-                    this.addUniqueItemsToPool(backpackLootTemplates, itemsToAdd);
+                    this.logger.warning(`How did you get here ${slot}`);
             }
-            
-            // Add items to combined pool if any exist
-            if (Object.keys(itemsToAdd).length > 0)
-            {
-                this.addUniqueItemsToPool(combinedPoolTemplates, itemsToAdd);
+
+            // Add all items (if any) to combined pool (excluding secure)
+            if (Object.keys(pool).length > 0 && slot.toLowerCase() !== "securedcontainer") {
+                this.addItemsToPool(combinedLootPool, pool);
             }
         }
 
-        // Sort all items by their worth
-        this.sortPoolByRagfairPrice(specialLootTemplates);
-        this.sortPoolByRagfairPrice(backpackLootTemplates);
-        this.sortPoolByRagfairPrice(pocketLootTemplates);
-        this.sortPoolByRagfairPrice(vestLootTemplates);
-        this.sortPoolByRagfairPrice(combinedPoolTemplates);
+        // Assign whitelisted special items to bot if any exist
+        const specialLootItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.specialItems.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.specialItems.whitelist
+                : {};
 
-        // use whitelist if array has values, otherwise process above sorted pools
-        const specialLootItems = (botJsonTemplate.generation.items.specialItems.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.specialItems.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : specialLootTemplates.filter(template =>
-                !(this.isBulletOrGrenade(template._props)
-                || this.isMagazine(template._props)));
+        // no whitelist, find and assign from combined item pool
+        if (Object.keys(specialLootItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(specialLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (!(this.isBulletOrGrenade(itemTemplate._props) || this.isMagazine(itemTemplate._props))) {
+                    specialLootItems[tpl] = weight;
+                }
+            }
+        }
 
-        const healingItems = (botJsonTemplate.generation.items.healing.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.healing.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isMedicalItem(template._props)
-                && template._parent !== BaseClasses.STIMULATOR
-                && template._parent !== BaseClasses.DRUGS);
+        // Assign whitelisted healing items to bot if any exist
+        const healingItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.healing.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.healing.whitelist
+                : {};
 
-        const drugItems = (botJsonTemplate.generation.items.drugs.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.drugs.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isMedicalItem(template._props)
-                && template._parent === BaseClasses.DRUGS);
+        // No whitelist, find and assign from combined item pool
+        if (Object.keys(healingItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (
+                    this.isMedicalItem(itemTemplate._props) &&
+                    itemTemplate._parent !== BaseClasses.STIMULATOR &&
+                    itemTemplate._parent !== BaseClasses.DRUGS
+                ) {
+                    healingItems[tpl] = weight;
+                }
+            }
+        }
 
-        const stimItems = (botJsonTemplate.generation.items.stims.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.stims.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isMedicalItem(template._props)
-                && template._parent === BaseClasses.STIMULATOR);
+        // Assign whitelisted drugs to bot if any exist
+        const drugItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.drugs.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.drugs.whitelist
+                : {};
 
-        const grenadeItems = (botJsonTemplate.generation.items.grenades.whitelist?.length > 0)
-            ? botJsonTemplate.generation.items.grenades.whitelist.map(x => this.itemHelper.getItem(x)[1])
-            : combinedPoolTemplates.filter(template =>
-                this.isGrenade(template._props));
+        // no drugs whitelist, find and assign from combined item pool
+        if (Object.keys(drugItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.isMedicalItem(itemTemplate._props) && itemTemplate._parent === BaseClasses.DRUGS) {
+                    drugItems[tpl] = weight;
+                }
+            }
+        }
 
-        // Get loot items (excluding magazines, bullets, grenades and healing items)
-        const backpackLootItems = backpackLootTemplates.filter(template =>
-            // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
-            !this.isBulletOrGrenade(template._props)
-            && !this.isMagazine(template._props)
-            && !this.isMedicalItem(template._props)
-            && !this.isGrenade(template._props));
+        // Assign whitelisted food to bot if any exist
+        const foodItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.food.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.food.whitelist
+                : {};
 
-        // Get pocket loot
-        const pocketLootItems = pocketLootTemplates.filter(template =>
-            // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
-            !this.isBulletOrGrenade(template._props)
-            && !this.isMagazine(template._props)
-            && !this.isMedicalItem(template._props)
-            && !this.isGrenade(template._props)
-            && ("Height" in template._props)
-            && ("Width" in template._props));
+        // No food whitelist, find and assign from combined item pool
+        if (Object.keys(foodItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.FOOD)) {
+                    foodItems[tpl] = weight;
+                }
+            }
+        }
 
-        // Get vest loot items
-        const vestLootItems = vestLootTemplates.filter(template =>
-            // rome-ignore lint/complexity/useSimplifiedLogicExpression: <explanation>
-            !this.isBulletOrGrenade(template._props)
-            && !this.isMagazine(template._props)
-            && !this.isMedicalItem(template._props)
-            && !this.isGrenade(template._props));
+        // Assign whitelisted drink to bot if any exist
+        const drinkItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.food.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.food.whitelist
+                : {};
+
+        // No drink whitelist, find and assign from combined item pool
+        if (Object.keys(drinkItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.DRINK)) {
+                    drinkItems[tpl] = weight;
+                }
+            }
+        }
+
+        // Assign whitelisted currency to bot if any exist
+        const currencyItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.currency.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.currency.whitelist
+                : {};
+
+        // No currency whitelist, find and assign from combined item pool
+        if (Object.keys(currencyItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.itemHelper.isOfBaseclass(itemTemplate._id, BaseClasses.MONEY)) {
+                    currencyItems[tpl] = weight;
+                }
+            }
+        }
+
+        // Assign whitelisted stims to bot if any exist
+        const stimItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.stims.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.stims.whitelist
+                : {};
+
+        // No whitelist, find and assign from combined item pool
+        if (Object.keys(stimItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.isMedicalItem(itemTemplate._props) && itemTemplate._parent === BaseClasses.STIMULATOR) {
+                    stimItems[tpl] = weight;
+                }
+            }
+        }
+
+        // Assign whitelisted grenades to bot if any exist
+        const grenadeItems: Record<string, number> =
+            Object.keys(botJsonTemplate.generation.items.grenades.whitelist)?.length > 0
+                ? botJsonTemplate.generation.items.grenades.whitelist
+                : {};
+
+        // no whitelist, find and assign from combined item pool
+        if (Object.keys(grenadeItems).length === 0) {
+            for (const [tpl, weight] of Object.entries(combinedLootPool)) {
+                const itemTemplate = this.itemHelper.getItem(tpl)[1];
+                if (this.isGrenade(itemTemplate._props)) {
+                    grenadeItems[tpl] = weight;
+                }
+            }
+        }
+
+        // Get backpack loot (excluding magazines, bullets, grenades, drink, food and healing/stim items)
+        const filteredBackpackItems = {};
+        for (const itemKey of Object.keys(backpackLootPool)) {
+            const itemResult = this.itemHelper.getItem(itemKey);
+            if (!itemResult[0]) {
+                continue;
+            }
+            const itemTemplate = itemResult[1];
+            if (
+                this.isBulletOrGrenade(itemTemplate._props) ||
+                this.isMagazine(itemTemplate._props) ||
+                this.isMedicalItem(itemTemplate._props) ||
+                this.isGrenade(itemTemplate._props) ||
+                this.isFood(itemTemplate._id) ||
+                this.isDrink(itemTemplate._id) ||
+                this.isCurrency(itemTemplate._id)
+            ) {
+                // Is type we dont want as backpack loot, skip
+                continue;
+            }
+
+            filteredBackpackItems[itemKey] = backpackLootPool[itemKey];
+        }
+
+        // Get pocket loot (excluding magazines, bullets, grenades, drink, food medical and healing/stim items)
+        const filteredPocketItems = {};
+        for (const itemKey of Object.keys(pocketLootPool)) {
+            const itemResult = this.itemHelper.getItem(itemKey);
+            if (!itemResult[0]) {
+                continue;
+            }
+            const itemTemplate = itemResult[1];
+            if (
+                this.isBulletOrGrenade(itemTemplate._props) ||
+                this.isMagazine(itemTemplate._props) ||
+                this.isMedicalItem(itemTemplate._props) ||
+                this.isGrenade(itemTemplate._props) ||
+                this.isFood(itemTemplate._id) ||
+                this.isDrink(itemTemplate._id) ||
+                this.isCurrency(itemTemplate._id) ||
+                !("Height" in itemTemplate._props) || // lacks height
+                !("Width" in itemTemplate._props) // lacks width
+            ) {
+                continue;
+            }
+
+            filteredPocketItems[itemKey] = pocketLootPool[itemKey];
+        }
+
+        // Get vest loot (excluding magazines, bullets, grenades, medical and healing/stim items)
+        const filteredVestItems = {};
+        for (const itemKey of Object.keys(vestLootPool)) {
+            const itemResult = this.itemHelper.getItem(itemKey);
+            if (!itemResult[0]) {
+                continue;
+            }
+            const itemTemplate = itemResult[1];
+            if (
+                this.isBulletOrGrenade(itemTemplate._props) ||
+                this.isMagazine(itemTemplate._props) ||
+                this.isMedicalItem(itemTemplate._props) ||
+                this.isGrenade(itemTemplate._props) ||
+                this.isFood(itemTemplate._id) ||
+                this.isDrink(itemTemplate._id) ||
+                this.isCurrency(itemTemplate._id)
+            ) {
+                continue;
+            }
+
+            filteredVestItems[itemKey] = vestLootPool[itemKey];
+        }
 
         this.lootCache[botRole].healingItems = healingItems;
         this.lootCache[botRole].drugItems = drugItems;
+        this.lootCache[botRole].foodItems = foodItems;
+        this.lootCache[botRole].drinkItems = drinkItems;
+        this.lootCache[botRole].currencyItems = currencyItems;
         this.lootCache[botRole].stimItems = stimItems;
         this.lootCache[botRole].grenadeItems = grenadeItems;
 
         this.lootCache[botRole].specialItems = specialLootItems;
-        this.lootCache[botRole].backpackLoot = backpackLootItems;
-        this.lootCache[botRole].pocketLoot = pocketLootItems;
-        this.lootCache[botRole].vestLoot = vestLootItems;
-    }
-
-    /**
-     * Sort a pool of item objects by its flea price
-     * @param poolToSort pool of items to sort
-     */
-    protected sortPoolByRagfairPrice(poolToSort: ITemplateItem[]): void
-    {
-        poolToSort.sort((a, b) => this.compareByValue(this.ragfairPriceService.getFleaPriceForItem(a._id), this.ragfairPriceService.getFleaPriceForItem(b._id)));
+        this.lootCache[botRole].backpackLoot = filteredBackpackItems;
+        this.lootCache[botRole].pocketLoot = filteredPocketItems;
+        this.lootCache[botRole].vestLoot = filteredVestItems;
+        this.lootCache[botRole].secureLoot = secureLootTPool;
     }
 
     /**
      * Add unique items into combined pool
-     * @param combinedItemPool Pool of items to add to
+     * @param poolToAddTo Pool of items to add to
      * @param itemsToAdd items to add to combined pool if unique
      */
-    protected addUniqueItemsToPool(combinedItemPool: ITemplateItem[], itemsToAdd: ITemplateItem[]): void
-    {
-        if (combinedItemPool.length === 0)
-        {
-            combinedItemPool.push(...itemsToAdd);
+    protected addUniqueItemsToPool(poolToAddTo: ITemplateItem[], itemsToAdd: ITemplateItem[]): void {
+        if (poolToAddTo.length === 0) {
+            poolToAddTo.push(...itemsToAdd);
             return;
         }
 
-        const mergedItemPools = [...combinedItemPool, ...itemsToAdd];
+        const mergedItemPools = [...poolToAddTo, ...itemsToAdd];
 
         // Save only unique array values
-        const uniqueResults = [... new Set([].concat(...mergedItemPools))];
-        combinedItemPool.splice(0, combinedItemPool.length);
-        combinedItemPool.push(...uniqueResults);
+        const uniqueResults = [...new Set([].concat(...mergedItemPools))];
+        poolToAddTo.splice(0, poolToAddTo.length);
+        poolToAddTo.push(...uniqueResults);
+    }
+
+    protected addItemsToPool(poolToAddTo: Record<string, number>, poolOfItemsToAdd: Record<string, number>): void {
+        for (const tpl in poolOfItemsToAdd) {
+            // Skip adding items that already exist
+            if (poolToAddTo[tpl]) {
+                continue;
+            }
+
+            poolToAddTo[tpl] = poolOfItemsToAdd[tpl];
+        }
     }
 
     /**
      * Ammo/grenades have this property
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
-    protected isBulletOrGrenade(props: Props): boolean
-    {
-        return ("ammoType" in props);
+    protected isBulletOrGrenade(props: IProps): boolean {
+        return "ammoType" in props;
     }
 
     /**
      * Internal and external magazine have this property
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
-    protected isMagazine(props: Props): boolean
-    {
-        return ("ReloadMagType" in props);
+    protected isMagazine(props: IProps): boolean {
+        return "ReloadMagType" in props;
     }
 
     /**
      * Medical use items (e.g. morphine/lip balm/grizzly)
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
-    protected isMedicalItem(props: Props): boolean
-    {
-        return ("medUseTime" in props);
+    protected isMedicalItem(props: IProps): boolean {
+        return "medUseTime" in props;
     }
 
     /**
      * Grenades have this property (e.g. smoke/frag/flash grenades)
-     * @param props 
-     * @returns 
+     * @param props
+     * @returns
      */
-    protected isGrenade(props: Props): boolean
-    {
-        return ("ThrowType" in props);
+    protected isGrenade(props: IProps): boolean {
+        return "ThrowType" in props;
+    }
+
+    protected isFood(tpl: string): boolean {
+        return this.itemHelper.isOfBaseclass(tpl, BaseClasses.FOOD);
+    }
+
+    protected isDrink(tpl: string): boolean {
+        return this.itemHelper.isOfBaseclass(tpl, BaseClasses.DRINK);
+    }
+
+    protected isCurrency(tpl: string): boolean {
+        return this.itemHelper.isOfBaseclass(tpl, BaseClasses.MONEY);
     }
 
     /**
@@ -296,28 +469,30 @@ export class BotLootCacheService
      * @param botRole role to check for
      * @returns true if they exist
      */
-    protected botRoleExistsInCache(botRole: string): boolean
-    {
+    protected botRoleExistsInCache(botRole: string): boolean {
         return !!this.lootCache[botRole];
     }
 
     /**
-     * If lootcache is null, init with empty property arrays
+     * If lootcache is undefined, init with empty property arrays
      * @param botRole Bot role to hydrate
      */
-    protected initCacheForBotRole(botRole: string): void
-    {
+    protected initCacheForBotRole(botRole: string): void {
         this.lootCache[botRole] = {
-            backpackLoot: [],
-            pocketLoot: [],
-            vestLoot: [],
-            combinedPoolLoot: [],
+            backpackLoot: {},
+            pocketLoot: {},
+            vestLoot: {},
+            secureLoot: {},
+            combinedPoolLoot: {},
 
-            specialItems: [],
-            grenadeItems: [],
-            drugItems: [],
-            healingItems: [],
-            stimItems: []
+            specialItems: {},
+            grenadeItems: {},
+            drugItems: {},
+            foodItems: {},
+            drinkItems: {},
+            currencyItems: {},
+            healingItems: {},
+            stimItems: {},
         };
     }
 
@@ -326,34 +501,28 @@ export class BotLootCacheService
      * -1 when a < b
      * 0 when a === b
      * 1 when a > b
-     * @param itemAPrice 
-     * @param itemBPrice 
-     * @returns 
+     * @param itemAPrice
+     * @param itemBPrice
+     * @returns
      */
-    protected compareByValue(itemAPrice: number, itemBPrice: number): number
-    {
+    protected compareByValue(itemAPrice: number, itemBPrice: number): number {
         // If item A has no price, it should be moved to the back when sorting
-        if (!itemAPrice)
-        {
+        if (!itemAPrice) {
             return 1;
         }
 
-        if (!itemBPrice)
-        {
+        if (!itemBPrice) {
             return -1;
         }
 
-        if (itemAPrice < itemBPrice)
-        {
+        if (itemAPrice < itemBPrice) {
             return -1;
         }
 
-        if (itemAPrice > itemBPrice)
-        {
+        if (itemAPrice > itemBPrice) {
             return 1;
         }
 
         return 0;
     }
-    
 }

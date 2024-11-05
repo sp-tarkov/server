@@ -1,6 +1,5 @@
-import { IItemEventRouterBase } from "./IItemEventRouterBase";
+import { IItemEventRouterBase } from "@spt/models/eft/itemEvent/IItemEventRouterBase";
 
-export interface IEmptyItemEventRouterResponse extends IItemEventRouterBase
-{
+export interface IEmptyItemEventRouterResponse extends IItemEventRouterBase {
     profileChanges: "";
 }

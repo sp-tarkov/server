@@ -1,5 +1,4 @@
-export enum WindDirection
-    {
+export enum WindDirection {
     EAST = 1,
     NORTH = 2,
     WEST = 3,
@@ -7,5 +6,5 @@ export enum WindDirection
     SE = 5,
     SW = 6,
     NW = 7,
-    NE = 8
+    NE = 8,
 }

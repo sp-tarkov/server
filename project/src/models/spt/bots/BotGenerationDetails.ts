@@ -1,19 +1,27 @@
-export interface BotGenerationDetails
-{
+import { MinMax } from "@spt/models/common/MinMax";
+
+export interface IBotGenerationDetails {
     /** Should the bot be generated as a PMC */
-    isPmc: boolean
+    isPmc: boolean;
     /** assault/pmcBot etc */
-    role: string
+    role: string;
     /** Side of bot */
-    side: string
+    side: string;
     /** Active players current level */
-    playerLevel: number
-    /** Delta of highest level of bot */
-    botRelativeLevelDeltaMax: number
+    playerLevel?: number;
+    playerName?: string;
+    /** Level specific overrides for PMC level */
+    locationSpecificPmcLevelOverride?: MinMax;
+    /** Delta of highest level of bot e.g. 50 means 50 levels above player */
+    botRelativeLevelDeltaMax: number;
+    /** Delta of lowest level of bot e.g. 50 means 50 levels below player */
+    botRelativeLevelDeltaMin: number;
     /** How many to create and store */
-    botCountToGenerate: number
+    botCountToGenerate: number;
     /** Desired difficulty of the bot */
-    botDifficulty: string
+    botDifficulty: string;
     /** Will the generated bot be a player scav */
-    isPlayerScav: boolean
+    isPlayerScav: boolean;
+    eventRole?: string;
+    allPmcsHaveSameNameAsPlayer?: boolean;
 }

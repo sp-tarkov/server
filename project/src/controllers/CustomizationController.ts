@@ -1,145 +1,237 @@
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { ISuit } from "@spt/models/eft/common/tables/ITrader";
+import {
+    IBuyClothingRequestData,
+    IPaymentItemForClothing,
+} from "@spt/models/eft/customization/IBuyClothingRequestData";
+import { IWearClothingRequestData } from "@spt/models/eft/customization/IWearClothingRequestData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectable } from "tsyringe";
 
-import { ProfileHelper } from "../helpers/ProfileHelper";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { ISuit } from "../models/eft/common/tables/ITrader";
-import { IBuyClothingRequestData } from "../models/eft/customization/IBuyClothingRequestData";
-import { IWearClothingRequestData } from "../models/eft/customization/IWearClothingRequestData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocalisationService } from "../services/LocalisationService";
-
 @injectable()
-export class CustomizationController
-{
+export class CustomizationController {
+    protected readonly clothingIds = {
+        lowerParentId: "5cd944d01388ce000a659df9",
+        upperParentId: "5cd944ca1388ce03a44dc2a4",
+    };
+
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ProfileHelper") protected profileHelper: ProfileHelper
-    )
-    {}
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+    ) {}
 
-    public getTraderSuits(traderID: string, sessionID: string): ISuit[]
-    {
-        const pmcData: IPmcData = this.profileHelper.getPmcProfile(sessionID);
-        const templates = this.databaseServer.getTables().templates.customization;
-        const suits = this.databaseServer.getTables().traders[traderID].suits;
-        const result: ISuit[] = [];
+    /**
+     * Get purchasable clothing items from trader that match players side (usec/bear)
+     * @param traderID trader to look up clothing for
+     * @param sessionID Session id
+     * @returns ISuit array
+     */
+    public getTraderSuits(traderID: string, sessionID: string): ISuit[] {
+        const pmcData = this.profileHelper.getPmcProfile(sessionID);
+        const clothing = this.databaseService.getCustomization();
+        const suits = this.databaseService.getTrader(traderID).suits;
 
-        // get only suites from the player's side (e.g. USEC)
-        for (const suit of suits)
-        {
-            if (suit.suiteId in templates)
-            {
-                for (let i = 0; i < templates[suit.suiteId]._props.Side.length; i++)
-                {
-                    if (templates[suit.suiteId]._props.Side[i] === pmcData.Info.Side)
-                    {
-                        result.push(suit);
-                    }
-                }
-            }
-        }
+        // Get an inner join of clothing from templates.customization and Ragman's suits array
+        const matchingSuits = suits?.filter((suit) => suit.suiteId in clothing);
 
-        return result;
+        // Return all suits that have a side array containing the players side (usec/bear)
+        const matchedSuits = matchingSuits?.filter((matchingSuit) =>
+            clothing[matchingSuit.suiteId]._props.Side.includes(pmcData.Info.Side),
+        );
+        if (matchingSuits === undefined)
+            throw new Error(this.localisationService.getText("customisation-unable_to_get_trader_suits", traderID));
+
+        return matchedSuits;
     }
 
-    public wearClothing(pmcData: IPmcData, body: IWearClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
-        for (let i = 0; i < body.suites.length; i++)
-        {
-            const suite = this.databaseServer.getTables().templates.customization[body.suites[i]];
+    /**
+     * Handle CustomizationWear event
+     * Equip one to many clothing items to player
+     */
+    public wearClothing(
+        pmcData: IPmcData,
+        wearClothingRequest: IWearClothingRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse {
+        for (const suitId of wearClothingRequest.suites) {
+            // Find desired clothing item in db
+            const dbSuit = this.databaseService.getCustomization()[suitId];
 
-            // this parent refers to Lower Node
-            if (suite._parent === "5cd944d01388ce000a659df9")
-            {
-                pmcData.Customization.Feet = suite._props.Feet;
+            // Legs
+            if (dbSuit._parent === this.clothingIds.lowerParentId) {
+                pmcData.Customization.Feet = dbSuit._props.Feet;
             }
 
-            // this parent reffers to Upper Node
-            if (suite._parent === "5cd944ca1388ce03a44dc2a4")
-            {
-                pmcData.Customization.Body = suite._props.Body;
-                pmcData.Customization.Hands = suite._props.Hands;
+            // Torso
+            if (dbSuit._parent === this.clothingIds.upperParentId) {
+                pmcData.Customization.Body = dbSuit._props.Body;
+                pmcData.Customization.Hands = dbSuit._props.Hands;
             }
         }
 
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
-    public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
-        const db = this.databaseServer.getTables();
-        const output = this.eventOutputHolder.getOutput(sessionID);
+    /**
+     * Handle CustomizationBuy event
+     * Purchase/unlock a clothing item from a trader
+     * @param pmcData Player profile
+     * @param buyClothingRequest Request object
+     * @param sessionId Session id
+     * @returns IItemEventRouterResponse
+     */
+    public buyClothing(
+        pmcData: IPmcData,
+        buyClothingRequest: IBuyClothingRequestData,
+        sessionId: string,
+    ): IItemEventRouterResponse {
+        const output = this.eventOutputHolder.getOutput(sessionId);
 
-        // find suit offer
-        const offers = this.getAllTraderSuits(sessionID);
-        const traderOffer = offers.find(x => x._id === body.offer);
-        const suitId = traderOffer.suiteId;
-
-        // check if outfit already exists
-        if (this.saveServer.getProfile(sessionID).suits.includes(suitId))
-        {
-            const suitDetails = db.templates.customization[suitId];
-            this.logger.error(this.localisationService.getText("customisation-item_already_purchased", {itemId: suitDetails._id, itemName: suitDetails._name}));
+        const traderOffer = this.getTraderClothingOffer(sessionId, buyClothingRequest.offer);
+        if (!traderOffer) {
+            this.logger.error(
+                this.localisationService.getText("customisation-unable_to_find_suit_by_id", buyClothingRequest.offer),
+            );
 
             return output;
         }
 
-        // pay items
-        for (const sellItem of body.items)
-        {
-            for (const itemID in pmcData.Inventory.items)
-            {
-                const item = pmcData.Inventory.items[itemID];
+        const suitId = traderOffer.suiteId;
+        if (this.outfitAlreadyPurchased(suitId, sessionId)) {
+            const suitDetails = this.databaseService.getCustomization()[suitId];
+            this.logger.error(
+                this.localisationService.getText("customisation-item_already_purchased", {
+                    itemId: suitDetails._id,
+                    itemName: suitDetails._name,
+                }),
+            );
 
-                if (item._id !== sellItem.id)
-                {
-                    continue;
-                }
-
-                if (sellItem.del === true)
-                {
-                    output.profileChanges[sessionID].items.del.push(item);
-                    pmcData.Inventory.items.splice(Number(itemID), 1);
-                }
-
-                if (item.upd.StackObjectsCount > sellItem.count)
-                {
-                    pmcData.Inventory.items[itemID].upd.StackObjectsCount -= sellItem.count;
-                    output.profileChanges[sessionID].items.change.push({
-                        _id: item._id,
-                        _tpl: item._tpl,
-                        parentId: item.parentId,
-                        slotId: item.slotId,
-                        location: item.location,
-                        upd: { StackObjectsCount: item.upd.StackObjectsCount }
-                    });
-                }
-            }
+            return output;
         }
 
-        // add clothing to profile
-        this.saveServer.getProfile(sessionID).suits.push(suitId);
+        // Pay for items
+        this.payForClothingItems(sessionId, pmcData, buyClothingRequest.items, output);
+
+        // Add clothing to profile
+        this.saveServer.getProfile(sessionId).suits.push(suitId);
 
         return output;
     }
 
-    protected getAllTraderSuits(sessionID: string): ISuit[]
-    {
-        const traders = this.databaseServer.getTables().traders;
+    protected getTraderClothingOffer(sessionId: string, offerId: string): ISuit {
+        const foundSuit = this.getAllTraderSuits(sessionId).find((x) => x._id === offerId);
+        if (foundSuit === undefined) {
+            throw new Error(this.localisationService.getText("customisation-unable_to_find_suit_with_id", offerId));
+        }
+
+        return foundSuit;
+    }
+
+    /**
+     * Has an outfit been purchased by a player
+     * @param suitId clothing id
+     * @param sessionID Session id of profile to check for clothing in
+     * @returns true if already purchased
+     */
+    protected outfitAlreadyPurchased(suitId: string, sessionID: string): boolean {
+        return this.saveServer.getProfile(sessionID).suits.includes(suitId);
+    }
+
+    /**
+     * Update output object and player profile with purchase details
+     * @param sessionId Session id
+     * @param pmcData Player profile
+     * @param itemsToPayForClothingWith Clothing purchased
+     * @param output Client response
+     */
+    protected payForClothingItems(
+        sessionId: string,
+        pmcData: IPmcData,
+        itemsToPayForClothingWith: IPaymentItemForClothing[],
+        output: IItemEventRouterResponse,
+    ): void {
+        for (const inventoryItemToProcess of itemsToPayForClothingWith) {
+            this.payForClothingItem(sessionId, pmcData, inventoryItemToProcess, output);
+        }
+    }
+
+    /**
+     * Update output object and player profile with purchase details for single piece of clothing
+     * @param sessionId Session id
+     * @param pmcData Player profile
+     * @param paymentItemDetails Payment details
+     * @param output Client response
+     */
+    protected payForClothingItem(
+        sessionId: string,
+        pmcData: IPmcData,
+        paymentItemDetails: IPaymentItemForClothing,
+        output: IItemEventRouterResponse,
+    ): void {
+        const inventoryItem = pmcData.Inventory.items.find((x) => x._id === paymentItemDetails.id);
+        if (!inventoryItem) {
+            this.logger.error(
+                this.localisationService.getText(
+                    "customisation-unable_to_find_clothing_item_in_inventory",
+                    paymentItemDetails.id,
+                ),
+            );
+
+            return;
+        }
+
+        if (paymentItemDetails.del) {
+            output.profileChanges[sessionId].items.del.push(inventoryItem);
+            pmcData.Inventory.items.splice(pmcData.Inventory.items.indexOf(inventoryItem), 1);
+        }
+
+        // No upd, add a default
+        inventoryItem.upd ||= {
+            StackObjectsCount: 1,
+        };
+
+        // Nullguard
+        if (typeof inventoryItem.upd.StackObjectsCount === "undefined") {
+            inventoryItem.upd.StackObjectsCount = 1;
+        }
+
+        // Needed count to buy is same as current stack
+        if (inventoryItem.upd.StackObjectsCount === paymentItemDetails.count) {
+            output.profileChanges[sessionId].items.del.push(inventoryItem);
+            pmcData.Inventory.items.splice(pmcData.Inventory.items.indexOf(inventoryItem), 1);
+
+            return;
+        }
+
+        if (inventoryItem.upd.StackObjectsCount > paymentItemDetails.count) {
+            inventoryItem.upd.StackObjectsCount -= paymentItemDetails.count;
+            output.profileChanges[sessionId].items.change.push({
+                _id: inventoryItem._id,
+                _tpl: inventoryItem._tpl,
+                parentId: inventoryItem.parentId,
+                slotId: inventoryItem.slotId,
+                location: inventoryItem.location,
+                upd: { StackObjectsCount: inventoryItem.upd.StackObjectsCount },
+            });
+        }
+    }
+
+    protected getAllTraderSuits(sessionID: string): ISuit[] {
+        const traders = this.databaseService.getTraders();
         let result: ISuit[] = [];
 
-        for (const traderID in traders)
-        {
-            if (traders[traderID].base.customization_seller === true)
-            {
+        for (const traderID in traders) {
+            if (traders[traderID].base.customization_seller === true) {
                 result = [...result, ...this.getTraderSuits(traderID, sessionID)];
             }
         }

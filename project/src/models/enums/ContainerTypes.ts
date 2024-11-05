@@ -1,5 +1,4 @@
-export enum CommonContainers 
-    {
+export enum CommonContainers {
     AMMO_CASE = "5aafbde786f774389d0cbc0f",
     DOCUMENTS_CASE = "590c60fc86f77412b13fddcf",
     DOGTAG_CASE = "5c093e3486f77430cb02e593",
@@ -19,14 +18,13 @@ export enum CommonContainers
     THICC_ITEM_CASE = "5c0a840b86f7742ffa4f2482",
     THICC_WEAPON_CASE = "5b6d9ce188a4501afc1b2b25",
     WEAPON_CASE = "59fb023c86f7746d0d4b423c",
-    WZ_WALLET = "60b0f6c058e0b0481a09ad11"
+    WZ_WALLET = "60b0f6c058e0b0481a09ad11",
 }
 
-export enum SecuredContainers
-    {
+export enum SecuredContainers {
     ALPHA = "544a11ac4bdc2d470e8b456a",
     BETA = "5857a8b324597729ab0a0e7d",
     EPSILON = "59db794186f77448bc595262",
     GAMMA = "5857a8bc2459772bad15db29",
-    KAPPA = "5c093ca986f7740a1867ab12"
+    KAPPA = "5c093ca986f7740a1867ab12",
 }

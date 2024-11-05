@@ -1,5 +1,4 @@
-export interface IGetMailDialogListRequestData 
-{
-    limit: number
-    offset: number
+export interface IGetMailDialogListRequestData {
+    limit: number;
+    offset: number;
 }

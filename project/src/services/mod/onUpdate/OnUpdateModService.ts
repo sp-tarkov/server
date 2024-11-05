@@ -1,19 +1,16 @@
+import { OnUpdateMod } from "@spt/services/mod/onUpdate/OnUpdateMod";
 import { DependencyContainer, injectable } from "tsyringe";
-import { OnUpdateMod } from "./OnUpdateMod";
 
 @injectable()
-export class OnUpdateModService 
-{
-    constructor(protected container: DependencyContainer) 
-    {}
-    
+export class OnUpdateModService {
+    constructor(protected container: DependencyContainer) {}
+
     public registerOnUpdate(
         name: string,
         onUpdate: (timeSinceLastRun: number) => boolean,
-        getRoute: () => string
-    ): void 
-    {
-        this.container.register(name, {useValue: new OnUpdateMod(onUpdate, getRoute)});
+        getRoute: () => string,
+    ): void {
+        this.container.register(name, { useValue: new OnUpdateMod(onUpdate, getRoute) });
         this.container.registerType("OnUpdate", name);
     }
 }

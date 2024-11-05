@@ -1,61 +1,37 @@
+import { MinMax } from "@spt/models/common/MinMax";
+import { IBotType, IDifficultyCategories } from "@spt/models/eft/common/tables/IBotType";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { EquipmentFilters, IBotConfig, IRandomisationDetails } from "@spt/models/spt/config/IBotConfig";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
+import { max } from "date-fns";
 import { inject, injectable } from "tsyringe";
 
-import { MinMax } from "../models/common/MinMax";
-import { Difficulty, IBotType } from "../models/eft/common/tables/IBotType";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import {
-    EquipmentFilters, IBotConfig, RandomisationDetails
-} from "../models/spt/config/IBotConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "../services/LocalisationService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-
 @injectable()
-export class BotHelper
-{
+export class BotHelper {
     protected botConfig: IBotConfig;
+    protected pmcConfig: IPmcConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+        @inject("ConfigServer") protected configServer: ConfigServer,
+    ) {
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
+        this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
-
-
 
     /**
      * Get a template object for the specified botRole from bots.types db
      * @param role botRole to get template for
      * @returns IBotType object
      */
-    public getBotTemplate(role: string): IBotType
-    {
-        return this.databaseServer.getTables().bots.types[role.toLowerCase()];
-    }
-
-    /**
-     * Randomize the chance the PMC will attack their own side
-     * Look up value in bot.json/chanceSameSideIsHostilePercent
-     * @param difficultySettings pmc difficulty settings
-     */
-    public randomizePmcHostility(difficultySettings: Difficulty): void
-    {
-        if (this.randomUtil.getChance100(this.botConfig.pmc.chanceSameSideIsHostilePercent))
-        {
-            difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_BEAR"] = false;
-            difficultySettings.Mind["CAN_RECEIVE_PLAYER_REQUESTS_USEC"] = false;
-            difficultySettings.Mind["DEFAULT_USEC_BEHAVIOUR"] = "Attack";
-            difficultySettings.Mind["DEFAULT_BEAR_BEHAVIOUR"] = "Attack";
-        }
+    public getBotTemplate(role: string): IBotType {
+        return this.databaseService.getBots().types[role.toLowerCase()];
     }
 
     /**
@@ -63,19 +39,16 @@ export class BotHelper
      * @param botRole bot role to check
      * @returns true if is pmc
      */
-    public isBotPmc(botRole: string): boolean
-    {
-        return (["usec", "bear", "pmc", "sptbear", "sptusec"].includes(botRole.toLowerCase()));
+    public isBotPmc(botRole: string): boolean {
+        return ["usec", "bear", "pmc", "pmcbear", "pmcusec"].includes(botRole?.toLowerCase());
     }
 
-    public isBotBoss(botRole: string): boolean
-    {
-        return this.botConfig.bosses.some(x => x.toLowerCase() === botRole.toLowerCase());
+    public isBotBoss(botRole: string): boolean {
+        return this.botConfig.bosses.some((x) => x.toLowerCase() === botRole?.toLowerCase());
     }
 
-    public isBotFollower(botRole: string): boolean
-    {
-        return botRole.toLowerCase().startsWith("follower");
+    public isBotFollower(botRole: string): boolean {
+        return botRole?.toLowerCase().startsWith("follower");
     }
 
     /**
@@ -83,13 +56,11 @@ export class BotHelper
      * @param difficultySettings bot settings to alter
      * @param typeToAdd bot type to add to friendly list
      */
-    public addBotToFriendlyList(difficultySettings: Difficulty, typeToAdd: string): void
-    {
+    public addBotToFriendlyList(difficultySettings: IDifficultyCategories, typeToAdd: string): void {
         const friendlyBotTypesKey = "FRIENDLY_BOT_TYPES";
 
         // Null guard
-        if (!difficultySettings.Mind[friendlyBotTypesKey])
-        {
+        if (!difficultySettings.Mind[friendlyBotTypesKey]) {
             difficultySettings.Mind[friendlyBotTypesKey] = [];
         }
 
@@ -97,102 +68,53 @@ export class BotHelper
     }
 
     /**
-     * Add a bot to the ENEMY_BOT_TYPES array, do not add itself if its on the enemy list
-     * @param difficultySettings bot settings to alter
-     * @param typesToAdd bot type to add to enemy list
-     */
-    public addBotToEnemyList(difficultySettings: Difficulty, typesToAdd: string[], typeBeingEdited: string): void
-    {
-        const enemyBotTypesKey = "ENEMY_BOT_TYPES";
-
-        // Null guard
-        if (!difficultySettings.Mind[enemyBotTypesKey])
-        {
-            difficultySettings.Mind[enemyBotTypesKey] = [];
-        }
-
-        const enemyArray = <string[]>difficultySettings.Mind[enemyBotTypesKey];
-        for (const botTypeToAdd of typesToAdd)
-        {
-            if (botTypeToAdd.toLowerCase() === typeBeingEdited.toLowerCase())
-            {
-                this.logger.debug(`unable to add enemy ${botTypeToAdd} to its own enemy list, skipping`);
-                continue;
-            }
-
-            if (!enemyArray.includes(botTypeToAdd))
-            {
-                enemyArray.push(botTypeToAdd);
-            }
-        }
-    }
-
-    /**
      * Add a bot to the REVENGE_BOT_TYPES array
      * @param difficultySettings bot settings to alter
      * @param typesToAdd bot type to add to revenge list
      */
-    public addBotToRevengeList(difficultySettings: Difficulty, typesToAdd: string[]): void
-    {
+    public addBotToRevengeList(difficultySettings: IDifficultyCategories, typesToAdd: string[]): void {
         const revengePropKey = "REVENGE_BOT_TYPES";
 
         // Nothing to add
-        if (!typesToAdd)
-        {
+        if (!typesToAdd) {
             return;
         }
 
         // Null guard
-        if (!difficultySettings.Mind[revengePropKey])
-        {
+        if (!difficultySettings.Mind[revengePropKey]) {
             difficultySettings.Mind[revengePropKey] = [];
         }
 
         const revengeArray = <string[]>difficultySettings.Mind[revengePropKey];
-        for (const botTypeToAdd of typesToAdd)
-        {
-            if (!revengeArray.includes(botTypeToAdd))
-            {
+        for (const botTypeToAdd of typesToAdd) {
+            if (!revengeArray.includes(botTypeToAdd)) {
                 revengeArray.push(botTypeToAdd);
             }
         }
     }
 
+    public rollChanceToBePmc(botConvertMinMax: MinMax): boolean {
+        return this.randomUtil.getChance100(this.randomUtil.getInt(botConvertMinMax.min, botConvertMinMax.max));
+    }
+
+    protected getPmcConversionValuesForLocation(location: string) {
+        const result = this.pmcConfig.convertIntoPmcChance[location.toLowerCase()];
+        if (!result) {
+            this.pmcConfig.convertIntoPmcChance.default;
+        }
+
+        return result;
+    }
+
     /**
-     * Choose if a bot should become a PMC by checking if bot type is allowed to become a Pmc in botConfig.convertFromChances and doing a random int check
-     * @param botRole the bot role to check if should be a pmc
-     * @returns true if should be a pmc
+     * is the provided role a PMC, case-agnostic
+     * @param botRole Role to check
+     * @returns True if role is PMC
      */
-    public shouldBotBePmc(botRole: string): boolean
-    {
-        const botRoleLowered = botRole.toLowerCase();
-
-        // Handle when map waves have these types in the bot type
-        if (this.botRoleIsPmc(botRoleLowered))
-        {
-            return true;
-        }
-
-        const botConvertMinMax = this.botConfig.pmc.convertIntoPmcChance[botRoleLowered];
-
-        // no bot type defined in config, default to false
-        if (!botConvertMinMax)
-        {
-            return false;
-        }
-
-        return this.rollChanceToBePmc(botRoleLowered, botConvertMinMax);
-    }
-
-    public rollChanceToBePmc(role: string, botConvertMinMax: MinMax): boolean
-    {
-        return role.toLowerCase() in this.botConfig.pmc.convertIntoPmcChance
-            && this.randomUtil.getChance100(this.randomUtil.getInt(botConvertMinMax.min, botConvertMinMax.max));
-    }
-
-    public botRoleIsPmc(botRole: string): boolean
-    {
-        return [this.botConfig.pmc.usecType.toLowerCase(), this.botConfig.pmc.bearType.toLowerCase()].includes(botRole.toLowerCase());
+    public botRoleIsPmc(botRole: string): boolean {
+        return [this.pmcConfig.usecType.toLowerCase(), this.pmcConfig.bearType.toLowerCase()].includes(
+            botRole.toLowerCase(),
+        );
     }
 
     /**
@@ -201,40 +123,38 @@ export class BotHelper
      * @param botEquipConfig bot equipment json
      * @returns RandomisationDetails
      */
-    public getBotRandomizationDetails(botLevel: number, botEquipConfig: EquipmentFilters): RandomisationDetails
-    {
+    public getBotRandomizationDetails(
+        botLevel: number,
+        botEquipConfig: EquipmentFilters,
+    ): IRandomisationDetails | undefined {
         // No randomisation details found, skip
-        if (!botEquipConfig || Object.keys(botEquipConfig).length === 0 || !botEquipConfig.randomisation)
-        {
-            return null;
+        if (!botEquipConfig || Object.keys(botEquipConfig).length === 0 || !botEquipConfig.randomisation) {
+            return undefined;
         }
-        
-        return botEquipConfig.randomisation.find(x => botLevel >= x.levelRange.min && botLevel <= x.levelRange.max);        
+
+        return botEquipConfig.randomisation.find(
+            (randDetails) => botLevel >= randDetails.levelRange.min && botLevel <= randDetails.levelRange.max,
+        );
     }
 
     /**
-     * Choose between sptBear and sptUsec at random based on the % defined in botConfig.pmc.isUsec
+     * Choose between pmcBEAR and pmcUSEC at random based on the % defined in pmcConfig.isUsec
      * @returns pmc role
      */
-    public getRandomizedPmcRole(): string
-    {
-        return (this.randomUtil.getChance100(this.botConfig.pmc.isUsec))
-            ? this.botConfig.pmc.usecType
-            : this.botConfig.pmc.bearType;
+    public getRandomizedPmcRole(): string {
+        return this.randomUtil.getChance100(this.pmcConfig.isUsec) ? this.pmcConfig.usecType : this.pmcConfig.bearType;
     }
 
     /**
-     * Get the corresponding side when sptBear or sptUsec is passed in
+     * Get the corresponding side when pmcBEAR or pmcUSEC is passed in
      * @param botRole role to get side for
      * @returns side (usec/bear)
      */
-    public getPmcSideByRole(botRole: string): string
-    {
-        switch (botRole.toLowerCase())
-        {
-            case this.botConfig.pmc.bearType.toLowerCase():
+    public getPmcSideByRole(botRole: string): string {
+        switch (botRole.toLowerCase()) {
+            case this.pmcConfig.bearType.toLowerCase():
                 return "Bear";
-            case this.botConfig.pmc.usecType.toLowerCase():
+            case this.pmcConfig.usecType.toLowerCase():
                 return "Usec";
             default:
                 return this.getRandomizedPmcSide();
@@ -245,10 +165,28 @@ export class BotHelper
      * Get a randomized PMC side based on bot config value 'isUsec'
      * @returns pmc side as string
      */
-    protected getRandomizedPmcSide(): string
-    {
-        return (this.randomUtil.getChance100(this.botConfig.pmc.isUsec))
-            ? "Usec"
-            : "Bear";
+    protected getRandomizedPmcSide(): string {
+        return this.randomUtil.getChance100(this.pmcConfig.isUsec) ? "Usec" : "Bear";
+    }
+
+    /**
+     * Get a name from a PMC that fits the desired length
+     * @param maxLength Max length of name, inclusive
+     * @param side OPTIONAL - what side PMC to get name from (usec/bear)
+     * @returns name of PMC
+     */
+    public getPmcNicknameOfMaxLength(maxLength: number, side?: string): string {
+        const randomType = side ? side : this.randomUtil.getInt(0, 1) === 0 ? "usec" : "bear";
+        const allNames = this.databaseService.getBots().types[randomType.toLowerCase()].firstName;
+        const filteredNames = allNames.filter((name) => name.length <= maxLength);
+        if (filteredNames.length === 0) {
+            this.logger.warning(
+                `Unable to filter: ${randomType} PMC names to only those under: ${maxLength}, none found that match that criteria, selecting from entire name pool instead`,
+            );
+
+            return this.randomUtil.getStringArrayValue(allNames);
+        }
+
+        return this.randomUtil.getStringArrayValue(filteredNames);
     }
 }

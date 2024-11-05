@@ -1,49 +1,47 @@
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectable } from "tsyringe";
-
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { LocalisationService } from "./LocalisationService";
 
 /**
  * Cache the baseids for each item in the tiems db inside a dictionary
  */
 @injectable()
-export class ItemBaseClassService
-{
+export class ItemBaseClassService {
     protected itemBaseClassesCache: Record<string, string[]> = {};
+    protected items: Record<string, ITemplateItem>;
     protected cacheGenerated = false;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer
-    )
-    {}
+        @inject("DatabaseService") protected databaseService: DatabaseService,
+    ) {}
 
     /**
      * Create cache and store inside ItemBaseClassService
+     * Store a dict of an items tpl to the base classes it and its parents have
      */
-    public hydrateItemBaseClassCache(): void
-    {
-        const allDbItems = this.databaseServer.getTables().templates.items;
-        if (!allDbItems)
-        {
+    public hydrateItemBaseClassCache(): void {
+        // Clear existing cache
+        this.itemBaseClassesCache = {};
+
+        this.items = this.databaseService.getItems();
+        if (!this.items) {
             this.logger.warning(this.localisationService.getText("baseclass-missing_db_no_cache"));
 
             return;
         }
 
-        const filteredDbItems = Object.values(allDbItems).filter(x => x._type === "Item");
-        for (const item of filteredDbItems)
-        {
+        const filteredDbItems = Object.values(this.items).filter((x) => x._type === "Item");
+        for (const item of filteredDbItems) {
             const itemIdToUpdate = item._id;
-            if (!this.itemBaseClassesCache[item._id])
-            {
+            if (!this.itemBaseClassesCache[item._id]) {
                 this.itemBaseClassesCache[item._id] = [];
             }
 
-            this.addBaseItems(itemIdToUpdate, item, allDbItems);
+            this.addBaseItems(itemIdToUpdate, item);
         }
 
         this.cacheGenerated = true;
@@ -53,16 +51,13 @@ export class ItemBaseClassService
      * Helper method, recursivly iterate through items parent items, finding and adding ids to dictionary
      * @param itemIdToUpdate item tpl to store base ids against in dictionary
      * @param item item being checked
-     * @param allDbItems all items in db
      */
-    protected addBaseItems(itemIdToUpdate: string, item: ITemplateItem, allDbItems: Record<string, ITemplateItem>): void
-    {
+    protected addBaseItems(itemIdToUpdate: string, item: ITemplateItem): void {
         this.itemBaseClassesCache[itemIdToUpdate].push(item._parent);
-        const parent = allDbItems[item._parent];
+        const parent = this.items[item._parent];
 
-        if (parent._parent !== "")
-        {
-            this.addBaseItems(itemIdToUpdate, parent, allDbItems);
+        if (parent._parent !== "") {
+            this.addBaseItems(itemIdToUpdate, parent);
         }
     }
 
@@ -72,21 +67,45 @@ export class ItemBaseClassService
      * @param baseClass base class to check for
      * @returns true if item inherits from base class passed in
      */
-    public itemHasBaseClass(itemTpl: string, baseClasses: string[]): boolean
-    {
-        if (!this.cacheGenerated)
-        {
+    public itemHasBaseClass(itemTpl: string, baseClasses: string[]): boolean {
+        if (!this.cacheGenerated) {
             this.hydrateItemBaseClassCache();
         }
 
-        // No item in cache
-        if (!this.itemBaseClassesCache[itemTpl])
-        {
-            this.logger.warning(this.localisationService.getText("baseclass-item_not_found", itemTpl));
+        if (typeof itemTpl === "undefined") {
+            this.logger.warning("Unable to check itemTpl base class as its undefined");
+
             return false;
         }
 
-        return this.itemBaseClassesCache[itemTpl].some(x => baseClasses.includes(x));
+        // The cache is only generated for item templates with `_type === "Item"`, so return false for any other type,
+        // including item templates that simply don't exist.
+        if (!this.cachedItemIsOfItemType(itemTpl)) {
+            return false;
+        }
+
+        // No item in cache
+        if (!this.itemBaseClassesCache[itemTpl]) {
+            // Hydrate again
+            this.logger.debug(this.localisationService.getText("baseclass-item_not_found", itemTpl));
+            this.hydrateItemBaseClassCache();
+
+            // Check for item again, throw exception if not found
+            if (!this.itemBaseClassesCache[itemTpl]) {
+                throw new Error(this.localisationService.getText("baseclass-item_not_found_failed", itemTpl));
+            }
+        }
+
+        return this.itemBaseClassesCache[itemTpl].some((x) => baseClasses.includes(x));
+    }
+
+    /**
+     * Check if cached item template is of type Item
+     * @param itemTemplateId item to check
+     * @returns true if item is of type Item
+     */
+    private cachedItemIsOfItemType(itemTemplateId: string): boolean {
+        return this.items[itemTemplateId]?._type === "Item";
     }
 
     /**
@@ -94,15 +113,12 @@ export class ItemBaseClassService
      * @param itemTpl item to get base classes for
      * @returns array of base classes
      */
-    public getItemBaseClasses(itemTpl: string): string[]
-    {
-        if (!this.cacheGenerated)
-        {
+    public getItemBaseClasses(itemTpl: string): string[] {
+        if (!this.cacheGenerated) {
             this.hydrateItemBaseClassCache();
         }
 
-        if (!this.itemBaseClassesCache[itemTpl])
-        {
+        if (!this.itemBaseClassesCache[itemTpl]) {
             return [];
         }
 

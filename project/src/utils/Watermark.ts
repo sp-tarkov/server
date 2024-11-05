@@ -1,30 +1,26 @@
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectable } from "tsyringe";
 
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ICoreConfig } from "../models/spt/config/ICoreConfig";
-import { LogTextColor } from "../models/spt/logging/LogTextColor";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { LocalisationService } from "../services/LocalisationService";
-
 @injectable()
-export class WatermarkLocale
-{
-    constructor(
-        @inject("LocalisationService") protected localisationService: LocalisationService
-    )
-    {}
+export class WatermarkLocale {
+    protected description: string[];
+    protected warning: string[];
+    protected modding: string[];
 
-    protected watermark = {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        "description": [
+    constructor(@inject("LocalisationService") protected localisationService: LocalisationService) {
+        this.description = [
             this.localisationService.getText("watermark-discord_url"),
             "",
             this.localisationService.getText("watermark-free_of_charge"),
             this.localisationService.getText("watermark-paid_scammed"),
-            this.localisationService.getText("watermark-commercial_use_prohibited")
-        ],
-        "warning": [
+            this.localisationService.getText("watermark-commercial_use_prohibited"),
+        ];
+        this.warning = [
             "",
             this.localisationService.getText("watermark-testing_build"),
             this.localisationService.getText("watermark-no_support"),
@@ -32,76 +28,74 @@ export class WatermarkLocale
             `${this.localisationService.getText("watermark-report_issues_to")}:`,
             this.localisationService.getText("watermark-issue_tracker_url"),
             "",
-            this.localisationService.getText("watermark-use_at_own_risk")
-        ],
-        "modding": [
+            this.localisationService.getText("watermark-use_at_own_risk"),
+        ];
+        this.modding = [
             "",
             this.localisationService.getText("watermark-modding_disabled"),
             "",
             this.localisationService.getText("watermark-not_an_issue"),
-            this.localisationService.getText("watermark-do_not_report")
-        ]
-    };
-
-    public getDescription(): string[]
-    {
-        return this.watermark.description;
+            this.localisationService.getText("watermark-do_not_report"),
+        ];
     }
 
-    public getWarning(): string[]
-    {
-        return this.watermark.warning;
+    public getDescription(): string[] {
+        return this.description;
     }
 
-    public getModding(): string[]
-    {
-        return this.watermark.modding;
+    public getWarning(): string[] {
+        return this.warning;
+    }
+
+    public getModding(): string[] {
+        return this.modding;
     }
 }
 
 @injectable()
-export class Watermark
-{
-    protected akiConfig: ICoreConfig;
-
-    constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
-        @inject("ConfigServer") protected configServer: ConfigServer,
-        @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("WatermarkLocale") protected watermarkLocale?: WatermarkLocale
-    )
-    {
-        this.akiConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
-
-        this.initialize();
-        this.setTitle();
-        this.resetCursor();
-        this.draw();
-    }
-
+export class Watermark {
+    protected sptConfig: ICoreConfig;
     protected text: string[] = [];
     protected versionLabel = "";
 
-    public initialize(): void
-    {
+    constructor(
+        @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("LocalisationService") protected localisationService: LocalisationService,
+        @inject("WatermarkLocale") protected watermarkLocale: WatermarkLocale,
+    ) {
+        this.sptConfig = this.configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+    }
+
+    public initialize(): void {
         const description = this.watermarkLocale.getDescription();
         const warning = this.watermarkLocale.getWarning();
         const modding = this.watermarkLocale.getModding();
         const versionTag = this.getVersionTag();
 
-        this.versionLabel = `${this.akiConfig.projectName} ${versionTag}`;
+        this.versionLabel = `${this.sptConfig.projectName} ${versionTag}`;
 
         this.text = [this.versionLabel];
         this.text = [...this.text, ...description];
 
-        if (globalThis.G_DEBUG_CONFIGURATION)
-        {
+        if (globalThis.G_DEBUG_CONFIGURATION) {
             this.text = this.text.concat([...warning]);
         }
-        if (!globalThis.G_MODS_ENABLED)
-        {
+        if (!globalThis.G_MODS_ENABLED) {
             this.text = this.text.concat([...modding]);
         }
+
+        if (this.sptConfig.customWatermarkLocaleKeys) {
+            if (this.sptConfig.customWatermarkLocaleKeys.length > 0) {
+                for (const key of this.sptConfig.customWatermarkLocaleKeys) {
+                    this.text.push(...["", this.localisationService.getText(key)]);
+                }
+            }
+        }
+
+        this.setTitle();
+        this.resetCursor();
+        this.draw();
     }
 
     /**
@@ -109,15 +103,14 @@ export class Watermark
      * @param withEftVersion Include the eft version this spt version was made for
      * @returns string
      */
-    public getVersionTag(withEftVersion = false): string
-    {
-        const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
-            : this.akiConfig.akiVersion;
+    public getVersionTag(withEftVersion = false): string {
+        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
+        const versionTag = globalThis.G_DEBUG_CONFIGURATION
+            ? `${sptVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
+            : sptVersion;
 
-        if (withEftVersion)
-        {
-            const tarkovVersion = this.akiConfig.compatibleTarkovVersion.split(".").pop();
+        if (withEftVersion) {
+            const tarkovVersion = this.sptConfig.compatibleTarkovVersion.split(".").pop();
             return `${versionTag} (${tarkovVersion})`;
         }
 
@@ -125,79 +118,66 @@ export class Watermark
     }
 
     /**
+     * Handle singleplayer/settings/version
      * Get text shown in game on screen, can't be translated as it breaks bsgs client when certian characters are used
      * @returns string
      */
-    public getInGameVersionLabel(): string
-    {
-        const versionTag = (globalThis.G_DEBUG_CONFIGURATION)
-            ? `${this.akiConfig.akiVersion} - BLEEDINGEDGE`
-            : this.akiConfig.akiVersion;
+    public getInGameVersionLabel(): string {
+        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
+        const versionTag = globalThis.G_DEBUG_CONFIGURATION
+            ? `${sptVersion} - BLEEDINGEDGE ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`
+            : `${sptVersion} - ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`;
 
-        return `${this.akiConfig.projectName} ${versionTag}`;
+        return `${this.sptConfig.projectName} ${versionTag}`;
     }
 
     /** Set window title */
-    public setTitle(): void
-    {
+    protected setTitle(): void {
         process.title = this.versionLabel;
     }
 
     /** Reset console cursor to top */
-    public resetCursor(): void
-    {
+    protected resetCursor(): void {
         process.stdout.write("\u001B[2J\u001B[0;0f");
     }
 
     /** Draw the watermark */
-    public draw(): void
-    {
-        const result = [];
+    protected draw(): void {
+        const result: string[] = [];
 
-        // calculate size
-        const longestLength = this.text.reduce((a, b) =>
-        {
-            const a2 = String(a).replace(/[\u0391-\uFFE5]/g, "ab");
-            const b2 = String(b).replace(/[\u0391-\uFFE5]/g, "ab");
-            return a2.length > b2.length ? a2 : b2;
-        }).length;
+        // Calculate size, add 10% for spacing to the right
+        const longestLength =
+            this.text.reduce((a, b) => {
+                return a.length > b.length ? a : b;
+            }).length * 1.1;
 
-        // get top-bottom line
+        // Create line of - to add top/bottom of watermark
         let line = "";
-
-        for (let i = 0; i < longestLength; ++i)
-        {
+        for (let i = 0; i < longestLength; ++i) {
             line += "─";
         }
 
-        // get watermark to draw
+        // Opening line
         result.push(`┌─${line}─┐`);
 
-        for (const text of this.text)
-        {
-            const spacingSize = longestLength - this.textLength(text);
-            let spacingText = text;
+        // Add content of watermark to screen
+        for (const watermarkText of this.text) {
+            const spacingSize = longestLength - watermarkText.length;
+            let textWithRightPadding = watermarkText;
 
-            for (let i = 0; i < spacingSize; ++i)
-            {
-                spacingText += " ";
+            for (let i = 0; i < spacingSize; ++i) {
+                textWithRightPadding += " ";
             }
 
-            result.push(`│ ${spacingText} │`);
+            result.push(`│ ${textWithRightPadding} │`);
         }
 
+        // Closing line
         result.push(`└─${line}─┘`);
 
-        // draw the watermark
-        for (const text of result)
-        {
+        // Log watermark to screen
+        for (const text of result) {
             this.logger.logWithColor(text, LogTextColor.YELLOW);
         }
-    }
-
-    /** Caculate text length */
-    protected textLength(s: string): number
-    {
-        return String(s).replace(/[\u0391-\uFFE5]/g, "ab").length;
     }
 }

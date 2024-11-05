@@ -1,7 +1,6 @@
-import { InventoryMagGen } from "./InventoryMagGen";
+import { InventoryMagGen } from "@spt/generators/weapongen/InventoryMagGen";
 
-export interface IInventoryMagGen
-{
+export interface IInventoryMagGen {
     getPriority(): number;
     canHandleInventoryMagGen(inventoryMagGen: InventoryMagGen): boolean;
     process(inventoryMagGen: InventoryMagGen): void;

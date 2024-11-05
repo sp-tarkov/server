@@ -1,117 +1,149 @@
+import { IHandbookCategory } from "@spt/models/eft/common/tables/IHandbookBase";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IItemConfig } from "@spt/models/spt/config/IItemConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
-import { Money } from "../models/enums/Money";
-import { DatabaseServer } from "../servers/DatabaseServer";
+class LookupItem<T, I> {
+    readonly byId: Map<string, T>;
+    readonly byParent: Map<string, I[]>;
 
-class LookupItem
-{
-    byId: Record<number, string>;
-    byParent: Record<string, string[]>;
-
-    constructor()
-    {
-        this.byId = {};
-        this.byParent = {};
+    constructor() {
+        this.byId = new Map();
+        this.byParent = new Map();
     }
 }
 
-export class LookupCollection
-{
-    items: LookupItem;
-    categories: LookupItem;
+export class LookupCollection {
+    readonly items: LookupItem<number, string>;
+    readonly categories: LookupItem<string, string>;
 
-    constructor()
-    {
-        this.items = new LookupItem();
-        this.categories = new LookupItem();
+    constructor() {
+        this.items = new LookupItem<number, string>();
+        this.categories = new LookupItem<string, string>();
     }
 }
 
 @injectable()
-export class HandbookHelper
-{    
+export class HandbookHelper {
+    protected itemConfig: IItemConfig;
     protected lookupCacheGenerated = false;
     protected handbookPriceCache = new LookupCollection();
 
-    constructor(@inject("DatabaseServer") protected databaseServer: DatabaseServer)
-    {}
+    constructor(
+        @inject("DatabaseService") protected databaseService: DatabaseService,
+        @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("PrimaryCloner") protected cloner: ICloner,
+    ) {
+        this.itemConfig = this.configServer.getConfig(ConfigTypes.ITEM);
+    }
 
-    public hydrateLookup(): void
-    {
-        for (const handbookItem of this.databaseServer.getTables().templates.handbook.Items)
-        {
-            this.handbookPriceCache.items.byId[handbookItem.Id] = handbookItem.Price;
-            if (!this.handbookPriceCache.items.byParent[handbookItem.ParentId])
-            {
-                this.handbookPriceCache.items.byParent[handbookItem.ParentId] = [];
+    /**
+     * Create an in-memory cache of all items with associated handbook price in handbookPriceCache class
+     */
+    public hydrateLookup(): void {
+        const handbook = this.databaseService.getHandbook();
+        // Add handbook overrides found in items.json config into db
+        for (const itemTpl in this.itemConfig.handbookPriceOverride) {
+            let itemToUpdate = handbook.Items.find((item) => item.Id === itemTpl);
+            if (!itemToUpdate) {
+                handbook.Items.push({
+                    Id: itemTpl,
+                    ParentId: this.databaseService.getItems()[itemTpl]._parent,
+                    Price: this.itemConfig.handbookPriceOverride[itemTpl],
+                });
+                itemToUpdate = handbook.Items.find((item) => item.Id === itemTpl);
             }
-            this.handbookPriceCache.items.byParent[handbookItem.ParentId].push(handbookItem.Id);
+
+            itemToUpdate.Price = this.itemConfig.handbookPriceOverride[itemTpl];
         }
 
-        for (const handbookCategory of this.databaseServer.getTables().templates.handbook.Categories)
-        {
-            this.handbookPriceCache.categories.byId[handbookCategory.Id] = handbookCategory.ParentId ? handbookCategory.ParentId : null;
+        const handbookDbClone = this.cloner.clone(handbook);
+        for (const handbookItem of handbookDbClone.Items) {
+            this.handbookPriceCache.items.byId.set(handbookItem.Id, handbookItem.Price);
+            if (!this.handbookPriceCache.items.byParent.has(handbookItem.ParentId)) {
+                this.handbookPriceCache.items.byParent.set(handbookItem.ParentId, []);
+            }
+            this.handbookPriceCache.items.byParent.get(handbookItem.ParentId).push(handbookItem.Id);
+        }
 
-            if (handbookCategory.ParentId)
-            {
-                if (!this.handbookPriceCache.categories.byParent[handbookCategory.ParentId])
-                {
-                    this.handbookPriceCache.categories.byParent[handbookCategory.ParentId] = [];
+        for (const handbookCategory of handbookDbClone.Categories) {
+            this.handbookPriceCache.categories.byId.set(handbookCategory.Id, handbookCategory.ParentId || undefined);
+            if (handbookCategory.ParentId) {
+                if (!this.handbookPriceCache.categories.byParent.has(handbookCategory.ParentId)) {
+                    this.handbookPriceCache.categories.byParent.set(handbookCategory.ParentId, []);
                 }
-                this.handbookPriceCache.categories.byParent[handbookCategory.ParentId].push(handbookCategory.Id);
+                this.handbookPriceCache.categories.byParent.get(handbookCategory.ParentId).push(handbookCategory.Id);
             }
         }
     }
 
     /**
      * Get price from internal cache, if cache empty look up price directly in handbook (expensive)
-     * If no values found, return 1
-     * @param tpl item tpl to look up price for
+     * If no values found, return 0
+     * @param tpl Item tpl to look up price for
      * @returns price in roubles
      */
-    public getTemplatePrice(tpl: string): number
-    {
-        if (!this.lookupCacheGenerated)
-        {
+    public getTemplatePrice(tpl: string): number {
+        if (!this.lookupCacheGenerated) {
             this.hydrateLookup();
             this.lookupCacheGenerated = true;
         }
 
-        if (tpl in this.handbookPriceCache.items.byId)
-        {
-            return this.handbookPriceCache.items.byId[tpl];
+        if (this.handbookPriceCache.items.byId.has(tpl)) {
+            return this.handbookPriceCache.items.byId.get(tpl);
         }
 
-        const handbookItem = this.databaseServer.getTables().templates.handbook.Items.find(x => x.Id === tpl);
+        const handbookItem = this.databaseService.getHandbook().Items.find((item) => item.Id === tpl);
+        if (!handbookItem) {
+            const newValue = 0;
+            this.handbookPriceCache.items.byId.set(tpl, newValue);
 
-        return handbookItem
-            ? handbookItem.Price
-            : 1;
+            return newValue;
+        }
+
+        this.handbookPriceCache.items.byId.set(tpl, handbookItem.Price);
+        return handbookItem.Price;
+    }
+
+    public getTemplatePriceForItems(items: IItem[]): number {
+        let total = 0;
+        for (const item of items) {
+            total += this.getTemplatePrice(item._tpl);
+        }
+
+        return total;
     }
 
     /**
-     * all items in template with the given parent category
-     * @param x 
+     * Get all items in template with the given parent category
+     * @param parentId
      * @returns string array
      */
-    public templatesWithParent(x: string): string[]
-    {
-        return (x in this.handbookPriceCache.items.byParent) ? this.handbookPriceCache.items.byParent[x] : [];
+    public templatesWithParent(parentId: string): string[] {
+        return this.handbookPriceCache.items.byParent.get(parentId) ?? [];
     }
 
     /**
      * Does category exist in handbook cache
-     * @param category 
+     * @param category
      * @returns true if exists in cache
      */
-    public isCategory(category: string): boolean
-    {
-        return (category in this.handbookPriceCache.categories.byId);
+    public isCategory(category: string): boolean {
+        return this.handbookPriceCache.categories.byId.has(category);
     }
 
-    public childrenCategories(x: string): string[]
-    {
-        return (x in this.handbookPriceCache.categories.byParent) ? this.handbookPriceCache.categories.byParent[x] : [];
+    /**
+     * Get all items associated with a categories parent
+     * @param categoryParent
+     * @returns string array
+     */
+    public childrenCategories(categoryParent: string): string[] {
+        return this.handbookPriceCache.categories.byParent.get(categoryParent) ?? [];
     }
 
     /**
@@ -120,10 +152,8 @@ export class HandbookHelper
      * @param currencyTypeFrom What current currency is
      * @returns Count in roubles
      */
-    public inRUB(nonRoubleCurrencyCount: number, currencyTypeFrom: string): number
-    {
-        if (currencyTypeFrom === Money.ROUBLES)
-        {
+    public inRUB(nonRoubleCurrencyCount: number, currencyTypeFrom: string): number {
+        if (currencyTypeFrom === Money.ROUBLES) {
             return nonRoubleCurrencyCount;
         }
 
@@ -136,15 +166,17 @@ export class HandbookHelper
      * @param currencyTypeTo Currency to convert roubles into
      * @returns currency count in desired type
      */
-    public fromRUB(roubleCurrencyCount: number, currencyTypeTo: string): number
-    {
-        if (currencyTypeTo === Money.ROUBLES)
-        {
+    public fromRUB(roubleCurrencyCount: number, currencyTypeTo: string): number {
+        if (currencyTypeTo === Money.ROUBLES) {
             return roubleCurrencyCount;
         }
 
         // Get price of currency from handbook
         const price = this.getTemplatePrice(currencyTypeTo);
-        return price ? Math.round(roubleCurrencyCount / price) : 0;
+        return price ? Math.max(1, Math.round(roubleCurrencyCount / price)) : 0;
+    }
+
+    public getCategoryById(handbookId: string): IHandbookCategory {
+        return this.databaseService.getHandbook().Categories.find((category) => category.Id === handbookId);
     }
 }

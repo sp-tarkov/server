@@ -1,54 +1,56 @@
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { IMessage, IMessageContentRagfair } from "@spt/models/eft/profile/ISptProfile";
+import { IWsChatMessageReceived } from "@spt/models/eft/ws/IWsChatMessageReceived";
+import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
+import { IWsRagfairOfferSold } from "@spt/models/eft/ws/IWsRagfairOfferSold";
+import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
 import { inject, injectable } from "tsyringe";
 
-import { INotification } from "../models/eft/notifier/INotifier";
-import { Message, MessageContentRagfair } from "../models/eft/profile/IAkiProfile";
-import { HttpServerHelper } from "./HttpServerHelper";
-
 @injectable()
-export class NotifierHelper
-{
+export class NotifierHelper {
     /**
      * The default notification sent when waiting times out.
      */
-    protected defaultNotification: INotification = {
-        type: "ping",
-        eventId: "ping"
-    };
+    protected defaultNotification: IWsNotificationEvent = { type: NotificationEventType.PING, eventId: "ping" };
 
-    constructor(
-        @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper
-    )
-    {}
+    constructor(@inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper) {}
 
-    public getDefaultNotification(): INotification
-    {
+    public getDefaultNotification(): IWsNotificationEvent {
         return this.defaultNotification;
     }
 
-    /** Creates a new notification that displays the "Your offer was sold!" prompt and removes sold offer from "My Offers" on clientside */
-    public createRagfairOfferSoldNotification(dialogueMessage: Message, ragfairData: MessageContentRagfair): INotification
-    {
+    /**
+     * Create a new notification that displays the "Your offer was sold!" prompt and removes sold offer from "My Offers" on clientside
+     * @param dialogueMessage Message from dialog that was sent
+     * @param ragfairData Ragfair data to attach to notification
+     * @returns
+     */
+    public createRagfairOfferSoldNotification(
+        dialogueMessage: IMessage,
+        ragfairData: IMessageContentRagfair,
+    ): IWsRagfairOfferSold {
         return {
-            "type": "RagfairOfferSold",
-            "eventId": dialogueMessage._id,
-            "dialogId": dialogueMessage.uid,
-            ...ragfairData
+            type: NotificationEventType.RAGFAIR_OFFER_SOLD,
+            eventId: dialogueMessage._id,
+            ...ragfairData,
         };
     }
 
-    /** Creates a new notification with the specified dialogueMessage object. */
-    public createNewMessageNotification(dialogueMessage: Message): INotification
-    {
+    /**
+     * Create a new notification with the specified dialogueMessage object
+     * @param dialogueMessage
+     * @returns
+     */
+    public createNewMessageNotification(dialogueMessage: IMessage): IWsChatMessageReceived {
         return {
-            type: "new_message",
+            type: NotificationEventType.CHAT_MESSAGE_RECEIVED,
             eventId: dialogueMessage._id,
             dialogId: dialogueMessage.uid,
-            message: dialogueMessage
+            message: dialogueMessage,
         };
     }
 
-    public getWebSocketServer(sessionID: string): string
-    {
+    public getWebSocketServer(sessionID: string): string {
         return `${this.httpServerHelper.getWebsocketUrl()}/notifierServer/getwebsocket/${sessionID}`;
     }
 }

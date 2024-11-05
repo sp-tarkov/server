@@ -1,19 +1,22 @@
-import { IPmcData } from "../../eft/common/IPmcData";
-import { IGetBodyResponseData } from "../../eft/httpResponse/IGetBodyResponseData";
-import { ISearchRequestData } from "../../eft/ragfair/ISearchRequestData";
-import { IEmptyRequestData } from "../../eft/common/IEmptyRequestData";
-import { IGetMarketPriceRequestData } from "../../eft/ragfair/IGetMarketPriceRequestData";
-import { IAddOfferRequestData } from "../../eft/ragfair/IAddOfferRequestData";
-import { IRemoveOfferRequestData } from "../../eft/ragfair/IRemoveOfferRequestData";
-import { IExtendOfferRequestData } from "../../eft/ragfair/IExtendOfferRequestData";
-import { IItemEventRouterResponse } from "../../eft/itemEvent/IItemEventRouterResponse";
-import { IGetItemPriceResult } from "../../eft/ragfair/IGetItemPriceResult";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAddOfferRequestData } from "@spt/models/eft/ragfair/IAddOfferRequestData";
+import { IExtendOfferRequestData } from "@spt/models/eft/ragfair/IExtendOfferRequestData";
+import { IGetItemPriceResult } from "@spt/models/eft/ragfair/IGetItemPriceResult";
+import { IGetMarketPriceRequestData } from "@spt/models/eft/ragfair/IGetMarketPriceRequestData";
+import { IRemoveOfferRequestData } from "@spt/models/eft/ragfair/IRemoveOfferRequestData";
+import { ISearchRequestData } from "@spt/models/eft/ragfair/ISearchRequestData";
 
-export interface IRagfairCallbacks 
-{
+export interface IRagfairCallbacks {
     load(): void;
     search(url: string, info: ISearchRequestData, sessionID: string): IGetBodyResponseData<any>;
-    getMarketPrice(url: string, info: IGetMarketPriceRequestData, sessionID: string): IGetBodyResponseData<IGetItemPriceResult>;
+    getMarketPrice(
+        url: string,
+        info: IGetMarketPriceRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetItemPriceResult>;
     getItemPrices(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<any>;
     addOffer(pmcData: IPmcData, info: IAddOfferRequestData, sessionID: string): IItemEventRouterResponse;
     removeOffer(pmcData: IPmcData, info: IRemoveOfferRequestData, sessionID: string): IItemEventRouterResponse;

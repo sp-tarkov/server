@@ -1,6 +1,5 @@
-export interface IHideoutTakeProductionRequestData 
-{
-    Action: "HideoutTakeProduction"
-    recipeId: string
-    timestamp: number
+export interface IHideoutTakeProductionRequestData {
+    Action: "HideoutTakeProduction";
+    recipeId: string;
+    timestamp: number;
 }

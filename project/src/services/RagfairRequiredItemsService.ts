@@ -1,45 +1,36 @@
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { RagfairOfferService } from "@spt/services/RagfairOfferService";
 import { inject, injectable } from "tsyringe";
 
-import { PaymentHelper } from "../helpers/PaymentHelper";
-import { RagfairOfferService } from "../services/RagfairOfferService";
-import { ILogger } from "../models/spt/utils/ILogger";
-
 @injectable()
-export class RagfairRequiredItemsService
-{
+export class RagfairRequiredItemsService {
     protected requiredItemsCache = {};
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
-        @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService
-    )
-    { }
+        @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
+    ) {}
 
-    public getRequiredItemsById(searchId: string): any
-    {
-        return this.requiredItemsCache[searchId] || []
+    public getRequiredItemsById(searchId: string): IRagfairOffer[] {
+        return Array.from(this.requiredItemsCache[searchId] ?? {}) || [];
     }
 
-    public buildRequiredItemTable(): void
-    {
+    public buildRequiredItemTable(): void {
         const requiredItems = {};
-        const getRequiredItems = (id: string) =>
-        {
-            if (!(id in requiredItems))
-            {
+        const getRequiredItems = (id: string) => {
+            if (!(id in requiredItems)) {
                 requiredItems[id] = new Set();
             }
 
             return requiredItems[id];
         };
 
-        for (const offer of this.ragfairOfferService.getOffers())
-        {
-            for (const requirement of offer.requirements)
-            {
-                if (this.paymentHelper.isMoneyTpl(requirement._tpl))
-                {
+        for (const offer of this.ragfairOfferService.getOffers()) {
+            for (const requirement of offer.requirements) {
+                if (this.paymentHelper.isMoneyTpl(requirement._tpl)) {
                     // This would just be too noisy.
                     continue;
                 }
@@ -50,5 +41,4 @@ export class RagfairRequiredItemsService
 
         this.requiredItemsCache = requiredItems;
     }
-
 }

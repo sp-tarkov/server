@@ -1,225 +1,271 @@
-export class LinkedList<T>
-{
-    private head: LinkedListNode<T>;
-    private tail: LinkedListNode<T>;
+import { LinkedListNode } from "@spt/utils/collections/lists/Nodes";
 
-    public add(t: T): void 
-    {
-        if (!this.head) 
-        {
-            const node = new LinkedListNode(t);
-            this.head = node;
-            this.tail = node;
+export class LinkedList<T> {
+    private head?: LinkedListNode<T>;
+    private tail?: LinkedListNode<T>;
+    private _length: number;
+
+    public get length(): number {
+        return this._length;
+    }
+
+    private set length(value: number) {
+        this._length = value;
+    }
+
+    constructor() {
+        this.length = 0;
+        this.head = this.tail = undefined;
+    }
+
+    /**
+     * Adds an element to the start of the list.
+     */
+    public prepend(value: T): void {
+        const node = new LinkedListNode(value);
+        this.length++;
+
+        if (!this.head) {
+            this.head = this.tail = node;
+            return;
         }
-        else 
-        {
-            let ref = this.head;
-            let next = this.head.getNextNode();
-            while (next) 
-            {
-                ref = next;
-                next = ref.getNextNode();
+
+        node.next = this.head;
+        this.head.prev = node;
+        this.head = node;
+    }
+
+    /**
+     * Adds an element at the given index to the list.
+     */
+    public insertAt(value: T, idx: number): void {
+        if (idx < 0 || idx > this.length) {
+            return;
+        }
+
+        if (idx === 0) {
+            this.prepend(value);
+            return;
+        }
+
+        if (idx === this.length) {
+            this.append(value);
+            return;
+        }
+
+        let ref = this.head;
+        for (let i = 0; i <= idx; ++i) {
+            ref = ref?.next;
+        }
+
+        const node = new LinkedListNode(value);
+        this.length++;
+
+        node.next = ref;
+        node.prev = ref?.prev;
+        if (ref) {
+            ref.prev = node;
+        }
+
+        if (node.prev) {
+            node.prev.next = node;
+        }
+    }
+
+    /**
+     * Adds an element to the end of the list.
+     */
+    public append(value: T): void {
+        const node = new LinkedListNode(value);
+        this.length++;
+
+        if (!this.tail) {
+            this.head = this.tail = node;
+            return;
+        }
+
+        node.prev = this.tail;
+        this.tail.next = node;
+        this.tail = this.tail.next;
+    }
+
+    /**
+     * Returns the first element's value.
+     */
+    public getHead(): T | undefined {
+        return this.head?.value;
+    }
+
+    /**
+     * Finds the element from the list at the given index and returns it's value.
+     */
+    public get(idx: number): T | undefined {
+        if (idx < 0 || idx >= this.length) {
+            return;
+        }
+
+        if (idx === 0) {
+            return this.getHead();
+        }
+
+        if (idx === this.length - 1) {
+            return this.getTail();
+        }
+
+        for (const [index, value] of this.entries()) {
+            if (idx === index) {
+                return value;
             }
-            const node = new LinkedListNode(t, ref);
-            ref.setNextNode(node);
-            this.tail = node;
         }
     }
 
-    public addRange(list: T[]): void 
-    {
-        for (const item of list) 
-        {
-            this.add(item);
+    /**
+     * Returns the last element's value.
+     */
+    public getTail(): T | undefined {
+        return this.tail?.value;
+    }
+
+    /**
+     * Finds and removes the first element from a list that has a value equal to the given value, returns it's value if it successfully removed it.
+     */
+    public remove(value: T): T | undefined {
+        let ref = this.head;
+        for (let i = 0; ref && i < this.length; ++i) {
+            if (ref.value === value) {
+                break;
+            }
+            ref = ref.next;
         }
-    }
 
-    public getHead(): LinkedListNode<T> 
-    {
-        return this.head;
-    }
-
-    public getTail(): LinkedListNode<T> 
-    {
-        return this.tail;
-    }
-
-    public isEmpty(): boolean 
-    {
-        return this.head === undefined || this.head === null;
-    }
-
-    public getSize(): number 
-    {
-        let size = 0;
-        let next = this.head;
-        while (next) 
-        {
-            size++;
-            next = next.getNextNode();
+        if (!ref) {
+            return;
         }
-        return size;
+
+        this.length--;
+
+        if (this.length === 0) {
+            const out = this.head?.value;
+            this.head = this.tail = undefined;
+            return out;
+        }
+
+        if (ref.prev) {
+            ref.prev.next = ref.next;
+        }
+        if (ref.next) {
+            ref.next.prev = ref.prev;
+        }
+
+        if (ref === this.head) {
+            this.head = ref.next;
+        }
+
+        if (ref === this.tail) {
+            this.tail = ref.prev;
+        }
+
+        ref.prev = ref.next = undefined;
+
+        return ref.value;
     }
 
-    public removeFirst(): LinkedListNode<T> 
-    {
-        if (!this.head) return undefined;
+    /**
+     * Removes the first element from the list and returns it's value. If the list is empty, undefined is returned and the list is not modified.
+     */
+    public shift(): T | undefined {
+        if (!this.head) {
+            return;
+        }
 
-        const node = this.head;
-        if (this.head.getNextNode()) 
-        {
-            this.head = this.head.getNextNode();
-            this.head.setPreviousNode(undefined);
-        }
-        else 
-        {
-            this.head = undefined;
-        }
-        return node;
-    }
+        this.length--;
 
-    public removeLast(): LinkedListNode<T> 
-    {
-        if (!this.tail) return undefined;
-        
-        const node = this.tail;
-        if (this.tail.getPreviousNode()) 
-        {
-            this.tail = this.tail.getPreviousNode();
-            this.tail.setNextNode(undefined);
-        }
-        else 
-        {
+        const ref = this.head;
+        this.head = this.head.next;
+
+        ref.next = undefined;
+
+        if (this.length === 0) {
             this.tail = undefined;
         }
-        return node;
+
+        return ref.value;
     }
 
-    public indexOf(func: (t:T) => boolean): number
-    {
-        const node = this.head;
-        let index = 0;
-        while (node)
-        {
-            if (func(node.getValue()))
-            {
-                return index;
-            }
-            index++;
+    /**
+     * Removes the element from the list at the given index and returns it's value.
+     */
+    public removeAt(idx: number): T | undefined {
+        if (idx < 0 || idx >= this.length) {
+            return;
         }
-        return undefined;
+
+        if (idx === 0) {
+            return this.shift();
+        }
+
+        if (idx === this.length - 1) {
+            return this.pop();
+        }
+
+        let ref = this.head;
+        this.length--;
+
+        for (let i = 0; i < idx; ++i) {
+            ref = ref?.next;
+        }
+
+        if (ref?.prev) {
+            ref.prev.next = ref.next;
+        }
+        if (ref?.next) {
+            ref.next.prev = ref.prev;
+        }
+
+        return ref?.value;
     }
 
-    public contains(func: (t:T) => boolean): boolean
-    {
+    /**
+     * Removes the last element from the list and returns it's value. If the list is empty, undefined is returned and the list is not modified.
+     */
+    public pop(): T | undefined {
+        if (!this.tail) {
+            return;
+        }
+
+        this.length--;
+
+        const ref = this.tail;
+        this.tail = this.tail.prev;
+
+        ref.prev = undefined;
+
+        if (this.length === 0) {
+            this.head = undefined;
+        }
+
+        return ref.value;
+    }
+
+    /**
+     * Returns an iterable of index, value pairs for every entry in the list.
+     */
+    public *entries(): IterableIterator<[number, T | undefined]> {
         let node = this.head;
-        while (node)
-        {
-            if (func(node.getValue()))
-            {
-                return true;
-            }
-            node = node.getNextNode();
+        for (let i = 0; i < this.length; ++i) {
+            yield [i, node?.value];
+            node = node?.next;
         }
-        return false;
     }
 
-    public forEachNode(func: (t:LinkedListNode<T>) => void): void
-    {
+    /**
+     * Returns an iterable of values in the list.
+     */
+    public *values(): IterableIterator<T> {
         let node = this.head;
-        while (node)
-        {
-            func(node);
-            node = node.getNextNode();
+        while (node) {
+            yield node.value;
+            node = node.next;
         }
-    }
-
-    public forEachValue(func: (t:T) => void): void
-    {
-        let node = this.head;
-        while (node)
-        {
-            func(node.getValue());
-            node = node.getNextNode();
-        }
-    }
-
-    public findFirstNode(func: (t:LinkedListNode<T>) => boolean): LinkedListNode<T>
-    {
-        let node = this.head;
-        while (node)
-        {
-            if (func(node))
-            {
-                return node;
-            }
-            node = node.getNextNode();
-        }
-        return undefined;
-    }
-
-    public findFirstValue(func: (t:T) => boolean): T
-    {
-        let node = this.head;
-        while (node)
-        {
-            if (func(node.getValue()))
-            {
-                return node.getValue();
-            }
-            node = node.getNextNode();
-        }
-        return undefined;
-    }
-
-    public toList(): T[]
-    {
-        const elements: T[] = [];
-        let node = this.head;
-        while (node)
-        {
-            elements.push(node.getValue());
-            node = node.getNextNode();
-        }
-        return elements;
-    }
-}
-
-export class LinkedListNode<T>
-{
-    private previous: LinkedListNode<T>;
-    private value: T;
-    private next: LinkedListNode<T>;
-
-    constructor(value: T, previous: LinkedListNode<T> = undefined, next: LinkedListNode<T> = undefined) 
-    {
-        this.value = value;
-        this.previous = previous;
-        this.next = next;
-    }
-
-    public getValue(): T 
-    {
-        return this.value;
-    }
-
-    public getNextNode(): LinkedListNode<T> 
-    {
-        return this.next;
-    }
-
-    public setNextNode(node: LinkedListNode<T>): void 
-    {
-        this.next = node;
-    }
-
-    public getPreviousNode(): LinkedListNode<T> 
-    {
-        return this.previous;
-    }
-
-    public setPreviousNode(node: LinkedListNode<T>): void 
-    {
-        this.previous = node;
     }
 }

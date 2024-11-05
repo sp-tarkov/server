@@ -1,73 +1,189 @@
+import { BotHelper } from "@spt/helpers/BotHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PaymentHelper } from "@spt/helpers/PaymentHelper";
+import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { QuestHelper } from "@spt/helpers/QuestHelper";
+import { RagfairHelper } from "@spt/helpers/RagfairHelper";
+import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
+import { RagfairSortHelper } from "@spt/helpers/RagfairSortHelper";
+import { TraderHelper } from "@spt/helpers/TraderHelper";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
+import { ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ISptProfile, ISystemData } from "@spt/models/eft/profile/ISptProfile";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { ISearchRequestData, OfferOwnerType } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { MessageType } from "@spt/models/enums/MessageType";
+import { RagfairSort } from "@spt/models/enums/RagfairSort";
+import { Traders } from "@spt/models/enums/Traders";
+import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
+import { IRagfairConfig, ITieredFlea } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { LocaleService } from "@spt/services/LocaleService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { MailSendService } from "@spt/services/MailSendService";
+import { RagfairOfferService } from "@spt/services/RagfairOfferService";
+import { RagfairRequiredItemsService } from "@spt/services/RagfairRequiredItemsService";
+import { HashUtil } from "@spt/utils/HashUtil";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 import { inject, injectable } from "tsyringe";
 
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITraderAssort } from "../models/eft/common/tables/ITrader";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { ISystemData } from "../models/eft/profile/IAkiProfile";
-import { IRagfairOffer } from "../models/eft/ragfair/IRagfairOffer";
-import { ISearchRequestData, OfferOwnerType } from "../models/eft/ragfair/ISearchRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { MemberCategory } from "../models/enums/MemberCategory";
-import { MessageType } from "../models/enums/MessageType";
-import { RagfairSort } from "../models/enums/RagfairSort";
-import { Traders } from "../models/enums/Traders";
-import { IQuestConfig } from "../models/spt/config/IQuestConfig";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { EventOutputHolder } from "../routers/EventOutputHolder";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { SaveServer } from "../servers/SaveServer";
-import { LocaleService } from "../services/LocaleService";
-import { RagfairOfferService } from "../services/RagfairOfferService";
-import { HashUtil } from "../utils/HashUtil";
-import { TimeUtil } from "../utils/TimeUtil";
-import { DialogueHelper } from "./DialogueHelper";
-import { ItemHelper } from "./ItemHelper";
-import { PaymentHelper } from "./PaymentHelper";
-import { PresetHelper } from "./PresetHelper";
-import { ProfileHelper } from "./ProfileHelper";
-import { RagfairHelper } from "./RagfairHelper";
-import { RagfairServerHelper } from "./RagfairServerHelper";
-import { RagfairSortHelper } from "./RagfairSortHelper";
-import { TraderHelper } from "./TraderHelper";
-
 @injectable()
-export class RagfairOfferHelper
-{
-    protected static goodSoldTemplate = "5bdac0b686f7743e1665e09e";
+export class RagfairOfferHelper {
+    protected static goodSoldTemplate = "5bdabfb886f7743e152e867e 0"; // Your {soldItem} {itemCount} items were bought by {buyerNickname}.
     protected ragfairConfig: IRagfairConfig;
     protected questConfig: IQuestConfig;
+    protected botConfig: IBotConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("BotHelper") protected botHelper: BotHelper,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
         @inject("PresetHelper") protected presetHelper: PresetHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("RagfairServerHelper") protected ragfairServerHelper: RagfairServerHelper,
         @inject("RagfairSortHelper") protected ragfairSortHelper: RagfairSortHelper,
         @inject("RagfairHelper") protected ragfairHelper: RagfairHelper,
         @inject("RagfairOfferService") protected ragfairOfferService: RagfairOfferService,
+        @inject("RagfairRequiredItemsService") protected ragfairRequiredItemsService: RagfairRequiredItemsService,
         @inject("LocaleService") protected localeService: LocaleService,
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+        @inject("LocalisationService") protected localisationService: LocalisationService,
+        @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("ConfigServer") protected configServer: ConfigServer,
+    ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
         this.questConfig = this.configServer.getConfig(ConfigTypes.QUEST);
+        this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
     }
 
-    public getValidOffers(searchRequest: ISearchRequestData, itemsToAdd: string[], traderAssorts: Record<string, ITraderAssort>, pmcProfile: IPmcData): IRagfairOffer[]
-    {
-        return this.ragfairOfferService.getOffers().filter(x => this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, x, pmcProfile));
+    /**
+     * Passthrough to ragfairOfferService.getOffers(), get flea offers a player should see
+     * @param searchRequest Data from client
+     * @param itemsToAdd ragfairHelper.filterCategories()
+     * @param traderAssorts Trader assorts
+     * @param pmcData Player profile
+     * @returns Offers the player should see
+     */
+    public getValidOffers(
+        searchRequest: ISearchRequestData,
+        itemsToAdd: string[],
+        traderAssorts: Record<string, ITraderAssort>,
+        pmcData: IPmcData,
+    ): IRagfairOffer[] {
+        const playerIsFleaBanned = this.profileHelper.playerIsFleaBanned(pmcData);
+        const tieredFlea = this.ragfairConfig.tieredFlea;
+        const tieredFleaLimitTypes = Object.keys(tieredFlea.unlocksType);
+        return this.ragfairOfferService.getOffers().filter((offer) => {
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData)) {
+                return false;
+            }
+
+            const isDisplayable = this.isDisplayableOffer(
+                searchRequest,
+                itemsToAdd,
+                traderAssorts,
+                offer,
+                pmcData,
+                playerIsFleaBanned,
+            );
+
+            if (!isDisplayable) {
+                return false;
+            }
+
+            // Not trader offer + tiered flea enabled
+            if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+                this.checkAndLockOfferFromPlayerTieredFlea(tieredFlea, offer, tieredFleaLimitTypes, pmcData.Info.Level);
+            }
+
+            return true;
+        });
+    }
+
+    protected checkAndLockOfferFromPlayerTieredFlea(
+        tieredFlea: ITieredFlea,
+        offer: IRagfairOffer,
+        tieredFleaLimitTypes: string[],
+        playerLevel: number,
+    ): void {
+        const offerItemTpl = offer.items[0]._tpl;
+        if (tieredFlea.ammoTplUnlocks && this.itemHelper.isOfBaseclass(offerItemTpl, BaseClasses.AMMO)) {
+            const unlockLevel = tieredFlea.ammoTplUnlocks[offerItemTpl];
+            if (unlockLevel && playerLevel < unlockLevel) {
+                offer.locked = true;
+
+                return;
+            }
+        }
+
+        // Check for a direct level requirement for the offer item
+        const itemLevelRequirement = tieredFlea.unlocksTpl[offerItemTpl];
+        if (itemLevelRequirement) {
+            if (playerLevel < itemLevelRequirement) {
+                offer.locked = true;
+
+                return;
+            }
+        }
+
+        // Optimisation - Ensure the item has at least one of the limited base types
+        if (this.itemHelper.isOfBaseclasses(offerItemTpl, tieredFleaLimitTypes)) {
+            // Loop over all flea types to find the matching one
+            for (const tieredItemType of tieredFleaLimitTypes) {
+                if (this.itemHelper.isOfBaseclass(offerItemTpl, tieredItemType)) {
+                    if (playerLevel < tieredFlea.unlocksType[tieredItemType]) {
+                        offer.locked = true;
+
+                        return;
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Get matching offers that require the desired item and filter out offers from non traders if player is below ragfair unlock level
+     * @param searchRequest Search request from client
+     * @param pmcDataPlayer profile
+     * @returns Matching IRagfairOffer objects
+     */
+    public getOffersThatRequireItem(searchRequest: ISearchRequestData, pmcData: IPmcData): IRagfairOffer[] {
+        // Get all offers that requre the desired item and filter out offers from non traders if player below ragifar unlock
+        const requiredOffers = this.ragfairRequiredItemsService.getRequiredItemsById(searchRequest.neededSearchId);
+        const tieredFlea = this.ragfairConfig.tieredFlea;
+        const tieredFleaLimitTypes = Object.keys(tieredFlea.unlocksType);
+
+        return requiredOffers.filter((offer: IRagfairOffer) => {
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData)) {
+                return false;
+            }
+
+            if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+                this.checkAndLockOfferFromPlayerTieredFlea(tieredFlea, offer, tieredFleaLimitTypes, pmcData.Info.Level);
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -75,37 +191,61 @@ export class RagfairOfferHelper
      * @param searchRequest Search request data
      * @param itemsToAdd string array of item tpls to search for
      * @param traderAssorts All trader assorts player can access/buy
-     * @param pmcProfile Player profile
-     * @returns ITraderAssort
+     * @param pmcData Player profile
+     * @returns IRagfairOffer array
      */
-    public getOffersForBuild(searchRequest: ISearchRequestData, itemsToAdd: string[], traderAssorts: Record<string, ITraderAssort>, pmcProfile: IPmcData): IRagfairOffer[]
-    {
+    public getOffersForBuild(
+        searchRequest: ISearchRequestData,
+        itemsToAdd: string[],
+        traderAssorts: Record<string, ITraderAssort>,
+        pmcData: IPmcData,
+    ): IRagfairOffer[] {
         const offersMap = new Map<string, IRagfairOffer[]>();
         const offers: IRagfairOffer[] = [];
-        for (const offer of this.ragfairOfferService.getOffers())
-        {
-            if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcProfile))
-            {
+        const playerIsFleaBanned = this.profileHelper.playerIsFleaBanned(pmcData);
+        const tieredFlea = this.ragfairConfig.tieredFlea;
+        const tieredFleaLimitTypes = Object.keys(tieredFlea.unlocksType);
+
+        for (const offer of this.ragfairOfferService.getOffers()) {
+            // Dont show pack offers
+            if (offer.sellInOnePiece) {
+                continue;
+            }
+
+            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData)) {
+                continue;
+            }
+
+            if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcData, playerIsFleaBanned)) {
                 const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
 
-                if (isTraderOffer && this.traderBuyRestrictionReached(offer))
-                {
+                if (isTraderOffer && this.traderBuyRestrictionReached(offer)) {
                     continue;
                 }
 
-                if (isTraderOffer && this.traderOutOfStock(offer))
-                {
+                if (isTraderOffer && this.traderOutOfStock(offer)) {
                     continue;
                 }
 
-                if (isTraderOffer && this.traderOfferItemQuestLocked(offer, traderAssorts))
-                {
+                if (isTraderOffer && this.traderOfferItemQuestLocked(offer, traderAssorts)) {
                     continue;
+                }
+
+                if (isTraderOffer && this.traderOfferLockedBehindLoyaltyLevel(offer, pmcData)) {
+                    continue;
+                }
+
+                if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+                    this.checkAndLockOfferFromPlayerTieredFlea(
+                        tieredFlea,
+                        offer,
+                        tieredFleaLimitTypes,
+                        pmcData.Info.Level,
+                    );
                 }
 
                 const key = offer.items[0]._tpl;
-                if (!offersMap.has(key))
-                {
+                if (!offersMap.has(key)) {
                     offersMap.set(key, []);
                 }
 
@@ -114,21 +254,18 @@ export class RagfairOfferHelper
         }
 
         // get best offer for each item to show on screen
-        for (let possibleOffers of offersMap.values())
-        {
+        for (let possibleOffers of offersMap.values()) {
             // Remove offers with locked = true (quest locked) when > 1 possible offers
             // single trader item = shows greyed out
             // multiple offers for item = is greyed out
-            if (possibleOffers.length > 1)
-            {
-                const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcProfile);
-                
+            if (possibleOffers.length > 1) {
+                const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcData);
+
                 // Exclude locked offers + above loyalty locked offers if at least 1 was found
-                const availableOffers = possibleOffers.filter(x => !(x.locked || lockedOffers.includes(x._id)));
-                if (availableOffers.length > 0)
-                {
+                const availableOffers = possibleOffers.filter((x) => !(x.locked || lockedOffers.includes(x._id)));
+                if (availableOffers.length > 0) {
                     possibleOffers = availableOffers;
-                }                
+                }
             }
 
             const offer = this.ragfairSortHelper.sortOffers(possibleOffers, RagfairSort.PRICE, 0)[0];
@@ -139,14 +276,27 @@ export class RagfairOfferHelper
     }
 
     /**
+     * Check if offer is from trader standing the player does not have
+     * @param offer Offer to check
+     * @param pmcProfile Player profile
+     * @returns True if item is locked, false if item is purchaseable
+     */
+    protected traderOfferLockedBehindLoyaltyLevel(offer: IRagfairOffer, pmcProfile: IPmcData): boolean {
+        const userTraderSettings = pmcProfile.TradersInfo[offer.user.id];
+
+        return userTraderSettings.loyaltyLevel < offer.loyaltyLevel;
+    }
+
+    /**
      * Check if offer item is quest locked for current player by looking at sptQuestLocked property in traders barter_scheme
      * @param offer Offer to check is quest locked
      * @param traderAssorts all trader assorts for player
      * @returns true if quest locked
      */
-    public traderOfferItemQuestLocked(offer: IRagfairOffer, traderAssorts: Record<string, ITraderAssort>): boolean
-    {
-        return offer.items?.some(i => traderAssorts[offer.user.id].barter_scheme[i._id]?.some(bs1 => bs1?.some(bs2 => bs2.sptQuestLocked)));
+    public traderOfferItemQuestLocked(offer: IRagfairOffer, traderAssorts: Record<string, ITraderAssort>): boolean {
+        return offer.items?.some((i) =>
+            traderAssorts[offer.user.id].barter_scheme[i._id]?.some((bs1) => bs1?.some((bs2) => bs2.sptQuestLocked)),
+        );
     }
 
     /**
@@ -154,10 +304,8 @@ export class RagfairOfferHelper
      * @param offer Offer to check stock of
      * @returns true if out of stock
      */
-    protected traderOutOfStock(offer: IRagfairOffer): boolean 
-    {
-        if (offer?.items?.length === 0)
-        {
+    protected traderOutOfStock(offer: IRagfairOffer): boolean {
+        if (offer?.items?.length === 0) {
             return true;
         }
 
@@ -169,28 +317,36 @@ export class RagfairOfferHelper
      * @param offer offer to check restriction properties of
      * @returns true if restriction reached, false if no restrictions/not reached
      */
-    protected traderBuyRestrictionReached(offer: IRagfairOffer): boolean
-    {
-        const traderAssorts = this.traderHelper.getTraderAssortsById(offer.user.id).items;
-        const assortData = traderAssorts.find(x => x._id === offer._id);
+    protected traderBuyRestrictionReached(offer: IRagfairOffer): boolean {
+        const traderAssorts = this.traderHelper.getTraderAssortsByTraderId(offer.user.id).items;
+
+        // Find item being purchased from traders assorts
+        const assortData = traderAssorts.find((item) => item._id === offer.items[0]._id);
 
         // No trader assort data
-        if (!assortData)
-        {
-            this.logger.warning(`Unable to find trader ${offer.user.nickname} assort for item ${this.itemHelper.getItemName(offer.items[0]._tpl)} ${offer.items[0]._tpl}`);
+        if (!assortData) {
+            this.logger.warning(
+                `Unable to find trader: ${offer.user.nickname} assort for item: ${this.itemHelper.getItemName(
+                    offer.items[0]._tpl,
+                )} ${offer.items[0]._tpl}, cannot check if buy restriction reached`,
+            );
+
+            return false;
+        }
+
+        if (!assortData.upd) {
             return false;
         }
 
         // No restriction values
-        // Can't use !assortData.upd.BuyRestrictionX as value could be 0 
-        if (assortData.upd.BuyRestrictionMax === undefined || assortData.upd.BuyRestrictionCurrent === undefined)
-        {
+        // Can't use !assortData.upd.BuyRestrictionX as value could be 0
+        const assortUpd = assortData.upd;
+        if (assortUpd.BuyRestrictionMax === undefined || assortUpd.BuyRestrictionCurrent === undefined) {
             return false;
         }
 
         // Current equals max, limit reached
-        if (assortData?.upd.BuyRestrictionCurrent === assortData.upd.BuyRestrictionMax)
-        {
+        if (assortUpd.BuyRestrictionCurrent >= assortUpd.BuyRestrictionMax) {
             return true;
         }
 
@@ -201,17 +357,14 @@ export class RagfairOfferHelper
      * Get an array of flea offers that are inaccessible to player due to their inadequate loyalty level
      * @param offers Offers to check
      * @param pmcProfile Players profile with trader loyalty levels
+     * @returns array of offer ids player cannot see
      */
-    protected getLoyaltyLockedOffers(offers: IRagfairOffer[], pmcProfile: IPmcData): string[]
-    {
+    protected getLoyaltyLockedOffers(offers: IRagfairOffer[], pmcProfile: IPmcData): string[] {
         const loyaltyLockedOffers: string[] = [];
-        for (const offer of offers)
-        {
-            if (offer.user.memberType === MemberCategory.TRADER)
-            {
+        for (const offer of offers) {
+            if (offer.user.memberType === MemberCategory.TRADER) {
                 const traderDetails = pmcProfile.TradersInfo[offer.user.id];
-                if (traderDetails.loyaltyLevel < offer.loyaltyLevel)
-                {
+                if (traderDetails.loyaltyLevel < offer.loyaltyLevel) {
                     loyaltyLockedOffers.push(offer._id);
                 }
             }
@@ -220,315 +373,459 @@ export class RagfairOfferHelper
         return loyaltyLockedOffers;
     }
 
-    public processOffersOnProfile(sessionID: string): boolean
-    {
+    /**
+     * Process all player-listed flea offers for a desired profile
+     * @param sessionID Session id to process offers for
+     * @returns true = complete
+     */
+    public processOffersOnProfile(sessionID: string): boolean {
         const timestamp = this.timeUtil.getTimestamp();
-
         const profileOffers = this.getProfileOffers(sessionID);
 
-        if (!profileOffers?.length)
-        {
+        // No offers, don't do anything
+        if (!profileOffers?.length) {
             return true;
         }
 
-        for (const offer of profileOffers.values())
-        {
-            if (offer.sellResult && offer.sellResult.length > 0 && timestamp >= offer.sellResult[0].sellTime)
-            {
+        for (const offer of profileOffers.values()) {
+            if (offer.sellResult?.length > 0 && timestamp >= offer.sellResult[0].sellTime) {
+                // Checks first item, first is spliced out of array after being processed
                 // Item sold
                 let totalItemsCount = 1;
                 let boughtAmount = 1;
 
-                if (!offer.sellInOnePiece)
-                {
-                    totalItemsCount = offer.items.reduce((sum: number, item) => sum += item.upd.StackObjectsCount, 0);
+                if (!offer.sellInOnePiece) {
+                    // offer.items.reduce((sum, item) => sum + item.upd?.StackObjectsCount ?? 0, 0);
+                    totalItemsCount = this.getTotalStackCountSize([offer.items]);
                     boughtAmount = offer.sellResult[0].amount;
                 }
 
-                // Increase rating
-                const profileRagfairInfo = this.saveServer.getProfile(sessionID).characters.pmc.RagfairInfo;
-                profileRagfairInfo.rating += this.ragfairConfig.sell.reputation.gain * offer.summaryCost / totalItemsCount * boughtAmount;
-                profileRagfairInfo.isRatingGrowing = true;
+                this.increaseProfileRagfairRating(
+                    this.saveServer.getProfile(sessionID),
+                    (offer.summaryCost / totalItemsCount) * boughtAmount,
+                );
 
                 this.completeOffer(sessionID, offer, boughtAmount);
-                offer.sellResult.splice(0, 1);
+                offer.sellResult.splice(0, 1); // Remove the sell result object now its been processed
             }
         }
 
         return true;
     }
 
-    protected getProfileOffers(sessionID: string): IRagfairOffer[]
-    {
+    /**
+     * Count up all rootitem StackObjectsCount properties of an array of items
+     * @param itemsInInventoryToList items to sum up
+     * @returns Total count
+     */
+    public getTotalStackCountSize(itemsInInventoryToList: IItem[][]): number {
+        let total = 0;
+        for (const itemAndChildren of itemsInInventoryToList) {
+            // Only count the root items stack count in total
+            const rootItem = itemAndChildren[0];
+            total += rootItem.upd?.StackObjectsCount ?? 1;
+        }
+
+        return total;
+    }
+
+    /**
+     * Add amount to players ragfair rating
+     * @param sessionId Profile to update
+     * @param amountToIncrementBy Raw amount to add to players ragfair rating (excluding the reputation gain multiplier)
+     */
+    public increaseProfileRagfairRating(profile: ISptProfile, amountToIncrementBy: number): void {
+        const ragfairGlobalsConfig = this.databaseService.getGlobals().config.RagFair;
+
+        profile.characters.pmc.RagfairInfo.isRatingGrowing = true;
+        if (Number.isNaN(amountToIncrementBy)) {
+            this.logger.warning(`Unable to increment ragfair rating, value was not a number: ${amountToIncrementBy}`);
+
+            return;
+        }
+        profile.characters.pmc.RagfairInfo.rating +=
+            (ragfairGlobalsConfig.ratingIncreaseCount / ragfairGlobalsConfig.ratingSumForIncrease) *
+            amountToIncrementBy;
+    }
+
+    /**
+     * Return all offers a player has listed on a desired profile
+     * @param sessionID Session id
+     * @returns Array of ragfair offers
+     */
+    protected getProfileOffers(sessionID: string): IRagfairOffer[] {
         const profile = this.profileHelper.getPmcProfile(sessionID);
 
-        if (profile.RagfairInfo === undefined || profile.RagfairInfo.offers === undefined)
-        {
+        if (profile.RagfairInfo === undefined || profile.RagfairInfo.offers === undefined) {
             return [];
         }
 
         return profile.RagfairInfo.offers;
     }
 
-    protected deleteOfferByOfferId(sessionID: string, offerId: string): void
-    {
+    /**
+     * Delete an offer from a desired profile and from ragfair offers
+     * @param sessionID Session id of profile to delete offer from
+     * @param offerId Id of offer to delete
+     */
+    protected deleteOfferById(sessionID: string, offerId: string): void {
         const profileRagfairInfo = this.saveServer.getProfile(sessionID).characters.pmc.RagfairInfo;
-        const index = profileRagfairInfo.offers.findIndex(o => o._id === offerId);
+        const index = profileRagfairInfo.offers.findIndex((o) => o._id === offerId);
         profileRagfairInfo.offers.splice(index, 1);
 
+        // Also delete from ragfair
         this.ragfairOfferService.removeOfferById(offerId);
     }
 
-    protected completeOffer(sessionID: string, offer: IRagfairOffer, boughtAmount: number): IItemEventRouterResponse
-    {
+    /**
+     * Complete the selling of players' offer
+     * @param sessionID Session id
+     * @param offer Sold offer details
+     * @param boughtAmount Amount item was purchased for
+     * @returns IItemEventRouterResponse
+     */
+    public completeOffer(sessionID: string, offer: IRagfairOffer, boughtAmount: number): IItemEventRouterResponse {
         const itemTpl = offer.items[0]._tpl;
-        let itemsToSend = [];
+        let paymentItemsToSendToPlayer: IItem[] = [];
+        const offerStackCount = offer.items[0].upd.StackObjectsCount;
 
-        if (offer.sellInOnePiece || boughtAmount === offer.items[0].upd.StackObjectsCount)
-        {
-            this.deleteOfferByOfferId(sessionID, offer._id);
-        }
-        else
-        {
-            offer.items[0].upd.StackObjectsCount -= boughtAmount;
-            const rootItems = offer.items.filter(i => i.parentId === "hideout");
-            rootItems.splice(0, 1);
+        // Pack or ALL items of a multi-offer were bought - remove entire ofer
+        if (offer.sellInOnePiece || boughtAmount === offerStackCount) {
+            this.deleteOfferById(sessionID, offer._id);
+        } else {
+            const offerRootItem = offer.items[0];
 
-            let removeCount = boughtAmount;
-            let idsToRemove: string[] = [];
-
-            while (removeCount > 0 && rootItems.length > 0)
-            {
-                const lastItem = rootItems[rootItems.length - 1];
-
-                if (lastItem.upd.StackObjectsCount > removeCount)
-                {
-                    lastItem.upd.StackObjectsCount -= removeCount;
-                    removeCount = 0;
-                }
-                else
-                {
-                    removeCount -= lastItem.upd.StackObjectsCount;
-                    idsToRemove.push(lastItem._id);
-                    rootItems.splice(rootItems.length - 1, 1);
-                }
-            }
-
-            let foundNewItems = true;
-
-            while (foundNewItems)
-            {
-                foundNewItems = false;
-                
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                for (const id of idsToRemove)
-                {
-                    const newIds = offer.items.filter(i => !idsToRemove.includes(i._id) && idsToRemove.includes(i.parentId)).map(i => i._id);
-
-                    if (newIds.length > 0)
-                    {
-                        foundNewItems = true;
-                        idsToRemove = [...idsToRemove, ...newIds];
-                    }
-                }
-            }
-
-            if (idsToRemove.length > 0)
-            {
-                offer.items = offer.items.filter(i => !idsToRemove.includes(i._id));
-            }
+            // Reduce offer root items stack count
+            offerRootItem.upd.StackObjectsCount -= boughtAmount;
         }
 
-        // assemble the payment items
-        for (const requirement of offer.requirements)
-        {
+        // Assemble payment to send to seller now offer was purchased
+        for (const requirement of offer.requirements) {
             // Create an item template item
-            const requestedItem: Item = {
+            const requestedItem: IItem = {
                 _id: this.hashUtil.generate(),
                 _tpl: requirement._tpl,
-                upd: { StackObjectsCount: requirement.count * boughtAmount }
+                upd: { StackObjectsCount: requirement.count * boughtAmount },
             };
 
             const stacks = this.itemHelper.splitStack(requestedItem);
-
-            for (const item of stacks)
-            {
+            for (const item of stacks) {
                 const outItems = [item];
 
-                if (requirement.onlyFunctional)
-                {
+                // TODO - is this code used?, may have been when adding barters to flea was still possible for player
+                if (requirement.onlyFunctional) {
                     const presetItems = this.ragfairServerHelper.getPresetItemsByTpl(item);
-
-                    if (presetItems.length)
-                    {
+                    if (presetItems.length) {
                         outItems.push(presetItems[0]);
                     }
                 }
 
-                itemsToSend = [...itemsToSend, ...outItems];
+                paymentItemsToSendToPlayer = [...paymentItemsToSendToPlayer, ...outItems];
             }
         }
 
-        // Generate a message to inform that item was sold
-        const globalLocales = this.localeService.getLocaleDb();
-        const messageTpl = globalLocales[RagfairOfferHelper.goodSoldTemplate];
-        const tplVars: ISystemData = {
-            soldItem: globalLocales[`${itemTpl} Name`] || itemTpl,
-            buyerNickname: this.ragfairServerHelper.getNickname(this.hashUtil.generate()),
-            itemCount: boughtAmount
-        };
-        const messageText = messageTpl.replace(/{\w+}/g, (matched) =>
-        {
-            return tplVars[matched.replace(/{|}/g, "")];
-        });
-
-        const messageContent = this.dialogueHelper.createMessageContext(undefined, MessageType.FLEAMARKET_MESSAGE, this.questConfig.redeemTime);
-        messageContent.text = messageText.replace(/"/g, "");
-        messageContent.ragfair = {
+        const ragfairDetails = {
             offerId: offer._id,
-            count: boughtAmount,
-            handbookId: itemTpl
+            count: offer.sellInOnePiece ? offerStackCount : boughtAmount, // pack-offers NEED to the full item count otherwise it only removes 1 from the pack, leaving phantom offer on client ui
+            handbookId: itemTpl,
         };
 
+        this.mailSendService.sendDirectNpcMessageToPlayer(
+            sessionID,
+            this.traderHelper.getTraderById(Traders.RAGMAN),
+            MessageType.FLEAMARKET_MESSAGE,
+            this.getLocalisedOfferSoldMessage(itemTpl, boughtAmount),
+            paymentItemsToSendToPlayer,
+            this.timeUtil.getHoursAsSeconds(
+                this.questHelper.getMailItemRedeemTimeHoursForProfile(this.profileHelper.getPmcProfile(sessionID)),
+            ),
+            undefined,
+            ragfairDetails,
+        );
 
-        this.dialogueHelper.addDialogueMessage(Traders.RAGMAN, messageContent, sessionID, itemsToSend);
         return this.eventOutputHolder.getOutput(sessionID);
     }
 
-    public isDisplayableOffer(info: ISearchRequestData, itemsToAdd: string[], traderAssorts: Record<string, ITraderAssort>, offer: IRagfairOffer, pmcProfile: IPmcData): boolean
-    {
-        const item = offer.items[0];
-        const money = offer.requirements[0]._tpl;
-        const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
-        const isDefaultUserOffer = offer.user.memberType === MemberCategory.DEFAULT;
+    /**
+     * Get a localised message for when players offer has sold on flea
+     * @param itemTpl Item sold
+     * @param boughtAmount How many were purchased
+     * @returns Localised message text
+     */
+    protected getLocalisedOfferSoldMessage(itemTpl: string, boughtAmount: number): string {
+        // Generate a message to inform that item was sold
+        const globalLocales = this.localeService.getLocaleDb();
+        const soldMessageLocaleGuid = globalLocales[RagfairOfferHelper.goodSoldTemplate];
+        if (!soldMessageLocaleGuid) {
+            this.logger.error(
+                this.localisationService.getText(
+                    "ragfair-unable_to_find_locale_by_key",
+                    RagfairOfferHelper.goodSoldTemplate,
+                ),
+            );
+        }
 
-        if (pmcProfile.Info.Level < this.databaseServer.getTables().globals.config.RagFair.minUserLevel && isDefaultUserOffer)
-        {
+        // Used to replace tokens in sold message sent to player
+        const tplVars: ISystemData = {
+            soldItem: globalLocales[`${itemTpl} Name`] || itemTpl,
+            buyerNickname: this.botHelper.getPmcNicknameOfMaxLength(this.botConfig.botNameLengthLimit),
+            itemCount: boughtAmount,
+        };
+
+        const offerSoldMessageText = soldMessageLocaleGuid.replace(/{\w+}/g, (matched) => {
+            return tplVars[matched.replace(/{|}/g, "")];
+        });
+
+        return offerSoldMessageText.replace(/"/g, "");
+    }
+
+    /**
+     * Check an offer passes the various search criteria the player requested
+     * @param searchRequest
+     * @param offer
+     * @param pmcData
+     * @returns True
+     */
+    protected passesSearchFilterCriteria(
+        searchRequest: ISearchRequestData,
+        offer: IRagfairOffer,
+        pmcData: IPmcData,
+    ): boolean {
+        const isDefaultUserOffer = offer.user.memberType === MemberCategory.DEFAULT;
+        const offerRootItem = offer.items[0];
+        const moneyTypeTpl = offer.requirements[0]._tpl;
+        const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
+
+        if (pmcData.Info.Level < this.databaseService.getGlobals().config.RagFair.minUserLevel && isDefaultUserOffer) {
             // Skip item if player is < global unlock level (default is 15) and item is from a dynamically generated source
             return false;
         }
 
-        if (!!itemsToAdd && !itemsToAdd.includes(item._tpl))
-        {
-            // skip items we shouldn't include
-            return false;
-        }
-
-        if (info.offerOwnerType === OfferOwnerType.TRADEROWNERTYPE && !isTraderOffer)
-        {
+        if (searchRequest.offerOwnerType === OfferOwnerType.TRADEROWNERTYPE && !isTraderOffer) {
             // don't include player offers
             return false;
         }
 
-        if (info.offerOwnerType === OfferOwnerType.PLAYEROWNERTYPE && isTraderOffer)
-        {
+        if (searchRequest.offerOwnerType === OfferOwnerType.PLAYEROWNERTYPE && isTraderOffer) {
             // don't include trader offers
             return false;
         }
 
-        if (info.oneHourExpiration && offer.endTime - this.timeUtil.getTimestamp() > TimeUtil.oneHourAsSeconds)
-        {
+        if (
+            searchRequest.oneHourExpiration &&
+            offer.endTime - this.timeUtil.getTimestamp() > TimeUtil.ONE_HOUR_AS_SECONDS
+        ) {
             // offer doesnt expire within an hour
             return false;
         }
 
-        if (info.quantityFrom > 0 && info.quantityFrom >= item.upd.StackObjectsCount)
-        {
+        if (searchRequest.quantityFrom > 0 && searchRequest.quantityFrom >= offerRootItem.upd.StackObjectsCount) {
             // too little items to offer
             return false;
         }
 
-        if (info.quantityTo > 0 && info.quantityTo <= item.upd.StackObjectsCount)
-        {
+        if (searchRequest.quantityTo > 0 && searchRequest.quantityTo <= offerRootItem.upd.StackObjectsCount) {
             // too many items to offer
             return false;
         }
 
-        if (info.onlyFunctional && this.presetHelper.hasPreset(item._tpl) && offer.items.length === 1)
-        {
+        if (searchRequest.onlyFunctional && !this.isItemFunctional(offerRootItem, offer)) {
             // don't include non-functional items
             return false;
         }
 
-        if (info.buildCount && this.presetHelper.hasPreset(item._tpl) && offer.items.length > 1)
-        {
-            // don't include preset items
-            return false;
-        }
-
-        if (item.upd.MedKit || item.upd.Repairable)
-        {
-            const itemQualityPercentage = 100 * this.itemHelper.getItemQualityModifier(item);
-
-            if (info.conditionFrom > 0 && info.conditionFrom > itemQualityPercentage)
-            {
-                // item condition is too low
+        if (offer.items.length === 1) {
+            // Single item
+            if (
+                this.isConditionItem(offerRootItem) &&
+                !this.itemQualityInRange(offerRootItem, searchRequest.conditionFrom, searchRequest.conditionTo)
+            ) {
+                return false;
+            }
+        } else {
+            const itemQualityPercent = this.itemHelper.getItemQualityModifierForItems(offer.items) * 100;
+            if (itemQualityPercent < searchRequest.conditionFrom) {
                 return false;
             }
 
-            if (info.conditionTo < 100 && info.conditionTo <= itemQualityPercentage)
-            {
-                // item condition is too high
+            if (itemQualityPercent > searchRequest.conditionTo) {
                 return false;
             }
         }
 
-        // commented out as required search "which is for checking offers that are barters"
-        // has info.removeBartering as true, this if statement removed barter items.
-        if (info.removeBartering && !this.paymentHelper.isMoneyTpl(money))
-        {
-            // don't include barter offers
-            return false;
-        }
-
-        if (info.currency > 0 && this.paymentHelper.isMoneyTpl(money))
-        {
+        if (searchRequest.currency > 0 && this.paymentHelper.isMoneyTpl(moneyTypeTpl)) {
             const currencies = ["all", "RUB", "USD", "EUR"];
 
-            if (this.ragfairHelper.getCurrencyTag(money) !== currencies[info.currency])
-            {
+            if (this.ragfairHelper.getCurrencyTag(moneyTypeTpl) !== currencies[searchRequest.currency]) {
                 // don't include item paid in wrong currency
                 return false;
             }
         }
 
-        if (info.priceFrom > 0 && info.priceFrom >= offer.requirementsCost)
-        {
+        if (searchRequest.priceFrom > 0 && searchRequest.priceFrom >= offer.requirementsCost) {
             // price is too low
             return false;
         }
 
-        if (info.priceTo > 0 && info.priceTo <= offer.requirementsCost)
-        {
+        if (searchRequest.priceTo > 0 && searchRequest.priceTo <= offer.requirementsCost) {
             // price is too high
             return false;
         }
 
-        if (isNaN(offer.requirementsCost))
-        {
-            // don't include offers with null or NaN in it
+        // Passes above checks, search criteria filters have not filtered offer out
+        return true;
+    }
+
+    /**
+     * Check that the passed in offer item is functional
+     * @param offerRootItem The root item of the offer
+     * @param offer The flea offer
+     * @returns True if the given item is functional
+     */
+    public isItemFunctional(offerRootItem: IItem, offer: IRagfairOffer): boolean {
+        // Non-presets are always functional
+        if (!this.presetHelper.hasPreset(offerRootItem._tpl)) {
+            return true;
+        }
+
+        // For armor items that can hold mods, make sure the item count is atleast the amount of required plates
+        if (this.itemHelper.armorItemCanHoldMods(offerRootItem._tpl)) {
+            const offerRootTemplate = this.itemHelper.getItem(offerRootItem._tpl)[1];
+            const requiredPlateCount = offerRootTemplate._props.Slots?.filter((item) => item._required)?.length;
+
+            return offer.items.length > requiredPlateCount;
+        }
+
+        // For other presets, make sure the offer has more than 1 item
+        return offer.items.length > 1;
+    }
+
+    /**
+     * Should a ragfair offer be visible to the player
+     * @param searchRequest Search request
+     * @param itemsToAdd ?
+     * @param traderAssorts Trader assort items
+     * @param offer The flea offer
+     * @param pmcProfile Player profile
+     * @returns True = should be shown to player
+     */
+    public isDisplayableOffer(
+        searchRequest: ISearchRequestData,
+        itemsToAdd: string[],
+        traderAssorts: Record<string, ITraderAssort>,
+        offer: IRagfairOffer,
+        pmcProfile: IPmcData,
+        playerIsFleaBanned?: boolean,
+    ): boolean {
+        const offerRootItem = offer.items[0];
+        /** Currency offer is sold for */
+        const moneyTypeTpl = offer.requirements[0]._tpl;
+        const isTraderOffer = offer.user.id in this.databaseService.getTraders();
+
+        if (!isTraderOffer && playerIsFleaBanned) {
             return false;
         }
 
-        // handle trader items to remove items that are not available to the user right now
+        // Offer root items tpl not in searched for array
+        if (!itemsToAdd?.includes(offerRootItem._tpl)) {
+            // skip items we shouldn't include
+            return false;
+        }
+
+        // Performing a required search and offer doesn't have requirement for item
+        if (
+            searchRequest.neededSearchId &&
+            !offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId)
+        ) {
+            return false;
+        }
+
+        // Weapon/equipment search + offer is preset
+        if (
+            Object.keys(searchRequest.buildItems).length === 0 && // Prevent equipment loadout searches filtering out presets
+            searchRequest.buildCount &&
+            this.presetHelper.hasPreset(offerRootItem._tpl)
+        ) {
+            return false;
+        }
+
+        // commented out as required search "which is for checking offers that are barters"
+        // has info.removeBartering as true, this if statement removed barter items.
+        if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(moneyTypeTpl)) {
+            // don't include barter offers
+            return false;
+        }
+
+        if (Number.isNaN(offer.requirementsCost)) {
+            // don't include offers with undefined or NaN in it
+            return false;
+        }
+
+        // Handle trader items to remove items that are not available to the user right now
         // required search for "lamp" shows 4 items, 3 of which are not available to a new player
         // filter those out
-        if (offer.user.id in this.databaseServer.getTables().traders)
-        {
-            if (!(offer.user.id in traderAssorts))
-            {
+        if (isTraderOffer) {
+            if (!(offer.user.id in traderAssorts)) {
                 // trader not visible on flea market
                 return false;
             }
 
-            if (!traderAssorts[offer.user.id].items.find((item) =>
-            {
-                return item._id === offer.root;
-            }))
-            {
+            if (
+                !traderAssorts[offer.user.id].items.some((item) => {
+                    return item._id === offer.root;
+                })
+            ) {
                 // skip (quest) locked items
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    public isDisplayableOfferThatNeedsItem(searchRequest: ISearchRequestData, offer: IRagfairOffer): boolean {
+        if (offer.requirements.some((requirement) => requirement._tpl === searchRequest.neededSearchId)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Does the passed in item have a condition property
+     * @param item Item to check
+     * @returns True if has condition
+     */
+    protected isConditionItem(item: IItem): boolean {
+        // thanks typescript, undefined assertion is not returnable since it
+        // tries to return a multitype object
+        return !!(
+            item.upd.MedKit ||
+            item.upd.Repairable ||
+            item.upd.Resource ||
+            item.upd.FoodDrink ||
+            item.upd.Key ||
+            item.upd.RepairKit
+        );
+    }
+
+    /**
+     * Is items quality value within desired range
+     * @param item Item to check quality of
+     * @param min Desired minimum quality
+     * @param max Desired maximum quality
+     * @returns True if in range
+     */
+    protected itemQualityInRange(item: IItem, min: number, max: number): boolean {
+        const itemQualityPercentage = 100 * this.itemHelper.getItemQualityModifier(item);
+        if (min > 0 && min > itemQualityPercentage) {
+            // Item condition too low
+            return false;
+        }
+
+        if (max < 100 && max <= itemQualityPercentage) {
+            // Item condition too high
+            return false;
         }
 
         return true;

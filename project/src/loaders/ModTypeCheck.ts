@@ -1,66 +1,58 @@
+import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import { IPostDBLoadModAsync } from "@spt/models/external/IPostDBLoadModAsync";
+import { IPostSptLoadMod } from "@spt/models/external/IPostSptLoadMod";
+import { IPostSptLoadModAsync } from "@spt/models/external/IPostSptLoadModAsync";
+import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
+import { IPreSptLoadModAsync } from "@spt/models/external/IPreSptLoadModAsync";
 import { injectable } from "tsyringe";
-import { IPostAkiLoadMod } from "../models/external/IPostAkiLoadMod";
-import { IPostAkiLoadModAsync } from "../models/external/IPostAkiLoadModAsync";
-import { IPostDBLoadMod } from "../models/external/IPostDBLoadMod";
-import { IPostDBLoadModAsync } from "../models/external/IPostDBLoadModAsync";
-import { IPreAkiLoadMod } from "../models/external/IPreAkiLoadMod";
-import { IPreAkiLoadModAsync } from "../models/external/IPreAkiLoadModAsync";
 
 @injectable()
-export class ModTypeCheck
-{
+export class ModTypeCheck {
+    /**
+     * Use defined safe guard to check if the mod is a IPreSptLoadMod
+     * @returns boolean
+     */
+    public isPreSptLoad(mod: any): mod is IPreSptLoadMod {
+        return mod?.preSptLoad;
+    }
 
     /**
-     * Use defined safe guard to check if the mod is a IPreAkiLoadMod
+     * Use defined safe guard to check if the mod is a IPostSptLoadMod
      * @returns boolean
      */
-    public isPreAkiLoad(mod: any): mod is IPreAkiLoadMod
-    {
-        return mod?.preAkiLoad;
+    public isPostSptLoad(mod: any): mod is IPostSptLoadMod {
+        return mod?.postSptLoad;
     }
-    
-    /**
-     * Use defined safe guard to check if the mod is a IPostAkiLoadMod
-     * @returns boolean
-     */
-    public isPostAkiLoad(mod: any): mod is IPostAkiLoadMod
-    {
-        return mod?.postAkiLoad;
-    }
-    
+
     /**
      * Use defined safe guard to check if the mod is a IPostDBLoadMod
      * @returns boolean
      */
-    public isPostDBAkiLoad(mod: any): mod is IPostDBLoadMod
-    {
+    public isPostDBLoad(mod: any): mod is IPostDBLoadMod {
         return mod?.postDBLoad;
     }
 
     /**
-     * Use defined safe guard to check if the mod is a IPreAkiLoadModAsync
+     * Use defined safe guard to check if the mod is a IPreSptLoadModAsync
      * @returns boolean
      */
-    public isPreAkiLoadAsync(mod: any): mod is IPreAkiLoadModAsync
-    {
-        return mod?.preAkiLoadAsync;
+    public isPreSptLoadAsync(mod: any): mod is IPreSptLoadModAsync {
+        return mod?.preSptLoadAsync;
     }
-        
+
     /**
-     * Use defined safe guard to check if the mod is a IPostAkiLoadModAsync
+     * Use defined safe guard to check if the mod is a IPostSptLoadModAsync
      * @returns boolean
      */
-    public isPostAkiLoadAsync(mod: any): mod is IPostAkiLoadModAsync
-    {
-        return mod?.postAkiLoadAsync;
+    public isPostSptLoadAsync(mod: any): mod is IPostSptLoadModAsync {
+        return mod?.postSptLoadAsync;
     }
-        
+
     /**
      * Use defined safe guard to check if the mod is a IPostDBLoadModAsync
      * @returns boolean
      */
-    public isPostDBAkiLoadAsync(mod: any): mod is IPostDBLoadModAsync
-    {
+    public isPostDBLoadAsync(mod: any): mod is IPostDBLoadModAsync {
         return mod?.postDBLoadAsync;
     }
 
@@ -68,14 +60,14 @@ export class ModTypeCheck
      * Checks for mod to be compatible with 3.X+
      * @returns boolean
      */
-    public isPostV3Compatible(mod: any): boolean
-    {
-        return this.isPreAkiLoad(mod) || 
-            this.isPostAkiLoad(mod) || 
-            this.isPostDBAkiLoad(mod) ||
-            this.isPreAkiLoadAsync(mod) ||
-            this.isPostAkiLoadAsync(mod) ||
-            this.isPostDBAkiLoadAsync(mod);
-
+    public isPostV3Compatible(mod: any): boolean {
+        return (
+            this.isPreSptLoad(mod) ||
+            this.isPostSptLoad(mod) ||
+            this.isPostDBLoad(mod) ||
+            this.isPreSptLoadAsync(mod) ||
+            this.isPostSptLoadAsync(mod) ||
+            this.isPostDBLoadAsync(mod)
+        );
     }
 }

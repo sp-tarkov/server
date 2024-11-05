@@ -1,4 +1,3 @@
-export interface IGameLogoutResponseData
-{
-    status: string
+export interface IGameLogoutResponseData {
+    status: string;
 }

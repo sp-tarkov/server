@@ -1,4 +1,4 @@
-## SPT-AKI
+## SPT
 *.exe
 *.zip
 *.d.ts
@@ -7,21 +7,26 @@ project/obj/
 project/dist/
 project/user/
 project/logs/
-project/Aki_Data/
+project/SPT_Data/
 project/tmp/
 project/docs/
 project/types/
+project/tests/__cache__/
+project/tests/__coverage__/
+project/src/__coverage__/
 
 ## visual studio
 .vs
 .idea
+.vscode
 slnx.sqlite
 slnx-journal.sqlite
 
 ## nodejs
+package-lock.json
 node_modules
 node.exe
-package-lock.json
+pnpm-lock.yaml
 yarn.lock
 
 ## windows

@@ -1,31 +1,22 @@
+import { InraidCallbacks } from "@spt/callbacks/InraidCallbacks";
+import { DynamicRouter, RouteAction } from "@spt/di/Router";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 import { inject, injectable } from "tsyringe";
 
-import { InraidCallbacks } from "../../callbacks/InraidCallbacks";
-import { DynamicRouter, RouteAction } from "../../di/Router";
-
 @injectable()
-export class InraidDynamicRouter extends DynamicRouter 
-{
-    constructor(
-        @inject("InraidCallbacks") protected inraidCallbacks: InraidCallbacks
-    ) 
-    {
-        super(
-            [
-                new RouteAction(
-                    "/client/location/getLocalloot",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any =>
-                    {
-                        return this.inraidCallbacks.registerPlayer(url, info, sessionID);
-                    }
-                )
-            ]
-        );
+export class InraidDynamicRouter extends DynamicRouter {
+    constructor(@inject("InraidCallbacks") protected inraidCallbacks: InraidCallbacks) {
+        super([
+            new RouteAction(
+                "/client/location/getLocalloot",
+                async (url: string, info: any, sessionID: string, output: string): Promise<INullResponseData> => {
+                    return this.inraidCallbacks.registerPlayer(url, info, sessionID);
+                },
+            ),
+        ]);
     }
 
-    public override getTopLevelRoute(): string 
-    {
-        return "aki-name";
+    public override getTopLevelRoute(): string {
+        return "spt-name";
     }
 }

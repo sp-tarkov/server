@@ -1,0 +1,3627 @@
+{
+  "appearance": {
+    "body": {
+      "66bf66f1fb051905704a22d5": 13487,
+      "5d5e7e8386f774393602d6fa": 13729,
+      "66bf6769f08c35734d4940c4": 13668,
+      "66bf67c65d6942454668fd58": 13751
+    },
+    "feet": {
+      "66bf680aa1b36f497a5d65bd": 13433,
+      "66bf69195d6942454668fd5d": 13615,
+      "66bf6885952b42739a5f2298": 13896,
+      "66bf68d0f08c35734d4940c6": 13691
+    },
+    "hands": {
+      "5cc2e68f14c02e28b47de290": 1
+    },
+    "head": {
+      "5f68c4c217d579077152a252": 10923,
+      "5cc2e4d014c02e000d0115f8": 10723,
+      "5d28afe786f774292668618d": 11025,
+      "5cde9ff17d6c8b0474535daa": 10945,
+      "5f68c4a7c174a17c0f4c8945": 11019
+    },
+    "voice": {
+      "Scav_2": 9097,
+      "Scav_4": 9106,
+      "Scav_6": 9116,
+      "Scav_1": 8999,
+      "Scav_5": 9112,
+      "Scav_3": 9205
+    }
+  },
+  "experience": {
+    "level": {
+      "min": 0,
+      "max": 1
+    },
+    "reward": {
+      "min": 450,
+      "max": 450
+    },
+    "standingForKill": -0.05,
+    "aggressorBonus": 0.02,
+    "useSimpleAnimator": false
+  },
+  "health": {
+    "Hydration": {
+      "min": 100,
+      "max": 100
+    },
+    "Energy": {
+      "min": 100,
+      "max": 100
+    },
+    "Temperature": {
+      "min": 36,
+      "max": 40
+    },
+    "BodyParts": [
+      {
+        "Head": {
+          "min": 50,
+          "max": 50
+        },
+        "Chest": {
+          "min": 170,
+          "max": 170
+        },
+        "Stomach": {
+          "min": 130,
+          "max": 130
+        },
+        "LeftArm": {
+          "min": 110,
+          "max": 110
+        },
+        "RightArm": {
+          "min": 110,
+          "max": 110
+        },
+        "LeftLeg": {
+          "min": 110,
+          "max": 110
+        },
+        "RightLeg": {
+          "min": 110,
+          "max": 110
+        }
+      }
+    ]
+  },
+  "skills": {
+    "Common": {}
+  },
+  "inventory": {
+    "equipment": {
+      "Headwear": {
+        "5aa7e4a4e5b5b000137b76f2": 8724,
+        "65719f0775149d62ce0a670b": 1736,
+        "5f60e784f2bcbb675b00dac7": 6640,
+        "5f60e6403b85f6263c14558c": 6605,
+        "5aa2b8d7e5b5b00014028f4a": 6560,
+        "5645bc214bdc2d363b8b4571": 6953,
+        "5f60c74e3b85f6263c145586": 1481,
+        "5d6d3716a4b9361bc8618872": 492
+      },
+      "Earpiece": {
+        "5b432b965acfc47a8774094e": 1
+      },
+      "FaceCover": {
+        "5b432f3d5acfc4704b4a1dfb": 8852,
+        "5ab8f39486f7745cd93a1cca": 8881,
+        "5bd073a586f7747e6f135799": 11373
+      },
+      "ArmorVest": {
+        "5b44d22286f774172b0c9de8": 11191,
+        "5f5f41476bdad616ad46d631": 7337,
+        "5648a7494bdc2d9d488b4583": 6409,
+        "64be79c487d1510151095552": 11317,
+        "609e8540d5c319764c2bc2e9": 5104,
+        "5c0e625a86f7742d77340f62": 349,
+        "5ab8e79e86f7742d8b372e78": 5245,
+        "5e9dacf986f774054d6b89f4": 347,
+        "5ca2151486f774244a3b8d30": 757
+      },
+      "Eyewear": {
+        "557ff21e4bdc2d89578b4586": 5290,
+        "5aa2b986e5b5b00014028f4c": 5241,
+        "603409c80ca681766b6a0fb2": 5392
+      },
+      "ArmBand": {},
+      "TacticalVest": {
+        "60a6220e953894617404b00a": 7033,
+        "5fd4c60f875c30179f5d04c2": 5483,
+        "592c2d1a86f7746dbe2af32a": 8661,
+        "5ca20abf86f77418567a43f2": 8904,
+        "59e7643b86f7742cbf2c109a": 8592,
+        "603648ff5a45383c122086ac": 6853,
+        "5929a2a086f7744f4b234d43": 5445,
+        "5c0e722886f7740458316a57": 1876,
+        "5ab8dced86f774646209ec87": 1291,
+        "5d5d87f786f77427997cfaef": 372,
+        "5e4ac41886f77406a511c9a8": 125
+      },
+      "Backpack": {
+        "60a2828e8689911a226117f9": 5235,
+        "5e9dcf5986f7746c417435b3": 6816,
+        "618bb76513f5097c8d5aa2d5": 4405,
+        "5ca20d5986f774331e7c9602": 6787,
+        "628e1ffc83ec92260c0f437f": 1902
+      },
+      "FirstPrimaryWeapon": {
+        "5ac66d9b5acfc4001633997a": 5743,
+        "57dc2fa62459775949412633": 13513,
+        "5ac66d725acfc43b321d4b60": 5418,
+        "5ac4cd105acfc40016339859": 5835,
+        "59d6088586f774275f37482f": 5871,
+        "576165642459773c7a400233": 5816,
+        "57d14d2524597714373db789": 2909,
+        "59984ab886f7743e98271174": 5766,
+        "645e0c6b3b381ede770e1cc9": 1168,
+        "5e848cc2988a8701445df1e8": 1127,
+        "57c44b372459772d2b39b8ce": 335,
+        "644674a13d52156624001fbc": 1134
+      },
+      "SecondPrimaryWeapon": {},
+      "Holster": {
+        "56e0598dd2720bb5668b45a6": 10397,
+        "576a581d2459771e7b1bc4f1": 10781,
+        "602a9740da11d6478d5a06dc": 10389,
+        "5448bd6b4bdc2dfc2f8b4569": 10633,
+        "5a17f98cfcdbcb0980087290": 12435
+      },
+      "Scabbard": {},
+      "Pockets": {
+        "60c7272c204bc17802313365": 1
+      },
+      "SecuredContainer": {
+        "5c0a794586f77461c458f892": 1
+      }
+    },
+    "Ammo": {
+      "Caliber545x39": {
+        "56dfef82d2720bbd668b4567": 17023,
+        "56dff2ced2720bb4668b4567": 5892,
+        "56dff061d2720bb5668b4567": 2176
+      },
+      "Caliber9x18PM": {
+        "573719762459775a626ccbc1": 33465,
+        "573718ba2459775a75491131": 638,
+        "573719df2459775a626ccbc2": 1666,
+        "573720e02459776143012541": 605
+      },
+      "Caliber9x19PARA": {
+        "56d59d3ad2720bdb418b4577": 25674,
+        "5c925fa22e221601da359b7b": 427,
+        "5efb0da7a29a85116f6ea05f": 140,
+        "58864a4f2459770fcc257101": 695
+      },
+      "Caliber762x39": {
+        "5656d7c34bdc2d9d198b4587": 6755,
+        "59e4cf5286f7741778269d8a": 3894,
+        "64b7af434b75259c590fa893": 640
+      },
+      "Caliber12g": {
+        "5d6e6869a4b9361c140bcfde": 785,
+        "5d6e68b3a4b9361bca7e50b5": 836,
+        "5d6e689ca4b9361bc8618956": 856,
+        "5d6e68e6a4b9361c140bcfe0": 800,
+        "5d6e68d1a4b93622fe60e845": 784,
+        "58820d1224597753c90aeb13": 842,
+        "5d6e6891a4b9361bd473feea": 858,
+        "560d5e524bdc2d25448b4571": 55
+      },
+      "Caliber9x39": {
+        "61962d879bb3d20b0946d385": 948,
+        "57a0dfb82459774d3078b56c": 890,
+        "5c0d668f86f7747ccb7f13b2": 571,
+        "57a0e5022459774d1673f889": 228
+      },
+      "Caliber23x75": {
+        "5e85aa1a988a8701445df1f5": 450,
+        "5e85a9a6eacf8c039e4e2ac1": 486,
+        "5e85a9f4add9fe03027d9bf1": 191
+      }
+    },
+    "mods": {
+      "5ac66d9b5acfc4001633997a": {
+        "mod_reciever": [
+          "5ac50da15acfc4001718d287"
+        ],
+        "mod_sight_rear": [
+          "5ac733a45acfc400192630e2"
+        ],
+        "mod_gas_block": [
+          "59c6633186f7740cf0493bb9"
+        ],
+        "mod_pistol_grip": [
+          "5beec8ea0db834001a6f9dbf",
+          "5649ade84bdc2d1b2b8b4587",
+          "5998517986f7746017232f7e",
+          "5649ae4a4bdc2d1b2b8b4588"
+        ],
+        "mod_muzzle": [
+          "5ac72e945acfc43f3b691116",
+          "5649ab884bdc2ded0b8b457f"
+        ],
+        "mod_stock": [
+          "6386300124a1dc425c00577a",
+          "5ac50c185acfc400163398d4",
+          "5ac78eaf5acfc4001926317a",
+          "649ec87d8007560a9001ab36"
+        ],
+        "mod_magazine": [
+          "55d480c04bdc2d1d4e8b456a",
+          "64b9e265c94d0d15c5027e35",
+          "5aaa4194e5b5b055d06310a5"
+        ]
+      },
+      "59c6633186f7740cf0493bb9": {
+        "mod_handguard": [
+          "5c617a5f2e2216000f1e81b3",
+          "5648b4534bdc2d3d1c8b4580",
+          "5648b1504bdc2d9d488b4584"
+        ]
+      },
+      "5c617a5f2e2216000f1e81b3": {
+        "mod_foregrip": [
+          "5c1bc5fb2e221602b1779b32",
+          "5c1bc5612e221602b5429350",
+          "5c1bc7752e221602b1779b34",
+          "5cf4fb76d7f00c065703d3ac",
+          "5c1bc7432e221602b412949d",
+          "5c1bc4812e22164bef5cfde7"
+        ],
+        "mod_tactical": [
+          "560d657b4bdc2da74d8b4572"
+        ]
+      },
+      "56e0598dd2720bb5668b45a6": {
+        "mod_muzzle": [
+          "56e05b06d2720bb2668b4586"
+        ],
+        "mod_pistolgrip": [
+          "56e05a6ed2720bd0748b4567"
+        ],
+        "mod_magazine": [
+          "5448c12b4bdc2d02308b456f"
+        ]
+      },
+      "5b44d22286f774172b0c9de8": {
+        "Front_plate": [
+          "656f9d5900d62bcd2e02407c"
+        ],
+        "Back_plate": [
+          "656f9d5900d62bcd2e02407c"
+        ],
+        "Soft_armor_front": [
+          "65704de13e7bba58ea0285c8"
+        ],
+        "Soft_armor_back": [
+          "65705c3c14f2ed6d7d0b7738"
+        ],
+        "Soft_armor_left": [
+          "65705c777260e1139e091408"
+        ],
+        "soft_armor_right": [
+          "65705cb314f2ed6d7d0b773c"
+        ],
+        "Collar": [
+          "65705cea4916448ae1050897"
+        ]
+      },
+      "57dc2fa62459775949412633": {
+        "mod_reciever": [
+          "57dc334d245977597164366f"
+        ],
+        "mod_pistol_grip": [
+          "5649ade84bdc2d1b2b8b4587",
+          "5beec8ea0db834001a6f9dbf",
+          "5998517986f7746017232f7e",
+          "5649ae4a4bdc2d1b2b8b4588"
+        ],
+        "mod_gas_block": [
+          "59d36a0086f7747e673f3946"
+        ],
+        "mod_stock": [
+          "59ecc28286f7746d7a68aa8c",
+          "57dc347d245977596754e7a1"
+        ],
+        "mod_muzzle": [
+          "5649ab884bdc2ded0b8b457f",
+          "57dc324a24597759501edc20"
+        ],
+        "mod_magazine": [
+          "64b9e265c94d0d15c5027e35",
+          "55d480c04bdc2d1d4e8b456a",
+          "5aaa4194e5b5b055d06310a5"
+        ]
+      },
+      "59d36a0086f7747e673f3946": {
+        "mod_handguard": [
+          "57dc32dc245977596d4ef3d3",
+          "57ffa9f4245977728561e844"
+        ]
+      },
+      "59ecc28286f7746d7a68aa8c": {
+        "mod_stock": [
+          "5b222d405acfc400153af4fe"
+        ]
+      },
+      "576a581d2459771e7b1bc4f1": {
+        "mod_magazine": [
+          "576a5ed62459771e9c2096cb"
+        ],
+        "mod_pistol_grip": [
+          "576a63cd2459771e796e0e11"
+        ]
+      },
+      "5aa7e4a4e5b5b000137b76f2": {
+        "Helmet_top": [
+          "657f925dada5fadd1f07a57a"
+        ],
+        "Helmet_back": [
+          "657f92acada5fadd1f07a57e"
+        ],
+        "Helmet_ears": [
+          "657f92e7f4c82973640b2354"
+        ]
+      },
+      "5f5f41476bdad616ad46d631": {
+        "Front_plate": [
+          "656f664200d62bcd2e024077"
+        ],
+        "Back_plate": [
+          "657b2797c3dbcb01d60c35ea"
+        ],
+        "Left_side_plate": [
+          "654a4f8bc721968a4404ef18"
+        ],
+        "Right_side_plate": [
+          "654a4f8bc721968a4404ef18"
+        ],
+        "Soft_armor_front": [
+          "65731b46cea9255e2102360a"
+        ],
+        "Soft_armor_back": [
+          "65731b4fcea9255e2102360e"
+        ],
+        "Soft_armor_left": [
+          "65731b576e709cddd001ec3f"
+        ],
+        "soft_armor_right": [
+          "65731b60ff6dc44a7d068c4a"
+        ],
+        "Collar": [
+          "65731b666e709cddd001ec43"
+        ],
+        "Groin": [
+          "65731b716e709cddd001ec47"
+        ],
+        "Groin_back": [
+          "65731b6b6042b0f210020ef6"
+        ]
+      },
+      "5ac66d725acfc43b321d4b60": {
+        "mod_reciever": [
+          "5ac50da15acfc4001718d287"
+        ],
+        "mod_sight_rear": [
+          "5ac733a45acfc400192630e2"
+        ],
+        "mod_magazine": [
+          "5ac66bea5acfc43b321d4aec"
+        ],
+        "mod_gas_block": [
+          "59e649f986f77411d949b246"
+        ],
+        "mod_pistol_grip": [
+          "5beec8ea0db834001a6f9dbf",
+          "5649ade84bdc2d1b2b8b4587",
+          "5998517986f7746017232f7e",
+          "5649ae4a4bdc2d1b2b8b4588"
+        ],
+        "mod_muzzle": [
+          "5ac72e895acfc43b321d4bd5",
+          "5649ab884bdc2ded0b8b457f",
+          "5cc9ad73d7f00c000e2579d4"
+        ],
+        "mod_stock": [
+          "5ac78eaf5acfc4001926317a",
+          "5ac50c185acfc400163398d4",
+          "6386300124a1dc425c00577a",
+          "649ec87d8007560a9001ab36"
+        ]
+      },
+      "59e649f986f77411d949b246": {
+        "mod_handguard": [
+          "5648b4534bdc2d3d1c8b4580",
+          "5c617a5f2e2216000f1e81b3"
+        ]
+      },
+      "5648b4534bdc2d3d1c8b4580": {
+        "mod_foregrip": [
+          "5c1bc5fb2e221602b1779b32",
+          "5c1bc5612e221602b5429350",
+          "5cf4fb76d7f00c065703d3ac",
+          "5c1bc7752e221602b1779b34",
+          "5c1bc4812e22164bef5cfde7",
+          "5c1bc7432e221602b412949d"
+        ],
+        "mod_scope": [
+          "57ae0171245977343c27bfcf",
+          "584984812459776a704a82a6",
+          "591c4efa86f7741030027726"
+        ],
+        "mod_tactical_002": [
+          "560d657b4bdc2da74d8b4572"
+        ]
+      },
+      "5ac78eaf5acfc4001926317a": {
+        "mod_stock": [
+          "5b222d405acfc400153af4fe",
+          "59ecc3dd86f7746dc827481c"
+        ]
+      },
+      "65719f0775149d62ce0a670b": {
+        "Helmet_top": [
+          "657fa0fcd4caf976440afe3e"
+        ],
+        "Helmet_back": [
+          "657fa168e9433140ad0baf8e"
+        ],
+        "Helmet_ears": [
+          "657fa186d4caf976440afe42"
+        ],
+        "mod_equipment_000": [
+          "65719f9ef392ad76c50a2ec8"
+        ]
+      },
+      "5ac4cd105acfc40016339859": {
+        "mod_reciever": [
+          "5ac50da15acfc4001718d287"
+        ],
+        "mod_sight_rear": [
+          "5ac72e475acfc400180ae6fe"
+        ],
+        "mod_gas_block": [
+          "59c6633186f7740cf0493bb9"
+        ],
+        "mod_pistol_grip": [
+          "5649ade84bdc2d1b2b8b4587",
+          "5beec8ea0db834001a6f9dbf",
+          "5649ae4a4bdc2d1b2b8b4588",
+          "5998517986f7746017232f7e"
+        ],
+        "mod_muzzle": [
+          "5649ab884bdc2ded0b8b457f",
+          "5ac7655e5acfc40016339a19"
+        ],
+        "mod_stock": [
+          "6386300124a1dc425c00577a",
+          "5ac50c185acfc400163398d4",
+          "5ac78eaf5acfc4001926317a",
+          "5cf50fc5d7f00c056c53f83c"
+        ],
+        "mod_magazine": [
+          "55d480c04bdc2d1d4e8b456a",
+          "64b9e265c94d0d15c5027e35",
+          "5aaa4194e5b5b055d06310a5"
+        ]
+      },
+      "602a9740da11d6478d5a06dc": {
+        "mod_barrel": [
+          "602a95edda11d6478d5a06da"
+        ],
+        "mod_reciever": [
+          "60228924961b8d75ee233c32"
+        ],
+        "mod_magazine": [
+          "602286df23506e50807090c6"
+        ]
+      },
+      "60228924961b8d75ee233c32": {
+        "mod_sight_rear": [
+          "60229948cacb6b0506369e27"
+        ],
+        "mod_sight_front": [
+          "60228a76d62c9b14ed777a66"
+        ]
+      },
+      "5648a7494bdc2d9d488b4583": {
+        "Soft_armor_front": [
+          "65703d866584602f7d057a8a"
+        ],
+        "Soft_armor_back": [
+          "65703fa06584602f7d057a8e"
+        ],
+        "Soft_armor_left": [
+          "65703fe46a912c8b5c03468b"
+        ],
+        "soft_armor_right": [
+          "657040374e67e8ec7a0d261c"
+        ]
+      },
+      "64be79c487d1510151095552": {
+        "Soft_armor_front": [
+          "6570495b45d573133d0d6adb"
+        ],
+        "Soft_armor_back": [
+          "657049d23425b19bbc0502f0"
+        ]
+      },
+      "59d6088586f774275f37482f": {
+        "mod_reciever": [
+          "59d6507c86f7741b846413a2"
+        ],
+        "mod_sight_rear": [
+          "59d650cf86f7741b846413a4"
+        ],
+        "mod_gas_block": [
+          "59d64ec286f774171d1e0a42"
+        ],
+        "mod_pistol_grip": [
+          "5649ade84bdc2d1b2b8b4587",
+          "5998517986f7746017232f7e",
+          "5beec8ea0db834001a6f9dbf",
+          "5649ae4a4bdc2d1b2b8b4588"
+        ],
+        "mod_muzzle": [
+          "59d64fc686f774171b243fe2",
+          "5a0abb6e1526d8000a025282"
+        ],
+        "mod_stock": [
+          "5649b0fc4bdc2d17108b4588",
+          "5b222d335acfc4771e1be099",
+          "5cf518cfd7f00c065b422214"
+        ],
+        "mod_magazine": [
+          "59d625f086f774661516605d",
+          "5ac66bea5acfc43b321d4aec",
+          "64b9cf0ac12b9c38db26923a"
+        ]
+      },
+      "59d64ec286f774171d1e0a42": {
+        "mod_handguard": [
+          "5c617a5f2e2216000f1e81b3",
+          "59d64f2f86f77417193ef8b3",
+          "5648b4534bdc2d3d1c8b4580"
+        ]
+      },
+      "5448bd6b4bdc2dfc2f8b4569": {
+        "mod_magazine": [
+          "5448c12b4bdc2d02308b456f"
+        ],
+        "mod_reciever": [
+          "6374a822e629013b9c0645c8"
+        ],
+        "mod_pistolgrip": [
+          "6374a7e7417239a7bf00f042"
+        ]
+      },
+      "6374a822e629013b9c0645c8": {
+        "mod_sight_rear": [
+          "63c6adcfb4ba094317063742"
+        ]
+      },
+      "609e8540d5c319764c2bc2e9": {
+        "Front_plate": [
+          "656f9fa0498d1b7e3e071d98"
+        ],
+        "Back_plate": [
+          "656f9fa0498d1b7e3e071d98"
+        ],
+        "Soft_armor_front": [
+          "6572e5221b5bc1185508c24f"
+        ],
+        "Soft_armor_back": [
+          "6572e52f73c0eabb700109a0"
+        ],
+        "Soft_armor_left": [
+          "6572e53c73c0eabb700109a4"
+        ],
+        "soft_armor_right": [
+          "6572e54873c0eabb700109a8"
+        ]
+      },
+      "576165642459773c7a400233": {
+        "mod_handguard": [
+          "5f63418ef5750b524b45f116",
+          "58272b392459774b4c7b3ccd"
+        ],
+        "mod_pistol_grip": [
+          "5947f92f86f77427344a76b1",
+          "5649ade84bdc2d1b2b8b4587",
+          "628a664bccaab13006640e47",
+          "5998517986f7746017232f7e",
+          "5cf54404d7f00c108840b2ef",
+          "5649ae4a4bdc2d1b2b8b4588",
+          "5beec8ea0db834001a6f9dbf"
+        ],
+        "mod_muzzle": [
+          "59fb137a86f7740adb646af1",
+          "58272d7f2459774f6311ddfd",
+          "576167ab2459773cad038c43"
+        ],
+        "mod_stock": [
+          "57616ca52459773c69055192",
+          "5ac78eaf5acfc4001926317a",
+          "5cf50fc5d7f00c056c53f83c"
+        ],
+        "mod_charge": [
+          "5648ac824bdc2ded0b8b457d",
+          "6130ca3fd92c473c77020dbd"
+        ],
+        "mod_magazine": [
+          "57616a9e2459773c7a400234",
+          "5a966f51a2750c00156aacf6"
+        ],
+        "patron_in_weapon": [
+          "5d6e6869a4b9361c140bcfde",
+          "5d6e68b3a4b9361bca7e50b5",
+          "5d6e689ca4b9361bc8618956",
+          "5d6e68e6a4b9361c140bcfe0",
+          "5d6e68d1a4b93622fe60e845",
+          "58820d1224597753c90aeb13",
+          "5d6e6891a4b9361bd473feea",
+          "560d5e524bdc2d25448b4571"
+        ]
+      },
+      "5f63418ef5750b524b45f116": {
+        "mod_scope": [
+          "57ae0171245977343c27bfcf",
+          "591c4efa86f7741030027726",
+          "584984812459776a704a82a6",
+          "5c0505e00db834001b735073"
+        ],
+        "mod_foregrip": [
+          "5c1bc7432e221602b412949d",
+          "5c1bc7752e221602b1779b34",
+          "5cf4fb76d7f00c065703d3ac",
+          "5c1bc4812e22164bef5cfde7",
+          "5c1bc5fb2e221602b1779b32",
+          "5c1bc5612e221602b5429350"
+        ],
+        "mod_tactical_001": [
+          "560d657b4bdc2da74d8b4572",
+          "5b3a337e5acfc4704b4a19a0"
+        ]
+      },
+      "57616ca52459773c69055192": {
+        "mod_stock": [
+          "5a0c59791526d8dba737bba7"
+        ]
+      },
+      "57ffa9f4245977728561e844": {
+        "mod_foregrip": [
+          "5c1bc4812e22164bef5cfde7",
+          "5c1bc5612e221602b5429350",
+          "5c1bc5fb2e221602b1779b32",
+          "5c1bc7752e221602b1779b34",
+          "5cf4fb76d7f00c065703d3ac",
+          "5c1bc7432e221602b412949d"
+        ],
+        "mod_tactical_000": [
+          "57ffaea724597779f52b3a4d"
+        ],
+        "mod_tactical_001": [
+          "560d657b4bdc2da74d8b4572"
+        ]
+      },
+      "57ffaea724597779f52b3a4d": {
+        "mod_scope": [
+          "591c4efa86f7741030027726",
+          "57ae0171245977343c27bfcf",
+          "584984812459776a704a82a6"
+        ]
+      },
+      "5645bc214bdc2d363b8b4571": {
+        "Helmet_top": [
+          "657bae18b7e9ca9a02045c0a"
+        ],
+        "Helmet_back": [
+          "657baeaacfcf63c951052db3"
+        ],
+        "Helmet_ears": [
+          "657baecbc6f689d3a205b863"
+        ]
+      },
+      "5c0e625a86f7742d77340f62": {
+        "Front_plate": [
+          "656f63c027aed95beb08f62c"
+        ],
+        "Back_plate": [
+          "656fafe3498d1b7e3e071da4"
+        ],
+        "Left_side_plate": [
+          "64afd81707e2cf40e903a316"
+        ],
+        "Right_side_plate": [
+          "64afd81707e2cf40e903a316"
+        ],
+        "Soft_armor_front": [
+          "65764275d8537eb26a0355e9"
+        ],
+        "Soft_armor_back": [
+          "657642b0e6d5dd75f40688a5"
+        ],
+        "Soft_armor_left": [
+          "6576434820cc24d17102b148"
+        ],
+        "soft_armor_right": [
+          "657643732bc38ef78e076477"
+        ],
+        "Collar": [
+          "657643a220cc24d17102b14c"
+        ]
+      },
+      "57d14d2524597714373db789": {
+        "mod_pistol_grip": [
+          "57d152ec245977144076ccdf"
+        ],
+        "mod_mount": [
+          "57ee59b42459771c7b045da5"
+        ],
+        "mod_magazine": [
+          "57d1519e24597714373db79d"
+        ]
+      },
+      "57ee59b42459771c7b045da5": {
+        "mod_scope": [
+          "57ae0171245977343c27bfcf"
+        ],
+        "mod_tactical": [
+          "560d657b4bdc2da74d8b4572",
+          "5b3a337e5acfc4704b4a19a0"
+        ]
+      },
+      "58272b392459774b4c7b3ccd": {
+        "mod_scope": [
+          "591c4efa86f7741030027726",
+          "57ae0171245977343c27bfcf",
+          "609a63b6e2ff132951242d09",
+          "584984812459776a704a82a6",
+          "5c0505e00db834001b735073"
+        ],
+        "mod_foregrip": [
+          "5c1bc4812e22164bef5cfde7",
+          "5cf4fb76d7f00c065703d3ac",
+          "5c1bc5fb2e221602b1779b32",
+          "5c1bc7752e221602b1779b34",
+          "5c1bc7432e221602b412949d",
+          "5c1bc5612e221602b5429350"
+        ],
+        "mod_tactical_001": [
+          "560d657b4bdc2da74d8b4572",
+          "5b3a337e5acfc4704b4a19a0"
+        ]
+      },
+      "5a17f98cfcdbcb0980087290": {
+        "mod_magazine": [
+          "5a17fb03fcdbcbcae668728f"
+        ],
+        "mod_pistol_grip": [
+          "5a17fc70fcdbcb0176308b3d"
+        ],
+        "mod_sight_front": [
+          "5aba62f8d8ce87001943946b"
+        ],
+        "mod_sight_rear": [
+          "5aba637ad8ce87001773e17f"
+        ]
+      },
+      "59984ab886f7743e98271174": {
+        "mod_reciever": [
+          "59985a8086f77414ec448d1a"
+        ],
+        "mod_sight_rear": [
+          "599860e986f7743bb57573a6"
+        ],
+        "mod_pistol_grip": [
+          "5998517986f7746017232f7e",
+          "5beec8ea0db834001a6f9dbf",
+          "5649ade84bdc2d1b2b8b4587",
+          "5649ae4a4bdc2d1b2b8b4588"
+        ],
+        "mod_gas_block": [
+          "59ccd11386f77428f24a488f"
+        ],
+        "mod_stock": [
+          "599851db86f77467372f0a18",
+          "5ac78eaf5acfc4001926317a",
+          "5cf50fc5d7f00c056c53f83c"
+        ],
+        "mod_muzzle": [
+          "5998597786f77414ea6da093"
+        ],
+        "mod_magazine": [
+          "599860ac86f77436b225ed1a"
+        ]
+      },
+      "59ccd11386f77428f24a488f": {
+        "mod_handguard": [
+          "5648b1504bdc2d9d488b4584",
+          "5648b4534bdc2d3d1c8b4580",
+          "5c617a5f2e2216000f1e81b3"
+        ]
+      },
+      "645e0c6b3b381ede770e1cc9": {
+        "mod_stock": [
+          "6452519e3d52156624001fd5"
+        ],
+        "mod_scope": [
+          "618a5d5852ecee1505530b2a"
+        ],
+        "mod_barrel": [
+          "645123013d52156624001fd1"
+        ],
+        "mod_magazine": [
+          "6450ec2e7da7133e5a09ca96"
+        ]
+      },
+      "645123013d52156624001fd1": {
+        "mod_muzzle": [
+          "64527a263d52156624001fd7"
+        ],
+        "mod_handguard": [
+          "6448f2f6d4928d46d30be3f6"
+        ]
+      },
+      "5cf50fc5d7f00c056c53f83c": {
+        "mod_stock": [
+          "5beec8c20db834001d2c465c",
+          "56eabf3bd2720b75698b4569",
+          "5a9eb32da2750c00171b3f9c",
+          "5bfe86df0db834001b734685",
+          "5d135e83d7ad1a21b83f42d8"
+        ]
+      },
+      "5c0e722886f7740458316a57": {
+        "Front_plate": [
+          "656fa0fb498d1b7e3e071d9c"
+        ],
+        "Back_plate": [
+          "656fa0fb498d1b7e3e071d9c"
+        ],
+        "Soft_armor_front": [
+          "65730c0e292ecadbfa09ad49"
+        ],
+        "Soft_armor_back": [
+          "65730c2213a2f660f60bea96"
+        ],
+        "Soft_armor_left": [
+          "65730c2b292ecadbfa09ad50"
+        ],
+        "soft_armor_right": [
+          "65730c35292ecadbfa09ad54"
+        ]
+      },
+      "5a0abb6e1526d8000a025282": {
+        "mod_muzzle": [
+          "5649ab884bdc2ded0b8b457f"
+        ]
+      },
+      "5ab8e79e86f7742d8b372e78": {
+        "Front_plate": [
+          "656f611f94b480b8a500c0db"
+        ],
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Soft_armor_front": [
+          "65732688d9d89ff7ac0d9c4c"
+        ],
+        "Soft_armor_back": [
+          "657326978c1cc6dcd9098b56"
+        ],
+        "Soft_armor_left": [
+          "657326a28c1cc6dcd9098b5a"
+        ],
+        "soft_armor_right": [
+          "657326b08c1cc6dcd9098b5e"
+        ],
+        "Collar": [
+          "657326bc5d3a3129fb05f36b"
+        ]
+      },
+      "5b222d335acfc4771e1be099": {
+        "mod_stock": [
+          "5b222d405acfc400153af4fe"
+        ]
+      },
+      "5e9dacf986f774054d6b89f4": {
+        "Front_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Soft_armor_front": [
+          "65732de75d3a3129fb05f3dd"
+        ],
+        "Soft_armor_back": [
+          "65732df4d0acf75aea06c87b"
+        ],
+        "Soft_armor_left": [
+          "65732e05d0acf75aea06c87f"
+        ],
+        "soft_armor_right": [
+          "65732e0f6784ca384b0167ad"
+        ],
+        "Collar": [
+          "65732e215d3a3129fb05f3e1"
+        ],
+        "Groin": [
+          "65732e30dd8739f6440ef383"
+        ]
+      },
+      "5f60c74e3b85f6263c145586": {
+        "Helmet_top": [
+          "657bc285aab96fccee08bea3"
+        ],
+        "Helmet_back": [
+          "657bc2c5a1c61ee0c3036333"
+        ],
+        "Helmet_ears": [
+          "657bc2e7b30eca976305118d"
+        ]
+      },
+      "5ca2151486f774244a3b8d30": {
+        "Front_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Back_plate": [
+          "65573fa5655447403702a816"
+        ],
+        "Soft_armor_front": [
+          "6575dd3e9e27f4a85e081142"
+        ],
+        "Soft_armor_back": [
+          "6575dd519e27f4a85e081146"
+        ],
+        "Soft_armor_left": [
+          "6575dd64945bf78edd04c438"
+        ],
+        "soft_armor_right": [
+          "6575dd6e9d3a0ddf660b9047"
+        ],
+        "Collar": [
+          "6575dd769d3a0ddf660b904b"
+        ],
+        "Groin": [
+          "6575dd800546f8b1de093df6"
+        ],
+        "Groin_back": [
+          "6575dd94945bf78edd04c43c"
+        ]
+      },
+      "5d6d3716a4b9361bc8618872": {
+        "Helmet_top": [
+          "657fa009d4caf976440afe3a"
+        ],
+        "Helmet_back": [
+          "657fa04ac6679fefb3051e24"
+        ],
+        "Helmet_ears": [
+          "657fa07387e11c61f70bface"
+        ],
+        "mod_equipment_002": [
+          "5d6d3943a4b9360dbc46d0cc"
+        ],
+        "mod_equipment_001": [
+          "5d6d3be5a4b9361bc73bc763"
+        ]
+      },
+      "5ab8dced86f774646209ec87": {
+        "Front_plate": [
+          "656fa25e94b480b8a500c0e0"
+        ],
+        "Back_plate": [
+          "656fa25e94b480b8a500c0e0"
+        ],
+        "Soft_armor_front": [
+          "6570f6e774d84423df065f21"
+        ],
+        "Soft_armor_back": [
+          "6570f71dd67d0309980a7af8"
+        ],
+        "Soft_armor_left": [
+          "6570f74774d84423df065f25"
+        ],
+        "soft_armor_right": [
+          "6570f79c4c65ab77a6015121"
+        ]
+      },
+      "649ec87d8007560a9001ab36": {
+        "mod_stock": [
+          "5beec8c20db834001d2c465c"
+        ]
+      },
+      "5e848cc2988a8701445df1e8": {
+        "mod_barrel": [
+          "5e848d1c264f7c180b5e35a9"
+        ],
+        "mod_handguard": [
+          "5e848d51e4dbc5266a4ec63b"
+        ],
+        "mod_stock": [
+          "5e848d99865c0f329958c83b",
+          "5e848db4681bea2ada00daa9"
+        ],
+        "mod_magazine": [
+          "5f647d9f8499b57dc40ddb93"
+        ]
+      },
+      "5e848d99865c0f329958c83b": {
+        "mod_stock": [
+          "5e848dc4e4dbc5266a4ec63d"
+        ]
+      },
+      "57c44b372459772d2b39b8ce": {
+        "mod_reciever": [
+          "57c44f4f2459772d2c627113"
+        ],
+        "mod_pistol_grip": [
+          "57c44fa82459772d2d75e415"
+        ],
+        "mod_stock": [
+          "57c450252459772d28133253"
+        ],
+        "mod_handguard": [
+          "651178336cad06c37c049eb4"
+        ],
+        "mod_muzzle": [
+          "57c44dd02459772d2e0ae249"
+        ],
+        "mod_mount_004": [
+          "57486e672459770abd687134",
+          "5947db3f86f77447880cf76f"
+        ],
+        "mod_magazine": [
+          "57838f9f2459774a150289a0"
+        ]
+      },
+      "57c44dd02459772d2e0ae249": {
+        "mod_mount_000": [
+          "57a3459f245977764a01f703"
+        ]
+      },
+      "57a3459f245977764a01f703": {
+        "mod_tactical": [
+          "560d657b4bdc2da74d8b4572",
+          "646f6322f43d0c5d62063715"
+        ]
+      },
+      "644674a13d52156624001fbc": {
+        "mod_pistol_grip": [
+          "6450f21a3d52156624001fcf"
+        ],
+        "mod_stock_000": [
+          "6451167ad4928d46d30be3fd"
+        ],
+        "mod_scope": [
+          "6544d4187c5457729210d277"
+        ],
+        "mod_barrel": [
+          "645122f6d4928d46d30be3ff"
+        ],
+        "mod_magazine": [
+          "6450ec2e7da7133e5a09ca96"
+        ]
+      },
+      "645122f6d4928d46d30be3ff": {
+        "mod_muzzle": [
+          "64527a3a7da7133e5a09ca99"
+        ],
+        "mod_handguard": [
+          "644675573d52156624001fc9"
+        ]
+      },
+      "64527a3a7da7133e5a09ca99": {
+        "mod_mount": [
+          "57a3459f245977764a01f703"
+        ]
+      },
+      "646f6322f43d0c5d62063715": {
+        "mod_tactical": [
+          "646f62fee779812413011ab7"
+        ]
+      },
+      "5cf518cfd7f00c065b422214": {
+        "mod_stock": [
+          "5beec8c20db834001d2c465c"
+        ]
+      },
+      "5d5d87f786f77427997cfaef": {
+        "Front_plate": [
+          "656f9fa0498d1b7e3e071d98"
+        ],
+        "Back_plate": [
+          "656f9fa0498d1b7e3e071d98"
+        ],
+        "Soft_armor_front": [
+          "6570e5100b57c03ec90b970a"
+        ],
+        "Soft_armor_back": [
+          "6570e479a6560e4ee50c2b02"
+        ],
+        "Soft_armor_left": [
+          "6570e5674cc0d2ab1e05edbb"
+        ],
+        "soft_armor_right": [
+          "6570e59b0b57c03ec90b970e"
+        ]
+      },
+      "5e4ac41886f77406a511c9a8": {
+        "front_plate": [
+          "656fae5f7c2d57afe200c0d7"
+        ],
+        "back_plate": [
+          "656fae5f7c2d57afe200c0d7"
+        ],
+        "left_side_plate": [
+          "6557458f83942d705f0c4962"
+        ],
+        "right_side_plate": [
+          "6557458f83942d705f0c4962"
+        ],
+        "soft_armor_front": [
+          "6575ef599c7cad336508e453"
+        ],
+        "soft_armor_back": [
+          "6575ef6bf6a13a7b7100b093"
+        ],
+        "soft_armor_left": [
+          "6575ef78da698a4e980677eb"
+        ],
+        "soft_armor_right": [
+          "6575ef7f9c7cad336508e457"
+        ]
+      }
+    },
+    "items": {
+      "TacticalVest": {
+        "55d480c04bdc2d1d4e8b456a": 29948,
+        "5710c24ad2720bc3458b45a3": 46599,
+        "64b9e265c94d0d15c5027e35": 9318,
+        "5a01c29586f77474660c694c": 10836,
+        "59d625f086f774661516605d": 6840,
+        "5448be9a4bdc2dfd2f8b456a": 22247,
+        "57616a9e2459773c7a400234": 11632,
+        "57d1519e24597714373db79d": 5818,
+        "599860ac86f77436b225ed1a": 11532,
+        "5aaa4194e5b5b055d06310a5": 10916,
+        "6450ec2e7da7133e5a09ca96": 4604,
+        "5ac66bea5acfc43b321d4aec": 2528,
+        "64b9cf0ac12b9c38db26923a": 2374,
+        "57838f9f2459774a150289a0": 670
+      },
+      "Pockets": {
+        "5448c12b4bdc2d02308b456f": 42060,
+        "590c678286f77426c9660122": 54635,
+        "544fb3f34bdc2d03748b456a": 43825,
+        "576a5ed62459771e9c2096cb": 21562,
+        "602286df23506e50807090c6": 20778,
+        "5a17fb03fcdbcbcae668728f": 24870,
+        "5e85aa1a988a8701445df1f5": 450,
+        "5e85a9a6eacf8c039e4e2ac1": 486,
+        "5e85a9f4add9fe03027d9bf1": 191
+      },
+      "Backpack": {
+        "5e831507ea0a7c419c2f9bd9": 560,
+        "544fb62a4bdc2dfb738b4568": 1011,
+        "5751435d24597720a27126d1": 625,
+        "5e8f3423fd7471236e6e3b64": 265,
+        "57513f9324597720a7128161": 761,
+        "57514643245977207f2c2d09": 573,
+        "544fb3364bdc2d34748b456a": 1454,
+        "57513f07245977207e26a311": 1242,
+        "60098af40accd37ef2175f27": 608,
+        "60098ad7c2240c0fe85c570a": 450,
+        "544fb37f4bdc2dee738b4567": 889,
+        "5c94bbff86f7747ee735c08f": 1548,
+        "544fb25a4bdc2dfb738b4567": 1934,
+        "59e3577886f774176a362503": 369,
+        "544fb45d4bdc2dee738b4568": 679,
+        "57513fcc24597720a31c09a6": 747,
+        "5673de654bdc2d180f8b456d": 229,
+        "5755356824597772cb798962": 794,
+        "5e8488fa988a8701445df1e4": 602,
+        "544fb6cc4bdc2d34748b456e": 298,
+        "5c0e533786f7747fa23f4d47": 214,
+        "60b0f93284c20f0feb453da7": 358,
+        "60098b1705871270cd5352a1": 348,
+        "57347d7224597744596b4e72": 352,
+        "57347d90245977448f7b7f65": 374,
+        "5c0e531d86f7747fa23f4d42": 575,
+        "57347da92459774491567cf5": 336,
+        "5751496424597720a27126da": 1077,
+        "575146b724597720a27126d5": 968,
+        "5448ff904bdc2d6f028b456e": 341,
+        "5d02778e86f774203e7dedbe": 236,
+        "590c5d4b86f774784e1b9c45": 392,
+        "65815f0e647e3d7246384e14": 181,
+        "5751487e245977207e26a315": 407,
+        "5bc9b156d4351e00367fbce9": 116,
+        "5734773724597737fd047c14": 154,
+        "57347d8724597744596b4e76": 337,
+        "656df4fec921ad01000481a2": 644,
+        "5af0454c86f7746bf20992e8": 715,
+        "5af0548586f7743a532b7e99": 224,
+        "5751a25924597722c463c472": 1649,
+        "57347d692459774491567cf1": 349,
+        "5ed515c8d380ab312177c0fa": 231,
+        "590c678286f77426c9660122": 233,
+        "57505f6224597709a92585a9": 313,
+        "575062b524597720a31c09a1": 641,
+        "57347d9c245977448b40fa85": 303,
+        "5bc9c29cd4351e003562b8a3": 181,
+        "590c657e86f77412b013051d": 349,
+        "5755383e24597772cb798966": 237,
+        "5c0e534186f7747fa1419867": 256,
+        "5ed515e03a40a50460332579": 110,
+        "5fca13ca637ee0341a484f46": 124,
+        "637b620db7afa97bfc3d7009": 117,
+        "637b6251104668754b72f8f9": 71,
+        "635a758bfefc88a93f021b8a": 59,
+        "5c0fa877d174af02a012e1cf": 589,
+        "5c0e530286f7747fa1419862": 218,
+        "637b612fb7afa97bfc3d7005": 114,
+        "5ed51652f6c34d2cc26336a1": 119,
+        "590c695186f7741e566b64a2": 233,
+        "5448fee04bdc2dbc018b4567": 440,
+        "5d40407c86f774318526545a": 278,
+        "5c10c8fd86f7743d7d706df3": 234,
+        "5ed515ece452db0eb56fc028": 114,
+        "590c5f0d86f77413997acfab": 368,
+        "5d403f9186f7743cac3f229b": 298,
+        "5d1b376e86f774252519444e": 48,
+        "590c661e86f7741e566b646a": 586,
+        "5c0e531286f7747fa54205c2": 242,
+        "5ed5160a87bb8443d10680b5": 101,
+        "5d02797c86f774203f38e30a": 235,
+        "62a09f32621468534a797acb": 599,
+        "57347d5f245977448b40fa81": 277,
+        "637b60c3b7afa97bfc3d7001": 53,
+        "5751a89d24597722aa0e8db0": 67,
+        "57347d3d245977448f7b7f61": 351,
+        "544fb3f34bdc2d03748b456a": 212,
+        "66507eabf5ddb0818b085b68": 55,
+        "5ed5166ad380ab312177c100": 68,
+        "5ed515f6915ec335206e4152": 111,
+        "637b6179104668754b72f8f5": 111,
+        "5fca138c2a7b221b2852a5c6": 51,
+        "5d1b33a686f7742523398398": 52
+      },
+      "SecuredContainer": {
+        "56dfef82d2720bbd668b4567": 510690,
+        "573719762459775a626ccbc1": 33465,
+        "56d59d3ad2720bdb418b4577": 156290,
+        "5656d7c34bdc2d9d198b4587": 202650,
+        "56dff2ced2720bb4668b4567": 176760,
+        "59e4cf5286f7741778269d8a": 116820,
+        "5d6e6869a4b9361c140bcfde": 23550,
+        "573718ba2459775a75491131": 19140,
+        "5d6e68b3a4b9361bca7e50b5": 25080,
+        "61962d879bb3d20b0946d385": 28440,
+        "5d6e689ca4b9361bc8618956": 25680,
+        "5d6e68e6a4b9361c140bcfe0": 24000,
+        "56dff061d2720bb5668b4567": 65280,
+        "573719df2459775a626ccbc2": 49980,
+        "64b7af434b75259c590fa893": 19200,
+        "573720e02459776143012541": 18150,
+        "5d6e68d1a4b93622fe60e845": 23520,
+        "5c925fa22e221601da359b7b": 12810,
+        "5e85aa1a988a8701445df1f5": 13500,
+        "5efb0da7a29a85116f6ea05f": 4200,
+        "58864a4f2459770fcc257101": 20850,
+        "57a0dfb82459774d3078b56c": 26700,
+        "58820d1224597753c90aeb13": 25260,
+        "5c0d668f86f7747ccb7f13b2": 17130,
+        "5d6e6891a4b9361bd473feea": 25740,
+        "5e85a9a6eacf8c039e4e2ac1": 14580,
+        "5e85a9f4add9fe03027d9bf1": 5730,
+        "560d5e524bdc2d25448b4571": 1650,
+        "57a0e5022459774d1673f889": 6840
+      },
+      "SpecialLoot": {}
+    }
+  },
+  "firstName": [
+    "Майор",
+    "Старший",
+    "Арсенал",
+    "Пэпс",
+    "Омон",
+    "Вася",
+    "Крот",
+    "Николай",
+    "Сержант",
+    "Куча",
+    "Слонолюб",
+    "Висяк",
+    "Басяк",
+    "Бегемотик",
+    "Козырек",
+    "Дежурка",
+    "Учик",
+    "Человек",
+    "Фуражка",
+    "Гиббон",
+    "Татьянка",
+    "Старлей",
+    "Главдурь",
+    "Служебка",
+    "Стрелок"
+  ],
+  "lastName": [
+    "брат",
+    "Десантник",
+    "Николаевич"
+  ],
+  "difficulty": {
+    "easy": {
+      "Lay": {
+        "CHECK_SHOOT_WHEN_LAYING": false,
+        "DELTA_LAY_CHECK": 2,
+        "DELTA_GETUP": 2.7,
+        "DELTA_AFTER_GETUP": 10,
+        "CLEAR_POINTS_OF_SCARE_SEC": 20,
+        "MAX_LAY_TIME": 35,
+        "DELTA_WANT_LAY_CHECL_SEC": 5,
+        "ATTACK_LAY_CHANCE": 25,
+        "DIST_TO_COVER_TO_LAY": 3.5,
+        "DIST_TO_COVER_TO_LAY_SQRT": 12.25,
+        "DIST_GRASS_TERRAIN_SQRT": 0.160000011,
+        "DIST_ENEMY_NULL_DANGER_LAY": 15,
+        "DIST_ENEMY_NULL_DANGER_LAY_SQRT": 225,
+        "DIST_ENEMY_GETUP_LAY": 10,
+        "DIST_ENEMY_GETUP_LAY_SQRT": 100,
+        "DIST_ENEMY_CAN_LAY": 15,
+        "DIST_ENEMY_CAN_LAY_SQRT": 225,
+        "LAY_AIM": 0.6,
+        "MIN_CAN_LAY_DIST_SQRT": 121,
+        "MIN_CAN_LAY_DIST": 11,
+        "MAX_CAN_LAY_DIST_SQRT": 40000,
+        "MAX_CAN_LAY_DIST": 200,
+        "LAY_CHANCE_DANGER": 40,
+        "DAMAGE_TIME_TO_GETUP": 3
+      },
+      "Aiming": {
+        "MAX_AIM_PRECICING": 2,
+        "BETTER_PRECICING_COEF": 0.9,
+        "RECALC_DIST": 0.7,
+        "RECALC_SQR_DIST": 0.48999998,
+        "COEF_FROM_COVER": 0.45,
+        "PANIC_COEF": 1.2,
+        "PANIC_ACCURATY_COEF": 1.2,
+        "HARD_AIM": 0.75,
+        "PANIC_TIME": 2,
+        "RECALC_MUST_TIME": 3,
+        "DAMAGE_PANIC_TIME": 15,
+        "DANGER_UP_POINT": 1.3,
+        "MAX_AIMING_UPGRADE_BY_TIME": 0.25,
+        "DAMAGE_TO_DISCARD_AIM_0_100": 1,
+        "MIN_TIME_DISCARD_AIM_SEC": 0,
+        "MAX_TIME_DISCARD_AIM_SEC": 0,
+        "XZ_COEF": 0.2,
+        "SHOOT_TO_CHANGE_PRIORITY": 5525,
+        "BOTTOM_COEF": 0.1,
+        "FIRST_CONTACT_ADD_SEC": 0.1,
+        "FIRST_CONTACT_ADD_CHANCE_100": 80,
+        "BASE_HIT_AFFECTION_DELAY_SEC": 0.57,
+        "BASE_HIT_AFFECTION_MIN_ANG": 4,
+        "BASE_HIT_AFFECTION_MAX_ANG": 10,
+        "BASE_SHIEF": 0.05,
+        "SCATTERING_HAVE_DAMAGE_COEF": 2,
+        "SCATTERING_DIST_MODIF": 0.45,
+        "SCATTERING_DIST_MODIF_CLOSE": 0.6,
+        "AIMING_TYPE": 1,
+        "DIST_TO_SHOOT_TO_CENTER": 3,
+        "DIST_TO_SHOOT_NO_OFFSET": 3,
+        "CAN_USE_STRIBOSCOPE": 100,
+        "SHPERE_FRIENDY_FIRE_SIZE": -1,
+        "COEF_IF_MOVE": 1,
+        "TIME_COEF_IF_MOVE": 1.1,
+        "BOT_MOVE_IF_DELTA": 3.01,
+        "NEXT_SHOT_MISS_CHANCE_100": 100,
+        "NEXT_SHOT_MISS_Y_OFFSET": 1,
+        "ANYTIME_LIGHT_WHEN_AIM_100": -1,
+        "ANY_PART_SHOOT_TIME": 15,
+        "WEAPON_ROOT_OFFSET": 0.35,
+        "MIN_DAMAGE_TO_GET_HIT_AFFETS": 1,
+        "MAX_AIM_TIME": 1.5,
+        "OFFSET_RECAL_ANYWAY_TIME": 1,
+        "ENEMY_Y_WEAPON_OFFSET": 0.08,
+        "BASE_SHIEF_STATIONARY_GRENADE": 1.1,
+        "XZ_COEF_STATIONARY_GRENADE": 0.7,
+        "Y_TOP_OFFSET_COEF": 0.001,
+        "Y_BOTTOM_OFFSET_COEF": 0.015,
+        "BAD_SHOOTS_MIN": 0,
+        "BAD_SHOOTS_MAX": 0,
+        "BAD_SHOOTS_OFFSET": 1,
+        "BAD_SHOOTS_MAIN_COEF": 0.39
+      },
+      "Look": {
+        "MINIMUM_VISIBLE_DIST": 70,
+        "OLD_TIME_POINT": 11,
+        "WAIT_NEW_SENSOR": 2.1,
+        "WAIT_NEW__LOOK_SENSOR": 7.8,
+        "LOOK_AROUND_DELTA": 1.1,
+        "MAX_VISION_GRASS_METERS": 0.8,
+        "MAX_VISION_GRASS_METERS_FLARE": 8,
+        "MAX_VISION_GRASS_METERS_OPT": 0.9090909,
+        "MAX_VISION_GRASS_METERS_FLARE_OPT": 0.125,
+        "LightOnVisionDistance": 45,
+        "FAR_DISTANCE": 160,
+        "FarDeltaTimeSec": 3,
+        "MIDDLE_DIST": 90,
+        "MiddleDeltaTimeSec": 1,
+        "CloseDeltaTimeSec": 0.1,
+        "POSIBLE_VISION_SPACE": 1.2,
+        "GOAL_TO_FULL_DISSAPEAR": 1.1,
+        "GOAL_TO_FULL_DISSAPEAR_SHOOT": 0.03,
+        "BODY_DELTA_TIME_SEARCH_SEC": 1.7,
+        "COME_TO_BODY_DIST": 1.2,
+        "MARKSMAN_VISIBLE_DIST_COEF": 1.15,
+        "VISIBLE_DISNACE_WITH_LIGHT": 100,
+        "ENEMY_LIGHT_ADD": 48,
+        "ENEMY_LIGHT_START_DIST": 90,
+        "CAN_LOOK_TO_WALL": true,
+        "LOOK_THROUGH_GRASS": true,
+        "DIST_NOT_TO_IGNORE_WALL": 15,
+        "DIST_CHECK_WALL": 20,
+        "LOOK_LAST_POSENEMY_IF_NO_DANGER_SEC": 25,
+        "MIN_LOOK_AROUD_TIME": 20,
+        "OPTIMIZE_TO_ONLY_BODY": true
+      },
+      "Shoot": {
+        "RECOIL_TIME_NORMALIZE": 1,
+        "RECOIL_PER_METER": 0.02,
+        "MAX_RECOIL_PER_METER": 0.04,
+        "HORIZONT_RECOIL_COEF": 0.04,
+        "WAIT_NEXT_SINGLE_SHOT": 0.2,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MAX": 3.3,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MIN": 0.4,
+        "MARKSMAN_DIST_SEK_COEF": 44,
+        "FINGER_HOLD_SINGLE_SHOT": 0.14,
+        "BASE_AUTOMATIC_TIME": 0.4,
+        "AUTOMATIC_FIRE_SCATTERING_COEF": 1.1,
+        "CHANCE_TO_CHANGE_TO_AUTOMATIC_FIRE_100": 100,
+        "FAR_DIST_ENEMY": 20,
+        "SHOOT_FROM_COVER": 6,
+        "FAR_DIST_ENEMY_SQR": 400,
+        "MAX_DIST_COEF": 1.35,
+        "RECOIL_DELTA_PRESS": 0.15,
+        "RUN_DIST_NO_AMMO": 25,
+        "RUN_DIST_NO_AMMO_SQRT": 625,
+        "CAN_SHOOTS_TIME_TO_AMBUSH": 600,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_PERCENT": 0.5,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_SEC": 2,
+        "RELOAD_PECNET_NO_ENEMY": 0.6,
+        "CHANCE_TO_CHANGE_WEAPON": 10,
+        "CHANCE_TO_CHANGE_WEAPON_WITH_HELMET": 10,
+        "LOW_DIST_TO_CHANGE_WEAPON": 6,
+        "FAR_DIST_TO_CHANGE_WEAPON": 30,
+        "SUPPRESS_BY_SHOOT_TIME": 6,
+        "SUPPRESS_TRIGGERS_DOWN": 3,
+        "VALIDATE_MALFUNCTION_CHANCE": 100,
+        "REPAIR_MALFUNCTION_IMMEDIATE_CHANCE": 25,
+        "DELAY_BEFORE_EXAMINE_MALFUNCTION": 0.5,
+        "DELAY_BEFORE_FIX_MALFUNCTION": 0.5
+      },
+      "Move": {
+        "BASE_ROTATE_SPEED": 270,
+        "REACH_DIST": 0.5,
+        "REACH_DIST_RUN": 0.8,
+        "START_SLOW_DIST": 1.5,
+        "BASESTART_SLOW_DIST": 1.1,
+        "SLOW_COEF": 7,
+        "DIST_TO_CAN_CHANGE_WAY": 8,
+        "DIST_TO_START_RAYCAST": 15,
+        "BASE_START_SERACH": 35,
+        "UPDATE_TIME_RECAL_WAY": 7,
+        "FAR_DIST": 4,
+        "FAR_DIST_SQR": 16,
+        "DIST_TO_CAN_CHANGE_WAY_SQR": 64,
+        "DIST_TO_START_RAYCAST_SQR": 225,
+        "BASE_SQRT_START_SERACH": 1225,
+        "Y_APPROXIMATION": 0.7,
+        "DELTA_LAST_SEEN_ENEMY": 20,
+        "REACH_DIST_COVER": 2,
+        "RUN_TO_COVER_MIN": 2,
+        "CHANCE_TO_RUN_IF_NO_AMMO_0_100": 100,
+        "RUN_IF_CANT_SHOOT": false,
+        "RUN_IF_GAOL_FAR_THEN": 10,
+        "SEC_TO_CHANGE_TO_RUN": 3,
+        "ETERNITY_STAMINA": true
+      },
+      "Grenade": {
+        "DELTA_NEXT_ATTEMPT_FROM_COVER": 5,
+        "DELTA_NEXT_ATTEMPT": 10,
+        "MIN_DIST_NOT_TO_THROW": 8,
+        "NEAR_DELTA_THROW_TIME_SEC": 2,
+        "MIN_THROW_GRENADE_DIST": 12,
+        "MIN_THROW_GRENADE_DIST_SQRT": 144,
+        "MIN_DIST_NOT_TO_THROW_SQR": 64,
+        "RUN_AWAY": 22,
+        "RUN_AWAY_SQR": 484,
+        "ADD_GRENADE_AS_DANGER": 65,
+        "ADD_GRENADE_AS_DANGER_SQR": 4225,
+        "CHANCE_TO_NOTIFY_ENEMY_GR_100": 100,
+        "GrenadePerMeter": 0.1,
+        "REQUEST_DIST_MUST_THROW_SQRT": 9,
+        "REQUEST_DIST_MUST_THROW": 3,
+        "BEWARE_TYPE": 2,
+        "SHOOT_TO_SMOKE_CHANCE_100": 50,
+        "CHANCE_RUN_FLASHED_100": 100,
+        "MAX_FLASHED_DIST_TO_SHOOT": 10,
+        "MAX_FLASHED_DIST_TO_SHOOT_SQRT": 100,
+        "FLASH_GRENADE_TIME_COEF": 0.25,
+        "SIZE_SPOTTED_COEF": 2,
+        "BE_ATTENTION_COEF": 4,
+        "TIME_SHOOT_TO_FLASH": 4,
+        "CLOSE_TO_SMOKE_TO_SHOOT": 10,
+        "CLOSE_TO_SMOKE_TO_SHOOT_SQRT": 100,
+        "CLOSE_TO_SMOKE_TIME_DELTA": 5,
+        "SMOKE_CHECK_DELTA": 1,
+        "DELTA_GRENADE_START_TIME": 0.01,
+        "AMBUSH_IF_SMOKE_IN_ZONE_100": 40,
+        "AMBUSH_IF_SMOKE_RETURN_TO_ATTACK_SEC": 30,
+        "NO_RUN_FROM_AI_GRENADES": true,
+        "MAX_THROW_POWER": 25,
+        "MIN_THROW_DIST_PERCENT_0_1": 0.7,
+        "GrenadePrecision": 0.01,
+        "STOP_WHEN_THROW_GRENADE": true,
+        "WAIT_TIME_TURN_AWAY": 0.2,
+        "SMOKE_SUPPRESS_DELTA": 20,
+        "DAMAGE_GRENADE_SUPPRESS_DELTA": 8,
+        "STUN_SUPPRESS_DELTA": 9,
+        "CHEAT_START_GRENADE_PLACE": false,
+        "CAN_THROW_STRAIGHT_CONTACT": true,
+        "STRAIGHT_CONTACT_DELTA_SEC": -1,
+        "ANG_TYPE": 1
+      },
+      "Change": {
+        "SMOKE_VISION_DIST": 0.6,
+        "SMOKE_GAIN_SIGHT": 1.6,
+        "SMOKE_SCATTERING": 1.6,
+        "SMOKE_PRECICING": 1.6,
+        "SMOKE_HEARING": 1,
+        "SMOKE_ACCURATY": 1.6,
+        "SMOKE_LAY_CHANCE": 1.6,
+        "FLASH_VISION_DIST": 0.05,
+        "FLASH_GAIN_SIGHT": 1.8,
+        "FLASH_SCATTERING": 1.6,
+        "FLASH_PRECICING": 1.6,
+        "FLASH_HEARING": 1,
+        "FLASH_ACCURATY": 1.6,
+        "FLASH_LAY_CHANCE": 1,
+        "STUN_HEARING": 0.01
+      },
+      "Cover": {
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MIN": 20,
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MAX": 50,
+        "SOUND_TO_GET_SPOTTED": 2,
+        "TIME_TO_MOVE_TO_COVER": 15,
+        "MAX_DIST_OF_COVER": 4,
+        "CHANGE_RUN_TO_COVER_SEC": 5,
+        "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
+        "MIN_DIST_TO_ENEMY": 9,
+        "DIST_CANT_CHANGE_WAY": 5,
+        "DIST_CHECK_SFETY": 9,
+        "TIME_CHECK_SAFE": 2,
+        "HIDE_TO_COVER_TIME": 1.5,
+        "MAX_DIST_OF_COVER_SQR": 16,
+        "DIST_CANT_CHANGE_WAY_SQR": 25,
+        "SPOTTED_COVERS_RADIUS": 2.5,
+        "LOOK_LAST_ENEMY_POS_MOVING": 1.5,
+        "LOOK_TO_HIT_POINT_IF_LAST_ENEMY": 3,
+        "LOOK_LAST_ENEMY_POS_LOOKAROUND": 45,
+        "OFFSET_LOOK_ALONG_WALL_ANG": 20,
+        "SPOTTED_GRENADE_RADIUS": 16,
+        "MAX_SPOTTED_TIME_SEC": 55,
+        "WAIT_INT_COVER_FINDING_ENEMY": 2,
+        "CLOSE_DIST_POINT_SQRT": 4,
+        "DELTA_SEEN_FROM_COVE_LAST_POS": 15,
+        "MOVE_TO_COVER_WHEN_TARGET": false,
+        "RUN_COVER_IF_CAN_AND_NO_ENEMIES": false,
+        "SPOTTED_GRENADE_TIME": 7,
+        "DEPENDS_Y_DIST_TO_BOT": false,
+        "RUN_IF_FAR": 15,
+        "RUN_IF_FAR_SQRT": 225,
+        "STAY_IF_FAR": 25,
+        "STAY_IF_FAR_SQRT": 625,
+        "CHECK_COVER_ENEMY_LOOK": false,
+        "SHOOT_NEAR_TO_LEAVE": 2,
+        "SHOOT_NEAR_SEC_PERIOD": 0.5,
+        "HITS_TO_LEAVE_COVER": 1,
+        "HITS_TO_LEAVE_COVER_UNKNOWN": 1,
+        "DOG_FIGHT_AFTER_LEAVE": 4,
+        "NOT_LOOK_AT_WALL_IS_DANGER": true,
+        "MIN_DEFENCE_LEVEL": 22,
+        "DIST_MAX_REWORK_NOT_TO_SHOOT": 30,
+        "REWORK_NOT_TO_SHOOT": true,
+        "DELETE_POINTS_BEHIND_ENEMIES": true,
+        "GOOD_DIST_TO_POINT_COEF": 1.8,
+        "ENEMY_DIST_TO_GO_OUT": 1,
+        "CHECK_CLOSEST_FRIEND": false,
+        "STATIONARY_WEAPON_NO_ENEMY_GETUP": 15,
+        "STATIONARY_WEAPON_MAX_DIST_TO_USE": 50
+      },
+      "Patrol": {
+        "LOOK_TIME_BASE": 12,
+        "RESERVE_TIME_STAY": 72,
+        "FRIEND_SEARCH_SEC": 12,
+        "TALK_DELAY": 31.1,
+        "MIN_TALK_DELAY": 35,
+        "TALK_DELAY_BIG": 45.1,
+        "CHANGE_WAY_TIME": 3325.1,
+        "MIN_DIST_TO_CLOSE_TALK": 5,
+        "VISION_DIST_COEF_PEACE": 1,
+        "MIN_DIST_TO_CLOSE_TALK_SQR": 25,
+        "CHANCE_TO_CUT_WAY_0_100": 75,
+        "CUT_WAY_MIN_0_1": 0.4,
+        "CUT_WAY_MAX_0_1": 0.65,
+        "CHANCE_TO_CHANGE_WAY_0_100": 30,
+        "CHANCE_TO_SHOOT_DEADBODY": 52,
+        "SUSPETION_PLACE_LIFETIME": 7,
+        "RESERVE_OUT_TIME": 60,
+        "CLOSE_TO_SELECT_RESERV_WAY": 25,
+        "MAX_YDIST_TO_START_WARN_REQUEST_TO_REQUESTER": 5,
+        "CAN_CHOOSE_RESERV": false,
+        "CAN_CHECK_MAGAZINE": false,
+        "CAN_WATCH_SECOND_WEAPON": true
+      },
+      "Hearing": {
+        "BOT_CLOSE_PANIC_DIST": 1,
+        "CHANCE_TO_HEAR_SIMPLE_SOUND_0_1": 0.88,
+        "DISPERSION_COEF": 10,
+        "CLOSE_DIST": 26,
+        "FAR_DIST": 56,
+        "SOUND_DIR_DEEFREE": 30,
+        "DIST_PLACE_TO_FIND_POINT": 70,
+        "DEAD_BODY_SOUND_RAD": 30,
+        "LOOK_ONLY_DANGER": false,
+        "RESET_TIMER_DIST": 17,
+        "HEAR_DELAY_WHEN_PEACE": 0,
+        "HEAR_DELAY_WHEN_HAVE_SMT": 0,
+        "LOOK_ONLY_DANGER_DELTA": 9
+      },
+      "Mind": {
+        "MIN_SHOOTS_TIME": 2,
+        "MAX_SHOOTS_TIME": 4,
+        "GROUP_EXACTLY_PHRASE_DELAY_MAX": 20,
+        "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "DAMAGE_REDUCTION_TIME_SEC": 20,
+        "MIN_DAMAGE_SCARE": 20,
+        "CHANCE_TO_RUN_CAUSE_DAMAGE_0_100": 35,
+        "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
+        "TIME_TO_FIND_ENEMY": 22,
+        "MAX_AGGRO_BOT_DIST": 100,
+        "HIT_POINT_DETECTION": 4,
+        "DANGER_POINT_CHOOSE_COEF": 1,
+        "SIMPLE_POINT_CHOOSE_COEF": 0.4,
+        "LASTSEEN_POINT_CHOOSE_COEF": 0.2,
+        "COVER_DIST_COEF": 1.5,
+        "DIST_TO_FOUND_SQRT": 400,
+        "MAX_AGGRO_BOT_DIST_SQR": 10000,
+        "DIST_TO_STOP_RUN_ENEMY": 15,
+        "ENEMY_LOOK_AT_ME_ANG": 15,
+        "MIN_START_AGGRESION_COEF": 1,
+        "MAX_START_AGGRESION_COEF": 3,
+        "BULLET_FEEL_DIST": 360,
+        "BULLET_FEEL_CLOSE_SDIST": 1,
+        "ATTACK_IMMEDIATLY_CHANCE_0_100": 40,
+        "CHANCE_FUCK_YOU_ON_CONTACT_100": 0.01,
+        "FRIEND_DEAD_AGR_LOW": -0.2,
+        "FRIEND_AGR_KILL": 0.2,
+        "LAST_ENEMY_LOOK_TO": 40,
+        "CAN_RECEIVE_PLAYER_REQUESTS_SAVAGE": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_BEAR": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_USEC": false,
+        "CAN_USE_MEDS": true,
+        "SUSPETION_POINT_CHANCE_ADD100": 0,
+        "AMBUSH_WHEN_UNDER_FIRE": true,
+        "AMBUSH_WHEN_UNDER_FIRE_TIME_RESIST": 60,
+        "ATTACK_ENEMY_IF_PROTECT_DELTA_LAST_TIME_SEEN": 1.5,
+        "HOLD_IF_PROTECT_DELTA_LAST_TIME_SEEN": 8.5,
+        "FIND_COVER_TO_GET_POSITION_WITH_SHOOT": 2,
+        "PROTECT_TIME_REAL": true,
+        "CHANCE_SHOOT_WHEN_WARN_PLAYER_100": 25,
+        "CAN_PANIC_IS_PROTECT": false,
+        "NO_RUN_AWAY_FOR_SAFE": true,
+        "PART_PERCENT_TO_HEAL": 0.65,
+        "PROTECT_DELTA_HEAL_SEC": 10,
+        "CAN_STAND_BY": false,
+        "CAN_THROW_REQUESTS": true,
+        "GROUP_ANY_PHRASE_DELAY": 5,
+        "GROUP_EXACTLY_PHRASE_DELAY": 20,
+        "DIST_TO_ENEMY_YO_CAN_HEAL": 30,
+        "CHANCE_TO_STAY_WHEN_WARN_PLAYER_100": 80,
+        "DOG_FIGHT_OUT": 6,
+        "DOG_FIGHT_IN": 3,
+        "SHOOT_INSTEAD_DOG_FIGHT": 9,
+        "PISTOL_SHOTGUN_AMBUSH_DIST": 330,
+        "STANDART_AMBUSH_DIST": 300,
+        "AI_POWER_COEF": 120,
+        "COVER_SECONDS_AFTER_LOSE_VISION": 10,
+        "COVER_SELF_ALWAYS_IF_DAMAGED": false,
+        "SEC_TO_MORE_DIST_TO_RUN": 10,
+        "HEAL_DELAY_SEC": 5,
+        "HIT_DELAY_WHEN_HAVE_SMT": -1,
+        "HIT_DELAY_WHEN_PEACE": -1,
+        "TALK_WITH_QUERY": true,
+        "DANGER_EXPIRE_TIME_MIN": 0.4,
+        "DANGER_EXPIRE_TIME_MAX": 1.2,
+        "PANIC_RUN_WEIGHT": 1,
+        "PANIC_SIT_WEIGHT": 80,
+        "PANIC_LAY_WEIGHT": 20,
+        "PANIC_NONE_WEIGHT": 40,
+        "CAN_TAKE_ITEMS": false,
+        "PANIC_SIT_WEIGHT_PEACE": 60,
+        "DEFAULT_SAVAGE_BEHAVIOUR": "Warn",
+        "DEFAULT_BEAR_BEHAVIOUR": "AlwaysEnemies",
+        "DEFAULT_USEC_BEHAVIOUR": "AlwaysEnemies",
+        "FRIENDLY_BOT_TYPES": [],
+        "WARN_BOT_TYPES": [
+          "assault"
+        ],
+        "ENEMY_BOT_TYPES": [
+          "pmcBEAR",
+          "pmcUSEC"
+        ]
+      },
+      "Boss": {
+        "BOSS_DIST_TO_WARNING": 34,
+        "BOSS_DIST_TO_WARNING_SQRT": 1156,
+        "BOSS_DIST_TO_WARNING_OUT": 43,
+        "BOSS_DIST_TO_WARNING_OUT_SQRT": 1849,
+        "BOSS_DIST_TO_SHOOT": 16,
+        "BOSS_DIST_TO_SHOOT_SQRT": 256,
+        "CHANCE_TO_SEND_GRENADE_100": 100,
+        "MAX_DIST_COVER_BOSS": 25,
+        "MAX_DIST_COVER_BOSS_SQRT": 625,
+        "MAX_DIST_DECIDER_TO_SEND": 35,
+        "MAX_DIST_DECIDER_TO_SEND_SQRT": 1225,
+        "TIME_AFTER_LOSE": 15,
+        "TIME_AFTER_LOSE_DELTA": 60,
+        "PERSONS_SEND": 2,
+        "DELTA_SEARCH_TIME": 18,
+        "COVER_TO_SEND": true,
+        "EFFECT_PAINKILLER": true,
+        "WAIT_NO_ATTACK_SAVAGE": 10,
+        "CHANCE_USE_RESERVE_PATROL_100": 30,
+        "KILLA_Y_DELTA_TO_BE_ENEMY_BOSS": 5,
+        "KILLA_DITANCE_TO_BE_ENEMY_BOSS": 65,
+        "KILLA_START_SEARCH_SEC": 40,
+        "KILLA_CONTUTION_TIME": 5,
+        "KILLA_CLOSE_ATTACK_DIST": 14,
+        "KILLA_MIDDLE_ATTACK_DIST": 92,
+        "KILLA_LARGE_ATTACK_DIST": 121,
+        "KILLA_SEARCH_METERS": 30,
+        "KILLA_DEF_DIST_SQRT": 225,
+        "KILLA_SEARCH_SEC_STOP_AFTER_COMING": 25,
+        "KILLA_DIST_TO_GO_TO_SUPPRESS": 6,
+        "KILLA_AFTER_GRENADE_SUPPRESS_DELAY": 2,
+        "KILLA_CLOSEATTACK_TIMES": 3,
+        "KILLA_CLOSEATTACK_DELAY": 10,
+        "KILLA_HOLD_DELAY": 5,
+        "KILLA_BULLET_TO_RELOAD": 15,
+        "SHALL_WARN": true,
+        "KILLA_ENEMIES_TO_ATTACK": 3,
+        "KILLA_ONE_IS_CLOSE": 20,
+        "KILLA_TRIGGER_DOWN_DELAY": 0.1,
+        "KILLA_WAIT_IN_COVER_COEF": 0.1,
+        "KOJANIY_DIST_WHEN_READY": 40,
+        "KOJANIY_DIST_TO_BE_ENEMY": 200,
+        "KOJANIY_MIN_DIST_TO_LOOT": 20,
+        "KOJANIY_MIN_DIST_TO_LOOT_SQRT": 400,
+        "KOJANIY_DIST_ENEMY_TOO_CLOSE": 17,
+        "KOJANIY_MANY_ENEMIES_COEF": 1.5,
+        "KOJANIY_COVER_POWER": 500,
+        "KOJANIY_FIGHT_CENTER_POS_ME": false,
+        "KOJANIY_DIST_CORE_SPOS_RECALC": 25,
+        "KOJANIY_DIST_CORE_SPOS_RECALC_SQRT": 625,
+        "GLUHAR_FOLLOWER_PATH_NAME": "Attack",
+        "GLUHAR_FOLLOWER_SCOUT_DIST_START_ATTACK": 80,
+        "GLUHAR_FOLLOWER_SCOUT_DIST_END_ATTACK": 120,
+        "GLUHAR_BOSS_WANNA_ATTACK_CHANCE_0_100": 150,
+        "GLUHAR_ASSAULT_ATTACK_DIST": 45,
+        "GLUHAR_STOP_ASSAULT_ATTACK_DIST": 180,
+        "GLUHAR_TIME_TO_ASSAULT": 10,
+        "DIST_TO_PROTECT_BOSS": 15
+      },
+      "Core": {
+        "VisibleAngle": 160,
+        "VisibleDistance": 142,
+        "GainSightCoef": 0.1,
+        "ScatteringPerMeter": 0.045,
+        "ScatteringClosePerMeter": 0.12,
+        "DamageCoeff": 1,
+        "HearingSense": 3.9,
+        "CanRun": true,
+        "CanGrenade": true,
+        "AimingType": "normal",
+        "PistolFireDistancePref": 35,
+        "ShotgunFireDistancePref": 50,
+        "RifleFireDistancePref": 100,
+        "AccuratySpeed": 0.2,
+        "WaitInCoverBetweenShotsSec": 0.3
+      },
+      "Scattering": {
+        "MinScatter": 0.03,
+        "WorkingScatter": 0.15,
+        "MaxScatter": 0.4,
+        "SpeedUp": 0.3,
+        "SpeedUpAim": 1.4,
+        "SpeedDown": -0.3,
+        "ToSlowBotSpeed": 1.5,
+        "ToLowBotSpeed": 2.4,
+        "ToUpBotSpeed": 3.6,
+        "MovingSlowCoef": 1.5,
+        "ToLowBotAngularSpeed": 80,
+        "ToStopBotAngularSpeed": 40,
+        "FromShot": 0.001,
+        "TracerCoef": 1.3,
+        "HandDamageScatteringMinMax": 0.7,
+        "HandDamageAccuracySpeed": 1.3,
+        "BloodFall": 1.45,
+        "Caution": 0.3,
+        "ToCaution": 0.6,
+        "RecoilControlCoefShootDone": 0.0003,
+        "RecoilControlCoefShootDoneAuto": 0.00015,
+        "AMPLITUDE_FACTOR": 0.25,
+        "AMPLITUDE_SPEED": 0.1,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM": 15,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM_SQRT": 225,
+        "DIST_NOT_TO_SHOOT": 0.3,
+        "PoseChnageCoef": 0.1,
+        "LayFactor": 0.1,
+        "RecoilYCoef": 0.0005,
+        "RecoilYCoefSppedDown": -0.52,
+        "RecoilYMax": 1
+      }
+    },
+    "normal": {
+      "Lay": {
+        "CHECK_SHOOT_WHEN_LAYING": false,
+        "DELTA_LAY_CHECK": 2,
+        "DELTA_GETUP": 2.7,
+        "DELTA_AFTER_GETUP": 10,
+        "CLEAR_POINTS_OF_SCARE_SEC": 20,
+        "MAX_LAY_TIME": 35,
+        "DELTA_WANT_LAY_CHECL_SEC": 5,
+        "ATTACK_LAY_CHANCE": 25,
+        "DIST_TO_COVER_TO_LAY": 3.5,
+        "DIST_TO_COVER_TO_LAY_SQRT": 12.25,
+        "DIST_GRASS_TERRAIN_SQRT": 0.160000011,
+        "DIST_ENEMY_NULL_DANGER_LAY": 15,
+        "DIST_ENEMY_NULL_DANGER_LAY_SQRT": 225,
+        "DIST_ENEMY_GETUP_LAY": 10,
+        "DIST_ENEMY_GETUP_LAY_SQRT": 100,
+        "DIST_ENEMY_CAN_LAY": 15,
+        "DIST_ENEMY_CAN_LAY_SQRT": 225,
+        "LAY_AIM": 0.6,
+        "MIN_CAN_LAY_DIST_SQRT": 121,
+        "MIN_CAN_LAY_DIST": 11,
+        "MAX_CAN_LAY_DIST_SQRT": 40000,
+        "MAX_CAN_LAY_DIST": 200,
+        "LAY_CHANCE_DANGER": 40,
+        "DAMAGE_TIME_TO_GETUP": 3
+      },
+      "Aiming": {
+        "MAX_AIM_PRECICING": 2,
+        "BETTER_PRECICING_COEF": 0.9,
+        "RECALC_DIST": 0.7,
+        "RECALC_SQR_DIST": 0.48999998,
+        "COEF_FROM_COVER": 0.45,
+        "PANIC_COEF": 1.2,
+        "PANIC_ACCURATY_COEF": 1.2,
+        "HARD_AIM": 0.75,
+        "PANIC_TIME": 2,
+        "RECALC_MUST_TIME": 3,
+        "DAMAGE_PANIC_TIME": 15,
+        "DANGER_UP_POINT": 1.3,
+        "MAX_AIMING_UPGRADE_BY_TIME": 0.25,
+        "DAMAGE_TO_DISCARD_AIM_0_100": 1,
+        "MIN_TIME_DISCARD_AIM_SEC": 0,
+        "MAX_TIME_DISCARD_AIM_SEC": 0,
+        "XZ_COEF": 0.2,
+        "SHOOT_TO_CHANGE_PRIORITY": 5525,
+        "BOTTOM_COEF": 0.1,
+        "FIRST_CONTACT_ADD_SEC": 0.1,
+        "FIRST_CONTACT_ADD_CHANCE_100": 80,
+        "BASE_HIT_AFFECTION_DELAY_SEC": 0.57,
+        "BASE_HIT_AFFECTION_MIN_ANG": 4,
+        "BASE_HIT_AFFECTION_MAX_ANG": 10,
+        "BASE_SHIEF": 0.05,
+        "SCATTERING_HAVE_DAMAGE_COEF": 2,
+        "SCATTERING_DIST_MODIF": 0.45,
+        "SCATTERING_DIST_MODIF_CLOSE": 0.6,
+        "AIMING_TYPE": 1,
+        "DIST_TO_SHOOT_TO_CENTER": 3,
+        "DIST_TO_SHOOT_NO_OFFSET": 3,
+        "CAN_USE_STRIBOSCOPE": 100,
+        "SHPERE_FRIENDY_FIRE_SIZE": -1,
+        "COEF_IF_MOVE": 1,
+        "TIME_COEF_IF_MOVE": 1.1,
+        "BOT_MOVE_IF_DELTA": 3.01,
+        "NEXT_SHOT_MISS_CHANCE_100": 100,
+        "NEXT_SHOT_MISS_Y_OFFSET": 1,
+        "ANYTIME_LIGHT_WHEN_AIM_100": -1,
+        "ANY_PART_SHOOT_TIME": 15,
+        "WEAPON_ROOT_OFFSET": 0.35,
+        "MIN_DAMAGE_TO_GET_HIT_AFFETS": 1,
+        "MAX_AIM_TIME": 1.5,
+        "OFFSET_RECAL_ANYWAY_TIME": 1,
+        "ENEMY_Y_WEAPON_OFFSET": 0.08,
+        "BASE_SHIEF_STATIONARY_GRENADE": 1.1,
+        "XZ_COEF_STATIONARY_GRENADE": 0.7,
+        "Y_TOP_OFFSET_COEF": 0.001,
+        "Y_BOTTOM_OFFSET_COEF": 0.015,
+        "BAD_SHOOTS_MIN": 0,
+        "BAD_SHOOTS_MAX": 0,
+        "BAD_SHOOTS_OFFSET": 1,
+        "BAD_SHOOTS_MAIN_COEF": 0.39
+      },
+      "Look": {
+        "MINIMUM_VISIBLE_DIST": 70,
+        "OLD_TIME_POINT": 11,
+        "WAIT_NEW_SENSOR": 2.1,
+        "WAIT_NEW__LOOK_SENSOR": 7.8,
+        "LOOK_AROUND_DELTA": 1.1,
+        "MAX_VISION_GRASS_METERS": 0.8,
+        "MAX_VISION_GRASS_METERS_FLARE": 8,
+        "MAX_VISION_GRASS_METERS_OPT": 0.9090909,
+        "MAX_VISION_GRASS_METERS_FLARE_OPT": 0.125,
+        "LightOnVisionDistance": 45,
+        "FAR_DISTANCE": 160,
+        "FarDeltaTimeSec": 3,
+        "MIDDLE_DIST": 90,
+        "MiddleDeltaTimeSec": 1,
+        "CloseDeltaTimeSec": 0.1,
+        "POSIBLE_VISION_SPACE": 1.2,
+        "GOAL_TO_FULL_DISSAPEAR": 1.1,
+        "GOAL_TO_FULL_DISSAPEAR_SHOOT": 0.03,
+        "BODY_DELTA_TIME_SEARCH_SEC": 1.7,
+        "COME_TO_BODY_DIST": 1.2,
+        "MARKSMAN_VISIBLE_DIST_COEF": 1.15,
+        "VISIBLE_DISNACE_WITH_LIGHT": 100,
+        "ENEMY_LIGHT_ADD": 48,
+        "ENEMY_LIGHT_START_DIST": 90,
+        "CAN_LOOK_TO_WALL": true,
+        "LOOK_THROUGH_GRASS": true,
+        "DIST_NOT_TO_IGNORE_WALL": 15,
+        "DIST_CHECK_WALL": 20,
+        "LOOK_LAST_POSENEMY_IF_NO_DANGER_SEC": 25,
+        "MIN_LOOK_AROUD_TIME": 20,
+        "OPTIMIZE_TO_ONLY_BODY": true
+      },
+      "Shoot": {
+        "RECOIL_TIME_NORMALIZE": 1,
+        "RECOIL_PER_METER": 0.02,
+        "MAX_RECOIL_PER_METER": 0.04,
+        "HORIZONT_RECOIL_COEF": 0.04,
+        "WAIT_NEXT_SINGLE_SHOT": 0.2,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MAX": 3.3,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MIN": 0.4,
+        "MARKSMAN_DIST_SEK_COEF": 44,
+        "FINGER_HOLD_SINGLE_SHOT": 0.14,
+        "BASE_AUTOMATIC_TIME": 0.4,
+        "AUTOMATIC_FIRE_SCATTERING_COEF": 1.1,
+        "CHANCE_TO_CHANGE_TO_AUTOMATIC_FIRE_100": 100,
+        "FAR_DIST_ENEMY": 20,
+        "SHOOT_FROM_COVER": 6,
+        "FAR_DIST_ENEMY_SQR": 400,
+        "MAX_DIST_COEF": 1.35,
+        "RECOIL_DELTA_PRESS": 0.15,
+        "RUN_DIST_NO_AMMO": 25,
+        "RUN_DIST_NO_AMMO_SQRT": 625,
+        "CAN_SHOOTS_TIME_TO_AMBUSH": 600,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_PERCENT": 0.5,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_SEC": 2,
+        "RELOAD_PECNET_NO_ENEMY": 0.6,
+        "CHANCE_TO_CHANGE_WEAPON": 10,
+        "CHANCE_TO_CHANGE_WEAPON_WITH_HELMET": 10,
+        "LOW_DIST_TO_CHANGE_WEAPON": 6,
+        "FAR_DIST_TO_CHANGE_WEAPON": 30,
+        "SUPPRESS_BY_SHOOT_TIME": 6,
+        "SUPPRESS_TRIGGERS_DOWN": 3,
+        "VALIDATE_MALFUNCTION_CHANCE": 100,
+        "REPAIR_MALFUNCTION_IMMEDIATE_CHANCE": 25,
+        "DELAY_BEFORE_EXAMINE_MALFUNCTION": 0.5,
+        "DELAY_BEFORE_FIX_MALFUNCTION": 0.5
+      },
+      "Move": {
+        "BASE_ROTATE_SPEED": 270,
+        "REACH_DIST": 0.5,
+        "REACH_DIST_RUN": 0.8,
+        "START_SLOW_DIST": 1.5,
+        "BASESTART_SLOW_DIST": 1.1,
+        "SLOW_COEF": 7,
+        "DIST_TO_CAN_CHANGE_WAY": 8,
+        "DIST_TO_START_RAYCAST": 15,
+        "BASE_START_SERACH": 35,
+        "UPDATE_TIME_RECAL_WAY": 7,
+        "FAR_DIST": 4,
+        "FAR_DIST_SQR": 16,
+        "DIST_TO_CAN_CHANGE_WAY_SQR": 64,
+        "DIST_TO_START_RAYCAST_SQR": 225,
+        "BASE_SQRT_START_SERACH": 1225,
+        "Y_APPROXIMATION": 0.7,
+        "DELTA_LAST_SEEN_ENEMY": 20,
+        "REACH_DIST_COVER": 2,
+        "RUN_TO_COVER_MIN": 2,
+        "CHANCE_TO_RUN_IF_NO_AMMO_0_100": 100,
+        "RUN_IF_CANT_SHOOT": false,
+        "RUN_IF_GAOL_FAR_THEN": 10,
+        "SEC_TO_CHANGE_TO_RUN": 3,
+        "ETERNITY_STAMINA": true
+      },
+      "Grenade": {
+        "DELTA_NEXT_ATTEMPT_FROM_COVER": 5,
+        "DELTA_NEXT_ATTEMPT": 10,
+        "MIN_DIST_NOT_TO_THROW": 8,
+        "NEAR_DELTA_THROW_TIME_SEC": 2,
+        "MIN_THROW_GRENADE_DIST": 12,
+        "MIN_THROW_GRENADE_DIST_SQRT": 144,
+        "MIN_DIST_NOT_TO_THROW_SQR": 64,
+        "RUN_AWAY": 22,
+        "RUN_AWAY_SQR": 484,
+        "ADD_GRENADE_AS_DANGER": 65,
+        "ADD_GRENADE_AS_DANGER_SQR": 4225,
+        "CHANCE_TO_NOTIFY_ENEMY_GR_100": 100,
+        "GrenadePerMeter": 0.1,
+        "REQUEST_DIST_MUST_THROW_SQRT": 9,
+        "REQUEST_DIST_MUST_THROW": 3,
+        "BEWARE_TYPE": 2,
+        "SHOOT_TO_SMOKE_CHANCE_100": 50,
+        "CHANCE_RUN_FLASHED_100": 100,
+        "MAX_FLASHED_DIST_TO_SHOOT": 10,
+        "MAX_FLASHED_DIST_TO_SHOOT_SQRT": 100,
+        "FLASH_GRENADE_TIME_COEF": 0.25,
+        "SIZE_SPOTTED_COEF": 2,
+        "BE_ATTENTION_COEF": 4,
+        "TIME_SHOOT_TO_FLASH": 4,
+        "CLOSE_TO_SMOKE_TO_SHOOT": 10,
+        "CLOSE_TO_SMOKE_TO_SHOOT_SQRT": 100,
+        "CLOSE_TO_SMOKE_TIME_DELTA": 5,
+        "SMOKE_CHECK_DELTA": 1,
+        "DELTA_GRENADE_START_TIME": 0.01,
+        "AMBUSH_IF_SMOKE_IN_ZONE_100": 40,
+        "AMBUSH_IF_SMOKE_RETURN_TO_ATTACK_SEC": 30,
+        "NO_RUN_FROM_AI_GRENADES": true,
+        "MAX_THROW_POWER": 25,
+        "MIN_THROW_DIST_PERCENT_0_1": 0.7,
+        "GrenadePrecision": 0.01,
+        "STOP_WHEN_THROW_GRENADE": true,
+        "WAIT_TIME_TURN_AWAY": 0.2,
+        "SMOKE_SUPPRESS_DELTA": 20,
+        "DAMAGE_GRENADE_SUPPRESS_DELTA": 8,
+        "STUN_SUPPRESS_DELTA": 9,
+        "CHEAT_START_GRENADE_PLACE": false,
+        "CAN_THROW_STRAIGHT_CONTACT": true,
+        "STRAIGHT_CONTACT_DELTA_SEC": -1,
+        "ANG_TYPE": 1
+      },
+      "Change": {
+        "SMOKE_VISION_DIST": 0.6,
+        "SMOKE_GAIN_SIGHT": 1.6,
+        "SMOKE_SCATTERING": 1.6,
+        "SMOKE_PRECICING": 1.6,
+        "SMOKE_HEARING": 1,
+        "SMOKE_ACCURATY": 1.6,
+        "SMOKE_LAY_CHANCE": 1.6,
+        "FLASH_VISION_DIST": 0.05,
+        "FLASH_GAIN_SIGHT": 1.8,
+        "FLASH_SCATTERING": 1.6,
+        "FLASH_PRECICING": 1.6,
+        "FLASH_HEARING": 1,
+        "FLASH_ACCURATY": 1.6,
+        "FLASH_LAY_CHANCE": 1,
+        "STUN_HEARING": 0.01
+      },
+      "Cover": {
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MIN": 20,
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MAX": 50,
+        "SOUND_TO_GET_SPOTTED": 2,
+        "TIME_TO_MOVE_TO_COVER": 15,
+        "MAX_DIST_OF_COVER": 4,
+        "CHANGE_RUN_TO_COVER_SEC": 5,
+        "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
+        "MIN_DIST_TO_ENEMY": 9,
+        "DIST_CANT_CHANGE_WAY": 5,
+        "DIST_CHECK_SFETY": 9,
+        "TIME_CHECK_SAFE": 2,
+        "HIDE_TO_COVER_TIME": 1.5,
+        "MAX_DIST_OF_COVER_SQR": 16,
+        "DIST_CANT_CHANGE_WAY_SQR": 25,
+        "SPOTTED_COVERS_RADIUS": 2.5,
+        "LOOK_LAST_ENEMY_POS_MOVING": 1.5,
+        "LOOK_TO_HIT_POINT_IF_LAST_ENEMY": 3,
+        "LOOK_LAST_ENEMY_POS_LOOKAROUND": 45,
+        "OFFSET_LOOK_ALONG_WALL_ANG": 20,
+        "SPOTTED_GRENADE_RADIUS": 16,
+        "MAX_SPOTTED_TIME_SEC": 55,
+        "WAIT_INT_COVER_FINDING_ENEMY": 2,
+        "CLOSE_DIST_POINT_SQRT": 4,
+        "DELTA_SEEN_FROM_COVE_LAST_POS": 15,
+        "MOVE_TO_COVER_WHEN_TARGET": false,
+        "RUN_COVER_IF_CAN_AND_NO_ENEMIES": false,
+        "SPOTTED_GRENADE_TIME": 7,
+        "DEPENDS_Y_DIST_TO_BOT": false,
+        "RUN_IF_FAR": 15,
+        "RUN_IF_FAR_SQRT": 225,
+        "STAY_IF_FAR": 25,
+        "STAY_IF_FAR_SQRT": 625,
+        "CHECK_COVER_ENEMY_LOOK": false,
+        "SHOOT_NEAR_TO_LEAVE": 2,
+        "SHOOT_NEAR_SEC_PERIOD": 0.5,
+        "HITS_TO_LEAVE_COVER": 1,
+        "HITS_TO_LEAVE_COVER_UNKNOWN": 1,
+        "DOG_FIGHT_AFTER_LEAVE": 4,
+        "NOT_LOOK_AT_WALL_IS_DANGER": true,
+        "MIN_DEFENCE_LEVEL": 22,
+        "DIST_MAX_REWORK_NOT_TO_SHOOT": 30,
+        "REWORK_NOT_TO_SHOOT": true,
+        "DELETE_POINTS_BEHIND_ENEMIES": true,
+        "GOOD_DIST_TO_POINT_COEF": 1.8,
+        "ENEMY_DIST_TO_GO_OUT": 1,
+        "CHECK_CLOSEST_FRIEND": false,
+        "STATIONARY_WEAPON_NO_ENEMY_GETUP": 15,
+        "STATIONARY_WEAPON_MAX_DIST_TO_USE": 50
+      },
+      "Patrol": {
+        "LOOK_TIME_BASE": 12,
+        "RESERVE_TIME_STAY": 72,
+        "FRIEND_SEARCH_SEC": 12,
+        "TALK_DELAY": 31.1,
+        "MIN_TALK_DELAY": 35,
+        "TALK_DELAY_BIG": 45.1,
+        "CHANGE_WAY_TIME": 3325.1,
+        "MIN_DIST_TO_CLOSE_TALK": 5,
+        "VISION_DIST_COEF_PEACE": 1,
+        "MIN_DIST_TO_CLOSE_TALK_SQR": 25,
+        "CHANCE_TO_CUT_WAY_0_100": 75,
+        "CUT_WAY_MIN_0_1": 0.4,
+        "CUT_WAY_MAX_0_1": 0.65,
+        "CHANCE_TO_CHANGE_WAY_0_100": 30,
+        "CHANCE_TO_SHOOT_DEADBODY": 52,
+        "SUSPETION_PLACE_LIFETIME": 7,
+        "RESERVE_OUT_TIME": 60,
+        "CLOSE_TO_SELECT_RESERV_WAY": 25,
+        "MAX_YDIST_TO_START_WARN_REQUEST_TO_REQUESTER": 5,
+        "CAN_CHOOSE_RESERV": false,
+        "CAN_CHECK_MAGAZINE": false,
+        "CAN_WATCH_SECOND_WEAPON": true
+      },
+      "Hearing": {
+        "BOT_CLOSE_PANIC_DIST": 1,
+        "CHANCE_TO_HEAR_SIMPLE_SOUND_0_1": 0.88,
+        "DISPERSION_COEF": 10,
+        "CLOSE_DIST": 26,
+        "FAR_DIST": 56,
+        "SOUND_DIR_DEEFREE": 30,
+        "DIST_PLACE_TO_FIND_POINT": 70,
+        "DEAD_BODY_SOUND_RAD": 30,
+        "LOOK_ONLY_DANGER": false,
+        "RESET_TIMER_DIST": 17,
+        "HEAR_DELAY_WHEN_PEACE": 0,
+        "HEAR_DELAY_WHEN_HAVE_SMT": 0,
+        "LOOK_ONLY_DANGER_DELTA": 9
+      },
+      "Mind": {
+        "MIN_SHOOTS_TIME": 2,
+        "MAX_SHOOTS_TIME": 4,
+        "GROUP_EXACTLY_PHRASE_DELAY_MAX": 20,
+        "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "DAMAGE_REDUCTION_TIME_SEC": 20,
+        "MIN_DAMAGE_SCARE": 20,
+        "CHANCE_TO_RUN_CAUSE_DAMAGE_0_100": 35,
+        "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
+        "TIME_TO_FIND_ENEMY": 22,
+        "MAX_AGGRO_BOT_DIST": 100,
+        "HIT_POINT_DETECTION": 4,
+        "DANGER_POINT_CHOOSE_COEF": 1,
+        "SIMPLE_POINT_CHOOSE_COEF": 0.4,
+        "LASTSEEN_POINT_CHOOSE_COEF": 0.2,
+        "COVER_DIST_COEF": 1.5,
+        "DIST_TO_FOUND_SQRT": 400,
+        "MAX_AGGRO_BOT_DIST_SQR": 10000,
+        "DIST_TO_STOP_RUN_ENEMY": 15,
+        "ENEMY_LOOK_AT_ME_ANG": 15,
+        "MIN_START_AGGRESION_COEF": 1,
+        "MAX_START_AGGRESION_COEF": 3,
+        "BULLET_FEEL_DIST": 360,
+        "BULLET_FEEL_CLOSE_SDIST": 1,
+        "ATTACK_IMMEDIATLY_CHANCE_0_100": 40,
+        "CHANCE_FUCK_YOU_ON_CONTACT_100": 0.01,
+        "FRIEND_DEAD_AGR_LOW": -0.2,
+        "FRIEND_AGR_KILL": 0.2,
+        "LAST_ENEMY_LOOK_TO": 40,
+        "CAN_RECEIVE_PLAYER_REQUESTS_SAVAGE": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_BEAR": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_USEC": false,
+        "CAN_USE_MEDS": true,
+        "SUSPETION_POINT_CHANCE_ADD100": 0,
+        "AMBUSH_WHEN_UNDER_FIRE": true,
+        "AMBUSH_WHEN_UNDER_FIRE_TIME_RESIST": 60,
+        "ATTACK_ENEMY_IF_PROTECT_DELTA_LAST_TIME_SEEN": 1.5,
+        "HOLD_IF_PROTECT_DELTA_LAST_TIME_SEEN": 8.5,
+        "FIND_COVER_TO_GET_POSITION_WITH_SHOOT": 2,
+        "PROTECT_TIME_REAL": true,
+        "CHANCE_SHOOT_WHEN_WARN_PLAYER_100": 25,
+        "CAN_PANIC_IS_PROTECT": false,
+        "NO_RUN_AWAY_FOR_SAFE": true,
+        "PART_PERCENT_TO_HEAL": 0.65,
+        "PROTECT_DELTA_HEAL_SEC": 10,
+        "CAN_STAND_BY": false,
+        "CAN_THROW_REQUESTS": true,
+        "GROUP_ANY_PHRASE_DELAY": 5,
+        "GROUP_EXACTLY_PHRASE_DELAY": 20,
+        "DIST_TO_ENEMY_YO_CAN_HEAL": 30,
+        "CHANCE_TO_STAY_WHEN_WARN_PLAYER_100": 80,
+        "DOG_FIGHT_OUT": 6,
+        "DOG_FIGHT_IN": 3,
+        "SHOOT_INSTEAD_DOG_FIGHT": 9,
+        "PISTOL_SHOTGUN_AMBUSH_DIST": 330,
+        "STANDART_AMBUSH_DIST": 300,
+        "AI_POWER_COEF": 120,
+        "COVER_SECONDS_AFTER_LOSE_VISION": 10,
+        "COVER_SELF_ALWAYS_IF_DAMAGED": false,
+        "SEC_TO_MORE_DIST_TO_RUN": 10,
+        "HEAL_DELAY_SEC": 5,
+        "HIT_DELAY_WHEN_HAVE_SMT": -1,
+        "HIT_DELAY_WHEN_PEACE": -1,
+        "TALK_WITH_QUERY": true,
+        "DANGER_EXPIRE_TIME_MIN": 0.4,
+        "DANGER_EXPIRE_TIME_MAX": 1.2,
+        "PANIC_RUN_WEIGHT": 1,
+        "PANIC_SIT_WEIGHT": 80,
+        "PANIC_LAY_WEIGHT": 20,
+        "PANIC_NONE_WEIGHT": 40,
+        "CAN_TAKE_ITEMS": false,
+        "PANIC_SIT_WEIGHT_PEACE": 60,
+        "DEFAULT_SAVAGE_BEHAVIOUR": "Warn",
+        "DEFAULT_BEAR_BEHAVIOUR": "AlwaysEnemies",
+        "DEFAULT_USEC_BEHAVIOUR": "AlwaysEnemies",
+        "FRIENDLY_BOT_TYPES": [],
+        "WARN_BOT_TYPES": [
+          "assault"
+        ],
+        "ENEMY_BOT_TYPES": [
+          "pmcBEAR",
+          "pmcUSEC"
+        ]
+      },
+      "Boss": {
+        "BOSS_DIST_TO_WARNING": 34,
+        "BOSS_DIST_TO_WARNING_SQRT": 1156,
+        "BOSS_DIST_TO_WARNING_OUT": 43,
+        "BOSS_DIST_TO_WARNING_OUT_SQRT": 1849,
+        "BOSS_DIST_TO_SHOOT": 16,
+        "BOSS_DIST_TO_SHOOT_SQRT": 256,
+        "CHANCE_TO_SEND_GRENADE_100": 100,
+        "MAX_DIST_COVER_BOSS": 25,
+        "MAX_DIST_COVER_BOSS_SQRT": 625,
+        "MAX_DIST_DECIDER_TO_SEND": 35,
+        "MAX_DIST_DECIDER_TO_SEND_SQRT": 1225,
+        "TIME_AFTER_LOSE": 15,
+        "TIME_AFTER_LOSE_DELTA": 60,
+        "PERSONS_SEND": 2,
+        "DELTA_SEARCH_TIME": 18,
+        "COVER_TO_SEND": true,
+        "EFFECT_PAINKILLER": true,
+        "WAIT_NO_ATTACK_SAVAGE": 10,
+        "CHANCE_USE_RESERVE_PATROL_100": 30,
+        "KILLA_Y_DELTA_TO_BE_ENEMY_BOSS": 5,
+        "KILLA_DITANCE_TO_BE_ENEMY_BOSS": 65,
+        "KILLA_START_SEARCH_SEC": 40,
+        "KILLA_CONTUTION_TIME": 5,
+        "KILLA_CLOSE_ATTACK_DIST": 14,
+        "KILLA_MIDDLE_ATTACK_DIST": 92,
+        "KILLA_LARGE_ATTACK_DIST": 121,
+        "KILLA_SEARCH_METERS": 30,
+        "KILLA_DEF_DIST_SQRT": 225,
+        "KILLA_SEARCH_SEC_STOP_AFTER_COMING": 25,
+        "KILLA_DIST_TO_GO_TO_SUPPRESS": 6,
+        "KILLA_AFTER_GRENADE_SUPPRESS_DELAY": 2,
+        "KILLA_CLOSEATTACK_TIMES": 3,
+        "KILLA_CLOSEATTACK_DELAY": 10,
+        "KILLA_HOLD_DELAY": 5,
+        "KILLA_BULLET_TO_RELOAD": 15,
+        "SHALL_WARN": true,
+        "KILLA_ENEMIES_TO_ATTACK": 3,
+        "KILLA_ONE_IS_CLOSE": 20,
+        "KILLA_TRIGGER_DOWN_DELAY": 0.1,
+        "KILLA_WAIT_IN_COVER_COEF": 0.1,
+        "KOJANIY_DIST_WHEN_READY": 40,
+        "KOJANIY_DIST_TO_BE_ENEMY": 200,
+        "KOJANIY_MIN_DIST_TO_LOOT": 20,
+        "KOJANIY_MIN_DIST_TO_LOOT_SQRT": 400,
+        "KOJANIY_DIST_ENEMY_TOO_CLOSE": 17,
+        "KOJANIY_MANY_ENEMIES_COEF": 1.5,
+        "KOJANIY_COVER_POWER": 500,
+        "KOJANIY_FIGHT_CENTER_POS_ME": false,
+        "KOJANIY_DIST_CORE_SPOS_RECALC": 25,
+        "KOJANIY_DIST_CORE_SPOS_RECALC_SQRT": 625,
+        "GLUHAR_FOLLOWER_PATH_NAME": "Attack",
+        "GLUHAR_FOLLOWER_SCOUT_DIST_START_ATTACK": 80,
+        "GLUHAR_FOLLOWER_SCOUT_DIST_END_ATTACK": 120,
+        "GLUHAR_BOSS_WANNA_ATTACK_CHANCE_0_100": 150,
+        "GLUHAR_ASSAULT_ATTACK_DIST": 45,
+        "GLUHAR_STOP_ASSAULT_ATTACK_DIST": 180,
+        "GLUHAR_TIME_TO_ASSAULT": 10,
+        "DIST_TO_PROTECT_BOSS": 15
+      },
+      "Core": {
+        "VisibleAngle": 160,
+        "VisibleDistance": 142,
+        "GainSightCoef": 0.1,
+        "ScatteringPerMeter": 0.045,
+        "ScatteringClosePerMeter": 0.12,
+        "DamageCoeff": 1,
+        "HearingSense": 3.9,
+        "CanRun": true,
+        "CanGrenade": true,
+        "AimingType": "normal",
+        "PistolFireDistancePref": 35,
+        "ShotgunFireDistancePref": 50,
+        "RifleFireDistancePref": 100,
+        "AccuratySpeed": 0.2,
+        "WaitInCoverBetweenShotsSec": 0.3
+      },
+      "Scattering": {
+        "MinScatter": 0.03,
+        "WorkingScatter": 0.15,
+        "MaxScatter": 0.4,
+        "SpeedUp": 0.3,
+        "SpeedUpAim": 1.4,
+        "SpeedDown": -0.3,
+        "ToSlowBotSpeed": 1.5,
+        "ToLowBotSpeed": 2.4,
+        "ToUpBotSpeed": 3.6,
+        "MovingSlowCoef": 1.5,
+        "ToLowBotAngularSpeed": 80,
+        "ToStopBotAngularSpeed": 40,
+        "FromShot": 0.001,
+        "TracerCoef": 1.3,
+        "HandDamageScatteringMinMax": 0.7,
+        "HandDamageAccuracySpeed": 1.3,
+        "BloodFall": 1.45,
+        "Caution": 0.3,
+        "ToCaution": 0.6,
+        "RecoilControlCoefShootDone": 0.0003,
+        "RecoilControlCoefShootDoneAuto": 0.00015,
+        "AMPLITUDE_FACTOR": 0.25,
+        "AMPLITUDE_SPEED": 0.1,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM": 15,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM_SQRT": 225,
+        "DIST_NOT_TO_SHOOT": 0.3,
+        "PoseChnageCoef": 0.1,
+        "LayFactor": 0.1,
+        "RecoilYCoef": 0.0005,
+        "RecoilYCoefSppedDown": -0.52,
+        "RecoilYMax": 1
+      }
+    },
+    "hard": {
+      "Lay": {
+        "CHECK_SHOOT_WHEN_LAYING": false,
+        "DELTA_LAY_CHECK": 2,
+        "DELTA_GETUP": 2.7,
+        "DELTA_AFTER_GETUP": 10,
+        "CLEAR_POINTS_OF_SCARE_SEC": 20,
+        "MAX_LAY_TIME": 35,
+        "DELTA_WANT_LAY_CHECL_SEC": 5,
+        "ATTACK_LAY_CHANCE": 25,
+        "DIST_TO_COVER_TO_LAY": 3.5,
+        "DIST_TO_COVER_TO_LAY_SQRT": 12.25,
+        "DIST_GRASS_TERRAIN_SQRT": 0.160000011,
+        "DIST_ENEMY_NULL_DANGER_LAY": 15,
+        "DIST_ENEMY_NULL_DANGER_LAY_SQRT": 225,
+        "DIST_ENEMY_GETUP_LAY": 10,
+        "DIST_ENEMY_GETUP_LAY_SQRT": 100,
+        "DIST_ENEMY_CAN_LAY": 15,
+        "DIST_ENEMY_CAN_LAY_SQRT": 225,
+        "LAY_AIM": 0.6,
+        "MIN_CAN_LAY_DIST_SQRT": 121,
+        "MIN_CAN_LAY_DIST": 11,
+        "MAX_CAN_LAY_DIST_SQRT": 40000,
+        "MAX_CAN_LAY_DIST": 200,
+        "LAY_CHANCE_DANGER": 40,
+        "DAMAGE_TIME_TO_GETUP": 3
+      },
+      "Aiming": {
+        "MAX_AIM_PRECICING": 2,
+        "BETTER_PRECICING_COEF": 0.9,
+        "RECALC_DIST": 0.7,
+        "RECALC_SQR_DIST": 0.48999998,
+        "COEF_FROM_COVER": 0.45,
+        "PANIC_COEF": 1.2,
+        "PANIC_ACCURATY_COEF": 1.2,
+        "HARD_AIM": 0.75,
+        "PANIC_TIME": 2,
+        "RECALC_MUST_TIME": 3,
+        "DAMAGE_PANIC_TIME": 15,
+        "DANGER_UP_POINT": 1.3,
+        "MAX_AIMING_UPGRADE_BY_TIME": 0.25,
+        "DAMAGE_TO_DISCARD_AIM_0_100": 1,
+        "MIN_TIME_DISCARD_AIM_SEC": 0,
+        "MAX_TIME_DISCARD_AIM_SEC": 0,
+        "XZ_COEF": 0.2,
+        "SHOOT_TO_CHANGE_PRIORITY": 5525,
+        "BOTTOM_COEF": 0.1,
+        "FIRST_CONTACT_ADD_SEC": 0.1,
+        "FIRST_CONTACT_ADD_CHANCE_100": 80,
+        "BASE_HIT_AFFECTION_DELAY_SEC": 0.57,
+        "BASE_HIT_AFFECTION_MIN_ANG": 4,
+        "BASE_HIT_AFFECTION_MAX_ANG": 10,
+        "BASE_SHIEF": 0.05,
+        "SCATTERING_HAVE_DAMAGE_COEF": 2,
+        "SCATTERING_DIST_MODIF": 0.45,
+        "SCATTERING_DIST_MODIF_CLOSE": 0.6,
+        "AIMING_TYPE": 1,
+        "DIST_TO_SHOOT_TO_CENTER": 3,
+        "DIST_TO_SHOOT_NO_OFFSET": 3,
+        "CAN_USE_STRIBOSCOPE": 100,
+        "SHPERE_FRIENDY_FIRE_SIZE": -1,
+        "COEF_IF_MOVE": 1,
+        "TIME_COEF_IF_MOVE": 1.1,
+        "BOT_MOVE_IF_DELTA": 3.01,
+        "NEXT_SHOT_MISS_CHANCE_100": 100,
+        "NEXT_SHOT_MISS_Y_OFFSET": 1,
+        "ANYTIME_LIGHT_WHEN_AIM_100": -1,
+        "ANY_PART_SHOOT_TIME": 15,
+        "WEAPON_ROOT_OFFSET": 0.35,
+        "MIN_DAMAGE_TO_GET_HIT_AFFETS": 1,
+        "MAX_AIM_TIME": 1.5,
+        "OFFSET_RECAL_ANYWAY_TIME": 1,
+        "ENEMY_Y_WEAPON_OFFSET": 0.08,
+        "BASE_SHIEF_STATIONARY_GRENADE": 1.1,
+        "XZ_COEF_STATIONARY_GRENADE": 0.7,
+        "Y_TOP_OFFSET_COEF": 0.001,
+        "Y_BOTTOM_OFFSET_COEF": 0.015,
+        "BAD_SHOOTS_MIN": 0,
+        "BAD_SHOOTS_MAX": 0,
+        "BAD_SHOOTS_OFFSET": 1,
+        "BAD_SHOOTS_MAIN_COEF": 0.39
+      },
+      "Look": {
+        "MINIMUM_VISIBLE_DIST": 70,
+        "OLD_TIME_POINT": 11,
+        "WAIT_NEW_SENSOR": 2.1,
+        "WAIT_NEW__LOOK_SENSOR": 7.8,
+        "LOOK_AROUND_DELTA": 1.1,
+        "MAX_VISION_GRASS_METERS": 0.8,
+        "MAX_VISION_GRASS_METERS_FLARE": 8,
+        "MAX_VISION_GRASS_METERS_OPT": 0.9090909,
+        "MAX_VISION_GRASS_METERS_FLARE_OPT": 0.125,
+        "LightOnVisionDistance": 45,
+        "FAR_DISTANCE": 160,
+        "FarDeltaTimeSec": 3,
+        "MIDDLE_DIST": 90,
+        "MiddleDeltaTimeSec": 1,
+        "CloseDeltaTimeSec": 0.1,
+        "POSIBLE_VISION_SPACE": 1.2,
+        "GOAL_TO_FULL_DISSAPEAR": 1.1,
+        "GOAL_TO_FULL_DISSAPEAR_SHOOT": 0.03,
+        "BODY_DELTA_TIME_SEARCH_SEC": 1.7,
+        "COME_TO_BODY_DIST": 1.2,
+        "MARKSMAN_VISIBLE_DIST_COEF": 1.15,
+        "VISIBLE_DISNACE_WITH_LIGHT": 100,
+        "ENEMY_LIGHT_ADD": 48,
+        "ENEMY_LIGHT_START_DIST": 90,
+        "CAN_LOOK_TO_WALL": true,
+        "LOOK_THROUGH_GRASS": true,
+        "DIST_NOT_TO_IGNORE_WALL": 15,
+        "DIST_CHECK_WALL": 20,
+        "LOOK_LAST_POSENEMY_IF_NO_DANGER_SEC": 25,
+        "MIN_LOOK_AROUD_TIME": 20,
+        "OPTIMIZE_TO_ONLY_BODY": true
+      },
+      "Shoot": {
+        "RECOIL_TIME_NORMALIZE": 1,
+        "RECOIL_PER_METER": 0.02,
+        "MAX_RECOIL_PER_METER": 0.04,
+        "HORIZONT_RECOIL_COEF": 0.04,
+        "WAIT_NEXT_SINGLE_SHOT": 0.2,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MAX": 3.3,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MIN": 0.4,
+        "MARKSMAN_DIST_SEK_COEF": 44,
+        "FINGER_HOLD_SINGLE_SHOT": 0.14,
+        "BASE_AUTOMATIC_TIME": 0.4,
+        "AUTOMATIC_FIRE_SCATTERING_COEF": 1.1,
+        "CHANCE_TO_CHANGE_TO_AUTOMATIC_FIRE_100": 100,
+        "FAR_DIST_ENEMY": 20,
+        "SHOOT_FROM_COVER": 6,
+        "FAR_DIST_ENEMY_SQR": 400,
+        "MAX_DIST_COEF": 1.35,
+        "RECOIL_DELTA_PRESS": 0.15,
+        "RUN_DIST_NO_AMMO": 25,
+        "RUN_DIST_NO_AMMO_SQRT": 625,
+        "CAN_SHOOTS_TIME_TO_AMBUSH": 600,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_PERCENT": 0.5,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_SEC": 2,
+        "RELOAD_PECNET_NO_ENEMY": 0.6,
+        "CHANCE_TO_CHANGE_WEAPON": 10,
+        "CHANCE_TO_CHANGE_WEAPON_WITH_HELMET": 10,
+        "LOW_DIST_TO_CHANGE_WEAPON": 6,
+        "FAR_DIST_TO_CHANGE_WEAPON": 30,
+        "SUPPRESS_BY_SHOOT_TIME": 6,
+        "SUPPRESS_TRIGGERS_DOWN": 3,
+        "VALIDATE_MALFUNCTION_CHANCE": 100,
+        "REPAIR_MALFUNCTION_IMMEDIATE_CHANCE": 25,
+        "DELAY_BEFORE_EXAMINE_MALFUNCTION": 0.5,
+        "DELAY_BEFORE_FIX_MALFUNCTION": 0.5
+      },
+      "Move": {
+        "BASE_ROTATE_SPEED": 270,
+        "REACH_DIST": 0.5,
+        "REACH_DIST_RUN": 0.8,
+        "START_SLOW_DIST": 1.5,
+        "BASESTART_SLOW_DIST": 1.1,
+        "SLOW_COEF": 7,
+        "DIST_TO_CAN_CHANGE_WAY": 8,
+        "DIST_TO_START_RAYCAST": 15,
+        "BASE_START_SERACH": 35,
+        "UPDATE_TIME_RECAL_WAY": 7,
+        "FAR_DIST": 4,
+        "FAR_DIST_SQR": 16,
+        "DIST_TO_CAN_CHANGE_WAY_SQR": 64,
+        "DIST_TO_START_RAYCAST_SQR": 225,
+        "BASE_SQRT_START_SERACH": 1225,
+        "Y_APPROXIMATION": 0.7,
+        "DELTA_LAST_SEEN_ENEMY": 20,
+        "REACH_DIST_COVER": 2,
+        "RUN_TO_COVER_MIN": 2,
+        "CHANCE_TO_RUN_IF_NO_AMMO_0_100": 100,
+        "RUN_IF_CANT_SHOOT": false,
+        "RUN_IF_GAOL_FAR_THEN": 10,
+        "SEC_TO_CHANGE_TO_RUN": 3,
+        "ETERNITY_STAMINA": true
+      },
+      "Grenade": {
+        "DELTA_NEXT_ATTEMPT_FROM_COVER": 5,
+        "DELTA_NEXT_ATTEMPT": 10,
+        "MIN_DIST_NOT_TO_THROW": 8,
+        "NEAR_DELTA_THROW_TIME_SEC": 2,
+        "MIN_THROW_GRENADE_DIST": 12,
+        "MIN_THROW_GRENADE_DIST_SQRT": 144,
+        "MIN_DIST_NOT_TO_THROW_SQR": 64,
+        "RUN_AWAY": 22,
+        "RUN_AWAY_SQR": 484,
+        "ADD_GRENADE_AS_DANGER": 65,
+        "ADD_GRENADE_AS_DANGER_SQR": 4225,
+        "CHANCE_TO_NOTIFY_ENEMY_GR_100": 100,
+        "GrenadePerMeter": 0.1,
+        "REQUEST_DIST_MUST_THROW_SQRT": 9,
+        "REQUEST_DIST_MUST_THROW": 3,
+        "BEWARE_TYPE": 2,
+        "SHOOT_TO_SMOKE_CHANCE_100": 50,
+        "CHANCE_RUN_FLASHED_100": 100,
+        "MAX_FLASHED_DIST_TO_SHOOT": 10,
+        "MAX_FLASHED_DIST_TO_SHOOT_SQRT": 100,
+        "FLASH_GRENADE_TIME_COEF": 0.25,
+        "SIZE_SPOTTED_COEF": 2,
+        "BE_ATTENTION_COEF": 4,
+        "TIME_SHOOT_TO_FLASH": 4,
+        "CLOSE_TO_SMOKE_TO_SHOOT": 10,
+        "CLOSE_TO_SMOKE_TO_SHOOT_SQRT": 100,
+        "CLOSE_TO_SMOKE_TIME_DELTA": 5,
+        "SMOKE_CHECK_DELTA": 1,
+        "DELTA_GRENADE_START_TIME": 0.01,
+        "AMBUSH_IF_SMOKE_IN_ZONE_100": 40,
+        "AMBUSH_IF_SMOKE_RETURN_TO_ATTACK_SEC": 30,
+        "NO_RUN_FROM_AI_GRENADES": true,
+        "MAX_THROW_POWER": 25,
+        "MIN_THROW_DIST_PERCENT_0_1": 0.7,
+        "GrenadePrecision": 0.01,
+        "STOP_WHEN_THROW_GRENADE": true,
+        "WAIT_TIME_TURN_AWAY": 0.2,
+        "SMOKE_SUPPRESS_DELTA": 20,
+        "DAMAGE_GRENADE_SUPPRESS_DELTA": 8,
+        "STUN_SUPPRESS_DELTA": 9,
+        "CHEAT_START_GRENADE_PLACE": false,
+        "CAN_THROW_STRAIGHT_CONTACT": true,
+        "STRAIGHT_CONTACT_DELTA_SEC": -1,
+        "ANG_TYPE": 1
+      },
+      "Change": {
+        "SMOKE_VISION_DIST": 0.6,
+        "SMOKE_GAIN_SIGHT": 1.6,
+        "SMOKE_SCATTERING": 1.6,
+        "SMOKE_PRECICING": 1.6,
+        "SMOKE_HEARING": 1,
+        "SMOKE_ACCURATY": 1.6,
+        "SMOKE_LAY_CHANCE": 1.6,
+        "FLASH_VISION_DIST": 0.05,
+        "FLASH_GAIN_SIGHT": 1.8,
+        "FLASH_SCATTERING": 1.6,
+        "FLASH_PRECICING": 1.6,
+        "FLASH_HEARING": 1,
+        "FLASH_ACCURATY": 1.6,
+        "FLASH_LAY_CHANCE": 1,
+        "STUN_HEARING": 0.01
+      },
+      "Cover": {
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MIN": 20,
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MAX": 50,
+        "SOUND_TO_GET_SPOTTED": 2,
+        "TIME_TO_MOVE_TO_COVER": 15,
+        "MAX_DIST_OF_COVER": 4,
+        "CHANGE_RUN_TO_COVER_SEC": 5,
+        "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
+        "MIN_DIST_TO_ENEMY": 9,
+        "DIST_CANT_CHANGE_WAY": 5,
+        "DIST_CHECK_SFETY": 9,
+        "TIME_CHECK_SAFE": 2,
+        "HIDE_TO_COVER_TIME": 1.5,
+        "MAX_DIST_OF_COVER_SQR": 16,
+        "DIST_CANT_CHANGE_WAY_SQR": 25,
+        "SPOTTED_COVERS_RADIUS": 2.5,
+        "LOOK_LAST_ENEMY_POS_MOVING": 1.5,
+        "LOOK_TO_HIT_POINT_IF_LAST_ENEMY": 3,
+        "LOOK_LAST_ENEMY_POS_LOOKAROUND": 45,
+        "OFFSET_LOOK_ALONG_WALL_ANG": 20,
+        "SPOTTED_GRENADE_RADIUS": 16,
+        "MAX_SPOTTED_TIME_SEC": 55,
+        "WAIT_INT_COVER_FINDING_ENEMY": 2,
+        "CLOSE_DIST_POINT_SQRT": 4,
+        "DELTA_SEEN_FROM_COVE_LAST_POS": 15,
+        "MOVE_TO_COVER_WHEN_TARGET": false,
+        "RUN_COVER_IF_CAN_AND_NO_ENEMIES": false,
+        "SPOTTED_GRENADE_TIME": 7,
+        "DEPENDS_Y_DIST_TO_BOT": false,
+        "RUN_IF_FAR": 15,
+        "RUN_IF_FAR_SQRT": 225,
+        "STAY_IF_FAR": 25,
+        "STAY_IF_FAR_SQRT": 625,
+        "CHECK_COVER_ENEMY_LOOK": false,
+        "SHOOT_NEAR_TO_LEAVE": 2,
+        "SHOOT_NEAR_SEC_PERIOD": 0.5,
+        "HITS_TO_LEAVE_COVER": 1,
+        "HITS_TO_LEAVE_COVER_UNKNOWN": 1,
+        "DOG_FIGHT_AFTER_LEAVE": 4,
+        "NOT_LOOK_AT_WALL_IS_DANGER": true,
+        "MIN_DEFENCE_LEVEL": 22,
+        "DIST_MAX_REWORK_NOT_TO_SHOOT": 30,
+        "REWORK_NOT_TO_SHOOT": true,
+        "DELETE_POINTS_BEHIND_ENEMIES": true,
+        "GOOD_DIST_TO_POINT_COEF": 1.8,
+        "ENEMY_DIST_TO_GO_OUT": 1,
+        "CHECK_CLOSEST_FRIEND": false,
+        "STATIONARY_WEAPON_NO_ENEMY_GETUP": 15,
+        "STATIONARY_WEAPON_MAX_DIST_TO_USE": 50
+      },
+      "Patrol": {
+        "LOOK_TIME_BASE": 12,
+        "RESERVE_TIME_STAY": 72,
+        "FRIEND_SEARCH_SEC": 12,
+        "TALK_DELAY": 31.1,
+        "MIN_TALK_DELAY": 35,
+        "TALK_DELAY_BIG": 45.1,
+        "CHANGE_WAY_TIME": 3325.1,
+        "MIN_DIST_TO_CLOSE_TALK": 5,
+        "VISION_DIST_COEF_PEACE": 1,
+        "MIN_DIST_TO_CLOSE_TALK_SQR": 25,
+        "CHANCE_TO_CUT_WAY_0_100": 75,
+        "CUT_WAY_MIN_0_1": 0.4,
+        "CUT_WAY_MAX_0_1": 0.65,
+        "CHANCE_TO_CHANGE_WAY_0_100": 30,
+        "CHANCE_TO_SHOOT_DEADBODY": 52,
+        "SUSPETION_PLACE_LIFETIME": 7,
+        "RESERVE_OUT_TIME": 60,
+        "CLOSE_TO_SELECT_RESERV_WAY": 25,
+        "MAX_YDIST_TO_START_WARN_REQUEST_TO_REQUESTER": 5,
+        "CAN_CHOOSE_RESERV": false,
+        "CAN_CHECK_MAGAZINE": false,
+        "CAN_WATCH_SECOND_WEAPON": true
+      },
+      "Hearing": {
+        "BOT_CLOSE_PANIC_DIST": 1,
+        "CHANCE_TO_HEAR_SIMPLE_SOUND_0_1": 0.88,
+        "DISPERSION_COEF": 10,
+        "CLOSE_DIST": 26,
+        "FAR_DIST": 56,
+        "SOUND_DIR_DEEFREE": 30,
+        "DIST_PLACE_TO_FIND_POINT": 70,
+        "DEAD_BODY_SOUND_RAD": 30,
+        "LOOK_ONLY_DANGER": false,
+        "RESET_TIMER_DIST": 17,
+        "HEAR_DELAY_WHEN_PEACE": 0,
+        "HEAR_DELAY_WHEN_HAVE_SMT": 0,
+        "LOOK_ONLY_DANGER_DELTA": 9
+      },
+      "Mind": {
+        "MIN_SHOOTS_TIME": 2,
+        "MAX_SHOOTS_TIME": 4,
+        "GROUP_EXACTLY_PHRASE_DELAY_MAX": 20,
+        "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "DAMAGE_REDUCTION_TIME_SEC": 20,
+        "MIN_DAMAGE_SCARE": 20,
+        "CHANCE_TO_RUN_CAUSE_DAMAGE_0_100": 35,
+        "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
+        "TIME_TO_FIND_ENEMY": 22,
+        "MAX_AGGRO_BOT_DIST": 100,
+        "HIT_POINT_DETECTION": 4,
+        "DANGER_POINT_CHOOSE_COEF": 1,
+        "SIMPLE_POINT_CHOOSE_COEF": 0.4,
+        "LASTSEEN_POINT_CHOOSE_COEF": 0.2,
+        "COVER_DIST_COEF": 1.5,
+        "DIST_TO_FOUND_SQRT": 400,
+        "MAX_AGGRO_BOT_DIST_SQR": 10000,
+        "DIST_TO_STOP_RUN_ENEMY": 15,
+        "ENEMY_LOOK_AT_ME_ANG": 15,
+        "MIN_START_AGGRESION_COEF": 1,
+        "MAX_START_AGGRESION_COEF": 3,
+        "BULLET_FEEL_DIST": 360,
+        "BULLET_FEEL_CLOSE_SDIST": 1,
+        "ATTACK_IMMEDIATLY_CHANCE_0_100": 40,
+        "CHANCE_FUCK_YOU_ON_CONTACT_100": 0.01,
+        "FRIEND_DEAD_AGR_LOW": -0.2,
+        "FRIEND_AGR_KILL": 0.2,
+        "LAST_ENEMY_LOOK_TO": 40,
+        "CAN_RECEIVE_PLAYER_REQUESTS_SAVAGE": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_BEAR": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_USEC": false,
+        "CAN_USE_MEDS": true,
+        "SUSPETION_POINT_CHANCE_ADD100": 0,
+        "AMBUSH_WHEN_UNDER_FIRE": true,
+        "AMBUSH_WHEN_UNDER_FIRE_TIME_RESIST": 60,
+        "ATTACK_ENEMY_IF_PROTECT_DELTA_LAST_TIME_SEEN": 1.5,
+        "HOLD_IF_PROTECT_DELTA_LAST_TIME_SEEN": 8.5,
+        "FIND_COVER_TO_GET_POSITION_WITH_SHOOT": 2,
+        "PROTECT_TIME_REAL": true,
+        "CHANCE_SHOOT_WHEN_WARN_PLAYER_100": 25,
+        "CAN_PANIC_IS_PROTECT": false,
+        "NO_RUN_AWAY_FOR_SAFE": true,
+        "PART_PERCENT_TO_HEAL": 0.65,
+        "PROTECT_DELTA_HEAL_SEC": 10,
+        "CAN_STAND_BY": false,
+        "CAN_THROW_REQUESTS": true,
+        "GROUP_ANY_PHRASE_DELAY": 5,
+        "GROUP_EXACTLY_PHRASE_DELAY": 20,
+        "DIST_TO_ENEMY_YO_CAN_HEAL": 30,
+        "CHANCE_TO_STAY_WHEN_WARN_PLAYER_100": 80,
+        "DOG_FIGHT_OUT": 6,
+        "DOG_FIGHT_IN": 3,
+        "SHOOT_INSTEAD_DOG_FIGHT": 9,
+        "PISTOL_SHOTGUN_AMBUSH_DIST": 330,
+        "STANDART_AMBUSH_DIST": 300,
+        "AI_POWER_COEF": 120,
+        "COVER_SECONDS_AFTER_LOSE_VISION": 10,
+        "COVER_SELF_ALWAYS_IF_DAMAGED": false,
+        "SEC_TO_MORE_DIST_TO_RUN": 10,
+        "HEAL_DELAY_SEC": 5,
+        "HIT_DELAY_WHEN_HAVE_SMT": -1,
+        "HIT_DELAY_WHEN_PEACE": -1,
+        "TALK_WITH_QUERY": true,
+        "DANGER_EXPIRE_TIME_MIN": 0.4,
+        "DANGER_EXPIRE_TIME_MAX": 1.2,
+        "PANIC_RUN_WEIGHT": 1,
+        "PANIC_SIT_WEIGHT": 80,
+        "PANIC_LAY_WEIGHT": 20,
+        "PANIC_NONE_WEIGHT": 40,
+        "CAN_TAKE_ITEMS": false,
+        "PANIC_SIT_WEIGHT_PEACE": 60,
+        "DEFAULT_SAVAGE_BEHAVIOUR": "Warn",
+        "DEFAULT_BEAR_BEHAVIOUR": "AlwaysEnemies",
+        "DEFAULT_USEC_BEHAVIOUR": "AlwaysEnemies",
+        "FRIENDLY_BOT_TYPES": [],
+        "WARN_BOT_TYPES": [
+          "assault"
+        ],
+        "ENEMY_BOT_TYPES": [
+          "pmcBEAR",
+          "pmcUSEC"
+        ]
+      },
+      "Boss": {
+        "BOSS_DIST_TO_WARNING": 34,
+        "BOSS_DIST_TO_WARNING_SQRT": 1156,
+        "BOSS_DIST_TO_WARNING_OUT": 43,
+        "BOSS_DIST_TO_WARNING_OUT_SQRT": 1849,
+        "BOSS_DIST_TO_SHOOT": 16,
+        "BOSS_DIST_TO_SHOOT_SQRT": 256,
+        "CHANCE_TO_SEND_GRENADE_100": 100,
+        "MAX_DIST_COVER_BOSS": 25,
+        "MAX_DIST_COVER_BOSS_SQRT": 625,
+        "MAX_DIST_DECIDER_TO_SEND": 35,
+        "MAX_DIST_DECIDER_TO_SEND_SQRT": 1225,
+        "TIME_AFTER_LOSE": 15,
+        "TIME_AFTER_LOSE_DELTA": 60,
+        "PERSONS_SEND": 2,
+        "DELTA_SEARCH_TIME": 18,
+        "COVER_TO_SEND": true,
+        "EFFECT_PAINKILLER": true,
+        "WAIT_NO_ATTACK_SAVAGE": 10,
+        "CHANCE_USE_RESERVE_PATROL_100": 30,
+        "KILLA_Y_DELTA_TO_BE_ENEMY_BOSS": 5,
+        "KILLA_DITANCE_TO_BE_ENEMY_BOSS": 65,
+        "KILLA_START_SEARCH_SEC": 40,
+        "KILLA_CONTUTION_TIME": 5,
+        "KILLA_CLOSE_ATTACK_DIST": 14,
+        "KILLA_MIDDLE_ATTACK_DIST": 92,
+        "KILLA_LARGE_ATTACK_DIST": 121,
+        "KILLA_SEARCH_METERS": 30,
+        "KILLA_DEF_DIST_SQRT": 225,
+        "KILLA_SEARCH_SEC_STOP_AFTER_COMING": 25,
+        "KILLA_DIST_TO_GO_TO_SUPPRESS": 6,
+        "KILLA_AFTER_GRENADE_SUPPRESS_DELAY": 2,
+        "KILLA_CLOSEATTACK_TIMES": 3,
+        "KILLA_CLOSEATTACK_DELAY": 10,
+        "KILLA_HOLD_DELAY": 5,
+        "KILLA_BULLET_TO_RELOAD": 15,
+        "SHALL_WARN": true,
+        "KILLA_ENEMIES_TO_ATTACK": 3,
+        "KILLA_ONE_IS_CLOSE": 20,
+        "KILLA_TRIGGER_DOWN_DELAY": 0.1,
+        "KILLA_WAIT_IN_COVER_COEF": 0.1,
+        "KOJANIY_DIST_WHEN_READY": 40,
+        "KOJANIY_DIST_TO_BE_ENEMY": 200,
+        "KOJANIY_MIN_DIST_TO_LOOT": 20,
+        "KOJANIY_MIN_DIST_TO_LOOT_SQRT": 400,
+        "KOJANIY_DIST_ENEMY_TOO_CLOSE": 17,
+        "KOJANIY_MANY_ENEMIES_COEF": 1.5,
+        "KOJANIY_COVER_POWER": 500,
+        "KOJANIY_FIGHT_CENTER_POS_ME": false,
+        "KOJANIY_DIST_CORE_SPOS_RECALC": 25,
+        "KOJANIY_DIST_CORE_SPOS_RECALC_SQRT": 625,
+        "GLUHAR_FOLLOWER_PATH_NAME": "Attack",
+        "GLUHAR_FOLLOWER_SCOUT_DIST_START_ATTACK": 80,
+        "GLUHAR_FOLLOWER_SCOUT_DIST_END_ATTACK": 120,
+        "GLUHAR_BOSS_WANNA_ATTACK_CHANCE_0_100": 150,
+        "GLUHAR_ASSAULT_ATTACK_DIST": 45,
+        "GLUHAR_STOP_ASSAULT_ATTACK_DIST": 180,
+        "GLUHAR_TIME_TO_ASSAULT": 10,
+        "DIST_TO_PROTECT_BOSS": 15
+      },
+      "Core": {
+        "VisibleAngle": 160,
+        "VisibleDistance": 142,
+        "GainSightCoef": 0.1,
+        "ScatteringPerMeter": 0.045,
+        "ScatteringClosePerMeter": 0.12,
+        "DamageCoeff": 1,
+        "HearingSense": 3.9,
+        "CanRun": true,
+        "CanGrenade": true,
+        "AimingType": "normal",
+        "PistolFireDistancePref": 35,
+        "ShotgunFireDistancePref": 50,
+        "RifleFireDistancePref": 100,
+        "AccuratySpeed": 0.2,
+        "WaitInCoverBetweenShotsSec": 0.3
+      },
+      "Scattering": {
+        "MinScatter": 0.03,
+        "WorkingScatter": 0.15,
+        "MaxScatter": 0.4,
+        "SpeedUp": 0.3,
+        "SpeedUpAim": 1.4,
+        "SpeedDown": -0.3,
+        "ToSlowBotSpeed": 1.5,
+        "ToLowBotSpeed": 2.4,
+        "ToUpBotSpeed": 3.6,
+        "MovingSlowCoef": 1.5,
+        "ToLowBotAngularSpeed": 80,
+        "ToStopBotAngularSpeed": 40,
+        "FromShot": 0.001,
+        "TracerCoef": 1.3,
+        "HandDamageScatteringMinMax": 0.7,
+        "HandDamageAccuracySpeed": 1.3,
+        "BloodFall": 1.45,
+        "Caution": 0.3,
+        "ToCaution": 0.6,
+        "RecoilControlCoefShootDone": 0.0003,
+        "RecoilControlCoefShootDoneAuto": 0.00015,
+        "AMPLITUDE_FACTOR": 0.25,
+        "AMPLITUDE_SPEED": 0.1,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM": 15,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM_SQRT": 225,
+        "DIST_NOT_TO_SHOOT": 0.3,
+        "PoseChnageCoef": 0.1,
+        "LayFactor": 0.1,
+        "RecoilYCoef": 0.0005,
+        "RecoilYCoefSppedDown": -0.52,
+        "RecoilYMax": 1
+      }
+    },
+    "impossible": {
+      "Lay": {
+        "CHECK_SHOOT_WHEN_LAYING": false,
+        "DELTA_LAY_CHECK": 2,
+        "DELTA_GETUP": 2.7,
+        "DELTA_AFTER_GETUP": 10,
+        "CLEAR_POINTS_OF_SCARE_SEC": 20,
+        "MAX_LAY_TIME": 35,
+        "DELTA_WANT_LAY_CHECL_SEC": 5,
+        "ATTACK_LAY_CHANCE": 25,
+        "DIST_TO_COVER_TO_LAY": 3.5,
+        "DIST_TO_COVER_TO_LAY_SQRT": 12.25,
+        "DIST_GRASS_TERRAIN_SQRT": 0.160000011,
+        "DIST_ENEMY_NULL_DANGER_LAY": 15,
+        "DIST_ENEMY_NULL_DANGER_LAY_SQRT": 225,
+        "DIST_ENEMY_GETUP_LAY": 10,
+        "DIST_ENEMY_GETUP_LAY_SQRT": 100,
+        "DIST_ENEMY_CAN_LAY": 15,
+        "DIST_ENEMY_CAN_LAY_SQRT": 225,
+        "LAY_AIM": 0.6,
+        "MIN_CAN_LAY_DIST_SQRT": 121,
+        "MIN_CAN_LAY_DIST": 11,
+        "MAX_CAN_LAY_DIST_SQRT": 40000,
+        "MAX_CAN_LAY_DIST": 200,
+        "LAY_CHANCE_DANGER": 40,
+        "DAMAGE_TIME_TO_GETUP": 3
+      },
+      "Aiming": {
+        "MAX_AIM_PRECICING": 2,
+        "BETTER_PRECICING_COEF": 0.9,
+        "RECALC_DIST": 0.7,
+        "RECALC_SQR_DIST": 0.48999998,
+        "COEF_FROM_COVER": 0.45,
+        "PANIC_COEF": 1.2,
+        "PANIC_ACCURATY_COEF": 1.2,
+        "HARD_AIM": 0.75,
+        "PANIC_TIME": 2,
+        "RECALC_MUST_TIME": 3,
+        "DAMAGE_PANIC_TIME": 15,
+        "DANGER_UP_POINT": 1.3,
+        "MAX_AIMING_UPGRADE_BY_TIME": 0.25,
+        "DAMAGE_TO_DISCARD_AIM_0_100": 1,
+        "MIN_TIME_DISCARD_AIM_SEC": 0,
+        "MAX_TIME_DISCARD_AIM_SEC": 0,
+        "XZ_COEF": 0.2,
+        "SHOOT_TO_CHANGE_PRIORITY": 5525,
+        "BOTTOM_COEF": 0.1,
+        "FIRST_CONTACT_ADD_SEC": 0.1,
+        "FIRST_CONTACT_ADD_CHANCE_100": 80,
+        "BASE_HIT_AFFECTION_DELAY_SEC": 0.57,
+        "BASE_HIT_AFFECTION_MIN_ANG": 4,
+        "BASE_HIT_AFFECTION_MAX_ANG": 10,
+        "BASE_SHIEF": 0.05,
+        "SCATTERING_HAVE_DAMAGE_COEF": 2,
+        "SCATTERING_DIST_MODIF": 0.45,
+        "SCATTERING_DIST_MODIF_CLOSE": 0.6,
+        "AIMING_TYPE": 1,
+        "DIST_TO_SHOOT_TO_CENTER": 3,
+        "DIST_TO_SHOOT_NO_OFFSET": 3,
+        "CAN_USE_STRIBOSCOPE": 100,
+        "SHPERE_FRIENDY_FIRE_SIZE": -1,
+        "COEF_IF_MOVE": 1,
+        "TIME_COEF_IF_MOVE": 1.1,
+        "BOT_MOVE_IF_DELTA": 3.01,
+        "NEXT_SHOT_MISS_CHANCE_100": 100,
+        "NEXT_SHOT_MISS_Y_OFFSET": 1,
+        "ANYTIME_LIGHT_WHEN_AIM_100": -1,
+        "ANY_PART_SHOOT_TIME": 15,
+        "WEAPON_ROOT_OFFSET": 0.35,
+        "MIN_DAMAGE_TO_GET_HIT_AFFETS": 1,
+        "MAX_AIM_TIME": 1.5,
+        "OFFSET_RECAL_ANYWAY_TIME": 1,
+        "ENEMY_Y_WEAPON_OFFSET": 0.08,
+        "BASE_SHIEF_STATIONARY_GRENADE": 1.1,
+        "XZ_COEF_STATIONARY_GRENADE": 0.7,
+        "Y_TOP_OFFSET_COEF": 0.001,
+        "Y_BOTTOM_OFFSET_COEF": 0.015,
+        "BAD_SHOOTS_MIN": 0,
+        "BAD_SHOOTS_MAX": 0,
+        "BAD_SHOOTS_OFFSET": 1,
+        "BAD_SHOOTS_MAIN_COEF": 0.39
+      },
+      "Look": {
+        "MINIMUM_VISIBLE_DIST": 70,
+        "OLD_TIME_POINT": 11,
+        "WAIT_NEW_SENSOR": 2.1,
+        "WAIT_NEW__LOOK_SENSOR": 7.8,
+        "LOOK_AROUND_DELTA": 1.1,
+        "MAX_VISION_GRASS_METERS": 0.8,
+        "MAX_VISION_GRASS_METERS_FLARE": 8,
+        "MAX_VISION_GRASS_METERS_OPT": 0.9090909,
+        "MAX_VISION_GRASS_METERS_FLARE_OPT": 0.125,
+        "LightOnVisionDistance": 45,
+        "FAR_DISTANCE": 160,
+        "FarDeltaTimeSec": 3,
+        "MIDDLE_DIST": 90,
+        "MiddleDeltaTimeSec": 1,
+        "CloseDeltaTimeSec": 0.1,
+        "POSIBLE_VISION_SPACE": 1.2,
+        "GOAL_TO_FULL_DISSAPEAR": 1.1,
+        "GOAL_TO_FULL_DISSAPEAR_SHOOT": 0.03,
+        "BODY_DELTA_TIME_SEARCH_SEC": 1.7,
+        "COME_TO_BODY_DIST": 1.2,
+        "MARKSMAN_VISIBLE_DIST_COEF": 1.15,
+        "VISIBLE_DISNACE_WITH_LIGHT": 100,
+        "ENEMY_LIGHT_ADD": 48,
+        "ENEMY_LIGHT_START_DIST": 90,
+        "CAN_LOOK_TO_WALL": true,
+        "LOOK_THROUGH_GRASS": true,
+        "DIST_NOT_TO_IGNORE_WALL": 15,
+        "DIST_CHECK_WALL": 20,
+        "LOOK_LAST_POSENEMY_IF_NO_DANGER_SEC": 25,
+        "MIN_LOOK_AROUD_TIME": 20,
+        "OPTIMIZE_TO_ONLY_BODY": true
+      },
+      "Shoot": {
+        "RECOIL_TIME_NORMALIZE": 1,
+        "RECOIL_PER_METER": 0.02,
+        "MAX_RECOIL_PER_METER": 0.04,
+        "HORIZONT_RECOIL_COEF": 0.04,
+        "WAIT_NEXT_SINGLE_SHOT": 0.2,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MAX": 3.3,
+        "WAIT_NEXT_SINGLE_SHOT_LONG_MIN": 0.4,
+        "MARKSMAN_DIST_SEK_COEF": 44,
+        "FINGER_HOLD_SINGLE_SHOT": 0.14,
+        "BASE_AUTOMATIC_TIME": 0.4,
+        "AUTOMATIC_FIRE_SCATTERING_COEF": 1.1,
+        "CHANCE_TO_CHANGE_TO_AUTOMATIC_FIRE_100": 100,
+        "FAR_DIST_ENEMY": 20,
+        "SHOOT_FROM_COVER": 6,
+        "FAR_DIST_ENEMY_SQR": 400,
+        "MAX_DIST_COEF": 1.35,
+        "RECOIL_DELTA_PRESS": 0.15,
+        "RUN_DIST_NO_AMMO": 25,
+        "RUN_DIST_NO_AMMO_SQRT": 625,
+        "CAN_SHOOTS_TIME_TO_AMBUSH": 600,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_PERCENT": 0.5,
+        "NOT_TO_SEE_ENEMY_TO_WANT_RELOAD_SEC": 2,
+        "RELOAD_PECNET_NO_ENEMY": 0.6,
+        "CHANCE_TO_CHANGE_WEAPON": 10,
+        "CHANCE_TO_CHANGE_WEAPON_WITH_HELMET": 10,
+        "LOW_DIST_TO_CHANGE_WEAPON": 6,
+        "FAR_DIST_TO_CHANGE_WEAPON": 30,
+        "SUPPRESS_BY_SHOOT_TIME": 6,
+        "SUPPRESS_TRIGGERS_DOWN": 3,
+        "VALIDATE_MALFUNCTION_CHANCE": 100,
+        "REPAIR_MALFUNCTION_IMMEDIATE_CHANCE": 25,
+        "DELAY_BEFORE_EXAMINE_MALFUNCTION": 0.5,
+        "DELAY_BEFORE_FIX_MALFUNCTION": 0.5
+      },
+      "Move": {
+        "BASE_ROTATE_SPEED": 270,
+        "REACH_DIST": 0.5,
+        "REACH_DIST_RUN": 0.8,
+        "START_SLOW_DIST": 1.5,
+        "BASESTART_SLOW_DIST": 1.1,
+        "SLOW_COEF": 7,
+        "DIST_TO_CAN_CHANGE_WAY": 8,
+        "DIST_TO_START_RAYCAST": 15,
+        "BASE_START_SERACH": 35,
+        "UPDATE_TIME_RECAL_WAY": 7,
+        "FAR_DIST": 4,
+        "FAR_DIST_SQR": 16,
+        "DIST_TO_CAN_CHANGE_WAY_SQR": 64,
+        "DIST_TO_START_RAYCAST_SQR": 225,
+        "BASE_SQRT_START_SERACH": 1225,
+        "Y_APPROXIMATION": 0.7,
+        "DELTA_LAST_SEEN_ENEMY": 20,
+        "REACH_DIST_COVER": 2,
+        "RUN_TO_COVER_MIN": 2,
+        "CHANCE_TO_RUN_IF_NO_AMMO_0_100": 100,
+        "RUN_IF_CANT_SHOOT": false,
+        "RUN_IF_GAOL_FAR_THEN": 10,
+        "SEC_TO_CHANGE_TO_RUN": 3,
+        "ETERNITY_STAMINA": true
+      },
+      "Grenade": {
+        "DELTA_NEXT_ATTEMPT_FROM_COVER": 5,
+        "DELTA_NEXT_ATTEMPT": 10,
+        "MIN_DIST_NOT_TO_THROW": 8,
+        "NEAR_DELTA_THROW_TIME_SEC": 2,
+        "MIN_THROW_GRENADE_DIST": 12,
+        "MIN_THROW_GRENADE_DIST_SQRT": 144,
+        "MIN_DIST_NOT_TO_THROW_SQR": 64,
+        "RUN_AWAY": 22,
+        "RUN_AWAY_SQR": 484,
+        "ADD_GRENADE_AS_DANGER": 65,
+        "ADD_GRENADE_AS_DANGER_SQR": 4225,
+        "CHANCE_TO_NOTIFY_ENEMY_GR_100": 100,
+        "GrenadePerMeter": 0.1,
+        "REQUEST_DIST_MUST_THROW_SQRT": 9,
+        "REQUEST_DIST_MUST_THROW": 3,
+        "BEWARE_TYPE": 2,
+        "SHOOT_TO_SMOKE_CHANCE_100": 50,
+        "CHANCE_RUN_FLASHED_100": 100,
+        "MAX_FLASHED_DIST_TO_SHOOT": 10,
+        "MAX_FLASHED_DIST_TO_SHOOT_SQRT": 100,
+        "FLASH_GRENADE_TIME_COEF": 0.25,
+        "SIZE_SPOTTED_COEF": 2,
+        "BE_ATTENTION_COEF": 4,
+        "TIME_SHOOT_TO_FLASH": 4,
+        "CLOSE_TO_SMOKE_TO_SHOOT": 10,
+        "CLOSE_TO_SMOKE_TO_SHOOT_SQRT": 100,
+        "CLOSE_TO_SMOKE_TIME_DELTA": 5,
+        "SMOKE_CHECK_DELTA": 1,
+        "DELTA_GRENADE_START_TIME": 0.01,
+        "AMBUSH_IF_SMOKE_IN_ZONE_100": 40,
+        "AMBUSH_IF_SMOKE_RETURN_TO_ATTACK_SEC": 30,
+        "NO_RUN_FROM_AI_GRENADES": true,
+        "MAX_THROW_POWER": 25,
+        "MIN_THROW_DIST_PERCENT_0_1": 0.7,
+        "GrenadePrecision": 0.01,
+        "STOP_WHEN_THROW_GRENADE": true,
+        "WAIT_TIME_TURN_AWAY": 0.2,
+        "SMOKE_SUPPRESS_DELTA": 20,
+        "DAMAGE_GRENADE_SUPPRESS_DELTA": 8,
+        "STUN_SUPPRESS_DELTA": 9,
+        "CHEAT_START_GRENADE_PLACE": false,
+        "CAN_THROW_STRAIGHT_CONTACT": true,
+        "STRAIGHT_CONTACT_DELTA_SEC": -1,
+        "ANG_TYPE": 1
+      },
+      "Change": {
+        "SMOKE_VISION_DIST": 0.6,
+        "SMOKE_GAIN_SIGHT": 1.6,
+        "SMOKE_SCATTERING": 1.6,
+        "SMOKE_PRECICING": 1.6,
+        "SMOKE_HEARING": 1,
+        "SMOKE_ACCURATY": 1.6,
+        "SMOKE_LAY_CHANCE": 1.6,
+        "FLASH_VISION_DIST": 0.05,
+        "FLASH_GAIN_SIGHT": 1.8,
+        "FLASH_SCATTERING": 1.6,
+        "FLASH_PRECICING": 1.6,
+        "FLASH_HEARING": 1,
+        "FLASH_ACCURATY": 1.6,
+        "FLASH_LAY_CHANCE": 1,
+        "STUN_HEARING": 0.01
+      },
+      "Cover": {
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MIN": 20,
+        "RETURN_TO_ATTACK_AFTER_AMBUSH_MAX": 50,
+        "SOUND_TO_GET_SPOTTED": 2,
+        "TIME_TO_MOVE_TO_COVER": 15,
+        "MAX_DIST_OF_COVER": 4,
+        "CHANGE_RUN_TO_COVER_SEC": 5,
+        "CHANGE_RUN_TO_COVER_SEC_GREANDE": 0.6,
+        "MIN_DIST_TO_ENEMY": 9,
+        "DIST_CANT_CHANGE_WAY": 5,
+        "DIST_CHECK_SFETY": 9,
+        "TIME_CHECK_SAFE": 2,
+        "HIDE_TO_COVER_TIME": 1.5,
+        "MAX_DIST_OF_COVER_SQR": 16,
+        "DIST_CANT_CHANGE_WAY_SQR": 25,
+        "SPOTTED_COVERS_RADIUS": 2.5,
+        "LOOK_LAST_ENEMY_POS_MOVING": 1.5,
+        "LOOK_TO_HIT_POINT_IF_LAST_ENEMY": 3,
+        "LOOK_LAST_ENEMY_POS_LOOKAROUND": 45,
+        "OFFSET_LOOK_ALONG_WALL_ANG": 20,
+        "SPOTTED_GRENADE_RADIUS": 16,
+        "MAX_SPOTTED_TIME_SEC": 55,
+        "WAIT_INT_COVER_FINDING_ENEMY": 2,
+        "CLOSE_DIST_POINT_SQRT": 4,
+        "DELTA_SEEN_FROM_COVE_LAST_POS": 15,
+        "MOVE_TO_COVER_WHEN_TARGET": false,
+        "RUN_COVER_IF_CAN_AND_NO_ENEMIES": false,
+        "SPOTTED_GRENADE_TIME": 7,
+        "DEPENDS_Y_DIST_TO_BOT": false,
+        "RUN_IF_FAR": 15,
+        "RUN_IF_FAR_SQRT": 225,
+        "STAY_IF_FAR": 25,
+        "STAY_IF_FAR_SQRT": 625,
+        "CHECK_COVER_ENEMY_LOOK": false,
+        "SHOOT_NEAR_TO_LEAVE": 2,
+        "SHOOT_NEAR_SEC_PERIOD": 0.5,
+        "HITS_TO_LEAVE_COVER": 1,
+        "HITS_TO_LEAVE_COVER_UNKNOWN": 1,
+        "DOG_FIGHT_AFTER_LEAVE": 4,
+        "NOT_LOOK_AT_WALL_IS_DANGER": true,
+        "MIN_DEFENCE_LEVEL": 22,
+        "DIST_MAX_REWORK_NOT_TO_SHOOT": 30,
+        "REWORK_NOT_TO_SHOOT": true,
+        "DELETE_POINTS_BEHIND_ENEMIES": true,
+        "GOOD_DIST_TO_POINT_COEF": 1.8,
+        "ENEMY_DIST_TO_GO_OUT": 1,
+        "CHECK_CLOSEST_FRIEND": false,
+        "STATIONARY_WEAPON_NO_ENEMY_GETUP": 15,
+        "STATIONARY_WEAPON_MAX_DIST_TO_USE": 50
+      },
+      "Patrol": {
+        "LOOK_TIME_BASE": 12,
+        "RESERVE_TIME_STAY": 72,
+        "FRIEND_SEARCH_SEC": 12,
+        "TALK_DELAY": 31.1,
+        "MIN_TALK_DELAY": 35,
+        "TALK_DELAY_BIG": 45.1,
+        "CHANGE_WAY_TIME": 3325.1,
+        "MIN_DIST_TO_CLOSE_TALK": 5,
+        "VISION_DIST_COEF_PEACE": 1,
+        "MIN_DIST_TO_CLOSE_TALK_SQR": 25,
+        "CHANCE_TO_CUT_WAY_0_100": 75,
+        "CUT_WAY_MIN_0_1": 0.4,
+        "CUT_WAY_MAX_0_1": 0.65,
+        "CHANCE_TO_CHANGE_WAY_0_100": 30,
+        "CHANCE_TO_SHOOT_DEADBODY": 52,
+        "SUSPETION_PLACE_LIFETIME": 7,
+        "RESERVE_OUT_TIME": 60,
+        "CLOSE_TO_SELECT_RESERV_WAY": 25,
+        "MAX_YDIST_TO_START_WARN_REQUEST_TO_REQUESTER": 5,
+        "CAN_CHOOSE_RESERV": false,
+        "CAN_CHECK_MAGAZINE": false,
+        "CAN_WATCH_SECOND_WEAPON": true
+      },
+      "Hearing": {
+        "BOT_CLOSE_PANIC_DIST": 1,
+        "CHANCE_TO_HEAR_SIMPLE_SOUND_0_1": 0.88,
+        "DISPERSION_COEF": 10,
+        "CLOSE_DIST": 26,
+        "FAR_DIST": 56,
+        "SOUND_DIR_DEEFREE": 30,
+        "DIST_PLACE_TO_FIND_POINT": 70,
+        "DEAD_BODY_SOUND_RAD": 30,
+        "LOOK_ONLY_DANGER": false,
+        "RESET_TIMER_DIST": 17,
+        "HEAR_DELAY_WHEN_PEACE": 0,
+        "HEAR_DELAY_WHEN_HAVE_SMT": 0,
+        "LOOK_ONLY_DANGER_DELTA": 9
+      },
+      "Mind": {
+        "MIN_SHOOTS_TIME": 2,
+        "MAX_SHOOTS_TIME": 4,
+        "GROUP_EXACTLY_PHRASE_DELAY_MAX": 20,
+        "TIME_TO_RUN_TO_COVER_CAUSE_SHOOT_SEC": 15,
+        "DAMAGE_REDUCTION_TIME_SEC": 20,
+        "MIN_DAMAGE_SCARE": 20,
+        "CHANCE_TO_RUN_CAUSE_DAMAGE_0_100": 35,
+        "TIME_TO_FORGOR_ABOUT_ENEMY_SEC": 52,
+        "TIME_TO_FIND_ENEMY": 22,
+        "MAX_AGGRO_BOT_DIST": 100,
+        "HIT_POINT_DETECTION": 4,
+        "DANGER_POINT_CHOOSE_COEF": 1,
+        "SIMPLE_POINT_CHOOSE_COEF": 0.4,
+        "LASTSEEN_POINT_CHOOSE_COEF": 0.2,
+        "COVER_DIST_COEF": 1.5,
+        "DIST_TO_FOUND_SQRT": 400,
+        "MAX_AGGRO_BOT_DIST_SQR": 10000,
+        "DIST_TO_STOP_RUN_ENEMY": 15,
+        "ENEMY_LOOK_AT_ME_ANG": 15,
+        "MIN_START_AGGRESION_COEF": 1,
+        "MAX_START_AGGRESION_COEF": 3,
+        "BULLET_FEEL_DIST": 360,
+        "BULLET_FEEL_CLOSE_SDIST": 1,
+        "ATTACK_IMMEDIATLY_CHANCE_0_100": 40,
+        "CHANCE_FUCK_YOU_ON_CONTACT_100": 0.01,
+        "FRIEND_DEAD_AGR_LOW": -0.2,
+        "FRIEND_AGR_KILL": 0.2,
+        "LAST_ENEMY_LOOK_TO": 40,
+        "CAN_RECEIVE_PLAYER_REQUESTS_SAVAGE": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_BEAR": false,
+        "CAN_RECEIVE_PLAYER_REQUESTS_USEC": false,
+        "CAN_USE_MEDS": true,
+        "SUSPETION_POINT_CHANCE_ADD100": 0,
+        "AMBUSH_WHEN_UNDER_FIRE": true,
+        "AMBUSH_WHEN_UNDER_FIRE_TIME_RESIST": 60,
+        "ATTACK_ENEMY_IF_PROTECT_DELTA_LAST_TIME_SEEN": 1.5,
+        "HOLD_IF_PROTECT_DELTA_LAST_TIME_SEEN": 8.5,
+        "FIND_COVER_TO_GET_POSITION_WITH_SHOOT": 2,
+        "PROTECT_TIME_REAL": true,
+        "CHANCE_SHOOT_WHEN_WARN_PLAYER_100": 25,
+        "CAN_PANIC_IS_PROTECT": false,
+        "NO_RUN_AWAY_FOR_SAFE": true,
+        "PART_PERCENT_TO_HEAL": 0.65,
+        "PROTECT_DELTA_HEAL_SEC": 10,
+        "CAN_STAND_BY": false,
+        "CAN_THROW_REQUESTS": true,
+        "GROUP_ANY_PHRASE_DELAY": 5,
+        "GROUP_EXACTLY_PHRASE_DELAY": 20,
+        "DIST_TO_ENEMY_YO_CAN_HEAL": 30,
+        "CHANCE_TO_STAY_WHEN_WARN_PLAYER_100": 80,
+        "DOG_FIGHT_OUT": 6,
+        "DOG_FIGHT_IN": 3,
+        "SHOOT_INSTEAD_DOG_FIGHT": 9,
+        "PISTOL_SHOTGUN_AMBUSH_DIST": 330,
+        "STANDART_AMBUSH_DIST": 300,
+        "AI_POWER_COEF": 120,
+        "COVER_SECONDS_AFTER_LOSE_VISION": 10,
+        "COVER_SELF_ALWAYS_IF_DAMAGED": false,
+        "SEC_TO_MORE_DIST_TO_RUN": 10,
+        "HEAL_DELAY_SEC": 5,
+        "HIT_DELAY_WHEN_HAVE_SMT": -1,
+        "HIT_DELAY_WHEN_PEACE": -1,
+        "TALK_WITH_QUERY": true,
+        "DANGER_EXPIRE_TIME_MIN": 0.4,
+        "DANGER_EXPIRE_TIME_MAX": 1.2,
+        "PANIC_RUN_WEIGHT": 1,
+        "PANIC_SIT_WEIGHT": 80,
+        "PANIC_LAY_WEIGHT": 20,
+        "PANIC_NONE_WEIGHT": 40,
+        "CAN_TAKE_ITEMS": false,
+        "PANIC_SIT_WEIGHT_PEACE": 60,
+        "DEFAULT_SAVAGE_BEHAVIOUR": "Warn",
+        "DEFAULT_BEAR_BEHAVIOUR": "AlwaysEnemies",
+        "DEFAULT_USEC_BEHAVIOUR": "AlwaysEnemies",
+        "FRIENDLY_BOT_TYPES": [],
+        "WARN_BOT_TYPES": [
+          "assault"
+        ],
+        "ENEMY_BOT_TYPES": [
+          "pmcBEAR",
+          "pmcUSEC"
+        ]
+      },
+      "Boss": {
+        "BOSS_DIST_TO_WARNING": 34,
+        "BOSS_DIST_TO_WARNING_SQRT": 1156,
+        "BOSS_DIST_TO_WARNING_OUT": 43,
+        "BOSS_DIST_TO_WARNING_OUT_SQRT": 1849,
+        "BOSS_DIST_TO_SHOOT": 16,
+        "BOSS_DIST_TO_SHOOT_SQRT": 256,
+        "CHANCE_TO_SEND_GRENADE_100": 100,
+        "MAX_DIST_COVER_BOSS": 25,
+        "MAX_DIST_COVER_BOSS_SQRT": 625,
+        "MAX_DIST_DECIDER_TO_SEND": 35,
+        "MAX_DIST_DECIDER_TO_SEND_SQRT": 1225,
+        "TIME_AFTER_LOSE": 15,
+        "TIME_AFTER_LOSE_DELTA": 60,
+        "PERSONS_SEND": 2,
+        "DELTA_SEARCH_TIME": 18,
+        "COVER_TO_SEND": true,
+        "EFFECT_PAINKILLER": true,
+        "WAIT_NO_ATTACK_SAVAGE": 10,
+        "CHANCE_USE_RESERVE_PATROL_100": 30,
+        "KILLA_Y_DELTA_TO_BE_ENEMY_BOSS": 5,
+        "KILLA_DITANCE_TO_BE_ENEMY_BOSS": 65,
+        "KILLA_START_SEARCH_SEC": 40,
+        "KILLA_CONTUTION_TIME": 5,
+        "KILLA_CLOSE_ATTACK_DIST": 14,
+        "KILLA_MIDDLE_ATTACK_DIST": 92,
+        "KILLA_LARGE_ATTACK_DIST": 121,
+        "KILLA_SEARCH_METERS": 30,
+        "KILLA_DEF_DIST_SQRT": 225,
+        "KILLA_SEARCH_SEC_STOP_AFTER_COMING": 25,
+        "KILLA_DIST_TO_GO_TO_SUPPRESS": 6,
+        "KILLA_AFTER_GRENADE_SUPPRESS_DELAY": 2,
+        "KILLA_CLOSEATTACK_TIMES": 3,
+        "KILLA_CLOSEATTACK_DELAY": 10,
+        "KILLA_HOLD_DELAY": 5,
+        "KILLA_BULLET_TO_RELOAD": 15,
+        "SHALL_WARN": true,
+        "KILLA_ENEMIES_TO_ATTACK": 3,
+        "KILLA_ONE_IS_CLOSE": 20,
+        "KILLA_TRIGGER_DOWN_DELAY": 0.1,
+        "KILLA_WAIT_IN_COVER_COEF": 0.1,
+        "KOJANIY_DIST_WHEN_READY": 40,
+        "KOJANIY_DIST_TO_BE_ENEMY": 200,
+        "KOJANIY_MIN_DIST_TO_LOOT": 20,
+        "KOJANIY_MIN_DIST_TO_LOOT_SQRT": 400,
+        "KOJANIY_DIST_ENEMY_TOO_CLOSE": 17,
+        "KOJANIY_MANY_ENEMIES_COEF": 1.5,
+        "KOJANIY_COVER_POWER": 500,
+        "KOJANIY_FIGHT_CENTER_POS_ME": false,
+        "KOJANIY_DIST_CORE_SPOS_RECALC": 25,
+        "KOJANIY_DIST_CORE_SPOS_RECALC_SQRT": 625,
+        "GLUHAR_FOLLOWER_PATH_NAME": "Attack",
+        "GLUHAR_FOLLOWER_SCOUT_DIST_START_ATTACK": 80,
+        "GLUHAR_FOLLOWER_SCOUT_DIST_END_ATTACK": 120,
+        "GLUHAR_BOSS_WANNA_ATTACK_CHANCE_0_100": 150,
+        "GLUHAR_ASSAULT_ATTACK_DIST": 45,
+        "GLUHAR_STOP_ASSAULT_ATTACK_DIST": 180,
+        "GLUHAR_TIME_TO_ASSAULT": 10,
+        "DIST_TO_PROTECT_BOSS": 15
+      },
+      "Core": {
+        "VisibleAngle": 160,
+        "VisibleDistance": 142,
+        "GainSightCoef": 0.1,
+        "ScatteringPerMeter": 0.045,
+        "ScatteringClosePerMeter": 0.12,
+        "DamageCoeff": 1,
+        "HearingSense": 3.9,
+        "CanRun": true,
+        "CanGrenade": true,
+        "AimingType": "normal",
+        "PistolFireDistancePref": 35,
+        "ShotgunFireDistancePref": 50,
+        "RifleFireDistancePref": 100,
+        "AccuratySpeed": 0.2,
+        "WaitInCoverBetweenShotsSec": 0.3
+      },
+      "Scattering": {
+        "MinScatter": 0.03,
+        "WorkingScatter": 0.15,
+        "MaxScatter": 0.4,
+        "SpeedUp": 0.3,
+        "SpeedUpAim": 1.4,
+        "SpeedDown": -0.3,
+        "ToSlowBotSpeed": 1.5,
+        "ToLowBotSpeed": 2.4,
+        "ToUpBotSpeed": 3.6,
+        "MovingSlowCoef": 1.5,
+        "ToLowBotAngularSpeed": 80,
+        "ToStopBotAngularSpeed": 40,
+        "FromShot": 0.001,
+        "TracerCoef": 1.3,
+        "HandDamageScatteringMinMax": 0.7,
+        "HandDamageAccuracySpeed": 1.3,
+        "BloodFall": 1.45,
+        "Caution": 0.3,
+        "ToCaution": 0.6,
+        "RecoilControlCoefShootDone": 0.0003,
+        "RecoilControlCoefShootDoneAuto": 0.00015,
+        "AMPLITUDE_FACTOR": 0.25,
+        "AMPLITUDE_SPEED": 0.1,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM": 15,
+        "DIST_FROM_OLD_POINT_TO_NOT_AIM_SQRT": 225,
+        "DIST_NOT_TO_SHOOT": 0.3,
+        "PoseChnageCoef": 0.1,
+        "LayFactor": 0.1,
+        "RecoilYCoef": 0.0005,
+        "RecoilYCoefSppedDown": -0.52,
+        "RecoilYMax": 1
+      }
+    }
+  },
+  "chances": {
+    "equipment": {
+      "Headwear": 71,
+      "Earpiece": 15,
+      "FaceCover": 53,
+      "ArmorVest": 87,
+      "Eyewear": 29,
+      "ArmBand": 0,
+      "TacticalVest": 100,
+      "Backpack": 92,
+      "FirstPrimaryWeapon": 100,
+      "SecondPrimaryWeapon": 0,
+      "Holster": 100,
+      "Scabbard": 0,
+      "Pockets": 100,
+      "SecuredContainer": 100
+    },
+    "weaponMods": {
+      "mod_launcher": 0,
+      "mod_muzzle": 100,
+      "mod_reciever": 87,
+      "mod_sight_rear": 68,
+      "mod_stock": 55,
+      "mod_magazine": 100,
+      "mod_mount_000": 0,
+      "mod_charge": 6,
+      "mod_mount": 10,
+      "mod_foregrip": 98,
+      "mod_tactical": 38,
+      "mod_stock_000": 16,
+      "mod_scope": 77,
+      "mod_tactical_002": 66,
+      "mod_sight_front": 79,
+      "mod_mount_001": 0,
+      "mod_tactical_000": 54,
+      "mod_tactical_001": 100,
+      "mod_tactical_003": 0,
+      "mod_tactical_004": 0,
+      "mod_bipod": 0,
+      "mod_mount_004": 77
+    },
+    "equipmentMods": {
+      "front_plate": 100,
+      "back_plate": 100,
+      "mod_equipment": 0,
+      "left_side_plate": 34,
+      "right_side_plate": 34,
+      "mod_equipment_000": 54,
+      "mod_nvg": 0,
+      "mod_mount": 0,
+      "mod_equipment_001": 25,
+      "mod_equipment_002": 50
+    }
+  },
+  "generation": {
+    "items": {
+      "specialItems": {
+        "weights": {
+          "0": 1,
+          "1": 0
+        },
+        "whitelist": []
+      },
+      "healing": {
+        "weights": {
+          "0": 1,
+          "1": 2,
+          "2": 1
+        },
+        "whitelist": []
+      },
+      "drugs": {
+        "weights": {
+          "0": 1,
+          "1": 2,
+          "2": 0
+        },
+        "whitelist": []
+      },
+      "stims": {
+        "weights": {
+          "0": 2,
+          "1": 1,
+          "2": 0
+        },
+        "whitelist": []
+      },
+      "food": {
+        "weights": {
+          "0": 10,
+          "1": 5,
+          "2": 2
+        },
+        "whitelist": []
+      },
+      "drink": {
+        "weights": {
+          "0": 10,
+          "1": 5,
+          "2": 2
+        },
+        "whitelist": []
+      },
+      "currency": {
+        "weights": {
+          "0": 20,
+          "1": 5,
+          "2": 1
+        },
+        "whitelist": []
+      },
+      "backpackLoot": {
+        "weights": {
+          "0": 1,
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 0
+        },
+        "whitelist": []
+      },
+      "pocketLoot": {
+        "weights": {
+          "0": 1,
+          "1": 6,
+          "2": 3,
+          "3": 1,
+          "4": 1
+        },
+        "whitelist": []
+      },
+      "vestLoot": {
+        "weights": {
+          "0": 1,
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 0,
+          "5": 0,
+          "6": 0
+        },
+        "whitelist": []
+      },
+      "magazines": {
+        "weights": {
+          "0": 0,
+          "1": 0,
+          "2": 1,
+          "3": 3,
+          "4": 1
+        },
+        "whitelist": []
+      },
+      "grenades": {
+        "weights": {
+          "0": 1,
+          "1": 2,
+          "2": 1,
+          "3": 1,
+          "4": 0,
+          "5": 0
+        },
+        "whitelist": []
+      }
+    }
+  }
+}

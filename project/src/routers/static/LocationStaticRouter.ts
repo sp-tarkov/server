@@ -1,34 +1,36 @@
+import { LocationCallbacks } from "@spt/callbacks/LocationCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { ILocationsGenerateAllResponse } from "@spt/models/eft/common/ILocationsSourceDestinationBase";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IGetAirdropLootResponse } from "@spt/models/eft/location/IGetAirdropLootResponse";
 import { inject, injectable } from "tsyringe";
 
-import { LocationCallbacks } from "../../callbacks/LocationCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
-
 @injectable()
-export class LocationStaticRouter extends StaticRouter 
-{
-    constructor(
-        @inject("LocationCallbacks") protected locationCallbacks: LocationCallbacks
-    ) 
-    {
-        super(
-            [
-                new RouteAction(
-                    "/client/locations",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.locationCallbacks.getLocationData(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/location/getAirdropLoot",
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, _output: string): any =>
-                    {
-                        return this.locationCallbacks.getAirdropLoot(url, info, sessionID);
-                    }
-                )
-            ]
-        );
+export class LocationStaticRouter extends StaticRouter {
+    constructor(@inject("LocationCallbacks") protected locationCallbacks: LocationCallbacks) {
+        super([
+            new RouteAction(
+                "/client/locations",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<ILocationsGenerateAllResponse>> => {
+                    return this.locationCallbacks.getLocationData(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/airdrop/loot",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<IGetAirdropLootResponse>> => {
+                    return this.locationCallbacks.getAirdropLoot(url, info, sessionID);
+                },
+            ),
+        ]);
     }
 }

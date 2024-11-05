@@ -1,4 +1,3 @@
-export interface ISetDialogReadRequestData 
-{
+export interface ISetDialogReadRequestData {
     dialogs: string[];
 }

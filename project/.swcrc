@@ -9,15 +9,16 @@
         "transform": {
             "decoratorMetadata": true
         },
-        "target": "es2020",
+        "target": "es2022",
         "loose": true,
         "externalHelpers": false,
-        // Requires v1.2.50 or upper and requires target to be es2016 or upper.
-        "keepClassNames": true
+        "keepClassNames": true,
+        "baseUrl": "./",
+        "paths": {
+            "@spt/*": ["src/*"]
+        }
     },
-    "exclude": [
-        "node_modules/"
-    ],
+    "exclude": ["node_modules/"],
     "module": {
         "type": "commonjs",
         "strict": false,
@@ -25,6 +26,6 @@
         "lazy": false,
         "noInterop": false
     },
-    "sourceMaps":true,
+    "sourceMaps": true,
     "minify": false
 }

@@ -1,24 +1,32 @@
 {
-    "MIAOnRaidEnd": true,
     "raidMenuSettings": {
         "aiAmount": "AsOnline",
         "aiDifficulty": "AsOnline",
         "bossEnabled": true,
         "scavWars": false,
         "taggedAndCursed": false,
-        "enablePve": true
+        "enablePve": true,
+        "randomWeather": false,
+        "randomTime": false
     },
     "save": {
-        "loot": true,
-        "durability": true
+        "loot": true
     },
-    "carExtracts": [
-        "Dorms V-Ex",
-        "PP Exfil",
-        "V-Ex_light",
-        "South V-Ex",
-        "E7_car"
+    "carExtracts": ["Dorms V-Ex", "PP Exfil", "V-Ex_light", "South V-Ex", "E7_car", "Sandbox_VExit", "Shorl_V-Ex"],
+    "coopExtracts": [
+        "Interchange Cooperation",
+        "tunnel_shared",
+        "EXFIL_ScavCooperation",
+        "Factory Gate",
+        "Exit_E10_coop",
+        "Smugglers_Trail_coop",
+        "Scav_coop_exit"
     ],
-    "carExtractBaseStandingGain": 0.25,
-    "scavExtractGain": 0.01
+    "carExtractBaseStandingGain": 0.2,
+    "coopExtractBaseStandingGain": 0.25,
+    "scavExtractStandingGain": 0.01,
+    "pmcKillProbabilityForScavGain": 0.2,
+    "keepFiRSecureContainerOnDeath": false,
+    "alwaysKeepFoundInRaidonRaidEnd": false,
+    "playerScavHostileChancePercent": 15
 }

@@ -21,6 +21,7 @@
     "min_payment": 0,
     "min_return_hour": 10
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [
       "543be5664bdc2dd4348b4569",
@@ -35,7 +36,19 @@
   "items_buy_prohibited": {
     "category": [],
     "id_list": [
-      "62e910aaf957f2915e0a5e36"
+      "62e910aaf957f2915e0a5e36",
+      "64d0b40fbe2eed70e254e2d4",
+      "65ddcc9cfa85b9f17d0dfb07",
+      "65ca457b4aafb5d7fc0dcb5d",
+      "660312cc4d6cdfa6f500c703",
+      "660bbc98c38b837877075e4a",
+      "6638a5474e92f038531e210e",
+      "66bc98a01a47be227a5e956e",
+      "6655e35b6bc645cb7b059912",
+      "666879d498b97e3a8f09f1ae",
+      "6399f54b0a36db13c823ad21",
+      "66687bc89111279d600b5062",
+      "66d98233302686954b0c6f81"
     ]
   },
   "location": "",
@@ -83,8 +96,12 @@
   ],
   "medic": true,
   "name": "Эльвира",
-  "nextResupply": 1631488848,
+  "nextResupply": 1717705452,
   "nickname": "Therapist",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": false,
     "currency": "5449016a4bdc2d6f028b456f",
@@ -93,20 +110,14 @@
       "5447e1d04bdc2dff2f8b4567"
     ],
     "excluded_id_list": [],
-    "price_rate": 0,
     "quality": "0"
   },
-  "sell_category": [
-    "5b47574386f77428ca22b344",
-    "5b47574386f77428ca22b2f1",
-    "5b47574386f77428ca22b340",
-    "5b47574386f77428ca22b2f4",
-    "5b47574386f77428ca22b2f3",
-    "5b47574386f77428ca22b342",
-    "5b47574386f77428ca22b341",
-    "5b5f6fa186f77409407a7eb7",
-    "5b47574386f77428ca22b343"
-  ],
+  "sell_category": [],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Хабибуллина",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

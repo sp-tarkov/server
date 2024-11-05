@@ -39,31 +39,46 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 1
+                    "weights": {
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "labsAccessCardChancePercent": 0,
+            "lootItemsToAddChancePercent": {}
         },
         "-6": {
             "botTypeForLoot": "assault",
@@ -104,31 +119,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 1,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "-5": {
             "botTypeForLoot": "assault",
@@ -169,31 +204,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
-                },
-                "labsAccessCardChancePercent": 0
-            }
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
+                }
+            },
+            "lootItemsToAddChancePercent": {}
         },
         "-4": {
             "botTypeForLoot": "assault",
@@ -234,31 +289,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "-3": {
             "botTypeForLoot": "assault",
@@ -299,31 +374,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "-2": {
             "botTypeForLoot": "assault",
@@ -364,31 +459,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "-1": {
             "botTypeForLoot": "assault",
@@ -429,31 +544,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 2,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "0": {
             "botTypeForLoot": "assault",
@@ -494,31 +629,51 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 0,
-                    "max": 4
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 0
+            "lootItemsToAddChancePercent": {}
         },
         "1": {
             "botTypeForLoot": "assault",
@@ -535,7 +690,7 @@
                 "equipment": {
                     "Headwear": 4,
                     "ArmorVest": 10,
-                    "Backpack": 8,
+                    "Backpack": 15,
                     "FirstPrimaryWeapon": 2,
                     "Holster": 5,
                     "Scabbard": 3
@@ -559,31 +714,56 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 2,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 0,
-                    "max": 2
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 0
+                    "weights": {
+                        "0": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 1,
-                    "max": 4
+                    "weights": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 1,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 1,
-                    "max": 3
+                    "weights": {
+                        "1": 1,
+                        "2": 2,
+                        "3": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 0,
-                    "max": 2
+                    "weights": {
+                        "0": 2,
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 3
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 3,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         },
         "2": {
             "botTypeForLoot": "assault",
@@ -600,7 +780,7 @@
                 "equipment": {
                     "Headwear": 8,
                     "ArmorVest": 20,
-                    "Backpack": 15,
+                    "Backpack": 25,
                     "FirstPrimaryWeapon": 4,
                     "Holster": 15,
                     "Scabbard": 6
@@ -624,31 +804,53 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 2
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 2
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 0,
-                    "max": 1
+                    "weights": {
+                        "0": 1,
+                        "1": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 2,
-                    "max": 4
+                    "weights": {
+                        "2": 2,
+                        "3": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 2,
+                        "3": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 6
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 6,
+                "62178c4d4ecf221597654e3d": 3,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         },
         "3": {
             "botTypeForLoot": "assault",
@@ -665,7 +867,7 @@
                 "equipment": {
                     "Headwear": 12,
                     "ArmorVest": 30,
-                    "Backpack": 22,
+                    "Backpack": 35,
                     "FirstPrimaryWeapon": 6,
                     "Holster": 25,
                     "Scabbard": 9
@@ -689,31 +891,56 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 2
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 2
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 1,
-                    "max": 1
+                    "weights": {
+                        "1": 5,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 2,
-                    "max": 5
+                    "weights": {
+                        "2": 1,
+                        "3": 2,
+                        "4": 1,
+                        "5": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 2,
-                    "max": 4
+                    "weights": {
+                        "2": 1,
+                        "3": 2,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 2
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 11
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 11,
+                "62178c4d4ecf221597654e3d": 8,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         },
         "4": {
             "botTypeForLoot": "assault",
@@ -730,7 +957,7 @@
                 "equipment": {
                     "Headwear": 16,
                     "ArmorVest": 40,
-                    "Backpack": 30,
+                    "Backpack": 40,
                     "FirstPrimaryWeapon": 8,
                     "Holster": 35,
                     "Scabbard": 12
@@ -754,31 +981,55 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 2,
-                    "max": 2
+                    "weights": {
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 1,
+                        "3": 2
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 3,
-                    "max": 6
+                    "weights": {
+                        "3": 2,
+                        "4": 2,
+                        "5": 1,
+                        "6": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 2,
-                    "max": 4
+                    "weights": {
+                        "2": 1,
+                        "3": 2,
+                        "4": 1
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 1,
+                        "3": 2
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 17
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 17,
+                "62178c4d4ecf221597654e3d": 13,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         },
         "5": {
             "botTypeForLoot": "assault",
@@ -795,7 +1046,7 @@
                 "equipment": {
                     "Headwear": 20,
                     "ArmorVest": 50,
-                    "Backpack": 39,
+                    "Backpack": 48,
                     "FirstPrimaryWeapon": 8,
                     "Holster": 45,
                     "Scabbard": 15
@@ -819,39 +1070,80 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 2,
-                    "max": 2
+                    "weights": {
+                        "2": 5,
+                        "3": 1
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 1,
+                        "3": 2
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 1,
-                    "max": 2
+                    "weights": {
+                        "1": 1,
+                        "2": 1
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 3,
-                    "max": 6
+                    "weights": {
+                        "3": 1,
+                        "4": 2,
+                        "5": 2,
+                        "6": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 3,
-                    "max": 4
+                    "weights": {
+                        "3": 2,
+                        "4": 2
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 2,
+                        "3": 1
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 22
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 22,
+                "62178c4d4ecf221597654e3d": 18,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         },
         "6": {
             "botTypeForLoot": "assault",
             "equipmentBlacklist": {
-                "Headwear": ["61c18db6dfd64163ea78fbb4", "60361b0b5a45383c122086a1", "5aa2b87de5b5b00016327c25", "5aa2ba19e5b5b00014028f4e", "59e770f986f7742cbe3164ef", "572b7fa124597762b472f9d2", "572b7d8524597762b472f9d1", "60361b5a9a15b10d96792291", "5f60e7788adaa7100c3adb49", "5aa2a7e8e5b5b00016327c16"],
+                "Headwear": [
+                    "61c18db6dfd64163ea78fbb4",
+                    "60361b0b5a45383c122086a1",
+                    "5aa2b87de5b5b00016327c25",
+                    "5aa2ba19e5b5b00014028f4e",
+                    "59e770f986f7742cbe3164ef",
+                    "572b7fa124597762b472f9d2",
+                    "572b7d8524597762b472f9d1",
+                    "60361b5a9a15b10d96792291",
+                    "5f60e7788adaa7100c3adb49",
+                    "5aa2a7e8e5b5b00016327c16"
+                ],
                 "ArmorVest": ["59e7635f86f7742cbf2c1095", "5df8a2ca86f7740bfe6df777"],
                 "TacticalVest": ["5fd4c5477a8d854fa0105061", "572b7adb24597762ae139821"],
-                "Backpack": ["56e33680d2720be2748b4576", "56e33634d2720bd8058b456b", "5ab8ee7786f7742d8f33f0b9", "5ab8f04f86f774585f4237d8", "5f5e45cc5021ce62144be7aa"],
+                "Backpack": [
+                    "56e33680d2720be2748b4576",
+                    "56e33634d2720bd8058b456b",
+                    "5ab8ee7786f7742d8f33f0b9",
+                    "5ab8f04f86f774585f4237d8",
+                    "5f5e45cc5021ce62144be7aa"
+                ],
                 "FirstPrimaryWeapon": ["5a38e6bac4a2826c6e06d79b"],
                 "Holster": ["5448bd6b4bdc2dfc2f8b4569", "579204f224597773d619e051", "571a12c42459771f627b58a0"],
                 "Scabbard": []
@@ -884,31 +1176,54 @@
             },
             "itemLimits": {
                 "healing": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 1,
+                        "3": 2
+                    },
+                    "whitelist": []
                 },
                 "drugs": {
-                    "min": 3,
-                    "max": 4
+                    "weights": {
+                        "3": 1,
+                        "4": 2
+                    },
+                    "whitelist": []
                 },
                 "stims": {
-                    "min": 2,
-                    "max": 3
+                    "weights": {
+                        "2": 1,
+                        "3": 2
+                    },
+                    "whitelist": []
                 },
                 "looseLoot": {
-                    "min": 5,
-                    "max": 7
+                    "weights": {
+                        "5": 1,
+                        "6": 2,
+                        "7": 1
+                    },
+                    "whitelist": []
                 },
                 "magazines": {
-                    "min": 4,
-                    "max": 4
+                    "weights": {
+                        "3": 1,
+                        "4": 4
+                    },
+                    "whitelist": []
                 },
                 "grenades": {
-                    "min": 3,
-                    "max": 4
+                    "weights": {
+                        "3": 1,
+                        "4": 2
+                    },
+                    "whitelist": []
                 }
             },
-            "labsAccessCardChancePercent": 27
+            "lootItemsToAddChancePercent": {
+                "5c94bbff86f7747ee735c08f": 27,
+                "62178c4d4ecf221597654e3d": 23,
+                "64d4b23dc1b37504b41ac2b6": 3
+            }
         }
     }
 }

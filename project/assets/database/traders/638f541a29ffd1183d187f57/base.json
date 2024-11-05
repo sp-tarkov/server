@@ -19,6 +19,7 @@
     "min_payment": 0,
     "min_return_hour": 0
   },
+  "isCanTransferItems": false,
   "items_buy": {
     "category": [],
     "id_list": []
@@ -27,7 +28,17 @@
     "category": [
       null
     ],
-    "id_list": []
+    "id_list": [
+      "64d0b40fbe2eed70e254e2d4",
+      "65ddcc9cfa85b9f17d0dfb07",
+      "65ca457b4aafb5d7fc0dcb5d",
+      "660312cc4d6cdfa6f500c703",
+      "660bbc98c38b837877075e4a",
+      "660bc341c38b837877075e4c",
+      "6638a5474e92f038531e210e",
+      "6655e35b6bc645cb7b059912",
+      "66d98233302686954b0c6f81"
+    ]
   },
   "location": "Смотритель",
   "loyaltyLevels": [
@@ -46,6 +57,10 @@
   "name": "Смотритель",
   "nextResupply": 1672241513,
   "nickname": "caretaker",
+  "prohibitedTransferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "repair": {
     "availability": false,
     "currency": "5449016a4bdc2d6f028b456f",
@@ -55,6 +70,11 @@
     "quality": 0
   },
   "sell_category": [],
+  "sell_modifier_for_prohibited_items": 0,
   "surname": "Смотритель",
+  "transferableItems": {
+    "category": [],
+    "id_list": []
+  },
   "unlockedByDefault": true
 }

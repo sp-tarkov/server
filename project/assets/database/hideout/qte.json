@@ -273,15 +273,15 @@
             "levelMultipliers": [
               {
                 "level": 0,
-                "multiplier": 2.25
+                "multiplier": 6
               },
               {
                 "level": 10,
-                "multiplier": 1.5
+                "multiplier": 5
               },
               {
                 "level": 25,
-                "multiplier": 0.75
+                "multiplier": 4
               }
             ],
             "type": "Skill"
@@ -293,15 +293,15 @@
             "levelMultipliers": [
               {
                 "level": 0,
-                "multiplier": 2.25
+                "multiplier": 6
               },
               {
                 "level": 10,
-                "multiplier": 0.6
+                "multiplier": 5
               },
               {
                 "level": 25,
-                "multiplier": 0.75
+                "multiplier": 4
               }
             ],
             "type": "Skill"

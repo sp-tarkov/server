@@ -1,0 +1,21 @@
+name: Clear Item DB Website Cache
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: filter
+        uses: dorny/paths-filter@v3.0.2
+        with:
+          list-files: shell
+          filters: |
+            database:
+              - 'project/assets/database/**'
+      - name: Send Refresh Request
+        if: steps.filter.outputs.database == 'true'
+        run: curl --max-time 30 https://db.sp-tarkov.com/api/refresh

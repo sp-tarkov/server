@@ -1,26 +1,23 @@
-export interface ISyncHealthRequestData 
-{
-    Health: Health
-    IsAlive: boolean
-    Hydration?: number
-    Energy?: number
-    Temperature?: number
+export interface ISyncHealthRequestData {
+    Health: IBodyPartCollection;
+    IsAlive: boolean;
+    Hydration?: number;
+    Energy?: number;
+    Temperature?: number;
 }
 
-export interface Health 
-{
-    Head?: BodyPartHealth
-    Chest?: BodyPartHealth
-    Stomach?: BodyPartHealth
-    LeftArm?: BodyPartHealth
-    RightArm?: BodyPartHealth
-    LeftLeg?: BodyPartHealth
-    RightLeg?: BodyPartHealth
+export interface IBodyPartCollection {
+    Head?: IBodyPartHealth;
+    Chest?: IBodyPartHealth;
+    Stomach?: IBodyPartHealth;
+    LeftArm?: IBodyPartHealth;
+    RightArm?: IBodyPartHealth;
+    LeftLeg?: IBodyPartHealth;
+    RightLeg?: IBodyPartHealth;
 }
 
-export interface BodyPartHealth 
-{
-    Maximum: number
-    Current: number
-    Effects: Record<string, number>
+export interface IBodyPartHealth {
+    Maximum: number;
+    Current: number;
+    Effects: Record<string, number>;
 }

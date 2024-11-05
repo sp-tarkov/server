@@ -1,31 +1,17 @@
+import { HandledRoute, SaveLoadRouter } from "@spt/di/Router";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { injectable } from "tsyringe";
 
-import { HandledRoute, SaveLoadRouter } from "../../di/Router";
-import { IAkiProfile } from "../../models/eft/profile/IAkiProfile";
-
 @injectable()
-export class HealthSaveLoadRouter extends SaveLoadRouter 
-{
-    constructor()
-    {
-        super();
+export class HealthSaveLoadRouter extends SaveLoadRouter {
+    public override getHandledRoutes(): HandledRoute[] {
+        return [new HandledRoute("spt-health", false)];
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
-        return [
-            new HandledRoute("aki-health", false)
-        ];
-    }
-
-    public override handleLoad(profile: IAkiProfile): IAkiProfile 
-    {
-        if (!profile.vitality) // Occurs on newly created profiles
-        {
-            profile.vitality = {
-                health: null,
-                effects: null
-            };
+    public override handleLoad(profile: ISptProfile): ISptProfile {
+        if (!profile.vitality) {
+            // Occurs on newly created profiles
+            profile.vitality = { health: undefined, effects: undefined };
         }
         profile.vitality.health = {
             Hydration: 0,
@@ -37,7 +23,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
             LeftArm: 0,
             RightArm: 0,
             LeftLeg: 0,
-            RightLeg: 0
+            RightLeg: 0,
         };
 
         profile.vitality.effects = {
@@ -47,7 +33,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter
             LeftArm: {},
             RightArm: {},
             LeftLeg: {},
-            RightLeg: {}
+            RightLeg: {},
         };
 
         return profile;

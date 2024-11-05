@@ -1,164 +1,154 @@
-export interface Item 
-{
-    
-    _id: string
-    _tpl: string
-    parentId?: string
-    slotId?: string
-    location?: Location | number
-    upd?: Upd
+export interface IItem {
+    _id: string;
+    _tpl: string;
+    parentId?: string;
+    slotId?: string;
+    location?: IItemLocation | number;
+    upd?: IUpd;
 }
 
-export interface Upd 
-{
-    Buff?: Buff
-    OriginalStackObjectsCount?: number
-    Togglable?: Togglable
-    Map?: Map
-    Tag?: Tag
-    sptPresetId?: string // SPT specific property, not made by BSG
-    FaceShield?: FaceShield
-    StackObjectsCount?: number
-    UnlimitedCount?: boolean
-    Repairable?: Repairable
-    RecodableComponent?: RecodableComponent
-    FireMode?: FireMode
-    SpawnedInSession?: boolean
-    Light?: Light
-    Key?: Key
-    Resource?: Resource
-    Sight?: Sight
-    MedKit?: MedKit
-    FoodDrink?: FoodDrink
-    Dogtag?: Dogtag
-    BuyRestrictionMax?: number
-    BuyRestrictionCurrent?: number
-    Foldable?: Foldable
-    SideEffect?: SideEffect
-    RepairKit?: RepairKit
+export interface IItemLocation {
+    x: number;
+    y: number;
+    r: string | number;
+    isSearched?: boolean;
+    /** SPT property? */
+    rotation?: string | boolean;
 }
 
-export interface Buff
-{
-    rarity: string
-    buffType: string
-    value: number
-    thresholdDurability?: number
+export interface IUpd {
+    Buff?: IUpdBuff;
+    OriginalStackObjectsCount?: number;
+    Togglable?: IUpdTogglable;
+    Map?: IUpdMap;
+    Tag?: IUpdTag;
+    /** SPT specific property, not made by BSG */
+    sptPresetId?: string;
+    FaceShield?: IUpdFaceShield;
+    StackObjectsCount?: number;
+    UnlimitedCount?: boolean;
+    Repairable?: IUpdRepairable;
+    RecodableComponent?: IUpdRecodableComponent;
+    FireMode?: IUpdFireMode;
+    SpawnedInSession?: boolean;
+    Light?: IUpdLight;
+    Key?: IUpdKey;
+    Resource?: IUpdResource;
+    Sight?: IUpdSight;
+    MedKit?: IUpdMedKit;
+    FoodDrink?: IUpdFoodDrink;
+    Dogtag?: IUpdDogtag;
+    BuyRestrictionMax?: number;
+    BuyRestrictionCurrent?: number;
+    Foldable?: IUpdFoldable;
+    SideEffect?: IUpdSideEffect;
+    RepairKit?: IUpdRepairKit;
+    CultistAmulet?: IUpdCultistAmulet;
+    PinLockState?: PinLockState;
 }
 
-export interface Togglable
-{
-    On: boolean
-}
-  
-export interface Map 
-{
-    Markers: MapMarker[]
-}
-  
-export interface MapMarker 
-{
-    X: number
-    Y: number
-}
-  
-export interface Tag 
-{
-    Color: number; 
-    Name: string
+export enum PinLockState {
+    FREE = "Free",
+    LOCKED = "Locked",
+    PINNED = "Pinned",
 }
 
-export interface FaceShield 
-{
+export interface IUpdBuff {
+    rarity: string;
+    buffType: string;
+    value: number;
+    thresholdDurability?: number;
+}
+
+export interface IUpdTogglable {
+    On: boolean;
+}
+
+export interface IUpdMap {
+    Markers: IMapMarker[];
+}
+
+export interface IMapMarker {
+    X: number;
+    Y: number;
+}
+
+export interface IUpdTag {
+    Color: number;
+    Name: string;
+}
+
+export interface IUpdFaceShield {
     Hits: number;
 }
-  
-export interface Repairable 
-{
-    Durability: number
-    MaxDurability: number
+
+export interface IUpdRepairable {
+    Durability: number;
+    MaxDurability: number;
 }
 
-export interface RecodableComponent
-{
-    IsEncoded: boolean
-}
-  
-export interface MedKit 
-{
-    HpResource: number
-}
-  
-export interface Sight 
-{
-    ScopesCurrentCalibPointIndexes: number[]
-    ScopesSelectedModes: number[]
-    SelectedScope: number
-}
-  
-export interface Foldable 
-{
-    Folded: boolean
-}
-  
-export interface FireMode 
-{
-    FireMode: string
-}
-  
-export interface FoodDrink 
-{
-    HpPercent: number
-}
-  
-export interface Key 
-{
-    NumberOfUsages: number
-}
-  
-export interface Resource 
-{
-    Value: number
-    UnitsConsumed: number
-}
-  
-export interface Light 
-{
-    IsActive: boolean
-    SelectedMode: number
-}
-  
-export interface Dogtag 
-{
-    AccountId: string
-    ProfileId: string
-    Nickname: string
-    Side: string
-    Level: number
-    Time: string
-    Status: string
-    KillerAccountId: string
-    KillerProfileId: string
-    KillerName: string
-    WeaponName: string
+export interface IUpdRecodableComponent {
+    IsEncoded: boolean;
 }
 
-export interface Location 
-{
-    x: number
-    y: number
-    r: string | number
-    isSearched?: boolean
-    /** SPT property? */
-    rotation?: string | boolean 
+export interface IUpdMedKit {
+    HpResource: number;
 }
 
-export interface SideEffect 
-{
-    Value: number
+export interface IUpdSight {
+    ScopesCurrentCalibPointIndexes: number[];
+    ScopesSelectedModes: number[];
+    SelectedScope: number;
 }
 
-export interface RepairKit
-{
-    Resource: number
+export interface IUpdFoldable {
+    Folded: boolean;
+}
+
+export interface IUpdFireMode {
+    FireMode: string;
+}
+
+export interface IUpdFoodDrink {
+    HpPercent: number;
+}
+
+export interface IUpdKey {
+    NumberOfUsages: number;
+}
+
+export interface IUpdResource {
+    Value: number;
+    UnitsConsumed: number;
+}
+
+export interface IUpdLight {
+    IsActive: boolean;
+    SelectedMode: number;
+}
+
+export interface IUpdDogtag {
+    AccountId: string;
+    ProfileId: string;
+    Nickname: string;
+    Side: string;
+    Level: number;
+    Time: string;
+    Status: string;
+    KillerAccountId: string;
+    KillerProfileId: string;
+    KillerName: string;
+    WeaponName: string;
+}
+
+export interface IUpdSideEffect {
+    Value: number;
+}
+
+export interface IUpdRepairKit {
+    Resource: number;
+}
+
+export interface IUpdCultistAmulet {
+    NumberOfUsages: number;
 }

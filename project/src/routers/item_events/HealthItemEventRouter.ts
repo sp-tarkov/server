@@ -1,33 +1,32 @@
+import { HealthCallbacks } from "@spt/callbacks/HealthCallbacks";
+import { HandledRoute, ItemEventRouterDefinition } from "@spt/di/Router";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { inject, injectable } from "tsyringe";
 
-import { HealthCallbacks } from "../../callbacks/HealthCallbacks";
-import { HandledRoute, ItemEventRouterDefinition } from "../../di/Router";
-import { IPmcData } from "../../models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "../../models/eft/itemEvent/IItemEventRouterResponse";
-
 @injectable()
-export class HealthItemEventRouter extends ItemEventRouterDefinition 
-{
+export class HealthItemEventRouter extends ItemEventRouterDefinition {
     constructor(
-        @inject("HealthCallbacks") protected healthCallbacks: HealthCallbacks // TODO: delay required
-    ) 
-    {
+        @inject("HealthCallbacks") protected healthCallbacks: HealthCallbacks, // TODO: delay required
+    ) {
         super();
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
+    public override getHandledRoutes(): HandledRoute[] {
         return [
             new HandledRoute("Eat", false),
             new HandledRoute("Heal", false),
-            new HandledRoute("RestoreHealth", false)
+            new HandledRoute("RestoreHealth", false),
         ];
     }
 
-    public override handleItemEvent(url: string, pmcData: IPmcData, body: any, sessionID: string): IItemEventRouterResponse 
-    {
-        switch (url)
-        {
+    public override async handleItemEvent(
+        url: string,
+        pmcData: IPmcData,
+        body: any,
+        sessionID: string,
+    ): Promise<IItemEventRouterResponse> {
+        switch (url) {
             case "Eat":
                 return this.healthCallbacks.offraidEat(pmcData, body, sessionID);
             case "Heal":

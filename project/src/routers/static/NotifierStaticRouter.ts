@@ -1,34 +1,36 @@
+import { NotifierCallbacks } from "@spt/callbacks/NotifierCallbacks";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
+import { ISelectProfileResponse } from "@spt/models/eft/notifier/ISelectProfileResponse";
 import { inject, injectable } from "tsyringe";
 
-import { NotifierCallbacks } from "../../callbacks/NotifierCallbacks";
-import { RouteAction, StaticRouter } from "../../di/Router";
-
 @injectable()
-export class NotifierStaticRouter extends StaticRouter 
-{
-    constructor(
-        @inject("NotifierCallbacks") protected notifierCallbacks: NotifierCallbacks
-    ) 
-    {
-        super(
-            [
-                new RouteAction(
-                    "/client/notifier/channel/create", 
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.notifierCallbacks.createNotifierChannel(url, info, sessionID);
-                    }
-                ),
-                new RouteAction(
-                    "/client/game/profile/select", 
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    (url: string, info: any, sessionID: string, output: string): any => 
-                    {
-                        return this.notifierCallbacks.selectProfile(url, info, sessionID);
-                    }
-                )
-            ]
-        );
+export class NotifierStaticRouter extends StaticRouter {
+    constructor(@inject("NotifierCallbacks") protected notifierCallbacks: NotifierCallbacks) {
+        super([
+            new RouteAction(
+                "/client/notifier/channel/create",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<INotifierChannel>> => {
+                    return this.notifierCallbacks.createNotifierChannel(url, info, sessionID);
+                },
+            ),
+            new RouteAction(
+                "/client/game/profile/select",
+                async (
+                    url: string,
+                    info: any,
+                    sessionID: string,
+                    output: string,
+                ): Promise<IGetBodyResponseData<ISelectProfileResponse>> => {
+                    return this.notifierCallbacks.selectProfile(url, info, sessionID);
+                },
+            ),
+        ]);
     }
 }

@@ -8,14 +8,14 @@
         "ArmorVest": true,
         "Eyewear": true,
         "TacticalVest": true,
+        "PocketItems": true,
         "Backpack": true,
         "Holster": true,
         "FirstPrimaryWeapon": true,
         "SecondPrimaryWeapon": true,
         "Scabbard": false,
-        "Pockets": false,
         "SecuredContainer": false
     },
     "questItems": true,
-	"specialSlotItems": false
+    "specialSlotItems": false
 }

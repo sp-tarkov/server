@@ -1,3 +1,15 @@
 {
-    "enabled": false
+    "enabled": false,
+    "randomiseMapContainers": {
+        "tarkovstreets": false,
+        "factory4_day": false,
+        "factory4_night": false,
+        "bigmap": false,
+        "woods": false,
+        "shoreline": false,
+        "interchange": false,
+        "lighthouse": false,
+        "laboratory": false,
+        "rezervbase": false
+    }
 }

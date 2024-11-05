@@ -1,29 +1,25 @@
+import { NoteController } from "@spt/controllers/NoteController";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { INoteActionData } from "@spt/models/eft/notes/INoteActionData";
 import { inject, injectable } from "tsyringe";
 
-import { NoteController } from "../controllers/NoteController";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { INoteActionData } from "../models/eft/notes/INoteActionData";
-
 @injectable()
-export class NoteCallbacks
-{
-    constructor(
-        @inject("NoteController") protected noteController: NoteController)
-    { }
+export class NoteCallbacks {
+    constructor(@inject("NoteController") protected noteController: NoteController) {}
 
-    public addNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    /** Handle AddNote event */
+    public addNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         return this.noteController.addNote(pmcData, body, sessionID);
     }
 
-    public editNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    /** Handle EditNote event */
+    public editNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         return this.noteController.editNote(pmcData, body, sessionID);
     }
 
-    public deleteNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse
-    {
+    /** Handle DeleteNote event */
+    public deleteNote(pmcData: IPmcData, body: INoteActionData, sessionID: string): IItemEventRouterResponse {
         return this.noteController.deleteNote(pmcData, body, sessionID);
     }
 }

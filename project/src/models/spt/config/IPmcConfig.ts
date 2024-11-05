@@ -1,43 +1,79 @@
-import { MinMax } from "../../common/MinMax";
+import { MinMax } from "@spt/models/common/MinMax";
+import { IChancedEnemy } from "@spt/models/eft/common/ILocationBase";
+import { MemberCategory } from "@spt/models/enums/MemberCategory";
+import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
-export interface IPmcConfig 
-{
-    vestLoot: SlotLootSettings
-    pocketLoot: SlotLootSettings
-    backpackLoot: SlotLootSettings
-    dynamicLoot: DynamicLoot
-    useDifficultyOverride: boolean
-    difficulty: string
-    looseWeaponInBackpackChancePercent: number
-    looseWeaponInBackpackLootMinMax: MinMax
-    isUsec: number
-    usecType: string
-    bearType: string
-    chanceSameSideIsHostilePercent: number
-    /** key: location, value: type for usec/bear */
-    pmcType: Record<string, Record<string, Record<string, number>>>
-    maxBackpackLootTotalRub: number
-    maxPocketLootTotalRub: number
-    maxVestLootTotalRub: number
-    convertIntoPmcChance: Record<string, MinMax>
-    enemyTypes: string[]
-    botRelativeLevelDeltaMax: number
+export interface IPmcConfig extends IBaseConfig {
+    kind: "spt-pmc";
+    /** What game version should the PMC have */
+    gameVersionWeight: Record<string, number>;
+    /** What account type should the PMC have */
+    accountTypeWeight: Record<MemberCategory, number>;
+    /** Global whitelist/blacklist of vest loot for PMCs */
+    vestLoot: ISlotLootSettings;
+    /** Global whitelist/blacklist of pocket loot for PMCs */
+    pocketLoot: ISlotLootSettings;
+    /** Global whitelist/blacklist of backpack loot for PMCs */
+    backpackLoot: ISlotLootSettings;
+    /** Use difficulty defined in config/bot.json/difficulty instead of chosen difficulty dropdown value */
+    useDifficultyOverride: boolean;
+    /** Difficulty override e.g. "AsOnline/Hard" */
+    difficulty: string;
+    /** Chance out of 100 to have a complete gun in backpack */
+    looseWeaponInBackpackChancePercent: number;
+    /** Chance out of 100 to have an enhancement applied to PMC weapon */
+    weaponHasEnhancementChancePercent: number;
+    /** MinMax count of weapons to have in backpack */
+    looseWeaponInBackpackLootMinMax: MinMax;
+    /** Percentage chance PMC will be USEC */
+    isUsec: number;
+    /** WildSpawnType enum value USEC PMCs use */
+    usecType: string;
+    /** WildSpawnType enum value BEAR PMCs use */
+    bearType: string;
+    /** What 'brain' does a PMC use, keyed by map and side (USEC/BEAR) key: map location, value: type for usec/bear */
+    pmcType: Record<string, Record<string, Record<string, number>>>;
+    maxBackpackLootTotalRub: IMinMaxLootValue[];
+    maxPocketLootTotalRub: number;
+    maxVestLootTotalRub: number;
+    /** Percentage chance a bot from a wave is converted into a PMC, first key = map, second key = bot wildspawn type (assault/exusec), value: min+max chance to be converted */
+    convertIntoPmcChance: Record<string, Record<string, MinMax>>;
+    /** How many levels above player level can a PMC be */
+    botRelativeLevelDeltaMax: number;
+    /** How many levels below player level can a PMC be */
+    botRelativeLevelDeltaMin: number;
+    /** Force a number of healing items into PMCs secure container to ensure they can heal */
+    forceHealingItemsIntoSecure: boolean;
+    hostilitySettings: Record<string, IHostilitySettings>;
+    allPMCsHavePlayerNameWithRandomPrefixChance: number;
+    locationSpecificPmcLevelOverride: Record<string, MinMax>;
+    /** Should secure container loot from usec.json/bear.json be added to pmc bots secure */
+    addSecureContainerLootFromBotConfig: boolean;
 }
 
-export interface PmcTypes
-{
-    usec: string
-    bear: string
+export interface IHostilitySettings {
+    /** Bot roles that are 100% an enemy */
+    additionalEnemyTypes?: string[];
+    /** Objects that determine the % chance another bot type is an enemy */
+    chancedEnemies?: IChancedEnemy[];
+    bearEnemyChance?: number;
+    usecEnemyChance?: number;
+    savageEnemyChance?: number;
+    /** Bot roles that are 100% an friendly */
+    additionalFriendlyTypes?: string[];
+    savagePlayerBehaviour?: string;
 }
 
-export interface SlotLootSettings 
-{
-    whitelist: string[]
-    blacklist: string[]
-    moneyStackLimits: Record<string, number>
+export interface IPmcTypes {
+    usec: string;
+    bear: string;
 }
 
-export interface DynamicLoot 
-{
-    moneyStackLimits: Record<string, number>
+export interface ISlotLootSettings {
+    whitelist: string[];
+    blacklist: string[];
+}
+
+export interface IMinMaxLootValue extends MinMax {
+    value: number;
 }

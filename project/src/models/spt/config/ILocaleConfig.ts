@@ -1,12 +1,12 @@
-import { IBaseConfig } from "./IBaseConfig"
+import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
-export interface ILocaleConfig extends IBaseConfig
-{
-    kind: "aki-locale"
+export interface ILocaleConfig extends IBaseConfig {
+    kind: "spt-locale";
     /** e.g. ru/en/cn/fr etc, or 'system', will take computer locale setting */
-    gameLocale: string 
+    gameLocale: string;
     /** e.g. ru/en/cn/fr etc, or 'system', will take computer locale setting */
-    serverLocale: string 
+    serverLocale: string;
     /** Languages server can be translated into */
-    serverSupportedLocales: string[]
+    serverSupportedLocales: string[];
+    fallbacks: { [locale: string]: string };
 }

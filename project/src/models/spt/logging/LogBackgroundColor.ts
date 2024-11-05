@@ -1,5 +1,4 @@
-export enum LogBackgroundColor
-    {
+export enum LogBackgroundColor {
     DEFAULT = "",
     BLACK = "blackBG",
     RED = "redBG",
@@ -8,5 +7,5 @@ export enum LogBackgroundColor
     BLUE = "blueBG",
     MAGENTA = "magentaBG",
     CYAN = "cyanBG",
-    WHITE = "whiteBG"
+    WHITE = "whiteBG",
 }

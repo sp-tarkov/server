@@ -1,6 +1,4 @@
-
-export enum MessageType
-    {
+export enum MessageType {
     // if this variables are supposed to be strings for the type
     // then the equals value should be the name that should be
     // required by the client instead of an int
@@ -18,5 +16,6 @@ export enum MessageType
     QUEST_FAIL = 11,
     QUEST_SUCCESS = 12,
     MESSAGE_WITH_ITEMS = 13,
-    INITIAL_SUPPORT = 14
+    INITIAL_SUPPORT = 14,
+    BTR_ITEMS_DELIVERY = 15,
 }

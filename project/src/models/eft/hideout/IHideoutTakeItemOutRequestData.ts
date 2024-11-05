@@ -1,7 +1,6 @@
-export interface IHideoutTakeItemOutRequestData 
-{
-    Action: "HideoutTakeItemsFromAreaSlots"
-    areaType: number
-    slots: number[]
-    timestamp: number
+export interface IHideoutTakeItemOutRequestData {
+    Action: "HideoutTakeItemsFromAreaSlots";
+    areaType: number;
+    slots: number[];
+    timestamp: number;
 }

@@ -1,8 +1,3 @@
-import { INotifierChannel } from "./INotifier"
-
-export interface ISelectProfileResponse
-{
-    status: string
-    notifier: INotifierChannel
-    notifierServer: string
+export interface ISelectProfileResponse {
+    status: string;
 }

@@ -1,30 +1,25 @@
+import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { LocalisationService } from "@spt/services/LocalisationService";
+import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectable } from "tsyringe";
-
-import { ILocationBase } from "../models/eft/common/ILocationBase";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { ILocationConfig } from "../models/spt/config/ILocationConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { JsonUtil } from "../utils/JsonUtil";
-import { RandomUtil } from "../utils/RandomUtil";
-import { LocalisationService } from "./LocalisationService";
 
 /** Service for adding new zones to a maps OpenZones property */
 @injectable()
-export class OpenZoneService
-{
+export class OpenZoneService {
     protected locationConfig: ILocationConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+        @inject("ConfigServer") protected configServer: ConfigServer,
+    ) {
         this.locationConfig = this.configServer.getConfig(ConfigTypes.LOCATION);
     }
 
@@ -33,16 +28,13 @@ export class OpenZoneService
      * @param locationId map location (e.g. factory4_day)
      * @param zoneToAdd zone to add
      */
-    public addZoneToMap(locationId: string, zoneToAdd: string): void
-    {
+    public addZoneToMap(locationId: string, zoneToAdd: string): void {
         const location = this.locationConfig.openZones[locationId];
-        if (!location)
-        {
+        if (!location) {
             this.locationConfig.openZones[locationId] = [];
         }
 
-        if (!this.locationConfig.openZones[locationId].includes(zoneToAdd))
-        {
+        if (!this.locationConfig.openZones[locationId].includes(zoneToAdd)) {
             this.locationConfig.openZones[locationId].push(zoneToAdd);
         }
     }
@@ -50,14 +42,13 @@ export class OpenZoneService
     /**
      * Add open zones to all maps found in config/location.json to db
      */
-    public applyZoneChangesToAllMaps(): void
-    {
-        const dbLocations = this.databaseServer.getTables().locations;
-        for (const mapKey in this.locationConfig.openZones)
-        { 
-            if (!dbLocations[mapKey])
-            {
+    public applyZoneChangesToAllMaps(): void {
+        const dbLocations = this.databaseService.getLocations();
+        for (const mapKey in this.locationConfig.openZones) {
+            if (!dbLocations[mapKey]) {
                 this.logger.error(this.localisationService.getText("openzone-unable_to_find_map", mapKey));
+
+                continue;
             }
 
             const dbLocationToUpdate: ILocationBase = dbLocations[mapKey].base;
@@ -65,10 +56,8 @@ export class OpenZoneService
 
             // Convert openzones string into array, easier to work wih
             const mapOpenZonesArray = dbLocationToUpdate.OpenZones.split(",");
-            for (const zoneToAdd of zonesToAdd)
-            {
-                if (!mapOpenZonesArray.includes(zoneToAdd))
-                {
+            for (const zoneToAdd of zonesToAdd) {
+                if (!mapOpenZonesArray.includes(zoneToAdd)) {
                     // Add new zone to array and convert array into string again
                     mapOpenZonesArray.push(zoneToAdd);
                     dbLocationToUpdate.OpenZones = mapOpenZonesArray.join(",");

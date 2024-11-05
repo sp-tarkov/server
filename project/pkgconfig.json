@@ -1,10 +1,6 @@
 {
     "pkg": {
-        "scripts": [
-            "obj/**/*.js"
-        ],
-        "assets": [
-            "obj/**/*.d.ts"
-        ]
+        "scripts": ["obj/**/*.js"],
+        "assets": ["obj/**/*.js.map", "package.json"]
     }
 }

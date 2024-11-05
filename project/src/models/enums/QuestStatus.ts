@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-export enum QuestStatus
-    {
+export enum QuestStatus {
     Locked = 0,
     AvailableForStart = 1,
     Started = 2,
@@ -10,5 +8,5 @@ export enum QuestStatus
     FailRestartable = 6,
     MarkedAsFailed = 7,
     Expired = 8,
-    AvailableAfter = 9
+    AvailableAfter = 9,
 }

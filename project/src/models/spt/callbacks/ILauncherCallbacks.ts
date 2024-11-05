@@ -1,11 +1,10 @@
-import { IRegisterData } from "../../eft/launcher/IRegisterData";
-import { IRemoveProfileData } from "../../eft/launcher/IRemoveProfileData";
-import { ILoginRequestData } from "../../eft/launcher/ILoginRequestData";
-import { IChangeRequestData } from "../../eft/launcher/IChangeRequestData";
-import { IGetMiniProfileRequestData } from "../../eft/launcher/IGetMiniProfileRequestData.js";
+import { IChangeRequestData } from "@spt/models/eft/launcher/IChangeRequestData";
+import { IGetMiniProfileRequestData } from "@spt/models/eft/launcher/IGetMiniProfileRequestData";
+import { ILoginRequestData } from "@spt/models/eft/launcher/ILoginRequestData";
+import { IRegisterData } from "@spt/models/eft/launcher/IRegisterData";
+import { IRemoveProfileData } from "@spt/models/eft/launcher/IRemoveProfileData";
 
-export interface ILauncherCallbacks
-{
+export interface ILauncherCallbacks {
     connect(): string;
     login(url: string, info: ILoginRequestData, sessionID: string): string;
     register(url: string, info: IRegisterData, sessionID: string): "FAILED" | "OK";

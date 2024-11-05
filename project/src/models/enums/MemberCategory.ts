@@ -1,6 +1,4 @@
-
-export enum MemberCategory // player type
-    {
+export enum MemberCategory { // player type
     DEFAULT = 0,
     DEVELOPER = 1,
     UNIQUE_ID = 2,
@@ -11,5 +9,6 @@ export enum MemberCategory // player type
     CHAT_MODERATOR_WITH_PERMANENT_BAN = 64,
     UNIT_TEST = 128,
     SHERPA = 256,
-    EMISSARY = 512
+    EMISSARY = 512,
+    UNHEARD = 1024,
 }

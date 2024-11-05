@@ -1,5 +1,85 @@
 {
-    "runIntervalSeconds": 15,
+    "runIntervalSeconds": 10,
     "hoursForSkillCrafting": 28800,
-	"hideoutWallAppearTimeSeconds": 86400
+    "runIntervalValues": {
+        "inRaid": 60,
+        "outOfRaid": 10
+    },
+    "expCraftAmount": 10,
+    "overrideCraftTimeSeconds": -1,
+    "overrideBuildTimeSeconds": -1,
+    "updateProfileHideoutWhenActiveWithinMinutes": 90,
+    "cultistCircle": {
+        "maxRewardItemCount": 5,
+        "maxAttemptsToPickRewardsWithinBudget": 5,
+        "rewardPriceMultiplerMinMax": {
+            "min": 0.7,
+            "max": 1.4
+        },
+        "craftTimeThreshholds": [
+            {
+                "min": 1,
+                "max": 25000,
+                "timeSeconds": 21600
+            },
+            {
+                "min": 25001,
+                "max": 99999999,
+                "timeSeconds": 43200
+            }
+        ],
+        "craftTimeOverride": 40,
+        "directRewards": {
+            "66572c82ad599021091c6118": { "rewardTpls": ["5c0e874186f7745dc7616606"], "craftTimeSeconds": 3960 },
+            "5aa2b986e5b5b00014028f4c": { "rewardTpls": ["62a091170b9d3c46de5b6cf2"], "craftTimeSeconds": 3960 },
+            "655c663a6689c676ce57af85": { "rewardTpls": ["5c0e655586f774045612eeb2"], "craftTimeSeconds": 3960 },
+            "655c652d60d0ac437100fed7": { "rewardTpls": ["590c657e86f77412b013051d"], "craftTimeSeconds": 3960 },
+            "655c67782a1356436041c9c5": {
+                "rewardTpls": ["59e3577886f774176a362503", "5ed5166ad380ab312177c100"],
+                "craftTimeSeconds": 3960
+            },
+            "655c673673a43e23e857aebd": {
+                "rewardTpls": ["572b7adb24597762ae139821", "56e335e4d2720b6c058b456d"],
+                "craftTimeSeconds": 3960
+            },
+            "655c66e40b2de553b618d4b8": {
+                "rewardTpls": ["5d40407c86f774318526545a", "5d40407c86f774318526545a", "5d40407c86f774318526545a"],
+                "craftTimeSeconds": 3960
+            },
+            "6582dbf0b8d7830efc45016f": { "rewardTpls": ["5d1b376e86f774252519444e"], "craftTimeSeconds": 3960 },
+            "66572be36a723f7f005a066e": { "rewardTpls": ["5b3b713c5acfc4330140bd8d"], "craftTimeSeconds": 3960 },
+            "655c669103999d3c810c025b": {
+                "rewardTpls": ["635267ab3c89e2112001f826", "5fc64ea372b0dd78d51159dc"],
+                "craftTimeSeconds": 3960
+            },
+            "66572cbdad599021091c611a": { "rewardTpls": ["60a7ad2a2198820d95707a2e"], "craftTimeSeconds": 3960 },
+            "5c0530ee86f774697952d952": { "rewardTpls": ["6389c8c5dbfd5e4b95197e6b"], "craftTimeSeconds": 43260 },
+            "66572b8d80b1cd4b6a67847f": {
+                "rewardTpls": ["5bc9b9ecd4351e3bac122519", "62a09dd4621468534a797ac7"],
+                "craftTimeSeconds": 3960
+            },
+            "5c093ca986f7740a1867ab12": { "rewardTpls": ["5732ee6a24597719ae0c0281"], "craftTimeSeconds": 3960 },
+            "665ee77ccf2d642e98220bca": { "rewardTpls": ["5857a8bc2459772bad15db29"], "craftTimeSeconds": 360 },
+            "59faff1d86f7746c51718c9c": {
+                "rewardTpls": [
+                    "5c12620d86f7743f8b198b72",
+                    "5c12620d86f7743f8b198b72",
+                    "5e2aedd986f7746d404f3aa4",
+                    "5e2aedd986f7746d404f3aa4"
+                ],
+                "craftTimeSeconds": 43260
+            }
+        },
+        "directRewardStackSize": {
+            "exampleParentId": { "min": 1000, "max": 50000 }
+        },
+        "rewardItemBlacklist": [],
+        "additionalRewardItemPool": [],
+        "currencyRewards": {
+            "5449016a4bdc2d6f028b456f": { "min": 20, "max": 50 },
+            "569668774bdc2da2298b4568": { "min": 20, "max": 50 },
+            "5696686a4bdc2da3298b456a": { "min": 20, "max": 50 },
+            "5d235b4d86f7742e017bc88a": { "min": 20, "max": 40 }
+        }
+    }
 }

@@ -1,24 +1,39 @@
+import { WishlistController } from "@spt/controllers/WishlistController";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAddToWishlistRequest } from "@spt/models/eft/wishlist/IAddToWishlistRequest";
+import { IChangeWishlistItemCategoryRequest } from "@spt/models/eft/wishlist/IChangeWishlistItemCategoryRequest";
+import { IRemoveFromWishlistRequest } from "@spt/models/eft/wishlist/IRemoveFromWishlistRequest";
 import { inject, injectable } from "tsyringe";
 
-import { WishlistController } from "../controllers/WishlistController";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IWishlistActionData } from "../models/eft/wishlist/IWishlistActionData";
-
 @injectable()
-export class WishlistCallbacks
-{
-    constructor(
-        @inject("WishlistController") protected wishlistController: WishlistController)
-    { }
+export class WishlistCallbacks {
+    constructor(@inject("WishlistController") protected wishlistController: WishlistController) {}
 
-    public addToWishlist(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse
-    {
-        return this.wishlistController.addToWishList(pmcData, body, sessionID);
+    /** Handle AddToWishList event */
+    public addToWishlist(
+        pmcData: IPmcData,
+        request: IAddToWishlistRequest,
+        sessionID: string,
+    ): IItemEventRouterResponse {
+        return this.wishlistController.addToWishList(pmcData, request, sessionID);
     }
 
-    public removeFromWishlist(pmcData: IPmcData, body: IWishlistActionData, sessionID: string): IItemEventRouterResponse
-    {
-        return this.wishlistController.removeFromWishList(pmcData, body, sessionID);
+    /** Handle RemoveFromWishList event */
+    public removeFromWishlist(
+        pmcData: IPmcData,
+        request: IRemoveFromWishlistRequest,
+        sessionID: string,
+    ): IItemEventRouterResponse {
+        return this.wishlistController.removeFromWishList(pmcData, request, sessionID);
+    }
+
+    /** Handle ChangeWishlistItemCategory */
+    changeWishlistItemCategory(
+        pmcData: IPmcData,
+        request: IChangeWishlistItemCategoryRequest,
+        sessionID: string,
+    ): IItemEventRouterResponse {
+        return this.wishlistController.changeWishlistItemCategory(pmcData, request, sessionID);
     }
 }

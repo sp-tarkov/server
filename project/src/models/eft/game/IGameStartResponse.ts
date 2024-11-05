@@ -1,5 +1,3 @@
-export interface IGameStartResponse
-{
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    utc_time: number
+export interface IGameStartResponse {
+    utc_time: number;
 }

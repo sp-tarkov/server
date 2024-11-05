@@ -19,22 +19,12 @@
         "55802f4a4bdc2ddb688b4569",
         "5448bf274bdc2dfc2f8b456a",
         "5d52cc5ba4b9367408500062",
-        "5d70e500a4b9364de70d38ce"
+        "62f109593b54472778797866",
+        "65649eb40bf0ed77b8044453"
     ],
-    "rewardItemBlacklist": [
-        "5ede4739e0350d05467f73e8",
-        "5ede47405b097655935d7d16",
-        "5ede474b0c226a66f5402622",
-        "5ede475339ee016e8c534742",
-        "5ede475b549eed7c6d5c18fb",
-        "62e910aaf957f2915e0a5e36",
-        "619bc61e86e01e16f839a999",
-        "619bddc6c9546643a67df6ee",
-		"5cde8864d7f00c0010373be1"
-    ],
-
+    "rewardItemBlacklist": [],
     "moneyRewards": {
-        "moneyRewardChancePercent": 10,
+        "moneyRewardChancePercent": 5,
         "rubCount": {
             "common": {
                 "min": 2000,
@@ -56,11 +46,11 @@
             },
             "rare": {
                 "min": 400,
-                "max": 1000
+                "max": 900
             },
             "superrare": {
-                "min": 1200,
-                "max": 5000
+                "min": 900,
+                "max": 2000
             }
         },
         "eurCount": {
@@ -70,11 +60,25 @@
             },
             "rare": {
                 "min": 400,
-                "max": 1000
+                "max": 900
             },
             "superrare": {
-                "min": 1200,
-                "max": 5000
+                "min": 900,
+                "max": 2000
+            }
+        },
+        "gpCount": {
+            "common": {
+                "min": 1,
+                "max": 2
+            },
+            "rare": {
+                "min": 2,
+                "max": 5
+            },
+            "superrare": {
+                "min": 5,
+                "max": 15
             }
         }
     },
@@ -82,9 +86,7 @@
         "ammoRewardChancePercent": 10,
         "minStackSize": 10,
         "ammoRewardBlacklist": {
-            "common": [
-                "59e690b686f7746c9f75e848"
-            ],
+            "common": ["59e690b686f7746c9f75e848"],
             "rare": [],
             "superrare": []
         },
@@ -102,5 +104,8 @@
                 "max": 50000
             }
         }
-    }
+    },
+    "allowMultipleMoneyRewardsPerRarity": false,
+    "allowMultipleAmmoRewardsPerRarity": true,
+    "allowBossItemsAsRewards": false
 }

@@ -1,69 +1,85 @@
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { ItemFilterService } from "@spt/services/ItemFilterService";
+import { RagfairPriceService } from "@spt/services/RagfairPriceService";
+import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { inject, injectable } from "tsyringe";
 
-import { ItemHelper } from "../helpers/ItemHelper";
-import { ITemplateItem } from "../models/eft/common/tables/ITemplateItem";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IBotConfig } from "../models/spt/config/IBotConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { ItemFilterService } from "../services/ItemFilterService";
-import { SeasonalEventService } from "../services/SeasonalEventService";
-
 /**
- * Handle the generation of dynamic PMC loot in pockets and backpacks 
+ * Handle the generation of dynamic PMC loot in pockets and backpacks
  * and the removal of blacklisted items
  */
 @injectable()
-
-export class PMCLootGenerator
-{
-    protected pocketLootPool: string[] = [];
-    protected vestLootPool: string[] = [];
-    protected backpackLootPool: string[] = [];
-    protected botConfig: IBotConfig;
+export class PMCLootGenerator {
+    protected pocketLootPool: Record<string, number> = {};
+    protected vestLootPool: Record<string, number> = {};
+    protected backpackLootPool: Record<string, number> = {};
+    protected pmcConfig: IPmcConfig;
 
     constructor(
         @inject("ItemHelper") protected itemHelper: ItemHelper,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ConfigServer") protected configServer: ConfigServer,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
-        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService
-    )
-    {
-        this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
+        @inject("RagfairPriceService") protected ragfairPriceService: RagfairPriceService,
+        @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
+        @inject("WeightedRandomHelper") protected weightedRandomHelper: WeightedRandomHelper,
+    ) {
+        this.pmcConfig = this.configServer.getConfig(ConfigTypes.PMC);
     }
 
     /**
      * Create an array of loot items a PMC can have in their pockets
      * @returns string array of tpls
      */
-    public generatePMCPocketLootPool(): string[]
-    {
+    public generatePMCPocketLootPool(botRole: string): Record<string, number> {
         // Hydrate loot dictionary if empty
-        if (Object.keys(this.pocketLootPool).length === 0)
-        {
-            const items = this.databaseServer.getTables().templates.items;
+        if (Object.keys(this.pocketLootPool).length === 0) {
+            const items = this.databaseService.getItems();
+            const pmcPriceOverrides =
+                this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items.Pockets;
 
-            const allowedItemTypes = this.botConfig.pmc.pocketLoot.whitelist;
-            const pmcItemBlacklist = this.botConfig.pmc.pocketLoot.blacklist;
+            const allowedItemTypes = this.pmcConfig.pocketLoot.whitelist;
+            const pmcItemBlacklist = this.pmcConfig.pocketLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
-            // Blacklist seasonal items if not inside seasonal event
-            // Blacklist seasonal items if not inside seasonal event
-            if (!this.seasonalEventService.seasonalEventEnabled())
-            {
-                // Blacklist seasonal items
-                itemBlacklist.push(...this.seasonalEventService.getSeasonalEventItemsToBlock());
+
+            // Blacklist inactive seasonal items
+            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent) &&
+                    this.itemHelper.isValidItem(item._id) &&
+                    !pmcItemBlacklist.includes(item._id) &&
+                    !itemBlacklist.includes(item._id) &&
+                    this.itemFitsInto1By2Slot(item),
+            );
+
+            for (const itemToAdd of itemsToAdd) {
+                // If pmc has override, use that. Otherwise use flea price
+                if (pmcPriceOverrides[itemToAdd._id]) {
+                    this.pocketLootPool[itemToAdd._id] = pmcPriceOverrides[itemToAdd._id];
+                } else {
+                    // Set price of item as its weight
+                    const price = this.ragfairPriceService.getDynamicItemPrice(itemToAdd._id, Money.ROUBLES);
+                    this.pocketLootPool[itemToAdd._id] = price;
+                }
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id)
-                                                            && item._props.Width === 1
-                                                            && item._props.Height === 1);
+            const highestPrice = Math.max(...Object.values(this.backpackLootPool));
+            for (const key of Object.keys(this.pocketLootPool)) {
+                // Invert price so cheapest has a larger weight
+                // Times by highest price so most expensive item has weight of 1
+                this.pocketLootPool[key] = Math.round((1 / this.pocketLootPool[key]) * highestPrice);
+            }
 
-            this.pocketLootPool = itemsToAdd.map(x => x._id);
+            this.weightedRandomHelper.reduceWeightValues(this.pocketLootPool);
         }
 
         return this.pocketLootPool;
@@ -73,47 +89,72 @@ export class PMCLootGenerator
      * Create an array of loot items a PMC can have in their vests
      * @returns string array of tpls
      */
-    public generatePMCVestLootPool(): string[]
-    {
+    public generatePMCVestLootPool(botRole: string): Record<string, number> {
         // Hydrate loot dictionary if empty
-        if (Object.keys(this.vestLootPool).length === 0)
-        {
-            const items = this.databaseServer.getTables().templates.items;
+        if (Object.keys(this.vestLootPool).length === 0) {
+            const items = this.databaseService.getItems();
+            const pmcPriceOverrides =
+                this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items
+                    .TacticalVest;
 
-            const allowedItemTypes = this.botConfig.pmc.vestLoot.whitelist;
-            const pmcItemBlacklist = this.botConfig.pmc.vestLoot.blacklist;
+            const allowedItemTypes = this.pmcConfig.vestLoot.whitelist;
+            const pmcItemBlacklist = this.pmcConfig.vestLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
-            // Blacklist seasonal items if not inside seasonal event
-            // Blacklist seasonal items if not inside seasonal event
-            if (!this.seasonalEventService.seasonalEventEnabled())
-            {
-                // Blacklist seasonal items
-                itemBlacklist.push(...this.seasonalEventService.getSeasonalEventItemsToBlock());
+
+            // Blacklist seasonal items
+            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent) &&
+                    this.itemHelper.isValidItem(item._id) &&
+                    !pmcItemBlacklist.includes(item._id) &&
+                    !itemBlacklist.includes(item._id) &&
+                    this.itemFitsInto2By2Slot(item),
+            );
+
+            for (const itemToAdd of itemsToAdd) {
+                // If pmc has override, use that. Otherwise use flea price
+                if (pmcPriceOverrides[itemToAdd._id]) {
+                    this.vestLootPool[itemToAdd._id] = pmcPriceOverrides[itemToAdd._id];
+                } else {
+                    // Set price of item as its weight
+                    const price = this.ragfairPriceService.getDynamicItemPrice(itemToAdd._id, Money.ROUBLES);
+                    this.vestLootPool[itemToAdd._id] = price;
+                }
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id)
-                                                            && this.itemFitsInto1By2Slot(item));
+            const highestPrice = Math.max(...Object.values(this.backpackLootPool));
+            for (const key of Object.keys(this.vestLootPool)) {
+                // Invert price so cheapest has a larger weight
+                // Times by highest price so most expensive item has weight of 1
+                this.vestLootPool[key] = Math.round((1 / this.vestLootPool[key]) * highestPrice);
+            }
 
-            this.vestLootPool = itemsToAdd.map(x => x._id);
+            this.weightedRandomHelper.reduceWeightValues(this.vestLootPool);
         }
 
         return this.vestLootPool;
     }
 
     /**
-     * Check if item has a width/height that lets it fit into a 1x2/2x1 slot
+     * Check if item has a width/height that lets it fit into a 2x2 slot
+     * 1x1 / 1x2 / 2x1 / 2x2
+     * @param item Item to check size of
+     * @returns true if it fits
+     */
+    protected itemFitsInto2By2Slot(item: ITemplateItem): boolean {
+        return item._props.Width <= 2 && item._props.Height <= 2;
+    }
+
+    /**
+     * Check if item has a width/height that lets it fit into a 1x2 slot
      * 1x1 / 1x2 / 2x1
      * @param item Item to check size of
      * @returns true if it fits
      */
-    protected itemFitsInto1By2Slot(item: ITemplateItem): boolean
-    {
-        switch (`{${item._props.Width}x${item._props.Height}}`)
-        {
+    protected itemFitsInto1By2Slot(item: ITemplateItem): boolean {
+        switch (`${item._props.Width}x${item._props.Height}`) {
             case "1x1":
             case "1x2":
             case "2x1":
@@ -128,30 +169,47 @@ export class PMCLootGenerator
      * Create an array of loot items a PMC can have in their backpack
      * @returns string array of tpls
      */
-    public generatePMCBackpackLootPool(): string[]
-    {
+    public generatePMCBackpackLootPool(botRole: string): Record<string, number> {
         // Hydrate loot dictionary if empty
-        if (Object.keys(this.backpackLootPool).length === 0)
-        {
-            const items = this.databaseServer.getTables().templates.items;
+        if (Object.keys(this.backpackLootPool).length === 0) {
+            const items = this.databaseService.getItems();
+            const pmcPriceOverrides =
+                this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items.Backpack;
 
-            const allowedItemTypes = this.botConfig.pmc.backpackLoot.whitelist;
-            const pmcItemBlacklist = this.botConfig.pmc.backpackLoot.blacklist;
+            const allowedItemTypes = this.pmcConfig.backpackLoot.whitelist;
+            const pmcItemBlacklist = this.pmcConfig.backpackLoot.blacklist;
             const itemBlacklist = this.itemFilterService.getBlacklistedItems();
-    
-            // blacklist event items if not inside seasonal event
-            if (!this.seasonalEventService.seasonalEventEnabled())
-            {
-                // Blacklist seasonal items
-                itemBlacklist.push(...this.seasonalEventService.getSeasonalEventItemsToBlock());
+
+            // Blacklist seasonal items
+            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+
+            const itemsToAdd = Object.values(items).filter(
+                (item) =>
+                    allowedItemTypes.includes(item._parent) &&
+                    this.itemHelper.isValidItem(item._id) &&
+                    !pmcItemBlacklist.includes(item._id) &&
+                    !itemBlacklist.includes(item._id),
+            );
+
+            for (const itemToAdd of itemsToAdd) {
+                // If pmc has price override, use that. Otherwise use flea price
+                if (pmcPriceOverrides[itemToAdd._id]) {
+                    this.backpackLootPool[itemToAdd._id] = pmcPriceOverrides[itemToAdd._id];
+                } else {
+                    // Set price of item as its weight
+                    const price = this.ragfairPriceService.getDynamicItemPrice(itemToAdd._id, Money.ROUBLES);
+                    this.backpackLootPool[itemToAdd._id] = price;
+                }
             }
 
-            const itemsToAdd = Object.values(items).filter(item => allowedItemTypes.includes(item._parent)
-                                                            && this.itemHelper.isValidItem(item._id)
-                                                            && !pmcItemBlacklist.includes(item._id)
-                                                            && !itemBlacklist.includes(item._id));
+            const highestPrice = Math.max(...Object.values(this.backpackLootPool));
+            for (const key of Object.keys(this.backpackLootPool)) {
+                // Invert price so cheapest has a larger weight
+                // Times by highest price so most expensive item has weight of 1
+                this.backpackLootPool[key] = Math.round((1 / this.backpackLootPool[key]) * highestPrice);
+            }
 
-            this.backpackLootPool = itemsToAdd.map(x => x._id);
+            this.weightedRandomHelper.reduceWeightValues(this.backpackLootPool);
         }
 
         return this.backpackLootPool;

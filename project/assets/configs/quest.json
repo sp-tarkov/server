@@ -1,7 +1,26 @@
 {
-    "redeemTime": 48,
-    "usecOnlyQuests": ["6179b5eabca27a099552e052", "5e383a6386f77465910ce1f3", "5e4d515e86f77438b2195244", "639282134ed9512be67647ed"],
-    "bearOnlyQuests": ["6179b5b06e9dd54ac275e409", "5e381b0286f77420e3417a74", "5e4d4ac186f774264f758336", "639136d68ba6894d155e77cf"],
+    "mailRedeemTimeHours": {
+        "default": 48,
+        "unheard_edition": 72
+    },
+    "usecOnlyQuests": [
+        "6179b5eabca27a099552e052",
+        "5e383a6386f77465910ce1f3",
+        "5e4d515e86f77438b2195244",
+        "639282134ed9512be67647ed"
+    ],
+    "bearOnlyQuests": [
+        "6179b5b06e9dd54ac275e409",
+        "5e381b0286f77420e3417a74",
+        "5e4d4ac186f774264f758336",
+        "639136d68ba6894d155e77cf"
+    ],
+    "profileBlacklist": {
+        "unheard_edition": ["666314a50aa5c7436c00908a"]
+    },
+    "profileWhitelist": {
+        "edge_of_darkness": ["666314b4d7f171c4c20226c3"]
+    },
     "questTemplateIds": {
         "pmc": {
             "elimination": "616052ea3054fc0e2c24ce6e",
@@ -11,27 +30,207 @@
         "scav": {
             "elimination": "62825ef60e88d037dc1eb428",
             "completion": "628f588ebb558574b2260fe5",
-            "exploration": "62825ef60e88d037dc1eb42c"
+            "exploration": "62825ef60e88d037dc1eb42c",
+            "pickup": "628f588ebb558574b2260fe5"
         }
     },
-    "repeatableQuests": [{
+    "showNonSeasonalEventQuests": false,
+    "eventQuests": {
+        "641dbfd7f43eda9d810d7137": {
+            "name": "Important Patient",
+            "season": "None",
+            "startTimestamp": 1333753200000,
+            "endTimestamp": 1334444400000,
+            "yearly": false
+        },
+        "64764abcd125ab430a14ccb5": {
+            "name": "Bloodhounds",
+            "season": "None",
+            "startTimestamp": 1338591600000,
+            "endTimestamp": 1340578800000,
+            "yearly": false
+        },
+        "647710905320c660d91c15a5": {
+            "name": "Hint",
+            "season": "None",
+            "startTimestamp": 1338591600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "649567f359eab30d1b7c9585": {
+            "name": "Hustle",
+            "season": "None",
+            "startTimestamp": 1341270000000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "649570491bb4d158bc4d0168": {
+            "name": "Tourist",
+            "season": "None",
+            "startTimestamp": 1341270000000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "64916da7ad4e722c106f2345": {
+            "name": "Failed setup",
+            "season": "None",
+            "startTimestamp": 1340665200000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "649af47d717cb30e7e4b5e26": {
+            "name": "Cocktail Tasting",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "61bb474dce7374453b45dfd2": {
+            "name": "Fairy Tale Showdown",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb474b1ab5304c3817a53a": {
+            "name": "Disrupting the Party",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb47481908c67d4249a205": {
+            "name": "No Gifts for You",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb468b8d7cac1532300ccc": {
+            "name": "Party Preparations",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61b9e1aaef9a1b5d6a79899a": {
+            "name": "Santas bag",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb47516b70332c062ca7b9": {
+            "name": "Stop the Fight!",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb475467f83663e155e26a": {
+            "name": "A Kind Snow Maiden",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb4756883b2c16a163870a": {
+            "name": "Home Comfort",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "61bb47578d7cac1532300ccd": {
+            "name": "Bad Santa",
+            "season": "christmas",
+            "startTimestamp": 1701388800000,
+            "endTimestamp": 1703980800000,
+            "yearly": true
+        },
+        "655e427b64d09b4122018228": {
+            "name": "The punisher - Harvest",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "65e85198e32da31f2b30978e": {
+            "name": "Evil Spirits",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "6603fe74e773dcf3b0099f88": {
+            "name": "The Tarkov Mystery",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "6658a15615cbb1b2c6014d5b": {
+            "name": "Hustle2",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "6672ec2a2b6f3b71be794cc5": {
+            "name": "Key to salvation",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "668bcccc167d507eb01a268b": {
+            "name": "Import control",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "66a74c628410476dd65543be": {
+            "name": "Gunsmith: special order",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+        "66e01aca214f88109006a4b5": {
+            "name": "Into the Inferno",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+        },
+		"66e3e2ee2136472d220bcb36": {
+			"name": "Night of The Cult",
+            "season": "None",
+            "startTimestamp": 1341615600000,
+            "endTimestamp": "",
+            "yearly": false
+		}
+    },
+    "repeatableQuests": [
+        {
+            "id": "615ffc701c97c768137e719b",
             "name": "Daily",
             "side": "Pmc",
-            "types": [
-                "Elimination",
-                "Completion",
-                "Exploration"
-            ],
+            "types": ["Elimination", "Completion", "Exploration"],
             "resetTime": 86400,
             "numQuests": 3,
             "minPlayerLevel": 5,
             "rewardScaling": {
-                "levels": [1, 20, 45, 100],
-                "experience": [2000, 4000, 20000, 80000],
-                "roubles": [6000, 10000, 100000, 250000],
-                "items": [1, 2, 4, 4],
-                "reputation": [0.01, 0.01, 0.01, 0.01],
-                "rewardSpread": 0.5
+                "levels": [1, 10, 20, 30, 40, 50, 60],
+                "experience": [1000, 2000, 8000, 13000, 19000, 24000, 30000],
+                "roubles": [11000, 20000, 32000, 45000, 58000, 70000, 82000],
+                "gpCoins": [3, 3, 6, 6, 8, 8, 10],
+                "items": [2, 4, 5, 5, 5, 5, 5],
+                "reputation": [0.01, 0.01, 0.02, 0.02, 0.03, 0.03, 0.03],
+                "rewardSpread": 0.5,
+                "skillRewardChance": [0, 0.01, 0.05, 0.1, 0.1, 0.15, 0.15],
+                "skillPointReward": [10, 15, 20, 25, 30, 35, 40]
             },
             "locations": {
                 "any": ["any"],
@@ -42,36 +241,165 @@
                 "Interchange": ["Interchange"],
                 "Lighthouse": ["Lighthouse"],
                 "laboratory": ["laboratory"],
-                "RezervBase": ["RezervBase"]
+                "RezervBase": ["RezervBase"],
+                "TarkovStreets": ["TarkovStreets"],
+                "Sandbox": ["Sandbox"]
             },
-            "traderWhitelist": [{
+            "traderWhitelist": [
+                {
                     "traderId": "54cb50c76803fa8b248b4571",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "prapor",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5485a8684bdc2da71d8b4567",
+                        "590c745b86f7743cc433c5f2",
+                        "57864c322459775490116fbf",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
+                },
+                {
                     "traderId": "54cb57776803fa99248b456e",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "therapist",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "57864a66245977548f04a81f",
+                        "5448f39d4bdc2d0a728b4568",
+                        "5448f3ac4bdc2dce718b4569",
+                        "5448f3a64bdc2d60728b456a",
+                        "57864c322459775490116fbf",
+                        "57864c8c245977548867e7f1",
+                        "5448e8d04bdc2ddf718b4569",
+                        "57864e4c24597754843f8723",
+                        "57864ee62459775490116fc1",
+                        "543be5664bdc2dd4348b4569"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
+                },
+                {
                     "traderId": "58330581ace78e27b8b10cee",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "skier",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5a341c4086f77401f2541505",
+                        "5448e8d64bdc2dce718b4568",
+                        "5448e8d04bdc2ddf718b4569",
+                        "55818ad54bdc2ddc698b4569",
+                        "57864a3d24597754843f8721",
+                        "5a341c4686f77469e155819e",
+                        "55818b224bdc2dde698b456f",
+                        "5c99f98d86f7745c314214b3",
+                        "55818aeb4bdc2ddc698b456a",
+                        "55818acf4bdc2dde698b456b",
+                        "57864bb7245977548b3b66c2",
+                        "590c745b86f7743cc433c5f2",
+                        "57864a66245977548f04a81f",
+                        "5c164d2286f774194c5e69fa"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
+                },
+                {
                     "traderId": "5935c25fb3acc3127c3d8cd9",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "peacekeeper",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5448e5284bdc2dcb718b4567",
+                        "5485a8684bdc2da71d8b4567",
+                        "57864a3d24597754843f8721",
+                        "55818af64bdc2d5b648b4570",
+                        "57864e4c24597754843f8723",
+                        "57864a66245977548f04a81f",
+                        "57864ee62459775490116fc1",
+                        "590c745b86f7743cc433c5f2"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
+                },
+                {
                     "traderId": "5a7c2eca46aef81a7ca2145d",
-                    "questTypes": ["Completion", "Exploration"]
-                }, {
+                    "name": "mechanic",
+                    "questTypes": ["Completion", "Exploration"],
+                    "rewardBaseWhitelist": [
+                        "55818af64bdc2d5b648b4570",
+                        "5448bc234bdc2d3c308b4569",
+                        "55818b164bdc2ddc698b456c",
+                        "55818a684bdc2ddd698b456d",
+                        "550aa4cd4bdc2dd8348b456c",
+                        "5485a8684bdc2da71d8b4567",
+                        "55818b224bdc2dde698b456f",
+                        "57864a66245977548f04a81f",
+                        "55818af64bdc2d5b648b4570",
+                        "550aa4dd4bdc2dc9348b4569",
+                        "55818a594bdc2db9688b456a",
+                        "55818a104bdc2db9688b4569"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
+                },
+                {
                     "traderId": "5ac3b934156ae10c4430e83c",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "ragman",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5a341c4086f77401f2541505",
+                        "5448e5724bdc2ddf718b4568",
+                        "5448e54d4bdc2dcc718b4568",
+                        "590c745b86f7743cc433c5f2",
+                        "57bef4c42459772e8d35a53b",
+                        "5448e53e4bdc2d60728b4567",
+                        "5448e5284bdc2dcb718b4567",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
+                },
+                {
                     "traderId": "5c0647fdd443bc2504c2d371",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
+                    "name": "jaeger",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5448f3ac4bdc2dce718b4569",
+                        "5c99f98d86f7745c314214b3",
+                        "590c745b86f7743cc433c5f2",
+                        "57864bb7245977548b3b66c2",
+                        "57864a66245977548f04a81f",
+                        "57864e4c24597754843f8723",
+                        "57864a3d24597754843f8721",
+                        "5448f3a64bdc2d60728b456a",
+                        "5795f317245977243854e041",
+                        "5d650c3e815116009f6201d2",
+                        "57864ada245977548638de91"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
+                },
+                {
+                    "traderId": "6617beeaa9cfa777ca915b7c",
+                    "name": "ref",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5485a8684bdc2da71d8b4567",
+                        "590c745b86f7743cc433c5f2",
+                        "57864c322459775490116fbf",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 20
                 }
             ],
             "questConfig": {
                 "Exploration": {
-                    "maxExtracts": 3,
+                    "maxExtracts": 4,
+                    "maxExtractsWithSpecificExit": 2,
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
                     "specificExits": {
-                        "probability": 0.25,
+                        "probability": 0.2,
                         "passageRequirementWhitelist": [
                             "None",
                             "TransferItem",
@@ -83,19 +411,24 @@
                     }
                 },
                 "Completion": {
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
                     "minRequestedAmount": 1,
-                    "maxRequestedAmount": 5,
-                    "minRequestedBulletAmount": 20,
-                    "maxRequestedBulletAmount": 60,
+                    "maxRequestedAmount": 4,
+                    "uniqueItemCount": 2,
+                    "minRequestedBulletAmount": 15,
+                    "maxRequestedBulletAmount": 40,
                     "useWhitelist": true,
                     "useBlacklist": false
                 },
-                "Elimination": [{
+                "Elimination": [
+                    {
                         "levelRange": {
                             "min": 1,
                             "max": 15
                         },
-                        "targets": [{
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
                                 "key": "Savage",
                                 "relativeProbability": 1,
                                 "data": {
@@ -103,151 +436,605 @@
                                 }
                             }
                         ],
-                        "bodyPartProb": 0.4,
-                        "bodyParts": [{
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
                                 "key": "Head",
                                 "relativeProbability": 1,
                                 "data": ["Head"]
-                            }, {
-                                "key": "Stomach",
-                                "relativeProbability": 3,
-                                "data": ["Stomach"]
-                            }, {
+                            },
+                            {
                                 "key": "Chest",
                                 "relativeProbability": 25,
-                                "data": ["Chest"]
-                            }, {
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
                                 "key": "Arms",
                                 "relativeProbability": 0.5,
                                 "data": ["LeftArm", "RightArm"]
-                            }, {
+                            },
+                            {
                                 "key": "Legs",
                                 "relativeProbability": 1,
                                 "data": ["LeftLeg", "RightLeg"]
                             }
                         ],
-                        "specificLocationProb": 0.25,
+                        "specificLocationProb": 0,
+                        "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
+                        "distProb": 0.15,
+                        "maxDist": 75,
+                        "minDist": 10,
+                        "maxKills": 4,
+                        "minKills": 2,
+                        "maxBossKills": 1,
+                        "minBossKills": 1,
+                        "maxPmcKills": 2,
+                        "minPmcKills": 1,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.15,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 10,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 3,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 3,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 10,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 0,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 10,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
+                    },
+                    {
+                        "levelRange": {
+                            "min": 16,
+                            "max": 40
+                        },
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "Savage",
+                                "relativeProbability": 15,
+                                "data": {
+                                    "isBoss": false
+                                }
+                            },
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 4,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
+                            },
+                            {
+                                "key": "bossBully",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossGluhar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossSanitar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossTagilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKojaniy",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKnight",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKolontay",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossZryachiy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoarSniper",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            }
+                        ],
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 8,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
+                            }
+                        ],
+                        "specificLocationProb": 0.15,
                         "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
                         "distProb": 0.25,
                         "maxDist": 100,
-                        "minDist": 20,
-                        "maxKills": 3,
-                        "minKills": 2
-                    }, {
+                        "minDist": 10,
+                        "maxKills": 15,
+                        "minKills": 5,
+                        "maxBossKills": 2,
+                        "minBossKills": 1,
+                        "maxPmcKills": 5,
+                        "minPmcKills": 2,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.15,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 8,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 5,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 10,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 10,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 10,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 8,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 10,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 0,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
+                    },
+                    {
                         "levelRange": {
-                            "min": 16,
+                            "min": 41,
                             "max": 100
                         },
-                        "targets": [{
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
                                 "key": "Savage",
-                                "relativeProbability": 7,
+                                "relativeProbability": 9,
                                 "data": {
                                     "isBoss": false
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "AnyPmc",
                                 "relativeProbability": 2,
                                 "data": {
-                                    "isBoss": false
+                                    "isBoss": false,
+                                    "isPmc": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossBully",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossGluhar",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossKilla",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossSanitar",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossTagilla",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossKojaniy",
                                 "relativeProbability": 0.5,
                                 "data": {
                                     "isBoss": true
                                 }
-                            }, {
+                            },
+                            {
                                 "key": "bossKnight",
-                                "relativeProbability": 0.5,
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossZryachiy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKolontay",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoarSniper",
+                                "relativeProbability": 0,
                                 "data": {
                                     "isBoss": true
                                 }
                             }
                         ],
-                        "bodyPartProb": 0.4,
-                        "bodyParts": [{
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
                                 "key": "Head",
                                 "relativeProbability": 1,
                                 "data": ["Head"]
-                            }, {
-                                "key": "Stomach",
-                                "relativeProbability": 3,
-                                "data": ["Stomach"]
-                            }, {
+                            },
+                            {
                                 "key": "Chest",
-                                "relativeProbability": 5,
-                                "data": ["Chest"]
-                            }, {
+                                "relativeProbability": 7,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
                                 "key": "Arms",
                                 "relativeProbability": 0.5,
                                 "data": ["LeftArm", "RightArm"]
-                            }, {
+                            },
+                            {
                                 "key": "Legs",
                                 "relativeProbability": 1,
                                 "data": ["LeftLeg", "RightLeg"]
                             }
                         ],
-                        "specificLocationProb": 0.25,
+                        "specificLocationProb": 0.15,
                         "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
                         "distProb": 0.25,
-                        "maxDist": 200,
-                        "minDist": 20,
-                        "maxKills": 5,
-                        "minKills": 2
+                        "maxDist": 100,
+                        "minDist": 10,
+                        "maxKills": 20,
+                        "minKills": 5,
+                        "maxBossKills": 4,
+                        "minBossKills": 2,
+                        "maxPmcKills": 6,
+                        "minPmcKills": 3,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.15,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 10,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 15,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 8,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 1,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 10,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 10,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 1,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 10,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 10,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 10,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 10,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 10,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
                     }
                 ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248"],
-            "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 15
-        }, {
+            "rewardBaseTypeBlacklist": [
+                "543be5e94bdc2df1348b4568",
+                "5b3f15d486f77432d0509248",
+                "65649eb40bf0ed77b8044453"
+            ],
+            "rewardBlacklist": ["627bce33f21bc425b06ab967", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
+            "rewardAmmoStackMinSize": 5,
+            "freeChangesAvailable": 2,
+            "freeChanges": 2,
+            "keepDailyQuestTypeOnReplacement": false
+        },
+        {
+            "id": "618035d38012292db3081bf0",
             "name": "Weekly",
             "side": "Pmc",
-            "types": [
-                "Elimination",
-                "Completion",
-                "Exploration"
-            ],
+            "types": ["Elimination", "Completion", "Exploration"],
             "resetTime": 604800,
             "numQuests": 1,
             "minPlayerLevel": 15,
             "rewardScaling": {
-                "levels": [1, 20, 45, 100],
-                "experience": [4000, 8000, 40000, 160000],
-                "roubles": [12000, 20000, 200000, 500000],
-                "items": [3, 3, 4, 4],
-                "reputation": [0.02, 0.03, 0.03, 0.03],
-                "rewardSpread": 0.5
+                "levels": [1, 10, 20, 30, 40, 50, 60],
+                "experience": [5000, 15000, 27000, 80000, 142000, 220000, 290000],
+                "roubles": [20000, 50000, 175000, 350000, 540000, 710000, 880000],
+                "gpCoins": [10, 10, 16, 16, 20, 30, 35],
+                "items": [4, 5, 5, 6, 6, 7, 7],
+                "reputation": [0.02, 0.03, 0.04, 0.04, 0.05, 0.05, 0.05],
+                "rewardSpread": 0.5,
+                "skillRewardChance": [0, 0.05, 0.1, 0.15, 0.2, 0.2, 0.2],
+                "skillPointReward": [25, 35, 45, 50, 55, 60, 65]
             },
             "locations": {
                 "any": ["any"],
@@ -258,36 +1045,151 @@
                 "Interchange": ["Interchange"],
                 "Lighthouse": ["Lighthouse"],
                 "laboratory": ["laboratory"],
-                "RezervBase": ["RezervBase"]
+                "RezervBase": ["RezervBase"],
+                "TarkovStreets": ["TarkovStreets"],
+                "Sandbox": ["Sandbox"]
             },
-            "traderWhitelist": [{
+            "traderWhitelist": [
+                {
                     "traderId": "54cb50c76803fa8b248b4571",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "prapor",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5485a8684bdc2da71d8b4567",
+                        "590c745b86f7743cc433c5f2",
+                        "57864c322459775490116fbf",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 25
+                },
+                {
                     "traderId": "54cb57776803fa99248b456e",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "therapist",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "57864a66245977548f04a81f",
+                        "5448f39d4bdc2d0a728b4568",
+                        "5448f3ac4bdc2dce718b4569",
+                        "5448f3a64bdc2d60728b456a",
+                        "57864c322459775490116fbf",
+                        "57864c8c245977548867e7f1",
+                        "5448e8d04bdc2ddf718b4569",
+                        "57864e4c24597754843f8723",
+                        "57864ee62459775490116fc1",
+                        "543be5664bdc2dd4348b4569"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
+                },
+                {
                     "traderId": "58330581ace78e27b8b10cee",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "skier",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5a341c4086f77401f2541505",
+                        "5448e8d64bdc2dce718b4568",
+                        "5448e8d04bdc2ddf718b4569",
+                        "55818ad54bdc2ddc698b4569",
+                        "57864a3d24597754843f8721",
+                        "5a341c4686f77469e155819e",
+                        "55818b224bdc2dde698b456f",
+                        "5c99f98d86f7745c314214b3",
+                        "55818aeb4bdc2ddc698b456a",
+                        "55818acf4bdc2dde698b456b",
+                        "57864bb7245977548b3b66c2",
+                        "590c745b86f7743cc433c5f2",
+                        "57864a66245977548f04a81f",
+                        "5c164d2286f774194c5e69fa"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 25
+                },
+                {
                     "traderId": "5935c25fb3acc3127c3d8cd9",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "peacekeeper",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "543be6564bdc2df4348b4568",
+                        "5448e5284bdc2dcb718b4567",
+                        "5485a8684bdc2da71d8b4567",
+                        "57864a3d24597754843f8721",
+                        "55818af64bdc2d5b648b4570",
+                        "57864e4c24597754843f8723",
+                        "57864a66245977548f04a81f",
+                        "57864ee62459775490116fc1",
+                        "590c745b86f7743cc433c5f2"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 25
+                },
+                {
                     "traderId": "5a7c2eca46aef81a7ca2145d",
-                    "questTypes": ["Completion", "Exploration"]
-                }, {
+                    "name": "mechanic",
+                    "questTypes": ["Completion", "Exploration"],
+                    "rewardBaseWhitelist": [
+                        "55818af64bdc2d5b648b4570",
+                        "5448bc234bdc2d3c308b4569",
+                        "55818b164bdc2ddc698b456c",
+                        "55818a684bdc2ddd698b456d",
+                        "550aa4cd4bdc2dd8348b456c",
+                        "5485a8684bdc2da71d8b4567",
+                        "55818b224bdc2dde698b456f",
+                        "57864a66245977548f04a81f",
+                        "55818af64bdc2d5b648b4570",
+                        "550aa4dd4bdc2dc9348b4569",
+                        "55818a594bdc2db9688b456a",
+                        "55818a104bdc2db9688b4569"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 25
+                },
+                {
                     "traderId": "5ac3b934156ae10c4430e83c",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
-                }, {
+                    "name": "ragman",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5a341c4086f77401f2541505",
+                        "5448e5724bdc2ddf718b4568",
+                        "5448e54d4bdc2dcc718b4568",
+                        "590c745b86f7743cc433c5f2",
+                        "57bef4c42459772e8d35a53b",
+                        "5448e53e4bdc2d60728b4567",
+                        "5448e5284bdc2dcb718b4567",
+                        "57864a66245977548f04a81f"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
+                },
+                {
                     "traderId": "5c0647fdd443bc2504c2d371",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
+                    "name": "jaeger",
+                    "questTypes": ["Completion", "Exploration", "Elimination"],
+                    "rewardBaseWhitelist": [
+                        "5448f3ac4bdc2dce718b4569",
+                        "5c99f98d86f7745c314214b3",
+                        "590c745b86f7743cc433c5f2",
+                        "57864bb7245977548b3b66c2",
+                        "57864a66245977548f04a81f",
+                        "57864e4c24597754843f8723",
+                        "57864a3d24597754843f8721",
+                        "5448f3a64bdc2d60728b456a",
+                        "5795f317245977243854e041",
+                        "5d650c3e815116009f6201d2",
+                        "57864ada245977548638de91"
+                    ],
+                    "rewardCanBeWeapon": false,
+                    "weaponRewardChancePercent": 0
                 }
             ],
             "questConfig": {
                 "Exploration": {
-                    "maxExtracts": 10,
+                    "maxExtracts": 15,
+                    "maxExtractsWithSpecificExit": 4,
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
                     "specificExits": {
-                        "probability": 0.5,
+                        "probability": 0.1,
                         "passageRequirementWhitelist": [
                             "None",
                             "TransferItem",
@@ -299,218 +1201,702 @@
                     }
                 },
                 "Completion": {
-                    "minRequestedAmount": 2,
-                    "maxRequestedAmount": 10,
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                    "minRequestedAmount": 4,
+                    "maxRequestedAmount": 12,
+                    "uniqueItemCount": 4,
                     "minRequestedBulletAmount": 20,
                     "maxRequestedBulletAmount": 60,
                     "useWhitelist": true,
                     "useBlacklist": false
                 },
-                "Elimination": [{
-					"levelRange": {
+                "Elimination": [
+                    {
+                        "levelRange": {
                             "min": 1,
                             "max": 15
                         },
-                    "targets": [{
-                            "key": "Savage",
-                            "relativeProbability": 7,
-                            "data": {
-                                "isBoss": false
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "Savage",
+                                "relativeProbability": 15,
+                                "data": {
+                                    "isBoss": false
+                                }
+                            },
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 1,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
+                            },
+                            {
+                                "key": "bossBully",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossGluhar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKilla",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossSanitar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossTagilla",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKojaniy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKnight",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossZryachiy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoarSniper",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
                             }
-                        }, {
-                            "key": "AnyPmc",
-                            "relativeProbability": 1,
-                            "data": {
-                                "isBoss": false
+                        ],
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 5,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
                             }
-                        }, {
-                            "key": "bossBully",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
+                        ],
+                        "specificLocationProb": 0.15,
+                        "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
+                        "distProb": 0.15,
+                        "maxDist": 75,
+                        "minDist": 10,
+                        "maxKills": 20,
+                        "minKills": 8,
+                        "maxBossKills": 7,
+                        "minBossKills": 3,
+                        "maxPmcKills": 8,
+                        "minPmcKills": 5,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.2,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 1,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 5,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 0,
+                                "data": ["5b5f79a486f77409407a7f94"]
                             }
-                        }, {
-                            "key": "bossGluhar",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
                             }
-                        }, {
-                            "key": "bossKilla",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossSanitar",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossTagilla",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossKojaniy",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossKnight",
-                            "relativeProbability": 0,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }
-                    ],
-                    "bodyPartProb": 0.3,
-                    "bodyParts": [{
-                            "key": "Head",
-                            "relativeProbability": 1,
-                            "data": ["Head"]
-                        }, {
-                            "key": "Stomach",
-                            "relativeProbability": 3,
-                            "data": ["Stomach"]
-                        }, {
-                            "key": "Chest",
-                            "relativeProbability": 5,
-                            "data": ["Chest"]
-                        }, {
-                            "key": "Arms",
-                            "relativeProbability": 0.5,
-                            "data": ["LeftArm", "RightArm"]
-                        }, {
-                            "key": "Legs",
-                            "relativeProbability": 1,
-                            "data": ["LeftLeg", "RightLeg"]
-                        }
-                    ],
-                    "specificLocationProb": 0.25,
-                    "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
-                    "distProb": 0.20,
-                    "maxDist": 100,
-                    "minDist": 20,
-                    "maxKills": 10,
-                    "minKills": 5
-                },
-				{
-					"levelRange": {
+                        ]
+                    },
+                    {
+                        "levelRange": {
                             "min": 16,
+                            "max": 40
+                        },
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "Savage",
+                                "relativeProbability": 7,
+                                "data": {
+                                    "isBoss": false
+                                }
+                            },
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 2,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
+                            },
+                            {
+                                "key": "bossBully",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossGluhar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossSanitar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossTagilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKojaniy",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKnight",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossZryachiy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKolontay",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoarSniper",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            }
+                        ],
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 5,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
+                            }
+                        ],
+                        "specificLocationProb": 0.15,
+                        "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
+                        "distProb": 0.15,
+                        "maxDist": 75,
+                        "minDist": 10,
+                        "maxKills": 40,
+                        "minKills": 15,
+                        "maxBossKills": 10,
+                        "minBossKills": 5,
+                        "maxPmcKills": 15,
+                        "minPmcKills": 10,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.15,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 1,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 1,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 1,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
+                    },
+                    {
+                        "levelRange": {
+                            "min": 41,
                             "max": 100
                         },
-                    "targets": [{
-                            "key": "Savage",
-                            "relativeProbability": 7,
-                            "data": {
-                                "isBoss": false
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "Savage",
+                                "relativeProbability": 8,
+                                "data": {
+                                    "isBoss": false
+                                }
+                            },
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 2,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
+                            },
+                            {
+                                "key": "bossBully",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossGluhar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossSanitar",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossTagilla",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKojaniy",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKnight",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossZryachiy",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoar",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossKolontay",
+                                "relativeProbability": 0.4,
+                                "data": {
+                                    "isBoss": true
+                                }
+                            },
+                            {
+                                "key": "bossBoarSniper",
+                                "relativeProbability": 0,
+                                "data": {
+                                    "isBoss": true
+                                }
                             }
-                        }, {
-                            "key": "AnyPmc",
-                            "relativeProbability": 2,
-                            "data": {
-                                "isBoss": false
+                        ],
+                        "bodyPartProb": 0.15,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 5,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
                             }
-                        }, {
-                            "key": "bossBully",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
+                        ],
+                        "specificLocationProb": 0.15,
+                        "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
+                        "distProb": 0.15,
+                        "maxDist": 100,
+                        "minDist": 10,
+                        "maxKills": 40,
+                        "minKills": 20,
+                        "maxBossKills": 14,
+                        "minBossKills": 7,
+                        "maxPmcKills": 25,
+                        "minPmcKills": 10,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.2,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 1,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 5,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 1,
+                                "data": ["5b5f79a486f77409407a7f94"]
                             }
-                        }, {
-                            "key": "bossGluhar",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
                             }
-                        }, {
-                            "key": "bossKilla",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossSanitar",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossTagilla",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossKojaniy",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }, {
-                            "key": "bossKnight",
-                            "relativeProbability": 0.5,
-                            "data": {
-                                "isBoss": true
-                            }
-                        }
-                    ],
-                    "bodyPartProb": 0.4,
-                    "bodyParts": [{
-                            "key": "Head",
-                            "relativeProbability": 1,
-                            "data": ["Head"]
-                        }, {
-                            "key": "Stomach",
-                            "relativeProbability": 3,
-                            "data": ["Stomach"]
-                        }, {
-                            "key": "Chest",
-                            "relativeProbability": 5,
-                            "data": ["Chest"]
-                        }, {
-                            "key": "Arms",
-                            "relativeProbability": 0.5,
-                            "data": ["LeftArm", "RightArm"]
-                        }, {
-                            "key": "Legs",
-                            "relativeProbability": 1,
-                            "data": ["LeftLeg", "RightLeg"]
-                        }
-                    ],
-                    "specificLocationProb": 0.25,
-                    "distLocationBlacklist": ["laboratory", "factory4_day", "factory4_night"],
-                    "distProb": 0.25,
-                    "maxDist": 200,
-                    "minDist": 20,
-                    "maxKills": 15,
-                    "minKills": 5
-                }]
+                        ]
+                    }
+                ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248"],
-            "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 15
-        }, {
+            "rewardBaseTypeBlacklist": [
+                "543be5e94bdc2df1348b4568",
+                "5b3f15d486f77432d0509248",
+                "65649eb40bf0ed77b8044453"
+            ],
+            "rewardBlacklist": ["627bce33f21bc425b06ab967", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
+            "rewardAmmoStackMinSize": 5,
+            "freeChangesAvailable": 0,
+            "freeChanges": 0
+        },
+        {
+            "id": "62825ef60e88d037dc1eb426",
             "name": "Daily_Savage",
             "side": "Scav",
-            "types": [
-                "Elimination",
-                "Completion"
-            ],
+            "types": ["Exploration", "Elimination", "Completion"],
             "resetTime": 86400,
             "numQuests": 1,
             "minPlayerLevel": 1,
             "rewardScaling": {
-                "levels": [1, 20, 45, 100],
-                "experience": [2000, 4000, 20000, 80000],
-                "roubles": [6000, 10000, 100000, 250000],
-                "items": [1, 2, 4, 4],
-                "reputation": [0.01, 0.02, 0.05, 0.05],
-                "rewardSpread": 0.5
+                "levels": [1, 10, 20, 30, 40, 50, 60],
+                "experience": [0, 0, 0, 0, 0, 0, 0],
+                "roubles": [11000, 20000, 32000, 45000, 58000, 70000, 82000],
+                "gpCoins": [1, 1, 2, 2, 4, 4, 5],
+                "items": [2, 3, 3, 3, 3, 4, 4],
+                "reputation": [0.02, 0.02, 0.03, 0.03, 0.04, 0.04, 0.05],
+                "rewardSpread": 0.5,
+                "skillRewardChance": [0, 0, 0, 0, 0, 0, 0],
+                "skillPointReward": [10, 15, 20, 25, 30, 35, 40]
             },
             "locations": {
                 "any": ["any"],
@@ -520,130 +1906,392 @@
                 "Shoreline": ["Shoreline"],
                 "Interchange": ["Interchange"],
                 "Lighthouse": ["Lighthouse"],
-                "RezervBase": ["RezervBase"]
+                "RezervBase": ["RezervBase"],
+                "TarkovStreets": ["TarkovStreets"],
+                "Sandbox": ["Sandbox"]
             },
-            "traderWhitelist": [{
+            "traderWhitelist": [
+                {
                     "traderId": "579dc571d53a0658a154fbec",
-                    "questTypes": ["Completion", "Exploration", "Elimination"]
+                    "questTypes": ["Completion", "Exploration", "Elimination", "Pickup"],
+                    "rewardBaseWhitelist": [
+                        "55818a684bdc2ddd698b456d",
+                        "55818a594bdc2db9688b456a",
+                        "57864c8c245977548867e7f1",
+                        "5448ecbe4bdc2d60728b4568",
+                        "57864bb7245977548b3b66c2"
+                    ],
+                    "rewardCanBeWeapon": true,
+                    "weaponRewardChancePercent": 10
                 }
             ],
             "questConfig": {
                 "Exploration": {
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
                     "maxExtracts": 3,
+                    "maxExtractsWithSpecificExit": 1,
                     "specificExits": {
-                        "probability": 0.25,
-                        "passageRequirementWhitelist": [
-                            "None",
-                            "WorldEvent",
-                            "Train",
-                            "Reference",
-                            "Empty"
-                        ]
+                        "probability": 0.2,
+                        "passageRequirementWhitelist": ["None", "WorldEvent", "Train", "Reference", "Empty"]
                     }
                 },
+                "Pickup": {
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                    "ItemTypeToFetchWithMaxCount": [
+                        {
+                            "itemType": "5b47574386f77428ca22b335",
+                            "minPickupCount": 2,
+                            "maxPickupCount": 4
+                        },
+                        {
+                            "itemType": "5b47574386f77428ca22b336",
+                            "minPickupCount": 2,
+                            "maxPickupCount": 4
+                        },
+                        {
+                            "itemType": "5b47574386f77428ca22b2ee",
+                            "minPickupCount": 2,
+                            "maxPickupCount": 3
+                        },
+                        {
+                            "itemType": "5b47574386f77428ca22b2ef",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        },
+                        {
+                            "itemType": "5b47574386f77428ca22b33a",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        },
+                        {
+                            "itemType": "5b5f701386f774093f2ecf0f",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        },
+                        {
+                            "itemType": "5b5f754a86f774094242f19b",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 3
+                        },
+                        {
+                            "itemType": "5b5f75c686f774094242f19f",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        },
+                        {
+                            "itemType": "5b5f792486f77447ed5636b3",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        },
+                        {
+                            "itemType": "5b5f73ab86f774094242f195",
+                            "minPickupCount": 1,
+                            "maxPickupCount": 2
+                        }
+                    ],
+                    "ItemTypesToFetch": [
+                        "5b47574386f77428ca22b335",
+                        "5b47574386f77428ca22b336",
+                        "5b47574386f77428ca22b2ee"
+                    ],
+                    "maxItemFetchCount": 3
+                },
                 "Completion": {
+                    "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
                     "minRequestedAmount": 1,
-                    "maxRequestedAmount": 5,
-                    "minRequestedBulletAmount": 20,
-                    "maxRequestedBulletAmount": 60,
+                    "maxRequestedAmount": 3,
+                    "uniqueItemCount": 1,
+                    "minRequestedBulletAmount": 15,
+                    "maxRequestedBulletAmount": 40,
                     "useWhitelist": true,
                     "useBlacklist": false
                 },
-                "Elimination": [{
-					"levelRange": {
+                "Elimination": [
+                    {
+                        "levelRange": {
                             "min": 1,
                             "max": 15
                         },
-                    "targets":
-                    [{
-                            "key": "AnyPmc",
-                            "relativeProbability": 2,
-                            "data": {
-                                "isBoss": false
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 1,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
                             }
-                        }
-                    ],
-                    "bodyPartProb": 0.4,
-                    "bodyParts": [{
-                            "key": "Head",
-                            "relativeProbability": 1,
-                            "data": ["Head"]
-                        }, {
-                            "key": "Stomach",
-                            "relativeProbability": 3,
-                            "data": ["Stomach"]
-                        }, {
-                            "key": "Chest",
-                            "relativeProbability": 10,
-                            "data": ["Chest"]
-                        }, {
-                            "key": "Arms",
-                            "relativeProbability": 0.5,
-                            "data": ["LeftArm", "RightArm"]
-                        }, {
-                            "key": "Legs",
-                            "relativeProbability": 1,
-                            "data": ["LeftLeg", "RightLeg"]
-                        }
-                    ],
-                    "specificLocationProb": 0.25,
-                    "distLocationBlacklist": ["laboratory"],
-                    "distProb": 0.20,
-                    "maxDist": 100,
-                    "minDist": 20,
-                    "maxKills": 3,
-                    "minKills": 1
-                },
-				{
-					"levelRange": {
+                        ],
+                        "bodyPartProb": 0.2,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 10,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
+                            }
+                        ],
+                        "specificLocationProb": 0.15,
+                        "distLocationBlacklist": ["laboratory"],
+                        "distProb": 0.2,
+                        "maxDist": 75,
+                        "minDist": 10,
+                        "maxKills": 3,
+                        "minKills": 1,
+                        "maxBossKills": 1,
+                        "minBossKills": 1,
+                        "maxPmcKills": 2,
+                        "minPmcKills": 1,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.3,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 0,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 1,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 5,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 0,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
+                    },
+                    {
+                        "levelRange": {
                             "min": 16,
                             "max": 100
                         },
-                    "targets":
-                    [{
-                            "key": "AnyPmc",
-                            "relativeProbability": 1,
-                            "data": {
-                                "isBoss": false
+                        "possibleSkillRewards": ["Endurance", "Strength", "Vitality"],
+                        "targets": [
+                            {
+                                "key": "AnyPmc",
+                                "relativeProbability": 1,
+                                "data": {
+                                    "isBoss": false,
+                                    "isPmc": true
+                                }
                             }
-                        }
-                    ],
-                    "bodyPartProb": 0.4,
-                    "bodyParts": [{
-                            "key": "Head",
-                            "relativeProbability": 1,
-                            "data": ["Head"]
-                        }, {
-                            "key": "Stomach",
-                            "relativeProbability": 3,
-                            "data": ["Stomach"]
-                        }, {
-                            "key": "Chest",
-                            "relativeProbability": 5,
-                            "data": ["Chest"]
-                        }, {
-                            "key": "Arms",
-                            "relativeProbability": 0.5,
-                            "data": ["LeftArm", "RightArm"]
-                        }, {
-                            "key": "Legs",
-                            "relativeProbability": 1,
-                            "data": ["LeftLeg", "RightLeg"]
-                        }
-                    ],
-                    "specificLocationProb": 0.25,
-                    "distLocationBlacklist": ["laboratory"],
-                    "distProb": 0.25,
-                    "maxDist": 200,
-                    "minDist": 20,
-                    "maxKills": 5,
-                    "minKills": 2
-                }
-				]
+                        ],
+                        "bodyPartProb": 0.4,
+                        "bodyParts": [
+                            {
+                                "key": "Head",
+                                "relativeProbability": 1,
+                                "data": ["Head"]
+                            },
+                            {
+                                "key": "Chest",
+                                "relativeProbability": 5,
+                                "data": ["Chest", "Stomach"]
+                            },
+                            {
+                                "key": "Arms",
+                                "relativeProbability": 0.5,
+                                "data": ["LeftArm", "RightArm"]
+                            },
+                            {
+                                "key": "Legs",
+                                "relativeProbability": 1,
+                                "data": ["LeftLeg", "RightLeg"]
+                            }
+                        ],
+                        "specificLocationProb": 0.25,
+                        "distLocationBlacklist": ["laboratory"],
+                        "distProb": 0.25,
+                        "maxDist": 75,
+                        "minDist": 10,
+                        "maxKills": 9,
+                        "minKills": 3,
+                        "maxBossKills": 3,
+                        "minBossKills": 1,
+                        "maxPmcKills": 5,
+                        "minPmcKills": 2,
+                        "weaponRequirementProb": 0,
+                        "weaponCategoryRequirementProb": 0.3,
+                        "weaponCategoryRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 1,
+                                "data": ["5b5f794b86f77409407a7f92"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 1,
+                                "data": ["5b5f792486f77447ed5636b3"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 2,
+                                "data": ["5b5f78fc86f77409407a7f90"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 1,
+                                "data": ["5b5f78e986f77447ed5636b1"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5b5f796a86f774093f2ed3c0"]
+                            },
+                            {
+                                "key": "Melee",
+                                "relativeProbability": 1,
+                                "data": ["5b5f7a0886f77409407a7f96"]
+                            },
+                            {
+                                "key": "DMR",
+                                "relativeProbability": 1,
+                                "data": ["5b5f791486f774093f2ed3be"]
+                            },
+                            {
+                                "key": "BoltAction",
+                                "relativeProbability": 1,
+                                "data": ["5b5f798886f77447ed5636b5"]
+                            },
+                            {
+                                "key": "MachineGun",
+                                "relativeProbability": 1,
+                                "data": ["5b5f79a486f77409407a7f94"]
+                            }
+                        ],
+                        "weaponRequirements": [
+                            {
+                                "key": "Shotgun",
+                                "relativeProbability": 10,
+                                "data": ["5447b6094bdc2dc3278b4567"]
+                            },
+                            {
+                                "key": "Pistol",
+                                "relativeProbability": 10,
+                                "data": ["5447b5cf4bdc2d65278b4567"]
+                            },
+                            {
+                                "key": "AssaultRifle",
+                                "relativeProbability": 3,
+                                "data": ["5447b5f14bdc2d61278b4567"]
+                            },
+                            {
+                                "key": "AssaultCarbine",
+                                "relativeProbability": 5,
+                                "data": ["5447b5fc4bdc2d87278b4567"]
+                            },
+                            {
+                                "key": "MarksmanRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6194bdc2d67278b4567"]
+                            },
+                            {
+                                "key": "SniperRifle",
+                                "relativeProbability": 1,
+                                "data": ["5447b6254bdc2dc3278b4568"]
+                            },
+                            {
+                                "key": "SMG",
+                                "relativeProbability": 1,
+                                "data": ["5447b5e04bdc2d62278b4567"]
+                            }
+                        ]
+                    }
+                ]
             },
-            "rewardBaseTypeBlacklist": ["543be5e94bdc2df1348b4568", "5b3f15d486f77432d0509248"],
-            "rewardBlacklist": ["627bce33f21bc425b06ab967"],
-            "rewardAmmoStackMinSize": 15
+            "rewardBaseTypeBlacklist": [
+                "543be5e94bdc2df1348b4568",
+                "5b3f15d486f77432d0509248",
+                "65649eb40bf0ed77b8044453"
+            ],
+            "rewardBlacklist": ["627bce33f21bc425b06ab967", "59f32c3b86f77472a31742f0", "59f32bb586f774757e1e8442"],
+            "rewardAmmoStackMinSize": 5,
+            "freeChangesAvailable": 0,
+            "freeChanges": 0
         }
     ],
     "locationIdMap": {
@@ -656,6 +2304,8 @@
         "Interchange": "5714dbc024597771384a510d",
         "Lighthouse": "5704e4dad2720bb55b8b4567",
         "laboratory": "5b0fc42d86f7744a585f9105",
-        "RezervBase": "5704e5fad2720bc05b8b4567"
+        "RezervBase": "5704e5fad2720bc05b8b4567",
+        "TarkovStreets": "5714dc692459777137212e12",
+        "Sandbox": "653e6760052c01c1c805532f"
     }
 }

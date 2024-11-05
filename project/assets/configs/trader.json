@@ -1,103 +1,456 @@
 {
-    "updateTime": [{
+    "updateTime": [
+        {
+            "_name": "prapor",
             "traderId": "54cb50c76803fa8b248b4571",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 7000,
+                "max": 13500
+            }
+        },
+        {
+            "_name": "therapist",
             "traderId": "54cb57776803fa99248b456e",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 3000,
+                "max": 9500
+            }
+        },
+        {
+            "_name": "fence",
             "traderId": "579dc571d53a0658a154fbec",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 3000,
+                "max": 9000
+            }
+        },
+        {
+            "_name": "skier",
             "traderId": "58330581ace78e27b8b10cee",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 5000,
+                "max": 9000
+            }
+        },
+        {
+            "_name": "peacekeeper",
             "traderId": "5935c25fb3acc3127c3d8cd9",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 2000,
+                "max": 15000
+            }
+        },
+        {
+            "_name": "mechanic",
             "traderId": "5a7c2eca46aef81a7ca2145d",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 6500,
+                "max": 13500
+            }
+        },
+        {
+            "_name": "ragman",
             "traderId": "5ac3b934156ae10c4430e83c",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 6500,
+                "max": 15000
+            }
+        },
+        {
+            "_name": "jaeger",
             "traderId": "5c0647fdd443bc2504c2d371",
-            "seconds": 3600
-        }, {
+            "seconds": {
+                "min": 2000,
+                "max": 5500
+            }
+        },
+        {
+            "_name": "btr",
+            "traderId": "656f0f98d80a697f855d34b1",
+            "seconds": {
+                "min": 3000,
+                "max": 7500
+            }
+        },
+        {
+            "_name": "Ref",
+            "traderId": "6617beeaa9cfa777ca915b7c",
+            "seconds": {
+                "min": 3000,
+                "max": 7500
+            }
+        },
+        {
             "traderId": "ragfair",
-            "seconds": 3600
+            "seconds": {
+                "min": 3600,
+                "max": 3600
+            }
         }
     ],
     "updateTimeDefault": 3600,
-	"purchasesAreFoundInRaid": false,
+    "tradersResetFromServerStart": true,
+    "purchasesAreFoundInRaid": false,
     "traderPriceMultipler": 1,
-    "persistPurchaseDataInProfile": true,
     "fence": {
         "discountOptions": {
-            "assortSize": 50,
+            "assortSize": 45,
             "itemPriceMult": 0.8,
-            "presetPriceMult": 1.5
+            "presetPriceMult": 1.15,
+            "weaponPresetMinMax": {
+                "min": 5,
+                "max": 12
+            },
+            "equipmentPresetMinMax": {
+                "min": 5,
+                "max": 12
+            }
         },
         "partialRefreshTimeSeconds": 240,
         "partialRefreshChangePercent": 15,
         "assortSize": 120,
-        "maxPresetsPercent": 5,
-        "itemPriceMult": 1.2,
-        "presetPriceMult": 2.3,
+        "weaponPresetMinMax": {
+            "min": 12,
+            "max": 19
+        },
+        "equipmentPresetMinMax": {
+            "min": 8,
+            "max": 15
+        },
+        "itemPriceMult": 1.3,
+        "presetPriceMult": 1.3,
         "regenerateAssortsOnRefresh": false,
         "itemTypeLimits": {
-            "550aa4bf4bdc2dd6348b456b": 3,
-            "55818add4bdc2d5b648b456f": 5,
-            "5448bc234bdc2d3c308b4569": 5,
-            "55818b224bdc2dde698b456f": 5,
-            "555ef6e44bdc2de9068b457e": 5,
-            "5a341c4086f77401f2541505": 5,
-            "55818ad54bdc2ddc698b4569": 5,
-            "5448e53e4bdc2d60728b4567": 5,
-            "55818ac54bdc2d5b648b456e": 5,
-            "55818af64bdc2d5b648b4570": 5,
-            "55818a304bdc2db5418b457d": 4,
-            "5a74651486f7744e73386dd1": 5,
-            "55818a594bdc2db9688b456a": 5,
-            "55818a104bdc2db9688b4569": 5,
-            "55818a684bdc2ddd698b456d": 3,
-            "550aa4cd4bdc2dd8348b456c": 3,
-            "55818acf4bdc2dde698b456b": 5,
-            "55818a6f4bdc2db9688b456b": 5,
-            "5447b5f14bdc2d61278b4567": 3,
-            "5447b5cf4bdc2d65278b4567": 5,
-            "5447b6094bdc2dc3278b4567": 5,
-            "5447b5e04bdc2d62278b4567": 5,
-            "55818b164bdc2ddc698b456c": 3,
-            "617f1ef5e8b54b0998387733": 2,
-            "5448ecbe4bdc2d60728b4568": 2,
-            "57864a66245977548f04a81f": 2,
-            "5a341c4686f77469e155819e": 3,
-            "57864a3d24597754843f8721": 2,
-            "5448e54d4bdc2dcc718b4568": 4,
-            "5448f39d4bdc2d0a728b4568": 5,
-            "5795f317245977243854e041": 3
+            "5448eb774bdc2d0a728b4567": 10,
+            "5c518ec986f7743b68682ce2": 3,
+            "5c518ed586f774119a772aee": 0,
+            "5448bc234bdc2d3c308b4569": 16,
+            "55802f4a4bdc2ddb688b4569": 3,
+            "644120aa86ffbe10ee032b6f": 3,
+            "5c99f98d86f7745c314214b3": 2,
+            "5447b5cf4bdc2d65278b4567": 4,
+            "55818a104bdc2db9688b4569": 1,
+            "55818a304bdc2db5418b457d": 1,
+            "5448fe394bdc2d0d028b456c": 0,
+            "55818a594bdc2db9688b456a": 0,
+            "55818a604bdc2db5418b457e": 0,
+            "55818a684bdc2ddd698b456d": 1,
+            "55818a6f4bdc2db9688b456b": 1,
+            "55818ac54bdc2d5b648b456e": 1,
+            "55818acf4bdc2dde698b456b": 0,
+            "55818ad54bdc2ddc698b4569": 0,
+            "55818add4bdc2d5b648b456f": 0,
+            "55818ae44bdc2dde698b456c": 0,
+            "55818aeb4bdc2ddc698b456a": 0,
+            "55818af64bdc2d5b648b4570": 0,
+            "55818afb4bdc2dde698b456d": 1,
+            "55818b014bdc2ddc698b456b": 1,
+            "55818b084bdc2d5b648b4571": 1,
+            "55818b0e4bdc2dde698b456e": 0,
+            "55818b164bdc2ddc698b456c": 0,
+            "55818b1d4bdc2d5b648b4572": 1,
+            "55818b224bdc2dde698b456f": 1,
+            "550aa4cd4bdc2dd8348b456c": 0,
+            "550aa4dd4bdc2dc9348b4569": 1,
+            "5a74651486f7744e73386dd1": 0,
+            "5a2c3a9486f774688b05e574": 0,
+            "56ea9461d2720b67698b456f": 0,
+            "5448f3a64bdc2d60728b456a": 0,
+            "5a341c4686f77469e155819e": 7,
+            "5485a8684bdc2da71d8b4567": 23,
+            "5f4fbaaca5573a5ac31db429": 0,
+            "5447e0e74bdc2d3c308b4567": 4,
+            "57bef4c42459772e8d35a53b": 2,
+            "5b3f15d486f77432d0509248": 3,
+            "543be6564bdc2df4348b4568": 0,
+            "5448ecbe4bdc2d60728b4568": 0,
+            "5671435f4bdc2d96058b4569": 0,
+            "543be5cb4bdc2deb348b4568": 5,
+            "5448e53e4bdc2d60728b4567": 7
         },
-        "presetMaxDurabilityPercentMinMax": {
-            "min": 35,
-            "max": 60
+        "preventDuplicateOffersOfCategory": [
+            "543be5cb4bdc2deb348b4568",
+            "57bef4c42459772e8d35a53b",
+            "5485a8684bdc2da71d8b4567",
+            "5448f3ac4bdc2dce718b4569",
+            "5448f39d4bdc2d0a728b4568",
+            "5448f3a14bdc2d27728b4569",
+            "5448bc234bdc2d3c308b4569",
+            "543be5e94bdc2df1348b4568",
+            "5448eb774bdc2d0a728b4567",
+            "5447e1d04bdc2dff2f8b4567",
+            "5448e53e4bdc2d60728b4567",
+            "5448ecbe4bdc2d60728b4568",
+            "543be6674bdc2df1348b4569",
+            "5448fe124bdc2da5018b4567",
+            "567849dd4bdc2d150f8b456e",
+            "5a341c4686f77469e155819e",
+            "5448e5284bdc2dcb718b4567",
+            "5447e0e74bdc2d3c308b4567",
+            "5b3f15d486f77432d0509248",
+            "5645bcb74bdc2ded0b8b4578",
+            "5795f317245977243854e041"
+        ],
+        "weaponDurabilityPercentMinMax": {
+            "current": {
+                "min": 40,
+                "max": 100
+            },
+            "max": {
+                "min": 89,
+                "max": 100
+            }
+        },
+        "chancePlateExistsInArmorPercent": {
+            "3": 95,
+            "4": 75,
+            "5": 25,
+            "6": 10
         },
         "armorMaxDurabilityPercentMinMax": {
-            "min": 35,
-            "max": 60
+            "current": {
+                "min": 50,
+                "max": 100
+            },
+            "max": {
+                "min": 80,
+                "max": 100
+            }
         },
+        "itemStackSizeOverrideMinMax": {
+            "59e690b686f7746c9f75e848": {
+                "min": 5,
+                "max": 15
+            },
+            "5485a8684bdc2da71d8b4567": {
+                "min": 80,
+                "max": 7000
+            },
+            "543be5cb4bdc2deb348b4568": {
+                "min": 1,
+                "max": 16
+            },
+            "5b432b965acfc47a8774094e": {
+                "min": 120,
+                "max": 352
+            },
+            "544fb25a4bdc2dfb738b4567": {
+                "min": 120,
+                "max": 700
+            },
+            "5e831507ea0a7c419c2f9bd9": {
+                "min": 5,
+                "max": 100
+            },
+            "5755356824597772cb798962": {
+                "min": 1,
+                "max": 400
+            },
+            "544fb3364bdc2d34748b456a": {
+                "min": 1,
+                "max": 800
+            },
+            "5448bc234bdc2d3c308b4569": {
+                "min": 1,
+                "max": 50
+            },
+            "5448f3a14bdc2d27728b4569": {
+                "min": 1,
+                "max": 25
+            }
+        },
+        "itemCategoryRoublePriceLimit": {
+            "5448eb774bdc2d0a728b4567": 14000,
+            "5485a8684bdc2da71d8b4567": 230,
+            "5795f317245977243854e041": 30000,
+            "5448ecbe4bdc2d60728b4568": 40000,
+            "57864a3d24597754843f8721": 40000,
+            "5448e53e4bdc2d60728b4567": 90000,
+            "5a341c4686f77469e155819e": 24000,
+            "57864a66245977548f04a81f": 71000,
+            "5448e54d4bdc2dcc718b4568": 100000,
+            "5a2c3a9486f774688b05e574": 70000,
+            "5448f3a64bdc2d60728b456a": 70000,
+            "5447b6194bdc2d67278b4567": 103000,
+            "550aa4cd4bdc2dd8348b456c": 70000,
+            "57864ee62459775490116fc1": 95000,
+            "5448bc234bdc2d3c308b4569": 29000,
+            "5447b6094bdc2dc3278b4567": 35009,
+            "5447bedf4bdc2d87278b4568": 27008,
+            "5447bed64bdc2d97278b4568": 27007,
+            "5447b5e04bdc2d62278b4567": 33006,
+            "5447b5fc4bdc2d87278b4567": 60000,
+            "5447b5f14bdc2d61278b4567": 60000,
+            "5447b5cf4bdc2d65278b4567": 28003,
+            "5447b6254bdc2dc3278b4568": 28002,
+            "5447e1d04bdc2dff2f8b4567": 19001,
+            "55818ae44bdc2dde698b456c": 45000,
+            "55818add4bdc2d5b648b456f": 35000,
+            "590c745b86f7743cc433c5f2": 64000,
+            "57864bb7245977548b3b66c2": 85000,
+            "5448e5284bdc2dcb718b4567": 59001,
+            "5a341c4086f77401f2541505": 35000,
+            "5d21f59b6dbe99052b54ef83": 45000,
+            "5645bcb74bdc2ded0b8b4578": 35000,
+            "644120aa86ffbe10ee032b6f": 20000,
+            "57864c8c245977548867e7f1": 15000,
+            "5447e0e74bdc2d3c308b4567": 20000,
+            "616eb7aea207f41933308f46": 40000,
+            "5b3f15d486f77432d0509248": 5000,
+            "5448f3ac4bdc2dce718b4569": 42000,
+            "5448f3a14bdc2d27728b4569": 20000,
+            "543be5cb4bdc2deb348b4568": 15000,
+            "5c99f98d86f7745c314214b3": 15000
+        },
+        "presetSlotsToRemoveChancePercent": {
+            "mod_scope": 70,
+            "mod_magazine": 50,
+            "mod_sight_rear": 20,
+            "mod_sight_front": 20,
+            "mod_muzzle": 40,
+            "mod_pistol_grip": 5,
+            "mod_stock": 5,
+            "mod_handguard": 10,
+            "mod_barrel": 5,
+            "mod_stock_000": 10,
+            "mod_tactical_2": 35,
+            "mod_foregrip": 20,
+            "mod_mount": 40,
+            "mod_reciever": 5,
+            "mod_charge": 5,
+            "mod_mount_000": 20,
+            "mod_mount_002": 20,
+            "mod_mount_003": 20,
+            "mod_mount_004": 20,
+            "mod_tactical": 40,
+            "mod_tactical_000": 40,
+            "mod_tactical_001": 40,
+            "mod_tactical_002": 40,
+            "mod_tactical_003": 40,
+            "front_plate": 25,
+            "back_plate": 75,
+            "left_side_plate": 75,
+            "right_side_plate": 75
+        },
+        "ammoMaxPenLimit": 20,
+        "blacklistSeasonalItems": true,
         "blacklist": [
-            "5661632d4bdc2d903d8b456b",
-            "543be5e94bdc2df1348b4568",
+            "5c164d2286f774194c5e69fa",
             "543be6674bdc2df1348b4569",
             "5448bf274bdc2dfc2f8b456a",
             "5447bedf4bdc2d87278b4568",
             "6275303a9f372d6ea97f9ec7",
             "62e9103049c018f425059f38",
-            "59f32bb586f774757e1e8442",
             "59f32c3b86f77472a31742f0",
-			"627bce33f21bc425b06ab967"
-        ]
+            "6662e9f37fa79a6d83730fa0",
+            "6662ea05f6259762c56f3189",
+            "59f32bb586f774757e1e8442",
+            "6662e9aca7e0b43baa3d5f74",
+            "6662e9cda7e0b43baa3d5f76",
+            "627bce33f21bc425b06ab967",
+            "62f109593b54472778797866",
+            "5d52cc5ba4b9367408500062",
+            "5d52d479a4b936793d58c76b",
+            "5e99711486f7744bfc4af328",
+            "62f10b79e7ee985f386b2f47",
+            "633ffb5d419dbf4bea7004c6",
+            "543be5dd4bdc2deb348b4569",
+            "65649eb40bf0ed77b8044453",
+            "5448e54d4bdc2dcc718b4568",
+            "5a341c4086f77401f2541505",
+            "5422acb9af1c889c16000029",
+            "64d0b40fbe2eed70e254e2d4",
+            "5fc22d7c187fea44d52eda44",
+            "646372518610c40fc20204e8",
+            "65ddcc9cfa85b9f17d0dfb07",
+            "660312cc4d6cdfa6f500c703",
+			"6655e35b6bc645cb7b059912"
+        ],
+        "coopExtractGift": {
+            "sendGift": true,
+            "messageLocaleIds": [
+                "5da89b1886f77439d7741002 0",
+                "5da89b3a86f7742f9026cb83 0"
+            ],
+            "giftExpiryHours": 168,
+            "weaponPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "armorPresetCount": {
+                "min": 0,
+                "max": 0
+            },
+            "itemCount": {
+                "min": 2,
+                "max": 5
+            },
+            "weaponCrateCount": {
+                "min": 0,
+                "max": 0
+            },
+            "itemBlacklist": [
+                "5e997f0b86f7741ac73993e2",
+                "5b44abe986f774283e2e3512",
+                "5e99711486f7744bfc4af328",
+                "5e99735686f7744bfc4af32c",
+                "6087e570b998180e9f76dc24",
+                "5d52d479a4b936793d58c76b",
+                "5e85aac65505fa48730d8af2",
+                "63495c500c297e20065a08b1",
+                "5cde8864d7f00c0010373be1",
+                "5b3b713c5acfc4330140bd8d",
+                "60c080eb991ac167ad1c3ad4",
+                "6389c7f115805221fb410466"
+            ],
+            "itemTypeWhitelist": [
+                "5d650c3e815116009f6201d2",
+                "57864ee62459775490116fc1",
+                "57864ada245977548638de91",
+                "57864bb7245977548b3b66c2",
+                "57864e4c24597754843f8723",
+                "57864c322459775490116fbf",
+                "57864a66245977548f04a81f"
+            ],
+            "itemLimits": {
+                "5d650c3e815116009f6201d2": 1,
+                "57864ee62459775490116fc1": 1,
+                "57864ada245977548638de91": 2,
+                "57864bb7245977548b3b66c2": 1,
+                "57864e4c24597754843f8723": 1,
+                "57864a66245977548f04a81f": 1,
+                "5448e8d04bdc2ddf718b4569": 1,
+                "5448e8d64bdc2dce718b4568": 1,
+                "5448bc234bdc2d3c308b4569": 1,
+                "5448e5724bdc2ddf718b4568": 1,
+                "55818add4bdc2d5b648b456f": 1,
+                "543be6564bdc2df4348b4568": 1,
+                "550aa4cd4bdc2dd8348b456c": 1,
+                "5448f39d4bdc2d0a728b4568": 1,
+                "5448f3a14bdc2d27728b4569": 1,
+                "5447e1d04bdc2dff2f8b4567": 1,
+                "55818ad54bdc2ddc698b4569": 1
+            },
+            "itemStackLimits": {
+                "5449016a4bdc2d6f028b456f": {
+                    "min": 5000,
+                    "max": 20000
+                },
+                "569668774bdc2da2298b4568": {
+                    "min": 75,
+                    "max": 150
+                },
+                "5696686a4bdc2da3298b456a": {
+                    "min": 75,
+                    "max": 150
+                }
+            },
+            "allowBossItems": false,
+			"useRewarditemBlacklist": true
+        },
+        "btrDeliveryExpireHours": 240
+    },
+    "moddedTraders": {
+        "clothingService": []
     }
-
 }

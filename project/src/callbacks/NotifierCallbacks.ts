@@ -1,22 +1,22 @@
+import { NotifierController } from "@spt/controllers/NotifierController";
+import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IUIDRequestData } from "@spt/models/eft/common/request/IUIDRequestData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
+import { ISelectProfileResponse } from "@spt/models/eft/notifier/ISelectProfileResponse";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
+import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectable } from "tsyringe";
 
-import { NotifierController } from "../controllers/NotifierController";
-import { HttpServerHelper } from "../helpers/HttpServerHelper";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { INotifierChannel } from "../models/eft/notifier/INotifier";
-import { ISelectProfileRequestData } from "../models/eft/notifier/ISelectProfileRequestData";
-import { ISelectProfileResponse } from "../models/eft/notifier/ISelectProfileResponse";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-
 @injectable()
-export class NotifierCallbacks
-{
+export class NotifierCallbacks {
     constructor(
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("NotifierController") protected notifierController: NotifierController)
-    { }
+        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("NotifierController") protected notifierController: NotifierController,
+    ) {}
 
     /**
      * If we don't have anything to send, it's ok to not send anything back
@@ -24,9 +24,7 @@ export class NotifierCallbacks
      * until we actually have something to send because otherwise we'd spam the client
      * and the client would abort the connection due to spam.
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sendNotification(sessionID: string, req: any, resp: any, data: any): void
-    {
+    public sendNotification(sessionID: string, req: any, resp: any, data: any): void {
         const splittedUrl = req.url.split("/");
         const tmpSessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];
 
@@ -34,19 +32,25 @@ export class NotifierCallbacks
          * Take our array of JSON message objects and cast them to JSON strings, so that they can then
          *  be sent to client as NEWLINE separated strings... yup.
          */
-        this.notifierController.notifyAsync(tmpSessionID)
-            .then((messages: any) => messages.map((message: any) => JSON.stringify(message)).join("\n"))
+        this.notifierController
+            .notifyAsync(tmpSessionID)
+            .then((messages: any) => messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n"))
             .then((text) => this.httpServerHelper.sendTextJson(resp, text));
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getNotifier(url: string, info: any, sessionID: string): IGetBodyResponseData<any[]>
-    {
+    /** Handle push/notifier/get */
+    /** Handle push/notifier/getwebsocket */
+    // TODO: removed from client?
+    public getNotifier(url: string, info: any, sessionID: string): IGetBodyResponseData<any[]> {
         return this.httpResponse.emptyArrayResponse();
     }
 
-    public createNotifierChannel(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<INotifierChannel>
-    {
+    /** Handle client/notifier/channel/create */
+    public createNotifierChannel(
+        url: string,
+        info: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<INotifierChannel> {
         return this.httpResponse.getBody(this.notifierController.getChannel(sessionID));
     }
 
@@ -54,18 +58,15 @@ export class NotifierCallbacks
      * Handle client/game/profile/select
      * @returns ISelectProfileResponse
      */
-    public selectProfile(url: string, info: ISelectProfileRequestData, sessionID: string): IGetBodyResponseData<ISelectProfileResponse>
-    {
-        return this.httpResponse.getBody({
-            status: "ok",
-            notifier: this.notifierController.getChannel(sessionID),
-            notifierServer: this.notifierController.getServer(sessionID)
-        });
+    public selectProfile(
+        url: string,
+        info: IUIDRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<ISelectProfileResponse> {
+        return this.httpResponse.getBody({ status: "ok" });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public notify(url: string, info: any, sessionID: string): string
-    {
+    public notify(url: string, info: any, sessionID: string): string {
         return "NOTIFY";
     }
 }

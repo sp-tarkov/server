@@ -1,9 +1,8 @@
-import { MessageType } from "../../enums/MessageType";
+import { MessageType } from "@spt/models/enums/MessageType";
 
-export interface IGetMailDialogViewRequestData 
-{
-    type: MessageType
-    dialogId: string
-    limit: number
-    time: number // decimal
+export interface IGetMailDialogViewRequestData {
+    type: MessageType;
+    dialogId: string;
+    limit: number;
+    time: number; // decimal
 }

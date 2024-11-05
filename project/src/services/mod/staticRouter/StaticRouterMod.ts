@@ -1,17 +1,14 @@
-import { RouteAction, StaticRouter } from "../../../di/Router";
+import { RouteAction, StaticRouter } from "@spt/di/Router";
 
-export class StaticRouterMod extends StaticRouter
-{
+export class StaticRouterMod extends StaticRouter {
     public constructor(
         routes: RouteAction[],
-        private topLevelRoute: string
-    ) 
-    {
+        private topLevelRoute: string,
+    ) {
         super(routes);
     }
 
-    public override getTopLevelRoute(): string 
-    {
+    public override getTopLevelRoute(): string {
         return this.topLevelRoute;
     }
 }

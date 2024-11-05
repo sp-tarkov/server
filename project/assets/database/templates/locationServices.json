@@ -1,0 +1,219 @@
+{
+    "TraderServerSettings": {
+        "TraderServices": {
+            "ExUsecLoyalty": {
+                "TraderId": "638f541a29ffd1183d187f57",
+                "TraderServiceType": "ExUsecLoyalty",
+                "Requirements": {
+                    "CompletedQuests": [{
+                            "QuestId": "63966ff54c3ef01b6f3ffad8"
+                        }
+                    ],
+                    "Standings": {
+                        "638f541a29ffd1183d187f57": {
+                            "Value": 0.09
+                        }
+                    }
+                },
+                "ServiceItemCost": {
+                    "569668774bdc2da2298b4568": {
+                        "Count": 2500
+                    },
+                    "61bf7c024770ee6f9c6b8b53": {
+                        "Count": 2
+                    }
+                },
+                "UniqueItems": []
+            },
+            "ZryachiyAid": {
+                "TraderId": "638f541a29ffd1183d187f57",
+                "TraderServiceType": "ZryachiyAid",
+                "Requirements": {
+                    "CompletedQuests": [{
+                            "QuestId": "6396701b9113f06a7c3b2379"
+                        }
+                    ],
+                    "Standings": {
+                        "638f541a29ffd1183d187f57": {
+                            "Value": 0.18
+                        }
+                    }
+                },
+                "ServiceItemCost": {
+                    "62a0a16d0b9d3c46de5b6e97": {
+                        "Count": 3
+                    },
+                    "5696686a4bdc2da3298b456a": {
+                        "Count": 2000
+                    }
+                },
+                "UniqueItems": []
+            },
+            "CultistsAid": {
+                "TraderId": "638f541a29ffd1183d187f57",
+                "TraderServiceType": "CultistsAid",
+                "Requirements": {
+                    "CompletedQuests": [{
+                            "QuestId": "63966fccac6f8f3c677b9d89"
+                        }
+                    ],
+                    "Standings": {
+                        "638f541a29ffd1183d187f57": {
+                            "Value": 0.03
+                        }
+                    }
+                },
+                "ServiceItemCost": {
+                    "5c12613b86f7743bbe2c3f76": {
+                        "Count": 3
+                    },
+                    "5696686a4bdc2da3298b456a": {
+                        "Count": 1000
+                    }
+                },
+                "UniqueItems": ["64d0b40fbe2eed70e254e2d4"]
+            },
+            "PlayerTaxi": {
+                "TraderId": "656f0f98d80a697f855d34b1",
+                "TraderServiceType": "PlayerTaxi",
+                "Requirements": {
+                    "CompletedQuests": [],
+                    "Standings": []
+                },
+                "ServiceItemCost": [],
+                "UniqueItems": []
+            },
+            "BtrItemsDelivery": {
+                "TraderId": "656f0f98d80a697f855d34b1",
+                "TraderServiceType": "BtrItemsDelivery",
+                "Requirements": {
+                    "CompletedQuests": [],
+                    "Standings": []
+                },
+                "ServiceItemCost": [],
+                "UniqueItems": []
+            },
+            "BtrBotCover": {
+                "TraderId": "656f0f98d80a697f855d34b1",
+                "TraderServiceType": "BtrBotCover",
+                "Requirements": {
+                    "CompletedQuests": [],
+                    "Standings": []
+                },
+                "ServiceItemCost": [],
+                "UniqueItems": []
+            },
+            "TransitItemsDelivery": {
+                "TraderId": "656f0f98d80a697f855d34b1",
+                "TraderServiceType": "TransitItemsDelivery",
+                "Requirements": {
+                    "CompletedQuests": [],
+                    "Standings": []
+                },
+                "ServiceItemCost": [],
+                "UniqueItems": []
+            }
+        }
+    },
+    "BTRServerSettings": {
+        "ChanceSpawn": 100,
+        "SpawnPeriod": {
+            "x": 300,
+            "y": 600,
+            "z": 0
+        },
+        "MoveSpeed": 8,
+        "ReadyToDepartureTime": 15,
+        "CheckTurnDistanceTime": 60,
+        "TurnCheckSensitivity": 0.98,
+        "DecreaseSpeedOnTurnLimit": 0.5,
+        "EndSplineDecelerationDistance": 3,
+        "AccelerationSpeed": 0.3,
+        "DecelerationSpeed": 1.5,
+        "PauseDurationRange": {
+            "x": 90,
+            "y": 150,
+            "z": 0
+        },
+        "BodySwingReturnSpeed": 1,
+        "BodySwingDamping": 0.77,
+        "BodySwingIntensity": 0.506,
+        "ServerMapBTRSettings": {
+            "Develop": {
+                "MapID": "develop",
+                "ChanceSpawn": 100,
+                "SpawnPeriod": {
+                    "x": 300,
+                    "y": 600,
+                    "z": 0
+                },
+                "MoveSpeed": 8,
+                "ReadyToDepartureTime": 15,
+                "CheckTurnDistanceTime": 60,
+                "TurnCheckSensitivity": 0.98,
+                "DecreaseSpeedOnTurnLimit": 0.5,
+                "EndSplineDecelerationDistance": 3,
+                "AccelerationSpeed": 0.3,
+                "DecelerationSpeed": 1.5,
+                "PauseDurationRange": {
+                    "x": 90,
+                    "y": 150,
+                    "z": 0
+                },
+                "BodySwingReturnSpeed": 1,
+                "BodySwingDamping": 0.6,
+                "BodySwingIntensity": 0.3
+            },
+            "TarkovStreets": {
+                "MapID": "TarkovStreets",
+                "ChanceSpawn": 100,
+                "SpawnPeriod": {
+                    "x": 0,
+                    "y": 10,
+                    "z": 0
+                },
+                "MoveSpeed": 8,
+                "ReadyToDepartureTime": 15,
+                "CheckTurnDistanceTime": 60,
+                "TurnCheckSensitivity": 0.98,
+                "DecreaseSpeedOnTurnLimit": 0.5,
+                "EndSplineDecelerationDistance": 3,
+                "AccelerationSpeed": 0.3,
+                "DecelerationSpeed": 1.5,
+                "PauseDurationRange": {
+                    "x": 90,
+                    "y": 150,
+                    "z": 0
+                },
+                "BodySwingReturnSpeed": 1,
+                "BodySwingDamping": 0.6,
+                "BodySwingIntensity": 0.3
+            },
+            "Woods": {
+                "MapID": "Woods",
+                "ChanceSpawn": 100,
+                "SpawnPeriod": {
+                    "x": 0,
+                    "y": 10,
+                    "z": 0
+                },
+                "MoveSpeed": 8,
+                "ReadyToDepartureTime": 15,
+                "CheckTurnDistanceTime": 60,
+                "TurnCheckSensitivity": 0.98,
+                "DecreaseSpeedOnTurnLimit": 0.5,
+                "EndSplineDecelerationDistance": 3,
+                "AccelerationSpeed": 0.3,
+                "DecelerationSpeed": 1.5,
+                "PauseDurationRange": {
+                    "x": 90,
+                    "y": 150,
+                    "z": 0
+                },
+                "BodySwingReturnSpeed": 1,
+                "BodySwingDamping": 0.6,
+                "BodySwingIntensity": 0.3
+            }
+        }
+    }
+}

@@ -1,9 +1,8 @@
-export enum HttpMethods 
-    {
+export enum HttpMethods {
     OPTIONS = "OPTIONS",
     GET = "GET",
     POST = "POST",
     PUT = "PUT",
     PATCH = "PATCH",
-    DELETE = "DELETE"
+    DELETE = "DELETE",
 }

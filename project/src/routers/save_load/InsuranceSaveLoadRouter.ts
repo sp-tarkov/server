@@ -1,27 +1,15 @@
+import { HandledRoute, SaveLoadRouter } from "@spt/di/Router";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { injectable } from "tsyringe";
 
-import { HandledRoute, SaveLoadRouter } from "../../di/Router";
-import { IAkiProfile } from "../../models/eft/profile/IAkiProfile";
-
 @injectable()
-export class InsuranceSaveLoadRouter extends SaveLoadRouter 
-{
-    constructor() 
-    {
-        super();
+export class InsuranceSaveLoadRouter extends SaveLoadRouter {
+    public override getHandledRoutes(): HandledRoute[] {
+        return [new HandledRoute("spt-insurance", false)];
     }
 
-    public override getHandledRoutes(): HandledRoute[] 
-    {
-        return [
-            new HandledRoute("aki-insurance", false)
-        ];
-    }
-
-    public override handleLoad(profile: IAkiProfile): IAkiProfile 
-    {
-        if (profile.insurance === undefined)
-        {
+    public override handleLoad(profile: ISptProfile): ISptProfile {
+        if (profile.insurance === undefined) {
             profile.insurance = [];
         }
         return profile;

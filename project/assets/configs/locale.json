@@ -1,5 +1,38 @@
 {
     "gameLocale": "system",
     "serverLocale": "system",
-	"serverSupportedLocales": ["en", "ru", "zh", "fr", "cz", "ge", "it", "ko", "jp", "es", "de", "tr", "hu", "pl", "sk", "pt", "sv", "nl"]
+    "serverSupportedLocales": [
+        "ar",
+        "en",
+        "cs",
+        "da",
+        "de",
+        "el",
+        "es-es",
+        "fr",
+        "nl",
+        "no",
+        "tr",
+        "hi",
+        "hu",
+        "id",
+        "it",
+        "ja",
+        "ko",
+        "nl",
+        "no",
+        "pl",
+        "pt-br",
+        "pt-pt",
+        "ru",
+        "sv",
+        "vi",
+        "zh-cn"
+    ],
+    "fallbacks": {
+        "en-*": "en",
+        "pt-*": "pt-pt",
+        "zh-*": "zh-cn",
+        "es-*": "es-es"
+    }
 }

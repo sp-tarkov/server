@@ -1,30 +1,26 @@
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { injectable } from "tsyringe";
-import { IDatabaseTables } from "../models/spt/server/IDatabaseTables";
 
 @injectable()
-export class DatabaseServer
-{
+export class DatabaseServer {
     protected tableData: IDatabaseTables = {
         bots: undefined,
         hideout: undefined,
         locales: undefined,
         locations: undefined,
-        loot: undefined,
         match: undefined,
         templates: undefined,
         traders: undefined,
         globals: undefined,
         server: undefined,
-        settings: undefined
+        settings: undefined,
     };
 
-    public getTables(): IDatabaseTables
-    {
+    public getTables(): IDatabaseTables {
         return this.tableData;
     }
 
-    public setTables(tableData: IDatabaseTables): void
-    {
+    public setTables(tableData: IDatabaseTables): void {
         this.tableData = tableData;
     }
 }

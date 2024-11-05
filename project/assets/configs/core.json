@@ -1,6 +1,42 @@
 {
-    "akiVersion": "3.5.4",
-    "projectName": "SPT-AKI",
-    "compatibleTarkovVersion": "0.13.0.22173",
-    "serverName": "SPT Server"
+    "sptVersion": "3.10.0",
+    "projectName": "SPT",
+    "compatibleTarkovVersion": "0.15.5.33420",
+    "serverName": "SPT Server",
+    "profileSaveIntervalSeconds": 15,
+    "sptFriendNickname": "SPT",
+    "allowProfileWipe": true,
+    "bsgLogging": {
+        "verbosity": 6,
+        "sendToServer": false
+    },
+    "release": {
+        "betaDisclaimerTimeoutDelay": 30
+    },
+    "fixes": {
+        "fixShotgunDispersion": true,
+        "removeModItemsFromProfile": false,
+        "fixProfileBreakingInventoryItemIssues": false
+    },
+    "features": {
+        "autoInstallModDependencies": false,
+        "compressProfile": false,
+        "chatbotFeatures": {
+            "sptFriendEnabled": true,
+			"sptFriendGiftsEnabled": true,
+            "commandoEnabled": true,
+            "commandoFeatures": {
+                "giveCommandEnabled": true
+            },
+            "commandUseLimits": {
+                "StashRows": 15
+            },
+			"ids": {
+				"commando": "6723fd51c5924c57ce0ca01e",
+				"spt": "6723fd51c5924c57ce0ca01f"
+			}
+        },
+        "createNewProfileTypesBlacklist": []
+    },
+    "customWatermarkLocaleKeys": []
 }

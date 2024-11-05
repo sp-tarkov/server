@@ -1,59 +1,59 @@
+import { CustomizationController } from "@spt/controllers/CustomizationController";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { ISuit } from "@spt/models/eft/common/tables/ITrader";
+import { IBuyClothingRequestData } from "@spt/models/eft/customization/IBuyClothingRequestData";
+import { IGetSuitsResponse } from "@spt/models/eft/customization/IGetSuitsResponse";
+import { IWearClothingRequestData } from "@spt/models/eft/customization/IWearClothingRequestData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { SaveServer } from "@spt/servers/SaveServer";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
 
-import { CustomizationController } from "../controllers/CustomizationController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { ISuit } from "../models/eft/common/tables/ITrader";
-import { IBuyClothingRequestData } from "../models/eft/customization/IBuyClothingRequestData";
-import { IGetSuitsResponse } from "../models/eft/customization/IGetSuitsResponse";
-import { IWearClothingRequestData } from "../models/eft/customization/IWearClothingRequestData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { SaveServer } from "../servers/SaveServer";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-
 @injectable()
-export class CustomizationCallbacks
-{
+export class CustomizationCallbacks {
     constructor(
         @inject("CustomizationController") protected customizationController: CustomizationController,
         @inject("SaveServer") protected saveServer: SaveServer,
-        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil
-    )
-    { }
+        @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
+    ) {}
 
     /**
-     * Handles client/trading/customization/storage
-     * @returns 
+     * Handle client/trading/customization/storage
+     * @returns IGetSuitsResponse
      */
-    public getSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetSuitsResponse>
-    {
-        const result: IGetSuitsResponse = {
-            _id: `pmc${sessionID}`,
-            suites: this.saveServer.getProfile(sessionID).suits
-        };
+    public getSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<IGetSuitsResponse> {
+        const result: IGetSuitsResponse = { _id: sessionID, suites: this.saveServer.getProfile(sessionID).suits };
         return this.httpResponse.getBody(result);
     }
 
     /**
-     * Handles client/trading/customization
+     * Handle client/trading/customization
      * @returns ISuit[]
      */
-    public getTraderSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISuit[]>
-    {
+    public getTraderSuits(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<ISuit[]> {
         const splittedUrl = url.split("/");
-        const traderID = splittedUrl[splittedUrl.length - 2];
+        const traderID = splittedUrl[splittedUrl.length - 3];
 
         return this.httpResponse.getBody(this.customizationController.getTraderSuits(traderID, sessionID));
     }
 
-    public wearClothing(pmcData: IPmcData, body: IWearClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    /**
+     * Handle CustomizationWear event
+     */
+    public wearClothing(
+        pmcData: IPmcData,
+        body: IWearClothingRequestData,
+        sessionID: string,
+    ): IItemEventRouterResponse {
         return this.customizationController.wearClothing(pmcData, body, sessionID);
     }
 
-    public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    /**
+     * Handle CustomizationBuy event
+     */
+    public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse {
         return this.customizationController.buyClothing(pmcData, body, sessionID);
     }
 }

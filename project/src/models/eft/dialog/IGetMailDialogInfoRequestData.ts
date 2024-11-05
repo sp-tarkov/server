@@ -1,5 +1,3 @@
-export interface IGetMailDialogInfoRequestData
-{
+export interface IGetMailDialogInfoRequestData {
     dialogId: string;
-
 }

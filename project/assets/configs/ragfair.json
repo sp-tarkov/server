@@ -1,22 +1,22 @@
 {
-    "runIntervalSeconds": 45,
+    "runIntervalSeconds": 8,
+    "runIntervalValues": {
+        "inRaid": 60,
+        "outOfRaid": 8
+    },
     "sell": {
-		"simulatedSellHours": 12,
         "fees": true,
         "chance": {
             "base": 50,
-            "overpriced": 0.5,
-            "underpriced": 2
+            "sellMultiplier": 1.24,
+            "maxSellChancePercent": 100,
+            "minSellChancePercent": 0
         },
         "time": {
-            "base": 1.5,
             "min": 0,
             "max": 1.0
         },
-        "reputation": {
-            "gain": 0.0000002,
-            "loss": 0.0000002
-        }
+        "expireSeconds": 71
     },
     "traders": {
         "54cb50c76803fa8b248b4571": true,
@@ -27,46 +27,73 @@
         "5a7c2eca46aef81a7ca2145d": true,
         "5ac3b934156ae10c4430e83c": true,
         "5c0647fdd443bc2504c2d371": true,
+        "6617beeaa9cfa777ca915b7c": true,
         "ragfair": false
     },
     "dynamic": {
-		"purchasesAreFoundInRaid": false,
-		"useTraderPriceForOffersIfHigher": true,
-		"barter": {
-			"enable": true,
-			"chancePercent": 20,
-			"itemCountMin": 1,
-			"itemCountMax": 3,
-			"priceRangeVariancePercent": 15,
-			"minRoubleCostToBecomeBarter": 20000,
-			"itemTypeBlacklist": [
-				"55802f4a4bdc2ddb688b4569",
-				"55802f3e4bdc2de7118b4584",
-				"543be5cb4bdc2deb348b4568",
-				"55818ac54bdc2d5b648b456e",
-				"5a74651486f7744e73386dd1"
-			]
-		},
-		"offerAdjustment":{
-			"adjustPriceWhenBelowHandbookPrice": false,
-			"maxPriceDifferenceBelowHandbookPercent": 64,
-			"handbookPriceMultipier": 1.1,
-			"priceThreshholdRub": 20000
-		},
-        "expiredOfferThreshold": 1500,
+        "purchasesAreFoundInRaid": false,
+        "useTraderPriceForOffersIfHigher": true,
+        "barter": {
+            "chancePercent": 20,
+            "itemCountMin": 1,
+            "itemCountMax": 3,
+            "priceRangeVariancePercent": 15,
+            "minRoubleCostToBecomeBarter": 20000,
+			"makeSingleStackOnly": true,
+            "itemTypeBlacklist": [
+                "55802f4a4bdc2ddb688b4569",
+                "55802f3e4bdc2de7118b4584",
+                "543be5cb4bdc2deb348b4568",
+                "55818ac54bdc2d5b648b456e",
+                "5a74651486f7744e73386dd1"
+            ]
+        },
+        "pack": {
+            "chancePercent": 6,
+            "itemCountMin": 4,
+            "itemCountMax": 17,
+            "itemTypeWhitelist": [
+                "5448eb774bdc2d0a728b4567",
+                "5448e8d64bdc2dce718b4568",
+                "5448f3ac4bdc2dce718b4569",
+                "543be6674bdc2df1348b4569",
+                "57864a3d24597754843f8721",
+                "57864a66245977548f04a81f",
+                "57864ada245977548638de91",
+                "57864ada245977548638de91"
+            ]
+        },
+        "offerAdjustment": {
+            "adjustPriceWhenBelowHandbookPrice": false,
+            "maxPriceDifferenceBelowHandbookPercent": 64,
+            "handbookPriceMultipier": 1.1,
+            "priceThreshholdRub": 20000
+        },
+        "expiredOfferThreshold": 1400,
         "offerItemCount": {
             "min": 7,
             "max": 30
         },
-        "price": {
-            "min": 0.8,
-            "max": 1.2
+        "priceRanges": {
+            "default": {
+                "min": 0.8,
+                "max": 1.2
+            },
+            "preset": {
+                "min": 0.95,
+                "max": 1.05
+            },
+            "pack": {
+                "min": 0.75,
+                "max": 0.96
+            }
         },
-        "presetPrice": {
-            "min": 0.95,
-            "max": 1.05
-        },
-		"showDefaultPresetsOnly": true,
+		"ignoreQualityPriceVarianceBlacklist": [
+			"59e3577886f774176a362503",
+			"5d02797c86f774203f38e30a",
+			"5ab8e79e86f7742d8b372e78"
+		],
+        "showDefaultPresetsOnly": true,
         "endTimeSeconds": {
             "min": 360,
             "max": 3600
@@ -75,44 +102,170 @@
             "5422acb9af1c889c16000029": {
                 "_name": "WEAPON",
                 "conditionChance": 0.2,
-                "min": 0.6,
-                "max": 1
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.6,
+                    "max": 1
+                }
             },
             "543be5664bdc2dd4348b4569": {
                 "_name": "MEDS",
                 "conditionChance": 0.2,
-                "min": 0.6,
-                "max": 1
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.6,
+                    "max": 1
+                }
             },
             "5447e0e74bdc2d3c308b4567": {
                 "_name": "SPEC_ITEM",
                 "conditionChance": 0.3,
-                "min": 0.02,
-                "max": 1
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.02,
+                    "max": 1
+                }
             },
             "543be5e94bdc2df1348b4568": {
                 "_name": "KEY",
-                "conditionChance": 0.02,
-                "min": 0.97,
-                "max": 1
+                "conditionChance": 0.04,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.96,
+                    "max": 1
+                }
             },
             "5448e5284bdc2dcb718b4567": {
                 "_name": "VEST",
                 "conditionChance": 0.2,
-                "min": 0.05,
-                "max": 1
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.45,
+                    "max": 1
+                }
             },
-            "57bef4c42459772e8d35a53b": {
-                "_name": "ARMORED_EQUIPMENT",
-                "conditionChance": 0.6,
-                "min": 0.05,
-                "max": 1
+            "5448e54d4bdc2dcc718b4568": {
+                "_name": "ARMOR",
+                "conditionChance": 0.2,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.45,
+                    "max": 1
+                }
+            },
+            "644120aa86ffbe10ee032b6f": {
+                "_name": "ARMOR_PLATE",
+                "conditionChance": 0.45,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.7,
+                    "max": 1
+                }
+            },
+            "65649eb40bf0ed77b8044453": {
+                "_name": "BUILT_IN_INSERTS",
+                "conditionChance": 0.3,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.3,
+                    "max": 1
+                }
             },
             "543be6674bdc2df1348b4569": {
                 "_name": "FOOD_DRINK",
                 "conditionChance": 0.05,
-                "min": 0.05,
-                "max": 1
+                "current": {
+                    "min": 1,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.05,
+                    "max": 1
+                }
+            },
+            "5d650c3e815116009f6201d2": {
+                "_name": "FUEL",
+                "conditionChance": 0.12,
+                "current": {
+                    "min": 1,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.7,
+                    "max": 1
+                }
+            },
+            "5a341c4686f77469e155819e": {
+                "_name": "FACECOVER",
+                "conditionChance": 0.32,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.6,
+                    "max": 1
+                }
+            },
+            "5448e5724bdc2ddf718b4568": {
+                "_name": "VISORS",
+                "conditionChance": 0.32,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.7,
+                    "max": 1
+                }
+            },
+            "5a341c4086f77401f2541505": {
+                "_name": "HELMETS",
+                "conditionChance": 0.32,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.45,
+                    "max": 1
+                }
+            },
+            "57bef4c42459772e8d35a53b": {
+                "_name": "ARMORED_EQUIPMENT",
+                "conditionChance": 0.25,
+                "current": {
+                    "min": 0,
+                    "max": 1
+                },
+                "max": {
+                    "min": 0.05,
+                    "max": 1
+                }
             }
         },
         "stackablePercent": {
@@ -124,10 +277,19 @@
             "max": 10
         },
         "rating": {
-            "min": 0.1,
-            "max": 0.95
+            "min": -2,
+            "max": 20
         },
-		"_currencies": "what percentage of the offers are in each currency",
+        "armor": {
+            "removeRemovablePlateChance": 40,
+            "plateSlotIdToRemovePool": ["front_plate", "back_plate"]
+        },
+        "itemPriceMultiplier": {
+            "5737292724597765e5728562": 6,
+            "57372ac324597767001bc261": 5,
+            "5c110624d174af029e69734c": 38
+        },
+        "_currencies": "what percentage of the offers are in each currency",
         "currencies": {
             "5449016a4bdc2d6f028b456f": 78,
             "5696686a4bdc2da3298b456a": 14,
@@ -140,14 +302,130 @@
             "5448e53e4bdc2d60728b4567",
             "5448bf274bdc2dfc2f8b456a",
             "543be5e94bdc2df1348b4568",
-            "5448f39d4bdc2d0a728b4568"
+            "5448f39d4bdc2d0a728b4568",
+            "62e910aaf957f2915e0a5e36",
+            "5447e1d04bdc2dff2f8b4567",
+            "57bef4c42459772e8d35a53b",
+            "55802f4a4bdc2ddb688b4569",
+            "616eb7aea207f41933308f46"
         ],
-		"removeSeasonalItemsWhenNotInEvent": true,
+        "removeSeasonalItemsWhenNotInEvent": true,
         "blacklist": {
+            "damagedAmmoPacks": true,
             "custom": [],
             "enableBsgList": true,
             "enableQuestList": true,
-            "traderItems": false
+            "traderItems": false,
+            "armorPlate": {
+                "maxProtectionLevel": 4,
+                "ignoreSlots": ["right_side_plate", "left_side_plate"]
+            },
+            "enableCustomItemCategoryList": false,
+            "customItemCategoryList": []
+        },
+        "unreasonableModPrices": {
+            "5448fe124bdc2da5018b4567": {
+                "itemType": "Weapon Mod",
+                "enabled": true,
+                "handbookPriceOverMultiplier": 6,
+                "newPriceHandbookMultiplier": 6
+            },
+            "57864a66245977548f04a81f": {
+                "itemType": "Electronics",
+                "enabled": true,
+                "handbookPriceOverMultiplier": 11,
+                "newPriceHandbookMultiplier": 11
+            }
+        }
+    },
+    "tieredFlea": {
+        "enabled": false,
+        "unlocksTpl": {
+            "5d5d940f86f7742797262046": 32,
+            "545cdae64bdc2d39198b4568": 30,
+            "5b44c6ae86f7742d1627baea": 30,
+            "628e1ffc83ec92260c0f437f": 30,
+            "5f5e467b0bc58666c37e7821": 30,
+
+            "5c0e6a1586f77404597b4965": 26,
+            "5df8a42886f77412640e2e75": 25,
+
+            "5c94bbff86f7747ee735c08f": 30,
+            "63a0b208f444d32d6f03ea1e": 25,
+            "5c0530ee86f774697952d952": 25,
+            "57347ca924597744596b4e71": 35,
+
+            "5af04b6486f774195a3ebb49": 30,
+            "590c2e1186f77425357b6124": 30,
+            "590c5bbd86f774785762df04": 30,
+            "59e36c6f86f774176c10a2a7": 30,
+            "590a3b0486f7743954552bdb": 30,
+            "5c06782b86f77426df5407d2": 30,
+            "5c06779c86f77426e00dd782": 30,
+            "5d1b2fa286f77425227d1674": 30,
+            "57347cd0245977445a2d6ff1": 30,
+
+            "5d1b385e86f774252167b98a": 30,
+			
+			"62a0a124de7ac81993580542": 40,
+			"5e42c81886f7742a01529f57": 40,
+			"5d1b371186f774253763a656": 35,
+			"5d1b36a186f7742523398433": 35,
+			"5e2af29386f7746d4159f077": 35,
+			"5d1b3a5d86f774252167ba22": 35,
+			"59e3577886f774176a362503": 35
+        },
+        "unlocksType": {
+            "57864a3d24597754843f8721": 35,
+            "57864a66245977548f04a81f": 20,
+            "57864ada245977548638de91": 20,
+            "590c745b86f7743cc433c5f2": 20,
+
+            "5447bedf4bdc2d87278b4568": 50,
+            "5447bed64bdc2d97278b4568": 40,
+            "5447b6254bdc2dc3278b4568": 35,
+            "5447b6194bdc2d67278b4567": 35,
+            "5447b5f14bdc2d61278b4567": 35,
+            "5447b5e04bdc2d62278b4567": 20,
+            "5447b6094bdc2dc3278b4567": 15,
+            "5447bee84bdc2dc3278b4569": 15,
+            "617f1ef5e8b54b0998387733": 10,
+            "5447b5cf4bdc2d65278b4567": 5,
+
+            "55818acf4bdc2dde698b456b": 20,
+            "55818ad54bdc2ddc698b4569": 23,
+            "55818add4bdc2d5b648b456f": 25,
+            "55818ae44bdc2dde698b456c": 30,
+            "55818aeb4bdc2ddc698b456a": 45,
+
+            "543be5cb4bdc2deb348b4568": 50,
+
+            "5c164d2286f774194c5e69fa": 40,
+            "5c99f98d86f7745c314214b3": 35
+        },
+        "ammoTiersEnabled": true,
+        "ammoTplUnlocks": {
+            "619636be6db0f2477964e710": 50,
+            "5fc382c1016cce60e8341b20": 50,
+            "5efb0cabfb3e451d70735af5": 35,
+            "64b8ee384b75259c590fa89b": 35,
+            "5d6e6911a4b9361bd5780d52": 35,
+            "5e85aa1a988a8701445df1f5": 35,
+            "6576f93989f0062e741ba952": 25,
+
+            "56dff061d2720bb5668b4567": 45,
+            "56dff2ced2720bb4668b4567": 40,
+
+            "64b7af434b75259c590fa893": 45,
+
+            "60194943740c5d77f6705eea": 35,
+
+            "5656d7c34bdc2d9d198b4587": 35,
+
+            "5e023e53d4353e3302577c4c": 25,
+
+            "5887431f2459777e1612938f": 30,
+            "59e77a2386f7742ee578960a": 35
         }
     }
 }

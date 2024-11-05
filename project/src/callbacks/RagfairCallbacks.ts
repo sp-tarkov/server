@@ -1,80 +1,100 @@
+import { RagfairController } from "@spt/controllers/RagfairController";
+import { OnLoad } from "@spt/di/OnLoad";
+import { OnUpdate } from "@spt/di/OnUpdate";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAddOfferRequestData } from "@spt/models/eft/ragfair/IAddOfferRequestData";
+import { IExtendOfferRequestData } from "@spt/models/eft/ragfair/IExtendOfferRequestData";
+import { IGetItemPriceResult } from "@spt/models/eft/ragfair/IGetItemPriceResult";
+import { IGetMarketPriceRequestData } from "@spt/models/eft/ragfair/IGetMarketPriceRequestData";
+import { IGetOffersResult } from "@spt/models/eft/ragfair/IGetOffersResult";
+import { IGetRagfairOfferByIdRequest } from "@spt/models/eft/ragfair/IGetRagfairOfferByIdRequest";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { IRemoveOfferRequestData } from "@spt/models/eft/ragfair/IRemoveOfferRequestData";
+import { ISearchRequestData } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { ISendRagfairReportRequestData } from "@spt/models/eft/ragfair/ISendRagfairReportRequestData";
+import { IStorePlayerOfferTaxAmountRequestData } from "@spt/models/eft/ragfair/IStorePlayerOfferTaxAmountRequestData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { RagfairServer } from "@spt/servers/RagfairServer";
+import { RagfairTaxService } from "@spt/services/RagfairTaxService";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
-import { OnLoad } from "../di/OnLoad";
-import { OnUpdate } from "../di/OnUpdate";
-
-import { RagfairController } from "../controllers/RagfairController";
-import { IEmptyRequestData } from "../models/eft/common/IEmptyRequestData";
-import { IPmcData } from "../models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "../models/eft/httpResponse/INullResponseData";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { IAddOfferRequestData } from "../models/eft/ragfair/IAddOfferRequestData";
-import { IExtendOfferRequestData } from "../models/eft/ragfair/IExtendOfferRequestData";
-import { IGetItemPriceResult } from "../models/eft/ragfair/IGetItemPriceResult";
-import { IGetMarketPriceRequestData } from "../models/eft/ragfair/IGetMarketPriceRequestData";
-import { IGetOffersResult } from "../models/eft/ragfair/IGetOffersResult";
-import { IRemoveOfferRequestData } from "../models/eft/ragfair/IRemoveOfferRequestData";
-import { ISearchRequestData } from "../models/eft/ragfair/ISearchRequestData";
-import { ISendRagfairReportRequestData } from "../models/eft/ragfair/ISendRagfairReportRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ConfigServer } from "../servers/ConfigServer";
-import { RagfairServer } from "../servers/RagfairServer";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-import { JsonUtil } from "../utils/JsonUtil";
 
 /**
  * Handle ragfair related callback events
  */
 @injectable()
-export class RagfairCallbacks implements OnLoad, OnUpdate
-{
+export class RagfairCallbacks implements OnLoad, OnUpdate {
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("RagfairServer") protected ragfairServer: RagfairServer,
         @inject("RagfairController") protected ragfairController: RagfairController,
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+        @inject("RagfairTaxService") protected ragfairTaxService: RagfairTaxService,
+        @inject("ConfigServer") protected configServer: ConfigServer,
+    ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
     }
 
-    public async onLoad(): Promise<void>
-    {
+    public async onLoad(): Promise<void> {
         await this.ragfairServer.load();
     }
 
-    public getRoute(): string
-    {
-        return "aki-ragfair";
+    public getRoute(): string {
+        return "spt-ragfair";
     }
 
-    public search(url: string, info: ISearchRequestData, sessionID: string): IGetBodyResponseData<IGetOffersResult>
-    {
+    public async onUpdate(timeSinceLastRun: number): Promise<boolean> {
+        if (timeSinceLastRun > this.ragfairConfig.runIntervalSeconds) {
+            // There is a flag inside this class that only makes it run once.
+            this.ragfairServer.addPlayerOffers();
+
+            // Check player offers and mail payment to player if sold
+            this.ragfairController.update();
+
+            // Process all offers / expire offers
+            await this.ragfairServer.update();
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Handle client/ragfair/search
+     * Handle client/ragfair/find
+     */
+    public search(url: string, info: ISearchRequestData, sessionID: string): IGetBodyResponseData<IGetOffersResult> {
         return this.httpResponse.getBody(this.ragfairController.getOffers(sessionID, info));
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getMarketPrice(url: string, info: IGetMarketPriceRequestData, sessionID: string): IGetBodyResponseData<IGetItemPriceResult>
-    {
+    /** Handle client/ragfair/itemMarketPrice */
+    public getMarketPrice(
+        url: string,
+        info: IGetMarketPriceRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<IGetItemPriceResult> {
         return this.httpResponse.getBody(this.ragfairController.getItemMinAvgMaxFleaPriceValues(info));
     }
 
-    public addOffer(pmcData: IPmcData, info: IAddOfferRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    /** Handle RagFairAddOffer event */
+    public addOffer(pmcData: IPmcData, info: IAddOfferRequestData, sessionID: string): IItemEventRouterResponse {
         return this.ragfairController.addPlayerOffer(pmcData, info, sessionID);
     }
 
-    public removeOffer(pmcData: IPmcData, info: IRemoveOfferRequestData, sessionID: string): IItemEventRouterResponse
-    {
-        return this.ragfairController.removeOffer(info.offerId, sessionID);
+    /** Handle RagFairRemoveOffer event */
+    public removeOffer(pmcData: IPmcData, info: IRemoveOfferRequestData, sessionID: string): IItemEventRouterResponse {
+        return this.ragfairController.removeOffer(info, sessionID);
     }
 
-    public extendOffer(pmcData: IPmcData, info: IExtendOfferRequestData, sessionID: string): IItemEventRouterResponse
-    {
+    /** Handle RagFairRenewOffer event */
+    public extendOffer(pmcData: IPmcData, info: IExtendOfferRequestData, sessionID: string): IItemEventRouterResponse {
         return this.ragfairController.extendOffer(info, sessionID);
     }
 
@@ -82,32 +102,34 @@ export class RagfairCallbacks implements OnLoad, OnUpdate
      * Handle /client/items/prices
      * Called when clicking an item to list on flea
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public getFleaPrices(url: string, request: IEmptyRequestData, sessionID: string): IGetBodyResponseData<Record<string, number>>
-    {
+    public getFleaPrices(
+        url: string,
+        request: IEmptyRequestData,
+        sessionID: string,
+    ): IGetBodyResponseData<Record<string, number>> {
         return this.httpResponse.getBody(this.ragfairController.getAllFleaPrices());
     }
 
-    public async onUpdate(timeSinceLastRun: number): Promise<boolean>
-    {
-        if (timeSinceLastRun > this.ragfairConfig.runIntervalSeconds)
-        {
-            // There is a flag inside this class that only makes it run once.
-            this.ragfairServer.addPlayerOffers();
-            await this.ragfairServer.update();
-            // function below used to be split, merged
-            this.ragfairController.update();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sendReport(url: string, info: ISendRagfairReportRequestData, sessionID: string): INullResponseData
-    {
+    /** Handle client/reports/ragfair/send */
+    public sendReport(url: string, info: ISendRagfairReportRequestData, sessionID: string): INullResponseData {
         return this.httpResponse.nullResponse();
     }
 
+    public storePlayerOfferTaxAmount(
+        url: string,
+        request: IStorePlayerOfferTaxAmountRequestData,
+        sessionId: string,
+    ): INullResponseData {
+        this.ragfairTaxService.storeClientOfferTaxValue(sessionId, request);
+        return this.httpResponse.nullResponse();
+    }
+
+    /** Handle client/ragfair/offer/findbyid */
+    public getFleaOfferById(
+        url: string,
+        request: IGetRagfairOfferByIdRequest,
+        sessionID: string,
+    ): IGetBodyResponseData<IRagfairOffer> {
+        return this.httpResponse.getBody(this.ragfairController.getOfferById(sessionID, request));
+    }
 }

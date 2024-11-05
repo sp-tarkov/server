@@ -1,95 +1,81 @@
+import { HandbookHelper } from "@spt/helpers/HandbookHelper";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { TraderAssortHelper } from "@spt/helpers/TraderAssortHelper";
+import { UtilityHelper } from "@spt/helpers/UtilityHelper";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
+import { ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
+import { ISearchRequestData } from "@spt/models/eft/ragfair/ISearchRequestData";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { Money } from "@spt/models/enums/Money";
+import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
+import { RagfairLinkedItemService } from "@spt/services/RagfairLinkedItemService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
-import { Item } from "../models/eft/common/tables/IItem";
-import { ITraderAssort } from "../models/eft/common/tables/ITrader";
-import { IGetOffersResult } from "../models/eft/ragfair/IGetOffersResult";
-import { ISearchRequestData } from "../models/eft/ragfair/ISearchRequestData";
-import { ConfigTypes } from "../models/enums/ConfigTypes";
-import { Money } from "../models/enums/Money";
-import { IRagfairConfig } from "../models/spt/config/IRagfairConfig";
-import { ILogger } from "../models/spt/utils/ILogger";
-import { ConfigServer } from "../servers/ConfigServer";
-import { DatabaseServer } from "../servers/DatabaseServer";
-import { RagfairLinkedItemService } from "../services/RagfairLinkedItemService";
-import { JsonUtil } from "../utils/JsonUtil";
-import { HandbookHelper } from "./HandbookHelper";
-import { ItemHelper } from "./ItemHelper";
-import { TraderAssortHelper } from "./TraderAssortHelper";
-import { UtilityHelper } from "./UtilityHelper";
-
 @injectable()
-export class RagfairHelper
-{
+export class RagfairHelper {
     protected ragfairConfig: IRagfairConfig;
 
     constructor(
-        @inject("WinstonLogger") protected logger: ILogger,
-        @inject("JsonUtil") protected jsonUtil: JsonUtil,
+        @inject("PrimaryLogger") protected logger: ILogger,
         @inject("TraderAssortHelper") protected traderAssortHelper: TraderAssortHelper,
-        @inject("DatabaseServer") protected databaseServer: DatabaseServer,
+        @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("HandbookHelper") protected handbookHelper: HandbookHelper,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("RagfairLinkedItemService") protected ragfairLinkedItemService: RagfairLinkedItemService,
         @inject("UtilityHelper") protected utilityHelper: UtilityHelper,
-        @inject("ConfigServer") protected configServer: ConfigServer
-    )
-    {
+        @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("PrimaryCloner") protected cloner: ICloner,
+    ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
     }
 
     /**
-    * Gets currency TAG from TPL
-    * @param {string} currency
-    * @returns string
-    */
-    public getCurrencyTag(currency: string): string
-    {
-        switch (currency)
-        {
-            case "569668774bdc2da2298b4568":
+     * Gets currency TAG from TPL
+     * @param {string} currency
+     * @returns string
+     */
+    public getCurrencyTag(currency: string): string {
+        switch (currency) {
+            case Money.EUROS:
                 return "EUR";
 
-            case "5696686a4bdc2da3298b456a":
+            case Money.DOLLARS:
                 return "USD";
 
-            case "5449016a4bdc2d6f028b456f":
+            case Money.ROUBLES:
                 return "RUB";
-
+            case Money.GP:
+                return "GP";
             default:
                 return "";
         }
     }
 
-    public filterCategories(sessionID: string, info: ISearchRequestData): string[]
-    {
+    public filterCategories(sessionID: string, request: ISearchRequestData): string[] {
         let result: string[] = [];
 
         // Case: weapon builds
-        if (info.buildCount)
-        {
-            return Object.keys(info.buildItems);
+        if (request.buildCount) {
+            return Object.keys(request.buildItems);
         }
 
         // Case: search
-        if (info.linkedSearchId)
-        {
-            const data = this.ragfairLinkedItemService.getLinkedItems(info.linkedSearchId);
-            result = !data
-                ? []
-                : Array.from(data);
+        if (request.linkedSearchId) {
+            const data = this.ragfairLinkedItemService.getLinkedItems(request.linkedSearchId);
+            result = !data ? [] : [...data];
         }
 
         // Case: category
-        if (info.handbookId)
-        {
-            const handbook = this.getCategoryList(info.handbookId);
+        if (request.handbookId) {
+            const handbook = this.getCategoryList(request.handbookId);
 
-            if (result.length)
-            {
+            if (result.length) {
                 result = this.utilityHelper.arrayIntersect(result, handbook);
-            }
-            else
-            {
+            } else {
                 result = handbook;
             }
         }
@@ -97,14 +83,11 @@ export class RagfairHelper
         return result;
     }
 
-    public getDisplayableAssorts(sessionID: string): Record<string, ITraderAssort>
-    {
+    public getDisplayableAssorts(sessionID: string): Record<string, ITraderAssort> {
         const result: Record<string, ITraderAssort> = {};
 
-        for (const traderID in this.databaseServer.getTables().traders)
-        {
-            if (this.ragfairConfig.traders[traderID])
-            {
+        for (const traderID in this.databaseService.getTraders()) {
+            if (this.ragfairConfig.traders[traderID]) {
                 result[traderID] = this.traderAssortHelper.getAssort(sessionID, traderID, true);
             }
         }
@@ -112,17 +95,13 @@ export class RagfairHelper
         return result;
     }
 
-    protected getCategoryList(handbookId: string): string[]
-    {
+    protected getCategoryList(handbookId: string): string[] {
         let result: string[] = [];
 
         // if its "mods" great-parent category, do double recursive loop
-        if (handbookId === "5b5f71a686f77447ed5636ab")
-        {
-            for (const categ of this.handbookHelper.childrenCategories(handbookId))
-            {
-                for (const subcateg of this.handbookHelper.childrenCategories(categ))
-                {
+        if (handbookId === "5b5f71a686f77447ed5636ab") {
+            for (const categ of this.handbookHelper.childrenCategories(handbookId)) {
+                for (const subcateg of this.handbookHelper.childrenCategories(categ)) {
                     result = [...result, ...this.handbookHelper.templatesWithParent(subcateg)];
                 }
             }
@@ -131,13 +110,11 @@ export class RagfairHelper
         }
 
         // item is in any other category
-        if (this.handbookHelper.isCategory(handbookId))
-        {
+        if (this.handbookHelper.isCategory(handbookId)) {
             // list all item of the category
             result = this.handbookHelper.templatesWithParent(handbookId);
 
-            for (const categ of this.handbookHelper.childrenCategories(handbookId))
-            {
+            for (const categ of this.handbookHelper.childrenCategories(handbookId)) {
                 result = [...result, ...this.handbookHelper.templatesWithParent(categ)];
             }
 
@@ -149,60 +126,27 @@ export class RagfairHelper
         return result;
     }
 
-    /* Because of presets, categories are not always 1 */
-    public countCategories(result: IGetOffersResult): void
-    {
-        const categories = {};
-
-        for (const offer of result.offers)
-        {
-            // only the first item can have presets
-            const item = offer.items[0];
-            categories[item._tpl] = categories[item._tpl] || 0;
-            categories[item._tpl]++;
-        }
-
-        // not in search mode, add back non-weapon items
-        for (const category in result.categories)
-        {
-            if (!categories[category])
-            {
-                categories[category] = 1;
-            }
-        }
-
-        result.categories = categories;
-    }
-
     /**
-     * Merges Root Items
+     * Iterate over array of identical items and merge stack count
      * Ragfair allows abnormally large stacks.
      */
-    public mergeStackable(items: Item[]): Item[]
-    {
+    public mergeStackable(items: IItem[]): IItem[] {
         const list = [];
-        let rootItem = null;
+        let rootItem = undefined;
 
-        for (let item of items)
-        {
+        for (let item of items) {
             item = this.itemHelper.fixItemStackCount(item);
-            const isChild = items.find(it => it._id === item.parentId);
 
-            if (!isChild)
-            {
-                if (!rootItem)
-                {
-                    rootItem = this.jsonUtil.clone(item);
+            const isChild = items.some((it) => it._id === item.parentId);
+            if (!isChild) {
+                if (!rootItem) {
+                    rootItem = this.cloner.clone(item);
                     rootItem.upd.OriginalStackObjectsCount = rootItem.upd.StackObjectsCount;
-                }
-                else
-                {
+                } else {
                     rootItem.upd.StackObjectsCount += item.upd.StackObjectsCount;
                     list.push(item);
                 }
-            }
-            else
-            {
+            } else {
                 list.push(item);
             }
         }
@@ -210,18 +154,19 @@ export class RagfairHelper
         return [...[rootItem], ...list];
     }
 
-    public getCurrencySymbol(currencyTpl: string): string
-    {
-        switch (currencyTpl)
-        {
+    /**
+     * Return the symbol for a currency
+     * e.g. 5449016a4bdc2d6f028b456f return ₽
+     * @param currencyTpl currency to get symbol for
+     * @returns symbol of currency
+     */
+    public getCurrencySymbol(currencyTpl: string): string {
+        switch (currencyTpl) {
             case Money.EUROS:
                 return "€";
-
             case Money.DOLLARS:
                 return "$";
-
-            case Money.ROUBLES:
-            default:
+            default: // Money.ROUBLES
                 return "₽";
         }
     }

@@ -1,34 +1,29 @@
-import { MinMax } from "../../common/MinMax";
-import { IBaseConfig } from "./IBaseConfig";
+import { IGenerationData } from "@spt/models/eft/common/tables/IBotType";
+import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
-
-export interface IPlayerScavConfig extends IBaseConfig
-{
-    kind: "aki-playerscav"
-    karmaLevel: Record<string, KarmaLevel>
+export interface IPlayerScavConfig extends IBaseConfig {
+    kind: "spt-playerscav";
+    karmaLevel: Record<string, IKarmaLevel>;
 }
 
-export interface KarmaLevel
-{
-    botTypeForLoot: string
-    modifiers: Modifiers
-    itemLimits: ItemLimits
-    equipmentBlacklist: Record<string, string[]>
-    labsAccessCardChancePercent: number
+export interface IKarmaLevel {
+    botTypeForLoot: string;
+    modifiers: IModifiers;
+    itemLimits: ItemLimits;
+    equipmentBlacklist: Record<string, string[]>;
+    lootItemsToAddChancePercent: Record<string, number>;
 }
 
-export interface Modifiers
-{
-    equipment: Record<string, number>
-    mod: Record<string, number>
+export interface IModifiers {
+    equipment: Record<string, number>;
+    mod: Record<string, number>;
 }
 
-export interface ItemLimits
-{
-    healing: MinMax
-    drugs: MinMax
-    stims: MinMax
-    looseLoot: MinMax
-    magazines: MinMax
-    grenades: MinMax
+export interface ItemLimits {
+    healing: IGenerationData;
+    drugs: IGenerationData;
+    stims: IGenerationData;
+    looseLoot: IGenerationData;
+    magazines: IGenerationData;
+    grenades: IGenerationData;
 }

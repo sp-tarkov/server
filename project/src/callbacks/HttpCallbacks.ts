@@ -1,30 +1,20 @@
+import { OnLoad } from "@spt/di/OnLoad";
+import { HttpServer } from "@spt/servers/HttpServer";
 import { inject, injectable } from "tsyringe";
 
-import { OnLoad } from "../di/OnLoad";
-import { HttpServer } from "../servers/HttpServer";
-
 @injectable()
-export class HttpCallbacks implements OnLoad
-{
-    constructor(
-        @inject("HttpServer") protected httpServer: HttpServer
-    )
-    {
-    }
-    
-    public async onLoad(): Promise<void>
-    {
+export class HttpCallbacks implements OnLoad {
+    constructor(@inject("HttpServer") protected httpServer: HttpServer) {}
+
+    public async onLoad(): Promise<void> {
         this.httpServer.load();
     }
 
-    public getRoute(): string 
-    {
-        return "aki-http";
+    public getRoute(): string {
+        return "spt-http";
     }
 
-
-    public getImage(): string
-    {
+    public getImage(): string {
         return "";
     }
 }

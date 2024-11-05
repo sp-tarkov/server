@@ -2,7 +2,6 @@
   "menu": {
     "206 - Wrong email or password": "Wrong email or password",
     "213 - Error connecting to auth server": "Authorization is unavailable now, please try again later.",
-    "230 - MAX LOGIN COUNT": "You have reached the maximum attempts. Try again later",
     "240 - Servers temporarily unavailable. Please, try later.": "Server maintenance",
     "ASSEMBLE": "ASSEMBLE",
     "AUTHORIZATION": "AUTHORIZATION",
@@ -19,22 +18,11 @@
     "BATTLEYE_ServiceNeedsToBeUpdated": "Anticheat is outdated. Game restart required",
     "BATTLEYE_ServiceNotRunningProperly": "Anticheat is running incorrectly. Game restart required",
     "BATTLEYE_UnknownRestartReason": "Anticheat is running incorrectly. Game restart required",
-    "DOWN: ": "DOWN: ",
     "EXIT": "EXIT",
-    "Escape from Tarkov": "ESCAPE FROM TARKOV",
-    "LEFT: ": "LEFT: ",
     "NEXT": "NEXT",
     "Place in queue:": "Place in queue:",
-    "Production completed: {0}": "Production completed: {0}",
     "Profile data loading...": "Loading profile data...",
-    "REMEMBER ACCOUNT": "REMEMBER ACCOUNT",
-    "RIGHT: ": "RIGHT: ",
     "SABER_ANTICHEAT_AnticheatConnectionFailed": "Anticheat connection failed",
-    "Servers are currently at full capacity": "Servers are currently at full capacity",
-    "UI/leave_game_confirmation_caption": "Exit",
-    "UI/leave_game_confirmation_text": "Are you sure you want to leave?",
-    "UP: ": "UP: ",
-    "When you leave the raid you don’t get anything and also receive Left the Action exit status.": "If you leave the raid, you lose all your loot and also receive the Left the Action exit status.",
-    "{0} Beta version": "{0} Beta version"
+    "Servers are currently at full capacity": "Servers are currently at full capacity"
   }
 }

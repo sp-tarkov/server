@@ -1,334 +1,120 @@
-# Server
+# Single Player Tarkov - Server Project
 
-Modding framework for Escape From Tarkov
+This is the Server project for the Single Player Tarkov mod for Escape From Tarkov. It can be run locally to replicate responses to the modified Escape From Tarkov client.
 
-[![Build Status](https://drone.sp-tarkov.com/api/badges/SPT-AKI/Server/status.svg?ref=refs/heads/development)](https://drone.sp-tarkov.com/SPT-AKI/Server)
-[![Quality Gate Status](https://sonar.sp-tarkov.com/api/project_badges/measure?project=AKI&metric=alert_status&token=d3b87ff5fac591c1f49a57d4a2883c92bfe6a77f)](https://sonar.sp-tarkov.com/dashboard?id=AKI)
+# Table of Contents
 
-## Privacy
-SPT is an open source project. Your commit credentials as author of a commit will be visible by anyone. Please make sure you understand this before submitting a PR.
-Feel free to use a "fake" username and email on your commits by using the following commands:
-```bash
-git config --local user.name "USERNAME"
-git config --local user.email "USERNAME@SOMETHING.com"
-```
+- [Features](#features)
+- [Installation](#installation)
+  - [Requirements](#requirements)
+  - [Initial Setup](#initial-setup)
+- [Development](#development)
+  - [Commands](#commands)
+  - [Debugging](#debugging)
+  - [Mod Debugging](#mod-debugging)
+- [Contributing](#contributing)
+  - [Branches](#branchs)
+  - [Pull Request Guidelines](#pull-request-guidelines)
+  - [Tests](#tests)
+- [License](#license)
 
-## Requirements
+## Features
 
-- NodeJS (with npm)
-- Visual Studio Code
-- git [LFS](https://git-lfs.github.com/)
+For a full list of features, please see [FEATURES.md](FEATURES.md).
 
-## Observations
+## Installation
 
-- The server was tested to work with **NodeJS 16.17.1**, if you are using a different version and experiencing difficulties change it before looking for support
-- If you are updating a branch you've had for some time, run `npm ci` before running any tasks. This will run the clean and install target from npm.
-- You can debug your mods using the server, just copy your mod files into the `user/mods` folder and put breakpoints on the **JS** files. **DO NOT** contact the dev team for support on this.
+### Requirements
 
-## Pulling
-- Run `git lfs fetch` and `git lfs pull` to acquire loot files
+This project has been built in [Visual Studio Code](https://code.visualstudio.com/) (VSC) using [Node.js](https://nodejs.org/). We recommend using [NVM](https://github.com/coreybutler/nvm-windows) to manage installation and switching Node versions. If you do not wish to use NVM, you will need to install the version of Node.js listed within the `.nvmrc` file manually.
 
-## Setup
+There are a number of VSC extensions that we recommended for this project. VSC will prompt you to install these when you open the workspace file. If you do not see the prompt, you can install them manually:
 
-1. Visual Studio Code > File > Open Workspace... > `project\Server.code-workspace`
-2. Visual Studio Code > Terminal > Run Task... > npm > npm: Install
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) - Editor Settings Synchronization
+- [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer) - Debugging Tests
+- [SPT ID Highlighter](https://marketplace.visualstudio.com/items?itemName=refringe.spt-id-highlighter) - Converts IDs to Names
+- [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) - Automatic Formatting & Code Standards Linting
 
-## Build
+### Initial Setup
 
-This is for preparing for a release, not to run locally.
+To prepare the project for development you will need to:
 
-**Mode** | **Location**
--------- | -----------------------------------------------------------------
-release  | Visual Studio Code > Terminal > Run Build Task... > build:release
-debug    | Visual Studio Code > Terminal > Run Build Task... > build:debug
+1. Run `git clone https://dev.sp-tarkov.com/SPT/Server.git server` to clone the repository.
+2. Run `git lfs pull` to download LFS files locally.
+3. Open the `project/mod.code-workspace` file in Visual Studio Code (VSC).
+4. Run `nvm use 20.11.1` in the VSC terminal.
+5. Run `npm install` in the VSC terminal.
 
-## Test / Run locally
+## Development
 
-Visual Studio Code > Run > Start Debugging
+### Commands
 
-# Features
+The following commands are available after the initial setup. Run them with `npm run <command>`.
 
-## Progression
-Player profile is stored in SPT folder as a JSON file, allowing for changes to persist
-- Scav:
-	- Stats increase by doing scav raids
-	- Skills increase by doing scav raids
-	- Scav reputation system (Karma)
-		- Scavs hostile below certain level
-		- Scav run cooldown adjustment
-		- Scav follow chance adjustment
-		- Scav case
-			- ~~Completion time adjustment~~ NOT IMPLEMENTED
-			- ~~Equipment chance adjustment~~ NOT IMPLEMENTED
-		- Bosses hostile below certain level
-		- ~~Exfil price adjustment~~ NOT IMPLEMENTED
-		- Improved gear with higher rep
-		- Increase rep by exiting through car extracts
-- PMC:
-	- Stats increase by doing PMC raids
-	- Skills increase by doing PMC raids
-	- Hydration/food
-		- Increase out of raid
-		- Post-raid levels are persisted to profile
-	- Raid stat tracking
-		- Raid count
-		- Survived count
-		- KIA count
-		- MIA count
-		- AWOL count
-		- Kills count
+| Command              | Description                                                               |
+|----------------------|---------------------------------------------------------------------------|
+| `check:circular`     | Check for circular dependencies in the project.                           |
+| `lint`               | Check the project for coding standards issues using Biome.                |
+| `lint:fix`           | Automatically fix coding standards issues using Biome.                    |
+| `style`              | Check the project for formatting issues using Biome.                      |
+| `style:fix`          | Automatically fix formatting issues using Biome.                          |
+| `format`             | Automatically fix all coding standards and formatting issues using Biome. |
+| `test`               | Run all tests.                                                            |
+| `test:watch`         | Run tests in watch mode. Tests will re-run when files are changed.        |
+| `test:coverage`      | Run tests and generate a coverage report.                                 |
+| `test:ui`            | Run tests in UI mode. This will open a browser window to view tests.      |
+| `build:release`      | Build the project for release.                                            |
+| `build:debug`        | Build the project for debugging.                                          |
+| `build:bleeding`     | Build the project on the bleeding edge.                                   |
+| `build:bleedingmods` | Build the project on the bleeding edge with mods.                         |
+| `run:build`          | Run the project in build mode.                                            |
+| `run:debug`          | Run the project in debug mode.                                            |
+| `run:profiler`       | Run the project in profiler mode.                                         |
+| `gen:types`          | Generate types for the project.                                           |
+| `gen:docs`           | Generate documentation for the project.                                   |
 
-## Bots
+### Debugging
 
- - Emulated bots:
-	 - assault (scav)
-	 - bossBully (Reshalla)
-	 - bossGluhar
-	 - bossKilla
-	 - bossKnight
-	 - bossKojainy (Shturman)
-	 - bossSanitar
-	 - bossTagilla
-	 - bosszryachiy
-	 - curedAssault
-	 - exUsec (Rogue)
-	 - followerBigPipe
-		 - Grenade launcher
-	 - followerBirdEye
-	 - followerBully
-	 - followerGluharAssault
-	 - followerGluharScout
-	 - followerGluharSecurity
-	 - followerGluharSnipe
-	 - followerKojaniy
-	 - followerSanitar
-	 - followerzryachiy
-	 - gifter
-		 - ~~Gives gifts~~ NOT IMPLEMENTED
-	 - marksman
-	 - pmcBot (raider)
-	 - sectantPriest (Cultist)
-	 - sectantWarrior (Cultist)
-- Gear
-	- Semi-randomised gear chosen with weighting system
-	- Randomised durability of gear
-- Ammo
-	- Ammo weighting system
-- Loot
-	- Semi-randomised loot
-	- Item type spawn limit system
-- Per-map AI types
+To debug the project in Visual Studio Code, you can select the `Run` tab and then select the `Start Debugging` option (or the `F5` shortcut). This will start the server in debug mode, attaching a debugger to code execution, allowing you to set breakpoints and step through the code as it runs.
 
-## PMCs
-- Simulated PMC players
-	 - Custom weapons
-		 - Semi-randomly generated with weighting system
-		 - Semi-randomly chosen ammo with weighting system
-	 - Custom gear
-		- Semi-randomly generated with weighting system
-	 - Custom headgear
-		 - Randomised attachments with percentage based chance to appear
-			 - Face shields
-			 - Flashlights
-	 - Dogtags
-		 - Random level
-		 - Random name
-	 - Voices
-		 - Bear/usec voices for each faction
-	 - Item blacklist/whitelist
-	 - Item
-	 - Highly configurable in config
+### Mod Debugging
 
-## Inventory
- - Move/split/delete stacks
- - Tags (add/modify/remove)
- - Armor/weapon kit item repair
- - ~~Auto-sort~~ (SEMI-BROKEN - MOVES ITEMS OUT OF VISIBLE INVENTORY SPACE)
- - Out of raid healing
- - Out of raid eating
- - Special slots (compass etc)
+To debug a server mod in Visual Studio Code, you can copy the mod files into the `user/mods` folder and then start the server in [debug mode](#debugging). You should now be able to set breakpoints in the mod's Typescript files and they will be hit when the server runs the mod files.
 
-## Traders
-- Buy/Sell
-- Listed items are refreshed every hour
-- purchase limits per refresh period
-- Track sold rouble count
-- Loyalty levels
-- Build reputation
-- Item repair
-	- Calculate randomised durability level based on item type/values
-- Alternate clothing from Ragman
-	- Buy/unlock new clothing
-- Insurance
-	- chance for items to be returned - higher chance for more expensive trader
-	- Chance parts will be stripped from returned weapons
-- Fence
-	- Lists random items for sale
-	- Emulated system of 'churn' for items sold by fence
-		- every 4 minutes 20% of fences' items are replaced
-	- Configurable through config
+## Contributing
 
-## Flea market
-- Buy and sell items
-- Prices pulled from live data
-- Listing tax fee
-- Offer filtering
-- Offer search
-- Filter by item
-- Linked search
-- Simulated player offers
-	- Generated with random names/ratings/expiry times
-	- Variable prices based on live price (20% above/below)
-	- Weapon presets as offers
-	- Bartering offers
-	- Listed currency
-		- Rouble
-		- Euro
-		- Dollar
-- Rating
-	- Increase flea rating by selling items
-	- Decrease flea rating by failing to sell items
-	- Will be purchased by simulated players
-	- Greater chance listed item will be purchased the lower it is listed for
-- Adjust flea prices that are massively below trader buy price
-- Receive purchased item through mail from seller
-- Sorting by
-	- Rating
-	- Price
-	- Name
-- Configurable using config
+We're really excited that you're interested in contributing! Before submitting your contribution, please consider the following:
 
-## Quests
-- ~~Accurate quest list~~ INCOMPLETE (85% complete)
-- Trader quests
-	- Accept/Complete
-- Daily Quests
-	- Simulated system of daily quests
-	- Replace daily quest
-		- Replace quest with new one
-		- Charged fee
-	- Scav daily quests
-	- Types
-		- Elimination
-		- Exit location
-		- Find
-- Trader item unlocks through completion of quests
-- Receive mail from traders after accepting/completing/failing a quest
-- Item rewards given through mail
+### Branches
 
-## Hideout
-- Areas supported
-	- Air filter
-		- Air filter degradation speed calculation
-		- Skill levelling boost + 40%
-	- Bitcoin farm
-		- Coin generation speed calculation
-	- Booze generator
-		- Create moonshine
-	- Generator
-		- Fuel usage calculation
-	- Heating
-		- Energy regen rate
-		- Negative effects removal rate x2
-	- Illumination
-	- Intel centre
-		- ~~Unlocks scav tasks from fence~~ NOT IMPLEMENTED
-		- ~~Reduces insurance return time by 20%~~ NOT IMPLEMENTED
-		- Quest money reward boost
-	- Lavatory
-	- Library
-	- Medstation
-	- Nutrition unit
-	- Rest space
-	- Scav case
-		- Custom reward system
-		- Configurable in config
-	- Security
-	- Shooting range
-	- Solar power
-	- Stash
-		- Gives bonus storage space
-	- Vents
-	- Water collector
-	- Workbench
-	- Christmas tree
-- Item crafting
-	- Found in raid on completion
-	- Crafts when server not running
+- **master**  
+  The default branch used for the latest stable release. This branch is protected and typically is only merges with release branches.
+- **3.9.x-DEV**  
+  Development for the next hotfix release. Hotfix releases include bug fixes and minor features that do not affect the coding structure of the project. Special care is taken to not break server mod stability. These always target the same version of EFT as the last minor release.
+- **3.10.0-DEV**  
+  Development for the next minor release of SPT. Minor releases target the latest version of EFT. Late in the minor release cycle the EFT version is frozen for stability to prepare for release. Larger changes to the project structure may be included in minor releases.
 
-## Weapon building
-- Create weapon presets
-- Saving of presets
+### Pull Request Guidelines
 
-## Raids
-- Supported maps
-	- Customs
-	- Factory day
-	- Factory night
-	- Reserve
-	- Woods
-	- Lighthouse
-	- Laboratory
-	- Shoreline
-	- Streets
-- Loot
-	- Generated from over 30,000 loot runs on live, spawn chances calculated from all runs to give fairly accurate depiction of live loot.
-	- Static loot (containers)
-		- Each container type can contain items appropriate to that type
-	- Loose loot
-		- Randomised loose items found on map
-- Airdrops
-	- Randomised chance of spawning
-	- Fire red flare to request an airdrop
-	- ~~Drops 1 of 3 randomised loot crate types~~ NOT IMPLEMENTED
-	- Drops lootable crate in:
-		- Customs
-		- Reserve
-		- Woods
-		- Lighthouse
-		- Shoreline
-		- Streets
-	- Can be adjusted via config file
-- Raid damage
-	- Exiting a raid with injury to player character will be persisted out of raid
-- Post-raid therapist healing
+- **Keep Them Small**  
+  If you're fixing a bug, try to keep the changes to the bug fix only. If you're adding a feature, try to keep the changes to the feature only. This will make it easier to review and merge your changes.
+- **Perform a Self-Review**  
+  Before submitting your changes, review your own code. This will help you catch any mistakes you may have made.
+- **Remove Noise**  
+  Remove any unnecessary changes to white space, code style formatting, or some text change that has no impact related to the intention of the PR.
+- **Create a Meaningful Title**  
+  When creating a PR, make sure the title is meaningful and describes the changes you've made.
+- **Write Detailed Commit Messages**  
+  Bring out your table manners, speak the Queen's English and be on your best behaviour.
 
-## Messages
-- Receive from traders
-- Pin/unpin senders
-- Accept all attachments
-- Accept individual mail attachment
+### Style Guide
 
-## Modding
-- Extensive system that allows for the modification of nearly any aspect of SPT
-- Example mods covering a good slice of modding capabilities
+We use Biome to enforce a consistent code style. Please run `npm run format` before submitting any changes. This is made easier by opening the VSC workspace and installing the recommended VSC extensions; this will ensure that your code is automatically formatted whenever you save a file.
 
-## Misc
-- Profiles
-	- Standard/Left Behind/Prepare To Escape/Edge Of Darkness
-	- Custom profiles
-		- SPT Easy start
-			- Lots of money / some QoL skills level 20 / level 69
-		- SPT Zero to hero
-			- No money, skills, trader rep or items, only a knife
-		- SPT Developer
-			- Testing profile, level 69, most skills maxed, max trader rep
-			- USEC have all quests ready to start
-			- BEAR have all quests ready to hand in
-- Note system
-	- Add
-	- Edit
-	- Delete
-- Extensive config system
-	- Alter how SPT works
-- Holiday themes in hideout on appropriate days
-	- Halloween
-	- Christmas
+### Tests
 
-## Code
-- TypeScript
-	- Majority of EFT request/response classes passed from client to server have been mapped
-- Unit Tests
-	- Supports tests via jest
-- Dependency injection
-- Config files accessible from `Aki_Data\Server\configs` / `project\assets\configs`
+We have a number of tests that are run automatically when you submit a pull request. You can run these tests locally by running `npm run test`. If you're adding a new feature or fixing a bug, please conceder adding tests to cover your changes so that we can ensure they don't break in the future.
+
+## License
+
+This project is licensed under the NCSA Open Source License. See the [LICENSE](LICENSE.md) file for details.

@@ -1,15 +1,10 @@
-import crypto from "crypto";
-import { TimeUtil } from "./TimeUtil";
-
+import crypto from "node:crypto";
+import { TimeUtil } from "@spt/utils/TimeUtil";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class ObjectId
-{
-    constructor(
-        @inject("TimeUtil") protected timeUtil: TimeUtil
-    )
-    { }
+export class ObjectId {
+    constructor(@inject("TimeUtil") protected timeUtil: TimeUtil) {}
 
     protected randomBytes = crypto.randomBytes(5);
     protected constglobalCounter = 0;
@@ -17,26 +12,22 @@ export class ObjectId
     protected globalCounter: number;
     protected time: number;
 
-    public incGlobalCounter(): number
-    {
-        return (this.globalCounter = (this.globalCounter + 1) % 0xffffff);
+    public incGlobalCounter(): number {
+        this.globalCounter = (this.globalCounter + 1) % 0xffffff;
+        return this.globalCounter;
     }
 
-    public toHexString(byteArray: string | any[] | Buffer): string
-    {
+    public toHexString(byteArray: string | any[] | Buffer): string {
         let hexString = "";
-        for (let i = 0; i < byteArray.length; i++)
-        {
-            hexString += (`0${(byteArray[i] & 0xFF).toString(16)}`).slice(-2);
+        for (let i = 0; i < byteArray.length; i++) {
+            hexString += `0${(byteArray[i] & 0xff).toString(16)}`.slice(-2);
         }
         return hexString;
     }
 
-    public generate(): string
-    {
+    public generate(): string {
         const time = this.timeUtil.getTimestamp();
-        if (this.time !== time)
-        {
+        if (this.time !== time) {
             this.globalCounter = 0;
             this.time = time;
         }

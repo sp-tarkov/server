@@ -1,13 +1,11 @@
-import { ILocations } from "../../spt/server/ILocations"
+import { ILocations } from "@spt/models/spt/server/ILocations";
 
-export interface ILocationsGenerateAllResponse 
-{
-    locations: ILocations
-    paths: Path[]
+export interface ILocationsGenerateAllResponse {
+    locations: ILocations;
+    paths: IPath[];
 }
 
-export interface Path 
-{
-    Source: string
-    Destination: string
+export interface IPath {
+    Source: string;
+    Destination: string;
 }

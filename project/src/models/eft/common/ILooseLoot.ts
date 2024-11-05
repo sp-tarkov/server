@@ -1,63 +1,56 @@
-import { Item } from "./tables/IItem";
+import { Ixyz } from "@spt/models/eft/common/Ixyz";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
 
-export interface ILooseLoot 
-{
-    spawnpointCount: SpawnpointCount;
-    spawnpointsForced: SpawnpointsForced[];
-    spawnpoints: Spawnpoint[];
+export interface ILooseLoot {
+    spawnpointCount: ISpawnpointCount;
+    spawnpointsForced: ISpawnpointsForced[];
+    spawnpoints: ISpawnpoint[];
 }
 
-export interface SpawnpointCount 
-{
-    mean: number
-    std: number
+export interface ISpawnpointCount {
+    mean: number;
+    std: number;
 }
 
-export interface SpawnpointsForced 
-{
-    locationId: string
-    probability: number
-    template: SpawnpointTemplate
+export interface ISpawnpointsForced {
+    locationId: string;
+    probability: number;
+    template: ISpawnpointTemplate;
 }
 
-export interface SpawnpointTemplate 
-{
-    Id: string
-    IsStatic: boolean
-    useGravity: boolean
-    randomRotation: boolean
-    Position: Xyz
-    Rotation: Xyz
-    IsGroupPosition: boolean
-    GroupPositions: any[]
-    Root: any
-    Items: Item[]
+export interface ISpawnpointTemplate {
+    Id: string;
+    IsContainer: boolean;
+    useGravity: boolean;
+    randomRotation: boolean;
+    Position: Ixyz;
+    Rotation: Ixyz;
+    IsAlwaysSpawn: boolean;
+    IsGroupPosition: boolean;
+    GroupPositions: IGroupPostion[];
+    Root: string;
+    Items: IItem[];
 }
 
-export interface Spawnpoint 
-{
-    locationId: string
-    probability: number
-    template: SpawnpointTemplate
-    itemDistribution: ItemDistribution[]
+export interface IGroupPostion {
+    Name: string;
+    Weight: number;
+    Postion: Ixyz;
+    Rotation: Ixyz;
 }
 
-
-
-export interface Xyz 
-{
-    x: number
-    y: number
-    z: number
+export interface ISpawnpoint {
+    locationId: string;
+    probability: number;
+    template: ISpawnpointTemplate;
+    itemDistribution: ItemDistribution[];
 }
 
-export interface ItemDistribution 
-{
-    composedKey: ComposedKey
-    relativeProbability: number
+export interface ItemDistribution {
+    composedKey: IComposedKey;
+    relativeProbability: number;
 }
 
-export interface ComposedKey
-{
-    key: string
+export interface IComposedKey {
+    key: string;
 }

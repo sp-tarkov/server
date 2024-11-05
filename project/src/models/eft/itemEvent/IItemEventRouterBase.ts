@@ -1,90 +1,94 @@
-import { QuestStatus } from "../../../models/enums/QuestStatus";
-import { Health, Productive, Skills, TraderInfo } from "../common/tables/IBotBase";
-import { Item, Upd } from "../common/tables/IItem";
-import { IQuest } from "../common/tables/IQuest";
-import { IPmcDataRepeatableQuest } from "../common/tables/IRepeatableQuests";
-import { IRagfairOffer } from "../ragfair/IRagfairOffer";
+import {
+    IHealth,
+    IHideoutImprovement,
+    IMoneyTransferLimits,
+    IProductive,
+    IQuestStatus,
+    ISkills,
+} from "@spt/models/eft/common/tables/IBotBase";
+import { IItem, IItemLocation, IUpd } from "@spt/models/eft/common/tables/IItem";
+import { IQuest } from "@spt/models/eft/common/tables/IQuest";
+import { IPmcDataRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import { EquipmentBuildType } from "@spt/models/enums/EquipmentBuildType";
 
-export interface IItemEventRouterBase
-{
-    warnings: Warning[]
-    profileChanges: TProfileChanges | ""
+export interface IItemEventRouterBase {
+    warnings: Warning[];
+    profileChanges: TProfileChanges | "";
 }
 
-export type TProfileChanges = Record<string, ProfileChange>
+export type TProfileChanges = Record<string, IProfileChange>;
 
-export interface Warning
-{
-    index: number
-    errmsg: string
-    code?: string
-    data?: any
+export interface Warning {
+    index: number;
+    errmsg: string;
+    code?: string;
+    data?: any;
 }
 
-export interface ProfileChange
-{
-    _id: string
-    experience: number
-    quests: IQuest[]
-    ragFairOffers: IRagfairOffer[]
-    builds: BuildChange[]
-    items: ItemChanges
-    production: Record<string, Productive>
+export interface IProfileChange {
+    _id: string;
+    experience: number;
+    quests: IQuest[];
+    ragFairOffers: IRagfairOffer[];
+    weaponBuilds: IWeaponBuildChange[];
+    equipmentBuilds: IEquipmentBuildChange[];
+    items: IItemChanges;
+    production: Record<string, IProductive>;
     /** Hideout area improvement id */
-    improvements: Record<string, Improvement>
-    skills: Skills
-    health: Health
-    traderRelations: Record<string, TraderInfo>
-    repeatableQuests?: IPmcDataRepeatableQuest[]
-    recipeUnlocked: Record<string, boolean>
-    questsStatus: QuestStatusChange[]
+    improvements: Record<string, IHideoutImprovement>;
+    skills: ISkills;
+    health: IHealth;
+    traderRelations: Record<string, ITraderData>;
+    moneyTransferLimitData: IMoneyTransferLimits;
+    repeatableQuests?: IPmcDataRepeatableQuest[];
+    recipeUnlocked: Record<string, boolean>;
+    changedHideoutStashes?: Record<string, IHideoutStashItem>;
+    questsStatus: IQuestStatus[];
 }
 
-export interface QuestStatusChange
-{
-    qid: string
-    startTime: number
-    status: QuestStatus
-    statusTimers: Record<QuestStatus, number>
-    completedConditions: string[]
-    availableAfter: number
+export interface IHideoutStashItem {
+    id: string;
+    tpl: string;
 }
 
-export interface BuildChange
-{
-    id: string
-    name: string
-    root: string
-    items: Item[]
+export interface IWeaponBuildChange {
+    id: string;
+    name: string;
+    root: string;
+    items: IItem[];
 }
 
-export interface ItemChanges 
-{
-    new: Product[]
-    change: Product[]
-    del: Product[]
+export interface IEquipmentBuildChange {
+    id: string;
+    name: string;
+    root: string;
+    items: IItem[];
+    type: string;
+    fastpanel: any[];
+    buildType: EquipmentBuildType;
 }
 
-export interface Improvement
-{
-    completed: boolean,
-    improveCompleteTimestamp: number
+export interface IItemChanges {
+    new: IProduct[];
+    change: IProduct[];
+    del: IProduct[]; // Only needs _id property
 }
 
-export interface Product
-{
-    _id: string
-    _tpl?: string
-    parentId?: string
-    slotId?: string
-    location?: ItemChangeLocation
-    upd?: Upd
+/** Related to TraderInfo */
+export interface ITraderData {
+    salesSum: number;
+    standing: number;
+    loyalty: number;
+    unlocked: boolean;
+    disabled: boolean;
 }
 
-export interface ItemChangeLocation
-{
-    x: number,
-    y: number,
-    r: number,
-    isSearched?: boolean
+export interface IProduct {
+    _id: string;
+    _tpl?: string;
+    parentId?: string;
+    slotId?: string;
+    location?: IItemLocation;
+    upd?: IUpd;
 }

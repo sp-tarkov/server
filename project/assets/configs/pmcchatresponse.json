@@ -11,14 +11,15 @@
         "appendBroToMessageEndChancePercent": 35
     },
     "killer": {
-        "responseChancePercent": 20,
+        "responseChancePercent": 16,
         "responseTypeWeights": {
             "positive": 5,
             "negative": 2,
-            "plead": 2
+            "plead": 2,
+            "pity": 1
         },
         "stripCapitalisationChancePercent": 20,
-        "allCapsChancePercent": 20,
-        "appendBroToMessageEndChancePercent": 35
+        "allCapsChancePercent": 15,
+        "appendBroToMessageEndChancePercent": 15
     }
 }

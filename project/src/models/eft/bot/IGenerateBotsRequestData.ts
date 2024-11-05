@@ -1,12 +1,10 @@
-export interface IGenerateBotsRequestData 
-{
-    conditions: Condition[]
+export interface IGenerateBotsRequestData {
+    conditions: ICondition[];
 }
 
-export interface Condition 
-{
+export interface ICondition {
     /** e.g. assault/pmcBot/bossKilla */
-    Role: string
-    Limit: number
-    Difficulty: string
+    Role: string;
+    Limit: number;
+    Difficulty: string;
 }

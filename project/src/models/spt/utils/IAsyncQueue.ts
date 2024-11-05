@@ -1,6 +1,5 @@
-import { ICommand } from "./ICommand";
+import { ICommand } from "@spt/models/spt/utils/ICommand";
 
-export interface IAsyncQueue 
-{
-    waitFor(command: ICommand): Promise<any>
+export interface IAsyncQueue {
+    waitFor(command: ICommand): Promise<any>;
 }

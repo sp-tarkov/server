@@ -1,30 +1,25 @@
-import { ContextVariableType } from "./ContextVariableType";
+import { ContextVariableType } from "@spt/context/ContextVariableType";
 
-export class ContextVariable
-{
+export class ContextVariable {
     private value: any;
     private timestamp: Date;
     private type: ContextVariableType;
 
-    constructor(value: any, type: ContextVariableType)
-    {
+    constructor(value: any, type: ContextVariableType) {
         this.value = value;
         this.timestamp = new Date();
         this.type = type;
     }
 
-    public getValue<T>(): T
-    {
+    public getValue<T>(): T {
         return this.value;
     }
 
-    public getTimestamp(): Date
-    {
+    public getTimestamp(): Date {
         return this.timestamp;
     }
 
-    public getType(): ContextVariableType
-    {
+    public getType(): ContextVariableType {
         return this.type;
     }
 }

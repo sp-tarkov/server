@@ -1,7 +1,7 @@
-export interface IHideoutSettingsBase 
-{
-    generatorSpeedWithoutFuel: number
-    generatorFuelFlowRate: number
-    airFilterUnitFlowRate: number
-    gpuBoostRate: number
+export interface IHideoutSettingsBase {
+    generatorSpeedWithoutFuel: number;
+    generatorFuelFlowRate: number;
+    airFilterUnitFlowRate: number;
+    cultistAmuletBonusPercent: number;
+    gpuBoostRate: number;
 }

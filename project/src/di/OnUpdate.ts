@@ -1,7 +1,4 @@
-export interface OnUpdate 
-{
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface OnUpdate {
     onUpdate(timeSinceLastRun: number): Promise<boolean>;
-
     getRoute(): string;
 }

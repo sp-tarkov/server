@@ -1,25 +1,10 @@
 {
-    "extends": "./base_tsconfig.json",
+    "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "resolveJsonModule": true,
         "outDir": "obj",
-        "declaration": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "baseUrl": ".",
-        "paths": {
-            "@spt-aki/*": [
-                "src/*"
-            ]
-        }
+        "declaration": true
     },
-    "include": [
-        "./src/**/*",
-        "./tests/**/*",
-        "./types/**/*",
-        "./user/mods/**/*"
-    ],
-    "exclude": [
-        "./user/mods/**/*"
-    ]
+    "include": ["./src/**/*", "./tests/**/*", "./types/**/*", "./user/mods/**/*"],
+    "exclude": ["./user/mods/**/*"]
 }

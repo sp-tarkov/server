@@ -1,0 +1,73 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "files": {
+        "ignore": [
+            ".editorconfig",
+            ".git/*",
+            ".pkg-cache/*",
+            ".vscode/*",
+            "build/*",
+            "node_modules/*",
+            "obj/*",
+            "out/*",
+            "src/services/ModCompilerService.ts",
+            "tests/__cache__/*",
+            "tests/__coverage__/*",
+            "types/*",
+            "user/mods/*",
+            "user/profiles/*",
+            "assets/database/*"
+        ]
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "style": {
+                "useImportType": "off"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "ignore": [
+            "**/.git",
+            "**/.pkg-cache",
+            "**/.vscode",
+            "**/build",
+            "**/node_modules",
+            "**/types",
+            "**/tests/__cache__",
+            "**/tests/__coverage__",
+            "**/.editorconfig"
+        ],
+        "attributePosition": "auto",
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120,
+        "lineEnding": "lf"
+    },
+    "javascript": {
+        "formatter": {
+            "arrowParentheses": "always",
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "semicolons": "always",
+            "trailingCommas": "all"
+        },
+        "parser": {
+            "unsafeParameterDecoratorsEnabled": true
+        }
+    },
+    "json": {
+        "formatter": {
+            "trailingCommas": "none"
+        }
+    }
+}

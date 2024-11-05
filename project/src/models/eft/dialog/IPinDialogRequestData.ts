@@ -1,4 +1,3 @@
-export interface IPinDialogRequestData 
-{
-    dialogId: string
+export interface IPinDialogRequestData {
+    dialogId: string;
 }

@@ -1,39 +1,58 @@
+import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import { Warning } from "@spt/models/eft/itemEvent/IItemEventRouterBase";
+import { IItemEventRouterRequest } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
+import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
+import { ItemEventRouter } from "@spt/routers/ItemEventRouter";
+import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
 
-import { IGetBodyResponseData } from "../models/eft/httpResponse/IGetBodyResponseData";
-import { Warning } from "../models/eft/itemEvent/IItemEventRouterBase";
-import { IItemEventRouterRequest } from "../models/eft/itemEvent/IItemEventRouterRequest";
-import { IItemEventRouterResponse } from "../models/eft/itemEvent/IItemEventRouterResponse";
-import { BackendErrorCodes } from "../models/enums/BackendErrorCodes";
-import { ItemEventRouter } from "../routers/ItemEventRouter";
-import { HttpResponseUtil } from "../utils/HttpResponseUtil";
-
 @injectable()
-export class ItemEventCallbacks
-{
+export class ItemEventCallbacks {
     constructor(
         @inject("HttpResponseUtil") protected httpResponse: HttpResponseUtil,
-        @inject("ItemEventRouter") protected itemEventRouter: ItemEventRouter
-    )
-    { }
+        @inject("ItemEventRouter") protected itemEventRouter: ItemEventRouter,
+    ) {}
 
-    public handleEvents(url: string, info: IItemEventRouterRequest, sessionID: string): IGetBodyResponseData<IItemEventRouterResponse>
-    {
-        const eventResponse = this.itemEventRouter.handleEvents(info, sessionID);
-        const result = (eventResponse.warnings.length > 0)
-            ? this.httpResponse.getBody(eventResponse, this.getErrorCode(eventResponse.warnings), eventResponse.warnings[0].errmsg) // TODO: map 228 to its enum value
+    public async handleEvents(
+        url: string,
+        info: IItemEventRouterRequest,
+        sessionID: string,
+    ): Promise<IGetBodyResponseData<IItemEventRouterResponse>> {
+        const eventResponse = await this.itemEventRouter.handleEvents(info, sessionID);
+        const result = this.isCriticalError(eventResponse.warnings)
+            ? this.httpResponse.getBody(
+                  eventResponse,
+                  this.getErrorCode(eventResponse.warnings),
+                  eventResponse.warnings[0].errmsg,
+              )
             : this.httpResponse.getBody(eventResponse);
 
         return result;
     }
 
-    protected getErrorCode(warnings: Warning[]): number
-    {
-        if (warnings[0]?.code)
-        {
-            return Number(warnings[0].code);
+    /**
+     * Return true if the passed in list of warnings contains critical issues
+     * @param warnings The list of warnings to check for critical errors
+     * @returns
+     */
+    private isCriticalError(warnings: Warning[]): boolean {
+        // List of non-critical error codes, we return true if any error NOT included is passed in
+        const nonCriticalErrorCodes: BackendErrorCodes[] = [BackendErrorCodes.NOTENOUGHSPACE];
+
+        for (const warning of warnings) {
+            if (!nonCriticalErrorCodes.includes(+(warning?.code ?? "0"))) {
+                return true;
+            }
         }
 
+        return false;
+    }
+
+    protected getErrorCode(warnings: Warning[]): number {
+        if (warnings[0]?.code) {
+            return Number(warnings[0].code);
+        }
         return BackendErrorCodes.UNKNOWN_ERROR;
     }
 }

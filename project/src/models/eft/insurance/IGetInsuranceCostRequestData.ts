@@ -1,5 +1,4 @@
-export interface IGetInsuranceCostRequestData 
-{
-    traders: string[]
-    items: string[]
+export interface IGetInsuranceCostRequestData {
+    traders: string[];
+    items: string[];
 }
