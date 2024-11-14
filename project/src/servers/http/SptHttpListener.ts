@@ -8,6 +8,10 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectAll, injectable } from "tsyringe";
+import util from "node:util";
+
+const zlibInflate = util.promisify(zlib.inflate);
+const zlibDeflate = util.promisify(zlib.deflate);
 
 @injectable()
 export class SptHttpListener implements IHttpListener {
@@ -29,7 +33,7 @@ export class SptHttpListener implements IHttpListener {
         switch (req.method) {
             case "GET": {
                 const response = await this.getResponse(sessionId, req, undefined);
-                this.sendResponse(sessionId, req, resp, undefined, response);
+                await this.sendResponse(sessionId, req, resp, undefined, response);
                 break;
             }
             // these are handled almost identically.
@@ -56,13 +60,13 @@ export class SptHttpListener implements IHttpListener {
                     const requestIsCompressed = req.headers.requestcompressed !== "0";
                     const requestCompressed = req.method === "PUT" || requestIsCompressed;
 
-                    const value = requestCompressed ? zlib.inflateSync(buffer) : buffer;
+                    const value = requestCompressed ? await zlibInflate(buffer) : buffer;
                     if (!requestIsCompressed) {
                         this.logger.debug(value.toString(), true);
                     }
 
                     const response = await this.getResponse(sessionId, req, value);
-                    this.sendResponse(sessionId, req, resp, value, response);
+                    await this.sendResponse(sessionId, req, resp, value, response);
                 });
 
                 break;
@@ -83,13 +87,13 @@ export class SptHttpListener implements IHttpListener {
      * @param body Buffer
      * @param output Server generated response data
      */
-    public sendResponse(
+    public async sendResponse(
         sessionID: string,
         req: IncomingMessage,
         resp: ServerResponse,
         body: Buffer,
         output: string,
-    ): void {
+    ): Promise<void> {
         const bodyInfo = this.getBodyInfo(body);
 
         if (this.isDebugRequest(req)) {
@@ -106,7 +110,7 @@ export class SptHttpListener implements IHttpListener {
             serialiser.serialize(sessionID, req, resp, bodyInfo);
         } else {
             // No serializer can handle the request (majority of requests dont), zlib the output and send response back
-            this.sendZlibJson(resp, output, sessionID);
+            await this.sendZlibJson(resp, output, sessionID);
         }
 
         this.logRequest(req, output);
@@ -165,8 +169,9 @@ export class SptHttpListener implements IHttpListener {
         resp.end(output);
     }
 
-    public sendZlibJson(resp: ServerResponse, output: string, sessionID: string): void {
-        zlib.deflate(output, (_, buf) => resp.end(buf));
+    public async sendZlibJson(resp: ServerResponse, output: string, sessionID: string): Promise<void> {
+        const buf = await zlibDeflate(output);
+        resp.end(buf);
     }
 }
 
