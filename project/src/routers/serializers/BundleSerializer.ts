@@ -15,7 +15,7 @@ export class BundleSerializer extends Serializer {
         super();
     }
 
-    public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
+    public override async serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {
         const key = decodeURI(req.url.split("/bundle/")[1]);
         const bundle = this.bundleLoader.getBundle(key);
         if (!bundle) {
@@ -29,7 +29,7 @@ export class BundleSerializer extends Serializer {
             return;
         }
 
-        this.httpFileUtil.sendFile(resp, `${bundle.modpath}/bundles/${bundle.filename}`);
+        await this.httpFileUtil.sendFileAsync(resp, `${bundle.modpath}/bundles/${bundle.filename}`);
     }
 
     public override canHandle(route: string): boolean {

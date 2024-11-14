@@ -107,7 +107,7 @@ export class SptHttpListener implements IHttpListener {
         // Not debug, minority of requests need a serializer to do the job (IMAGE/BUNDLE/NOTIFY)
         const serialiser = this.serializers.find((x) => x.canHandle(output));
         if (serialiser) {
-            serialiser.serialize(sessionID, req, resp, bodyInfo);
+            await serialiser.serialize(sessionID, req, resp, bodyInfo);
         } else {
             // No serializer can handle the request (majority of requests dont), zlib the output and send response back
             await this.sendZlibJson(resp, output, sessionID);

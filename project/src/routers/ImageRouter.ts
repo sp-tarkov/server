@@ -16,13 +16,13 @@ export class ImageRouter {
         this.imageRouteService.addRoute(key, valueToAdd);
     }
 
-    public sendImage(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
+    public async sendImage(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {
         // remove file extension
         const url = this.vfs.stripExtension(req.url);
 
         // send image
         if (this.imageRouteService.existsByKey(url)) {
-            this.httpFileUtil.sendFile(resp, this.imageRouteService.getByKey(url));
+            await this.httpFileUtil.sendFileAsync(resp, this.imageRouteService.getByKey(url));
         }
     }
 

@@ -9,8 +9,8 @@ export class ImageSerializer extends Serializer {
         super();
     }
 
-    public override serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): void {
-        this.imageRouter.sendImage(sessionID, req, resp, body);
+    public override async serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {
+        await this.imageRouter.sendImage(sessionID, req, resp, body);
     }
 
     public override canHandle(route: string): boolean {
