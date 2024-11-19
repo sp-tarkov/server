@@ -351,15 +351,15 @@ export class QuestHelper {
     }
 
     /**
-     * Gets a flat list of reward items for the given quest at a specific state (e.g. Fail/Success)
+     * Gets a flat list of reward items for the given quest at a specific state for the specified game version (e.g. Fail/Success)
      * @param quest quest to get rewards for
      * @param status Quest status that holds the items (Started, Success, Fail)
      * @returns array of items with the correct maxStack
      */
-    public getQuestRewardItems(quest: IQuest, status: QuestStatus): IItem[] {
+    public getQuestRewardItems(quest: IQuest, status: QuestStatus, gameVersion: string): IItem[] {
         // Iterate over all rewards with the desired status, flatten out items that have a type of Item
         const questRewards = quest.rewards[QuestStatus[status]].flatMap((reward: IQuestReward) =>
-            reward.type === "Item" ? this.processReward(reward) : [],
+            reward.type === "Item" && this.questRewardIsForGameEdition(reward, gameVersion) ? this.processReward(reward) : [],
         );
 
         return questRewards;
@@ -994,7 +994,7 @@ export class QuestHelper {
             }
         }
 
-        return this.getQuestRewardItems(questDetails, state);
+        return this.getQuestRewardItems(questDetails, state, gameVersion);
     }
 
     /**
@@ -1281,6 +1281,7 @@ export class QuestHelper {
         const questsToShowPlayer: IQuest[] = [];
         const allQuests = this.getQuestsFromDb();
         const profile: IPmcData = this.profileHelper.getPmcProfile(sessionID);
+        const gameVersion = profile.Info.GameVersion;
 
         for (const quest of allQuests) {
             // Player already accepted the quest, show it regardless of status
@@ -1396,7 +1397,30 @@ export class QuestHelper {
             }
         }
 
-        return questsToShowPlayer;
+        return this.updateQuestsForGameEdition(questsToShowPlayer, gameVersion);
+    }
+
+    /**
+     * Create a clone of the given quest array with the rewards updated to reflect the
+     * given game version
+     * 
+     * @param quests The list of quests to check
+     * @param gameVersion The game version of the profile
+     * @returns array of IQuest objects with the rewards filtered correctly for the game version
+     */
+    protected updateQuestsForGameEdition(quests: IQuest[], gameVersion: string)
+    {
+        const modifiedQuests = this.cloner.clone(quests);
+        for (const quest of modifiedQuests)
+        {
+            // Remove any reward that doesn't pass the game edition check
+            for (const rewardType of Object.keys(quest.rewards))
+            {
+                quest.rewards[rewardType] = quest.rewards[rewardType].filter(reward => this.questRewardIsForGameEdition(reward, gameVersion));
+            }
+        }
+
+        return modifiedQuests;
     }
 
     /**
