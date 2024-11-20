@@ -296,6 +296,7 @@ export class PostDbLoadService {
             }
 
             map.base.BotMaxPvE = this.botConfig.maxBotCap[locationKey];
+            map.base.BotMax = this.botConfig.maxBotCap[locationKey];
 
             // make values no larger than 30 secs
             map.base.BotStart = Math.min(map.base.BotStart, 30);
