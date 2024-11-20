@@ -68,7 +68,15 @@
                     "5e2aedd986f7746d404f3aa4"
                 ],
                 "craftTimeSeconds": 43260
-            }
+            },
+			"655c663a6689c676ce57af85": { "rewardTpls": ["5c0e655586f774045612eeb2"], "craftTimeSeconds": 3960 },
+			"5aa2b986e5b5b00014028f4c": { "rewardTpls": ["62a091170b9d3c46de5b6cf2"], "craftTimeSeconds": 3960 },
+			"5c13cd2486f774072c757944": { "rewardTpls": ["62a0a098de7ac8199358053b"], "craftTimeSeconds": 3960 },
+			"5a0c27731526d80618476ac4": { 
+				"rewardTpls": ["5d1b392c86f77425243e98fe", "5d1b392c86f77425243e98fe"], 
+				"craftTimeSeconds": 3960 
+			},
+			"5c0530ee86f774697952d952": { "rewardTpls": ["6389c8c5dbfd5e4b95197e6b"], "craftTimeSeconds": 39960 }
         },
         "directRewardStackSize": {
             "exampleParentId": { "min": 1000, "max": 50000 }
