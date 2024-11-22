@@ -9,66 +9,21 @@ on:
 jobs:
   vitest:
     runs-on: ubuntu-latest
-    if: >
-      # Conditional to limit runs: checks if it's NOT a push to a branch with an open PR
-      github.event_name == 'push' ||
-      github.event.pull_request.head.repo.full_name != github.repository
-    container:
-      image: refringe/spt-build-node:1.0.7
     steps:
-      - name: Clone
-        run: |
-          # For pull request events, checkout using GITHUB_SHA
-          # For push events, checkout using GITHUB_REF_NAME
-          if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
-            REF=${GITHUB_SHA}
-          else
-            REF=${GITHUB_REF_NAME}
-          fi
-
-          rm -rf /workspace/SPT/Server/current
-          git clone https://dev.sp-tarkov.com/${{ github.repository }}.git /workspace/SPT/Server/current
-
-          cd /workspace/SPT/Server/current
-          git fetch
-          git checkout $REF
-        env:
-          GITHUB_SHA: ${{ github.sha }}
-          GITHUB_REF_NAME: ${{ github.ref_name }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-        shell: bash
-
-      - name: Pull LFS Files
-        run: |
-          cd /workspace/SPT/Server/current && ls -lah
-          git lfs pull && git lfs ls-files
-        shell: bash
-
-      - name: Cache NPM Dependencies
-        id: cache-npm-dependencies
-        uses: actions/cache@v4
+      - uses: actions/checkout@v4
         with:
-          path: /workspace/SPT/Server/current/project/node_modules
-          key: npm-dependencies-${{ hashFiles('/workspace/SPT/Server/current/project/package.json') }}
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: "project/.nvmrc"
+          cache: "npm"
+          cache-dependency-path: "project/package-lock.json"
 
       - name: Install NPM Dependencies
-        if: steps.cache-npm-dependencies.outputs.cache-hit != 'true'
-        run: |
-          cd /workspace/SPT/Server/current/project
-          rm -rf /workspace/SPT/Server/current/project/node_modules
-          npm install
-        shell: bash
+        run: npm install
+        working-directory: ./project
 
       - name: Run Tests
-        id: run-tests
-        run: |
-          cd /workspace/SPT/Server/current/project
-          npm run test
-        shell: bash
-
-      - name: Fix Instructions
-        if: failure() && steps.run-tests.outcome == 'failure'
-        run: |
-          echo -e "Automated tests have failed. This could point to an issue with the committed code, or an updated test that has yet to be updated. Please look into resolving these test failures. The testing suite has a GUI to aid in writing tests. You can launch this by running the following command from within the 'project' directory.\n\nnpm run test:ui\n"
-          echo -e "A test written today is a bug prevented tomorrow.™"
-        shell: bash
+        run: npm run test
+        working-directory: ./project
