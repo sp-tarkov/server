@@ -14071,7 +14071,7 @@
     },
     {
       "activateAfterSec": 60,
-      "active": false,
+      "active": true,
       "conditions": "STR_TRANSIT_5_COND",
       "description": "STR_TRANSIT_5_DESC",
       "id": 5,
