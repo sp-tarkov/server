@@ -5006,7 +5006,7 @@
     },
     {
       "activateAfterSec": 60,
-      "active": false,
+      "active": true,
       "conditions": "FAC_TRANSIT_14_COND",
       "description": "FAC_TRANSIT_14_DESC",
       "id": 14,
