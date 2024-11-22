@@ -2,14 +2,15 @@ name: Run Tests
 
 on:
   push:
-    branches: '*'
+    branches: ["*"]
   pull_request:
-    branches: '*'
+    branches: ["*"]
 
 jobs:
   vitest:
     runs-on: ubuntu-latest
-    if: >  # Conditional to limit runs: checks if it's NOT a push to a branch with an open PR
+    if: >
+      # Conditional to limit runs: checks if it's NOT a push to a branch with an open PR
       github.event_name == 'push' ||
       github.event.pull_request.head.repo.full_name != github.repository
     container:
