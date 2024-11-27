@@ -55,6 +55,8 @@
         "typescript": "~5.5",
         "winston": "~3.13",
         "winston-daily-rotate-file": "~5.0",
+        "7zip-bin": "^5.2.0",
+        "node-7z": "^3.0.0",
         "ws": "~8.18"
     },
     "devDependencies": {
@@ -71,7 +73,6 @@
         "@vitest/ui": "~2",
         "@yao-pkg/pkg": "5.12",
         "@yao-pkg/pkg-fetch": "3.5.9",
-        "7zip-bin": "^5.2.0",
         "cross-env": "~7.0",
         "fs-extra": "~11.2",
         "gulp": "~5.0",
@@ -81,7 +82,6 @@
         "gulp-rename": "~2.0",
         "madge": "~7",
         "minimist": "~1.2",
-        "node-7z": "^3.0.0",
         "resedit": "~2.0",
         "ts-node-dev": "~2.0",
         "tsconfig-paths": "~4.2",
