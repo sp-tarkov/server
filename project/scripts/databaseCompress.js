@@ -9,9 +9,6 @@ const locationsDir = path.resolve(__dirname, "../assets/database/locations/*");
 
 let hadError = false;
 
-console.log(archivePath);
-console.log(locationsDir);
-
 const myStream = Seven.add(archivePath, locationsDir, {
     recursive: true,
     $bin: path7za,
