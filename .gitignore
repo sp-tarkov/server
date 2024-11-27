@@ -32,6 +32,9 @@ yarn.lock
 ## windows
 desktop.ini
 
+## OSX
+.DS_Store
+
 ## parcel
 .parcel-cache/
 

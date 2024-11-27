@@ -11,6 +11,7 @@
         "node": "20.11.1"
     },
     "scripts": {
+        "postinstall": "node scripts/fix-7za-permissions.js",
         "check:circular": "madge --circular --ts-config tsconfig.json --extensions ts ./src/",
         "lint": "npx @biomejs/biome lint ./",
         "lint:fix": "npx @biomejs/biome lint --write ./",
@@ -31,7 +32,9 @@
         "gen:types": "tsc -p tsconfig.typedef.json --resolveJsonModule",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
-        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
+        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts",
+        "database:compress": "node scripts/databaseCompress.js",
+        "database:decompress": "node scripts/databaseDecompress.js"
     },
     "dependencies": {
         "atomically": "~1.7",
@@ -68,6 +71,7 @@
         "@vitest/ui": "~2",
         "@yao-pkg/pkg": "5.12",
         "@yao-pkg/pkg-fetch": "3.5.9",
+        "7zip-bin": "^5.2.0",
         "cross-env": "~7.0",
         "fs-extra": "~11.2",
         "gulp": "~5.0",
@@ -77,11 +81,11 @@
         "gulp-rename": "~2.0",
         "madge": "~7",
         "minimist": "~1.2",
+        "node-7z": "^3.0.0",
         "resedit": "~2.0",
         "ts-node-dev": "~2.0",
         "tsconfig-paths": "~4.2",
-        "typedoc": "~0.26",
-        "typemoq": "~2.1"
+        "typedoc": "~0.26"
     },
     "targets": {
         "default": {
