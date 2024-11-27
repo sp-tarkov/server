@@ -6,7 +6,7 @@ const path = require("node:path");
 const fs = require("fs-extra");
 const { path7za } = require("7zip-bin");
 
-const archivePath = path.resolve(__dirname, "../assets/compressed/locations.7z");
+const archivePath = path.resolve(__dirname, "../assets/compressed/database/locations.7z");
 const databaseDir = path.resolve(__dirname, "../assets/database/locations");
 
 (async () => {

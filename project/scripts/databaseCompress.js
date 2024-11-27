@@ -4,7 +4,7 @@ const Seven = require("node-7z");
 const path = require("node:path");
 const { path7za } = require("7zip-bin");
 
-const archivePath = path.resolve(__dirname, "../assets/compressed/locations.7z");
+const archivePath = path.resolve(__dirname, "../assets/compressed/database/locations.7z");
 const locationsDir = path.resolve(__dirname, "../assets/database/locations/*");
 
 let hadError = false;
