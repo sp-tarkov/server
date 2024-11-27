@@ -2,7 +2,6 @@ import { ErrorHandler } from "@spt/ErrorHandler";
 import { Container } from "@spt/di/Container";
 import type { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { App } from "@spt/utils/App";
-import { DatabaseDecompressionUtil } from "@spt/utils/DatabaseDecompressionUtil";
 import { Watermark } from "@spt/utils/Watermark";
 import { container } from "tsyringe";
 
@@ -21,10 +20,6 @@ export class Program {
             const childContainer = container.createChildContainer();
             const watermark = childContainer.resolve<Watermark>("Watermark");
             watermark.initialize();
-
-            const databaseDecompressionUtil =
-                childContainer.resolve<DatabaseDecompressionUtil>("DatabaseDecompressionUtil");
-            await databaseDecompressionUtil.initialize();
 
             const preSptModLoader = childContainer.resolve<PreSptModLoader>("PreSptModLoader");
             Container.registerListTypes(childContainer);

@@ -122,20 +122,9 @@ const updateBuildProperties = async () => {
  */
 const copyAssets = () =>
     gulp
-        .src(
-            [
-                "assets/**/*.json",
-                "assets/**/*.json5",
-                "assets/**/*.png",
-                "assets/**/*.jpg",
-                "assets/**/*.ico",
-                "assets/**/*.7z",
-                "!assets/database/locations/**/*.json", // Included in a 7z archive.
-            ],
-            {
-                encoding: false,
-            },
-        )
+        .src(["assets/**/*.json", "assets/**/*.json5", "assets/**/*.png", "assets/**/*.jpg", "assets/**/*.ico"], {
+            encoding: false,
+        })
         .pipe(gulp.dest(dataDir));
 
 /**
