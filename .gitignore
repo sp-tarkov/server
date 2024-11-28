@@ -2,6 +2,7 @@
 *.exe
 *.zip
 *.d.ts
+project/assets/database/locations/
 project/build/
 project/obj/
 project/dist/
@@ -31,6 +32,9 @@ yarn.lock
 
 ## windows
 desktop.ini
+
+## OSX
+.DS_Store
 
 ## parcel
 .parcel-cache/

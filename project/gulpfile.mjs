@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
+import { path7za } from "7zip-bin";
 import pkg from "@yao-pkg/pkg";
 import pkgfetch from "@yao-pkg/pkg-fetch";
 import fs from "fs-extra";
@@ -9,6 +10,7 @@ import download from "gulp-download";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
 import minimist from "minimist";
+import Seven from "node-7z";
 import * as ResEdit from "resedit";
 import manifest from "./package.json" assert { type: "json" };
 
@@ -33,6 +35,69 @@ const entries = {
     bleedingmods: path.join("obj", "ide", "BleedingEdgeModsEntry.js"),
 };
 const licenseFile = "../LICENSE.md";
+
+/**
+ * Decompresses the database archives from the assets/compressed/database directory into the assets/database directory.
+ */
+const decompressArchives = async () => {
+    const compressedDir = path.resolve("assets", "compressed", "database");
+    const assetsDir = path.resolve("assets", "database");
+
+    // Read the compressed directory and filter out only the 7z files.
+    let compressedFiles = [];
+    try {
+        const files = await fs.readdir(compressedDir);
+        compressedFiles = files.filter((file) => file.endsWith(".7z"));
+    } catch (error) {
+        console.error(`Error reading compressed directory: ${error}`);
+        return;
+    }
+
+    if (compressedFiles.length === 0) {
+        console.log("No compressed database archives found.");
+        return;
+    }
+
+    for (const compressedFile of compressedFiles) {
+        const compressedFilePath = path.join(compressedDir, compressedFile);
+        const relativeTargetPath = compressedFile.replace(".7z", "");
+        const targetDir = path.join(assetsDir, relativeTargetPath);
+
+        console.log(`Processing archive: ${compressedFile}`);
+
+        // Clean the target directory before extracting the archive.
+        try {
+            await fs.remove(targetDir);
+            console.log(`Cleaned target directory: ${targetDir}`);
+        } catch (error) {
+            console.error(`Error cleaning target directory ${targetDir}: ${error}`);
+            continue;
+        }
+
+        // Extract the archive.
+        await new Promise((resolve, reject) => {
+            const stream = Seven.extractFull(compressedFilePath, targetDir, {
+                $bin: path7za,
+                overwrite: "a",
+            });
+
+            let hadError = false;
+
+            stream.on("end", () => {
+                if (!hadError) {
+                    console.log(`Successfully decompressed: ${compressedFile}`);
+                    resolve();
+                }
+            });
+
+            stream.on("error", (err) => {
+                hadError = true;
+                console.error(`Error decompressing ${compressedFile}: ${err}`);
+                reject(err);
+            });
+        });
+    }
+};
 
 /**
  * Transpile src files into Javascript with SWC
@@ -94,7 +159,7 @@ const updateBuildProperties = async () => {
         res.entries,
         1,
         1033,
-        iconFile.icons.map((item) => item.data),
+        iconFile.icons.map((item) => item.data)
     );
 
     const vi = ResEdit.Resource.VersionInfo.fromEntries(res.entries)[0];
@@ -106,7 +171,7 @@ const updateBuildProperties = async () => {
             FileDescription: manifest.description,
             CompanyName: manifest.name,
             LegalCopyright: manifest.license,
-        },
+        }
     );
     vi.removeStringValue({ lang: 1033, codepage: 1200 }, "OriginalFilename");
     vi.removeStringValue({ lang: 1033, codepage: 1200 }, "InternalName");
@@ -189,7 +254,14 @@ const createHashFile = async () => {
 };
 
 // Combine all tasks into addAssets
-const addAssets = gulp.series(copyAssets, downloadPnpm, copyLicense, writeBuildDataToJSON, createHashFile);
+const addAssets = gulp.series(
+    decompressArchives,
+    copyAssets,
+    downloadPnpm,
+    copyLicense,
+    writeBuildDataToJSON,
+    createHashFile
+);
 
 /**
  * Cleans the build directory.
@@ -327,7 +399,7 @@ gulp.task("build:bleedingmods", build("bleedingmods"));
 gulp.task("run:build", async () => await exec(serverExeName, { stdio, cwd: buildDir }));
 gulp.task(
     "run:debug",
-    async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }),
+    async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio })
 );
 gulp.task("run:profiler", async () => {
     await cleanCompiled();

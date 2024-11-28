@@ -51,27 +51,29 @@ To prepare the project for development you will need to:
 
 The following commands are available after the initial setup. Run them with `npm run <command>`.
 
-| Command              | Description                                                               |
-|----------------------|---------------------------------------------------------------------------|
-| `check:circular`     | Check for circular dependencies in the project.                           |
-| `lint`               | Check the project for coding standards issues using Biome.                |
-| `lint:fix`           | Automatically fix coding standards issues using Biome.                    |
-| `style`              | Check the project for formatting issues using Biome.                      |
-| `style:fix`          | Automatically fix formatting issues using Biome.                          |
-| `format`             | Automatically fix all coding standards and formatting issues using Biome. |
-| `test`               | Run all tests.                                                            |
-| `test:watch`         | Run tests in watch mode. Tests will re-run when files are changed.        |
-| `test:coverage`      | Run tests and generate a coverage report.                                 |
-| `test:ui`            | Run tests in UI mode. This will open a browser window to view tests.      |
-| `build:release`      | Build the project for release.                                            |
-| `build:debug`        | Build the project for debugging.                                          |
-| `build:bleeding`     | Build the project on the bleeding edge.                                   |
-| `build:bleedingmods` | Build the project on the bleeding edge with mods.                         |
-| `run:build`          | Run the project in build mode.                                            |
-| `run:debug`          | Run the project in debug mode.                                            |
-| `run:profiler`       | Run the project in profiler mode.                                         |
-| `gen:types`          | Generate types for the project.                                           |
-| `gen:docs`           | Generate documentation for the project.                                   |
+| Command               | Description                                                               |
+|-----------------------|---------------------------------------------------------------------------|
+| `check:circular`      | Check for circular dependencies in the project.                           |
+| `lint`                | Check the project for coding standards issues using Biome.                |
+| `lint:fix`            | Automatically fix coding standards issues using Biome.                    |
+| `style`               | Check the project for formatting issues using Biome.                      |
+| `style:fix`           | Automatically fix formatting issues using Biome.                          |
+| `format`              | Automatically fix all coding standards and formatting issues using Biome. |
+| `test`                | Run all tests.                                                            |
+| `test:watch`          | Run tests in watch mode. Tests will re-run when files are changed.        |
+| `test:coverage`       | Run tests and generate a coverage report.                                 |
+| `test:ui`             | Run tests in UI mode. This will open a browser window to view tests.      |
+| `build:release`       | Build the project for release.                                            |
+| `build:debug`         | Build the project for debugging.                                          |
+| `build:bleeding`      | Build the project on the bleeding edge.                                   |
+| `build:bleedingmods`  | Build the project on the bleeding edge with mods.                         |
+| `run:build`           | Run the project in build mode.                                            |
+| `run:debug`           | Run the project in debug mode.                                            |
+| `run:profiler`        | Run the project in profiler mode.                                         |
+| `gen:types`           | Generate types for the project.                                           |
+| `gen:docs`            | Generate documentation for the project.                                   |
+| `database:compress`   | Compress database files from working directory into archive.              |
+| `database:decompress` | Decompress database archives into working directory.                      |
 
 ### Debugging
 
