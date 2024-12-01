@@ -533,4 +533,29 @@ export class ProfileHelper {
     public getQuestItemsInProfile(profile: IPmcData): IItem[] {
         return profile.Inventory.items.filter((item) => item.parentId === profile.Inventory.questRaidItems);
     }
+
+    /**
+     * Return a favorites array in the format expected by the getOtherProfile call
+     * @param profile 
+     * @returns An array of IItem objects representing the favorited data
+     */
+    public getOtherProfileFavorites(profile: IPmcData): IItem[] {
+        let fullFavorites = [];
+
+        for (const itemId of profile.Inventory.favoriteItems ?? [])
+        {
+            // When viewing another users profile, the client expects a full item with children, so get that
+            const itemAndChildren = this.itemHelper.findAndReturnChildrenAsItems(profile.Inventory.items, itemId);
+            if (itemAndChildren && itemAndChildren.length > 0)
+            {
+                // To get the client to actually see the items, we set the main item's parent to null, so it's treated as a root item
+                const clonedItems = this.cloner.clone(itemAndChildren);
+                clonedItems[0].parentId = null;
+
+                fullFavorites = fullFavorites.concat(clonedItems);
+            }
+        }
+
+        return fullFavorites;
+    }
 }

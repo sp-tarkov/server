@@ -64,6 +64,7 @@ export class ProfileFixerService {
         this.removeDanglingTaskConditionCounters(pmcProfile);
         this.removeOrphanedQuests(pmcProfile);
         this.verifyQuestProductionUnlocks(pmcProfile);
+        this.fixFavorites(pmcProfile);
 
         if (pmcProfile.Hideout) {
             this.addHideoutEliteSlots(pmcProfile);
@@ -338,6 +339,23 @@ export class ProfileFixerService {
             this.logger.debug(
                 `Added production ${matchingProductionId} to unlocked production recipes for ${questDetails.QuestName}`,
             );
+        }
+    }
+
+    /**
+     * Initial release of SPT 3.10 used an incorrect favorites structure, reformat
+     * the structure to the correct MongoID array structure
+     * @param pmcProfile 
+     */
+    protected fixFavorites(pmcProfile: IPmcData): void {
+        const favoritesAsAny = pmcProfile.Inventory?.favoriteItems as any;
+        if (favoritesAsAny)
+        {
+            const correctedFavorites = favoritesAsAny.map((favorite) => {
+                return favorite._id ?? favorite;
+            });
+
+            pmcProfile.Inventory.favoriteItems = correctedFavorites ?? [];
         }
     }
 
