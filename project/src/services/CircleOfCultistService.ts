@@ -235,7 +235,7 @@ export class CircleOfCultistService {
         const highestThresholdMin = Math.max(...minThresholds);
         if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= 0.25) {
             const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)
-            return Math.round(highestThreshold * 0.43);
+            return Math.round(highestThreshold.timeSeconds * 0.43);
         }
 
         return matchingThreshold.craftTimeSeconds;
