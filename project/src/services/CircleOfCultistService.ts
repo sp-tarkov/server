@@ -219,9 +219,23 @@ export class CircleOfCultistService {
         const matchingThreshold = thresholds.find(
             (craftThreshold) => craftThreshold.min <= rewardAmountRoubles && craftThreshold.max >= rewardAmountRoubles,
         );
+
+        // If no threshold fits
         if (!matchingThreshold) {
-            // No craft time found, default to 12 hours
-            return this.timeUtil.getHoursAsSeconds(12);
+            // Sanity check that thresholds exist, if not use 12 hours. Otherwise use the first set.
+            let fallbackThreshold = 43200;
+            if (thresholds[0] && thresholds[0].timeSeconds) {
+                fallbackThreshold = thresholds[0].timeSeconds;
+            }
+            return fallbackThreshold;
+        }
+
+        // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
+        const minThresholds = thresholds.map((a) => a.min)
+        const highestThresholdMin = Math.max(...minThresholds);
+        if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= 0.25) {
+            const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)
+            return Math.round(highestThreshold * 0.43);
         }
 
         return matchingThreshold.craftTimeSeconds;
