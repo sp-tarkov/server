@@ -20,17 +20,17 @@
             {
                 "min": 1,
                 "max": 349999,
-                "timeSeconds": 43200
+                "craftTimeSeconds": 43200
             },
             {
                 "min": 350000,
                 "max": 399999,
-                "timeSeconds": 50400
+                "craftTimeSeconds": 50400
             },
             {
                 "min": 400000,
                 "max": 99999999,
-                "timeSeconds": 50400
+                "craftTimeSeconds": 50400
             }
         ],
         "craftTimeOverride": -1,

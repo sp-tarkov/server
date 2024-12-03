@@ -222,10 +222,10 @@ export class CircleOfCultistService {
 
         // If no threshold fits
         if (!matchingThreshold) {
-            // Sanity check that thresholds exist, if not use 12 hours. Otherwise use the first set.
+            // Sanity check that thresholds exist, if not use 12 hours. Otherwise, use the first set.
             let fallbackThreshold = 43200;
-            if (thresholds[0] && thresholds[0].timeSeconds) {
-                fallbackThreshold = thresholds[0].timeSeconds;
+            if (thresholds[0] && thresholds[0].craftTimeSeconds) {
+                fallbackThreshold = thresholds[0].craftTimeSeconds;
             }
             return fallbackThreshold;
         }
@@ -234,8 +234,8 @@ export class CircleOfCultistService {
         const minThresholds = thresholds.map((a) => a.min)
         const highestThresholdMin = Math.max(...minThresholds);
         if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= 0.25) {
-            const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)
-            return Math.round(highestThreshold.timeSeconds * 0.43);
+            const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)[0];
+            return Math.round(highestThreshold.craftTimeSeconds * 0.43);
         }
 
         return matchingThreshold.craftTimeSeconds;
