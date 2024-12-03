@@ -20,6 +20,9 @@ export interface ICultistCircleSettings {
     maxRewardItemCount: number;
     maxAttemptsToPickRewardsWithinBudget: number;
     rewardPriceMultiplerMinMax: MinMax;
+    /** The odds that meeting the highest threshold gives you a bonus to crafting time */
+    bonusAmount: number;
+    bonusChance: number;
     craftTimeThreshholds: ICraftTimeThreshhold[];
     /** -1 means no override */
     craftTimeOverride: number;

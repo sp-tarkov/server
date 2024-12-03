@@ -233,9 +233,9 @@ export class CircleOfCultistService {
         // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
         const minThresholds = thresholds.map((a) => a.min)
         const highestThresholdMin = Math.max(...minThresholds);
-        if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= 0.25) {
+        if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= this.hideoutConfig.cultistCircle.bonusChance) {
             const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)[0];
-            return Math.round(highestThreshold.craftTimeSeconds * 0.43);
+            return Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount);
         }
 
         return matchingThreshold.craftTimeSeconds;
