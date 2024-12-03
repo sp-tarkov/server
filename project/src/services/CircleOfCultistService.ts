@@ -101,6 +101,9 @@ export class CircleOfCultistService {
         const directRewardSettings = this.hideoutConfig.cultistCircle.directRewards[sacrificedItems[0]._tpl];
         const hasSacrificedSingleItemFlaggedInConfig = sacrificedItems.length === 1 && !!directRewardSettings;
 
+        // Get craft time and bonus status
+        const craftingInfo = this.getCircleCraftTimeSeconds(rewardAmountRoubles, directRewardSettings);
+
         // Create production in pmc profile
         this.registerCircleOfCultistProduction(
             sessionId,
@@ -108,6 +111,7 @@ export class CircleOfCultistService {
             cultistCraftData._id,
             sacrificedItems,
             rewardAmountRoubles,
+            craftingInfo.time,
             directRewardSettings,
         );
 
@@ -124,7 +128,7 @@ export class CircleOfCultistService {
         if (hasSacrificedSingleItemFlaggedInConfig) {
             rewards = this.getExplicitRewards(directRewardSettings, cultistCircleStashId);
         } else {
-            const rewardItemPool = this.getCultistCircleRewardPool(sessionId, pmcData);
+            const rewardItemPool = this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo.bonus);
             rewards = this.getRewardsWithinBudget(rewardItemPool, rewardAmountRoubles, cultistCircleStashId);
         }
 
@@ -167,6 +171,7 @@ export class CircleOfCultistService {
      * @param recipeId Recipe id
      * @param sacrificedItems Items player sacrificed
      * @param rewardAmountRoubles Rouble amount to reward player in items with
+     * @param craftingTime How long the ritual should take
      * @param directRewardSettings OPTIONAL: If craft is giving direct rewards
      */
     protected registerCircleOfCultistProduction(
@@ -175,12 +180,13 @@ export class CircleOfCultistService {
         recipeId: string,
         sacrificedItems: IItem[],
         rewardAmountRoubles: number,
+        craftingTime: number,
         directRewardSettings?: IDirectRewardSettings,
     ): void {
         // Create circle production/craft object to add to player profile
         const cultistProduction = this.hideoutHelper.initProduction(
             recipeId,
-            this.getCircleCraftTimeSeconds(rewardAmountRoubles, directRewardSettings),
+            craftingTime,
             false,
         );
 
@@ -199,20 +205,20 @@ export class CircleOfCultistService {
      * OR rewards are direct, then use custom craft time defined in oarameter object
      * @param rewardAmountRoubles Value of rewards in roubles
      * @param directRewardSettings OPTIONAL: If craft is giving direct rewards
-     * @returns craft time seconds
+     * @returns craft time seconds and bonus status
      */
     protected getCircleCraftTimeSeconds(
         rewardAmountRoubles: number,
         directRewardSettings?: IDirectRewardSettings,
-    ): number {
+    ): { bonus: boolean; time: number } {
         // Edge case, check if override exists
         if (this.hideoutConfig.cultistCircle.craftTimeOverride !== -1) {
-            return this.hideoutConfig.cultistCircle.craftTimeOverride;
+            return {time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: false};
         }
 
         // Craft is rewarding items directly, use custom craft time
         if (directRewardSettings) {
-            return directRewardSettings.craftTimeSeconds;
+            return {time: directRewardSettings.craftTimeSeconds, bonus: false};
         }
 
         const thresholds = this.hideoutConfig.cultistCircle.craftTimeThreshholds;
@@ -227,7 +233,7 @@ export class CircleOfCultistService {
             if (thresholds[0] && thresholds[0].craftTimeSeconds) {
                 fallbackThreshold = thresholds[0].craftTimeSeconds;
             }
-            return fallbackThreshold;
+            return {time: fallbackThreshold, bonus: false};
         }
 
         // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
@@ -235,10 +241,10 @@ export class CircleOfCultistService {
         const highestThresholdMin = Math.max(...minThresholds);
         if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= this.hideoutConfig.cultistCircle.bonusChance) {
             const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)[0];
-            return Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount);
+            return {time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount), bonus: true};
         }
 
-        return matchingThreshold.craftTimeSeconds;
+        return {time: matchingThreshold.craftTimeSeconds, bonus: false};
     }
 
     /**
@@ -469,9 +475,10 @@ export class CircleOfCultistService {
      * Get a pool of tpl IDs of items the player needs to complete hideout crafts/upgrade areas
      * @param sessionId Session id
      * @param pmcData Profile of player who will be getting the rewards
+     * @param bonus Do we return bonus items (hideout/task items)
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData): string[] {
+    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: boolean): string[] {
         const rewardPool = new Set<string>();
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
@@ -483,58 +490,72 @@ export class CircleOfCultistService {
             ...cultistCircleConfig.rewardItemBlacklist,
         ];
 
-        // What does player need to upgrade hideout areas
-        const dbAreas = hideoutDbData.areas;
-        for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
-            const currentStageLevel = area.level;
-            const areaType = area.type;
+        // Hideout and task rewards are ONLY if the bonus is active
+        if (bonus === true) {
+            // What does player need to upgrade hideout areas
+            const dbAreas = hideoutDbData.areas;
+            for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
+                const currentStageLevel = area.level;
+                const areaType = area.type;
 
-            // Get next stage of area
-            const dbArea = dbAreas.find((area) => area.type === areaType);
-            const nextStageDbData = dbArea.stages[currentStageLevel + 1];
-            if (nextStageDbData) {
-                // Next stage exists, gather up requirements and add to pool
-                const itemRequirements = this.getItemRequirements(nextStageDbData.requirements);
-                for (const rewardToAdd of itemRequirements) {
-                    if (itemRewardBlacklist.includes(rewardToAdd.templateId)) {
-                        continue;
+                // Get next stage of area
+                const dbArea = dbAreas.find((area) => area.type === areaType);
+                const nextStageDbData = dbArea.stages[currentStageLevel + 1];
+                if (nextStageDbData) {
+                    // Next stage exists, gather up requirements and add to pool
+                    const itemRequirements = this.getItemRequirements(nextStageDbData.requirements);
+                    for (const rewardToAdd of itemRequirements) {
+                        if (itemRewardBlacklist.includes(rewardToAdd.templateId)) {
+                            continue;
+                        }
+
+                        rewardPool.add(rewardToAdd.templateId);
                     }
-
-                    rewardPool.add(rewardToAdd.templateId);
                 }
             }
-        }
 
-        // What does player need to start crafts with
-        const playerUnlockedRecipes = pmcData.UnlockedInfo?.unlockedProductionRecipe ?? [];
-        const allRecipes = hideoutDbData.production;
-        for (const recipe of this.getPlayerAccessibleRecipes(playerUnlockedRecipes, allRecipes)) {
-            const itemRequirements = this.getItemRequirements(recipe.requirements);
-            for (const requirement of itemRequirements) {
-                if (itemRewardBlacklist.includes(requirement.templateId)) {
-                    continue;
-                }
-
-                rewardPool.add(requirement.templateId);
-            }
-        }
-
-        // Check for scav case unlock in profile
-        const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
-        if (hasScavCaseAreaUnlocked) {
-            // Gather up items used to start scav case crafts
-            const scavCaseCrafts = hideoutDbData.production.scavRecipes;
-            for (const craft of scavCaseCrafts) {
-                // Find the item requirements from each craft
-                const itemRequirements = this.getItemRequirements(craft.requirements);
+            // What does player need to start crafts with
+            const playerUnlockedRecipes = pmcData.UnlockedInfo?.unlockedProductionRecipe ?? [];
+            const allRecipes = hideoutDbData.production;
+            for (const recipe of this.getPlayerAccessibleRecipes(playerUnlockedRecipes, allRecipes)) {
+                const itemRequirements = this.getItemRequirements(recipe.requirements);
                 for (const requirement of itemRequirements) {
                     if (itemRewardBlacklist.includes(requirement.templateId)) {
                         continue;
                     }
 
-                    // Add tpl to reward pool
                     rewardPool.add(requirement.templateId);
                 }
+            }
+
+            // TODO: Check for task items
+
+            // Check for scav case unlock in profile
+            const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
+            if (hasScavCaseAreaUnlocked) {
+                // Gather up items used to start scav case crafts
+                const scavCaseCrafts = hideoutDbData.production.scavRecipes;
+                for (const craft of scavCaseCrafts) {
+                    // Find the item requirements from each craft
+                    const itemRequirements = this.getItemRequirements(craft.requirements);
+                    for (const requirement of itemRequirements) {
+                        if (itemRewardBlacklist.includes(requirement.templateId)) {
+                            continue;
+                        }
+
+                        // Add tpl to reward pool
+                        rewardPool.add(requirement.templateId);
+                    }
+                }
+            }
+        } else {
+            // Otherwise it's just random items so we'll add maxRewardItemCount * 2 amount of random things
+            let i = 0;
+            while (i < cultistCircleConfig.maxRewardItemCount * 2)
+            {
+                i++;
+                const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
+                rewardPool.add(item._id);
             }
         }
 

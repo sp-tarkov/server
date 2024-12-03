@@ -1804,6 +1804,20 @@ export class ItemHelper {
             delete item.upd.SpawnedInSession;
         }
     }
+
+    /**
+     * Return a random item from items.json while respecting a blacklist
+     * @param blacklist Items to not return
+     * @returns random item from items.json
+     */
+    public getRandomItem(blacklist: String[]): ITemplateItem {
+        const allItems = this.getItems();
+        for (const item of allItems) {
+            if (!blacklist.includes(item._id)) {
+                return item;
+            }
+        }
+    }
 }
 
 namespace ItemHelper {
