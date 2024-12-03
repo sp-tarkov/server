@@ -19,16 +19,21 @@
         "craftTimeThreshholds": [
             {
                 "min": 1,
-                "max": 25000,
-                "timeSeconds": 21600
+                "max": 349999,
+                "timeSeconds": 43200
             },
             {
-                "min": 25001,
+                "min": 350000,
+                "max": 399999,
+                "timeSeconds": 50400
+            },
+            {
+                "min": 400000,
                 "max": 99999999,
-                "timeSeconds": 43200
+                "timeSeconds": 50400
             }
         ],
-        "craftTimeOverride": 40,
+        "craftTimeOverride": -1,
         "directRewards": {
             "66572c82ad599021091c6118": { "rewardTpls": ["5c0e874186f7745dc7616606"], "craftTimeSeconds": 3960 },
             "5aa2b986e5b5b00014028f4c": { "rewardTpls": ["62a091170b9d3c46de5b6cf2"], "craftTimeSeconds": 3960 },
