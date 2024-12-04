@@ -3,6 +3,7 @@ import { InventoryHelper } from "@spt/helpers/InventoryHelper";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { QuestHelper } from "@spt/helpers/QuestHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { IBotHideoutArea } from "@spt/models/eft/common/tables/IBotBase";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
@@ -50,6 +51,7 @@ export class CircleOfCultistService {
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("HideoutHelper") protected hideoutHelper: HideoutHelper,
+        @inject("QuestHelper") protected questHelper: QuestHelper,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("ItemFilterService") protected itemFilterService: ItemFilterService,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
@@ -483,10 +485,11 @@ export class CircleOfCultistService {
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
 
-        // Merge reward item blacklist with cultist circle blacklist from config
+        // Merge reward item blacklist and boss item blacklist with cultist circle blacklist from config
         const itemRewardBlacklist = [
             ...this.seasonalEventService.getInactiveSeasonalEventItems(),
             ...this.itemFilterService.getItemRewardBlacklist(),
+            ...this.itemFilterService.getBossItems(),
             ...cultistCircleConfig.rewardItemBlacklist,
         ];
 
@@ -528,7 +531,20 @@ export class CircleOfCultistService {
                 }
             }
 
-            // TODO: Check for task items
+            // Add task items
+            const activeTasks = pmcData.Quests.filter((q) => q.status === 2)
+            if (activeTasks.length > 0) {
+                for (const task of activeTasks) {
+                    const questData = this.questHelper.getQuestFromDb(task.qid, pmcData);
+                    const handoverConditions = questData.conditions.AvailableForFinish.filter((c) => c.conditionType === "HandoverItem");
+                    for (const condition of handoverConditions) {
+                        const neededItems = condition.target;
+                        for (const neededItem of neededItems) {
+                            rewardPool.add(neededItem);
+                        }
+                    }
+                }
+            }
 
             // Check for scav case unlock in profile
             const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
@@ -553,9 +569,11 @@ export class CircleOfCultistService {
             let i = 0;
             while (i < cultistCircleConfig.maxRewardItemCount * 2)
             {
-                i++;
                 const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
+                // No ammo and no money
+                if (BaseClasses.AMMO === item._parent || BaseClasses.MONEY === item._parent) continue;
                 rewardPool.add(item._id);
+                i++;
             }
         }
 
