@@ -530,7 +530,7 @@ export class CircleOfCultistService {
                 }
                 break;
             case 2:
-                // Hideout/Task/Crafting loot
+                // Hideout/Task loot
                 // What does player need to upgrade hideout areas
                 const dbAreas = hideoutDbData.areas;
                 for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
@@ -553,20 +553,6 @@ export class CircleOfCultistService {
                     }
                 }
 
-                // What does player need to start crafts with
-                const playerUnlockedRecipes = pmcData.UnlockedInfo?.unlockedProductionRecipe ?? [];
-                const allRecipes = hideoutDbData.production;
-                for (const recipe of this.getPlayerAccessibleRecipes(playerUnlockedRecipes, allRecipes)) {
-                    const itemRequirements = this.getItemRequirements(recipe.requirements);
-                    for (const requirement of itemRequirements) {
-                        if (itemRewardBlacklist.includes(requirement.templateId)) {
-                            continue;
-                        }
-
-                        rewardPool.add(requirement.templateId);
-                    }
-                }
-
                 // Add task items
                 const activeTasks = pmcData.Quests.filter((q) => q.status === 2)
                 if (activeTasks.length > 0) {
@@ -582,22 +568,19 @@ export class CircleOfCultistService {
                     }
                 }
 
-                // Check for scav case unlock in profile
-                const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
-                if (hasScavCaseAreaUnlocked) {
-                    // Gather up items used to start scav case crafts
-                    const scavCaseCrafts = hideoutDbData.production.scavRecipes;
-                    for (const craft of scavCaseCrafts) {
-                        // Find the item requirements from each craft
-                        const itemRequirements = this.getItemRequirements(craft.requirements);
-                        for (const requirement of itemRequirements) {
-                            if (itemRewardBlacklist.includes(requirement.templateId)) {
-                                continue;
-                            }
-
-                            // Add tpl to reward pool
-                            rewardPool.add(requirement.templateId);
-                        }
+                // If we have no tasks or hideout stuff left, default to high value
+                if (rewardPool.size === 0) {
+                    let x = 0;
+                    while (x < cultistCircleConfig.maxRewardItemCount * 2)
+                    {
+                        const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
+                        // No ammo and no money
+                        if (BaseClasses.AMMO === item._parent || BaseClasses.MONEY === item._parent) continue;
+                        // Must meet value cutoff
+                        const itemValue = this.itemHelper.getItemMaxPrice(item._id);
+                        if (itemValue < cultistCircleConfig.highValueThreshold) continue;
+                        rewardPool.add(item._id);
+                        x++;
                     }
                 }
                 break;
