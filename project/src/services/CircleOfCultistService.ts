@@ -174,7 +174,6 @@ export class CircleOfCultistService {
      * @param sacrificedItems Items player sacrificed
      * @param rewardAmountRoubles Rouble amount to reward player in items with
      * @param craftingTime How long the ritual should take
-     * @param directRewardSettings OPTIONAL: If craft is giving direct rewards
      */
     protected registerCircleOfCultistProduction(
         sessionId: string,
@@ -183,7 +182,6 @@ export class CircleOfCultistService {
         sacrificedItems: IItem[],
         rewardAmountRoubles: number,
         craftingTime: number,
-        directRewardSettings?: IDirectRewardSettings,
     ): void {
         // Create circle production/craft object to add to player profile
         const cultistProduction = this.hideoutHelper.initProduction(
@@ -369,8 +367,8 @@ export class CircleOfCultistService {
     }
 
     /**
-     * Give every item as a reward that's passed in
-     * @param rewardTpls Item tpls to turn into reward items
+     * Get explicit rewards
+     * @param explicitRewardSettings Item tpls to turn into reward items
      * @param cultistCircleStashId Id of stash item
      * @returns Array of item arrays
      */
@@ -608,12 +606,7 @@ export class CircleOfCultistService {
      */
     protected getPlayerAccessibleHideoutAreas(areas: IBotHideoutArea[]): IBotHideoutArea[] {
         return areas.filter((area) => {
-            if (area.type === HideoutAreas.CHRISTMAS_TREE && !this.seasonalEventService.christmasEventEnabled()) {
-                // Christmas tree area and not Christmas, skip
-                return false;
-            }
-
-            return true;
+            return !(area.type === HideoutAreas.CHRISTMAS_TREE && !this.seasonalEventService.christmasEventEnabled());
         });
     }
 
