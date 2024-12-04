@@ -591,7 +591,10 @@ export class CircleOfCultistService {
     protected getRandomLoot(rewardPool: Set<string>, itemRewardBlacklist: string[], valuable: boolean): Set<string> {
         const allItems = this.itemHelper.getItems();
         let x = 0;
-        while (x < this.hideoutConfig.cultistCircle.maxRewardItemCount + 2) {
+        let y = 0;
+        // X var will look for the correct number of items, Y var will keep this from never stopping if the highValueThreshold is too high
+        while (x < this.hideoutConfig.cultistCircle.maxRewardItemCount + 2 && y < allItems.length) {
+            y++;
             const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
             if (itemRewardBlacklist.includes(randomItem._id) || BaseClasses.AMMO === randomItem._parent ||
                 BaseClasses.MONEY === randomItem._parent || !this.itemHelper.isValidItem(randomItem._id)) {
