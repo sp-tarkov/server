@@ -1812,11 +1812,8 @@ export class ItemHelper {
      */
     public getRandomItem(blacklist: String[]): ITemplateItem {
         const allItems = this.getItems();
-        for (const item of allItems) {
-            if (!blacklist.includes(item._id)) {
-                return item;
-            }
-        }
+        const filteredItem = allItems.filter((item) => !blacklist.includes(item._id));
+        return filteredItem[Math.floor(Math.random() * allItems.length)];
     }
 }
 
