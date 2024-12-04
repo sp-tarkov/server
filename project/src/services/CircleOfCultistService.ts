@@ -100,7 +100,7 @@ export class CircleOfCultistService {
 
         // Check if it matches any direct swap recipes
         const directReward = this.checkForDirectReward(sacrificedItems);
-        const directRewardFound = directReward.reward !== null;
+        const directRewardFound = directReward && directReward.reward !== null;
 
         // Get craft time and bonus status unless direct reward is found then use that
         let craftingInfo: { time: any; bonus: any; };
