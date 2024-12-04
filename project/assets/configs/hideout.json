@@ -18,6 +18,7 @@
         },
         "bonusChance": 0.25,
         "bonusAmount": 0.43,
+        "highValueThreshold": 70000,
         "craftTimeThreshholds": [
             {
                 "min": 1,

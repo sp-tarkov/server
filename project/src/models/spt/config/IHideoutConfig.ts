@@ -23,6 +23,8 @@ export interface ICultistCircleSettings {
     /** The odds that meeting the highest threshold gives you a bonus to crafting time */
     bonusAmount: number;
     bonusChance: number;
+    /** What is considered a "high-value" item */
+    highValueThreshold: number;
     craftTimeThreshholds: ICraftTimeThreshhold[];
     /** -1 means no override */
     craftTimeOverride: number;

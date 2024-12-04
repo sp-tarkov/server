@@ -212,15 +212,15 @@ export class CircleOfCultistService {
     protected getCircleCraftTimeSeconds(
         rewardAmountRoubles: number,
         directRewardSettings?: IDirectRewardSettings,
-    ): { bonus: boolean; time: number } {
+    ): { bonus: number; time: number } {
         // Edge case, check if override exists
         if (this.hideoutConfig.cultistCircle.craftTimeOverride !== -1) {
-            return {time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: false};
+            return {time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: 0};
         }
 
         // Craft is rewarding items directly, use custom craft time
         if (directRewardSettings) {
-            return {time: directRewardSettings.craftTimeSeconds, bonus: false};
+            return {time: directRewardSettings.craftTimeSeconds, bonus: 0};
         }
 
         const thresholds = this.hideoutConfig.cultistCircle.craftTimeThreshholds;
@@ -235,7 +235,7 @@ export class CircleOfCultistService {
             if (thresholds[0] && thresholds[0].craftTimeSeconds) {
                 fallbackThreshold = thresholds[0].craftTimeSeconds;
             }
-            return {time: fallbackThreshold, bonus: false};
+            return {time: fallbackThreshold, bonus: 0};
         }
 
         // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
@@ -243,10 +243,17 @@ export class CircleOfCultistService {
         const highestThresholdMin = Math.max(...minThresholds);
         if (rewardAmountRoubles >= highestThresholdMin && Math.random() <= this.hideoutConfig.cultistCircle.bonusChance) {
             const highestThreshold = thresholds.filter(thresholds => thresholds.min === highestThresholdMin)[0];
-            return {time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount), bonus: true};
+            return {time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount), bonus: 2};
         }
 
-        return {time: matchingThreshold.craftTimeSeconds, bonus: false};
+        // Handle not being in the lowest threshold so qualifying for a "high-value" item
+        const maxThresholds = thresholds.map((a) => a.max)
+        const lowestMax = Math.min(...maxThresholds);
+        if (rewardAmountRoubles >= lowestMax) {
+            return {time: matchingThreshold.craftTimeSeconds, bonus: 1};
+        }
+
+        return {time: matchingThreshold.craftTimeSeconds, bonus: 0};
     }
 
     /**
@@ -480,7 +487,7 @@ export class CircleOfCultistService {
      * @param bonus Do we return bonus items (hideout/task items)
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: boolean): string[] {
+    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: number): string[] {
         const rewardPool = new Set<string>();
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
@@ -493,88 +500,107 @@ export class CircleOfCultistService {
             ...cultistCircleConfig.rewardItemBlacklist,
         ];
 
-        // Hideout and task rewards are ONLY if the bonus is active
-        if (bonus === true) {
-            // What does player need to upgrade hideout areas
-            const dbAreas = hideoutDbData.areas;
-            for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
-                const currentStageLevel = area.level;
-                const areaType = area.type;
+        // Hideout and task rewards are ONLY if the bonus is active. Bonus 1 is a high value item, bonus 2 is crafting/task
+        switch (bonus) {
+            case 0:
+                // Just random items so we'll add maxRewardItemCount * 2 amount of random things
+                let i = 0;
+                while (i < cultistCircleConfig.maxRewardItemCount * 2)
+                {
+                    const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
+                    // No ammo and no money
+                    if (BaseClasses.AMMO === item._parent || BaseClasses.MONEY === item._parent) continue;
+                    rewardPool.add(item._id);
+                    i++;
+                }
+                break;
+            case 1:
+                // High value loot only we'll add maxRewardItemCount * 2 amount of random things
+                let x = 0;
+                while (x < cultistCircleConfig.maxRewardItemCount * 2)
+                {
+                    const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
+                    // No ammo and no money
+                    if (BaseClasses.AMMO === item._parent || BaseClasses.MONEY === item._parent) continue;
+                    // Must meet value cutoff
+                    const itemValue = this.itemHelper.getItemMaxPrice(item._id);
+                    if (itemValue < cultistCircleConfig.highValueThreshold) continue;
+                    rewardPool.add(item._id);
+                    x++;
+                }
+                break;
+            case 2:
+                // Hideout/Task/Crafting loot
+                // What does player need to upgrade hideout areas
+                const dbAreas = hideoutDbData.areas;
+                for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
+                    const currentStageLevel = area.level;
+                    const areaType = area.type;
 
-                // Get next stage of area
-                const dbArea = dbAreas.find((area) => area.type === areaType);
-                const nextStageDbData = dbArea.stages[currentStageLevel + 1];
-                if (nextStageDbData) {
-                    // Next stage exists, gather up requirements and add to pool
-                    const itemRequirements = this.getItemRequirements(nextStageDbData.requirements);
-                    for (const rewardToAdd of itemRequirements) {
-                        if (itemRewardBlacklist.includes(rewardToAdd.templateId)) {
-                            continue;
+                    // Get next stage of area
+                    const dbArea = dbAreas.find((area) => area.type === areaType);
+                    const nextStageDbData = dbArea.stages[currentStageLevel + 1];
+                    if (nextStageDbData) {
+                        // Next stage exists, gather up requirements and add to pool
+                        const itemRequirements = this.getItemRequirements(nextStageDbData.requirements);
+                        for (const rewardToAdd of itemRequirements) {
+                            if (itemRewardBlacklist.includes(rewardToAdd.templateId)) {
+                                continue;
+                            }
+
+                            rewardPool.add(rewardToAdd.templateId);
                         }
-
-                        rewardPool.add(rewardToAdd.templateId);
                     }
                 }
-            }
 
-            // What does player need to start crafts with
-            const playerUnlockedRecipes = pmcData.UnlockedInfo?.unlockedProductionRecipe ?? [];
-            const allRecipes = hideoutDbData.production;
-            for (const recipe of this.getPlayerAccessibleRecipes(playerUnlockedRecipes, allRecipes)) {
-                const itemRequirements = this.getItemRequirements(recipe.requirements);
-                for (const requirement of itemRequirements) {
-                    if (itemRewardBlacklist.includes(requirement.templateId)) {
-                        continue;
-                    }
-
-                    rewardPool.add(requirement.templateId);
-                }
-            }
-
-            // Add task items
-            const activeTasks = pmcData.Quests.filter((q) => q.status === 2)
-            if (activeTasks.length > 0) {
-                for (const task of activeTasks) {
-                    const questData = this.questHelper.getQuestFromDb(task.qid, pmcData);
-                    const handoverConditions = questData.conditions.AvailableForFinish.filter((c) => c.conditionType === "HandoverItem");
-                    for (const condition of handoverConditions) {
-                        const neededItems = condition.target;
-                        for (const neededItem of neededItems) {
-                            rewardPool.add(neededItem);
-                        }
-                    }
-                }
-            }
-
-            // Check for scav case unlock in profile
-            const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
-            if (hasScavCaseAreaUnlocked) {
-                // Gather up items used to start scav case crafts
-                const scavCaseCrafts = hideoutDbData.production.scavRecipes;
-                for (const craft of scavCaseCrafts) {
-                    // Find the item requirements from each craft
-                    const itemRequirements = this.getItemRequirements(craft.requirements);
+                // What does player need to start crafts with
+                const playerUnlockedRecipes = pmcData.UnlockedInfo?.unlockedProductionRecipe ?? [];
+                const allRecipes = hideoutDbData.production;
+                for (const recipe of this.getPlayerAccessibleRecipes(playerUnlockedRecipes, allRecipes)) {
+                    const itemRequirements = this.getItemRequirements(recipe.requirements);
                     for (const requirement of itemRequirements) {
                         if (itemRewardBlacklist.includes(requirement.templateId)) {
                             continue;
                         }
 
-                        // Add tpl to reward pool
                         rewardPool.add(requirement.templateId);
                     }
                 }
-            }
-        } else {
-            // Otherwise it's just random items so we'll add maxRewardItemCount * 2 amount of random things
-            let i = 0;
-            while (i < cultistCircleConfig.maxRewardItemCount * 2)
-            {
-                const item = this.itemHelper.getRandomItem(itemRewardBlacklist);
-                // No ammo and no money
-                if (BaseClasses.AMMO === item._parent || BaseClasses.MONEY === item._parent) continue;
-                rewardPool.add(item._id);
-                i++;
-            }
+
+                // Add task items
+                const activeTasks = pmcData.Quests.filter((q) => q.status === 2)
+                if (activeTasks.length > 0) {
+                    for (const task of activeTasks) {
+                        const questData = this.questHelper.getQuestFromDb(task.qid, pmcData);
+                        const handoverConditions = questData.conditions.AvailableForFinish.filter((c) => c.conditionType === "HandoverItem");
+                        for (const condition of handoverConditions) {
+                            const neededItems = condition.target;
+                            for (const neededItem of neededItems) {
+                                rewardPool.add(neededItem);
+                            }
+                        }
+                    }
+                }
+
+                // Check for scav case unlock in profile
+                const hasScavCaseAreaUnlocked = pmcData.Hideout.Areas[HideoutAreas.SCAV_CASE]?.level > 0;
+                if (hasScavCaseAreaUnlocked) {
+                    // Gather up items used to start scav case crafts
+                    const scavCaseCrafts = hideoutDbData.production.scavRecipes;
+                    for (const craft of scavCaseCrafts) {
+                        // Find the item requirements from each craft
+                        const itemRequirements = this.getItemRequirements(craft.requirements);
+                        for (const requirement of itemRequirements) {
+                            if (itemRewardBlacklist.includes(requirement.templateId)) {
+                                continue;
+                            }
+
+                            // Add tpl to reward pool
+                            rewardPool.add(requirement.templateId);
+                        }
+                    }
+                }
+                break;
         }
 
         // Add custom rewards from config
