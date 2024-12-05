@@ -101,7 +101,7 @@ export class CircleOfCultistService {
 
         // Get craft time and bonus status
         const craftingInfo = hasDirectReward
-            ? { time: directRewardSettings.craftTimeSeconds, bonus: CicleBonus.RANDOM }
+            ? { time: directRewardSettings.craftTimeSeconds, bonus: CircleBonus.RANDOM }
             : this.getCircleCraftingInfo(rewardAmountRoubles);
 
         // Create production in pmc profile
@@ -201,7 +201,7 @@ export class CircleOfCultistService {
     protected getCircleCraftingInfo(rewardAmountRoubles: number): ICraftDetails {
         // Edge case, check if override exists
         if (this.hideoutConfig.cultistCircle.craftTimeOverride !== -1) {
-            return { time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: CicleBonus.RANDOM };
+            return { time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: CircleBonus.RANDOM };
         }
 
         const thresholds = this.hideoutConfig.cultistCircle.craftTimeThreshholds;
@@ -216,7 +216,7 @@ export class CircleOfCultistService {
             if (thresholds[0]?.craftTimeSeconds) {
                 fallbackTimer = thresholds[0].craftTimeSeconds;
             }
-            return { time: fallbackTimer, bonus: CicleBonus.RANDOM };
+            return { time: fallbackTimer, bonus: CircleBonus.RANDOM };
         }
 
         // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
@@ -229,7 +229,7 @@ export class CircleOfCultistService {
             const highestThreshold = thresholds.filter((thresholds) => thresholds.min === highestThresholdMin)[0];
             return {
                 time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount),
-                bonus: CicleBonus.HIDEOUT,
+                bonus: CircleBonus.HIDEOUT,
             };
         }
 
@@ -237,10 +237,10 @@ export class CircleOfCultistService {
         const maxThresholds = thresholds.map((a) => a.max);
         const lowestMax = Math.min(...maxThresholds);
         if (rewardAmountRoubles >= lowestMax) {
-            return { time: matchingThreshold.craftTimeSeconds, bonus: CicleBonus.VALUABLE_RANDOM };
+            return { time: matchingThreshold.craftTimeSeconds, bonus: CircleBonus.VALUABLE_RANDOM };
         }
 
-        return { time: matchingThreshold.craftTimeSeconds, bonus: CicleBonus.RANDOM };
+        return { time: matchingThreshold.craftTimeSeconds, bonus: CircleBonus.RANDOM };
     }
 
     /**
@@ -362,13 +362,17 @@ export class CircleOfCultistService {
      * @param cultistCircleStashId Id of stash item
      * @returns The reward object
      */
-    protected getDirectRewards(sessionID: string, directReward: IDirectRewardSettings, cultistCircleStashId: string): IItem[][] {
+    protected getDirectRewards(
+        sessionID: string,
+        directReward: IDirectRewardSettings,
+        cultistCircleStashId: string,
+    ): IItem[][] {
         // Prep rewards array (reward can be item with children, hence array of arrays)
         const rewards: IItem[][] = [];
 
         // Handle special case of tagilla helmets
         if (directReward.reward.includes("60a7ad3a0c5cb24b0134664a")) {
-            directReward.reward = [directReward.reward[Math.round(Math.random())]]
+            directReward.reward = [directReward.reward[Math.round(Math.random())]];
         }
 
         // Loop because these can include multiple rewards
@@ -389,7 +393,7 @@ export class CircleOfCultistService {
         // Handle storing non-repeatable rewards
         const fullProfile = this.profileHelper.getFullProfile(sessionID);
         if (directReward.repeatable === false) {
-            fullProfile.spt.cultistRewards.push(directReward.reward)
+            fullProfile.spt.cultistRewards.push(directReward.reward);
         }
         return rewards;
     }
@@ -405,8 +409,7 @@ export class CircleOfCultistService {
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
         // Loop possible rewards
-        directRewards:
-        for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
+        directRewards: for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
             // Check if this is a one time reward that has already been received
             const fullProfile = this.profileHelper.getFullProfile(sessionID);
             for (const pastReward of fullProfile.spt.cultistRewards) {
@@ -487,7 +490,7 @@ export class CircleOfCultistService {
      * @param bonus Do we return bonus items (hideout/task items)
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: CicleBonus): string[] {
+    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: CircleBonus): string[] {
         const rewardPool = new Set<string>();
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
@@ -501,19 +504,19 @@ export class CircleOfCultistService {
 
         // Hideout and task rewards are ONLY if the bonus is active
         switch (bonus) {
-            case CicleBonus.RANDOM:
+            case CircleBonus.RANDOM:
                 // Just random items so we'll add maxRewardItemCount * 2 amount of random things
                 this.logger.debug("Generating level 0 cultist loot");
                 this.getRandomLoot(rewardPool, itemRewardBlacklist, false);
                 break;
 
-            case CicleBonus.VALUABLE_RANDOM:
+            case CircleBonus.VALUABLE_RANDOM:
                 // High value loot only we'll add maxRewardItemCount * 2 amount of random things
                 this.logger.debug("Generating level 1 cultist loot");
                 this.getRandomLoot(rewardPool, itemRewardBlacklist, true);
                 break;
 
-            case CicleBonus.HIDEOUT: {
+            case CircleBonus.HIDEOUT: {
                 // Hideout/Task loot
                 this.logger.debug("Generating level 2 cultist loot");
                 // Add hideout upgrade requirements
@@ -657,14 +660,17 @@ export class CircleOfCultistService {
      * @returns Boolean
      */
     protected compareArrays(array1: string[], array2: string[]): boolean {
-        if (array1.length !== array2.length) return false;
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
         const sortedArray1 = array1.slice().sort();
         const sortedArray2 = array2.slice().sort();
         return sortedArray1.every((element, index) => element === sortedArray2[index]); // Use the strict equality check from above
     }
 }
 
-export enum CicleBonus {
+export enum CircleBonus {
     RANDOM = 0,
     VALUABLE_RANDOM = 1,
     HIDEOUT = 2,
@@ -672,5 +678,5 @@ export enum CicleBonus {
 
 export interface ICraftDetails {
     time: number;
-    bonus: CicleBonus;
+    bonus: CircleBonus;
 }
