@@ -664,6 +664,11 @@ export class CircleOfCultistService {
             return false;
         }
 
+        // Single element arrays + don't match, early return
+        if (array1.length === 1 && array2.length === 1 && array1[0] !== array2[0]) {
+            return false;
+        }
+
         const sortedArray1 = array1.slice().sort();
         const sortedArray2 = array2.slice().sort();
         return sortedArray1.every((element, index) => element === sortedArray2[index]); // Use the strict equality check from above
