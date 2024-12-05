@@ -847,6 +847,9 @@ export class LocationLootGenerator {
             throw new Error(`Item for tpl ${chosenComposedKey} was not found in the spawn point`);
         }
         const itemTemplate = this.itemHelper.getItem(chosenTpl)[1];
+        if (!itemTemplate) {
+            this.logger.error(`Item tpl: ${chosenTpl} cannot be found in database`);
+        }
 
         // Item array to return
         const itemWithMods: IItem[] = [];
