@@ -161,7 +161,7 @@ export class CircleOfCultistService {
     protected generateSacrificedItemsCache(directRewards: IDirectRewardSettings[]): Map<string, IDirectRewardSettings> {
         const result = new Map<string, IDirectRewardSettings>();
         for (const rewardSettings of directRewards) {
-            const key = this.hashUtil.generateMd5ForData(rewardSettings.requiredItems.join(","));
+            const key = this.hashUtil.generateMd5ForData(rewardSettings.requiredItems.sort().join(","));
             result.set(key, rewardSettings);
         }
 
@@ -439,7 +439,7 @@ export class CircleOfCultistService {
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
         // Create md5 key of the items player sacrificed so we can compare against the direct reward cache
-        const sacrificedItemsKey = this.hashUtil.generateMd5ForData(sacrificedItemTpls.join(","));
+        const sacrificedItemsKey = this.hashUtil.generateMd5ForData(sacrificedItemTpls.sort().join(","));
 
         const matchingDirectReward = directRewardsCache.get(sacrificedItemsKey);
         if (!matchingDirectReward) {
@@ -464,7 +464,7 @@ export class CircleOfCultistService {
      */
     protected getDirectRewardHashKey(directReward: IDirectRewardSettings): string {
         // Key is sacrificed items separated by commas, a dash, then the rewards separated by commas
-        const key = `{${directReward.requiredItems.join(",")}-${directReward.reward.join(",")}`;
+        const key = `{${directReward.requiredItems.sort().join(",")}-${directReward.reward.sort().join(",")}`;
 
         return this.hashUtil.generateMd5ForData(key);
     }
