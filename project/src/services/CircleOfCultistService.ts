@@ -96,7 +96,7 @@ export class CircleOfCultistService {
         const rewardAmountRoubles = sacrificedItemCostRoubles * rewardAmountMultiplier;
 
         // Check if it matches any direct swap recipes
-        const directRewardSettings = this.checkForDirectReward(sacrificedItems);
+        const directRewardSettings = this.checkForDirectReward(sessionId, sacrificedItems);
         const hasDirectReward = directRewardSettings?.reward.length > 0;
 
         // Get craft time and bonus status
@@ -124,7 +124,7 @@ export class CircleOfCultistService {
         }
 
         const rewards = hasDirectReward
-            ? this.getDirectRewards(directRewardSettings, cultistCircleStashId)
+            ? this.getDirectRewards(sessionId, directRewardSettings, cultistCircleStashId)
             : this.getRewardsWithinBudget(
                   this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo.bonus),
                   rewardAmountRoubles,
@@ -357,13 +357,19 @@ export class CircleOfCultistService {
 
     /**
      * Get direct rewards
+     * @param sessionID sessionID
      * @param directReward Items sacrificed
      * @param cultistCircleStashId Id of stash item
      * @returns The reward object
      */
-    protected getDirectRewards(directReward: IDirectRewardSettings, cultistCircleStashId: string): IItem[][] {
+    protected getDirectRewards(sessionID: string, directReward: IDirectRewardSettings, cultistCircleStashId: string): IItem[][] {
         // Prep rewards array (reward can be item with children, hence array of arrays)
         const rewards: IItem[][] = [];
+
+        // Handle special case of tagilla helmets
+        if (directReward.reward.includes("60a7ad3a0c5cb24b0134664a")) {
+            directReward.reward = [directReward.reward[Math.round(Math.random())]]
+        }
 
         // Loop because these can include multiple rewards
         for (const reward of directReward.reward) {
@@ -380,20 +386,34 @@ export class CircleOfCultistService {
             };
             rewards.push([rewardItem]);
         }
+        // Handle storing non-repeatable rewards
+        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        if (directReward.repeatable === false) {
+            fullProfile.spt.cultistRewards.push(directReward.reward)
+        }
         return rewards;
     }
 
     /**
      * Check for direct rewards from what player sacrificed
+     * @param sessionID sessionID
      * @param sacrificedItems Items sacrificed
      * @returns Direct reward items to send to player
      */
-    protected checkForDirectReward(sacrificedItems: IItem[]): IDirectRewardSettings {
+    protected checkForDirectReward(sessionID: string, sacrificedItems: IItem[]): IDirectRewardSettings {
         // Make an array of sacrificed tpl's
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
         // Loop possible rewards
+        directRewards:
         for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
+            // Check if this is a one time reward that has already been received
+            const fullProfile = this.profileHelper.getFullProfile(sessionID);
+            for (const pastReward of fullProfile.spt.cultistRewards) {
+                if (this.compareArrays(directReward.reward, pastReward)) {
+                    continue directRewards;
+                }
+            }
             // Does sacrificed item match one of the dictionary keys
             // yes === its a direct reward
             if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
@@ -476,7 +496,6 @@ export class CircleOfCultistService {
         const itemRewardBlacklist = [
             ...this.seasonalEventService.getInactiveSeasonalEventItems(),
             ...this.itemFilterService.getItemRewardBlacklist(),
-            ...this.itemFilterService.getBossItems(),
             ...cultistCircleConfig.rewardItemBlacklist,
         ];
 

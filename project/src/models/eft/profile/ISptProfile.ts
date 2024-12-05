@@ -192,6 +192,8 @@ export interface ISpt {
     freeRepeatableRefreshUsedCount?: Record<string, number>;
     /** When was a profile migrated, value is timestamp */
     migrations?: Record<string, number>;
+    /** Cultist circle rewards received that are one time use */
+    cultistRewards?: string[][];
 }
 
 export interface IModDetails {
