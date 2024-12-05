@@ -390,11 +390,12 @@ export class CircleOfCultistService {
             };
             rewards.push([rewardItem]);
         }
-        // Handle storing non-repeatable rewards
-        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        // Direct reward is not repeatable, flag collected in profile
         if (!directReward.repeatable) {
+            const fullProfile = this.profileHelper.getFullProfile(sessionID);
             fullProfile.spt.cultistRewards.push(directReward.reward);
         }
+
         return rewards;
     }
 
