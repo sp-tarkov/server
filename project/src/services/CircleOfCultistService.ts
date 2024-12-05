@@ -102,7 +102,6 @@ export class CircleOfCultistService {
             pmcData,
             cultistCraftData._id,
             sacrificedItems,
-            rewardAmountRoubles,
             craftingInfo.time,
         );
 
@@ -197,7 +196,6 @@ export class CircleOfCultistService {
      * @param pmcData Player profile
      * @param recipeId Recipe id
      * @param sacrificedItems Items player sacrificed
-     * @param rewardAmountRoubles Rouble amount to reward player in items with
      * @param craftingTime How long the ritual should take
      */
     protected registerCircleOfCultistProduction(
@@ -205,7 +203,6 @@ export class CircleOfCultistService {
         pmcData: IPmcData,
         recipeId: string,
         sacrificedItems: IItem[],
-        rewardAmountRoubles: number,
         craftingTime: number,
     ): void {
         // Create circle production/craft object to add to player profile
