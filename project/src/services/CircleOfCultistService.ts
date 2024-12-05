@@ -238,7 +238,12 @@ export class CircleOfCultistService {
         circleConfig: ICultistCircleSettings,
         directRewardSettings?: IDirectRewardSettings,
     ): ICraftDetails {
-        const result = { time: -1, rewardType: CircleRewardType.RANDOM, rewardDetails: null };
+        const result = {
+            time: -1,
+            rewardType: CircleRewardType.RANDOM,
+            rewardAmountRoubles: rewardAmountRoubles,
+            rewardDetails: null,
+        };
 
         // Direct reward edge case
         if (directRewardSettings) {
@@ -250,9 +255,10 @@ export class CircleOfCultistService {
         // Get a threshold where sacrificed amount is between thresholds min and max
         const matchingThreshold = this.getMatchingThreshold(circleConfig.craftTimeThreshholds, rewardAmountRoubles);
         if (
-            matchingThreshold.min >= circleConfig.hideoutCraftSacrificeThresholdRub &&
+            rewardAmountRoubles >= circleConfig.hideoutCraftSacrificeThresholdRub &&
             Math.random() <= circleConfig.bonusChanceMultiplier
         ) {
+            // Sacrifice amount is enough + passed 25% check to get hideout/task rewards
             result.time = circleConfig.hideoutTaskRewardTimeSeconds;
             result.rewardType = CircleRewardType.HIDEOUT_TASK;
 
@@ -591,7 +597,7 @@ export class CircleOfCultistService {
                 // Just random items so we'll add maxRewardItemCount * 2 amount of random things
 
                 // Does reward pass the high value threshold
-                const isHighValueReward = craftingInfo.rewardDetails.min >= cultistCircleConfig.highValueThresholdRub;
+                const isHighValueReward = craftingInfo.rewardAmountRoubles >= cultistCircleConfig.highValueThresholdRub;
                 this.getRandomLoot(rewardPool, itemRewardBlacklist, isHighValueReward);
                 break;
             }
@@ -740,5 +746,6 @@ export enum CircleRewardType {
 export interface ICraftDetails {
     time: number;
     rewardType: CircleRewardType;
+    rewardAmountRoubles: number;
     rewardDetails?: ICraftTimeThreshhold;
 }
