@@ -227,7 +227,7 @@ export class CircleOfCultistService {
     protected getCircleCraftingInfo(rewardAmountRoubles: number): ICraftDetails {
         // Edge case, check if override exists
         if (this.hideoutConfig.cultistCircle.craftTimeOverride !== -1) {
-            return { time: this.hideoutConfig.cultistCircle.craftTimeOverride, bonus: CircleRewardType.RANDOM };
+            return { time: this.hideoutConfig.cultistCircle.craftTimeOverride, rewardType: CircleRewardType.RANDOM };
         }
 
         const thresholds = this.hideoutConfig.cultistCircle.craftTimeThreshholds;
@@ -242,7 +242,7 @@ export class CircleOfCultistService {
             if (thresholds[0]?.craftTimeSeconds) {
                 fallbackTimer = thresholds[0].craftTimeSeconds;
             }
-            return { time: fallbackTimer, bonus: CircleRewardType.RANDOM };
+            return { time: fallbackTimer, rewardType: CircleRewardType.RANDOM };
         }
 
         // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
@@ -255,7 +255,7 @@ export class CircleOfCultistService {
             const highestThreshold = thresholds.filter((thresholds) => thresholds.min === highestThresholdMin)[0];
             return {
                 time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount),
-                bonus: CircleRewardType.HIDEOUT,
+                rewardType: CircleRewardType.HIDEOUT,
             };
         }
 
@@ -263,10 +263,10 @@ export class CircleOfCultistService {
         const maxThresholds = thresholds.map((a) => a.max);
         const lowestMax = Math.min(...maxThresholds);
         if (rewardAmountRoubles >= lowestMax) {
-            return { time: matchingThreshold.craftTimeSeconds, bonus: CircleRewardType.VALUABLE_RANDOM };
+            return { time: matchingThreshold.craftTimeSeconds, rewardType: CircleRewardType.VALUABLE_RANDOM };
         }
 
-        return { time: matchingThreshold.craftTimeSeconds, bonus: CircleRewardType.RANDOM };
+        return { time: matchingThreshold.craftTimeSeconds, rewardType: CircleRewardType.RANDOM };
     }
 
     /**
@@ -721,5 +721,5 @@ export enum CircleRewardType {
 
 export interface ICraftDetails {
     time: number;
-    bonus: CircleRewardType;
+    rewardType: CircleRewardType;
 }
