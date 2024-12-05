@@ -46,5 +46,6 @@ export interface IDirectRewardSettings {
     reward: string[];
     requiredItems: string[];
     craftTimeSeconds: number;
+    /** Is the reward a one time reward or can it be given multiple times */
     repeatable: boolean;
 }

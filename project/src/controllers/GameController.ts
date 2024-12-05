@@ -117,9 +117,9 @@ export class GameController {
                 fullProfile.spt.migrations = {};
             }
 
-            // Need to track one time use cultist rewards
+            // Track one time use cultist rewards
             if (typeof fullProfile.spt.cultistRewards === "undefined") {
-                fullProfile.spt.cultistRewards = [];
+                fullProfile.spt.cultistRewards = new Map();
             }
 
             //3.9 migrations

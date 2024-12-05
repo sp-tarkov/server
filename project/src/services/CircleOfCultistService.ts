@@ -11,6 +11,7 @@ import { IStageRequirement } from "@spt/models/eft/hideout/IHideoutArea";
 import { IHideoutCircleOfCultistProductionStartRequestData } from "@spt/models/eft/hideout/IHideoutCircleOfCultistProductionStartRequestData";
 import { IRequirement, IRequirementBase } from "@spt/models/eft/hideout/IHideoutProduction";
 import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { IAcceptedCultistReward } from "@spt/models/eft/profile/ISptProfile";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
@@ -404,8 +405,7 @@ export class CircleOfCultistService {
         }
         // Direct reward is not repeatable, flag collected in profile
         if (!directReward.repeatable) {
-            const fullProfile = this.profileHelper.getFullProfile(sessionId);
-            fullProfile.spt.cultistRewards.push(directReward.reward);
+            this.flagDirectRewardAsAcceptedInProfile(sessionId, directReward);
         }
 
         return rewards;
@@ -424,26 +424,35 @@ export class CircleOfCultistService {
         // Look for direct reward based on items sacrificed
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
         for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
-            // Is this a direct reward
-            if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
-                // Check if not a repeatable reward
-                if (!directReward.repeatable) {
-                    // Can't be given multiple times, check if player accepted previously
-                    for (const acceptedReward of fullProfile.spt.cultistRewards) {
-                        if (this.compareArrays(directReward.reward, acceptedReward)) {
-                            // Player has already accepted this direct reward
-                            return null;
-                        }
-                    }
+            if (!directReward.repeatable) {
+                // Can only be rewarded single time, check player hasn't had it before
+                const directRewardHash = this.getDirectRewardHashKey(directReward);
+                if (fullProfile.spt.cultistRewards.has(directRewardHash)) {
+                    // Player has already received this direct reward
+                    return null;
                 }
+            }
 
-                // Is repeatable reward
+            if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
+                // Is repeatable reward and not accepted by player already
                 this.logger.debug(`Direct Reward Found: ${this.itemHelper.getItemName(directReward.reward[0])}`);
                 return directReward;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Create an md5 key of the sacrificed + reward items
+     * @param directReward Direct reward to create key for
+     * @returns Key
+     */
+    protected getDirectRewardHashKey(directReward: IDirectRewardSettings): string {
+        // Key is sacrificed items separated by commas, a dash, then the rewards separated by commas
+        const key = `{${directReward.requiredItems.join(",")}-${directReward.reward.join(",")}`;
+
+        return this.hashUtil.generateMd5ForData(key);
     }
 
     /**
@@ -466,6 +475,22 @@ export class CircleOfCultistService {
         }
 
         return this.randomUtil.getInt(settings.min, settings.max);
+    }
+
+    /**
+     * Add a record to the players profile to signal they have accepted a non-repeatable direct reward
+     * @param sessionId Session id
+     * @param directReward Reward sent to player
+     */
+    protected flagDirectRewardAsAcceptedInProfile(sessionId: string, directReward: IDirectRewardSettings) {
+        const fullProfile = this.profileHelper.getFullProfile(sessionId);
+        const dataToStoreInProfile: IAcceptedCultistReward = {
+            timestamp: this.timeUtil.getTimestamp(),
+            sacrificeItems: directReward.requiredItems,
+            rewardItems: directReward.reward,
+        };
+
+        fullProfile.spt.cultistRewards.set(this.getDirectRewardHashKey(directReward), dataToStoreInProfile);
     }
 
     /**
