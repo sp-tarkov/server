@@ -260,7 +260,10 @@ export class CircleOfCultistService {
             Math.random() <= circleConfig.bonusChanceMultiplier
         ) {
             // Sacrifice amount is enough + passed 25% check to get hideout/task rewards
-            result.time = circleConfig.hideoutTaskRewardTimeSeconds;
+            result.time =
+                circleConfig.craftTimeOverride !== -1
+                    ? circleConfig.craftTimeOverride
+                    : circleConfig.hideoutTaskRewardTimeSeconds;
             result.rewardType = CircleRewardType.HIDEOUT_TASK;
 
             return result;
@@ -428,7 +431,7 @@ export class CircleOfCultistService {
         // Prep rewards array (reward can be item with children, hence array of arrays)
         const rewards: IItem[][] = [];
 
-        // Handle special case of tagilla helmets
+        // Handle special case of tagilla helmets - only one reward is allowed
         if (directReward.reward.includes(ItemTpl.FACECOVER_TAGILLAS_WELDING_MASK_GORILLA)) {
             directReward.reward = [this.randomUtil.getArrayValue(directReward.reward)];
         }
