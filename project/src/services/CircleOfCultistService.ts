@@ -124,9 +124,10 @@ export class CircleOfCultistService {
         const rewards = hasDirectReward
             ? this.getDirectRewards(sessionId, directRewardSettings, cultistCircleStashId)
             : this.getRewardsWithinBudget(
-                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo),
+                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo, this.hideoutConfig.cultistCircle),
                   rewardAmountRoubles,
                   cultistCircleStashId,
+                  this.hideoutConfig.cultistCircle,
               );
 
         // Get the container grid for cultist stash area
@@ -334,6 +335,7 @@ export class CircleOfCultistService {
         rewardItemTplPool: string[],
         rewardBudget: number,
         cultistCircleStashId: string,
+        circleConfig: ICultistCircleSettings,
     ): IItem[][] {
         // Prep rewards array (reward can be item with children, hence array of arrays)
         const rewards: IItem[][] = [];
@@ -345,9 +347,9 @@ export class CircleOfCultistService {
         while (
             totalRewardCost < rewardBudget &&
             rewardItemTplPool.length > 0 &&
-            rewardItemCount < this.hideoutConfig.cultistCircle.maxRewardItemCount
+            rewardItemCount < circleConfig.maxRewardItemCount
         ) {
-            if (failedAttempts > this.hideoutConfig.cultistCircle.maxAttemptsToPickRewardsWithinBudget) {
+            if (failedAttempts > circleConfig.maxAttemptsToPickRewardsWithinBudget) {
                 this.logger.warning(`Exiting reward generation after ${failedAttempts} failed attempts`);
 
                 break;
@@ -577,11 +579,16 @@ export class CircleOfCultistService {
      * @param sessionId Session id
      * @param pmcData Profile of player who will be getting the rewards
      * @param rewardType Do we return bonus items (hideout/task items)
+     * @param cultistCircleConfig Circle config
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, craftingInfo: ICraftDetails): string[] {
+    protected getCultistCircleRewardPool(
+        sessionId: string,
+        pmcData: IPmcData,
+        craftingInfo: ICraftDetails,
+        cultistCircleConfig: ICultistCircleSettings,
+    ): string[] {
         const rewardPool = new Set<string>();
-        const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
 
         // Merge reward item blacklist and boss item blacklist with cultist circle blacklist from config
@@ -648,7 +655,7 @@ export class CircleOfCultistService {
                 }
 
                 // If we have no tasks or hideout stuff left or need more loot to fill it out, default to high value
-                if (rewardPool.size < this.hideoutConfig.cultistCircle.maxRewardItemCount + 2) {
+                if (rewardPool.size < cultistCircleConfig.maxRewardItemCount + 2) {
                     this.getRandomLoot(rewardPool, itemRewardBlacklist, true);
                 }
                 break;
