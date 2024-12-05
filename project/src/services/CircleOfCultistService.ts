@@ -389,7 +389,7 @@ export class CircleOfCultistService {
 
         // Loop because these can include multiple rewards
         for (const reward of directReward.reward) {
-            const stackSize = this.getExplicitRewardBaseTypeStackSize(reward);
+            const stackSize = this.getDirectRewardBaseTypeStackSize(reward);
             const rewardItem: IItem = {
                 _id: this.hashUtil.generate(),
                 _tpl: reward,
@@ -451,7 +451,7 @@ export class CircleOfCultistService {
      * @param rewardTpl Item being rewarded to get stack size of
      * @returns stack size of item
      */
-    protected getExplicitRewardBaseTypeStackSize(rewardTpl: string): number {
+    protected getDirectRewardBaseTypeStackSize(rewardTpl: string): number {
         const itemDetails = this.itemHelper.getItem(rewardTpl);
         if (!itemDetails[0]) {
             this.logger.warning(`${rewardTpl} is not an item, setting stack size to 1`);
