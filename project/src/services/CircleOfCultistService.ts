@@ -371,7 +371,7 @@ export class CircleOfCultistService {
         const rewards: IItem[][] = [];
 
         // Handle special case of tagilla helmets
-        if (directReward.reward.includes("60a7ad3a0c5cb24b0134664a")) {
+        if (directReward.reward.includes(ItemTpl.FACECOVER_TAGILLAS_WELDING_MASK_GORILLA)) {
             directReward.reward = [directReward.reward[Math.round(Math.random())]];
         }
 
