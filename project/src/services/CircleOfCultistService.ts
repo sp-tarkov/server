@@ -250,11 +250,13 @@ export class CircleOfCultistService {
         const highestThresholdMin = Math.max(...minThresholds);
         if (
             rewardAmountRoubles >= highestThresholdMin &&
-            Math.random() <= this.hideoutConfig.cultistCircle.bonusChance
+            Math.random() <= this.hideoutConfig.cultistCircle.bonusChanceMultiplier
         ) {
             const highestThreshold = thresholds.filter((thresholds) => thresholds.min === highestThresholdMin)[0];
             return {
-                time: Math.round(highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmount),
+                time: Math.round(
+                    highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmountMultiplier,
+                ),
                 rewardType: CircleRewardType.HIDEOUT,
             };
         }
@@ -546,10 +548,10 @@ export class CircleOfCultistService {
      * Get a pool of tpl IDs of items the player needs to complete hideout crafts/upgrade areas
      * @param sessionId Session id
      * @param pmcData Profile of player who will be getting the rewards
-     * @param bonus Do we return bonus items (hideout/task items)
+     * @param rewardType Do we return bonus items (hideout/task items)
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, bonus: CircleRewardType): string[] {
+    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, rewardType: CircleRewardType): string[] {
         const rewardPool = new Set<string>();
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
@@ -562,7 +564,7 @@ export class CircleOfCultistService {
         ];
 
         // Hideout and task rewards are ONLY if the bonus is active
-        switch (bonus) {
+        switch (rewardType) {
             case CircleRewardType.RANDOM:
                 // Just random items so we'll add maxRewardItemCount * 2 amount of random things
                 this.logger.debug("Generating level 0 cultist loot");
@@ -691,7 +693,7 @@ export class CircleOfCultistService {
             // Valuable check
             if (valuable) {
                 const itemValue = this.itemHelper.getItemMaxPrice(randomItem._id);
-                if (itemValue < this.hideoutConfig.cultistCircle.highValueThreshold) {
+                if (itemValue < this.hideoutConfig.cultistCircle.highValueThresholdRub) {
                     this.logger.debug(`Ignored due to value: ${this.itemHelper.getItemName(randomItem._id)}`);
                     continue;
                 }

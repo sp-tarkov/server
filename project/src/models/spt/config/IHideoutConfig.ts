@@ -21,15 +21,16 @@ export interface ICultistCircleSettings {
     maxAttemptsToPickRewardsWithinBudget: number;
     rewardPriceMultiplerMinMax: MinMax;
     /** The odds that meeting the highest threshold gives you a bonus to crafting time */
-    bonusAmount: number;
-    bonusChance: number;
+    bonusAmountMultiplier: number;
+    bonusChanceMultiplier: number;
     /** What is considered a "high-value" item */
-    highValueThreshold: number;
+    highValueThresholdRub: number;
     craftTimeThreshholds: ICraftTimeThreshhold[];
-    /** -1 means no override */
+    /** -1 means no override, value in seconds */
     craftTimeOverride: number;
-    /** Specific reward pool when player sacrificed one specific item */
+    /** Specific reward pool when player sacrifice specific item(s) */
     directRewards: IDirectRewardSettings[];
+    /** Overrides for reward stack sizes, keyed by item tpl */
     directRewardStackSize: Record<string, MinMax>;
     /** Item tpls to exclude from the reward pool */
     rewardItemBlacklist: string[];
