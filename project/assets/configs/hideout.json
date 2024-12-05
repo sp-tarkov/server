@@ -19,14 +19,16 @@
         "bonusChanceMultiplier": 0.25,
         "bonusAmountMultiplier": 0.43,
         "highValueThresholdRub": 70000,
+		"hideoutTaskRewardTimeSeconds": 21600,
+		"hideoutCraftSacrificeThresholdRub": 40000,
         "craftTimeThreshholds": [
             {
                 "min": 1,
-                "max": 349999,
+                "max": 350000,
                 "craftTimeSeconds": 43200
             },
             {
-                "min": 350000,
+                "min": 350001,
                 "max": 399999,
                 "craftTimeSeconds": 50400
             },

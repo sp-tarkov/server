@@ -89,7 +89,7 @@ export class CircleOfCultistService {
         const rewardAmountMultiplier = this.getRewardAmountMultipler(pmcData, this.hideoutConfig.cultistCircle);
 
         // Get the rouble amount we generate rewards with from cost of sacrified items * above multipler
-        const rewardAmountRoubles = sacrificedItemCostRoubles * rewardAmountMultiplier;
+        const rewardAmountRoubles = Math.round(sacrificedItemCostRoubles * rewardAmountMultiplier);
 
         // Check if it matches any direct swap recipes
         const directRewardsCache = this.generateSacrificedItemsCache(this.hideoutConfig.cultistCircle.directRewards);
@@ -99,7 +99,7 @@ export class CircleOfCultistService {
         // Get craft time and bonus status
         const craftingInfo = this.getCircleCraftingInfo(
             rewardAmountRoubles,
-            this.hideoutConfig.cultistCircle.craftTimeThreshholds,
+            this.hideoutConfig.cultistCircle,
             directRewardSettings,
         );
 
@@ -229,14 +229,14 @@ export class CircleOfCultistService {
      * Get the circle craft time as seconds, value is based on reward item value
      * And get the bonus status to determine what tier of reward is given
      * @param rewardAmountRoubles Value of rewards in roubles
-     * @param thresholds Threshold values from config
-     * @param directRewardSettings values related to direct reward being given
+     * @param circleConfig Circle config values
+     * @param directRewardSettings OPTIONAL - Values related to direct reward being given
      * @returns craft time + type of reward + reward details
      */
     protected getCircleCraftingInfo(
         rewardAmountRoubles: number,
-        thresholds: ICraftTimeThreshhold[],
-        directRewardSettings: IDirectRewardSettings,
+        circleConfig: ICultistCircleSettings,
+        directRewardSettings?: IDirectRewardSettings,
     ): ICraftDetails {
         const result = { time: -1, rewardType: CircleRewardType.RANDOM, rewardDetails: null };
 
@@ -247,21 +247,13 @@ export class CircleOfCultistService {
             return result;
         }
 
-        // Get the threshold that fits the sacrificed amount inside of its min and max values
-        const matchingThreshold = this.getMatchingThreshold(thresholds, rewardAmountRoubles);
-
-        // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
-        const thresholdMinValues = thresholds.map((threshold) => threshold.min);
-        const largestThresholdMinValue = Math.max(...thresholdMinValues);
+        // Get a threshold where sacrificed amount is between thresholds min and max
+        const matchingThreshold = this.getMatchingThreshold(circleConfig.craftTimeThreshholds, rewardAmountRoubles);
         if (
-            rewardAmountRoubles >= largestThresholdMinValue &&
-            Math.random() <= this.hideoutConfig.cultistCircle.bonusChanceMultiplier
+            matchingThreshold.min >= circleConfig.hideoutCraftSacrificeThresholdRub &&
+            Math.random() <= circleConfig.bonusChanceMultiplier
         ) {
-            const highestThreshold = thresholds.filter((thresholds) => thresholds.min === largestThresholdMinValue)[0];
-
-            result.time = Math.round(
-                highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmountMultiplier,
-            );
+            result.time = circleConfig.hideoutTaskRewardTimeSeconds;
             result.rewardType = CircleRewardType.HIDEOUT_TASK;
 
             return result;
@@ -269,9 +261,7 @@ export class CircleOfCultistService {
 
         // Edge case, check if override exists, Otherwise use matching threshold craft time
         result.time =
-            this.hideoutConfig.cultistCircle.craftTimeOverride !== -1
-                ? this.hideoutConfig.cultistCircle.craftTimeOverride
-                : matchingThreshold.craftTimeSeconds;
+            circleConfig.craftTimeOverride !== -1 ? circleConfig.craftTimeOverride : matchingThreshold.craftTimeSeconds;
 
         result.rewardDetails = matchingThreshold;
 

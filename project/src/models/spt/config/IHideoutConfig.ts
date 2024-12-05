@@ -25,6 +25,10 @@ export interface ICultistCircleSettings {
     bonusChanceMultiplier: number;
     /** What is considered a "high-value" item */
     highValueThresholdRub: number;
+    /** Hideout/task reward crafts have a unique craft time */
+    hideoutTaskRewardTimeSeconds: number;
+    /** Rouble amount player needs to sacrifice to get chance of hideout/task rewards */
+    hideoutCraftSacrificeThresholdRub: number;
     craftTimeThreshholds: ICraftTimeThreshhold[];
     /** -1 means no override, value in seconds */
     craftTimeOverride: number;
