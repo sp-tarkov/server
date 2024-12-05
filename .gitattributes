@@ -1,7 +1,7 @@
 # Normalize Line Endings.
 * text=auto eol=lf
 
-# LFS Tracking for large (10MB+) JSON files.
+# LFS Tracking for large (5MB+) JSON files.
 #
 # Can be found with the following command:
 # find project/assets/database -type f -name "*.json" -size +5M | while read file; do
