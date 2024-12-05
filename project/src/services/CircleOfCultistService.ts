@@ -369,13 +369,13 @@ export class CircleOfCultistService {
 
     /**
      * Get direct rewards
-     * @param sessionID sessionID
+     * @param sessionId sessionId
      * @param directReward Items sacrificed
      * @param cultistCircleStashId Id of stash item
      * @returns The reward object
      */
     protected getDirectRewards(
-        sessionID: string,
+        sessionId: string,
         directReward: IDirectRewardSettings,
         cultistCircleStashId: string,
     ): IItem[][] {
@@ -404,7 +404,7 @@ export class CircleOfCultistService {
         }
         // Direct reward is not repeatable, flag collected in profile
         if (!directReward.repeatable) {
-            const fullProfile = this.profileHelper.getFullProfile(sessionID);
+            const fullProfile = this.profileHelper.getFullProfile(sessionId);
             fullProfile.spt.cultistRewards.push(directReward.reward);
         }
 
@@ -413,16 +413,16 @@ export class CircleOfCultistService {
 
     /**
      * Check for direct rewards from what player sacrificed
-     * @param sessionID sessionID
+     * @param sessionId sessionId
      * @param sacrificedItems Items sacrificed
      * @returns Direct reward items to send to player
      */
-    protected checkForDirectReward(sessionID: string, sacrificedItems: IItem[]): IDirectRewardSettings {
+    protected checkForDirectReward(sessionId: string, sacrificedItems: IItem[]): IDirectRewardSettings {
         // Get sacrificed tpls
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
         // Look for direct reward based on items sacrificed
-        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        const fullProfile = this.profileHelper.getFullProfile(sessionId);
         for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
             // Is this a direct reward
             if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
