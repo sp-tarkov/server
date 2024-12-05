@@ -1,0 +1,592 @@
+{
+  "Enabled": false,
+  "Locked": false,
+  "Insurance": false,
+  "SafeLocation": false,
+  "Name": "Arena",
+  "Scene": {
+    "path": "maps/develop_preset.bundle",
+    "rcid": "develop.scenespreset.asset"
+  },
+  "Area": 0,
+  "RequiredPlayerLevel": 1,
+  "MinPlayers": 1,
+  "MaxPlayers": 10,
+  "exit_count": 0,
+  "exit_access_time": 0,
+  "exit_time": 0,
+  "IconX": 156,
+  "IconY": 551,
+  "waves": [
+    {
+      "number": 0,
+      "time_min": 0,
+      "time_max": 10,
+      "slots_min": 1,
+      "slots_max": 2,
+      "BotSide": "Savage",
+      "BotPreset": "normal",
+      "SpawnPoints": "BotZoneMain",
+      "WildSpawnType": "assault",
+      "isPlayers": true
+    },
+    {
+      "number": 1,
+      "time_min": 10,
+      "time_max": 120,
+      "slots_min": 2,
+      "slots_max": 3,
+      "BotSide": "Savage",
+      "BotPreset": "easy",
+      "SpawnPoints": "BotZoneMain",
+      "WildSpawnType": "assault",
+      "isPlayers": true
+    },
+    {
+      "number": 0,
+      "time_min": 120,
+      "time_max": 240,
+      "slots_min": 3,
+      "slots_max": 4,
+      "BotSide": "Savage",
+      "BotPreset": "hard",
+      "SpawnPoints": "BotZoneMain",
+      "WildSpawnType": "assault",
+      "isPlayers": true
+    }
+  ],
+  "limits": [],
+  "AveragePlayTime": 2,
+  "AveragePlayerLevel": 10,
+  "escape_time_limit": 60000,
+  "Rules": "Normal",
+  "IsSecret": false,
+  "doors": [],
+  "tmp_location_field_remove_me": 0,
+  "MinDistToExitPoint": 0,
+  "MaxDistToFreePoint": 900,
+  "MinDistToFreePoint": 10,
+  "MaxBotPerZone": 0,
+  "OpenZones": "",
+  "OcculsionCullingEnabled": true,
+  "GlobalLootChanceModifier": 0,
+  "OldSpawn": true,
+  "NewSpawn": false,
+  "BotMax": 5,
+  "BotStart": 30,
+  "BotStop": 2400,
+  "BotMaxTimePlayer": 0,
+  "BotSpawnTimeOnMin": 0,
+  "BotSpawnTimeOnMax": 0,
+  "BotSpawnTimeOffMin": 0,
+  "BotSpawnTimeOffMax": 0,
+  "BotMaxPlayer": 0,
+  "BotEasy": 0,
+  "BotNormal": 0,
+  "BotHard": 0,
+  "BotImpossible": 0,
+  "BotAssault": 0,
+  "BotMarksman": 0,
+  "DisabledScavExits": "",
+  "AccessKeys": [],
+  "UnixDateTime": 1600869802,
+  "users_gather_seconds": 0,
+  "users_spawn_seconds_n": 0,
+  "users_spawn_seconds_n2": 0,
+  "users_summon_seconds": 0,
+  "sav_summon_seconds": 0,
+  "matching_min_seconds": 0,
+  "MinMaxBots": [],
+  "BotLocationModifier": {
+    "AccuracySpeed": 1,
+    "Scattering": 1,
+    "GainSight": 1,
+    "MarksmanAccuratyCoef": 1,
+    "VisibleDistance": 1,
+    "DistToSleep": 100,
+    "DistToActivate": 80,
+    "MagnetPower": 10
+  },
+  "exits": [
+    {
+      "Name": "UN Roadblock",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 0,
+      "MaxTime": 0,
+      "PlayersCount": 0,
+      "ExfiltrationTime": 10,
+      "PassageRequirement": "TransferItem",
+      "ExfiltrationType": "SharedTimer",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "5449016a4bdc2d6f028b456f",
+      "RequirementTip": "Сотку должен",
+      "Count": 100
+    },
+    {
+      "Name": "Elevator",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 0,
+      "MaxTime": 0,
+      "PlayersCount": 3,
+      "ExfiltrationTime": 10,
+      "PassageRequirement": "None",
+      "ExfiltrationType": "Individual",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "",
+      "RequirementTip": "",
+      "Count": 0
+    },
+    {
+      "Name": "Outskirts",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 0,
+      "MaxTime": 0,
+      "PlayersCount": 0,
+      "ExfiltrationTime": 10,
+      "PassageRequirement": "None",
+      "ExfiltrationType": "Individual",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "",
+      "RequirementTip": "",
+      "Count": 0
+    },
+    {
+      "Name": "Hangar Gate",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 0,
+      "MaxTime": 0,
+      "PlayersCount": 0,
+      "ExfiltrationTime": 10,
+      "PassageRequirement": "None",
+      "ExfiltrationType": "Individual",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "",
+      "RequirementTip": "",
+      "Count": 0
+    },
+    {
+      "Name": "Tunnel",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 0,
+      "MaxTime": 0,
+      "PlayersCount": 0,
+      "ExfiltrationTime": 10,
+      "PassageRequirement": "None",
+      "ExfiltrationType": "Individual",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "",
+      "RequirementTip": "",
+      "Count": 0
+    },
+    {
+      "Name": "EXFIL_Train",
+      "EntryPoints": "House,Houseb",
+      "Chance": 100,
+      "MinTime": 30,
+      "MaxTime": 60,
+      "PlayersCount": 0,
+      "ExfiltrationTime": 5,
+      "PassageRequirement": "Train",
+      "ExfiltrationType": "SharedTimer",
+      "RequiredSlot": "FirstPrimaryWeapon",
+      "Id": "0",
+      "RequirementTip": "TIP IS HARDCODED",
+      "Count": 90
+    }
+  ],
+  "DisabledForScav": false,
+  "BossLocationSpawn": [],
+  "SpawnPointParams": [
+    {
+      "Id": "03841924-ea1a-4e5c-bf27-82af7868beb1",
+      "Position": {
+        "x": -30.359436,
+        "y": 0.1,
+        "z": -6.39318848
+      },
+      "Rotation": 87.10709,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "House",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "0da5b986-424a-44d1-906a-1d7cc118413a",
+      "Position": {
+        "x": 19.715271,
+        "y": 0.06,
+        "z": 5.14703369
+      },
+      "Rotation": 269.253418,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "Houseb",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "110e3c75-e58d-461c-ab61-9f6a715ca6b1",
+      "Position": {
+        "x": -30.0410156,
+        "y": 0.1,
+        "z": -1.40075684
+      },
+      "Rotation": 87.10709,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "House",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "1a40138b-6f65-4866-bad2-64162d7772de",
+      "Position": {
+        "x": -29.2000122,
+        "y": 0.1,
+        "z": 5.14001465
+      },
+      "Rotation": 87.10709,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "House",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "3feb492c-8c45-405a-8e7a-8dd903433eb0",
+      "Position": {
+        "x": -23.7852783,
+        "y": 0.1,
+        "z": -2.34625244
+      },
+      "Rotation": 87.10709,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "House",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "52d3284b-0e8f-47e8-a7d1-701bf4cd8e5b",
+      "Position": {
+        "x": -23.4979248,
+        "y": 0.1,
+        "z": 3.856079
+      },
+      "Rotation": 87.10709,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "House",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "870629fd-e4d5-4fa1-8274-94c223ad9692",
+      "Position": {
+        "x": 12.9941406,
+        "y": 0.06,
+        "z": 1.34918213
+      },
+      "Rotation": 269.253418,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "Houseb",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "93a1c6d6-1379-43e6-99c2-c346178bb3e0",
+      "Position": {
+        "x": 18.1246338,
+        "y": 0.06,
+        "z": -6.334656
+      },
+      "Rotation": 269.253418,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "Houseb",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "971882ef-596f-4419-acfb-ca2bfe52d043",
+      "Position": {
+        "x": -17.92,
+        "y": 0,
+        "z": 5.55
+      },
+      "Rotation": 0,
+      "Sides": [
+        "Savage"
+      ],
+      "Categories": [
+        "Bot"
+      ],
+      "Infiltration": "",
+      "DelayToCanSpawnSec": 10,
+      "ColliderParams": {
+        "_parent": "SpawnSphereParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Radius": 4
+        }
+      },
+      "BotZoneName": "BotZoneMain"
+    },
+    {
+      "Id": "cf24125e-1c3a-457e-a024-613a8df98b06",
+      "Position": {
+        "x": 12.47467,
+        "y": 0.06,
+        "z": -4.838135
+      },
+      "Rotation": 269.253418,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "Houseb",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    },
+    {
+      "Id": "d052b031-b477-465f-8913-ae108c9ca2c3",
+      "Position": {
+        "x": 19.210022,
+        "y": 0.06,
+        "z": 0.16998291
+      },
+      "Rotation": 269.253418,
+      "Sides": [
+        "Bear"
+      ],
+      "Categories": [
+        "Player"
+      ],
+      "Infiltration": "Houseb",
+      "DelayToCanSpawnSec": 4,
+      "ColliderParams": {
+        "_parent": "SpawnBoxParams",
+        "_props": {
+          "Center": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "Size": {
+            "x": 2.2,
+            "y": 2.04,
+            "z": 2.14
+          }
+        }
+      },
+      "BotZoneName": ""
+    }
+  ],
+  "maxItemCountInLocation": [],
+  "Id": "develop",
+  "_Id": "56db0b3bd2720bb0678b4567",
+  "Loot": [],
+  "Banners": [
+    {
+      "id": "5805f617245977100b2c1f41",
+      "pic": {
+        "path": "CONTENT/banners/tglabs.jpg",
+        "rcid": ""
+      }
+    },
+    {
+      "id": "5807be8924597742c603fa19",
+      "pic": {
+        "path": "CONTENT/banners/banner_tarkov.jpg",
+        "rcid": ""
+      }
+    },
+    {
+      "id": "5c1b857086f77465f465faa4",
+      "pic": {
+        "path": "CONTENT/banners/banner_scavraider.jpg",
+        "rcid": ""
+      }
+    }
+  ]
+}
