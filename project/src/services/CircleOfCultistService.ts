@@ -406,25 +406,32 @@ export class CircleOfCultistService {
      * @returns Direct reward items to send to player
      */
     protected checkForDirectReward(sessionID: string, sacrificedItems: IItem[]): IDirectRewardSettings {
-        // Make an array of sacrificed tpl's
+        // Get sacrificed tpls
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
-        // Loop possible rewards
-        directRewards: for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
-            // Check if this is a one time reward that has already been received
-            const fullProfile = this.profileHelper.getFullProfile(sessionID);
-            for (const pastReward of fullProfile.spt.cultistRewards) {
-                if (this.compareArrays(directReward.reward, pastReward)) {
-                    continue directRewards;
-                }
-            }
-            // Does sacrificed item match one of the dictionary keys
-            // yes === its a direct reward
+        // Look for direct reward based on items sacrificed
+        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
+            // Is this a direct reward
             if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
+                // Check if not a repeatable reward
+                if (!directReward.repeatable) {
+                    // Can't be given multiple times, check if player accepted previously
+                    for (const acceptedReward of fullProfile.spt.cultistRewards) {
+                        if (this.compareArrays(directReward.reward, acceptedReward)) {
+                            // Player has already accepted this direct reward
+                            return null;
+                        }
+                    }
+                }
+
+                // Is repeatable reward
                 this.logger.debug(`Direct Reward Found: ${this.itemHelper.getItemName(directReward.reward[0])}`);
                 return directReward;
             }
         }
+
+        return null;
     }
 
     /**
