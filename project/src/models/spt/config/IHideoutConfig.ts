@@ -46,4 +46,5 @@ export interface IDirectRewardSettings {
     reward: string[];
     requiredItems: string[];
     craftTimeSeconds: number;
+    repeatable: boolean;
 }
