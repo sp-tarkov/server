@@ -392,7 +392,7 @@ export class CircleOfCultistService {
         }
         // Handle storing non-repeatable rewards
         const fullProfile = this.profileHelper.getFullProfile(sessionID);
-        if (directReward.repeatable === false) {
+        if (!directReward.repeatable) {
             fullProfile.spt.cultistRewards.push(directReward.reward);
         }
         return rewards;
@@ -630,7 +630,7 @@ export class CircleOfCultistService {
             }
 
             // Valuable check
-            if (valuable === true) {
+            if (valuable) {
                 const itemValue = this.itemHelper.getItemMaxPrice(randomItem._id);
                 if (itemValue < this.hideoutConfig.cultistCircle.highValueThreshold) {
                     this.logger.debug(`Ignored due to value: ${this.itemHelper.getItemName(randomItem._id)}`);
