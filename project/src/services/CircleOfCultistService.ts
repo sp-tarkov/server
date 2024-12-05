@@ -93,7 +93,7 @@ export class CircleOfCultistService {
 
         // Get craft time and bonus status
         const craftingInfo = hasDirectReward
-            ? { time: directRewardSettings.craftTimeSeconds, bonus: CircleRewardType.RANDOM }
+            ? { time: directRewardSettings.craftTimeSeconds, rewardType: CircleRewardType.RANDOM }
             : this.getCircleCraftingInfo(rewardAmountRoubles);
 
         // Create production in pmc profile
@@ -117,7 +117,7 @@ export class CircleOfCultistService {
         const rewards = hasDirectReward
             ? this.getDirectRewards(sessionId, directRewardSettings, cultistCircleStashId)
             : this.getRewardsWithinBudget(
-                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo.bonus),
+                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo.rewardType),
                   rewardAmountRoubles,
                   cultistCircleStashId,
               );
