@@ -18,7 +18,12 @@ import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { QuestStatus } from "@spt/models/enums/QuestStatus";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
-import { ICultistCircleSettings, IDirectRewardSettings, IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
+import {
+    ICraftTimeThreshhold,
+    ICultistCircleSettings,
+    IDirectRewardSettings,
+    IHideoutConfig,
+} from "@spt/models/spt/config/IHideoutConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -92,9 +97,11 @@ export class CircleOfCultistService {
         const hasDirectReward = directRewardSettings?.reward.length > 0;
 
         // Get craft time and bonus status
-        const craftingInfo = hasDirectReward
-            ? { time: directRewardSettings.craftTimeSeconds, rewardType: CircleRewardType.RANDOM }
-            : this.getCircleCraftingInfo(rewardAmountRoubles);
+        const craftingInfo = this.getCircleCraftingInfo(
+            rewardAmountRoubles,
+            this.hideoutConfig.cultistCircle.craftTimeThreshholds,
+            directRewardSettings,
+        );
 
         // Create production in pmc profile
         this.registerCircleOfCultistProduction(
@@ -117,7 +124,7 @@ export class CircleOfCultistService {
         const rewards = hasDirectReward
             ? this.getDirectRewards(sessionId, directRewardSettings, cultistCircleStashId)
             : this.getRewardsWithinBudget(
-                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo.rewardType),
+                  this.getCultistCircleRewardPool(sessionId, pmcData, craftingInfo),
                   rewardAmountRoubles,
                   cultistCircleStashId,
               );
@@ -222,53 +229,78 @@ export class CircleOfCultistService {
      * Get the circle craft time as seconds, value is based on reward item value
      * And get the bonus status to determine what tier of reward is given
      * @param rewardAmountRoubles Value of rewards in roubles
-     * @returns craft time seconds and bonus status
+     * @param thresholds Threshold values from config
+     * @param directRewardSettings values related to direct reward being given
+     * @returns craft time + type of reward + reward details
      */
-    protected getCircleCraftingInfo(rewardAmountRoubles: number): ICraftDetails {
-        // Edge case, check if override exists
-        if (this.hideoutConfig.cultistCircle.craftTimeOverride !== -1) {
-            return { time: this.hideoutConfig.cultistCircle.craftTimeOverride, rewardType: CircleRewardType.RANDOM };
+    protected getCircleCraftingInfo(
+        rewardAmountRoubles: number,
+        thresholds: ICraftTimeThreshhold[],
+        directRewardSettings: IDirectRewardSettings,
+    ): ICraftDetails {
+        const result = { time: -1, rewardType: CircleRewardType.RANDOM, rewardDetails: null };
+
+        // Direct reward edge case
+        if (directRewardSettings) {
+            result.time = directRewardSettings.craftTimeSeconds;
+
+            return result;
         }
 
-        const thresholds = this.hideoutConfig.cultistCircle.craftTimeThreshholds;
+        // Get the threshold that fits the sacrificed amount inside of its min and max values
+        const matchingThreshold = this.getMatchingThreshold(thresholds, rewardAmountRoubles);
+
+        // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
+        const thresholdMinValues = thresholds.map((threshold) => threshold.min);
+        const largestThresholdMinValue = Math.max(...thresholdMinValues);
+        if (
+            rewardAmountRoubles >= largestThresholdMinValue &&
+            Math.random() <= this.hideoutConfig.cultistCircle.bonusChanceMultiplier
+        ) {
+            const highestThreshold = thresholds.filter((thresholds) => thresholds.min === largestThresholdMinValue)[0];
+
+            result.time = Math.round(
+                highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmountMultiplier,
+            );
+            result.rewardType = CircleRewardType.HIDEOUT_TASK;
+
+            return result;
+        }
+
+        // Edge case, check if override exists, Otherwise use matching threshold craft time
+        result.time =
+            this.hideoutConfig.cultistCircle.craftTimeOverride !== -1
+                ? this.hideoutConfig.cultistCircle.craftTimeOverride
+                : matchingThreshold.craftTimeSeconds;
+
+        result.rewardDetails = matchingThreshold;
+
+        return result;
+    }
+
+    protected getMatchingThreshold(
+        thresholds: ICraftTimeThreshhold[],
+        rewardAmountRoubles: number,
+    ): ICraftTimeThreshhold {
         const matchingThreshold = thresholds.find(
             (craftThreshold) => craftThreshold.min <= rewardAmountRoubles && craftThreshold.max >= rewardAmountRoubles,
         );
 
-        // If no threshold fits
+        // No matching threshold, make one
         if (!matchingThreshold) {
-            // Sanity check that thresholds exist, if not use 12 hours. Otherwise, use the first set.
-            let fallbackTimer = 43200;
-            if (thresholds[0]?.craftTimeSeconds) {
-                fallbackTimer = thresholds[0].craftTimeSeconds;
-            }
-            return { time: fallbackTimer, rewardType: CircleRewardType.RANDOM };
+            // None found, use a defalt
+            this.logger.warning("Unable to find a matching cultist circle threshold, using fallback of 12 hours");
+
+            // Use first threshold value (cheapest) from parameter array, otherwise use 12 hours
+            const firstThreshold = thresholds[0];
+            const craftTime = firstThreshold?.craftTimeSeconds
+                ? firstThreshold.craftTimeSeconds
+                : this.timeUtil.getHoursAsSeconds(12);
+
+            return { min: firstThreshold?.min ?? 1, max: firstThreshold?.max ?? 34999, craftTimeSeconds: craftTime };
         }
 
-        // Handle 25% chance if over the highest min threshold for a shorter timer. Live is ~0.43 of the base threshold.
-        const minThresholds = thresholds.map((a) => a.min);
-        const highestThresholdMin = Math.max(...minThresholds);
-        if (
-            rewardAmountRoubles >= highestThresholdMin &&
-            Math.random() <= this.hideoutConfig.cultistCircle.bonusChanceMultiplier
-        ) {
-            const highestThreshold = thresholds.filter((thresholds) => thresholds.min === highestThresholdMin)[0];
-            return {
-                time: Math.round(
-                    highestThreshold.craftTimeSeconds * this.hideoutConfig.cultistCircle.bonusAmountMultiplier,
-                ),
-                rewardType: CircleRewardType.HIDEOUT,
-            };
-        }
-
-        // Handle not being in the lowest threshold so qualifying for a "high-value" item
-        const maxThresholds = thresholds.map((a) => a.max);
-        const lowestMax = Math.min(...maxThresholds);
-        if (rewardAmountRoubles >= lowestMax) {
-            return { time: matchingThreshold.craftTimeSeconds, rewardType: CircleRewardType.VALUABLE_RANDOM };
-        }
-
-        return { time: matchingThreshold.craftTimeSeconds, rewardType: CircleRewardType.RANDOM };
+        return matchingThreshold;
     }
 
     /**
@@ -551,7 +583,7 @@ export class CircleOfCultistService {
      * @param rewardType Do we return bonus items (hideout/task items)
      * @returns Array of tpls
      */
-    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, rewardType: CircleRewardType): string[] {
+    protected getCultistCircleRewardPool(sessionId: string, pmcData: IPmcData, craftingInfo: ICraftDetails): string[] {
         const rewardPool = new Set<string>();
         const cultistCircleConfig = this.hideoutConfig.cultistCircle;
         const hideoutDbData = this.databaseService.getHideout();
@@ -564,22 +596,17 @@ export class CircleOfCultistService {
         ];
 
         // Hideout and task rewards are ONLY if the bonus is active
-        switch (rewardType) {
-            case CircleRewardType.RANDOM:
+        switch (craftingInfo.rewardType) {
+            case CircleRewardType.RANDOM: {
                 // Just random items so we'll add maxRewardItemCount * 2 amount of random things
-                this.logger.debug("Generating level 0 cultist loot");
-                this.getRandomLoot(rewardPool, itemRewardBlacklist, false);
-                break;
 
-            case CircleRewardType.VALUABLE_RANDOM:
-                // High value loot only we'll add maxRewardItemCount * 2 amount of random things
-                this.logger.debug("Generating level 1 cultist loot");
-                this.getRandomLoot(rewardPool, itemRewardBlacklist, true);
+                // Does reward pass the high value threshold
+                const isHighValueReward = craftingInfo.rewardDetails.min >= cultistCircleConfig.highValueThresholdRub;
+                this.getRandomLoot(rewardPool, itemRewardBlacklist, isHighValueReward);
                 break;
-
-            case CircleRewardType.HIDEOUT: {
+            }
+            case CircleRewardType.HIDEOUT_TASK: {
                 // Hideout/Task loot
-                this.logger.debug("Generating level 2 cultist loot");
                 // Add hideout upgrade requirements
                 const dbAreas = hideoutDbData.areas;
                 for (const area of this.getPlayerAccessibleHideoutAreas(pmcData.Hideout.Areas)) {
@@ -717,11 +744,11 @@ export class CircleOfCultistService {
 
 export enum CircleRewardType {
     RANDOM = 0,
-    VALUABLE_RANDOM = 1,
-    HIDEOUT = 2,
+    HIDEOUT_TASK = 1,
 }
 
 export interface ICraftDetails {
     time: number;
     rewardType: CircleRewardType;
+    rewardDetails?: ICraftTimeThreshhold;
 }
