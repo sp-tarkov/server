@@ -87,7 +87,8 @@ export class CircleOfCultistService {
         const rewardAmountRoubles = sacrificedItemCostRoubles * rewardAmountMultiplier;
 
         // Check if it matches any direct swap recipes
-        const directRewardSettings = this.checkForDirectReward(sessionId, sacrificedItems);
+        const directRewardsCache = this.generateSacrificedItemsCache(this.hideoutConfig.cultistCircle.directRewards);
+        const directRewardSettings = this.checkForDirectReward(sessionId, sacrificedItems, directRewardsCache);
         const hasDirectReward = directRewardSettings?.reward.length > 0;
 
         // Get craft time and bonus status
@@ -151,6 +152,21 @@ export class CircleOfCultistService {
         }
 
         return output;
+    }
+
+    /**
+     * Create a map of the possible direct rewards, keyed by the items needed to be sacrificed
+     * @param directRewards Direct rewards array from hideout config
+     * @returns Map
+     */
+    protected generateSacrificedItemsCache(directRewards: IDirectRewardSettings[]): Map<string, IDirectRewardSettings> {
+        const result = new Map<string, IDirectRewardSettings>();
+        for (const rewardSettings of directRewards) {
+            const key = this.hashUtil.generateMd5ForData(rewardSettings.requiredItems.join(","));
+            result.set(key, rewardSettings);
+        }
+
+        return result;
     }
 
     /**
@@ -417,30 +433,31 @@ export class CircleOfCultistService {
      * @param sacrificedItems Items sacrificed
      * @returns Direct reward items to send to player
      */
-    protected checkForDirectReward(sessionId: string, sacrificedItems: IItem[]): IDirectRewardSettings {
+    protected checkForDirectReward(
+        sessionId: string,
+        sacrificedItems: IItem[],
+        directRewardsCache: Map<string, IDirectRewardSettings>,
+    ): IDirectRewardSettings {
         // Get sacrificed tpls
         const sacrificedItemTpls = sacrificedItems.map((item) => item._tpl);
 
-        // Look for direct reward based on items sacrificed
-        const fullProfile = this.profileHelper.getFullProfile(sessionId);
-        for (const directReward of this.hideoutConfig.cultistCircle.directRewards) {
-            if (!directReward.repeatable) {
-                // Can only be rewarded single time, check player hasn't had it before
-                const directRewardHash = this.getDirectRewardHashKey(directReward);
-                if (fullProfile.spt.cultistRewards.has(directRewardHash)) {
-                    // Player has already received this direct reward
-                    return null;
-                }
-            }
+        // Create md5 key of the items player sacrificed so we can compare against the direct reward cache
+        const sacrificedItemsKey = this.hashUtil.generateMd5ForData(sacrificedItemTpls.join(","));
 
-            if (this.compareArrays(directReward.requiredItems, sacrificedItemTpls)) {
-                // Is repeatable reward and not accepted by player already
-                this.logger.debug(`Direct Reward Found: ${this.itemHelper.getItemName(directReward.reward[0])}`);
-                return directReward;
-            }
+        const matchingDirectReward = directRewardsCache.get(sacrificedItemsKey);
+        if (!matchingDirectReward) {
+            // No direct reward
+            return null;
         }
 
-        return null;
+        const fullProfile = this.profileHelper.getFullProfile(sessionId);
+        const directRewardHash = this.getDirectRewardHashKey(matchingDirectReward);
+        if (fullProfile.spt.cultistRewards.has(directRewardHash)) {
+            // Player has already received this direct reward
+            return null;
+        }
+
+        return matchingDirectReward;
     }
 
     /**
@@ -696,27 +713,6 @@ export class CircleOfCultistService {
      */
     protected getItemRequirements(requirements: IRequirementBase[]): (IStageRequirement | IRequirement)[] {
         return requirements.filter((requirement) => requirement.type === "Item");
-    }
-
-    /**
-     * Compare two arrays to see if they match regardless of order
-     * @param array1 Array 1
-     * @param array2 Array 2
-     * @returns Boolean
-     */
-    protected compareArrays(array1: string[], array2: string[]): boolean {
-        if (array1.length !== array2.length) {
-            return false;
-        }
-
-        // Single element arrays + don't match, early return
-        if (array1.length === 1 && array2.length === 1 && array1[0] !== array2[0]) {
-            return false;
-        }
-
-        const sortedArray1 = array1.slice().sort();
-        const sortedArray2 = array2.slice().sort();
-        return sortedArray1.every((element, index) => element === sortedArray2[index]); // Use the strict equality check from above
     }
 }
 
