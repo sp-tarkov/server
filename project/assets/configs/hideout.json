@@ -16,9 +16,9 @@
             "min": 0.7,
             "max": 1.4
         },
-        "bonusChance": 0.25,
-        "bonusAmount": 0.43,
-        "highValueThreshold": 70000,
+        "bonusChanceMultiplier": 0.25,
+        "bonusAmountMultiplier": 0.43,
+        "highValueThresholdRub": 70000,
         "craftTimeThreshholds": [
             {
                 "min": 1,
