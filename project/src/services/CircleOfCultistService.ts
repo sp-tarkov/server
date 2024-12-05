@@ -680,7 +680,7 @@ export class CircleOfCultistService {
             attempts < allItems.length
         ) {
             attempts++;
-            const randomItem = allItems[Math.floor(Math.random() * allItems.length)];
+            const randomItem = this.randomUtil.getArrayValue(allItems);
             if (
                 itemRewardBlacklist.includes(randomItem._id) ||
                 BaseClasses.AMMO === randomItem._parent ||
