@@ -114,7 +114,7 @@ export class CircleOfCultistService {
 
         const output = this.eventOutputHolder.getOutput(sessionId);
 
-        // Remove sacrified items from circle inventory
+        // Remove sacrificed items from circle inventory
         for (const item of sacrificedItems) {
             if (item.slotId === CircleOfCultistService.circleOfCultistSlotId) {
                 this.inventoryHelper.removeItem(pmcData, item._id, sessionId, output);
@@ -430,7 +430,7 @@ export class CircleOfCultistService {
 
         // Handle special case of tagilla helmets
         if (directReward.reward.includes(ItemTpl.FACECOVER_TAGILLAS_WELDING_MASK_GORILLA)) {
-            directReward.reward = [directReward.reward[Math.round(Math.random())]]; // TODO- mathutil
+            directReward.reward = [this.randomUtil.getArrayValue(directReward.reward)];
         }
 
         // Loop because these can include multiple rewards
@@ -481,7 +481,7 @@ export class CircleOfCultistService {
 
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
         const directRewardHash = this.getDirectRewardHashKey(matchingDirectReward);
-        if (fullProfile.spt.cultistRewards.has(directRewardHash)) {
+        if (fullProfile.spt.cultistRewards?.has(directRewardHash)) {
             // Player has already received this direct reward
             return null;
         }
