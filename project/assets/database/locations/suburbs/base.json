@@ -1,0 +1,119 @@
+{
+  "Enabled": false,
+  "Locked": true,
+  "Insurance": false,
+  "SafeLocation": false,
+  "Name": "Suburbs",
+  "Scene": {
+    "path": "",
+    "rcid": ""
+  },
+  "Area": 0,
+  "RequiredPlayerLevel": 0,
+  "MinPlayers": 6,
+  "MaxPlayers": 9,
+  "exit_count": 0,
+  "exit_access_time": 0,
+  "exit_time": 0,
+  "IconX": 480,
+  "IconY": 577,
+  "waves": [
+    {
+      "number": 0,
+      "time_min": 1,
+      "time_max": 2,
+      "slots_min": 3,
+      "slots_max": 6,
+      "SpawnPoints": "",
+      "BotSide": "Savage",
+      "BotPreset": "normal",
+      "isPlayers": false,
+      "WildSpawnType": "assault"
+    },
+    {
+      "number": 1,
+      "time_min": 10,
+      "time_max": 12,
+      "slots_min": 3,
+      "slots_max": 5,
+      "SpawnPoints": "",
+      "BotSide": "Usec",
+      "BotPreset": "easy",
+      "isPlayers": false,
+      "WildSpawnType": "assault"
+    }
+  ],
+  "limits": [],
+  "AveragePlayTime": 100,
+  "AveragePlayerLevel": 10,
+  "escape_time_limit": 0,
+  "Rules": "Normal",
+  "IsSecret": false,
+  "doors": [],
+  "tmp_location_field_remove_me": 0,
+  "MinDistToExitPoint": 0,
+  "MaxDistToFreePoint": 900,
+  "MinDistToFreePoint": 10,
+  "MaxBotPerZone": 0,
+  "OpenZones": "",
+  "OcculsionCullingEnabled": false,
+  "GlobalLootChanceModifier": 0,
+  "OldSpawn": true,
+  "NewSpawn": false,
+  "BotMax": 0,
+  "BotStart": 0,
+  "BotStop": 0,
+  "BotMaxTimePlayer": 0,
+  "BotSpawnTimeOnMin": 0,
+  "BotSpawnTimeOnMax": 0,
+  "BotSpawnTimeOffMin": 0,
+  "BotSpawnTimeOffMax": 0,
+  "BotMaxPlayer": 0,
+  "BotEasy": 0,
+  "BotNormal": 0,
+  "BotHard": 0,
+  "BotImpossible": 0,
+  "BotAssault": 0,
+  "BotMarksman": 0,
+  "DisabledScavExits": "",
+  "AccessKeys": [],
+  "UnixDateTime": 0,
+  "users_gather_seconds": 0,
+  "users_spawn_seconds_n": 0,
+  "users_spawn_seconds_n2": 0,
+  "users_summon_seconds": 0,
+  "sav_summon_seconds": 0,
+  "matching_min_seconds": 0,
+  "MinMaxBots": [],
+  "BotLocationModifier": {
+    "AccuracySpeed": 0,
+    "Scattering": 0,
+    "GainSight": 0,
+    "MarksmanAccuratyCoef": 0,
+    "VisibleDistance": 0
+  },
+  "exits": [],
+  "DisabledForScav": false,
+  "BossLocationSpawn": [],
+  "SpawnPointParams": [],
+  "maxItemCountInLocation": [],
+  "Id": "Suburbs",
+  "_Id": "5714dc342459777137212e0b",
+  "Loot": [],
+  "Banners": [
+    {
+      "id": "5807be8924597742c603fa19",
+      "pic": {
+        "path": "CONTENT/banners/banner_tarkov.jpg",
+        "rcid": ""
+      }
+    },
+    {
+      "id": "5c1b857086f77465f465faa4",
+      "pic": {
+        "path": "CONTENT/banners/banner_scavraider.jpg",
+        "rcid": ""
+      }
+    }
+  ]
+}

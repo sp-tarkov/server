@@ -12,7 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
+
+      - name: Checkout LFS
+        run: git lfs pull
 
       - uses: actions/setup-node@v4
         with:
