@@ -318,12 +318,28 @@ export class RandomUtil {
         return arr[this.getInt(0, arr.length - 1)];
     }
 
-    public getKey(node: any): string {
+    /**
+     * Retrieves a random key from the given object.
+     *
+     * @template T - The type of the object.
+     * @param {T} node - The object from which to retrieve a key.
+     * @returns {string} A random key from the object.
+     */
+    public getKey<T extends object>(node: T): string {
         return this.getArrayValue(Object.keys(node));
     }
 
-    public getKeyValue(node: { [x: string]: any }): any {
-        return node[this.getKey(node)];
+    /**
+     * Retrieves a random value from the given object.
+     *
+     * @template T - The type of the object.
+     * @template K - The type of the key, which must be a key of T.
+     * @param {T} node - The object from which to retrieve the value.
+     * @returns {T[K]} - A random value from the object.
+     */
+    public getKeyValue<T extends object, K extends keyof T>(node: T): T[K] {
+        const key = this.getKey(node) as K;
+        return node[key];
     }
 
     /**
@@ -409,15 +425,17 @@ export class RandomUtil {
     }
 
     /**
-     * Draw a random (top level) element of the provided dictionary N times to return an array of N random dictionary keys
-     * Drawing can be with or without replacement
-     * @param   {any}       dict            The dictionary we want to draw randomly from
-     * @param   {integer}   count           The number of times we want to draw
-     * @param   {boolean}   replacement     Draw with ot without replacement from the input dict
-     * @return  {array}                     Array consisting of N random keys of the dictionary
+     * Draws a specified number of random keys from a given dictionary.
+     *
+     * @template K - The type of the keys in the dictionary.
+     * @template V - The type of the values in the dictionary.
+     * @param {Partial<Record<K, V>>} dict - The dictionary from which to draw keys.
+     * @param {number} [count=1] - The number of keys to draw. Defaults to 1.
+     * @param {boolean} [replacement=true] - Whether to draw with replacement. Defaults to true.
+     * @returns {K[]} - An array of randomly drawn keys from the dictionary.
      */
-    public drawRandomFromDict(dict: any, count = 1, replacement = true): any[] {
-        const keys = Object.keys(dict);
+    public drawRandomFromDict<K extends string, V>(dict: Partial<Record<K, V>>, count = 1, replacement = true): K[] {
+        const keys = Object.keys(dict) as K[];
         const randomKeys = this.drawRandomFromList(keys, count, replacement);
         return randomKeys;
     }
