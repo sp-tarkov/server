@@ -374,7 +374,7 @@ export class BotEquipmentModGenerator {
         const randomisationSettings = this.botHelper.getBotRandomizationDetails(request.botData.level, botEquipConfig);
 
         // Iterate over mod pool and choose mods to attach
-        const sortedModKeys = this.sortModKeys(Object.keys(compatibleModsPool));
+        const sortedModKeys = this.sortModKeys(Object.keys(compatibleModsPool), request.parentTemplate._id);
         for (const modSlot of sortedModKeys) {
             // Check weapon has slot for mod to fit in
             const modsParentSlot = this.getModItemSlotFromDb(modSlot, request.parentTemplate);
@@ -665,13 +665,15 @@ export class BotEquipmentModGenerator {
     /**
      * Sort mod slots into an ordering that maximises chance of a successful weapon generation
      * @param unsortedSlotKeys Array of mod slot strings to sort
+     * @param itemTplWithKeysToSort The Tpl of the item with mod keys being sorted
      * @returns Sorted array
      */
-    protected sortModKeys(unsortedSlotKeys: string[]): string[] {
+    protected sortModKeys(unsortedSlotKeys: string[], itemTplWithKeysToSort: string): string[] {
         // No need to sort with only 1 item in array
         if (unsortedSlotKeys.length <= 1) {
             return unsortedSlotKeys;
         }
+        const isMount = this.itemHelper.isOfBaseclass(itemTplWithKeysToSort, BaseClasses.MOUNT);
 
         const sortedKeys: string[] = [];
         const modRecieverKey = "mod_reciever";
@@ -683,50 +685,69 @@ export class BotEquipmentModGenerator {
         const modHandguardKey = "mod_handguard";
         const modMountKey = "mod_mount";
         const modScopeKey = "mod_scope";
+        const modScope000Key = "mod_scope_000";
 
-        if (unsortedSlotKeys.includes(modHandguardKey)) {
-            sortedKeys.push(modHandguardKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modHandguardKey), 1);
-        }
+        // Mounts are a special case, they need scopes first before more mounts
+        if (isMount) {
+            if (unsortedSlotKeys.includes(modScope000Key)) {
+                sortedKeys.push(modScope000Key);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modScope000Key), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modBarrelKey)) {
-            sortedKeys.push(modBarrelKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modBarrelKey), 1);
-        }
+            if (unsortedSlotKeys.includes(modScopeKey)) {
+                sortedKeys.push(modScopeKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modScopeKey), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modMount001Key)) {
-            sortedKeys.push(modMount001Key);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMount001Key), 1);
-        }
+            if (unsortedSlotKeys.includes(modMountKey)) {
+                sortedKeys.push(modMountKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMountKey), 1);
+            }
+        } else {
+            if (unsortedSlotKeys.includes(modHandguardKey)) {
+                sortedKeys.push(modHandguardKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modHandguardKey), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modRecieverKey)) {
-            sortedKeys.push(modRecieverKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modRecieverKey), 1);
-        }
+            if (unsortedSlotKeys.includes(modBarrelKey)) {
+                sortedKeys.push(modBarrelKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modBarrelKey), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modPistolGrip)) {
-            sortedKeys.push(modPistolGrip);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modPistolGrip), 1);
-        }
+            if (unsortedSlotKeys.includes(modMount001Key)) {
+                sortedKeys.push(modMount001Key);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMount001Key), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modGasBlockKey)) {
-            sortedKeys.push(modGasBlockKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modGasBlockKey), 1);
-        }
+            if (unsortedSlotKeys.includes(modRecieverKey)) {
+                sortedKeys.push(modRecieverKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modRecieverKey), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modStockKey)) {
-            sortedKeys.push(modStockKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modStockKey), 1);
-        }
+            if (unsortedSlotKeys.includes(modPistolGrip)) {
+                sortedKeys.push(modPistolGrip);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modPistolGrip), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modMountKey)) {
-            sortedKeys.push(modMountKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMountKey), 1);
-        }
+            if (unsortedSlotKeys.includes(modGasBlockKey)) {
+                sortedKeys.push(modGasBlockKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modGasBlockKey), 1);
+            }
 
-        if (unsortedSlotKeys.includes(modScopeKey)) {
-            sortedKeys.push(modScopeKey);
-            unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modScopeKey), 1);
+            if (unsortedSlotKeys.includes(modStockKey)) {
+                sortedKeys.push(modStockKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modStockKey), 1);
+            }
+
+            if (unsortedSlotKeys.includes(modMountKey)) {
+                sortedKeys.push(modMountKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modMountKey), 1);
+            }
+
+            if (unsortedSlotKeys.includes(modScopeKey)) {
+                sortedKeys.push(modScopeKey);
+                unsortedSlotKeys.splice(unsortedSlotKeys.indexOf(modScopeKey), 1);
+            }
         }
 
         sortedKeys.push(...unsortedSlotKeys);
