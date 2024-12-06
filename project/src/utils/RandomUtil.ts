@@ -386,12 +386,18 @@ export class RandomUtil {
      */
     public drawRandomFromList<T>(originalList: Array<T>, count = 1, replacement = true): Array<T> {
         let list = originalList;
+        let drawCount = count;
+
         if (!replacement) {
             list = this.cloner.clone(originalList);
+            // Adjust drawCount to avoid drawing more elements than available
+            if (drawCount > list.length) {
+                drawCount = list.length;
+            }
         }
 
         const results: T[] = [];
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < drawCount; i++) {
             const randomIndex = this.randInt(list.length);
             if (replacement) {
                 results.push(list[randomIndex]);
