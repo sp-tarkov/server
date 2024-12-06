@@ -1,3 +1,4 @@
+import * as crypto from "node:crypto";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { MathUtil } from "@spt/utils/MathUtil";
 import { ICloner } from "@spt/utils/cloners/ICloner";
@@ -194,33 +195,90 @@ export class RandomUtil {
         @inject("PrimaryLogger") protected logger: ILogger,
     ) {}
 
+    /**
+     * Generates a secure random number between 0 (inclusive) and 1 (exclusive).
+     *
+     * This method uses the `crypto` module to generate a 48-bit random integer,
+     * which is then divided by the maximum possible 48-bit integer value to
+     * produce a floating-point number in the range [0, 1).
+     *
+     * @returns A secure random number between 0 (inclusive) and 1 (exclusive).
+     */
+    private getSecureRandomNumber(): number {
+        const buffer = crypto.randomBytes(6); // 48 bits
+        const integer = buffer.readUIntBE(0, 6);
+        const maxInteger = 281474976710656; // 2^48
+        return integer / maxInteger;
+    }
+
+    /**
+     * Generates a random integer between the specified minimum and maximum values, inclusive.
+     *
+     * @param min - The minimum value (inclusive).
+     * @param max - The maximum value (inclusive).
+     * @returns A random integer between the specified minimum and maximum values.
+     */
     public getInt(min: number, max: number): number {
         const minimum = Math.ceil(min);
         const maximum = Math.floor(max);
-        return maximum > minimum ? Math.floor(Math.random() * (maximum - minimum + 1) + minimum) : minimum;
+        if (maximum > minimum) {
+            // randomInt is exclusive of the max value, so add 1
+            return crypto.randomInt(minimum, maximum + 1);
+        }
+        return minimum;
     }
 
+    /**
+     * Generates a random integer between 1 (inclusive) and the specified maximum value (exclusive).
+     * If the maximum value is less than or equal to 1, it returns 1.
+     *
+     * @param max - The upper bound (exclusive) for the random integer generation.
+     * @returns A random integer between 1 and max - 1, or 1 if max is less than or equal to 1.
+     */
     public getIntEx(max: number): number {
-        return max > 1 ? Math.floor(Math.random() * (max - 2) + 1) : 1;
+        return max > 2 ? crypto.randomInt(1, max - 1) : 1;
     }
 
+    /**
+     * Generates a random floating-point number within the specified range.
+     *
+     * @param min - The minimum value of the range (inclusive).
+     * @param max - The maximum value of the range (exclusive).
+     * @returns A random floating-point number between `min` (inclusive) and `max` (exclusive).
+     */
     public getFloat(min: number, max: number): number {
-        return Math.random() * (max - min) + min;
+        const random = this.getSecureRandomNumber();
+        return random * (max - min) + min;
     }
 
+    /**
+     * Generates a random boolean value.
+     *
+     * @returns A random boolean value, where the probability of `true` and `false` is approximately equal.
+     */
     public getBool(): boolean {
-        return Math.random() < 0.5;
+        const random = this.getSecureRandomNumber();
+        return random < 0.5;
     }
 
+    /**
+     * Calculates the percentage of a given number and returns the result.
+     *
+     * @param percent - The percentage to calculate.
+     * @param number - The number to calculate the percentage of.
+     * @param toFixed - The number of decimal places to round the result to (default is 2).
+     * @returns The calculated percentage of the given number, rounded to the specified number of decimal places.
+     */
     public getPercentOfValue(percent: number, number: number, toFixed = 2): number {
         return Number.parseFloat(((percent * number) / 100).toFixed(toFixed));
     }
 
     /**
-     * Reduce a value by a percentage
-     * @param number Value to reduce
-     * @param percentage Percentage to reduce value by
-     * @returns Reduced value
+     * Reduces a given number by a specified percentage.
+     *
+     * @param number - The original number to be reduced.
+     * @param percentage - The percentage by which to reduce the number.
+     * @returns The reduced number after applying the percentage reduction.
      */
     public reduceValueByPercent(number: number, percentage: number): number {
         const reductionAmount = number * (percentage / 100);
@@ -228,46 +286,87 @@ export class RandomUtil {
     }
 
     /**
-     * Check if number passes a check out of 100
-     * @param chancePercent value check needs to be above
-     * @returns true if value passes check
+     * Determines if a random event occurs based on the given chance percentage.
+     *
+     * @param chancePercent - The percentage chance (0-100) that the event will occur.
+     * @returns `true` if the event occurs, `false` otherwise.
      */
     public getChance100(chancePercent: number): boolean {
         return this.getIntEx(100) <= chancePercent;
     }
 
-    // Its better to keep this method separated from getArrayValue so we can use generic inferance on getArrayValue
+    /**
+     * Returns a random string from the provided array of strings.
+     *
+     * This method is separate from getArrayValue so we can use a generic inferance with getArrayValue.
+     *
+     * @param arr - The array of strings to select a random value from.
+     * @returns A randomly selected string from the array.
+     */
     public getStringArrayValue(arr: string[]): string {
         return arr[this.getInt(0, arr.length - 1)];
     }
 
+    /**
+     * Returns a random element from the provided array.
+     *
+     * @template T - The type of elements in the array.
+     * @param arr - The array from which to select a random element.
+     * @returns A random element from the array.
+     */
     public getArrayValue<T>(arr: T[]): T {
         return arr[this.getInt(0, arr.length - 1)];
     }
 
+    /**
+     * Retrieves a random key from the given object.
+     *
+     * @param node - The object from which to retrieve a key.
+     * @returns A string representing one of the keys of the node object.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
+     */
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
     public getKey(node: any): string {
         return this.getArrayValue(Object.keys(node));
     }
 
+    /**
+     * Retrieves the value associated with a key from the given node object.
+     *
+     * @param node - An object with string keys and any type of values.
+     * @returns The value associated with the key obtained from the node.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
+     */
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
     public getKeyValue(node: { [x: string]: any }): any {
         return node[this.getKey(node)];
     }
 
     /**
-     * Generate a normally distributed random number
-     * Uses the Box-Muller transform
-     * @param   {number}    mean    Mean of the normal distribution
-     * @param   {number}    sigma   Standard deviation of the normal distribution
-     * @returns {number}            The value drawn
+     * Generates a normally distributed random number using the Box-Muller transform.
+     *
+     * @param mean - The mean (μ) of the normal distribution.
+     * @param sigma - The standard deviation (σ) of the normal distribution.
+     * @param attempt - The current attempt count to generate a valid number (default is 0).
+     * @returns A normally distributed random number.
+     *
+     * @remarks
+     * This function uses the Box-Muller transform to generate a normally distributed random number.
+     * If the generated number is less than 0, it will recursively attempt to generate a valid number up to 100 times.
+     * If it fails to generate a valid number after 100 attempts, it will return a random float between 0.01 and twice the mean.
      */
     public getNormallyDistributedRandomNumber(mean: number, sigma: number, attempt = 0): number {
         let u = 0;
         let v = 0;
         while (u === 0) {
-            u = Math.random(); // Converting [0,1) to (0,1)
+            u = this.getSecureRandomNumber();
         }
         while (v === 0) {
-            v = Math.random();
+            v = this.getSecureRandomNumber();
         }
         const w = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
         const valueDrawn = mean + w * sigma;
@@ -283,36 +382,42 @@ export class RandomUtil {
     }
 
     /**
-     * Draw Random integer low inclusive, high exclusive
-     * if high is not set we draw from 0 to low (exclusive)
-     * @param   {integer}   low     Lower bound inclusive, when high is not set, this is high
-     * @param   {integer}   high    Higher bound exclusive
-     * @returns {integer}           The random integer in [low, high)
+     * Generates a random integer between the specified range.
+     *
+     * @param low - The lower bound of the range (inclusive).
+     * @param high - The upper bound of the range (exclusive). If not provided, the range will be from 0 to `low`.
+     * @returns A random integer within the specified range.
      */
     public randInt(low: number, high?: number): number {
-        if (high) {
-            return low + Math.floor(Math.random() * (high - low));
+        if (typeof high !== "undefined") {
+            return crypto.randomInt(low, high);
         }
-
-        return Math.floor(Math.random() * low);
+        return crypto.randomInt(0, low);
     }
 
     /**
-     * Draw a random element of the provided list N times to return an array of N random elements
-     * Drawing can be with or without replacement
-     * @param   {array}     list            The array we want to draw randomly from
-     * @param   {integer}   count           The number of times we want to draw
-     * @param   {boolean}   replacement     Draw with or without replacement from the input array(default true)
-     * @return  {array}                     Array consisting of N random elements
+     * Draws a specified number of random elements from a given list.
+     *
+     * @template T - The type of elements in the list.
+     * @param originalList - The list to draw elements from.
+     * @param count - The number of elements to draw. Defaults to 1.
+     * @param replacement - Whether to draw with replacement. Defaults to true.
+     * @returns An array containing the drawn elements.
      */
     public drawRandomFromList<T>(originalList: Array<T>, count = 1, replacement = true): Array<T> {
         let list = originalList;
+        let drawCount = count;
+
         if (!replacement) {
             list = this.cloner.clone(originalList);
+            // Adjust drawCount to avoid drawing more elements than available
+            if (drawCount > list.length) {
+                drawCount = list.length;
+            }
         }
 
         const results: T[] = [];
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < drawCount; i++) {
             const randomIndex = this.randInt(list.length);
             if (replacement) {
                 results.push(list[randomIndex]);
@@ -324,33 +429,48 @@ export class RandomUtil {
     }
 
     /**
-     * Draw a random (top level) element of the provided dictionary N times to return an array of N random dictionary keys
-     * Drawing can be with or without replacement
-     * @param   {any}       dict            The dictionary we want to draw randomly from
-     * @param   {integer}   count           The number of times we want to draw
-     * @param   {boolean}   replacement     Draw with ot without replacement from the input dict
-     * @return  {array}                     Array consisting of N random keys of the dictionary
+     * Draws a specified number of random keys from a given dictionary.
+     *
+     * @param dict - The dictionary from which to draw keys.
+     * @param count - The number of keys to draw. Defaults to 1.
+     * @param replacement - Whether to draw with replacement. Defaults to true.
+     * @returns An array of randomly drawn keys from the dictionary.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
      */
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
     public drawRandomFromDict(dict: any, count = 1, replacement = true): any[] {
         const keys = Object.keys(dict);
         const randomKeys = this.drawRandomFromList(keys, count, replacement);
         return randomKeys;
     }
 
+    /**
+     * Generates a biased random number within a specified range.
+     *
+     * @param min - The minimum value of the range (inclusive).
+     * @param max - The maximum value of the range (inclusive).
+     * @param shift - The bias shift to apply to the random number generation.
+     * @param n - The number of iterations to use for generating a Gaussian random number.
+     * @returns A biased random number within the specified range.
+     * @throws Will throw if `max` is less than `min` or if `n` is less than 1.
+     */
     public getBiasedRandomNumber(min: number, max: number, shift: number, n: number): number {
-        /* To whoever tries to make sense of this, please forgive me - I tried my best at explaining what goes on here.
+        /**
          * This function generates a random number based on a gaussian distribution with an option to add a bias via shifting.
          *
          * Here's an example graph of how the probabilities can be distributed:
          * https://www.boost.org/doc/libs/1_49_0/libs/math/doc/sf_and_dist/graphs/normal_pdf.png
+         *
          * Our parameter 'n' is sort of like σ (sigma) in the example graph.
          *
          * An 'n' of 1 means all values are equally likely. Increasing 'n' causes numbers near the edge to become less likely.
          * By setting 'shift' to whatever 'max' is, we can make values near 'min' very likely, while values near 'max' become extremely unlikely.
          *
          * Here's a place where you can play around with the 'n' and 'shift' values to see how the distribution changes:
-         * http://jsfiddle.net/e08cumyx/ */
-
+         * http://jsfiddle.net/e08cumyx/
+         */
         if (max < min) {
             throw {
                 name: "Invalid arguments",
@@ -367,13 +487,14 @@ export class RandomUtil {
         }
 
         if (shift > max - min) {
-            /* If a rolled number is out of bounds (due to bias being applied), we simply roll it again.
+            /**
+             * If a rolled number is out of bounds (due to bias being applied), we simply roll it again.
              * As the shifting increases, the chance of rolling a number within bounds decreases.
              * A shift that is equal to the available range only has a 50% chance of rolling correctly, theoretically halving performance.
-             * Shifting even further drops the success chance very rapidly - so we want to warn against that */
-
+             * Shifting even further drops the success chance very rapidly - so we want to warn against that
+             **/
             this.logger.warning(
-                "Bias shift for random number generation is greater than the range of available numbers.\nThis can have a very severe performance impact!",
+                "Bias shift for random number generation is greater than the range of available numbers. This can have a very severe performance impact!",
             );
             this.logger.info(`min -> ${min}; max -> ${max}; shift -> ${shift}`);
         }
@@ -382,7 +503,7 @@ export class RandomUtil {
             let rand = 0;
 
             for (let i = 0; i < n; i += 1) {
-                rand += Math.random();
+                rand += this.getSecureRandomNumber();
             }
 
             return rand / n;
@@ -404,9 +525,11 @@ export class RandomUtil {
     }
 
     /**
-     * Fisher-Yates shuffle an array
-     * @param array Array to shuffle
-     * @returns Shuffled array
+     * Shuffles an array in place using the Fisher-Yates algorithm.
+     *
+     * @template T - The type of elements in the array.
+     * @param array - The array to shuffle.
+     * @returns The shuffled array.
      */
     public shuffle<T>(array: Array<T>): Array<T> {
         let currentIndex = array.length;
@@ -415,7 +538,7 @@ export class RandomUtil {
         // While there remain elements to shuffle.
         while (currentIndex !== 0) {
             // Pick a remaining element.
-            randomIndex = Math.floor(Math.random() * currentIndex);
+            randomIndex = crypto.randomInt(0, currentIndex);
             currentIndex--;
 
             // And swap it with the current element.
@@ -426,18 +549,13 @@ export class RandomUtil {
     }
 
     /**
-     * Rolls for a probability based on chance
-     * @param number Probability Chance as float (0-1)
-     * @returns If roll succeed or not
-     * @example
-     * rollForChanceProbability(0.25); // returns true 25% probability
+     * Rolls for a chance probability and returns whether the roll is successful.
+     *
+     * @param probabilityChance - The probability chance to roll for, represented as a number between 0 and 1.
+     * @returns `true` if the random number is less than or equal to the probability chance, otherwise `false`.
      */
     public rollForChanceProbability(probabilityChance: number): boolean {
-        const maxRoll = 9999;
-
-        // Roll a number between 0 and 1
-        const rolledChance = this.getInt(0, maxRoll) / 10000;
-
-        return rolledChance <= probabilityChance;
+        const random = this.getSecureRandomNumber();
+        return random <= probabilityChance;
     }
 }
