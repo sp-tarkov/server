@@ -430,8 +430,7 @@ export class ProfileController {
             },
             skills: playerPmc.Skills,
             equipment: {
-                // Default inventory tpl
-                Id: playerPmc.Inventory.items.find((item) => item._tpl === ItemTpl.INVENTORY_DEFAULT)._id,
+                Id: playerPmc.Inventory.equipment,
                 Items: playerPmc.Inventory.items,
             },
             achievements: playerPmc.Achievements,

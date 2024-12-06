@@ -72,8 +72,6 @@ The following commands are available after the initial setup. Run them with `npm
 | `run:profiler`        | Run the project in profiler mode.                                         |
 | `gen:types`           | Generate types for the project.                                           |
 | `gen:docs`            | Generate documentation for the project.                                   |
-| `database:compress`   | Compress database files from working directory into archive.              |
-| `database:decompress` | Decompress database archives into working directory.                      |
 
 ### Debugging
 

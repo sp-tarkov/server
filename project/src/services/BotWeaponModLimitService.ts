@@ -100,23 +100,28 @@ export class BotWeaponModLimitService {
             return true;
         }
 
-        // mods parent is scope and mod is scope, allow it (adds those mini-sights to the tops of sights)
+        // Mods parent is scope and mod is scope, allow it (adds those mini-sights to the tops of sights)
         const modIsScope = this.itemHelper.isOfBaseclasses(modTemplate._id, modLimits.scopeBaseTypes);
         if (this.itemHelper.isOfBaseclasses(modsParent._id, modLimits.scopeBaseTypes) && modIsScope) {
             return false;
         }
 
-        // If mod is a scope, return if limit reached
+        // If mod is a scope , Exit early
         if (modIsScope) {
             return this.weaponModLimitReached(modTemplate._id, modLimits.scope, modLimits.scopeMax, botRole);
         }
 
-        // Mod is a mount that can hold only scopes and limit is reached (dont want to add empty mounts if limit is reached)
+        // Don't allow multple mounts on a weapon (except when mount is on another mount)
+        // Fail when:
+        // Over or at scope limit on weapon
+        // Item being added is a mount but the parent item is NOT a mount (Allows red dot sub-mounts on mounts)
+        // Mount has one slot and its for a mod_scope
         if (
+            modLimits.scope.count >= modLimits.scopeMax &&
+            modTemplate._props.Slots?.length === 1 &&
             this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT) &&
-            modTemplate._props.Slots.some((x) => x._name === "mod_scope") &&
-            modTemplate._props.Slots.length === 1 &&
-            modLimits.scope.count >= modLimits.scopeMax
+            !this.itemHelper.isOfBaseclass(modsParent._id, BaseClasses.MOUNT) &&
+            modTemplate._props.Slots.some((slot) => slot._name === "mod_scope")
         ) {
             return true;
         }
@@ -134,10 +139,10 @@ export class BotWeaponModLimitService {
 
         // Mod is a mount that can hold only flashlights ad limit is reached (dont want to add empty mounts if limit is reached)
         if (
+            modLimits.scope.count >= modLimits.scopeMax &&
+            modTemplate._props.Slots?.length === 1 &&
             this.itemHelper.isOfBaseclass(modTemplate._id, BaseClasses.MOUNT) &&
-            modTemplate._props.Slots.some((x) => x._name === "mod_flashlight") &&
-            modTemplate._props.Slots.length === 1 &&
-            modLimits.scope.count >= modLimits.scopeMax
+            modTemplate._props.Slots.some((slot) => slot._name === "mod_flashlight")
         ) {
             return true;
         }

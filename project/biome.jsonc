@@ -69,5 +69,17 @@
         "formatter": {
             "trailingCommas": "none"
         }
-    }
+    },
+    "overrides": [
+        {
+            "include": ["tests/*"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noExplicitAny": "off"
+                    }
+                }
+            }
+        }
+    ]
 }

@@ -118,6 +118,13 @@ export class RagfairOfferHelper {
         });
     }
 
+    /**
+     * Disable offer if item is flagged by tiered flea config
+     * @param tieredFlea Tiered flea settings from ragfair config
+     * @param offer Ragfair offer to check
+     * @param tieredFleaLimitTypes Dict of item types with player level to be viewable
+     * @param playerLevel Level of player viewing offer
+     */
     protected checkAndLockOfferFromPlayerTieredFlea(
         tieredFlea: ITieredFlea,
         offer: IRagfairOffer,
@@ -218,23 +225,25 @@ export class RagfairOfferHelper {
 
             if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcData, playerIsFleaBanned)) {
                 const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
+                if (isTraderOffer) {
+                    if (this.traderBuyRestrictionReached(offer)) {
+                        continue;
+                    }
 
-                if (isTraderOffer && this.traderBuyRestrictionReached(offer)) {
-                    continue;
+                    if (this.traderOutOfStock(offer)) {
+                        continue;
+                    }
+
+                    if (this.traderOfferItemQuestLocked(offer, traderAssorts)) {
+                        continue;
+                    }
+
+                    if (this.traderOfferLockedBehindLoyaltyLevel(offer, pmcData)) {
+                        continue;
+                    }
                 }
 
-                if (isTraderOffer && this.traderOutOfStock(offer)) {
-                    continue;
-                }
-
-                if (isTraderOffer && this.traderOfferItemQuestLocked(offer, traderAssorts)) {
-                    continue;
-                }
-
-                if (isTraderOffer && this.traderOfferLockedBehindLoyaltyLevel(offer, pmcData)) {
-                    continue;
-                }
-
+                // Tiered flea and not trader offer
                 if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
                     this.checkAndLockOfferFromPlayerTieredFlea(
                         tieredFlea,
@@ -253,7 +262,7 @@ export class RagfairOfferHelper {
             }
         }
 
-        // get best offer for each item to show on screen
+        // Get best offer for each item to show on screen
         for (let possibleOffers of offersMap.values()) {
             // Remove offers with locked = true (quest locked) when > 1 possible offers
             // single trader item = shows greyed out
@@ -300,7 +309,7 @@ export class RagfairOfferHelper {
     }
 
     /**
-     * Has a traders offer ran out of stock to sell to player
+     * Has trader offer ran out of stock to sell to player
      * @param offer Offer to check stock of
      * @returns true if out of stock
      */
@@ -314,7 +323,7 @@ export class RagfairOfferHelper {
 
     /**
      * Check if trader offers' BuyRestrictionMax value has been reached
-     * @param offer offer to check restriction properties of
+     * @param offer Offer to check restriction properties of
      * @returns true if restriction reached, false if no restrictions/not reached
      */
     protected traderBuyRestrictionReached(offer: IRagfairOffer): boolean {
@@ -357,7 +366,7 @@ export class RagfairOfferHelper {
      * Get an array of flea offers that are inaccessible to player due to their inadequate loyalty level
      * @param offers Offers to check
      * @param pmcProfile Players profile with trader loyalty levels
-     * @returns array of offer ids player cannot see
+     * @returns Array of offer ids player cannot see
      */
     protected getLoyaltyLockedOffers(offers: IRagfairOffer[], pmcProfile: IPmcData): string[] {
         const loyaltyLockedOffers: string[] = [];
@@ -400,10 +409,8 @@ export class RagfairOfferHelper {
                     boughtAmount = offer.sellResult[0].amount;
                 }
 
-                this.increaseProfileRagfairRating(
-                    this.saveServer.getProfile(sessionID),
-                    (offer.summaryCost / totalItemsCount) * boughtAmount,
-                );
+                const ratingToAdd = (offer.summaryCost / totalItemsCount) * boughtAmount;
+                this.increaseProfileRagfairRating(this.saveServer.getProfile(sessionID), ratingToAdd);
 
                 this.completeOffer(sessionID, offer, boughtAmount);
                 offer.sellResult.splice(0, 1); // Remove the sell result object now its been processed
@@ -416,7 +423,7 @@ export class RagfairOfferHelper {
     /**
      * Count up all rootitem StackObjectsCount properties of an array of items
      * @param itemsInInventoryToList items to sum up
-     * @returns Total count
+     * @returns Total stack count
      */
     public getTotalStackCountSize(itemsInInventoryToList: IItem[][]): number {
         let total = 0;
@@ -581,10 +588,10 @@ export class RagfairOfferHelper {
 
     /**
      * Check an offer passes the various search criteria the player requested
-     * @param searchRequest
-     * @param offer
-     * @param pmcData
-     * @returns True
+     * @param searchRequest Client search request
+     * @param offer Offer to check
+     * @param pmcData Player profile
+     * @returns True if offer passes criteria
      */
     protected passesSearchFilterCriteria(
         searchRequest: ISearchRequestData,
@@ -679,7 +686,7 @@ export class RagfairOfferHelper {
     /**
      * Check that the passed in offer item is functional
      * @param offerRootItem The root item of the offer
-     * @param offer The flea offer
+     * @param offer Flea offer to check
      * @returns True if the given item is functional
      */
     public isItemFunctional(offerRootItem: IItem, offer: IRagfairOffer): boolean {
@@ -704,7 +711,7 @@ export class RagfairOfferHelper {
      * Should a ragfair offer be visible to the player
      * @param searchRequest Search request
      * @param itemsToAdd ?
-     * @param traderAssorts Trader assort items
+     * @param traderAssorts Trader assort items - used for filtering out locked trader items
      * @param offer The flea offer
      * @param pmcProfile Player profile
      * @returns True = should be shown to player
@@ -752,17 +759,17 @@ export class RagfairOfferHelper {
         // commented out as required search "which is for checking offers that are barters"
         // has info.removeBartering as true, this if statement removed barter items.
         if (searchRequest.removeBartering && !this.paymentHelper.isMoneyTpl(moneyTypeTpl)) {
-            // don't include barter offers
+            // Don't include barter offers
             return false;
         }
 
         if (Number.isNaN(offer.requirementsCost)) {
-            // don't include offers with undefined or NaN in it
+            // Don't include offers with undefined or NaN in it
             return false;
         }
 
         // Handle trader items to remove items that are not available to the user right now
-        // required search for "lamp" shows 4 items, 3 of which are not available to a new player
+        // e.g. required search for "lamp" shows 4 items, 3 of which are not available to a new player
         // filter those out
         if (isTraderOffer) {
             if (!(offer.user.id in traderAssorts)) {

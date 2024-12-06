@@ -22,6 +22,7 @@ import {
     IDynamic,
     IRagfairConfig,
 } from "@spt/models/spt/config/IRagfairConfig";
+import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
 import { ITplWithFleaPrice } from "@spt/models/spt/ragfair/ITplWithFleaPrice";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -40,6 +41,7 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class RagfairOfferGenerator {
     protected ragfairConfig: IRagfairConfig;
+    protected traderConfig: ITraderConfig;
     protected botConfig: IBotConfig;
     protected allowedFleaPriceItemsForBarter: { tpl: string; price: number }[];
 
@@ -69,6 +71,7 @@ export class RagfairOfferGenerator {
         @inject("PrimaryCloner") protected cloner: ICloner,
     ) {
         this.ragfairConfig = this.configServer.getConfig(ConfigTypes.RAGFAIR);
+        this.traderConfig = this.configServer.getConfig(ConfigTypes.TRADER);
         this.botConfig = this.configServer.getConfig(ConfigTypes.BOT);
     }
 
@@ -173,7 +176,7 @@ export class RagfairOfferGenerator {
      * @param isTrader Is the user creating the offer a trader
      * @returns IRagfairOfferUser
      */
-    createUserDataForFleaOffer(userID: string, isTrader: boolean): IRagfairOfferUser {
+    protected createUserDataForFleaOffer(userID: string, isTrader: boolean): IRagfairOfferUser {
         // Trader offer
         if (isTrader) {
             return {
@@ -589,6 +592,16 @@ export class RagfairOfferGenerator {
             }
 
             const barterSchemeItems = assorts.barter_scheme[item._id][0];
+
+            // Adjust price by traderPriceMultipler config property
+            if (this.traderConfig.traderPriceMultipler > 0) {
+                if (barterSchemeItems.length === 1 && this.paymentHelper.isMoneyTpl(barterSchemeItems[0]._tpl)) {
+                    barterSchemeItems[0].count = Math.ceil(
+                        barterSchemeItems[0].count * this.traderConfig.traderPriceMultipler,
+                    );
+                }
+            }
+
             const loyalLevel = assorts.loyal_level_items[item._id];
 
             const offer = this.createAndAddFleaOffer(traderID, time, items, barterSchemeItems, loyalLevel, false);

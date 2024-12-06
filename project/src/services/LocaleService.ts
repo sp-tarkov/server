@@ -104,6 +104,11 @@ export class LocaleService {
                 return languageCode;
             }
 
+            if (baseNameCode === "pt") {
+                // Handle edge case of pt
+                return "pt-pt";
+            }
+
             this.logger.warning(`Unsupported system language found: ${baseNameCode}, falling back to english`);
 
             return "en";

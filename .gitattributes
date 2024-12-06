@@ -1,4 +1,22 @@
-# Normalize Line Endings
+# Normalize Line Endings.
 * text=auto eol=lf
 
-project/assets/compressed/database/locations.7z filter=lfs diff=lfs merge=lfs -text
+# LFS Tracking for large (5MB+) JSON files.
+#
+# Can be found with the following command:
+# find project/assets/database -type f -name "*.json" -size +5M | while read file; do
+#     git lfs track "$file"
+# done
+project/assets/database/locations/bigmap/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/laboratory/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/interchange/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/factory4_night/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/shoreline/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/tarkovstreets/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/sandbox/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/sandbox_high/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/lighthouse/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/rezervbase/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/woods/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/locations/factory4_day/looseLoot.json filter=lfs diff=lfs merge=lfs -text
+project/assets/database/templates/items.json filter=lfs diff=lfs merge=lfs -text

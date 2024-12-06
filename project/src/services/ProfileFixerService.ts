@@ -288,9 +288,9 @@ export class ProfileFixerService {
             }
 
             // For started or successful quests, check for unlocks in the `Started` rewards
-            if (profileQuest.status == QuestStatus.Started || profileQuest.status == QuestStatus.Success) {
+            if (profileQuest.status === QuestStatus.Started || profileQuest.status === QuestStatus.Success) {
                 const productionRewards = quest.rewards.Started?.filter(
-                    (reward) => reward.type == QuestRewardType.PRODUCTIONS_SCHEME,
+                    (reward) => reward.type === QuestRewardType.PRODUCTIONS_SCHEME,
                 );
                 productionRewards?.forEach((reward) => this.verifyQuestProductionUnlock(pmcProfile, reward, quest));
             }
@@ -298,7 +298,7 @@ export class ProfileFixerService {
             // For successful quests, check for unlocks in the `Success` rewards
             if (profileQuest.status == QuestStatus.Success) {
                 const productionRewards = quest.rewards.Success?.filter(
-                    (reward) => reward.type == QuestRewardType.PRODUCTIONS_SCHEME,
+                    (reward) => reward.type === QuestRewardType.PRODUCTIONS_SCHEME,
                 );
                 productionRewards?.forEach((reward) => this.verifyQuestProductionUnlock(pmcProfile, reward, quest));
             }

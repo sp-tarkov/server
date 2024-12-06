@@ -501,10 +501,29 @@ export class SeasonalEventService {
             this.databaseService.getLocation(locationId).base.waves = [];
         }
 
-        const activeMaps = Object.keys(zombieSettings.mapInfectionAmount).filter(
-            (locationId) => zombieSettings.mapInfectionAmount[locationId] > 0,
+        const locationsWithActiveInfection = this.getLocationsWithZombies(zombieSettings.mapInfectionAmount);
+        this.addEventBossesToMaps("halloweenzombies", locationsWithActiveInfection);
+    }
+
+    /**
+     * Get location ids of maps with an infection above 0
+     * @param locationInfections Dict of locations with their infection percentage
+     * @returns Array of location ids
+     */
+    protected getLocationsWithZombies(locationInfections: Record<string, number>): string[] {
+        const result: string[] = [];
+
+        // Get only the locations with an infection above 0
+        const infectionKeys = Object.keys(locationInfections).filter(
+            (locationId) => locationInfections[locationId] > 0,
         );
-        this.addEventBossesToMaps("halloweenzombies", activeMaps);
+
+        // Convert the infected location id into its generic location id
+        for (const locationkey of infectionKeys) {
+            result.push(...this.getLocationFromInfectedLocation(locationkey));
+        }
+
+        return result;
     }
 
     /**

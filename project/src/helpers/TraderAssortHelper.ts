@@ -55,15 +55,10 @@ export class TraderAssortHelper {
      * Filter out assorts not unlocked due to level OR quest completion
      * @param sessionId session id
      * @param traderId traders id
-     * @param flea Should assorts player hasn't unlocked be returned - default false
+     * @param showLockedAssorts Should assorts player hasn't unlocked be returned - default false
      * @returns a traders' assorts
      */
-    public getAssort(sessionId: string, traderId: string, flea = false): ITraderAssort {
-        // Special case for getting ragfair items as they're dynamically generated
-        if (traderId === "ragfair") {
-            return this.getRagfairDataAsTraderAssort();
-        }
-
+    public getAssort(sessionId: string, traderId: string, showLockedAssorts = false): ITraderAssort {
         const traderClone = this.cloner.clone(this.databaseService.getTrader(traderId));
         const fullProfile = this.profileHelper.getFullProfile(sessionId);
         const pmcProfile = fullProfile.characters.pmc;
@@ -73,7 +68,7 @@ export class TraderAssortHelper {
         }
 
         // Strip assorts player should not see yet
-        if (!flea) {
+        if (!showLockedAssorts) {
             traderClone.assort = this.assortHelper.stripLockedLoyaltyAssort(pmcProfile, traderId, traderClone.assort);
         }
 
@@ -119,17 +114,12 @@ export class TraderAssortHelper {
             traderId,
             traderClone.assort,
             this.mergedQuestAssorts,
-            flea,
+            showLockedAssorts,
         );
 
         // Filter out root assorts that are blacklisted for this profile
         if (fullProfile.spt.blacklistedItemTpls?.length > 0) {
             this.removeItemsFromAssort(traderClone.assort, fullProfile.spt.blacklistedItemTpls);
-        }
-
-        // Multiply price if multiplier is other than 1
-        if (this.traderConfig.traderPriceMultipler !== 1) {
-            this.multiplyItemPricesByConfigMultiplier(traderClone.assort);
         }
 
         return traderClone.assort;
@@ -224,42 +214,11 @@ export class TraderAssortHelper {
     }
 
     /**
-     * Iterate over all assorts barter_scheme values, find barters selling for money and multiply by multipler in config
-     * @param traderAssort Assorts to multiple price of
-     */
-    protected multiplyItemPricesByConfigMultiplier(traderAssort: ITraderAssort): void {
-        if (!this.traderConfig.traderPriceMultipler || this.traderConfig.traderPriceMultipler <= 0) {
-            this.traderConfig.traderPriceMultipler = 0.01;
-            this.logger.warning(this.localisationService.getText("trader-price_multipler_is_zero_use_default"));
-        }
-
-        for (const assortId in traderAssort.barter_scheme) {
-            const schemeDetails = traderAssort.barter_scheme[assortId][0];
-            if (schemeDetails.length === 1 && this.paymentHelper.isMoneyTpl(schemeDetails[0]._tpl)) {
-                schemeDetails[0].count = Math.ceil(schemeDetails[0].count * this.traderConfig.traderPriceMultipler);
-            }
-        }
-    }
-
-    /**
      * Get an array of pristine trader items prior to any alteration by player (as they were on server start)
      * @param traderId trader id
      * @returns array of Items
      */
     protected getPristineTraderAssorts(traderId: string): IItem[] {
         return this.cloner.clone(this.traderAssortService.getPristineTraderAssort(traderId).items);
-    }
-
-    /**
-     * Returns generated ragfair offers in a trader assort format
-     * @returns Trader assort object
-     */
-    protected getRagfairDataAsTraderAssort(): ITraderAssort {
-        return {
-            items: this.ragfairAssortGenerator.getAssortItems().flat(),
-            barter_scheme: {},
-            loyal_level_items: {},
-            nextResupply: undefined,
-        };
     }
 }

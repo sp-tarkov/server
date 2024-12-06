@@ -1,6 +1,6 @@
 {
     "name": "spt-server",
-    "version": "3.10.0",
+    "version": "3.10.2",
     "author": "SPT Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
@@ -11,7 +11,6 @@
         "node": "20.11.1"
     },
     "scripts": {
-        "postinstall": "node scripts/fix-7za-permissions.js",
         "check:circular": "madge --circular --ts-config tsconfig.json --extensions ts ./src/",
         "lint": "npx @biomejs/biome lint ./",
         "lint:fix": "npx @biomejs/biome lint --write ./",
@@ -32,12 +31,9 @@
         "gen:types": "tsc -p tsconfig.typedef.json --resolveJsonModule",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
-        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts",
-        "database:compress": "node scripts/databaseCompress.js",
-        "database:decompress": "node scripts/databaseDecompress.js"
+        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
     },
     "dependencies": {
-        "7zip-bin": "^5.2.0",
         "atomically": "~1.7",
         "buffer-crc32": "~1.0",
         "date-fns": "~3.6",
@@ -47,7 +43,6 @@
         "json5": "~2.2",
         "jsonc": "~2.0",
         "mongoid-js": "~1.3",
-        "node-7z": "^3.0.0",
         "proper-lockfile": "~4.1",
         "reflect-metadata": "~0.2",
         "semver": "~7.6",
