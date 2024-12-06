@@ -202,7 +202,7 @@ export class RandomUtil {
      * which is then divided by the maximum possible 48-bit integer value to
      * produce a floating-point number in the range [0, 1).
      *
-     * @returns {number} A secure random number between 0 (inclusive) and 1 (exclusive).
+     * @returns A secure random number between 0 (inclusive) and 1 (exclusive).
      */
     private getSecureRandomNumber(): number {
         const buffer = crypto.randomBytes(6); // 48 bits
@@ -214,9 +214,9 @@ export class RandomUtil {
     /**
      * Generates a random integer between the specified minimum and maximum values, inclusive.
      *
-     * @param {number} min - The minimum value (inclusive).
-     * @param {number} max - The maximum value (inclusive).
-     * @returns {number} - A random integer between the specified minimum and maximum values.
+     * @param min - The minimum value (inclusive).
+     * @param max - The maximum value (inclusive).
+     * @returns A random integer between the specified minimum and maximum values.
      */
     public getInt(min: number, max: number): number {
         const minimum = Math.ceil(min);
@@ -232,8 +232,8 @@ export class RandomUtil {
      * Generates a random integer between 1 (inclusive) and the specified maximum value (exclusive).
      * If the maximum value is less than or equal to 1, it returns 1.
      *
-     * @param {number} max - The upper bound (exclusive) for the random integer generation.
-     * @returns {number} - A random integer between 1 and max - 1, or 1 if max is less than or equal to 1.
+     * @param max - The upper bound (exclusive) for the random integer generation.
+     * @returns A random integer between 1 and max - 1, or 1 if max is less than or equal to 1.
      */
     public getIntEx(max: number): number {
         return max > 2 ? crypto.randomInt(1, max - 1) : 1;
@@ -242,9 +242,9 @@ export class RandomUtil {
     /**
      * Generates a random floating-point number within the specified range.
      *
-     * @param {number} min - The minimum value of the range (inclusive).
-     * @param {number} max - The maximum value of the range (exclusive).
-     * @returns {number} - A random floating-point number between `min` (inclusive) and `max` (exclusive).
+     * @param min - The minimum value of the range (inclusive).
+     * @param max - The maximum value of the range (exclusive).
+     * @returns A random floating-point number between `min` (inclusive) and `max` (exclusive).
      */
     public getFloat(min: number, max: number): number {
         const random = this.getSecureRandomNumber();
@@ -254,7 +254,7 @@ export class RandomUtil {
     /**
      * Generates a random boolean value.
      *
-     * @returns {boolean} - A random boolean value, where the probability of `true` and `false` is approximately equal.
+     * @returns A random boolean value, where the probability of `true` and `false` is approximately equal.
      */
     public getBool(): boolean {
         const random = this.getSecureRandomNumber();
@@ -264,10 +264,10 @@ export class RandomUtil {
     /**
      * Calculates the percentage of a given number and returns the result.
      *
-     * @param {number} percent - The percentage to calculate.
-     * @param {number} number - The number to calculate the percentage of.
-     * @param {number} toFixed - The number of decimal places to round the result to (default is 2).
-     * @returns {number} - The calculated percentage of the given number, rounded to the specified number of decimal places.
+     * @param percent - The percentage to calculate.
+     * @param number - The number to calculate the percentage of.
+     * @param toFixed - The number of decimal places to round the result to (default is 2).
+     * @returns The calculated percentage of the given number, rounded to the specified number of decimal places.
      */
     public getPercentOfValue(percent: number, number: number, toFixed = 2): number {
         return Number.parseFloat(((percent * number) / 100).toFixed(toFixed));
@@ -276,9 +276,9 @@ export class RandomUtil {
     /**
      * Reduces a given number by a specified percentage.
      *
-     * @param {number} number - The original number to be reduced.
-     * @param {number} percentage - The percentage by which to reduce the number.
-     * @returns {number} - The reduced number after applying the percentage reduction.
+     * @param number - The original number to be reduced.
+     * @param percentage - The percentage by which to reduce the number.
+     * @returns The reduced number after applying the percentage reduction.
      */
     public reduceValueByPercent(number: number, percentage: number): number {
         const reductionAmount = number * (percentage / 100);
@@ -288,8 +288,8 @@ export class RandomUtil {
     /**
      * Determines if a random event occurs based on the given chance percentage.
      *
-     * @param {number} chancePercent - The percentage chance (0-100) that the event will occur.
-     * @returns {boolean} - `true` if the event occurs, `false` otherwise.
+     * @param chancePercent - The percentage chance (0-100) that the event will occur.
+     * @returns `true` if the event occurs, `false` otherwise.
      */
     public getChance100(chancePercent: number): boolean {
         return this.getIntEx(100) <= chancePercent;
@@ -300,8 +300,8 @@ export class RandomUtil {
      *
      * This method is separate from getArrayValue so we can use a generic inferance with getArrayValue.
      *
-     * @param {string[]} arr - The array of strings to select a random value from.
-     * @returns {string} - A randomly selected string from the array.
+     * @param arr - The array of strings to select a random value from.
+     * @returns A randomly selected string from the array.
      */
     public getStringArrayValue(arr: string[]): string {
         return arr[this.getInt(0, arr.length - 1)];
@@ -311,8 +311,8 @@ export class RandomUtil {
      * Returns a random element from the provided array.
      *
      * @template T - The type of elements in the array.
-     * @param {T[]} arr - The array from which to select a random element.
-     * @returns {T} A random element from the array.
+     * @param arr - The array from which to select a random element.
+     * @returns A random element from the array.
      */
     public getArrayValue<T>(arr: T[]): T {
         return arr[this.getInt(0, arr.length - 1)];
@@ -349,10 +349,10 @@ export class RandomUtil {
     /**
      * Generates a normally distributed random number using the Box-Muller transform.
      *
-     * @param {number} mean - The mean (μ) of the normal distribution.
-     * @param {number} sigma - The standard deviation (σ) of the normal distribution.
-     * @param {number} attempt - The current attempt count to generate a valid number (default is 0).
-     * @returns {number} - A normally distributed random number.
+     * @param mean - The mean (μ) of the normal distribution.
+     * @param sigma - The standard deviation (σ) of the normal distribution.
+     * @param attempt - The current attempt count to generate a valid number (default is 0).
+     * @returns A normally distributed random number.
      *
      * @remarks
      * This function uses the Box-Muller transform to generate a normally distributed random number.
@@ -384,9 +384,9 @@ export class RandomUtil {
     /**
      * Generates a random integer between the specified range.
      *
-     * @param {number} low - The lower bound of the range (inclusive).
-     * @param {number} high - The upper bound of the range (exclusive). If not provided, the range will be from 0 to `low`.
-     * @returns {number} - A random integer within the specified range.
+     * @param low - The lower bound of the range (inclusive).
+     * @param high - The upper bound of the range (exclusive). If not provided, the range will be from 0 to `low`.
+     * @returns A random integer within the specified range.
      */
     public randInt(low: number, high?: number): number {
         if (typeof high !== "undefined") {
@@ -399,10 +399,10 @@ export class RandomUtil {
      * Draws a specified number of random elements from a given list.
      *
      * @template T - The type of elements in the list.
-     * @param {Array<T>} originalList - The list to draw elements from.
-     * @param {number} [count=1] - The number of elements to draw. Defaults to 1.
-     * @param {boolean} [replacement=true] - Whether to draw with replacement. Defaults to true.
-     * @returns {Array<T>} - An array containing the drawn elements.
+     * @param originalList - The list to draw elements from.
+     * @param count - The number of elements to draw. Defaults to 1.
+     * @param replacement - Whether to draw with replacement. Defaults to true.
+     * @returns An array containing the drawn elements.
      */
     public drawRandomFromList<T>(originalList: Array<T>, count = 1, replacement = true): Array<T> {
         let list = originalList;
@@ -449,11 +449,11 @@ export class RandomUtil {
     /**
      * Generates a biased random number within a specified range.
      *
-     * @param {number} min - The minimum value of the range (inclusive).
-     * @param {number} max - The maximum value of the range (inclusive).
-     * @param {number} shift - The bias shift to apply to the random number generation.
-     * @param {number} n - The number of iterations to use for generating a Gaussian random number.
-     * @returns {number} - A biased random number within the specified range.
+     * @param min - The minimum value of the range (inclusive).
+     * @param max - The maximum value of the range (inclusive).
+     * @param shift - The bias shift to apply to the random number generation.
+     * @param n - The number of iterations to use for generating a Gaussian random number.
+     * @returns A biased random number within the specified range.
      * @throws Will throw if `max` is less than `min` or if `n` is less than 1.
      */
     public getBiasedRandomNumber(min: number, max: number, shift: number, n: number): number {
@@ -528,8 +528,8 @@ export class RandomUtil {
      * Shuffles an array in place using the Fisher-Yates algorithm.
      *
      * @template T - The type of elements in the array.
-     * @param {Array<T>} array - The array to shuffle.
-     * @returns {Array<T>} - The shuffled array.
+     * @param array - The array to shuffle.
+     * @returns The shuffled array.
      */
     public shuffle<T>(array: Array<T>): Array<T> {
         let currentIndex = array.length;
@@ -551,8 +551,8 @@ export class RandomUtil {
     /**
      * Rolls for a chance probability and returns whether the roll is successful.
      *
-     * @param {number} probabilityChance - The probability chance to roll for, represented as a number between 0 and 1.
-     * @returns {boolean} - `true` if the random number is less than or equal to the probability chance, otherwise `false`.
+     * @param probabilityChance - The probability chance to roll for, represented as a number between 0 and 1.
+     * @returns `true` if the random number is less than or equal to the probability chance, otherwise `false`.
      */
     public rollForChanceProbability(probabilityChance: number): boolean {
         const random = this.getSecureRandomNumber();
