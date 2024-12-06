@@ -321,25 +321,29 @@ export class RandomUtil {
     /**
      * Retrieves a random key from the given object.
      *
-     * @template T - The type of the object.
-     * @param {T} node - The object from which to retrieve a key.
-     * @returns {string} A random key from the object.
+     * @param node - The object from which to retrieve a key.
+     * @returns A string representing one of the keys of the node object.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
      */
-    public getKey<T extends object>(node: T): string {
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
+    public getKey(node: any): string {
         return this.getArrayValue(Object.keys(node));
     }
 
     /**
-     * Retrieves a random value from the given object.
+     * Retrieves the value associated with a key from the given node object.
      *
-     * @template T - The type of the object.
-     * @template K - The type of the key, which must be a key of T.
-     * @param {T} node - The object from which to retrieve the value.
-     * @returns {T[K]} - A random value from the object.
+     * @param node - An object with string keys and any type of values.
+     * @returns The value associated with the key obtained from the node.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
      */
-    public getKeyValue<T extends object, K extends keyof T>(node: T): T[K] {
-        const key = this.getKey(node) as K;
-        return node[key];
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
+    public getKeyValue(node: { [x: string]: any }): any {
+        return node[this.getKey(node)];
     }
 
     /**
@@ -427,15 +431,17 @@ export class RandomUtil {
     /**
      * Draws a specified number of random keys from a given dictionary.
      *
-     * @template K - The type of the keys in the dictionary.
-     * @template V - The type of the values in the dictionary.
-     * @param {Partial<Record<K, V>>} dict - The dictionary from which to draw keys.
-     * @param {number} [count=1] - The number of keys to draw. Defaults to 1.
-     * @param {boolean} [replacement=true] - Whether to draw with replacement. Defaults to true.
-     * @returns {K[]} - An array of randomly drawn keys from the dictionary.
+     * @param dict - The dictionary from which to draw keys.
+     * @param count - The number of keys to draw. Defaults to 1.
+     * @param replacement - Whether to draw with replacement. Defaults to true.
+     * @returns An array of randomly drawn keys from the dictionary.
+     *
+     * TODO: v3.11 - This method is not type-safe and should be refactored to use a more specific type:
+     *               https://github.com/sp-tarkov/server/pull/972/commits/f2b8efe211d95f71aec0a4bc84f4542335433412
      */
-    public drawRandomFromDict<K extends string, V>(dict: Partial<Record<K, V>>, count = 1, replacement = true): K[] {
-        const keys = Object.keys(dict) as K[];
+    // biome-ignore lint/suspicious/noExplicitAny: Used to allow for a broad range of types.
+    public drawRandomFromDict(dict: any, count = 1, replacement = true): any[] {
+        const keys = Object.keys(dict);
         const randomKeys = this.drawRandomFromList(keys, count, replacement);
         return randomKeys;
     }
