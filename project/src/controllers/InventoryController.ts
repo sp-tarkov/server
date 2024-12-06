@@ -928,24 +928,17 @@ export class InventoryController {
     }
 
     public setFavoriteItem(pmcData: IPmcData, request: ISetFavoriteItems, sessionId: string): void {
-        if (!pmcData.Inventory.favoriteItems) {
-            pmcData.Inventory.favoriteItems = [];
-        }
+        // The client sends the full list of favorite items, so clear the current favorites
+        pmcData.Inventory.favoriteItems = [];
 
         for (const itemId of request.items) {
-            // If id already exists in array, we're removing it
-            const indexOfItemAlreadyFavorited = pmcData.Inventory.favoriteItems.findIndex((x) => x._id === itemId);
-            if (indexOfItemAlreadyFavorited > -1) {
-                pmcData.Inventory.favoriteItems.splice(indexOfItemAlreadyFavorited, 1);
-            } else {
-                const item = pmcData.Inventory.items.find((i) => i._id === itemId);
-
-                if (item === undefined) {
-                    continue;
-                }
-
-                pmcData.Inventory.favoriteItems.push(item);
+            // Leaving this in as validation that the item exists in the profile
+            const item = pmcData.Inventory.items.find((i) => i._id === itemId);
+            if (item === undefined) {
+                continue;
             }
+
+            pmcData.Inventory.favoriteItems.push(itemId);
         }
     }
 

@@ -61,7 +61,7 @@ export class BotNameService {
         const isPlayerScav = botGenerationDetails.isPlayerScav;
         const simulateScavName = isPlayerScav ? false : this.shouldSimulatePlayerScavName(botRole);
         const showTypeInNickname = this.botConfig.showTypeInNickname && !isPlayerScav;
-        const roleShouldBeUnique = uniqueRoles.includes(botRole.toLowerCase());
+        const roleShouldBeUnique = uniqueRoles?.includes(botRole.toLowerCase());
 
         let isUnique = true;
         let attempts = 0;

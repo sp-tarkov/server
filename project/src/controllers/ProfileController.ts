@@ -401,6 +401,9 @@ export class ProfileController {
         return response;
     }
 
+    /**
+     * Handle client/profile/view
+     */
     public getOtherProfile(sessionId: string, request: IGetOtherProfileRequest): IGetOtherProfileResponse {
         const player = this.profileHelper.getFullProfile(sessionId);
         const playerPmc = player.characters.pmc;
@@ -431,7 +434,7 @@ export class ProfileController {
                 Items: playerPmc.Inventory.items,
             },
             achievements: playerPmc.Achievements,
-            favoriteItems: playerPmc.Inventory.favoriteItems ?? [],
+            favoriteItems: this.profileHelper.getOtherProfileFavorites(playerPmc),
             pmcStats: {
                 eft: {
                     totalInGameTime: playerPmc.Stats.Eft.TotalInGameTime,

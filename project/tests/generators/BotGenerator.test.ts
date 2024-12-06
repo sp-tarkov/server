@@ -1,14 +1,14 @@
 import "reflect-metadata";
-import { BotGenerator } from "@spt/generators/BotGenerator";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { BotNameService } from "@spt/services/BotNameService";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("BotGenerator", () => {
-    let botGenerator: any;
+    let botNameService: any;
 
     beforeEach(() => {
-        botGenerator = container.resolve<BotGenerator>("BotGenerator");
+        botNameService = container.resolve<BotNameService>("BotNameService");
     });
 
     afterEach(() => {
@@ -49,48 +49,48 @@ describe("BotGenerator", () => {
     //     });
     // });
 
-    describe("generateBotNickname", () => {
+    describe("generateUniqueBotNickname", () => {
         it("should choose random firstname for non player scav assault bot", () => {
             const botJsonTemplate = { firstName: ["one", "two"], lastName: [] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: false };
+            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/(one|two)/);
         });
 
         it("should choose random lastname for non player scav assault bot", () => {
             const botJsonTemplate = { firstName: [], lastName: [["one", "two"]] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: false };
+            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/(one|two)/);
         });
 
         it("should choose random firstname and lastname for non player scav assault bot", () => {
             const botJsonTemplate = { firstName: ["first-one", "first-two"], lastName: [["last-one", "last-two"]] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: false };
+            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/first-(one|two) last-(one|two)/);
         });
@@ -100,12 +100,12 @@ describe("BotGenerator", () => {
             const botGenerationDetails = { isPlayerScav: true, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/(one|two)/);
         });
@@ -115,12 +115,12 @@ describe("BotGenerator", () => {
             const botGenerationDetails = { isPlayerScav: true, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/(one|two)/);
         });
@@ -130,28 +130,28 @@ describe("BotGenerator", () => {
             const botGenerationDetails = { isPlayerScav: true, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toMatch(/first-(one|two) last-(one|two)/);
         });
 
         it("should append bot type to end of name when showTypeInNickname option is enabled ", () => {
             const botJsonTemplate = { firstName: ["firstname"], lastName: ["lastname"] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: false };
+            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 0;
-            botGenerator.botConfig.showTypeInNickname = true;
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 0;
+            botNameService.botConfig.showTypeInNickname = true;
 
             const mockPlayerProfile = { Info: { Nickname: "Player Nickname", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(result).toBe("firstname lastname assault");
         });
@@ -161,17 +161,18 @@ describe("BotGenerator", () => {
             const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: true };
             const botRole = "assault";
 
-            botGenerator.botConfig.showTypeInNickname = false;
-            botGenerator.pmcConfig.addPrefixToSameNamePMCAsPlayerChance = 100;
+            botNameService.botConfig.showTypeInNickname = false;
+            botNameService.pmcConfig.addPrefixToSameNamePMCAsPlayerChance = 100;
 
             const mockPlayerProfile = { Info: { Nickname: "player", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.botHelper, "getPmcNicknameOfMaxLength").mockReturnValue("player");
 
             const getRandomTextThatMatchesPartialKeySpy = vi
-                .spyOn((botGenerator as any).localisationService, "getRandomTextThatMatchesPartialKey")
+                .spyOn((botNameService as any).localisationService, "getRandomTextThatMatchesPartialKey")
                 .mockReturnValue("test");
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
 
             expect(getRandomTextThatMatchesPartialKeySpy).toHaveBeenCalled();
             expect(result).toBe("test player");
@@ -179,17 +180,17 @@ describe("BotGenerator", () => {
 
         it("should generate PMC name in brackets behind scav name when chanceAssaultScavHasPlayerScavName is enabled", () => {
             const botJsonTemplate = { firstName: ["scav"], lastName: [] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: true, allPmcsHaveSameNameAsPlayer: false };
+            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
             const botRole = "assault";
 
-            botGenerator.botConfig.chanceAssaultScavHasPlayerScavName = 100;
-            botGenerator.databaseService.getBots().types.usec.firstName = ["player"];
-            botGenerator.databaseService.getBots().types.bear.firstName = [];
+            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 100;
+            botNameService.databaseService.getBots().types.usec.firstName = ["player"];
+            botNameService.databaseService.getBots().types.bear.firstName = [];
 
             const mockPlayerProfile = { Info: { Nickname: "Player", Level: 1 } };
-            vi.spyOn(botGenerator.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
+            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
 
-            const result = botGenerator.generateBotNickname(botJsonTemplate, botGenerationDetails, botRole);
+            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
             expect(result).toBe("scav (player)");
         });
     });

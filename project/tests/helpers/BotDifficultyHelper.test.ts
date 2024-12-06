@@ -42,7 +42,7 @@ describe("BotHelper", () => {
             });
             const warningLogSpy = vi.spyOn(botDifficultyHelper.logger, "warning");
 
-            const result = botDifficultyHelper.getBotDifficultySettings("INVALID_TYPE", "normal");
+            const result = botDifficultyHelper.getBotDifficultySettings("INVALID_TYPE", "normal", { types: {} });
             expect(result).toBe("test");
             expect(warningLogSpy).toHaveBeenCalledTimes(1);
         });

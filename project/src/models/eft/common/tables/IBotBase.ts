@@ -169,7 +169,7 @@ export interface IInventory {
     /** Key is hideout area enum numeric as string e.g. "24", value is area _id  */
     hideoutAreaStashes: Record<string, string>;
     fastPanel: Record<string, string>;
-    favoriteItems: IItem[];
+    favoriteItems: string[];
 }
 
 export interface IBaseJsonSkills {
