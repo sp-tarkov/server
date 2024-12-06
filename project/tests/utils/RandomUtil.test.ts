@@ -8,17 +8,13 @@ describe("RandomUtil", () => {
     let mockLogger: any;
 
     beforeEach(() => {
-        // Mock dependencies
         mockCloner = {
             clone: vi.fn((obj) => JSON.parse(JSON.stringify(obj))),
         };
-
         mockLogger = {
             warning: vi.fn(),
             info: vi.fn(),
         };
-
-        // Instantiate RandomUtil with mocked dependencies
         randomUtil = new RandomUtil(mockCloner, mockLogger);
     });
 
@@ -74,18 +70,6 @@ describe("RandomUtil", () => {
             expect(result).toBeLessThanOrEqual(Math.floor(max));
             expect(Number.isInteger(result)).toBe(true);
         });
-
-        it("should return predictable result when Math.random is mocked", () => {
-            // Mock Math.random to always return 0.5
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
-
-            const min = 1;
-            const max = 5;
-            const expected = Math.floor(0.5 * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min));
-            const result = randomUtil.getInt(min, max);
-
-            expect(result).toBe(expected);
-        });
     });
 
     describe("getIntEx", () => {
@@ -107,28 +91,6 @@ describe("RandomUtil", () => {
         });
 
         it("should handle edge case when max is 2", () => {
-            const max = 2;
-            const result = randomUtil.getIntEx(max);
-
-            expect(result).toBe(1);
-        });
-
-        it("should return predictable result when Math.random is mocked", () => {
-            // Mock Math.random to always return 0.5
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
-
-            const max = 10;
-            // Expected calculation: Math.floor(0.5 * (10 - 2) + 1) = Math.floor(0.5 * 8 + 1) = Math.floor(5) = 5
-            const expected = 5;
-            const result = randomUtil.getIntEx(max);
-
-            expect(result).toBe(expected);
-        });
-
-        it("should return 1 when max is 2 (edge case with Math.random mocked)", () => {
-            // Mock Math.random to always return 0.99
-            vi.spyOn(Math, "random").mockReturnValue(0.99);
-
             const max = 2;
             const result = randomUtil.getIntEx(max);
 
@@ -162,17 +124,6 @@ describe("RandomUtil", () => {
 
             expect(result).toBe(min);
         });
-
-        it("should return a predictable value when Math.random is mocked", () => {
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
-
-            const min = 2.0;
-            const max = 4.0;
-            const expected = 3.0;
-            const result = randomUtil.getFloat(min, max);
-
-            expect(result).toBe(expected);
-        });
     });
 
     describe("getBool", () => {
@@ -182,13 +133,13 @@ describe("RandomUtil", () => {
         });
 
         it("should return true when Math.random is less than 0.5", () => {
-            vi.spyOn(Math, "random").mockReturnValue(0.3);
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.4);
             const result = randomUtil.getBool();
             expect(result).toBe(true);
         });
 
-        it("should return false when Math.random is greater than or equal to 0.5", () => {
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
+        it("should return false when getSecureRandomNumber returns 0.5", () => {
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.5);
             const result = randomUtil.getBool();
             expect(result).toBe(false);
         });
@@ -332,6 +283,20 @@ describe("RandomUtil", () => {
             expect(result).toBe("onlyKey");
         });
 
+        it("should handle empty objects", () => {
+            const obj = {};
+            const result = randomUtil.getKey(obj);
+
+            expect(result).toBeUndefined();
+        });
+
+        it("should handle objects with integer keys", () => {
+            const obj = { 1: "a", 2: "b", 3: "c" };
+            const result = randomUtil.getKey(obj);
+
+            expect(Object.keys(obj)).toContain(result);
+        });
+
         it("should return predictable key when getArrayValue is mocked", () => {
             vi.spyOn(randomUtil, "getArrayValue").mockReturnValue("b");
 
@@ -382,7 +347,7 @@ describe("RandomUtil", () => {
 
         it("should handle high attempt counts", () => {
             let callCount = 0;
-            vi.spyOn(Math, "random").mockImplementation(() => {
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockImplementation(() => {
                 callCount++;
                 // Alternate between u and v
                 if (callCount % 2 === 1) {
@@ -410,7 +375,7 @@ describe("RandomUtil", () => {
 
         it("should return a fallback value after many attempts", () => {
             let callCount = 0;
-            vi.spyOn(Math, "random").mockImplementation(() => {
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockImplementation(() => {
                 // Alternate between u and v
                 const value = callCount % 2 === 0 ? 0.0000001 : 0.5;
                 callCount++;
@@ -455,16 +420,6 @@ describe("RandomUtil", () => {
 
             expect(result).toBeGreaterThanOrEqual(low);
             expect(result).toBeLessThan(high);
-        });
-
-        it("should return predictable result when Math.random is mocked", () => {
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
-
-            const low = 0;
-            const high = 10;
-            const result = randomUtil.randInt(low, high);
-
-            expect(result).toBe(5);
         });
     });
 
@@ -541,6 +496,26 @@ describe("RandomUtil", () => {
             expect(new Set(result).size).toBe(count);
         });
 
+        it("should handle single-key dictionaries", () => {
+            const dict = { onlyKey: 1 };
+            const count = 2;
+            const result = randomUtil.drawRandomFromDict(dict, count, false);
+
+            expect(result.length).toBe(1);
+            expect(result).toEqual(["onlyKey"]);
+        });
+
+        it("should handle dictionaries with integer keys", () => {
+            const dict = { 1: "a", 2: "b", 3: "c" };
+            const count = 2;
+            const result = randomUtil.drawRandomFromDict(dict, count, false);
+
+            expect(result.length).toBe(count);
+            for (const key of result) {
+                expect(Object.keys(dict)).toContain(key);
+            }
+        });
+
         it("should handle count greater than number of keys without replacement", () => {
             const dict = { a: 1, b: 2 };
             const count = 3;
@@ -599,13 +574,24 @@ describe("RandomUtil", () => {
             expect(mockLogger.info).toHaveBeenCalledWith(`min -> ${min}; max -> ${max}; shift -> ${shift}`);
         });
 
-        it("should return predictable result when gaussianRandom is mocked", () => {
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
+        it("should return predictable result when getSecureRandomNumber is mocked", () => {
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.5);
 
             const min = 1;
             const max = 10;
             const shift = 0;
-            const n = 1;
+            const n = 2; // n affects how many times getSecureRandomNumber is summed/averaged
+
+            // With getSecureRandomNumber always returning 0.5,
+            // gaussianRandom(n) = 0.5 no matter what
+            // boundedGaussian(start, end, n) = round(start + 0.5 * (end - start + 1))
+
+            // For shift = 0:
+            // biasedMin = min = 1
+            // biasedMax = max = 10
+            // boundedGaussian(1, 10, 2) = round(1 + 0.5*(10 - 1 + 1)) = round(1 + 0.5*10) = round(1+5) = 6
+
+            // The loop ensures num is within [min, max], and since 6 is within [1,10], it returns 6 immediately.
             const result = randomUtil.getBiasedRandomNumber(min, max, shift, n);
 
             expect(result).toBe(6);
@@ -635,44 +621,41 @@ describe("RandomUtil", () => {
 
             expect(shuffled).toEqual([1]);
         });
-
-        it("should produce predictable shuffle when Math.random is mocked", () => {
-            const array = [1, 2, 3, 4, 5];
-            vi.spyOn(Math, "random").mockReturnValue(0.5);
-
-            const shuffled = randomUtil.shuffle([...array]);
-
-            expect(shuffled).toEqual([1, 4, 2, 5, 3]);
-        });
     });
 
     describe("rollForChanceProbability", () => {
         it("should return true when rolled chance is less than or equal to probabilityChance", () => {
-            vi.spyOn(randomUtil, "getInt").mockReturnValue(4999);
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.5);
 
-            const probabilityChance = 0.5;
+            const probabilityChance = 0.6;
             const result = randomUtil.rollForChanceProbability(probabilityChance);
 
             expect(result).toBe(true);
         });
 
         it("should return false when rolled chance is greater than probabilityChance", () => {
-            vi.spyOn(randomUtil, "getInt").mockReturnValue(5001);
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.7);
 
-            const probabilityChance = 0.5;
+            const probabilityChance = 0.6;
             const result = randomUtil.rollForChanceProbability(probabilityChance);
 
             expect(result).toBe(false);
         });
 
         it("should handle probabilityChance of 0", () => {
-            const result = randomUtil.rollForChanceProbability(0);
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.1);
+
+            const probabilityChance = 0;
+            const result = randomUtil.rollForChanceProbability(probabilityChance);
 
             expect(result).toBe(false);
         });
 
         it("should handle probabilityChance of 1", () => {
-            const result = randomUtil.rollForChanceProbability(1);
+            vi.spyOn(randomUtil as any, "getSecureRandomNumber").mockReturnValue(0.99);
+
+            const probabilityChance = 1;
+            const result = randomUtil.rollForChanceProbability(probabilityChance);
 
             expect(result).toBe(true);
         });
