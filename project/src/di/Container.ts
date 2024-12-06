@@ -253,7 +253,6 @@ import { StaticRouterModService } from "@spt/services/mod/staticRouter/StaticRou
 import { App } from "@spt/utils/App";
 import { AsyncQueue } from "@spt/utils/AsyncQueue";
 import { CompareUtil } from "@spt/utils/CompareUtil";
-import { DatabaseDecompressionUtil } from "@spt/utils/DatabaseDecompressionUtil";
 import { DatabaseImporter } from "@spt/utils/DatabaseImporter";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
 import { HashUtil } from "@spt/utils/HashUtil";
@@ -420,9 +419,6 @@ export class Container {
     private static registerUtils(depContainer: DependencyContainer): void {
         // Utils
         depContainer.register<App>("App", App, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<DatabaseDecompressionUtil>("DatabaseDecompressionUtil", DatabaseDecompressionUtil, {
-            lifecycle: Lifecycle.Singleton,
-        });
         depContainer.register<DatabaseImporter>("DatabaseImporter", DatabaseImporter, {
             lifecycle: Lifecycle.Singleton,
         });
