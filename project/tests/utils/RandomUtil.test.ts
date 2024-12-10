@@ -14,12 +14,36 @@ describe("RandomUtil", () => {
         mockLogger = {
             warning: vi.fn(),
             info: vi.fn(),
+            debug: vi.fn(),
         };
         randomUtil = new RandomUtil(mockCloner, mockLogger);
     });
 
     afterEach(() => {
         vi.restoreAllMocks();
+    });
+
+    describe("getNumberPrecision", () => {
+        it("should return the number of decimal places in a single digit number with up to 15 decimal places (IEEE-754 standard safe-upper bounds)", () => {
+            const number = 0.123456789012345;
+            const result = (randomUtil as any).getNumberPrecision(number);
+
+            expect(result).toBe(15);
+        });
+
+        it("should return 0 for whole numbers", () => {
+            const number = 123;
+            const result = (randomUtil as any).getNumberPrecision(number);
+
+            expect(result).toBe(0);
+        });
+
+        it("should return 0 for numbers with zero value decimals", () => {
+            const number = 123.0;
+            const result = (randomUtil as any).getNumberPrecision(number);
+
+            expect(result).toBe(0);
+        });
     });
 
     describe("getInt", () => {
@@ -394,6 +418,22 @@ describe("RandomUtil", () => {
     });
 
     describe("randInt", () => {
+        it("should return the same value when low and high are equal", () => {
+            const result = randomUtil.randInt(5, 5);
+            expect(result).toBe(5);
+        });
+
+        it("should work with float number parameters", () => {
+            const result = randomUtil.randInt(5.5, 10.5);
+            expect(result).toBeGreaterThanOrEqual(5);
+            expect(result).toBeLessThan(11);
+        });
+
+        it("should log a debug message with float number parameters", () => {
+            randomUtil.randInt(5.5, 10.5);
+            expect(mockLogger.debug).toHaveBeenCalled();
+        });
+
         it("should return an integer between low and high - 1", () => {
             const low = 5;
             const high = 10;
@@ -420,6 +460,103 @@ describe("RandomUtil", () => {
 
             expect(result).toBeGreaterThanOrEqual(low);
             expect(result).toBeLessThan(high);
+        });
+    });
+
+    describe("randNum", () => {
+        it("should return the same value when low and high are equal", () => {
+            const resultWithPrecision = randomUtil.randNum(5.555, 5.555);
+            expect(resultWithPrecision).toBe(5.555);
+
+            const resultNoPrecision = randomUtil.randNum(7, 7);
+            expect(resultNoPrecision).toBe(7);
+        });
+
+        it("should not throw an error when precision is null", () => {
+            expect(() => randomUtil.randNum(5, 10, null)).not.toThrow();
+        });
+
+        it("should throw when precision is a float or out of bounds", () => {
+            const maxPrecision = (RandomUtil as any).MAX_PRECISION; // It's private.
+            const expectedThrow = `randNum() parameter 'precision' must be a positive integer`;
+            expect(() => randomUtil.randNum(5, 10, 0.5)).toThrowError(expectedThrow);
+            expect(() => randomUtil.randNum(5, 10, -1)).toThrowError(expectedThrow);
+        });
+
+        it("should use the maximum precision of low and high when precision is null", () => {
+            const result = randomUtil.randNum(5.123, 10.12345, null);
+            expect(result.toString().split(".")[1]?.length || 0).toBeLessThanOrEqual(5); // Precision check.
+        });
+
+        it("should round to a whole number when precision is 0", () => {
+            const result = randomUtil.randNum(5.123, 10.12345, 0);
+            expect(result.toString().split(".")[1]?.length || 0).toBeLessThanOrEqual(0); // Precision check.
+        });
+
+        it("should correctly handle cases where high is less than low", () => {
+            expect(() => randomUtil.randNum(10, 5)).not.toThrow();
+
+            const result = randomUtil.randNum(10, 5);
+            expect(result).toBeGreaterThanOrEqual(5);
+            expect(result).toBeLessThanOrEqual(10);
+        });
+
+        it("should throw an error if low or high are not finite numbers", () => {
+            const expectedThrow = "randNum() parameters 'value1' and 'value2' must be finite numbers";
+            expect(() => randomUtil.randNum(Number.POSITIVE_INFINITY, 10)).toThrowError(expectedThrow);
+            expect(() => randomUtil.randNum(5, Number.NaN)).toThrowError(expectedThrow);
+        });
+
+        it("should always return a value within the inclusive range of low and high", () => {
+            for (let i = 0; i < 100; i++) {
+                const result = randomUtil.randNum(5, 6);
+                expect(result).toBeGreaterThanOrEqual(5);
+                expect(result).toBeLessThanOrEqual(6);
+            }
+        });
+
+        it("should return whole numbers when precision is 0", () => {
+            const result = randomUtil.randNum(5, 10, 0);
+            expect(result % 1).toBe(0); // Whole number check.
+            expect(result).toBeGreaterThanOrEqual(5);
+            expect(result).toBeLessThanOrEqual(10);
+        });
+
+        it("should throw when precision exceeds compatibility with double-precision arithmetic", () => {
+            const expectedFirstThrow =
+                "randNum() precision of 16 exceeds the allowable precision (15) for the given values";
+            expect(() => randomUtil.randNum(0.1, 0.2, 16)).toThrowError(expectedFirstThrow);
+
+            const expectedSecondThrow =
+                "randNum() precision of 12 exceeds the allowable precision (11) for the given values";
+            expect(() => randomUtil.randNum(1234.1, 1234.2, 12)).toThrowError(expectedSecondThrow);
+        });
+
+        it("should default high to low when high is not provided", () => {
+            const result = randomUtil.randNum(1);
+            expect(result).toBeGreaterThanOrEqual(0);
+            expect(result).toBeLessThanOrEqual(1);
+        });
+
+        it("should handle negative ranges correctly", () => {
+            const result = randomUtil.randNum(-10, -5);
+            expect(result).toBeGreaterThanOrEqual(-10);
+            expect(result).toBeLessThanOrEqual(-5);
+        });
+
+        it("should handle very large numbers correctly", () => {
+            const result = randomUtil.randNum(1e10, 1e10 + 1);
+            expect(result).toBeGreaterThanOrEqual(1e10);
+            expect(result).toBeLessThanOrEqual(1e10 + 1);
+        });
+
+        it("should consistently generate valid results over many iterations", () => {
+            for (let i = 0; i < 5000; i++) {
+                const result = randomUtil.randNum(1, 2, 3);
+                expect(result).toBeGreaterThanOrEqual(1);
+                expect(result).toBeLessThanOrEqual(2);
+                expect(result.toString().split(".")[1]?.length || 0).toBeLessThanOrEqual(3); // Precision check
+            }
         });
     });
 

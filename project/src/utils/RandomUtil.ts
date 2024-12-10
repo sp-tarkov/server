@@ -196,6 +196,12 @@ export class RandomUtil {
     ) {}
 
     /**
+     * The IEEE-754 standard for double-precision floating-point numbers limits the number of digits (including both
+     * integer + fractional parts) to about 15–17 significant digits. 15 is a safe upper bound, so we'll use that.
+     */
+    private static readonly MAX_SIGNIFICANT_DIGITS = 15;
+
+    /**
      * Generates a secure random number between 0 (inclusive) and 1 (exclusive).
      *
      * This method uses the `crypto` module to generate a 48-bit random integer,
@@ -209,6 +215,19 @@ export class RandomUtil {
         const integer = buffer.readUIntBE(0, 6);
         const maxInteger = 281474976710656; // 2^48
         return integer / maxInteger;
+    }
+
+    /**
+     * Determines the number of decimal places in a number.
+     *
+     * @param num - The number to analyze.
+     * @returns The number of decimal places, or 0 if none exist.
+     * @remarks There is a mathematical way to determine this, but it's not as simple as it seams due to floating point
+     *          precision issues. This method is a simple workaround that converts the number to a string and splits it.
+     *          It's not the most efficient but it *is* the most reliable and easy to understand. Come at me.
+     */
+    private getNumberPrecision(num: number): number {
+        return num.toString().split(".")[1]?.length || 0;
     }
 
     /**
@@ -298,7 +317,7 @@ export class RandomUtil {
     /**
      * Returns a random string from the provided array of strings.
      *
-     * This method is separate from getArrayValue so we can use a generic inferance with getArrayValue.
+     * This method is separate from getArrayValue so we can use a generic inference with getArrayValue.
      *
      * @param arr - The array of strings to select a random value from.
      * @returns A randomly selected string from the array.
@@ -383,20 +402,97 @@ export class RandomUtil {
 
     /**
      * Generates a random integer between the specified range.
+     * Low and high parameters are floored to integers.
+     *
+     * TODO: v3.11 - This method should not accept non-integer numbers.
      *
      * @param low - The lower bound of the range (inclusive).
      * @param high - The upper bound of the range (exclusive). If not provided, the range will be from 0 to `low`.
      * @returns A random integer within the specified range.
      */
     public randInt(low: number, high?: number): number {
-        if (low === high) {
-            return low;
+        let randomLow = low;
+        let randomHigh = high;
+
+        // Detect if either of the parameters is a float, and log a warning
+        if (low % 1 !== 0 || (typeof high !== "undefined" && high % 1 !== 0)) {
+            this.logger.debug(
+                "Deprecated: RandomUtil.randInt() called with float input. Use RandomUtil.randNum() instead.",
+            );
+            // Round the float values to the nearest integer. Eww!
+            randomLow = Math.floor(low);
+            if (typeof high !== "undefined") {
+                randomHigh = Math.floor(high);
+            }
         }
 
-        if (typeof high !== "undefined") {
-            return crypto.randomInt(low, high);
+        // Return a random integer from 0 to low if high is not provided
+        if (typeof high === "undefined") {
+            return crypto.randomInt(0, randomLow);
         }
-        return crypto.randomInt(0, low);
+
+        // Return low directly when low and high are equal
+        if (low === high) {
+            return randomLow;
+        }
+
+        return crypto.randomInt(randomLow, randomHigh);
+    }
+
+    /**
+     * Generates a random number between two given values with optional precision.
+     *
+     * @param value1 - The first value to determine the range.
+     * @param value2 - The second value to determine the range. If not provided, 0 is used.
+     * @param precision - The number of decimal places to round the result to. Must be a positive integer between 0
+     *                    and MAX_PRECISION, inclusive. If not provided, precision is determined by the input values.
+     * @returns A random floating-point number between `value1` and `value2` (inclusive) with the specified precision.
+     * @throws Will throw an error if `precision` is not a positive integer, if `value1` or `value2` are not finite
+     *         numbers, or if the precision exceeds the maximum allowed for the given values.
+     */
+    public randNum(value1: number, value2 = 0, precision: number | null = null): number {
+        if (!Number.isFinite(value1) || !Number.isFinite(value2)) {
+            throw new Error("randNum() parameters 'value1' and 'value2' must be finite numbers");
+        }
+
+        // Determine the range by finding the min and max of the provided values
+        const min = Math.min(value1, value2);
+        const max = Math.max(value1, value2);
+
+        // Validate and adjust precision
+        if (precision !== null) {
+            if (!Number.isInteger(precision) || precision < 0) {
+                throw new Error(`randNum() parameter 'precision' must be a positive integer`);
+            }
+
+            // Calculate the number of whole-number digits in the maximum absolute value of the range
+            const maxAbsoluteValue = Math.max(Math.abs(min), Math.abs(max));
+            const wholeNumberDigits = Math.floor(Math.log10(maxAbsoluteValue)) + 1;
+
+            // Determine the maximum allowable precision--The number of decimal places that can be used without losing
+            // precision due to the number of bits available in a double-precision floating-point number
+            const maxAllowedPrecision = Math.max(0, RandomUtil.MAX_SIGNIFICANT_DIGITS - wholeNumberDigits);
+
+            // Throw if the requested precision exceeds the maximum
+            if (precision > maxAllowedPrecision) {
+                throw new Error(
+                    `randNum() precision of ${precision} exceeds the allowable precision (${maxAllowedPrecision}) for the given values`,
+                );
+            }
+        }
+
+        // Generate a random number within a specified range
+        const random = this.getSecureRandomNumber();
+        const result = random * (max - min) + min;
+
+        // Determine the maximum precision to use for rounding the result
+        const maxPrecision = Math.max(this.getNumberPrecision(value1), this.getNumberPrecision(value2));
+        const effectivePrecision = precision ?? maxPrecision;
+
+        // Calculate the factor to use for rounding the result to the specified precision
+        const factor = 10 ** effectivePrecision;
+
+        return Math.round(result * factor) / factor;
     }
 
     /**
