@@ -34,6 +34,8 @@ export class BackupService {
         let currentProfiles: string[] = [];
         try {
             currentProfiles = await fs.readdir(this.profileDir);
+            // Ensure only JSON files are being backed up
+            currentProfiles = currentProfiles.filter((profileName: string) => profileName.endsWith(".json"));
         } catch (error) {
             this.logger.error(`Unable to read profiles directory: ${error.message}`);
             return;
