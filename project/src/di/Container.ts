@@ -198,6 +198,7 @@ import { SptWebSocketConnectionHandler } from "@spt/servers/ws/SptWebSocketConne
 import { DefaultSptWebSocketMessageHandler } from "@spt/servers/ws/message/DefaultSptWebSocketMessageHandler";
 import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
 import { AirdropService } from "@spt/services/AirdropService";
+import { BackupService } from "@spt/services/BackupService";
 import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
 import { BotEquipmentModPoolService } from "@spt/services/BotEquipmentModPoolService";
 import { BotGenerationCacheService } from "@spt/services/BotGenerationCacheService";
@@ -695,6 +696,7 @@ export class Container {
 
     private static registerServices(depContainer: DependencyContainer): void {
         // Services
+        depContainer.register<BackupService>("BackupService", BackupService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<DatabaseService>("DatabaseService", DatabaseService, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ImageRouteService>("ImageRouteService", ImageRouteService, {
             lifecycle: Lifecycle.Singleton,
