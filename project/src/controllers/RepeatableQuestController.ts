@@ -529,13 +529,6 @@ export class RepeatableQuestController {
             repeatableConfig.types = [questToReplace.type];
         }
 
-        // Prevent new repeatable using same trader (except Fence, his quests are fine) - workaround for client error
-        if (replacedQuestTraderId !== Traders.FENCE) {
-            repeatableConfig.traderWhitelist = repeatableConfig.traderWhitelist.filter(
-                (trader) => trader.traderId !== replacedQuestTraderId,
-            );
-        }
-
         // Generate meta-data for what type/levelrange of quests can be generated for player
         const allowedQuestTypes = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
         const newRepeatableQuest = this.attemptToGenerateRepeatableQuest(
