@@ -3,7 +3,6 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IBackupConfig } from "@spt/models/spt/config/IBackupConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { VFS } from "@spt/utils/VFS";
 import fs from "fs-extra";
 import { inject, injectable } from "tsyringe";
 
@@ -13,7 +12,6 @@ export class BackupService {
     protected readonly profileDir = "./user/profiles";
 
     constructor(
-        @inject("VFS") protected vfs: VFS,
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ConfigServer") protected configServer: ConfigServer,
     ) {
