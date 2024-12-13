@@ -33,12 +33,10 @@ export class BackupService {
 
         const targetDir = this.generateBackupTargetDir();
 
+        // Fetch all profiles in the profile directory.
         let currentProfiles: string[] = [];
         try {
-            // Get profiles that end in .json
-            currentProfiles = (await fs.readdir(this.profileDir)).filter((profileName: string) =>
-                profileName.endsWith(".json"),
-            );
+            currentProfiles = await this.fetchProfileFiles();
         } catch (error) {
             this.logger.error(`Unable to read profiles directory: ${error.message}`);
             return;
@@ -64,6 +62,25 @@ export class BackupService {
         this.logger.debug(`Profile backup created: ${targetDir}`);
 
         await this.cleanBackups();
+    }
+
+    /**
+     * Fetches the names of all JSON files in the profile directory.
+     *
+     * This method normalizes the profile directory path and reads all files within it. It then filters the files to
+     * include only those with a `.json` extension and returns their names.
+     *
+     * @returns A promise that resolves to an array of JSON file names.
+     */
+    protected async fetchProfileFiles(): Promise<string[]> {
+        const normalizedProfileDir = path.normalize(this.profileDir);
+
+        try {
+            const allFiles = await fs.readdir(normalizedProfileDir);
+            return allFiles.filter((file) => path.extname(file).toLowerCase() === ".json");
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 
     /**
