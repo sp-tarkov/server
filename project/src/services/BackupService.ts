@@ -31,9 +31,10 @@ export class BackupService {
 
         let currentProfiles: string[] = [];
         try {
-            currentProfiles = await fs.readdir(this.profileDir);
-            // Ensure only JSON files are being backed up
-            currentProfiles = currentProfiles.filter((profileName: string) => profileName.endsWith(".json"));
+            // Get profiles that end in .json
+            currentProfiles = (await fs.readdir(this.profileDir)).filter((profileName: string) =>
+                profileName.endsWith(".json"),
+            );
         } catch (error) {
             this.logger.error(`Unable to read profiles directory: ${error.message}`);
             return;
@@ -45,7 +46,11 @@ export class BackupService {
         }
 
         try {
-            await fs.copy(this.profileDir, targetDir);
+            // iterate over each profile found and save it into backup folder
+            for (const profileToCopy of currentProfiles) {
+                await fs.copy(path.join(this.profileDir, profileToCopy), path.join(targetDir, profileToCopy));
+            }
+            // TODO - write json with list of active mods to same folder as profile
         } catch (error) {
             this.logger.error(`Unable to write to backup profile directory: ${error.message}`);
             return;

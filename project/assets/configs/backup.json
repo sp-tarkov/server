@@ -1,7 +1,7 @@
 {
     "enabled": true,
     "maxBackups": 10,
-    "directory": "./user/backups/profiles",
+    "directory": "./user/profiles/backups",
     "dateFormat": "YYYY-MM-DD_HH-MM-SS",
     "backupInterval": {
         "enabled": true,
