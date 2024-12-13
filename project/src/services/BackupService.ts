@@ -48,12 +48,17 @@ export class BackupService {
         }
 
         try {
-            // iterate over each profile found and save it into backup folder
-            for (const profileToCopy of currentProfiles) {
-                await fs.copy(path.join(this.profileDir, profileToCopy), path.join(targetDir, profileToCopy));
-            }
+            await fs.ensureDir(targetDir);
 
-            await fs.writeJson(path.join(targetDir, "activeMods.json"), this.activeServerMods);
+            // Track write promises.
+            const writes: Promise<void>[] = currentProfiles.map((profile) =>
+                fs.copy(path.join(this.profileDir, profile), path.join(targetDir, profile)),
+            );
+
+            // Write a copy of active mods.
+            writes.push(fs.writeJson(path.join(targetDir, "activeMods.json"), this.activeServerMods));
+
+            await Promise.all(writes); // Wait for all writes to complete.
         } catch (error) {
             this.logger.error(`Unable to write to backup profile directory: ${error.message}`);
             return;
@@ -61,7 +66,7 @@ export class BackupService {
 
         this.logger.debug(`Profile backup created: ${targetDir}`);
 
-        await this.cleanBackups();
+        this.cleanBackups();
     }
 
     /**
@@ -155,15 +160,20 @@ export class BackupService {
             });
 
         // Remove oldest backups if the number exceeds the configured maximum.
-        const excessCount = backupPaths.length - this.backupConfig.maxBackups;
+        const excessCount: number = backupPaths.length - this.backupConfig.maxBackups;
         if (excessCount > 0) {
-            for (let i = 0; i < excessCount; i++) {
-                try {
-                    await fs.remove(backupPaths[i]);
-                    this.logger.debug(`Deleted old profile backup: ${backupPaths[i]}`);
-                } catch (error) {
-                    this.logger.error(`Failed to delete profile backup: ${backupPaths[i]} - ${error.message}`);
-                }
+            try {
+                const removePromises: Promise<void>[] = backupPaths
+                    .slice(0, excessCount)
+                    .map((backupPath) => fs.remove(backupPath));
+
+                await Promise.all(removePromises); // Wait for all remove operations to complete.
+
+                removePromises.forEach((_promise, index) => {
+                    this.logger.debug(`Deleted old profile backup: ${backupPaths[index]}`);
+                });
+            } catch (error) {
+                this.logger.error(`Failed to delete profile backups: ${error.message}`);
             }
         }
     }
