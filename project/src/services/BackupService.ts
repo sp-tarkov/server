@@ -1,4 +1,5 @@
 import path from "node:path";
+import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IBackupConfig } from "@spt/models/spt/config/IBackupConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
@@ -9,14 +10,17 @@ import { inject, injectable } from "tsyringe";
 @injectable()
 export class BackupService {
     protected backupConfig: IBackupConfig;
+    protected readonly activeServerMods: string[] = [];
     protected readonly profileDir = "./user/profiles";
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("ConfigServer") protected configServer: ConfigServer,
     ) {
         this.backupConfig = this.configServer.getConfig(ConfigTypes.BACKUP);
         this.startBackupInterval();
+        this.activeServerMods = this.getActiveServerMods();
     }
 
     /**
@@ -50,7 +54,8 @@ export class BackupService {
             for (const profileToCopy of currentProfiles) {
                 await fs.copy(path.join(this.profileDir, profileToCopy), path.join(targetDir, profileToCopy));
             }
-            // TODO - write json with list of active mods to same folder as profile
+
+            await fs.writeJson(path.join(targetDir, "activeMods.json"), this.activeServerMods);
         } catch (error) {
             this.logger.error(`Unable to write to backup profile directory: ${error.message}`);
             return;
@@ -158,5 +163,21 @@ export class BackupService {
         setInterval(() => {
             this.init().catch((error) => this.logger.error(`Profile backup failed: ${error.message}`));
         }, minutes);
+    }
+
+    /**
+     * Get an array of active server mod details
+     * @returns array of mod names
+     */
+    protected getActiveServerMods(): string[] {
+        const result = [];
+
+        const activeMods = this.preSptModLoader.getImportedModDetails();
+        for (const activeModKey in activeMods) {
+            result.push(
+                `${activeModKey}-${activeMods[activeModKey].author ?? "unknown"}-${activeMods[activeModKey].version ?? ""}`,
+            );
+        }
+        return result;
     }
 }
