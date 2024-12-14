@@ -146,42 +146,80 @@ export class BackupService {
      */
     protected async cleanBackups(): Promise<void> {
         const backupDir = this.backupConfig.directory;
+        const backupPaths = await this.getBackupPaths(backupDir);
 
-        let backups: string[] = [];
-        try {
-            backups = await fs.readdir(backupDir);
-        } catch (error) {
-            this.logger.error(`Unable to read backup directory: ${error.message}`);
-            return;
-        }
+        // Filter out invalid backup paths by ensuring they contain a valid date.
+        const validBackupPaths = backupPaths.filter((path) => this.extractDateFromFolderName(path) !== null);
 
-        // Filter directories and sort by modification time.
-        const backupPaths = backups
-            .map((backup) => path.join(backupDir, backup))
-            .filter((backupPath) => fs.statSync(backupPath).isDirectory())
-            .sort((a, b) => {
-                const aTime = fs.statSync(a).mtimeMs;
-                const bTime = fs.statSync(b).mtimeMs;
-                return aTime - bTime; // Oldest first
-            });
-
-        // Remove oldest backups if the number exceeds the configured maximum.
-        const excessCount: number = backupPaths.length - this.backupConfig.maxBackups;
+        const excessCount = validBackupPaths.length - this.backupConfig.maxBackups;
         if (excessCount > 0) {
-            try {
-                const removePromises: Promise<void>[] = backupPaths
-                    .slice(0, excessCount)
-                    .map((backupPath) => fs.remove(backupPath));
-
-                await Promise.all(removePromises); // Wait for all remove operations to complete.
-
-                removePromises.forEach((_promise, index) => {
-                    this.logger.debug(`Deleted old profile backup: ${backupPaths[index]}`);
-                });
-            } catch (error) {
-                this.logger.error(`Failed to delete profile backups: ${error.message}`);
-            }
+            const excessBackups = backupPaths.slice(0, excessCount);
+            await this.removeExcessBackups(excessBackups);
         }
+    }
+
+    /**
+     * Retrieves and sorts the backup file paths from the specified directory.
+     *
+     * @param dir - The directory to search for backup files.
+     * @returns A promise that resolves to an array of sorted backup file paths.
+     */
+    private async getBackupPaths(dir: string): Promise<string[]> {
+        const backups = await fs.readdir(dir);
+        return backups.filter((backup) => path.join(dir, backup)).sort(this.compareBackupDates.bind(this));
+    }
+
+    /**
+     * Compares two backup folder names based on their extracted dates.
+     *
+     * @param a - The name of the first backup folder.
+     * @param b - The name of the second backup folder.
+     * @returns The difference in time between the two dates in milliseconds, or `null` if either date is invalid.
+     */
+    private compareBackupDates(a: string, b: string): number | null {
+        const dateA = this.extractDateFromFolderName(a);
+        const dateB = this.extractDateFromFolderName(b);
+
+        if (!dateA || !dateB) {
+            return null; // Skip comparison if either date is invalid.
+        }
+
+        return dateA.getTime() - dateB.getTime();
+    }
+
+    /**
+     * Extracts a date from a folder name string formatted as `YYYY-MM-DD_hh-mm-ss`.
+     *
+     * @param folderName - The name of the folder from which to extract the date.
+     * @returns A Date object if the folder name is in the correct format, otherwise null.
+     */
+    private extractDateFromFolderName(folderName: string): Date | null {
+        const parts = folderName.split(/[-_]/);
+        if (parts.length !== 6) {
+            console.warn(`Invalid backup folder name format: ${folderName}`);
+            return null;
+        }
+
+        const [year, month, day, hour, minute, second] = parts;
+
+        return new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute), Number(second));
+    }
+
+    /**
+     * Removes excess backups from the backup directory.
+     *
+     * @param backups - An array of backup file names to be removed.
+     * @returns A promise that resolves when all specified backups have been removed.
+     */
+    private async removeExcessBackups(backups: string[]): Promise<void> {
+        const removePromises = backups.map((backupPath) =>
+            fs.remove(path.join(this.backupConfig.directory, backupPath)),
+        );
+        await Promise.all(removePromises);
+
+        removePromises.forEach((_promise, index) => {
+            this.logger.debug(`Deleted old profile backup: ${backups[index]}`);
+        });
     }
 
     /**
