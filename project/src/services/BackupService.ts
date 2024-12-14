@@ -19,12 +19,17 @@ export class BackupService {
         @inject("ConfigServer") protected configServer: ConfigServer,
     ) {
         this.backupConfig = this.configServer.getConfig(ConfigTypes.BACKUP);
-        this.startBackupInterval();
         this.activeServerMods = this.getActiveServerMods();
+        this.startBackupInterval();
     }
 
     /**
-     * Create a backup of all user profiles.
+     * Initializes the backup process.
+     *
+     * This method orchestrates the profile backup service. Handles copying profiles to a backup directory and cleaning
+     * up old backups if the number exceeds the configured maximum.
+     *
+     * @returns A promise that resolves when the backup process is complete.
      */
     public async init(): Promise<void> {
         if (!this.isEnabled()) {
@@ -186,15 +191,16 @@ export class BackupService {
             return;
         }
 
-        const minutes = this.backupConfig.backupInterval.intervalMinutes * 60 * 1000; // minutes to milliseconds
+        const minutes = this.backupConfig.backupInterval.intervalMinutes * 60 * 1000; // Minutes to milliseconds
         setInterval(() => {
             this.init().catch((error) => this.logger.error(`Profile backup failed: ${error.message}`));
         }, minutes);
     }
 
     /**
-     * Get an array of active server mod details
-     * @returns array of mod names
+     * Get an array of active server mod details.
+     *
+     * @returns An array of mod names.
      */
     protected getActiveServerMods(): string[] {
         const result = [];
