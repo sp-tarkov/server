@@ -220,6 +220,7 @@ export class DialogueCallbacks implements OnUpdate {
 
     /** Handle client/friend/delete */
     public deleteFriend(url: string, request: IDeleteFriendRequest, sessionID: string): INullResponseData {
+        this.dialogueController.deleteFriend(sessionID, request);
         return this.httpResponse.nullResponse();
     }
 

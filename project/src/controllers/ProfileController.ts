@@ -19,7 +19,6 @@ import { ISearchFriendRequestData } from "@spt/models/eft/profile/ISearchFriendR
 import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
 import { IInraid, ISptProfile, IVitality } from "@spt/models/eft/profile/ISptProfile";
 import { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
-import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { QuestStatus } from "@spt/models/enums/QuestStatus";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
@@ -182,6 +181,7 @@ export class ProfileController {
             insurance: [],
             traderPurchases: {},
             achievements: {},
+            friends: [],
         };
 
         this.profileFixerService.checkForAndFixPmcProfileIssues(profileDetails.characters.pmc);
@@ -361,21 +361,23 @@ export class ProfileController {
      * Handle client/game/profile/search
      */
     public getFriends(info: ISearchFriendRequestData, sessionID: string): ISearchFriendResponse[] {
-        const profile = this.saveServer.getProfile(sessionID);
+        // TODO: We should probably rename this method in the next client update
+        const result: ISearchFriendResponse[] = [];
 
-        // return some of the current player info for now
-        return [
-            {
-                _id: profile.characters.pmc._id,
-                aid: profile.characters.pmc.aid,
-                Info: {
-                    Nickname: info.nickname,
-                    Side: "Bear",
-                    Level: 1,
-                    MemberCategory: profile.characters.pmc.Info.MemberCategory,
-                },
-            },
-        ];
+        // Find any profiles with a nickname containing the entered name
+        const allProfiles = Object.values(this.saveServer.getProfiles());
+
+        for (const profile of allProfiles) {
+            const pmcProfile = profile.characters.pmc;
+
+            if (!pmcProfile.Info.LowerNickname.includes(info.nickname.toLocaleLowerCase())) {
+                continue;
+            }
+
+            result.push(this.profileHelper.getChatRoomMemberFromPmcProfile(pmcProfile));
+        }
+
+        return result;
     }
 
     /**
@@ -405,11 +407,14 @@ export class ProfileController {
      * Handle client/profile/view
      */
     public getOtherProfile(sessionId: string, request: IGetOtherProfileRequest): IGetOtherProfileResponse {
-        const player = this.profileHelper.getFullProfile(sessionId);
-        const playerPmc = player.characters.pmc;
-        const playerScav = player.characters.scav;
+        // Find the profile by the account ID, fall back to the current player if we can't find the account
+        let profile = this.profileHelper.getFullProfileByAccountId(request.accountId);
+        if (!profile?.characters?.pmc || !profile?.characters?.scav) {
+            profile = this.profileHelper.getFullProfile(sessionId);
+        }
+        const playerPmc = profile.characters.pmc;
+        const playerScav = profile.characters.scav;
 
-        // return player for now
         return {
             id: playerPmc._id,
             aid: playerPmc.aid,

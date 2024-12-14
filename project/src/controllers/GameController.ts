@@ -122,6 +122,11 @@ export class GameController {
                 fullProfile.spt.cultistRewards = new Map();
             }
 
+            // Make sure we have a friends list array
+            if (typeof fullProfile.friends === "undefined") {
+                fullProfile.friends = [];
+            }
+
             //3.9 migrations
             if (fullProfile.spt.version.includes("3.9.") && !fullProfile.spt.migrations["39x"]) {
                 // Check every item has a valid mongoid

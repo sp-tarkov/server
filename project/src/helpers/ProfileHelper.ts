@@ -2,6 +2,7 @@ import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { BanType, Common, ICounterKeyValue, IStats } from "@spt/models/eft/common/tables/IBotBase";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
+import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
 import { AccountTypes } from "@spt/models/enums/AccountTypes";
@@ -194,6 +195,49 @@ export class ProfileHelper {
      */
     public getFullProfile(sessionID: string): ISptProfile | undefined {
         return this.saveServer.profileExists(sessionID) ? this.saveServer.getProfile(sessionID) : undefined;
+    }
+
+    /**
+     * Get full representation of a players profile JSON by the account ID, or undefined if not found
+     * @param accountId Account ID to find
+     * @returns
+     */
+    public getFullProfileByAccountId(accountID: string): ISptProfile | undefined {
+        const aid = Number.parseInt(accountID);
+        return Object.values(this.saveServer.getProfiles()).find((profile) => profile?.info?.aid === aid);
+    }
+
+    /**
+     * Retrieve a ChatRoomMember formatted profile for the given session ID
+     * @param sessionID The session ID to return the profile for
+     * @returns
+     */
+    public getChatRoomMemberFromSessionId(sessionID: string): ISearchFriendResponse | undefined {
+        const pmcProfile = this.getFullProfile(sessionID)?.characters?.pmc;
+        if (!pmcProfile) {
+            return undefined;
+        }
+
+        return this.getChatRoomMemberFromPmcProfile(pmcProfile);
+    }
+
+    /**
+     * Retrieve a ChatRoomMember formatted profile for the given PMC profile data
+     * @param pmcProfile The PMC profile data to format into a ChatRoomMember structure
+     * @returns
+     */
+    public getChatRoomMemberFromPmcProfile(pmcProfile: IPmcData): ISearchFriendResponse {
+        return {
+            _id: pmcProfile._id,
+            aid: pmcProfile.aid,
+            Info: {
+                Nickname: pmcProfile.Info.Nickname,
+                Side: pmcProfile.Info.Side,
+                Level: pmcProfile.Info.Level,
+                MemberCategory: pmcProfile.Info.MemberCategory,
+                SelectedMemberCategory: pmcProfile.Info.SelectedMemberCategory,
+            },
+        };
     }
 
     /**

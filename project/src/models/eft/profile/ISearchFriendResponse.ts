@@ -9,4 +9,5 @@ export interface Info {
     Side: string;
     Level: number;
     MemberCategory: number;
+    SelectedMemberCategory: number;
 }

@@ -1,5 +1,8 @@
 import { IDialogueChatBot } from "@spt/helpers/Dialogue/IDialogueChatBot";
 import { DialogueHelper } from "@spt/helpers/DialogueHelper";
+import { NotificationSendHelper } from "@spt/helpers/NotificationSendHelper";
+import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IDeleteFriendRequest } from "@spt/models/eft/dialog/IDeleteFriendRequest";
 import { IFriendRequestData } from "@spt/models/eft/dialog/IFriendRequestData";
 import { IFriendRequestSendResponse } from "@spt/models/eft/dialog/IFriendRequestSendResponse";
 import { IGetAllAttachmentsResponse } from "@spt/models/eft/dialog/IGetAllAttachmentsResponse";
@@ -8,8 +11,11 @@ import { IGetMailDialogViewRequestData } from "@spt/models/eft/dialog/IGetMailDi
 import { IGetMailDialogViewResponseData } from "@spt/models/eft/dialog/IGetMailDialogViewResponseData";
 import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
 import { IDialogue, IDialogueInfo, IMessage, ISptProfile, IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import { IWsFriendsListAccept } from "@spt/models/eft/ws/IWsFriendsListAccept";
+import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { MessageType } from "@spt/models/enums/MessageType";
+import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -26,6 +32,8 @@ export class DialogueController {
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("TimeUtil") protected timeUtil: TimeUtil,
         @inject("DialogueHelper") protected dialogueHelper: DialogueHelper,
+        @inject("NotificationSendHelper") protected notificationSendHelper: NotificationSendHelper,
+        @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ConfigServer") protected configServer: ConfigServer,
@@ -69,8 +77,19 @@ export class DialogueController {
      * @returns IGetFriendListDataResponse
      */
     public getFriendList(sessionID: string): IGetFriendListDataResponse {
-        // Force a fake friend called SPT into friend list
-        return { Friends: this.dialogueChatBots.map((v) => v.getChatBot()), Ignore: [], InIgnoreList: [] };
+        // Add all chatbots to the friends list
+        const friends = this.dialogueChatBots.map((v) => v.getChatBot());
+
+        // Add any friends the user has after the chatbots
+        const profile = this.profileHelper.getFullProfile(sessionID);
+        for (const friendId of profile?.friends) {
+            const friendProfile = this.profileHelper.getChatRoomMemberFromSessionId(friendId);
+            if (friendProfile) {
+                friends.push(friendProfile);
+            }
+        }
+
+        return { Friends: friends, Ignore: [], InIgnoreList: [] };
     }
 
     /**
@@ -441,6 +460,44 @@ export class DialogueController {
 
     /** Handle client/friend/request/send  */
     public sendFriendRequest(sessionID: string, request: IFriendRequestData): IFriendRequestSendResponse {
-        return { status: 0, requestId: "12345", retryAfter: 600 };
+        // To avoid needing to jump between profiles, auto-accept all friend requests
+        const friendProfile = this.profileHelper.getFullProfile(request.to);
+        if (!friendProfile?.characters?.pmc) {
+            return {
+                status: BackendErrorCodes.PLAYERPROFILENOTFOUND,
+                requestId: "", // Unused in an error state
+                retryAfter: 600,
+            };
+        }
+
+        // Only add the profile to the friends list if it doesn't already exist
+        const profile = this.saveServer.getProfile(sessionID);
+        if (!profile.friends.includes(request.to)) {
+            profile.friends.push(request.to);
+        }
+
+        // We need to delay this so that the friend request gets properly added to the clientside list before we accept it
+        setTimeout(() => {
+            const notification: IWsFriendsListAccept = {
+                type: NotificationEventType.FRIEND_LIST_REQUEST_ACCEPTED,
+                profile: this.profileHelper.getChatRoomMemberFromPmcProfile(friendProfile.characters.pmc),
+            };
+            this.notificationSendHelper.sendMessage(sessionID, notification);
+        }, 1000);
+
+        return {
+            status: BackendErrorCodes.NONE,
+            requestId: friendProfile.info.aid.toString(),
+            retryAfter: 600,
+        };
+    }
+
+    /** Handle client/friend/delete */
+    public deleteFriend(sessionID: string, request: IDeleteFriendRequest): void {
+        const profile = this.saveServer.getProfile(sessionID);
+        const friendIndex = profile.friends.indexOf(request.friend_id);
+        if (friendIndex !== -1) {
+            profile.friends.splice(friendIndex, 1);
+        }
     }
 }
