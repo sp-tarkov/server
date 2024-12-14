@@ -5,7 +5,6 @@ export interface IBackupConfig extends IBaseConfig {
     enabled: boolean;
     maxBackups: number;
     directory: string;
-    dateFormat: string;
     backupInterval: IBackupConfigInterval;
 }
 

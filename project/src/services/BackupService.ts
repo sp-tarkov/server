@@ -118,21 +118,22 @@ export class BackupService {
     }
 
     /**
-     * Generates a formatted backup date string based on the current date and time. The format is defined by the
-     * `backupConfig.dateFormat` property.
+     * Generates a formatted backup date string in the format `YYYY-MM-DD_hh-mm-ss`.
      *
      * @returns The formatted backup date string.
      */
     protected generateBackupDate(): string {
         const now = new Date();
-        return this.backupConfig.dateFormat
-            .toUpperCase()
-            .replace("YYYY", now.getFullYear().toString())
-            .replace("MM", String(now.getMonth() + 1).padStart(2, "0"))
-            .replace("DD", String(now.getDate()).padStart(2, "0"))
-            .replace("HH", String(now.getHours()).padStart(2, "0"))
-            .replace("MM", String(now.getMinutes()).padStart(2, "0"))
-            .replace("SS", String(now.getSeconds()).padStart(2, "0"));
+        const [year, month, day, hour, minute, second] = [
+            now.getFullYear(),
+            now.getMonth() + 1,
+            now.getDate(),
+            now.getHours(),
+            now.getMinutes(),
+            now.getSeconds(),
+        ].map((num) => num.toString().padStart(2, "0"));
+
+        return `${year}-${month}-${day}_${hour}-${minute}-${second}`;
     }
 
     /**
