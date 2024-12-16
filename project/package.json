@@ -66,8 +66,8 @@
         "@types/proper-lockfile": "~4.1",
         "@types/semver": "~7.5",
         "@types/ws": "~8.5",
-        "@vitest/coverage-istanbul": "~2",
-        "@vitest/ui": "~2",
+        "@vitest/coverage-istanbul": "^2.1.8",
+        "@vitest/ui": "^2.1.8",
         "@yao-pkg/pkg": "5.12",
         "@yao-pkg/pkg-fetch": "3.5.9",
         "cross-env": "~7.0",
@@ -81,7 +81,8 @@
         "resedit": "~2.0",
         "ts-node-dev": "~2.0",
         "tsconfig-paths": "~4.2",
-        "typedoc": "~0.26"
+        "typedoc": "~0.26",
+        "vitest": "^2.1.8"
     },
     "targets": {
         "default": {
