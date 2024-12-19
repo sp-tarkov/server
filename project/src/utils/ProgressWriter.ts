@@ -17,10 +17,10 @@ export class ProgressWriter {
         const progress = Math.floor((this.count / this.total) * 100);
 
         // reduce bar fill max to 50 characters to save space
-        const progressHalved = Math.floor(progress / 2);
+        const progressHalved = Math.floor(progress / 4);
 
         const barFill = "=".repeat(progressHalved);
-        const barEmptySpace = " ".repeat(Math.floor(50 - progressHalved));
+        const barEmptySpace = " ".repeat(Math.floor(25 - progressHalved));
 
         const progressBar = `  -> ${this.count} / ${this.total} [${barFill}${barEmptySpace}] ${progress}%`;
 
