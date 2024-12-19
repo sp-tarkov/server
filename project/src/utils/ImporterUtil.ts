@@ -1,8 +1,8 @@
 import { JsonUtil } from "@spt/utils/JsonUtil";
+import { ProgressWriter } from "@spt/utils/ProgressWriter";
 import { VFS } from "@spt/utils/VFS";
 import { Queue } from "@spt/utils/collections/queue/Queue";
 import { inject, injectable } from "tsyringe";
-import { ProgressWriter } from "./ProgressWriter";
 
 @injectable()
 export class ImporterUtil {
