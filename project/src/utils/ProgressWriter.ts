@@ -4,9 +4,22 @@ export class ProgressWriter {
     private count = 0;
     private total?: number;
     private done = false;
+    private barFillChar: string;
+    private barEmptyChar: string;
+    private maxBarLength: number;
 
-    constructor(total: number) {
+    constructor(total: number, maxBarLength = 25, barFillChar = "\u25A0", barEmptyChar = " ") {
+        if (total <= 0) {
+            throw new Error("Total must be a positive number.");
+        }
+        if ((barFillChar && barFillChar.length !== 1) || (barEmptyChar && barEmptyChar.length !== 1)) {
+            throw new Error("Bar character values must be a single character.");
+        }
+
         this.total = total;
+        this.maxBarLength = maxBarLength;
+        this.barFillChar = barFillChar;
+        this.barEmptyChar = barEmptyChar;
     }
 
     /**
@@ -20,12 +33,11 @@ export class ProgressWriter {
         this.count++;
 
         const progress = Math.floor((this.count / this.total) * 100);
+        const filledChars = Math.floor((progress / 100) * this.maxBarLength);
+        const emptyChars = this.maxBarLength - filledChars;
 
-        // reduce bar fill max to 50 characters to save space
-        const progressHalved = Math.floor(progress / 4);
-
-        const barFill = "=".repeat(progressHalved);
-        const barEmptySpace = " ".repeat(Math.floor(25 - progressHalved));
+        const barFill = this.barFillChar.repeat(filledChars);
+        const barEmptySpace = this.barEmptyChar.repeat(emptyChars);
 
         const progressBar = `  -> ${this.count} / ${this.total} [${barFill}${barEmptySpace}] ${progress}%`;
 
