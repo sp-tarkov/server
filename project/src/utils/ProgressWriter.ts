@@ -1,3 +1,5 @@
+import * as readline from "node:readline";
+
 export class ProgressWriter {
     count = 0;
     total: number;
@@ -24,8 +26,9 @@ export class ProgressWriter {
 
         const progressBar = `  -> ${this.count} / ${this.total} [${barFill}${barEmptySpace}] ${progress}%`;
 
+        readline.clearLine(process.stdout, 0);
+        readline.cursorTo(process.stdout, 0, null);
         process.stdout.write(progressBar);
-        process.stdout.cursorTo(0);
 
         if (progress === 100) {
             process.stdout.write("\n");
