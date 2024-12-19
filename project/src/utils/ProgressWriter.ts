@@ -1,14 +1,17 @@
 import * as readline from "node:readline";
 
 export class ProgressWriter {
-    count = 0;
-    total: number;
-    done = false;
+    private count = 0;
+    private total?: number;
+    private done = false;
 
     constructor(total: number) {
         this.total = total;
     }
 
+    /**
+     * Increment the progress counter and update the progress bar display.
+     */
     public increment(): void {
         if (this.done) {
             return;
