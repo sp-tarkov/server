@@ -1,5 +1,5 @@
 import readline from "node:readline";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { AsyncQueue } from "@spt/utils/AsyncQueue";
 import { WinstonMainLogger } from "@spt/utils/logging/WinstonMainLogger";
 

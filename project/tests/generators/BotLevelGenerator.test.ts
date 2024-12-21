@@ -2,7 +2,7 @@ import "reflect-metadata";
 
 import { BotLevelGenerator } from "@spt/generators/BotLevelGenerator";
 import { MinMax } from "@spt/models/common/MinMax";
-import { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
+import type { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

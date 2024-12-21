@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
+import type { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

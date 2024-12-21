@@ -1,16 +1,16 @@
 import http, { IncomingMessage } from "node:http";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import { Server, WebSocket } from "ws";
+import { WebSocketServer as WSServer, WebSocket } from "ws";
 
 @injectable()
 export class WebSocketServer {
-    protected webSocketServer: Server;
+    protected webSocketServer: WSServer;
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
@@ -21,12 +21,12 @@ export class WebSocketServer {
         @injectAll("WebSocketConnectionHandler") protected webSocketConnectionHandlers: IWebSocketConnectionHandler[],
     ) {}
 
-    public getWebSocketServer(): Server {
+    public getWebSocketServer(): WSServer {
         return this.webSocketServer;
     }
 
     public setupWebSocket(httpServer: http.Server): void {
-        this.webSocketServer = new Server({ server: httpServer });
+        this.webSocketServer = new WSServer({ server: httpServer });
 
         this.webSocketServer.addListener("listening", () => {
             this.logger.success(

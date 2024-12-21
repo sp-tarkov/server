@@ -1,4 +1,4 @@
-import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import type { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 import { Money } from "@spt/models/enums/Money";
 import { RagfairSort } from "@spt/models/enums/RagfairSort";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";

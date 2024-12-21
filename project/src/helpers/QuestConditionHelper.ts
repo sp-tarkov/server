@@ -1,4 +1,4 @@
-import { IQuestCondition } from "@spt/models/eft/common/tables/IQuest";
+import type { IQuestCondition } from "@spt/models/eft/common/tables/IQuest";
 import { injectable } from "tsyringe";
 
 @injectable()

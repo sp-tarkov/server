@@ -1,7 +1,7 @@
-import { ItemEventCallbacks } from "@spt/callbacks/ItemEventCallbacks";
+import type { ItemEventCallbacks } from "@spt/callbacks/ItemEventCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

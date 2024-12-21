@@ -8,8 +8,6 @@ import { container } from "tsyringe";
 export class Program {
     private errorHandler: ErrorHandler;
     constructor() {
-        // set window properties
-        process.stdout.setEncoding("utf8");
         process.title = "SPT Server";
         this.errorHandler = new ErrorHandler();
     }
@@ -18,6 +16,7 @@ export class Program {
         try {
             Container.registerTypes(container);
             const childContainer = container.createChildContainer();
+
             const watermark = childContainer.resolve<Watermark>("Watermark");
             watermark.initialize();
 

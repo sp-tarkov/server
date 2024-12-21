@@ -1,7 +1,8 @@
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
 import { inject, injectable } from "tsyringe";
-import { RawData, WebSocket } from "ws";
+import { WebSocket } from "ws";
+import type { RawData } from "ws";
 
 @injectable()
 export class DefaultSptWebSocketMessageHandler implements ISptWebSocketMessageHandler {

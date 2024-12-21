@@ -1,10 +1,10 @@
 import "reflect-metadata";
 
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
-import { IProcessBuyTradeRequestData } from "@spt/models/eft/trade/IProcessBuyTradeRequestData";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { IProcessBuyTradeRequestData } from "@spt/models/eft/trade/IProcessBuyTradeRequestData";
 import { PaymentService } from "@spt/services/PaymentService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { container } from "tsyringe";

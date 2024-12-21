@@ -1,8 +1,8 @@
 import { TraderCallbacks } from "@spt/callbacks/TraderCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { IModdedTraders } from "@spt/models/spt/config/ITraderConfig";
+import type { ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IModdedTraders } from "@spt/models/spt/config/ITraderConfig";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

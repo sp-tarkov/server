@@ -1,12 +1,12 @@
 import { ApplicationContext } from "@spt/context/ApplicationContext";
 import { ContextVariableType } from "@spt/context/ContextVariableType";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { IRegisterPlayerRequestData } from "@spt/models/eft/inRaid/IRegisterPlayerRequestData";
-import { IScavSaveRequestData } from "@spt/models/eft/inRaid/IScavSaveRequestData";
+import type { IRegisterPlayerRequestData } from "@spt/models/eft/inRaid/IRegisterPlayerRequestData";
+import type { IScavSaveRequestData } from "@spt/models/eft/inRaid/IScavSaveRequestData";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
-import { IInRaidConfig } from "@spt/models/spt/config/IInRaidConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import type { IInRaidConfig } from "@spt/models/spt/config/IInRaidConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { LocalisationService } from "@spt/services/LocalisationService";

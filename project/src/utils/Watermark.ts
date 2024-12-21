@@ -1,10 +1,10 @@
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import type { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { ConfigServer } from "@spt/servers/ConfigServer";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectable } from "tsyringe";
+import { ConfigServer } from "../servers/ConfigServer";
 
 @injectable()
 export class WatermarkLocale {

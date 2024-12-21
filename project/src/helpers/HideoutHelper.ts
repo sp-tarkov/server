@@ -1,23 +1,28 @@
-import { InventoryHelper } from "@spt/helpers/InventoryHelper";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { InventoryHelper } from "@spt/helpers/InventoryHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IBotHideoutArea, IHideoutImprovement, IProduction, IProductive } from "@spt/models/eft/common/tables/IBotBase";
-import { IItem, IUpd } from "@spt/models/eft/common/tables/IItem";
-import { IHideoutArea, IStageBonus } from "@spt/models/eft/hideout/IHideoutArea";
-import { IHideoutContinuousProductionStartRequestData } from "@spt/models/eft/hideout/IHideoutContinuousProductionStartRequestData";
-import { IHideoutProduction } from "@spt/models/eft/hideout/IHideoutProduction";
-import { IHideoutSingleProductionStartRequestData } from "@spt/models/eft/hideout/IHideoutSingleProductionStartRequestData";
-import { IHideoutTakeProductionRequestData } from "@spt/models/eft/hideout/IHideoutTakeProductionRequestData";
-import { IAddItemsDirectRequest } from "@spt/models/eft/inventory/IAddItemsDirectRequest";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type {
+    IBotHideoutArea,
+    IHideoutImprovement,
+    IProduction,
+    IProductive,
+} from "@spt/models/eft/common/tables/IBotBase";
+import type { IItem, IUpd } from "@spt/models/eft/common/tables/IItem";
+import type { IHideoutArea, IStageBonus } from "@spt/models/eft/hideout/IHideoutArea";
+import type { IHideoutContinuousProductionStartRequestData } from "@spt/models/eft/hideout/IHideoutContinuousProductionStartRequestData";
+import type { IHideoutProduction } from "@spt/models/eft/hideout/IHideoutProduction";
+import type { IHideoutSingleProductionStartRequestData } from "@spt/models/eft/hideout/IHideoutSingleProductionStartRequestData";
+import type { IHideoutTakeProductionRequestData } from "@spt/models/eft/hideout/IHideoutTakeProductionRequestData";
+import type { IAddItemsDirectRequest } from "@spt/models/eft/inventory/IAddItemsDirectRequest";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
-import { IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -26,7 +31,7 @@ import { PlayerService } from "@spt/services/PlayerService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

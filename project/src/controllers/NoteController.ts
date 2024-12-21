@@ -1,7 +1,7 @@
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { INote } from "@spt/models/eft/common/tables/IBotBase";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
-import { INoteActionData } from "@spt/models/eft/notes/INoteActionData";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { INote } from "@spt/models/eft/common/tables/IBotBase";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { INoteActionData } from "@spt/models/eft/notes/INoteActionData";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { inject, injectable } from "tsyringe";
 

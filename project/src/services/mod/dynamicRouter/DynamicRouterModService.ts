@@ -1,6 +1,7 @@
 import { RouteAction } from "@spt/di/Router";
 import { DynamicRouterMod } from "@spt/services/mod/dynamicRouter/DynamicRouterMod";
-import { DependencyContainer, injectable } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
+import { injectable } from "tsyringe";
 
 @injectable()
 export class DynamicRouterModService {

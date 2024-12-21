@@ -1,20 +1,20 @@
 import { BotGenerator } from "@spt/generators/BotGenerator";
 import { BotGeneratorHelper } from "@spt/helpers/BotGeneratorHelper";
 import { BotHelper } from "@spt/helpers/BotHelper";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IBotBase, IBotInfoSettings, ISkills, IStats } from "@spt/models/eft/common/tables/IBotBase";
-import { IBotType } from "@spt/models/eft/common/tables/IBotType";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IBotBase, IBotInfoSettings, ISkills, IStats } from "@spt/models/eft/common/tables/IBotBase";
+import type { IBotType } from "@spt/models/eft/common/tables/IBotType";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
 import { AccountTypes } from "@spt/models/enums/AccountTypes";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ItemAddedResult } from "@spt/models/enums/ItemAddedResult";
+import type { ItemAddedResult } from "@spt/models/enums/ItemAddedResult";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { Traders } from "@spt/models/enums/Traders";
-import { IKarmaLevel, IPlayerScavConfig } from "@spt/models/spt/config/IPlayerScavConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IKarmaLevel, IPlayerScavConfig } from "@spt/models/spt/config/IPlayerScavConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { BotLootCacheService } from "@spt/services/BotLootCacheService";
@@ -23,7 +23,7 @@ import { FenceService } from "@spt/services/FenceService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

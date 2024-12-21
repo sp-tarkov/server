@@ -1,7 +1,7 @@
 import { CustomizationCallbacks } from "@spt/callbacks/CustomizationCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetSuitsResponse } from "@spt/models/eft/customization/IGetSuitsResponse";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IGetSuitsResponse } from "@spt/models/eft/customization/IGetSuitsResponse";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

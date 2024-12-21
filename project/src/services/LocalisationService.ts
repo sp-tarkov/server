@@ -1,5 +1,5 @@
 import path from "node:path";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocaleService } from "@spt/services/LocaleService";
 import { RandomUtil } from "@spt/utils/RandomUtil";

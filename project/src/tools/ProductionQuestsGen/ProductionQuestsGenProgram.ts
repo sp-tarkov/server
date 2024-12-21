@@ -1,5 +1,5 @@
+import "core-js";
 import "reflect-metadata";
-import "source-map-support/register";
 
 import { ErrorHandler } from "@spt/ErrorHandler";
 import { Container } from "@spt/di/Container";
@@ -9,8 +9,6 @@ import { Lifecycle, container } from "tsyringe";
 export class ProductionQuestsGenProgram {
     private errorHandler: ErrorHandler;
     constructor() {
-        // set window properties
-        process.stdout.setEncoding("utf8");
         process.title = "SPT ProductionQuestsGen";
         this.errorHandler = new ErrorHandler();
     }

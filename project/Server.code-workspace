@@ -11,40 +11,30 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports.biome": "explicit",
             "quickfix.biome": "explicit"
-        }
+        },
+        "bun.runtime": "bun",
+        "bun.debugTerminal.enabled": true,
     },
     "extensions": {
         "recommendations": [
             "EditorConfig.EditorConfig", // EditorConfig file support.
             "vitest.explorer", // ViTest test runner.
             "refringe.spt-id-highlighter", // SPT ID information of hover.
-            "biomejs.biome" // Biome code formatting, linting, and refactoring.
+            "biomejs.biome", // Biome code formatting, linting, and refactoring.
+            "oven.bun-vscode" // Additional Bun runtime support.
         ]
     },
     "launch": {
         "version": "0.2.0",
         "configurations": [
             {
-                "name": "Debug",
-                "type": "node",
-                "runtimeVersion": "20.11.1",
-                "runtimeExecutable": "npm",
+                "type": "bun",
                 "request": "launch",
-                "sourceMaps": true,
-                "runtimeArgs": ["run", "run:debug"],
-                "outFiles": ["!**/node_modules/**"],
+                "name": "Debug Bun",
                 "cwd": "${workspaceFolder}",
-                "outputCapture": "std"
-            },
-            {
-                "name": "Run Vitest Tests",
-                "type": "node",
-                "runtimeVersion": "20.11.1",
-                "runtimeExecutable": "npm",
-                "request": "launch",
-                "runtimeArgs": ["run", "test"],
-                "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen"
+                "runtime": "bun",
+                "program": "src/ide/local.ts",
+                "watchMode": "hot"
             }
         ]
     }

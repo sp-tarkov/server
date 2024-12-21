@@ -1,8 +1,8 @@
 import { AchievementCallbacks } from "@spt/callbacks/AchievementCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { ICompletedAchievementsResponse } from "@spt/models/eft/profile/ICompletedAchievementsResponse";
-import { IGetAchievementsResponse } from "@spt/models/eft/profile/IGetAchievementsResponse";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { ICompletedAchievementsResponse } from "@spt/models/eft/profile/ICompletedAchievementsResponse";
+import type { IGetAchievementsResponse } from "@spt/models/eft/profile/IGetAchievementsResponse";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

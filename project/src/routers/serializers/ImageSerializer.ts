@@ -1,6 +1,6 @@
-import { IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { Serializer } from "@spt/di/Serializer";
-import { ImageRouter } from "@spt/routers/ImageRouter";
+import type { ImageRouter } from "@spt/routers/ImageRouter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

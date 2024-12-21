@@ -1,6 +1,6 @@
-import { IDialogue, IMessage, IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
-import { IWsChatMessageReceived } from "@spt/models/eft/ws/IWsChatMessageReceived";
-import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
+import type { IDialogue, IMessage, IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import type { IWsChatMessageReceived } from "@spt/models/eft/ws/IWsChatMessageReceived";
+import type { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { NotificationEventType } from "@spt/models/enums/NotificationEventType";

@@ -1,15 +1,15 @@
-import { InsuranceController } from "@spt/controllers/InsuranceController";
-import { OnUpdate } from "@spt/di/OnUpdate";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { IGetInsuranceCostRequestData } from "@spt/models/eft/insurance/IGetInsuranceCostRequestData";
-import { IGetInsuranceCostResponseData } from "@spt/models/eft/insurance/IGetInsuranceCostResponseData";
-import { IInsureRequestData } from "@spt/models/eft/insurance/IInsureRequestData";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { InsuranceController } from "@spt/controllers/InsuranceController";
+import type { OnUpdate } from "@spt/di/OnUpdate";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IGetInsuranceCostRequestData } from "@spt/models/eft/insurance/IGetInsuranceCostRequestData";
+import type { IGetInsuranceCostResponseData } from "@spt/models/eft/insurance/IGetInsuranceCostResponseData";
+import type { IInsureRequestData } from "@spt/models/eft/insurance/IInsureRequestData";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IInsuranceConfig } from "@spt/models/spt/config/IInsuranceConfig";
+import type { IInsuranceConfig } from "@spt/models/spt/config/IInsuranceConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import { InsuranceService } from "@spt/services/InsuranceService";
+import type { InsuranceService } from "@spt/services/InsuranceService";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
 

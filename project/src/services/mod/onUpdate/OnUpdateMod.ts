@@ -1,4 +1,4 @@
-import { OnUpdate } from "@spt/di/OnUpdate";
+import type { OnUpdate } from "@spt/di/OnUpdate";
 
 export class OnUpdateMod implements OnUpdate {
     public constructor(

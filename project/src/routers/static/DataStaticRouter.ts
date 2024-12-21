@@ -1,13 +1,13 @@
 import { DataCallbacks } from "@spt/callbacks/DataCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGlobals } from "@spt/models/eft/common/IGlobals";
-import { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomizationItem";
-import { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
-import { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
-import { IHideoutProductionData } from "@spt/models/eft/hideout/IHideoutProduction";
-import { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { ISettingsBase } from "@spt/models/spt/server/ISettingsBase";
+import type { IGlobals } from "@spt/models/eft/common/IGlobals";
+import type { ICustomizationItem } from "@spt/models/eft/common/tables/ICustomizationItem";
+import type { IHandbookBase } from "@spt/models/eft/common/tables/IHandbookBase";
+import type { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
+import type { IHideoutProductionData } from "@spt/models/eft/hideout/IHideoutProduction";
+import type { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { ISettingsBase } from "@spt/models/spt/server/ISettingsBase";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

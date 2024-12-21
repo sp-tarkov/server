@@ -1,5 +1,5 @@
-import { ItemHelper } from "@spt/helpers/ItemHelper";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
 import { inject, injectable } from "tsyringe";
 
 export interface IOwnerInventoryItems {

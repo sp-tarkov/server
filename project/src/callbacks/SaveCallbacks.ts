@@ -1,7 +1,7 @@
-import { OnLoad } from "@spt/di/OnLoad";
-import { OnUpdate } from "@spt/di/OnUpdate";
+import type { OnLoad } from "@spt/di/OnLoad";
+import type { OnUpdate } from "@spt/di/OnUpdate";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import type { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { BackupService } from "@spt/services/BackupService";

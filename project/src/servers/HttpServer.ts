@@ -3,11 +3,11 @@ import { ApplicationContext } from "@spt/context/ApplicationContext";
 import { ContextVariableType } from "@spt/context/ContextVariableType";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { WebSocketServer } from "@spt/servers/WebSocketServer";
-import { IHttpListener } from "@spt/servers/http/IHttpListener";
+import type { IHttpListener } from "@spt/servers/http/IHttpListener";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectAll, injectable } from "tsyringe";
 

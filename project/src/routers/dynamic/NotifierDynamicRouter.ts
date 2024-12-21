@@ -1,6 +1,6 @@
 import { NotifierCallbacks } from "@spt/callbacks/NotifierCallbacks";
 import { DynamicRouter, RouteAction } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

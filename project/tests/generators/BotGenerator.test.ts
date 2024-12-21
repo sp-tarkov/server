@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { BotNameService } from "@spt/services/BotNameService";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

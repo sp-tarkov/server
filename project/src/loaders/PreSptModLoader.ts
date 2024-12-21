@@ -3,21 +3,22 @@ import os from "node:os";
 import path from "node:path";
 import { ModLoadOrder } from "@spt/loaders/ModLoadOrder";
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
-import { IModDetails } from "@spt/models/eft/profile/ISptProfile";
+import type { IModDetails } from "@spt/models/eft/profile/ISptProfile";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
-import { IPreSptLoadModAsync } from "@spt/models/external/IPreSptLoadModAsync";
-import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
-import { IModLoader } from "@spt/models/spt/mod/IModLoader";
-import { IPackageJsonData } from "@spt/models/spt/mod/IPackageJsonData";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
+import type { IPreSptLoadModAsync } from "@spt/models/external/IPreSptLoadModAsync";
+import type { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import type { IModLoader } from "@spt/models/spt/mod/IModLoader";
+import type { IPackageJsonData } from "@spt/models/spt/mod/IPackageJsonData";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { ModCompilerService } from "@spt/services/ModCompilerService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { VFS } from "@spt/utils/VFS";
 import { maxSatisfying, satisfies, valid, validRange } from "semver";
-import { DependencyContainer, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
 @injectable()
 export class PreSptModLoader implements IModLoader {

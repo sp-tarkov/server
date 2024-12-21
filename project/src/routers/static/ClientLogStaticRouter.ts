@@ -1,6 +1,6 @@
 import { ClientLogCallbacks } from "@spt/callbacks/ClientLogCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

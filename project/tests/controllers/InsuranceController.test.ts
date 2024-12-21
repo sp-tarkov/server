@@ -1,8 +1,8 @@
 import "reflect-metadata";
 
-import { InsuranceController } from "@spt/controllers/InsuranceController";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { IInsurance } from "@spt/models/eft/profile/ISptProfile";
+import type { InsuranceController } from "@spt/controllers/InsuranceController";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { IInsurance } from "@spt/models/eft/profile/ISptProfile";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { ProfileInsuranceFactory } from "@tests/__factories__/ProfileInsurance.factory";
 import { container } from "tsyringe";

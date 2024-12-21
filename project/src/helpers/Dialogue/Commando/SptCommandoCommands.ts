@@ -1,9 +1,9 @@
-import { IChatCommand } from "@spt/helpers/Dialogue/Commando/IChatCommand";
-import { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
-import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
-import { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import type { IChatCommand } from "@spt/helpers/Dialogue/Commando/IChatCommand";
+import type { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
+import type { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
+import type { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import type { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectAll, injectable } from "tsyringe";

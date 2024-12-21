@@ -1,12 +1,13 @@
-import { OnLoad } from "@spt/di/OnLoad";
+import type { OnLoad } from "@spt/di/OnLoad";
 import { BundleLoader } from "@spt/loaders/BundleLoader";
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
-import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
-import { IPostDBLoadModAsync } from "@spt/models/external/IPostDBLoadModAsync";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import type { IPostDBLoadModAsync } from "@spt/models/external/IPostDBLoadModAsync";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt/services/LocalisationService";
-import { DependencyContainer, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
 @injectable()
 export class PostDBModLoader implements OnLoad {

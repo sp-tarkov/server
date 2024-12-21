@@ -1,20 +1,20 @@
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
-import { IScavRecipe } from "@spt/models/eft/hideout/IHideoutProduction";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import type { IScavRecipe } from "@spt/models/eft/hideout/IHideoutProduction";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Money } from "@spt/models/enums/Money";
-import { IScavCaseConfig } from "@spt/models/spt/config/IScavCaseConfig";
-import {
+import type { IScavCaseConfig } from "@spt/models/spt/config/IScavCaseConfig";
+import type {
     IRewardCountAndPriceDetails,
     IScavCaseRewardCountsAndPrices,
 } from "@spt/models/spt/hideout/ScavCaseRewardCountsAndPrices";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ItemFilterService } from "@spt/services/ItemFilterService";
+import type { ItemFilterService } from "@spt/services/ItemFilterService";
 import { RagfairPriceService } from "@spt/services/RagfairPriceService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { HashUtil } from "@spt/utils/HashUtil";

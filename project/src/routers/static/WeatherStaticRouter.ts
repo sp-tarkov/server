@@ -1,8 +1,8 @@
 import { WeatherCallbacks } from "@spt/callbacks/WeatherCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { IWeatherData } from "@spt/models/eft/weather/IWeatherData";
-import { IGetLocalWeatherResponseData } from "@spt/models/spt/weather/IGetLocalWeatherResponseData";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IWeatherData } from "@spt/models/eft/weather/IWeatherData";
+import type { IGetLocalWeatherResponseData } from "@spt/models/spt/weather/IGetLocalWeatherResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

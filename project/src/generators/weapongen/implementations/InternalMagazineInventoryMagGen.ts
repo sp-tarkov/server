@@ -1,5 +1,5 @@
-import { IInventoryMagGen } from "@spt/generators/weapongen/IInventoryMagGen";
-import { InventoryMagGen } from "@spt/generators/weapongen/InventoryMagGen";
+import type { IInventoryMagGen } from "@spt/generators/weapongen/IInventoryMagGen";
+import type { InventoryMagGen } from "@spt/generators/weapongen/InventoryMagGen";
 import { BotWeaponGeneratorHelper } from "@spt/helpers/BotWeaponGeneratorHelper";
 import { inject, injectable } from "tsyringe";
 

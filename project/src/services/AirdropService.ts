@@ -1,21 +1,21 @@
 import { LootGenerator } from "@spt/generators/LootGenerator";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { IGetAirdropLootRequest } from "@spt/models/eft/location/IGetAirdropLootRequest";
-import { IGetAirdropLootResponse } from "@spt/models/eft/location/IGetAirdropLootResponse";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { IGetAirdropLootRequest } from "@spt/models/eft/location/IGetAirdropLootRequest";
+import type { IGetAirdropLootResponse } from "@spt/models/eft/location/IGetAirdropLootResponse";
 import { AirdropTypeEnum, SptAirdropTypeEnum } from "@spt/models/enums/AirdropType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
-import { IAirdropConfig, IAirdropLoot } from "@spt/models/spt/config/IAirdropConfig";
-import { IAirdropLootRequest, ILootRequest } from "@spt/models/spt/services/ILootRequest";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IAirdropConfig, IAirdropLoot } from "@spt/models/spt/config/IAirdropConfig";
+import type { IAirdropLootRequest } from "@spt/models/spt/services/ILootRequest";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ItemFilterService } from "@spt/services/ItemFilterService";
+import type { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -1,17 +1,18 @@
-import { ItemHelper } from "@spt/helpers/ItemHelper";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { BanType, Common, ICounterKeyValue, IStats } from "@spt/models/eft/common/tables/IBotBase";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
-import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
-import { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import { BanType } from "@spt/models/eft/common/tables/IBotBase";
+import type { Common, ICounterKeyValue, IStats } from "@spt/models/eft/common/tables/IBotBase";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
+import type { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import type { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
 import { AccountTypes } from "@spt/models/enums/AccountTypes";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { GameEditions } from "@spt/models/enums/GameEditions";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
-import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -19,7 +20,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { Watermark } from "@spt/utils/Watermark";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

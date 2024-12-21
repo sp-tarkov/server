@@ -1,8 +1,8 @@
 import "reflect-metadata";
 
 import { HealthController } from "@spt/controllers/HealthController";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IHealthTreatmentRequestData } from "@spt/models/eft/health/IHealthTreatmentRequestData";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IHealthTreatmentRequestData } from "@spt/models/eft/health/IHealthTreatmentRequestData";
 import { container } from "tsyringe";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

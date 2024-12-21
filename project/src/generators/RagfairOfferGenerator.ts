@@ -1,30 +1,30 @@
 import { RagfairAssortGenerator } from "@spt/generators/RagfairAssortGenerator";
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { HandbookHelper } from "@spt/helpers/HandbookHelper";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PaymentHelper } from "@spt/helpers/PaymentHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
-import { IBarterScheme } from "@spt/models/eft/common/tables/ITrader";
-import { IOfferRequirement, IRagfairOffer, IRagfairOfferUser } from "@spt/models/eft/ragfair/IRagfairOffer";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import type { IBarterScheme } from "@spt/models/eft/common/tables/ITrader";
+import type { IOfferRequirement, IRagfairOffer, IRagfairOfferUser } from "@spt/models/eft/ragfair/IRagfairOffer";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { Money } from "@spt/models/enums/Money";
-import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
-import {
+import type { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import type {
     Condition,
     IArmorPlateBlacklistSettings,
     IBarterDetails,
     IDynamic,
     IRagfairConfig,
 } from "@spt/models/spt/config/IRagfairConfig";
-import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
-import { ITplWithFleaPrice } from "@spt/models/spt/ragfair/ITplWithFleaPrice";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
+import type { ITplWithFleaPrice } from "@spt/models/spt/ragfair/ITplWithFleaPrice";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -35,7 +35,7 @@ import { RagfairPriceService } from "@spt/services/RagfairPriceService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

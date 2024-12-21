@@ -1,6 +1,6 @@
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import {
+import type {
     EquipmentChances,
     IBotType,
     IGeneration,
@@ -8,15 +8,15 @@ import {
     IModsChances,
 } from "@spt/models/eft/common/tables/IBotType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
-import {
+import type { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
+import type {
     EquipmentFilters,
     IAdjustmentDetails,
     IBotConfig,
     IEquipmentFilterDetails,
     IWeightingAdjustmentDetails,
 } from "@spt/models/spt/config/IBotConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { inject, injectable } from "tsyringe";
 

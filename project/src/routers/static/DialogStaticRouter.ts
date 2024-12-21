@@ -1,17 +1,17 @@
 import { DialogueCallbacks } from "@spt/callbacks/DialogueCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IAddUserGroupMailRequest } from "@spt/models/eft/dialog/IAddUserGroupMailRequest";
-import { IChangeGroupMailOwnerRequest } from "@spt/models/eft/dialog/IChangeGroupMailOwnerRequest";
-import { IChatServer } from "@spt/models/eft/dialog/IChatServer";
-import { ICreateGroupMailRequest } from "@spt/models/eft/dialog/ICreateGroupMailRequest";
-import { IFriendRequestSendResponse } from "@spt/models/eft/dialog/IFriendRequestSendResponse";
-import { IGetAllAttachmentsResponse } from "@spt/models/eft/dialog/IGetAllAttachmentsResponse";
-import { IGetFriendListDataResponse } from "@spt/models/eft/dialog/IGetFriendListDataResponse";
-import { IGetMailDialogViewResponseData } from "@spt/models/eft/dialog/IGetMailDialogViewResponseData";
-import { IRemoveUserGroupMailRequest } from "@spt/models/eft/dialog/IRemoveUserGroupMailRequest";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
-import { IDialogueInfo } from "@spt/models/eft/profile/ISptProfile";
+import type { IAddUserGroupMailRequest } from "@spt/models/eft/dialog/IAddUserGroupMailRequest";
+import type { IChangeGroupMailOwnerRequest } from "@spt/models/eft/dialog/IChangeGroupMailOwnerRequest";
+import type { IChatServer } from "@spt/models/eft/dialog/IChatServer";
+import type { ICreateGroupMailRequest } from "@spt/models/eft/dialog/ICreateGroupMailRequest";
+import type { IFriendRequestSendResponse } from "@spt/models/eft/dialog/IFriendRequestSendResponse";
+import type { IGetAllAttachmentsResponse } from "@spt/models/eft/dialog/IGetAllAttachmentsResponse";
+import type { IGetFriendListDataResponse } from "@spt/models/eft/dialog/IGetFriendListDataResponse";
+import type { IGetMailDialogViewResponseData } from "@spt/models/eft/dialog/IGetMailDialogViewResponseData";
+import type { IRemoveUserGroupMailRequest } from "@spt/models/eft/dialog/IRemoveUserGroupMailRequest";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { IDialogueInfo } from "@spt/models/eft/profile/ISptProfile";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

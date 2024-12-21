@@ -1,4 +1,4 @@
-import { IInsurance } from "@spt/models/eft/profile/ISptProfile";
+import type { IInsurance } from "@spt/models/eft/profile/ISptProfile";
 
 export const profileInsuranceFixture: IInsurance[] = [
     {

@@ -1,6 +1,6 @@
-import { InraidCallbacks } from "@spt/callbacks/InraidCallbacks";
+import type { InraidCallbacks } from "@spt/callbacks/InraidCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

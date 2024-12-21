@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
-import { ItemHelper } from "@spt/helpers/ItemHelper";
-import { IInsurance } from "@spt/models/eft/profile/ISptProfile";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { IInsurance } from "@spt/models/eft/profile/ISptProfile";
 import { profileInsuranceFixture } from "@tests/__fixture__/profileInsurance.fixture";
 import { format } from "date-fns";
 import { container } from "tsyringe";

@@ -1,5 +1,5 @@
 import { DynamicRouter, RouteAction } from "@spt/di/Router";
-import { ImageRouter } from "@spt/routers/ImageRouter";
+import type { ImageRouter } from "@spt/routers/ImageRouter";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

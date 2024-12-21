@@ -1,10 +1,10 @@
 import { WeatherGenerator } from "@spt/generators/WeatherGenerator";
 import { WeatherHelper } from "@spt/helpers/WeatherHelper";
-import { IWeather, IWeatherData } from "@spt/models/eft/weather/IWeatherData";
+import type { IWeather, IWeatherData } from "@spt/models/eft/weather/IWeatherData";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { IGetLocalWeatherResponseData } from "@spt/models/spt/weather/IGetLocalWeatherResponseData";
+import type { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IGetLocalWeatherResponseData } from "@spt/models/spt/weather/IGetLocalWeatherResponseData";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { RaidWeatherService } from "@spt/services/RaidWeatherService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";

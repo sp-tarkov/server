@@ -1,15 +1,15 @@
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import {
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type {
     IHideoutImprovement,
     IMoneyTransferLimits,
     IProductive,
     ITraderInfo,
 } from "@spt/models/eft/common/tables/IBotBase";
-import { IProfileChange, ITraderData } from "@spt/models/eft/itemEvent/IItemEventRouterBase";
-import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import type { IProfileChange, ITraderData } from "@spt/models/eft/itemEvent/IItemEventRouterBase";
+import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 export class Serializer {
     public async serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {

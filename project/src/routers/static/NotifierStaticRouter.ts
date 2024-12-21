@@ -1,8 +1,8 @@
 import { NotifierCallbacks } from "@spt/callbacks/NotifierCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
-import { ISelectProfileResponse } from "@spt/models/eft/notifier/ISelectProfileResponse";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INotifierChannel } from "@spt/models/eft/notifier/INotifier";
+import type { ISelectProfileResponse } from "@spt/models/eft/notifier/ISelectProfileResponse";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

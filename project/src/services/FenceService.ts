@@ -1,28 +1,28 @@
 import { HandbookHelper } from "@spt/helpers/HandbookHelper";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
-import { IFenceLevel } from "@spt/models/eft/common/IGlobals";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IItem, IUpdRepairable } from "@spt/models/eft/common/tables/IItem";
-import { ISlot, ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
-import { IBarterScheme, ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
+import type { IFenceLevel } from "@spt/models/eft/common/IGlobals";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IItem, IUpdRepairable } from "@spt/models/eft/common/tables/IItem";
+import type { ISlot, ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import type { IBarterScheme, ITraderAssort } from "@spt/models/eft/common/tables/ITrader";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Money } from "@spt/models/enums/Money";
 import { Traders } from "@spt/models/enums/Traders";
-import { IItemDurabilityCurrentMax, ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
-import { ICreateFenceAssortsResult } from "@spt/models/spt/fence/ICreateFenceAssortsResult";
-import {
+import type { IItemDurabilityCurrentMax, ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
+import type { ICreateFenceAssortsResult } from "@spt/models/spt/fence/ICreateFenceAssortsResult";
+import type {
     IFenceAssortGenerationValues,
     IGenerationAssortValues,
 } from "@spt/models/spt/fence/IFenceAssortGenerationValues";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 /**

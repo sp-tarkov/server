@@ -4,9 +4,9 @@ import { BotGeneratorHelper } from "@spt/helpers/BotGeneratorHelper";
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
-import { MinMax } from "@spt/models/common/MinMax";
-import { IWildBody } from "@spt/models/eft/common/IGlobals";
-import {
+import type { MinMax } from "@spt/models/common/MinMax";
+import type { IWildBody } from "@spt/models/eft/common/IGlobals";
+import type {
     Common,
     IBaseJsonSkills,
     IBaseSkill,
@@ -15,27 +15,27 @@ import {
     IHealth as PmcHealth,
     ISkills as botSkills,
 } from "@spt/models/eft/common/tables/IBotBase";
-import { IAppearance, IBodyPart, IBotType, IHealth, IInventory } from "@spt/models/eft/common/tables/IBotType";
-import { IItem, IUpd } from "@spt/models/eft/common/tables/IItem";
+import type { IAppearance, IBodyPart, IBotType, IHealth, IInventory } from "@spt/models/eft/common/tables/IBotType";
+import type { IItem, IUpd } from "@spt/models/eft/common/tables/IItem";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { GameEditions } from "@spt/models/enums/GameEditions";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { SideType } from "@spt/models/enums/SideType";
-import { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
-import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
-import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
+import type { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import type { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
 import { BotNameService } from "@spt/services/BotNameService";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ItemFilterService } from "@spt/services/ItemFilterService";
+import type { ItemFilterService } from "@spt/services/ItemFilterService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

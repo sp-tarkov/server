@@ -1,5 +1,5 @@
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import type { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { inject, injectable } from "tsyringe";
 

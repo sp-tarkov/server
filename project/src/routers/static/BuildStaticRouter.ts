@@ -1,8 +1,8 @@
 import { BuildsCallbacks } from "@spt/callbacks/BuildsCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
-import { IUserBuilds } from "@spt/models/eft/profile/ISptProfile";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { IUserBuilds } from "@spt/models/eft/profile/ISptProfile";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

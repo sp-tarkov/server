@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { HttpMethods } from "@spt/servers/http/HttpMethods";
 import { injectable } from "tsyringe";
 

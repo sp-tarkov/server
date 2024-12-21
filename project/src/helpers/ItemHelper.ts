@@ -1,17 +1,17 @@
 import { HandbookHelper } from "@spt/helpers/HandbookHelper";
-import { IStaticAmmoDetails } from "@spt/models/eft/common/ILocation";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IInsuredItem } from "@spt/models/eft/common/tables/IBotBase";
-import { IItem, IItemLocation, IUpd, IUpdRepairable } from "@spt/models/eft/common/tables/IItem";
-import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import type { IStaticAmmoDetails } from "@spt/models/eft/common/ILocation";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IInsuredItem } from "@spt/models/eft/common/tables/IBotBase";
+import type { IItem, IItemLocation, IUpd, IUpdRepairable } from "@spt/models/eft/common/tables/IItem";
+import type { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { EquipmentSlots } from "@spt/models/enums/EquipmentSlots";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { Money } from "@spt/models/enums/Money";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
-import { ItemFilterService } from "@spt/services/ItemFilterService";
+import type { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
+import type { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocaleService } from "@spt/services/LocaleService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { CompareUtil } from "@spt/utils/CompareUtil";
@@ -20,7 +20,7 @@ import { JsonUtil } from "@spt/utils/JsonUtil";
 import { MathUtil } from "@spt/utils/MathUtil";
 import { ObjectId } from "@spt/utils/ObjectId";
 import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

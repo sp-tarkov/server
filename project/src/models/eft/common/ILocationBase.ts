@@ -1,6 +1,6 @@
 import { MinMax } from "@spt/models/common/MinMax";
-import { Ixyz } from "@spt/models/eft/common/Ixyz";
-import { ISpawnpointTemplate } from "./ILooseLoot";
+import type { Ixyz } from "@spt/models/eft/common/Ixyz";
+import type { ISpawnpointTemplate } from "./ILooseLoot";
 
 export interface ILocationBase {
     AccessKeys: string[];

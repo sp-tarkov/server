@@ -1,14 +1,14 @@
-import { ILocationsGenerateAllResponse } from "@spt/models/eft/common/ILocationsSourceDestinationBase";
-import { IGetAirdropLootRequest } from "@spt/models/eft/location/IGetAirdropLootRequest";
-import { IGetAirdropLootResponse } from "@spt/models/eft/location/IGetAirdropLootResponse";
+import type { ILocationsGenerateAllResponse } from "@spt/models/eft/common/ILocationsSourceDestinationBase";
+import type { IGetAirdropLootRequest } from "@spt/models/eft/location/IGetAirdropLootRequest";
+import type { IGetAirdropLootResponse } from "@spt/models/eft/location/IGetAirdropLootResponse";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
-import { ILocations } from "@spt/models/spt/server/ILocations";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
+import type { ILocations } from "@spt/models/spt/server/ILocations";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { AirdropService } from "@spt/services/AirdropService";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -1,8 +1,8 @@
 import { QuestCallbacks } from "@spt/callbacks/QuestCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IQuest } from "@spt/models/eft/common/tables/IQuest";
-import { IPmcDataRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IQuest } from "@spt/models/eft/common/tables/IQuest";
+import type { IPmcDataRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

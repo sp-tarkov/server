@@ -8,7 +8,7 @@ declare global {
     var G_LOG_REQUESTS: boolean;
     var G_WATERMARK_ENABLED: boolean;
 
-    var G_SPTVERSION: string;
+    var G_SPT_VERSION: string;
     var G_COMMIT: string;
-    var G_BUILDTIME: number;
+    var G_BUILD_TIME: number;
 }

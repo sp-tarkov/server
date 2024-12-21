@@ -1,11 +1,11 @@
-import { IHandbookCategory } from "@spt/models/eft/common/tables/IHandbookBase";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { IHandbookCategory } from "@spt/models/eft/common/tables/IHandbookBase";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Money } from "@spt/models/enums/Money";
-import { IItemConfig } from "@spt/models/spt/config/IItemConfig";
+import type { IItemConfig } from "@spt/models/spt/config/IItemConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 class LookupItem<T, I> {

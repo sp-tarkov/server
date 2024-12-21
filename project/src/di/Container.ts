@@ -131,8 +131,8 @@ import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
 import { PostDBModLoader } from "@spt/loaders/PostDBModLoader";
 import { PostSptModLoader } from "@spt/loaders/PostSptModLoader";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
-import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { HttpRouter } from "@spt/routers/HttpRouter";
 import { ImageRouter } from "@spt/routers/ImageRouter";
@@ -193,10 +193,10 @@ import { RagfairServer } from "@spt/servers/RagfairServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { WebSocketServer } from "@spt/servers/WebSocketServer";
 import { SptHttpListener } from "@spt/servers/http/SptHttpListener";
-import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
+import type { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
 import { SptWebSocketConnectionHandler } from "@spt/servers/ws/SptWebSocketConnectionHandler";
 import { DefaultSptWebSocketMessageHandler } from "@spt/servers/ws/message/DefaultSptWebSocketMessageHandler";
-import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
+import type { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
 import { AirdropService } from "@spt/services/AirdropService";
 import { BackupService } from "@spt/services/BackupService";
 import { BotEquipmentFilterService } from "@spt/services/BotEquipmentFilterService";
@@ -273,7 +273,8 @@ import { RecursiveCloner } from "@spt/utils/cloners/RecursiveCloner";
 import { StructuredCloner } from "@spt/utils/cloners/StructuredCloner";
 import { WinstonMainLogger } from "@spt/utils/logging/WinstonMainLogger";
 import { WinstonRequestLogger } from "@spt/utils/logging/WinstonRequestLogger";
-import { DependencyContainer, Lifecycle } from "tsyringe";
+import { Lifecycle } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
 /**
  * Handle the registration of classes to be used by the Dependency Injection code

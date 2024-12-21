@@ -1,12 +1,12 @@
 import { SavedCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/GiveCommand/SavedCommand";
-import { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ISptCommand } from "@spt/helpers/Dialogue/Commando/SptCommands/ISptCommand";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
-import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
-import { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
+import type { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest";
+import type { IUserDialogInfo } from "@spt/models/eft/profile/ISptProfile";
 import { Money } from "@spt/models/enums/Money";
-import { IProfileChangeEvent, ProfileChangeEventType } from "@spt/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IProfileChangeEvent, ProfileChangeEventType } from "@spt/models/spt/dialog/ISendMessageDetails";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocaleService } from "@spt/services/LocaleService";
 import { MailSendService } from "@spt/services/MailSendService";

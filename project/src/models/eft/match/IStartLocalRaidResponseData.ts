@@ -1,6 +1,6 @@
-import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
-import { IInsuredItem } from "@spt/models/eft/common/tables/IBotBase";
-import { ILocationServices } from "@spt/models/eft/common/tables/ILocationServices";
+import type { ILocationBase } from "@spt/models/eft/common/ILocationBase";
+import type { IInsuredItem } from "@spt/models/eft/common/tables/IBotBase";
+import type { ILocationServices } from "@spt/models/eft/common/tables/ILocationServices";
 
 export interface IStartLocalRaidResponseData {
     serverId: string;

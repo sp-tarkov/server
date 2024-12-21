@@ -2,9 +2,9 @@ import "reflect-metadata";
 
 import path from "node:path";
 import { Container } from "@spt/di/Container";
-import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import type { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
-import { ImporterUtil } from "@spt/utils/ImporterUtil";
+import type { ImporterUtil } from "@spt/utils/ImporterUtil";
 import { DependencyContainer, Lifecycle, container } from "tsyringe";
 import type { Environment } from "vitest";
 

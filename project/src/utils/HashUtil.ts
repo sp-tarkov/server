@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
+import { crc32 } from "node:zlib";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import crc32 from "buffer-crc32";
 import { mongoid } from "mongoid-js";
 import { inject, injectable } from "tsyringe";
 
@@ -35,7 +35,7 @@ export class HashUtil {
     }
 
     public generateCRC32ForFile(filePath: fs.PathLike): number {
-        return crc32.unsigned(fs.readFileSync(filePath));
+        return crc32(fs.readFileSync(filePath));
     }
 
     /**

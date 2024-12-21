@@ -1,10 +1,11 @@
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import path from "node:path";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { VFS } from "@spt/utils/VFS";
-import fixJson from "json-fixer";
-import { parse, stringify } from "json5";
+import JSON5 from "json5";
 import { jsonc } from "jsonc";
-import { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
+import type { IParseOptions, IStringifyOptions, Reviver } from "jsonc/lib/interfaces";
+import { jsonrepair } from "jsonrepair";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -72,10 +73,10 @@ export class JsonUtil {
     public serializeJson5(data: any, filename?: string | undefined, prettify = false): string | undefined {
         try {
             if (prettify) {
-                return stringify(data, undefined, "\t");
+                return JSON5.stringify(data, undefined, "\t");
             }
 
-            return stringify(data);
+            return JSON5.stringify(data);
         } catch (error) {
             this.logger.error(
                 `unable to stringify json5 file: ${filename} message: ${error.message}, stack: ${error.stack}`,
@@ -118,7 +119,7 @@ export class JsonUtil {
 
     public deserializeJson5<T>(jsonString: string, filename = ""): T | undefined {
         try {
-            return parse(jsonString);
+            return JSON5.parse(jsonString);
         } catch (error) {
             this.logger.error(
                 `unable to parse json file: ${filename} message: ${error.message}, stack: ${error.stack}`,
@@ -140,6 +141,8 @@ export class JsonUtil {
      * @returns Object
      */
     public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T | undefined {
+        const normalizedFilePath = path.normalize(filePath);
+
         this.ensureJsonCacheExists(this.jsonCachePath);
         this.hydrateJsonCache(this.jsonCachePath);
 
@@ -150,22 +153,27 @@ export class JsonUtil {
             throw new Error("Unable to deserialize with Cache, file hashes have not been hydrated yet");
         }
         // Get hash of file and check if missing or hash mismatch
-        let savedHash = this.fileHashes[filePath];
+        let savedHash = this.fileHashes[normalizedFilePath];
         if (!savedHash || savedHash !== generatedHash) {
             try {
-                const { data, changed } = fixJson(jsonString);
+                const fixedJsonString = jsonrepair(jsonString);
+                const data = this.deserialize<T>(fixedJsonString);
+                const changed = jsonString !== fixedJsonString;
+
                 if (changed) {
                     // data invalid, return it
-                    this.logger.error(`${filePath} - Detected faulty json, please fix your json file using VSCodium`);
+                    this.logger.error(
+                        `${normalizedFilePath} - Detected faulty json, please fix your json file using VSCodium`,
+                    );
                 } else {
                     // data valid, save hash and call function again
-                    this.fileHashes[filePath] = generatedHash;
+                    this.fileHashes[normalizedFilePath] = generatedHash;
                     this.vfs.writeFile(this.jsonCachePath, this.serialize(this.fileHashes, true));
                     savedHash = generatedHash;
                 }
                 return data as T;
             } catch (error) {
-                const errorMessage = `Attempted to parse file: ${filePath}. Error: ${error.message}`;
+                const errorMessage = `Attempted to parse file: ${normalizedFilePath}. Error: ${error.message || error}`;
                 this.logger.error(errorMessage);
                 throw new Error(errorMessage);
             }
@@ -173,7 +181,7 @@ export class JsonUtil {
 
         // Doesn't match
         if (savedHash !== generatedHash) {
-            throw new Error(`Catastrophic failure processing file ${filePath}`);
+            throw new Error(`Catastrophic failure processing file ${normalizedFilePath}`);
         }
 
         // Match!

@@ -1,6 +1,6 @@
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Money } from "@spt/models/enums/Money";
-import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
+import type { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { inject, injectable } from "tsyringe";
 

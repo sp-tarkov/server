@@ -1,10 +1,10 @@
 import { RagfairCallbacks } from "@spt/callbacks/RagfairCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
-import { IGetItemPriceResult } from "@spt/models/eft/ragfair/IGetItemPriceResult";
-import { IGetOffersResult } from "@spt/models/eft/ragfair/IGetOffersResult";
-import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { IGetItemPriceResult } from "@spt/models/eft/ragfair/IGetItemPriceResult";
+import type { IGetOffersResult } from "@spt/models/eft/ragfair/IGetOffersResult";
+import type { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

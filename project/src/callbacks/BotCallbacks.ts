@@ -1,12 +1,12 @@
 import { ApplicationContext } from "@spt/context/ApplicationContext";
 import { ContextVariableType } from "@spt/context/ContextVariableType";
 import { BotController } from "@spt/controllers/BotController";
-import { IGenerateBotsRequestData } from "@spt/models/eft/bot/IGenerateBotsRequestData";
-import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
-import { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
-import { IDifficulties } from "@spt/models/eft/common/tables/IBotType";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { IGetRaidConfigurationRequestData } from "@spt/models/eft/match/IGetRaidConfigurationRequestData";
+import type { IGenerateBotsRequestData } from "@spt/models/eft/bot/IGenerateBotsRequestData";
+import type { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import type { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
+import type { IDifficulties } from "@spt/models/eft/common/tables/IBotType";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IGetRaidConfigurationRequestData } from "@spt/models/eft/match/IGetRaidConfigurationRequestData";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { inject, injectable } from "tsyringe";
 

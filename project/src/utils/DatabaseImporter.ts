@@ -1,15 +1,17 @@
-import { OnLoad } from "@spt/di/OnLoad";
+import path from "node:path";
+import type { OnLoad } from "@spt/di/OnLoad";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
-import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { ImageRouter } from "@spt/routers/ImageRouter";
+import type { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import type { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ImageRouter } from "@spt/routers/ImageRouter";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
+import { BunTimer } from "@spt/utils/BunTimer";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ImporterUtil } from "@spt/utils/ImporterUtil";
+import type { ImporterUtil } from "@spt/utils/ImporterUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
@@ -41,7 +43,8 @@ export class DatabaseImporter implements OnLoad {
      * @returns path to data
      */
     public getSptDataPath(): string {
-        return globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/" : "./assets/";
+        // Keep the trailing slash!
+        return globalThis.G_RELEASE_CONFIGURATION ? "./SPT_Data/Server/" : "./assets/";
     }
 
     public async onLoad(): Promise<void> {
@@ -49,9 +52,8 @@ export class DatabaseImporter implements OnLoad {
 
         if (globalThis.G_RELEASE_CONFIGURATION) {
             try {
-                // Reading the dynamic SHA1 file
                 const file = "checks.dat";
-                const fileWithPath = `${this.filepath}${file}`;
+                const fileWithPath = path.join(this.filepath, file);
                 if (this.vfs.exists(fileWithPath)) {
                     this.hashedFile = this.jsonUtil.deserialize(
                         this.encodingUtil.fromBase64(this.vfs.readFile(fileWithPath)),
@@ -69,7 +71,7 @@ export class DatabaseImporter implements OnLoad {
 
         await this.hydrateDatabase(this.filepath);
 
-        const imageFilePath = `${this.filepath}images/`;
+        const imageFilePath = path.join(this.filepath, "images/");
         const directories = this.vfs.getDirs(imageFilePath);
         this.loadImages(imageFilePath, directories, [
             "/files/achievement/",
@@ -82,93 +84,91 @@ export class DatabaseImporter implements OnLoad {
         ]);
     }
 
-    /**
-     * Read all json files in database folder and map into a json object
-     * @param filepath path to database folder
-     */
     protected async hydrateDatabase(filepath: string): Promise<void> {
         this.logger.info(this.localisationService.getText("importing_database"));
 
-        const dataToImport = await this.importerUtil.loadAsync<IDatabaseTables>(
-            `${filepath}database/`,
-            this.filepath,
-            (fileWithPath: string, data: string) => this.onReadValidate(fileWithPath, data),
-        );
+        const databasePath = path.join(filepath, "database/");
+        try {
+            const timer = new BunTimer();
+            const dataToImport = await this.importerUtil.loadAsync<IDatabaseTables>(
+                databasePath,
+                this.filepath,
+                (fileWithPath: string, data: string) => this.onReadValidate(fileWithPath, data),
+            );
+            const times = timer.finish();
 
-        const validation =
-            this.valid === VaildationResult.FAILED || this.valid === VaildationResult.NOT_FOUND ? "." : "";
-        this.logger.info(`${this.localisationService.getText("importing_database_finish")}${validation}`);
-        this.databaseServer.setTables(dataToImport);
+            const validation =
+                this.valid === VaildationResult.FAILED || this.valid === VaildationResult.NOT_FOUND ? "." : "";
+
+            this.logger.info(`${this.localisationService.getText("importing_database_finish")}${validation}`);
+            this.logger.debug(`Database import took ${times.sec.toFixed(2)} seconds`);
+            this.databaseServer.setTables(dataToImport);
+        } catch (error) {
+            this.logger.error(`Error hydrating database: ${error.message}`);
+            throw error;
+        }
     }
 
     protected onReadValidate(fileWithPath: string, data: string): void {
-        // Validate files
         if (globalThis.G_RELEASE_CONFIGURATION && this.hashedFile && !this.validateFile(fileWithPath, data)) {
             this.valid = VaildationResult.FAILED;
         }
     }
 
-    public getRoute(): string {
-        return "spt-database";
+    /**
+     * Normalize key paths to ensure consistency in how they were generated. Validation keys are are relative paths
+     * from the `assets` directory, normalized, no leading slash, forward slashes, and include the file extension.
+     * Example: `database/locations/sandbox/base.json`
+     *
+     * @param keyPath - The path that is being used for a validation check that needs to be normalized.
+     */
+    protected normalizeKeyPath(keyPath: string): string {
+        const assetsPath = path.normalize(this.filepath).replace(/\\/g, "/");
+        return path.normalize(keyPath).replace(/\\/g, "/").replace(assetsPath, "");
     }
 
     protected validateFile(filePathAndName: string, fileData: any): boolean {
         try {
-            const finalPath = filePathAndName.replace(this.filepath, "").replace(".json", "");
-            let tempObject: any;
-            for (const prop of finalPath.split("/")) {
-                if (!tempObject) {
-                    tempObject = this.hashedFile[prop];
-                } else {
-                    tempObject = tempObject[prop];
-                }
+            const hashedKeyPath = this.normalizeKeyPath(filePathAndName);
+
+            if (!hashedKeyPath) {
+                this.logger.error(`Key not found in path: "${hashedKeyPath}"`);
+                return false;
             }
 
-            if (tempObject !== this.hashUtil.generateSha1ForData(fileData)) {
+            const tempObject = this.hashedFile[hashedKeyPath];
+            const generatedHash = this.hashUtil.generateSha1ForData(fileData);
+
+            if (!tempObject || tempObject !== generatedHash) {
                 this.logger.debug(this.localisationService.getText("validation_error_file", filePathAndName));
                 return false;
             }
         } catch (e) {
-            this.logger.warning(this.localisationService.getText("validation_error_exception", filePathAndName));
-            this.logger.warning(e);
+            this.logger.warning(`Validation error: ${e.message || e}`);
             return false;
         }
         return true;
     }
 
-    /**
-     * Find and map files with image router inside a designated path
-     * @param filepath Path to find files in
-     */
     public loadImages(filepath: string, directories: string[], routes: string[]): void {
         for (const directoryIndex in directories) {
-            // Get all files in directory
-            const filesInDirectory = this.vfs.getFiles(`${filepath}${directories[directoryIndex]}`);
+            const filesInDirectory = this.vfs.getFiles(path.join(filepath, directories[directoryIndex]));
             for (const file of filesInDirectory) {
-                // Register each file in image router
                 const filename = this.vfs.stripExtension(file);
                 const routeKey = `${routes[directoryIndex]}${filename}`;
-                let imagePath = `${filepath}${directories[directoryIndex]}/${file}`;
+                let imagePath = path.join(filepath, directories[directoryIndex], file);
 
                 const pathOverride = this.getImagePathOverride(imagePath);
                 if (pathOverride) {
                     this.logger.debug(`overrode route: ${routeKey} endpoint: ${imagePath} with ${pathOverride}`);
                     imagePath = pathOverride;
                 }
-
                 this.imageRouter.addRoute(routeKey, imagePath);
             }
         }
-
-        // Map icon file separately
-        this.imageRouter.addRoute("/favicon.ico", `${filepath}icon.ico`);
+        this.imageRouter.addRoute("/favicon.ico", path.join(filepath, "icon.ico"));
     }
 
-    /**
-     * Check for a path override in the http json config file
-     * @param imagePath Key
-     * @returns override for key
-     */
     protected getImagePathOverride(imagePath: string): string {
         return this.httpConfig.serverImagePathOverride[imagePath];
     }

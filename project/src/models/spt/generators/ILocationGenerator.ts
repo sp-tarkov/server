@@ -4,7 +4,7 @@ import {
     IStaticForcedProps,
     IStaticLootDetails,
 } from "@spt/models/eft/common/ILocation";
-import { ILooseLoot, ISpawnpointTemplate } from "@spt/models/eft/common/ILooseLoot";
+import type { ILooseLoot, ISpawnpointTemplate } from "@spt/models/eft/common/ILooseLoot";
 
 export interface ILocationGenerator {
     generateContainerLoot(

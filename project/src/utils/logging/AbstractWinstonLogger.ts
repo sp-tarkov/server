@@ -2,13 +2,13 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
-import { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
+import type { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
 import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
-import { SptLogger } from "@spt/models/spt/logging/SptLogger";
-import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
-import { ICommand } from "@spt/models/spt/utils/ICommand";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { SptLogger } from "@spt/models/spt/logging/SptLogger";
+import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import type { ICommand } from "@spt/models/spt/utils/ICommand";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import winston, { createLogger, format, transports, addColors } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 

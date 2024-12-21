@@ -1,6 +1,6 @@
 import { BotCallbacks } from "@spt/callbacks/BotCallbacks";
 import { DynamicRouter, RouteAction } from "@spt/di/Router";
-import { IDifficulties } from "@spt/models/eft/common/tables/IBotType";
+import type { IDifficulties } from "@spt/models/eft/common/tables/IBotType";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

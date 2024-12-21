@@ -1,12 +1,12 @@
 import { ProfileCallbacks } from "@spt/callbacks/ProfileCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IPmcData } from "@spt/models/eft/common/IPmcData";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
-import { IGetProfileStatusResponseData } from "@spt/models/eft/profile/GetProfileStatusResponseData";
-import { ICreateProfileResponse } from "@spt/models/eft/profile/ICreateProfileResponse";
-import { IGetOtherProfileResponse } from "@spt/models/eft/profile/IGetOtherProfileResponse";
-import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
+import type { IPmcData } from "@spt/models/eft/common/IPmcData";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { IGetProfileStatusResponseData } from "@spt/models/eft/profile/GetProfileStatusResponseData";
+import type { ICreateProfileResponse } from "@spt/models/eft/profile/ICreateProfileResponse";
+import type { IGetOtherProfileResponse } from "@spt/models/eft/profile/IGetOtherProfileResponse";
+import type { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

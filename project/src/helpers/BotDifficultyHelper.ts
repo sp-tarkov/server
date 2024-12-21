@@ -1,14 +1,14 @@
 import { BotHelper } from "@spt/helpers/BotHelper";
-import { IDifficultyCategories } from "@spt/models/eft/common/tables/IBotType";
+import type { IDifficultyCategories } from "@spt/models/eft/common/tables/IBotType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IBots } from "@spt/models/spt/bots/IBots";
-import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IBots } from "@spt/models/spt/bots/IBots";
+import type { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

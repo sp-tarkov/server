@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { inject, injectable } from "tsyringe";
-import { ScriptTarget, ModuleKind, ModuleResolutionKind, transpileModule, CompilerOptions } from "typescript";
+import { ScriptTarget, ModuleKind, ModuleResolutionKind, transpileModule } from "typescript";
+import type { CompilerOptions } from "typescript";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ModHashCacheService } from "@spt/services/cache/ModHashCacheService";
 import { VFS } from "@spt/utils/VFS";

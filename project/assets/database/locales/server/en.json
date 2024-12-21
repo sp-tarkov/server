@@ -709,7 +709,7 @@
     "watermark-discord_url": "https://discord.sp-tarkov.com",
     "watermark-do_not_report": "DO NOT REPORT IT",
     "watermark-free_of_charge": "This work is free of charge",
-    "watermark-issue_tracker_url": "https://dev.sp-tarkov.com/SPT/Server/issues",
+    "watermark-issue_tracker_url": "https://github.com/sp-tarkov/server/issues",
     "watermark-modding_disabled": "THIS BUILD HAS SERVER MODDING DISABLED",
     "watermark-no_support": "NO SUPPORT WILL BE GIVEN",
     "watermark-not_an_issue": "THIS IS NOT AN ISSUE",
@@ -725,8 +725,8 @@
     "websocket-received_message": "[WS] Received message from user %s ",
     "websocket-socket_lost_deleting_handle": "[WS] Socket lost, deleting handle",
     "websocket-started": "Started websocket at %s",
-	"chatbot-cannot_accept_any_more_of_gift": "You cannot accept any more of this gift",
-	"chatbot-halloween_event_enabled": "Halloween event has been enabled, restart your game client before starting a raid",
-	"chatbot-added_stash_rows_please_restart": "Added 2 rows to stash, please restart your game to see them",
-	"chatbot-snow_enabled": "Snow is enabled for all subsequent raids until the server is restarted"
+    "chatbot-cannot_accept_any_more_of_gift": "You cannot accept any more of this gift",
+    "chatbot-halloween_event_enabled": "Halloween event has been enabled, restart your game client before starting a raid",
+    "chatbot-added_stash_rows_please_restart": "Added 2 rows to stash, please restart your game to see them",
+    "chatbot-snow_enabled": "Snow is enabled for all subsequent raids until the server is restarted"
 }

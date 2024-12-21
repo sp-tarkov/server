@@ -1,11 +1,12 @@
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
-import { IPostSptLoadMod } from "@spt/models/external/IPostSptLoadMod";
-import { IPostSptLoadModAsync } from "@spt/models/external/IPostSptLoadModAsync";
-import { IModLoader } from "@spt/models/spt/mod/IModLoader";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IPostSptLoadMod } from "@spt/models/external/IPostSptLoadMod";
+import type { IPostSptLoadModAsync } from "@spt/models/external/IPostSptLoadModAsync";
+import type { IModLoader } from "@spt/models/spt/mod/IModLoader";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt/services/LocalisationService";
-import { DependencyContainer, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
 
 @injectable()
 export class PostSptModLoader implements IModLoader {

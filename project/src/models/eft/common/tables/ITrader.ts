@@ -1,6 +1,6 @@
-import { IItem } from "@spt/models/eft/common/tables/IItem";
+import type { IItem } from "@spt/models/eft/common/tables/IItem";
 import { DogtagExchangeSide } from "@spt/models/enums/DogtagExchangeSide";
-import { ITraderServiceModel } from "@spt/models/spt/services/ITraderServiceModel";
+import type { ITraderServiceModel } from "@spt/models/spt/services/ITraderServiceModel";
 
 export interface ITrader {
     assort?: ITraderAssort;

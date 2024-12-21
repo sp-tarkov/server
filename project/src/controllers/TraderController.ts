@@ -2,13 +2,13 @@ import { FenceBaseAssortGenerator } from "@spt/generators/FenceBaseAssortGenerat
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { TraderAssortHelper } from "@spt/helpers/TraderAssortHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
-import { ITraderAssort, ITraderBase } from "@spt/models/eft/common/tables/ITrader";
-import { IGetItemPricesResponse } from "@spt/models/eft/game/IGetItemPricesResponse";
+import type { ITraderAssort, ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import type { IGetItemPricesResponse } from "@spt/models/eft/game/IGetItemPricesResponse";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Money } from "@spt/models/enums/Money";
 import { Traders } from "@spt/models/enums/Traders";
-import { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ITraderConfig } from "@spt/models/spt/config/ITraderConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { FenceService } from "@spt/services/FenceService";
@@ -16,7 +16,7 @@ import { RagfairPriceService } from "@spt/services/RagfairPriceService";
 import { TraderAssortService } from "@spt/services/TraderAssortService";
 import { TraderPurchasePersisterService } from "@spt/services/TraderPurchasePersisterService";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -1,14 +1,14 @@
 import { MatchCallbacks } from "@spt/callbacks/MatchCallbacks";
 import { RouteAction, StaticRouter } from "@spt/di/Router";
-import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
-import { IMetrics } from "@spt/models/eft/common/tables/IMatch";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
-import { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
-import { IGroupCharacter } from "@spt/models/eft/match/IGroupCharacter";
-import { IMatchGroupCurrentResponse } from "@spt/models/eft/match/IMatchGroupCurrentResponse";
-import { IMatchGroupStatusResponse } from "@spt/models/eft/match/IMatchGroupStatusResponse";
-import { IProfileStatusResponse } from "@spt/models/eft/match/IProfileStatusResponse";
-import { IStartLocalRaidResponseData } from "@spt/models/eft/match/IStartLocalRaidResponseData";
+import type { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
+import type { IMetrics } from "@spt/models/eft/common/tables/IMatch";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { INullResponseData } from "@spt/models/eft/httpResponse/INullResponseData";
+import type { IGroupCharacter } from "@spt/models/eft/match/IGroupCharacter";
+import type { IMatchGroupCurrentResponse } from "@spt/models/eft/match/IMatchGroupCurrentResponse";
+import type { IMatchGroupStatusResponse } from "@spt/models/eft/match/IMatchGroupStatusResponse";
+import type { IProfileStatusResponse } from "@spt/models/eft/match/IProfileStatusResponse";
+import type { IStartLocalRaidResponseData } from "@spt/models/eft/match/IStartLocalRaidResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

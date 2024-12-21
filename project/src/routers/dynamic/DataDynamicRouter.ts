@@ -1,7 +1,7 @@
 import { DataCallbacks } from "@spt/callbacks/DataCallbacks";
 import { DynamicRouter, RouteAction } from "@spt/di/Router";
-import { IGetItemPricesResponse } from "@spt/models/eft/game/IGetItemPricesResponse";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { IGetItemPricesResponse } from "@spt/models/eft/game/IGetItemPricesResponse";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

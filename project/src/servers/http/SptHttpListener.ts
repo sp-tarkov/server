@@ -1,14 +1,14 @@
-import { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingHttpHeaders, IncomingMessage, ServerResponse } from "node:http";
+import util from "node:util";
 import zlib from "node:zlib";
 import { Serializer } from "@spt/di/Serializer";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { HttpRouter } from "@spt/routers/HttpRouter";
-import { IHttpListener } from "@spt/servers/http/IHttpListener";
+import type { IHttpListener } from "@spt/servers/http/IHttpListener";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import util from "node:util";
 
 const zlibInflate = util.promisify(zlib.inflate);
 const zlibDeflate = util.promisify(zlib.deflate);

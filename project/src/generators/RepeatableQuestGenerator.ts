@@ -1,28 +1,28 @@
 import { RepeatableQuestRewardGenerator } from "@spt/generators/RepeatableQuestRewardGenerator";
-import { ItemHelper } from "@spt/helpers/ItemHelper";
+import type { ItemHelper } from "@spt/helpers/ItemHelper";
 import { RepeatableQuestHelper } from "@spt/helpers/RepeatableQuestHelper";
-import { IExit } from "@spt/models/eft/common/ILocationBase";
-import { ITraderInfo } from "@spt/models/eft/common/tables/IBotBase";
-import { IQuestCondition, IQuestConditionCounterCondition } from "@spt/models/eft/common/tables/IQuest";
-import { IRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import type { IExit } from "@spt/models/eft/common/ILocationBase";
+import type { ITraderInfo } from "@spt/models/eft/common/tables/IBotBase";
+import type { IQuestCondition, IQuestConditionCounterCondition } from "@spt/models/eft/common/tables/IQuest";
+import type { IRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Traders } from "@spt/models/enums/Traders";
-import {
+import type {
     IBossInfo,
     IEliminationConfig,
     IQuestConfig,
     IRepeatableQuestConfig,
 } from "@spt/models/spt/config/IQuestConfig";
-import { IQuestTypePool } from "@spt/models/spt/repeatable/IQuestTypePool";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IQuestTypePool } from "@spt/models/spt/repeatable/IQuestTypePool";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { MathUtil } from "@spt/utils/MathUtil";
 import { ObjectId } from "@spt/utils/ObjectId";
 import { ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

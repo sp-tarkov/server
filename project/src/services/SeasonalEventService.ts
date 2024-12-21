@@ -1,19 +1,23 @@
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
-import { IConfig } from "@spt/models/eft/common/IGlobals";
-import { ILocation } from "@spt/models/eft/common/ILocation";
-import { IAdditionalHostilitySettings, IBossLocationSpawn } from "@spt/models/eft/common/ILocationBase";
-import { IInventory } from "@spt/models/eft/common/tables/IBotType";
+import type { IConfig } from "@spt/models/eft/common/IGlobals";
+import type { ILocation } from "@spt/models/eft/common/ILocation";
+import type { IAdditionalHostilitySettings, IBossLocationSpawn } from "@spt/models/eft/common/ILocationBase";
+import type { IInventory } from "@spt/models/eft/common/tables/IBotType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { Season } from "@spt/models/enums/Season";
 import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
-import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
-import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
-import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
-import { ISeasonalEvent, ISeasonalEventConfig, IZombieSettings } from "@spt/models/spt/config/ISeasonalEventConfig";
-import { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
+import type { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
+import type { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
+import type {
+    ISeasonalEvent,
+    ISeasonalEventConfig,
+    IZombieSettings,
+} from "@spt/models/spt/config/ISeasonalEventConfig";
+import type { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { GiftService } from "@spt/services/GiftService";
@@ -355,7 +359,7 @@ export class SeasonalEventService {
      * @param eventName Name of the event to enable. e.g. Christmas
      */
     protected updateGlobalEvents(globalConfig: IConfig, event: ISeasonalEvent): void {
-        this.logger.success(`event: ${event.type} is active`);
+        this.logger.success(`The ${event.type.toUpperCase()} event is active`);
 
         switch (event.type.toLowerCase()) {
             case SeasonalEventType.HALLOWEEN.toLowerCase():

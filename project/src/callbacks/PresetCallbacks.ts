@@ -1,5 +1,5 @@
 import { PresetController } from "@spt/controllers/PresetController";
-import { OnLoad } from "@spt/di/OnLoad";
+import type { OnLoad } from "@spt/di/OnLoad";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -1,7 +1,7 @@
 import { BotHelper } from "@spt/helpers/BotHelper";
-import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import type { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
+import type { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectable } from "tsyringe";

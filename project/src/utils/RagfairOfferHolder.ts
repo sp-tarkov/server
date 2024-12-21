@@ -1,6 +1,6 @@
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
-import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
+import type { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 
 export class RagfairOfferHolder {
     protected offersById: Map<string, IRagfairOffer>;

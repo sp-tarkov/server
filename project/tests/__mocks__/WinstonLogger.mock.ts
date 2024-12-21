@@ -1,7 +1,7 @@
-import { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
+import type { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
 import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 
 export class WinstonLogger implements ILogger {
     writeToLogFile(data: string | IDaum): void {}

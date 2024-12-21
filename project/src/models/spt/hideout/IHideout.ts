@@ -1,7 +1,7 @@
-import { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
-import { IHideoutProductionData } from "@spt/models/eft/hideout/IHideoutProduction";
-import { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
-import { IQteData } from "@spt/models/eft/hideout/IQteData";
+import type { IHideoutArea } from "@spt/models/eft/hideout/IHideoutArea";
+import type { IHideoutProductionData } from "@spt/models/eft/hideout/IHideoutProduction";
+import type { IHideoutSettingsBase } from "@spt/models/eft/hideout/IHideoutSettingsBase";
+import type { IQteData } from "@spt/models/eft/hideout/IQteData";
 
 export interface IHideout {
     areas: IHideoutArea[];

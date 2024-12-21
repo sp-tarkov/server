@@ -1,7 +1,8 @@
-import { IncomingMessage, ServerResponse } from "node:http";
-import { IHttpListener } from "@spt/servers/http/IHttpListener";
+import type { IncomingMessage, ServerResponse } from "node:http";
+import type { IHttpListener } from "@spt/servers/http/IHttpListener";
 import { HttpListenerMod } from "@spt/services/mod/httpListener/HttpListenerMod";
-import { DependencyContainer, injectable } from "tsyringe";
+import type { DependencyContainer } from "tsyringe";
+import { injectable } from "tsyringe";
 
 @injectable()
 export class HttpListenerModService {

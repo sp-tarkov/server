@@ -1,4 +1,4 @@
-import { OnLoad } from "@spt/di/OnLoad";
+import type { OnLoad } from "@spt/di/OnLoad";
 
 export class OnLoadMod implements OnLoad {
     public constructor(

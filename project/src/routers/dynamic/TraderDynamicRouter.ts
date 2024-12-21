@@ -1,7 +1,7 @@
 import { TraderCallbacks } from "@spt/callbacks/TraderCallbacks";
 import { DynamicRouter, RouteAction } from "@spt/di/Router";
-import { ITraderAssort, ITraderBase } from "@spt/models/eft/common/tables/ITrader";
-import { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
+import type { ITraderAssort, ITraderBase } from "@spt/models/eft/common/tables/ITrader";
+import type { IGetBodyResponseData } from "@spt/models/eft/httpResponse/IGetBodyResponseData";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

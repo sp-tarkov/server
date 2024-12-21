@@ -1,16 +1,16 @@
 import os from "node:os";
-import { OnLoad } from "@spt/di/OnLoad";
-import { OnUpdate } from "@spt/di/OnUpdate";
+import type { OnLoad } from "@spt/di/OnLoad";
+import type { OnUpdate } from "@spt/di/OnUpdate";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { HttpServer } from "@spt/servers/HttpServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import { DatabaseService } from "@spt/services/DatabaseService";
 
 @injectable()
 export class App {

@@ -1,4 +1,4 @@
-import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import type { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { injectable } from "tsyringe";
 
 @injectable()

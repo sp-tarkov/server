@@ -1,9 +1,14 @@
 {
-    "extends": "./tsconfig.base.json",
+    "extends": "./tsconfig.json",
     "compilerOptions": {
+        "strict": false,
+        "noEmit": false,
         "emitDeclarationOnly": true,
         "declaration": true,
-        "declarationDir": "./types"
+        "declarationDir": "./types",
+        "resolveJsonModule": true
     },
-    "exclude": ["./types/**/*"]
+    "exclude": [
+        "./types/**/*"
+    ]
 }

@@ -1,5 +1,5 @@
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
-import { ISeasonalEventConfig } from "@spt/models/spt/config/ISeasonalEventConfig";
+import type { ISeasonalEventConfig } from "@spt/models/spt/config/ISeasonalEventConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { inject, injectable } from "tsyringe";
