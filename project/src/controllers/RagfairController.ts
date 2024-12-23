@@ -117,7 +117,7 @@ export class RagfairController {
 
         // Match offers with quests and lock unfinished quests
         for (const offer of result.offers) {
-            if (offer.user.memberType === MemberCategory.TRADER) {
+            if (this.ragfairOfferHelper.offerIsFromTrader(offer)) {
                 // for the items, check the barter schemes. The method getDisplayableAssorts sets a flag sptQuestLocked
                 // to true if the quest is not completed yet
                 if (this.ragfairOfferHelper.traderOfferItemQuestLocked(offer, traderAssorts)) {
@@ -330,7 +330,7 @@ export class RagfairController {
                         return sum;
                     }
 
-                    if (ignoreTraderOffers && offer.user.memberType === MemberCategory.TRADER) {
+                    if (ignoreTraderOffers && this.ragfairOfferHelper.offerIsFromTrader(offer)) {
                         return sum;
                     }
 

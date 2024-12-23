@@ -670,6 +670,11 @@ export class FenceService {
         const assortRootItems = baseFenceAssortClone.items.filter(
             (item) => item.parentId === "hideout" && !item.upd?.sptPresetId,
         );
+        if (assortRootItems.length === 0) {
+            this.logger.error("Unable to add assorts to Fence as no root items exist in items being added");
+
+            return;
+        }
 
         for (let i = 0; i < assortCount; i++) {
             const chosenBaseAssortRoot = this.randomUtil.getArrayValue(assortRootItems);

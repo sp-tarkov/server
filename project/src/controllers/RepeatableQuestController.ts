@@ -578,7 +578,7 @@ export class RepeatableQuestController {
             const charismaBonus = this.profileHelper.getSkillFromProfile(pmcData, SkillTypes.CHARISMA)?.Progress ?? 0;
             for (const cost of previousChangeRequirement.changeCost) {
                 // Not free, Charge player + appy charisma bonus to cost of replacement
-                cost.count = Math.trunc(cost.count * (1 - Math.trunc(charismaBonus / 100) * 0.001) ?? 1);
+                cost.count = Math.trunc(cost.count * (1 - Math.trunc(charismaBonus / 100) * 0.001));
                 this.paymentService.addPaymentToOutput(pmcData, cost.templateId, cost.count, sessionID, output);
                 if (output.warnings.length > 0) {
                     return output;

@@ -7,6 +7,8 @@ export interface ISeasonalEventConfig extends IBaseConfig {
     enableSeasonalEventDetection: boolean;
     /** event / botType / equipSlot / itemid */
     eventGear: Record<string, Record<string, Record<string, Record<string, number>>>>;
+    /** event / bot type / equipSlot / itemid */
+    eventLoot: Record<string, Record<string, Record<string, Record<string, number>>>>;
     events: ISeasonalEvent[];
     eventBotMapping: Record<string, string>;
     eventBossSpawns: Record<string, Record<string, IBossLocationSpawn[]>>;

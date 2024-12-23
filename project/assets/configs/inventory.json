@@ -1406,6 +1406,28 @@
                 "5448e53e4bdc2d60728b4567",
                 "5a2c3a9486f774688b05e574"
             ]
+        },
+        "674078c4a9c9adf0450d59f9": {
+            "_type": "opened case - walter event quest",
+            "rewardCount": 4,
+            "foundInRaid": true,
+            "rewardTplPool": ["67409848d0b2f8eb9b034db9"]
+        },
+        "674098588466ebb03408b210": {
+            "_type": "opened box - walter event quest",
+            "rewardCount": 6,
+            "foundInRaid": true,
+            "rewardTypePool": [
+                "57864c8c245977548867e7f1",
+                "54009119af1c881c07000029",
+                "57864c322459775490116fbf",
+                "57864a3d24597754843f8721",
+                "590c745b86f7743cc433c5f2",
+                "57864ee62459775490116fc1",
+                "57864e4c24597754843f8723",
+                "55818ae44bdc2dde698b456c",
+                "550aa4154bdc2dd8348b456b"
+            ]
         }
     },
     "sealedAirdropContainer": {
@@ -1573,5 +1595,6 @@
     "customMoneyTpls": [],
     "skillGainMultiplers": {
         "Strength": 1
-    }
+    },
+	"deprioritisedMoneyContainers": ["590c60fc86f77412b13fddcf", "5d235bb686f77443f4331278"]
 }

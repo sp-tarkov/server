@@ -336,7 +336,13 @@
                 "handbookPriceOverMultiplier": 11,
                 "newPriceHandbookMultiplier": 11
             }
-        }
+        },
+		"itemPriceOverrideRouble":{
+			"66bc98a01a47be227a5e956e": 500000,
+			"63a8970d7108f713591149f5": 50000,
+			"63a898a328e385334e0640a5": 100000,
+			"63a897c6b1ff6e29734fcc95": 200000
+		}
     },
     "tieredFlea": {
         "enabled": false,

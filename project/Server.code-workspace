@@ -31,10 +31,17 @@
                 "runtimeExecutable": "npm",
                 "request": "launch",
                 "sourceMaps": true,
-                "runtimeArgs": ["run", "run:debug"],
-                "outFiles": ["!**/node_modules/**"],
+                "runtimeArgs": [
+                    "run",
+                    "run:debug"
+                ],
+                "outFiles": [
+                    "!**/node_modules/**"
+                ],
                 "cwd": "${workspaceFolder}",
-                "outputCapture": "std"
+                "outputCapture": "std",
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen"
             },
             {
                 "name": "Run Vitest Tests",
@@ -42,9 +49,18 @@
                 "runtimeVersion": "20.11.1",
                 "runtimeExecutable": "npm",
                 "request": "launch",
-                "runtimeArgs": ["run", "test"],
+                "runtimeArgs": [
+                    "run",
+                    "test"
+                ],
                 "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen"
+                "internalConsoleOptions": "neverOpen",
+                "cwd": "${workspaceFolder}",
+                "sourceMaps": true,
+                "outputCapture": "std",
+                "outFiles": [
+                    "!**/node_modules/**"
+                ]
             }
         ]
     }

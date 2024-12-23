@@ -120,8 +120,7 @@ export class TradeController {
                 return this.httpResponse.appendErrorToOutput(output, errorMessage, BackendErrorCodes.OFFEROUTOFSTOCK);
             }
 
-            const sellerIsTrader = fleaOffer.user.memberType === MemberCategory.TRADER;
-            if (sellerIsTrader) {
+            if (this.ragfairOfferHelper.offerIsFromTrader(fleaOffer)) {
                 this.buyTraderItemFromRagfair(sessionID, pmcData, fleaOffer, offer, output);
             } else {
                 this.buyPmcItemFromRagfair(sessionID, pmcData, fleaOffer, offer, output);

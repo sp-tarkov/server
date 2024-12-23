@@ -553,10 +553,24 @@ export class HideoutController {
         output: IItemEventRouterResponse,
         hideoutArea: IBotHideoutArea,
     ): IItemEventRouterResponse {
-        const slotIndexToRemove = removeResourceRequest.slots[0];
+        const slotIndexToRemove = removeResourceRequest?.slots[0];
+        if (typeof slotIndexToRemove === "undefined") {
+            this.logger.warning(
+                `Unable to remove resource from area: ${removeResourceRequest.areaType} slot as no slots found in request, RESTART CLIENT IMMEDIATELY`,
+            );
+
+            return output;
+        }
 
         // Assume only one item in slot
-        const itemToReturn = hideoutArea.slots.find((slot) => slot.locationIndex === slotIndexToRemove).item[0];
+        const itemToReturn = hideoutArea.slots.find((slot) => slot.locationIndex === slotIndexToRemove)?.item[0];
+        if (!itemToReturn) {
+            this.logger.warning(
+                `Unable to remove resource from area: ${removeResourceRequest.areaType} slot as no item found, RESTART CLIENT IMMEDIATELY`,
+            );
+
+            return output;
+        }
 
         const request: IAddItemDirectRequest = {
             itemWithModsToAdd: [itemToReturn],

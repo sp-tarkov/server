@@ -110,7 +110,7 @@ export class RagfairOfferHelper {
             }
 
             // Not trader offer + tiered flea enabled
-            if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+            if (tieredFlea.enabled && !this.offerIsFromTrader(offer)) {
                 this.checkAndLockOfferFromPlayerTieredFlea(tieredFlea, offer, tieredFleaLimitTypes, pmcData.Info.Level);
             }
 
@@ -185,7 +185,7 @@ export class RagfairOfferHelper {
                 return false;
             }
 
-            if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+            if (tieredFlea.enabled && !this.offerIsFromTrader(offer)) {
                 this.checkAndLockOfferFromPlayerTieredFlea(tieredFlea, offer, tieredFleaLimitTypes, pmcData.Info.Level);
             }
 
@@ -208,24 +208,37 @@ export class RagfairOfferHelper {
         pmcData: IPmcData,
     ): IRagfairOffer[] {
         const offersMap = new Map<string, IRagfairOffer[]>();
-        const offers: IRagfairOffer[] = [];
+        const offersToReturn: IRagfairOffer[] = [];
         const playerIsFleaBanned = this.profileHelper.playerIsFleaBanned(pmcData);
         const tieredFlea = this.ragfairConfig.tieredFlea;
         const tieredFleaLimitTypes = Object.keys(tieredFlea.unlocksType);
 
-        for (const offer of this.ragfairOfferService.getOffers()) {
-            // Dont show pack offers
-            if (offer.sellInOnePiece) {
-                continue;
-            }
+        for (const desiredItemTpl of Object.keys(searchRequest.buildItems)) {
+            const matchingOffers = this.ragfairOfferService.getOffersOfType(desiredItemTpl);
+            for (const offer of matchingOffers) {
+                // Dont show pack offers
+                if (offer.sellInOnePiece) {
+                    continue;
+                }
 
-            if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData)) {
-                continue;
-            }
+                if (!this.passesSearchFilterCriteria(searchRequest, offer, pmcData)) {
+                    continue;
+                }
 
-            if (this.isDisplayableOffer(searchRequest, itemsToAdd, traderAssorts, offer, pmcData, playerIsFleaBanned)) {
-                const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
-                if (isTraderOffer) {
+                if (
+                    !this.isDisplayableOffer(
+                        searchRequest,
+                        itemsToAdd,
+                        traderAssorts,
+                        offer,
+                        pmcData,
+                        playerIsFleaBanned,
+                    )
+                ) {
+                    continue;
+                }
+
+                if (this.offerIsFromTrader(offer)) {
                     if (this.traderBuyRestrictionReached(offer)) {
                         continue;
                     }
@@ -244,7 +257,7 @@ export class RagfairOfferHelper {
                 }
 
                 // Tiered flea and not trader offer
-                if (tieredFlea.enabled && offer.user.memberType !== MemberCategory.TRADER) {
+                if (tieredFlea.enabled && !this.offerIsFromTrader(offer)) {
                     this.checkAndLockOfferFromPlayerTieredFlea(
                         tieredFlea,
                         offer,
@@ -271,17 +284,41 @@ export class RagfairOfferHelper {
                 const lockedOffers = this.getLoyaltyLockedOffers(possibleOffers, pmcData);
 
                 // Exclude locked offers + above loyalty locked offers if at least 1 was found
-                const availableOffers = possibleOffers.filter((x) => !(x.locked || lockedOffers.includes(x._id)));
-                if (availableOffers.length > 0) {
-                    possibleOffers = availableOffers;
+                possibleOffers = possibleOffers.filter((offer) => !(offer.locked || lockedOffers.includes(offer._id)));
+
+                // Exclude trader offers over their buy restriction limit
+                possibleOffers = this.getOffersInsideBuyRestrictionLimits(possibleOffers);
+            }
+
+            // Sort offers by price and pick the best
+            const offer = this.ragfairSortHelper.sortOffers(possibleOffers, RagfairSort.PRICE, 0)[0];
+            offersToReturn.push(offer);
+        }
+
+        return offersToReturn;
+    }
+
+    /**
+     * Get offers that have not exceeded buy limits
+     * @param possibleOffers offers to process
+     * @returns Offers
+     */
+    protected getOffersInsideBuyRestrictionLimits(possibleOffers: IRagfairOffer[]) {
+        // Check offer has buy limit + is from trader + current buy count is at or over max
+        return possibleOffers.filter((offer) => {
+            if (
+                typeof offer.buyRestrictionMax !== "undefined" &&
+                this.offerIsFromTrader(offer) &&
+                offer.buyRestrictionCurrent >= offer.buyRestrictionMax
+            ) {
+                if (offer.buyRestrictionCurrent >= offer.buyRestrictionMax) {
+                    return false;
                 }
             }
 
-            const offer = this.ragfairSortHelper.sortOffers(possibleOffers, RagfairSort.PRICE, 0)[0];
-            offers.push(offer);
-        }
-
-        return offers;
+            // Doesnt have buy limits, retrun offer
+            return true;
+        });
     }
 
     /**
@@ -370,12 +407,10 @@ export class RagfairOfferHelper {
      */
     protected getLoyaltyLockedOffers(offers: IRagfairOffer[], pmcProfile: IPmcData): string[] {
         const loyaltyLockedOffers: string[] = [];
-        for (const offer of offers) {
-            if (offer.user.memberType === MemberCategory.TRADER) {
-                const traderDetails = pmcProfile.TradersInfo[offer.user.id];
-                if (traderDetails.loyaltyLevel < offer.loyaltyLevel) {
-                    loyaltyLockedOffers.push(offer._id);
-                }
+        for (const offer of offers.filter((offer) => this.offerIsFromTrader(offer))) {
+            const traderDetails = pmcProfile.TradersInfo[offer.user.id];
+            if (traderDetails.loyaltyLevel < offer.loyaltyLevel) {
+                loyaltyLockedOffers.push(offer._id);
             }
         }
 
@@ -601,7 +636,7 @@ export class RagfairOfferHelper {
         const isDefaultUserOffer = offer.user.memberType === MemberCategory.DEFAULT;
         const offerRootItem = offer.items[0];
         const moneyTypeTpl = offer.requirements[0]._tpl;
-        const isTraderOffer = offer.user.memberType === MemberCategory.TRADER;
+        const isTraderOffer = this.offerIsFromTrader(offer);
 
         if (pmcData.Info.Level < this.databaseService.getGlobals().config.RagFair.minUserLevel && isDefaultUserOffer) {
             // Skip item if player is < global unlock level (default is 15) and item is from a dynamically generated source
@@ -622,7 +657,7 @@ export class RagfairOfferHelper {
             searchRequest.oneHourExpiration &&
             offer.endTime - this.timeUtil.getTimestamp() > TimeUtil.ONE_HOUR_AS_SECONDS
         ) {
-            // offer doesnt expire within an hour
+            // offer expires within an hour
             return false;
         }
 
@@ -690,7 +725,7 @@ export class RagfairOfferHelper {
      * @returns True if the given item is functional
      */
     public isItemFunctional(offerRootItem: IItem, offer: IRagfairOffer): boolean {
-        // Non-presets are always functional
+        // Non-preset weapons/armor are always functional
         if (!this.presetHelper.hasPreset(offerRootItem._tpl)) {
             return true;
         }
@@ -836,5 +871,14 @@ export class RagfairOfferHelper {
         }
 
         return true;
+    }
+
+    /**
+     * Does this offer come from a trader
+     * @param offer Offer to check
+     * @returns True = from trader
+     */
+    public offerIsFromTrader(offer: IRagfairOffer) {
+        return offer.user.memberType === MemberCategory.TRADER;
     }
 }

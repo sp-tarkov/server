@@ -123,11 +123,14 @@ export class InsuranceController {
             )} items, in profile ${sessionID}`,
         );
 
-        // Fetch the root Item parentId property value that should be used for insurance packages.
-        const rootItemParentID = this.insuranceService.getRootItemParentID(sessionID);
-
         // Iterate over each of the insurance packages.
         for (const insured of insuranceDetails) {
+            // Create a new root parent ID for the message we'll be sending the player
+            const rootItemParentID = this.hashUtil.generate();
+
+            // Update the insured items to have the new root parent ID for root/orphaned items
+            insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
+
             const simulateItemsBeingTaken = this.insuranceConfig.simulateItemsBeingTaken;
             if (simulateItemsBeingTaken) {
                 // Find items that could be taken by another player off the players body
@@ -135,10 +138,10 @@ export class InsuranceController {
 
                 // Actually remove them.
                 this.removeItemsFromInsurance(insured, itemsToDelete);
-            }
 
-            // Ensure that all items have a valid parent.
-            insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
+                // There's a chance we've orphaned weapon attachments, so adopt any orphaned items again
+                insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
+            }
 
             // Send the mail to the player.
             this.sendMail(sessionID, insured);

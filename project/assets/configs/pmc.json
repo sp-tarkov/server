@@ -67,7 +67,9 @@
             "614451b71e5874611e2c7ae5",
             "6540d2162ae6d96b540afcaf",
             "65ca457b4aafb5d7fc0dcb5d",
-            "6331ba83f2ab4f3f09502983"
+            "6331ba83f2ab4f3f09502983",
+			"67409848d0b2f8eb9b034db9",
+			"67449b6c89d5e1ddc603f504"
         ]
     },
     "pocketLoot": {
@@ -123,7 +125,8 @@
             "6391fcf5744e45201147080f",
             "65ca457b4aafb5d7fc0dcb5d",
             "660bbc98c38b837877075e4a",
-            "6331ba83f2ab4f3f09502983"
+            "6331ba83f2ab4f3f09502983",
+			"67449b6c89d5e1ddc603f504"
         ]
     },
     "backpackLoot": {
@@ -184,7 +187,9 @@
             "65ca457b4aafb5d7fc0dcb5d",
             "660bbc98c38b837877075e4a",
             "66d9f7256916142b3b02276e",
-            "6331ba83f2ab4f3f09502983"
+            "6331ba83f2ab4f3f09502983",
+			"67409848d0b2f8eb9b034db9",
+			"67449b6c89d5e1ddc603f504"
         ]
     },
     "useDifficultyOverride": false,

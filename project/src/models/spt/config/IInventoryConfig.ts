@@ -11,6 +11,8 @@ export interface IInventoryConfig extends IBaseConfig {
     customMoneyTpls: string[];
     /** Multipliers for skill gain when inside menus, NOT in-game */
     skillGainMultiplers: Record<string, number>;
+    /** Container Tpls that shoud be deprioritised when choosing where to take money from for payments */
+    deprioritisedMoneyContainers: string[];
 }
 
 export interface IRewardDetails {

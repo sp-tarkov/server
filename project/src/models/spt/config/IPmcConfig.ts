@@ -70,7 +70,9 @@ export interface IPmcTypes {
 }
 
 export interface ISlotLootSettings {
+    /** Item Type whitelist */
     whitelist: string[];
+    /** item tpl blacklist */
     blacklist: string[];
 }
 

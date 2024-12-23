@@ -1,5 +1,6 @@
 import { BotHelper } from "@spt/helpers/BotHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
 import { IBotType } from "@spt/models/eft/common/tables/IBotType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
@@ -58,9 +59,9 @@ export class BotNameService {
         uniqueRoles?: string[],
     ): string {
         const isPmc = botGenerationDetails.isPmc;
-        const isPlayerScav = botGenerationDetails.isPlayerScav;
-        const simulateScavName = isPlayerScav ? false : this.shouldSimulatePlayerScavName(botRole);
-        const showTypeInNickname = this.botConfig.showTypeInNickname && !isPlayerScav;
+
+        // Never show for players
+        const showTypeInNickname = !botGenerationDetails.isPlayerScav && this.botConfig.showTypeInNickname;
         const roleShouldBeUnique = uniqueRoles?.includes(botRole.toLowerCase());
 
         let isUnique = true;
@@ -71,12 +72,6 @@ export class BotNameService {
                 ? this.botHelper.getPmcNicknameOfMaxLength(this.botConfig.botNameLengthLimit, botGenerationDetails.side)
                 : `${this.randomUtil.getArrayValue(botJsonTemplate.firstName)} ${this.randomUtil.getArrayValue(botJsonTemplate.lastName) || ""}`;
             name = name.trim();
-
-            // Simulate bot looking like a player scav with the PMC name in brackets.
-            // E.g. "ScavName (PMC Name)"
-            if (simulateScavName) {
-                return this.addPlayerScavNameSimulationSuffix(name);
-            }
 
             // Config is set to add role to end of bot name
             if (showTypeInNickname) {
@@ -119,19 +114,23 @@ export class BotNameService {
     }
 
     /**
-     * Should this bot have a name like "name (Pmc Name)"
-     * @param botRole Role bot has
-     * @returns True if name should be simulated pscav
+     * Add random PMC name to bots MainProfileNickname property
+     * @param bot Bot to update
      */
-    protected shouldSimulatePlayerScavName(botRole: string): boolean {
-        return botRole === "assault" && this.randomUtil.getChance100(this.botConfig.chanceAssaultScavHasPlayerScavName);
+    public addRandomPmcNameToBotMainProfileNicknameProperty(bot: IBotBase): void {
+        // Simulate bot looking like a player scav with the PMC name in brackets.
+        // E.g. "ScavName (PMC Name)"
+        bot.Info.MainProfileNickname = this.getRandomPMCName();
     }
 
-    protected addPlayerScavNameSimulationSuffix(nickname: string): string {
-        const pmcNames = [
-            ...this.databaseService.getBots().types.usec.firstName,
-            ...this.databaseService.getBots().types.bear.firstName,
-        ];
-        return `${nickname} (${this.randomUtil.getArrayValue(pmcNames)})`;
+    /**
+     * Choose a random PMC name from bear or usec bot jsons
+     * @returns PMC name as string
+     */
+    protected getRandomPMCName(): string {
+        const bots = this.databaseService.getBots().types;
+
+        const pmcNames = new Set([...bots.usec.firstName, ...bots.bear.firstName]);
+        return this.randomUtil.getArrayValue(Array.from(pmcNames));
     }
 }

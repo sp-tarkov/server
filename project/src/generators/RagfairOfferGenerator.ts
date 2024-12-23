@@ -525,8 +525,8 @@ export class RagfairOfferGenerator {
             itemWithChildren,
             barterScheme,
             1,
-            isPreset || isPackOffer,
-        ); // sellAsOnePiece
+            isPackOffer, // sellAsOnePiece - pack offer
+        );
     }
 
     /**

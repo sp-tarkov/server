@@ -39,7 +39,7 @@ There are a number of VSC extensions that we recommended for this project. VSC w
 
 To prepare the project for development you will need to:
 
-1. Run `git clone https://dev.sp-tarkov.com/SPT/Server.git server` to clone the repository.
+1. Run `git clone https://github.com/sp-tarkov/server.git server` to clone the repository.
 2. Run `git lfs pull` to download LFS files locally.
 3. Open the `project/mod.code-workspace` file in Visual Studio Code (VSC).
 4. Run `nvm use 20.11.1` in the VSC terminal.

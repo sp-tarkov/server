@@ -10,7 +10,10 @@ import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRo
 import { IProcessBuyTradeRequestData } from "@spt/models/eft/trade/IProcessBuyTradeRequestData";
 import { IProcessSellTradeRequestData } from "@spt/models/eft/trade/IProcessSellTradeRequestData";
 import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
@@ -19,6 +22,8 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class PaymentService {
+    protected inventoryConfig: IInventoryConfig;
+
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("HashUtil") protected hashUtil: HashUtil,
@@ -30,7 +35,10 @@ export class PaymentService {
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("PaymentHelper") protected paymentHelper: PaymentHelper,
-    ) {}
+        @inject("ConfigServer") protected configServer: ConfigServer,
+    ) {
+        this.inventoryConfig = this.configServer.getConfig(ConfigTypes.INVENTORY);
+    }
 
     /**
      * Take money and insert items into return to server request
@@ -340,30 +348,54 @@ export class PaymentService {
      * @returns sort order
      */
     protected prioritiseStashSort(a: IItem, b: IItem, inventoryItems: IItem[], playerStashId: string): number {
-        // a in stash, prioritise
-        if (a.slotId === "hideout" && b.slotId !== "hideout") {
+        // a in root of stash, prioritise
+        if (a.parentId === playerStashId && b.parentId !== playerStashId) {
             return -1;
         }
 
-        // b in stash, prioritise
-        if (a.slotId !== "hideout" && b.slotId === "hideout") {
+        // b in root stash, prioritise
+        if (a.parentId !== playerStashId && b.parentId === playerStashId) {
             return 1;
         }
 
         // both in containers
         if (a.slotId === "main" && b.slotId === "main") {
-            // Item is in inventory, not stash, deprioritise
+            // Both items are in containers
             const aInStash = this.isInStash(a.parentId, inventoryItems, playerStashId);
             const bInStash = this.isInStash(b.parentId, inventoryItems, playerStashId);
 
-            // a in stash, prioritise
+            // a in stash in container, prioritise
             if (aInStash && !bInStash) {
                 return -1;
             }
 
-            // b in stash, prioritise
+            // b in stash in container, prioritise
             if (!aInStash && bInStash) {
                 return 1;
+            }
+
+            // Both in stash in containers
+            if (aInStash && bInStash) {
+                // Containers where taking money from would inconvinence player
+                const deprioritisedContainers = this.inventoryConfig.deprioritisedMoneyContainers;
+                const aImmediateParent = inventoryItems.find((item) => item._id === a.parentId);
+                const bImmediateParent = inventoryItems.find((item) => item._id === b.parentId);
+
+                // A is not a deprioritised container, B is
+                if (
+                    !deprioritisedContainers.includes(aImmediateParent._tpl) &&
+                    deprioritisedContainers.includes(bImmediateParent._tpl)
+                ) {
+                    return -1;
+                }
+
+                // B is not a deprioritised container, A is
+                if (
+                    deprioritisedContainers.includes(aImmediateParent._tpl) &&
+                    !deprioritisedContainers.includes(bImmediateParent._tpl)
+                ) {
+                    return 1;
+                }
             }
         }
 
@@ -379,7 +411,7 @@ export class PaymentService {
      * @returns true if its in inventory
      */
     protected isInStash(itemId: string | undefined, inventoryItems: IItem[], playerStashId: string): boolean {
-        const itemParent = inventoryItems.find((x) => x._id === itemId);
+        const itemParent = inventoryItems.find((item) => item._id === itemId);
 
         if (itemParent) {
             if (itemParent.slotId === "hideout") {

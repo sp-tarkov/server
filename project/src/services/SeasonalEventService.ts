@@ -179,6 +179,15 @@ export class SeasonalEventService {
     }
 
     /**
+     * Get a dictionary of loot changes to apply to bots for a specific event e.g. Christmas/Halloween
+     * @param eventName Name of event to get gear changes for
+     * @returns bots with loot changes
+     */
+    protected getEventBotLoot(eventType: SeasonalEventType): Record<string, Record<string, Record<string, number>>> {
+        return this.seasonalEventConfig.eventLoot[eventType.toLowerCase()];
+    }
+
+    /**
      * Get the dates each seasonal event starts and ends at
      * @returns Record with event name + start/end date
      */
@@ -385,6 +394,7 @@ export class SeasonalEventService {
                 globalConfig.EventType = globalConfig.EventType.filter((x) => x !== "None");
                 globalConfig.EventType.push("Christmas");
                 this.addEventGearToBots(event.type);
+                this.addEventLootToBots(event.type);
                 if (event.settings?.enableSanta) {
                     this.addGifterBotToMaps();
                     this.addLootItemsToGifterDropItemsList();
@@ -398,6 +408,7 @@ export class SeasonalEventService {
                 this.addLootItemsToGifterDropItemsList();
                 this.addEventGearToBots(SeasonalEventType.HALLOWEEN);
                 this.addEventGearToBots(SeasonalEventType.CHRISTMAS);
+                this.addEventLootToBots(SeasonalEventType.CHRISTMAS);
                 this.addEventBossesToMaps(SeasonalEventType.HALLOWEEN);
                 this.enableHalloweenSummonEvent();
                 this.addPumpkinsToScavBackpacks();
@@ -663,8 +674,8 @@ export class SeasonalEventService {
             }
 
             // Iterate over each equipment slot change
-            const gearAmendments = botGearChanges[bot];
-            for (const equipmentSlot in gearAmendments) {
+            const gearAmendmentsBySlot = botGearChanges[bot];
+            for (const equipmentSlot in gearAmendmentsBySlot) {
                 // Adjust slots spawn chance to be at least 75%
                 botToUpdate.chances.equipment[equipmentSlot] = Math.max(
                     botToUpdate.chances.equipment[equipmentSlot],
@@ -672,9 +683,41 @@ export class SeasonalEventService {
                 );
 
                 // Grab gear to add and loop over it
-                const itemsToAdd = gearAmendments[equipmentSlot];
+                const itemsToAdd = gearAmendmentsBySlot[equipmentSlot];
                 for (const itemTplIdToAdd in itemsToAdd) {
                     botToUpdate.inventory.equipment[equipmentSlot][itemTplIdToAdd] = itemsToAdd[itemTplIdToAdd];
+                }
+            }
+        }
+    }
+
+    /**
+     * Read in data from seasonalEvents.json and add found loot items to bots
+     * @param eventName Name of the event to read loot in from config
+     */
+    protected addEventLootToBots(eventType: SeasonalEventType): void {
+        const botLootChanges = this.getEventBotLoot(eventType);
+        if (!botLootChanges) {
+            this.logger.warning(this.localisationService.getText("gameevent-no_gear_data", eventType));
+
+            return;
+        }
+
+        // Iterate over bots with changes to apply
+        for (const bot in botLootChanges) {
+            const botToUpdate = this.databaseService.getBots().types[bot.toLowerCase()];
+            if (!botToUpdate) {
+                this.logger.warning(this.localisationService.getText("gameevent-bot_not_found", bot));
+                continue;
+            }
+
+            // Iterate over each loot slot change
+            const lootAmendmentsBySlot = botLootChanges[bot];
+            for (const slotKey in lootAmendmentsBySlot) {
+                // Grab loot to add and loop over it
+                const itemTplsToAdd = lootAmendmentsBySlot[slotKey];
+                for (const tpl in itemTplsToAdd) {
+                    botToUpdate.inventory.items[slotKey][tpl] = itemTplsToAdd[tpl];
                 }
             }
         }

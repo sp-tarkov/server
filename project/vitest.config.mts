@@ -2,12 +2,12 @@ import path from "node:path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+    cacheDir: "./tests/__cache__",
     test: {
         name: "spt-server",
         reporters: ["default"],
         root: "./",
         include: ["**/*.{test,spec}.?(c|m)[jt]s?(x)"],
-        cache: { dir: "./tests/__cache__" },
         environment: "./tests/CustomEnvironment.ts",
         globals: true,
         coverage: {

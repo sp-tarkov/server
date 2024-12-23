@@ -231,6 +231,28 @@
             }
         }
     },
+	"eventLoot": {
+		"christmas": {
+			"assault": {
+				"Pockets": {
+					"5df8a6a186f77412640e2e80": 3000,
+					"5df8a72c86f77412640e2e83": 3000,
+					"5df8a77486f77412672a1e3f": 3000
+				},
+				"Backpack": {
+					"5df8a6a186f77412640e2e80": 3000,
+					"5df8a72c86f77412640e2e83": 3000,
+					"5df8a77486f77412672a1e3f": 3000,
+					"63a8970d7108f713591149f5": 250
+				},
+				"TacticalVest": {
+					"5df8a6a186f77412640e2e80": 3000,
+					"5df8a72c86f77412640e2e83": 3000,
+					"5df8a77486f77412672a1e3f": 3000
+				}
+			}
+		}
+	},
     "eventBotMapping": {
         "peacefullZryachiyEvent": "bossZryachiy",
         "sectactPriestEvent": "sectantPriest",

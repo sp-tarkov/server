@@ -66,6 +66,7 @@ export interface IUnlockedInfo {
 export interface IInfo {
     EntryPoint: string;
     Nickname: string;
+    MainProfileNickname?: string;
     LowerNickname: string;
     Side: string;
     SquadInviteRestriction: boolean;

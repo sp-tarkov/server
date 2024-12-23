@@ -58,8 +58,9 @@ export class PlayerScavGenerator {
     public generate(sessionID: string): IPmcData {
         // get karma level from profile
         const profile = this.saveServer.getProfile(sessionID);
-        const pmcDataClone = this.cloner.clone(profile.characters.pmc);
-        const existingScavDataClone = this.cloner.clone(profile.characters.scav);
+        const profileCharactersClone = this.cloner.clone(profile.characters);
+        const pmcDataClone = profileCharactersClone.pmc;
+        const existingScavDataClone = profileCharactersClone.scav;
 
         const scavKarmaLevel = this.getScavKarmaLevel(pmcDataClone);
 
@@ -80,6 +81,7 @@ export class PlayerScavGenerator {
             playerScavKarmaSettings.botTypeForLoot.toLowerCase(),
             "easy",
             baseBotNode,
+            pmcDataClone,
         );
 
         // Remove cached bot data after scav was generated

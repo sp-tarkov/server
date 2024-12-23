@@ -43,7 +43,7 @@ export class BackupService {
         try {
             currentProfiles = await this.fetchProfileFiles();
         } catch (error) {
-            this.logger.error(`Unable to read profiles directory: ${error.message}`);
+            this.logger.debug("Skipping profile backup: Unable to read profiles directory");
             return;
         }
 
