@@ -56,7 +56,7 @@ export class TraderSptCommand implements ISptCommand {
 
         const trader: string = result.groups.trader;
         const command: string = result.groups.command;
-        const quantity: number = +result.groups.quantity;
+        let quantity: number = +result.groups.quantity;
 
         const dbTrader = Object.values(this.databaseService.getTraders()).find(
             (t) => t.base.nickname.toLocaleLowerCase() === trader.toLocaleLowerCase(),
@@ -72,6 +72,7 @@ export class TraderSptCommand implements ISptCommand {
         let profileChangeEventType: ProfileChangeEventType;
         switch (command) {
             case "rep":
+                quantity = quantity / 100;
                 profileChangeEventType = ProfileChangeEventType.TRADER_STANDING;
                 break;
             case "spend":
