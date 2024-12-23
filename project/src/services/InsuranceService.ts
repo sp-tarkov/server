@@ -176,21 +176,6 @@ export class InsuranceService {
         return this.timeUtil.getTimestamp() + finalReturnTimeSeconds;
     }
 
-    /**
-     * Take the insurance item packages within a profile session and ensure that each of the items in that package are
-     * not orphaned from their parent ID.
-     *
-     * @param sessionID The session ID to update insurance equipment packages in.
-     * @returns void
-     */
-    protected adoptOrphanedInsEquipment(sessionID: string): void {
-        const rootID = this.getRootItemParentID(sessionID);
-        const insuranceData = this.getInsurance(sessionID);
-        for (const [traderId, items] of Object.entries(insuranceData)) {
-            this.insured[sessionID][traderId] = this.itemHelper.adoptOrphanedItems(rootID, items);
-        }
-    }
-
     protected getMaxInsuranceStorageTime(traderBase: ITraderBase): number {
         if (this.insuranceConfig.storageTimeOverrideSeconds > 0) {
             // Override exists, use instead of traders value
@@ -209,9 +194,6 @@ export class InsuranceService {
         for (const gear of equipmentPkg) {
             this.addGearToSend(gear);
         }
-
-        // Items are separated into their individual trader packages, now we can ensure that they all have valid parents
-        this.adoptOrphanedInsEquipment(sessionID);
     }
 
     /**
@@ -346,15 +328,5 @@ export class InsuranceService {
             (this.traderHelper.getLoyaltyLevel(traderId, pmcData).insurance_price_coef / 100);
 
         return Math.ceil(price);
-    }
-
-    /**
-     * Returns the ID that should be used for a root-level Item's parentId property value within in the context of insurance.
-     * @param sessionID Players id
-     * @returns The root item Id.
-     */
-    public getRootItemParentID(sessionID: string): string {
-        // Try to use the equipment id from the profile. I'm not sure this is strictly required, but it feels neat.
-        return this.saveServer.getProfile(sessionID)?.characters?.pmc?.Inventory?.equipment ?? this.hashUtil.generate();
     }
 }

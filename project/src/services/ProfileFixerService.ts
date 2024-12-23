@@ -76,6 +76,38 @@ export class ProfileFixerService {
     }
 
     /**
+     * Resolve any dialogue attachments that were accidentally created using the player's equipment ID as
+     * the stash root object ID
+     * @param fullProfile 
+     */
+    public checkForAndFixDialogueAttachments(fullProfile: ISptProfile): void {
+        for (const traderDialogues of Object.values(fullProfile.dialogues)) {
+            for (const message of traderDialogues?.messages) {
+                // Skip any messages without attached items
+                if (!message.items?.data || !message.items?.stash) {
+                    continue;
+                }
+
+                // Skip any messages that don't have a stashId collision with the player's equipment ID
+                if (message.items?.stash !== fullProfile.characters?.pmc?.Inventory?.equipment) {
+                    continue;
+                }
+
+                // Otherwise we need to generate a new unique stash ID for this message's attachments
+                message.items.stash = this.hashUtil.generate();
+                message.items.data = this.itemHelper.adoptOrphanedItems(message.items.stash, message.items.data);
+
+                // Because `adoptOrphanedItems` sets the slotId to `hideout`, we need to re-set it to `main` to work with mail
+                for (const item of message.items.data) {
+                    if (item.slotId === "hideout") {
+                        item.slotId = "main";
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Find issues in the scav profile data that may cause issues
      * @param scavProfile profile to check and fix
      */

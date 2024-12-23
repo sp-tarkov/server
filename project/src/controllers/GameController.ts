@@ -148,6 +148,10 @@ export class GameController {
                 fullProfile.characters.scav.WishList = {};
             }
 
+            if (fullProfile.dialogues) {
+                this.profileFixerService.checkForAndFixDialogueAttachments(fullProfile);
+            }
+
             this.logger.debug(`Started game with sessionId: ${sessionID} ${fullProfile.info.username}`);
 
             const pmcProfile = fullProfile.characters.pmc;
