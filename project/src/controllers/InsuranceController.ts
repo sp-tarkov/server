@@ -128,7 +128,7 @@ export class InsuranceController {
             // Create a new root parent ID for the message we'll be sending the player
             const rootItemParentID = this.hashUtil.generate();
 
-            // Update the insured items to have the new root parent ID for root items
+            // Update the insured items to have the new root parent ID for root/orphaned items
             insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
 
             const simulateItemsBeingTaken = this.insuranceConfig.simulateItemsBeingTaken;
@@ -138,6 +138,9 @@ export class InsuranceController {
 
                 // Actually remove them.
                 this.removeItemsFromInsurance(insured, itemsToDelete);
+
+                // There's a chance we've orphaned weapon attachments, so adopt any orphaned items again
+                insured.items = this.itemHelper.adoptOrphanedItems(rootItemParentID, insured.items);
             }
 
             // Send the mail to the player.
