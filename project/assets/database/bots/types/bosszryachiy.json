@@ -148,8 +148,8 @@
     },
     "Ammo": {
       "Caliber762x54R": {
-        "5e023d48186a883be655e551": 926,
-        "5e023cf8186a883be655e54f": 107
+        "5e023d48186a883be655e551": 155,
+        "5e023cf8186a883be655e54f": 18
       },
       "Caliber545x39": {
         "56dff4a2d2720bbd668b456a": 1
@@ -291,9 +291,9 @@
       },
       "Backpack": {},
       "SecuredContainer": {
-        "5e023d48186a883be655e551": 229,
-        "56dff4a2d2720bbd668b456a": 78,
-        "5a26abfac4a28232980eabff": 39,
+        "5e023d48186a883be655e551": 541,
+        "56dff4a2d2720bbd668b456a": 182,
+        "5a26abfac4a28232980eabff": 91,
         "5e023cf8186a883be655e54f": 5
       },
       "SpecialLoot": {}
@@ -2282,7 +2282,7 @@
       "mod_magazine": 100,
       "mod_stock": 75,
       "mod_mount_000": 33,
-      "mod_mount_002": 34,
+      "mod_mount_002": 36,
       "mod_muzzle": 100,
       "mod_mount": 0,
       "mod_sight_front": 0,
