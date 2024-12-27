@@ -1,17 +1,14 @@
-import http, { IncomingMessage } from "node:http";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import type { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
+import type { ServerWebSocket } from "bun";
 import { inject, injectAll, injectable } from "tsyringe";
-import { WebSocketServer as WSServer, WebSocket } from "ws";
 
 @injectable()
 export class WebSocketServer {
-    protected webSocketServer: WSServer;
-
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
@@ -21,47 +18,5 @@ export class WebSocketServer {
         @injectAll("WebSocketConnectionHandler") protected webSocketConnectionHandlers: IWebSocketConnectionHandler[],
     ) {}
 
-    public getWebSocketServer(): WSServer {
-        return this.webSocketServer;
-    }
-
-    public setupWebSocket(httpServer: http.Server): void {
-        this.webSocketServer = new WSServer({ server: httpServer });
-
-        this.webSocketServer.addListener("listening", () => {
-            this.logger.success(
-                this.localisationService.getText("websocket-started", this.httpServerHelper.getWebsocketUrl()),
-            );
-            this.logger.success(
-                `${this.localisationService.getText("server_running")}, ${this.getRandomisedMessage()}!`,
-            );
-        });
-
-        this.webSocketServer.addListener("connection", this.wsOnConnection.bind(this));
-    }
-
-    protected getRandomisedMessage(): string {
-        if (this.randomUtil.getInt(1, 1000) > 999) {
-            return this.localisationService.getRandomTextThatMatchesPartialKey("server_start_meme_");
-        }
-
-        return globalThis.G_RELEASE_CONFIGURATION
-            ? `${this.localisationService.getText("server_start_success")}!`
-            : this.localisationService.getText("server_start_success");
-    }
-
-    protected wsOnConnection(ws: WebSocket, req: IncomingMessage): void {
-        const socketHandlers = this.webSocketConnectionHandlers.filter((wsh) => req.url.includes(wsh.getHookUrl()));
-        if ((socketHandlers?.length ?? 0) === 0) {
-            const message = `Socket connection received for url ${req.url}, but there is not websocket handler configured for it`;
-            this.logger.warning(message);
-            ws.send(this.jsonUtil.serialize({ error: message }));
-            ws.close();
-            return;
-        }
-        socketHandlers.forEach((wsh) => {
-            wsh.onConnection(ws, req);
-            this.logger.info(`WebSocketHandler "${wsh.getSocketId()}" connected`);
-        });
-    }
+    public wsOnConnection(ws: ServerWebSocket<unknown>, req: string | Buffer): Promise<void> {}
 }
