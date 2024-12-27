@@ -1,4 +1,3 @@
-import type { IncomingMessage } from "node:http";
 import { DynamicRouter, Router, StaticRouter } from "@spt/di/Router";
 import { injectAll, injectable } from "tsyringe";
 
@@ -23,9 +22,9 @@ export class HttpRouter {
         return map;
     }
 
-    public async getResponse(req: IncomingMessage, info: any, sessionID: string): Promise<string> {
+    public async getResponse(req: Request, info: any, sessionID: string): Promise<string> {
         const wrapper: ResponseWrapper = new ResponseWrapper("");
-        let url = req.url;
+        let url = new URL(req.url).pathname;
 
         // remove retry from url
         if (url?.includes("?retry=")) {

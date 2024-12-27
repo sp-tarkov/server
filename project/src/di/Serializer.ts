@@ -1,7 +1,5 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
-
 export class Serializer {
-    public async serialize(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {
+    public async serialize(sessionID: string, req: Request, body: any): Promise<Response> {
         throw new Error("Should be extended and overrode");
     }
 

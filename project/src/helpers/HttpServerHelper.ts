@@ -7,7 +7,7 @@ import { inject, injectable } from "tsyringe";
 export class HttpServerHelper {
     protected httpConfig: IHttpConfig;
 
-    protected mime = {
+    protected mime: Record<string, string> = {
         css: "text/css",
         bin: "application/octet-stream",
         html: "text/html",
@@ -48,8 +48,40 @@ export class HttpServerHelper {
         return `ws://${this.buildUrl()}`;
     }
 
-    public sendTextJson(resp: any, output: any): void {
-        resp.writeHead(200, "OK", { "Content-Type": this.mime.json });
-        resp.end(output);
+    public sendJson(output: string, sessionID?: string): Response {
+        const headers: HeadersInit = {
+            "Content-Type": "application/json",
+        };
+
+        if (sessionID) {
+            headers["Set-Cookie"] = `PHPSESSID=${sessionID}`;
+        }
+
+        return new Response(output, {
+            status: 200,
+            statusText: "OK",
+            headers,
+        });
+    }
+
+    public async sendZlibJson(output: string, sessionID: string): Promise<Response> {
+        return new Response(Bun.deflateSync(output), {
+            status: 200,
+        });
+    }
+
+    public async sendFileAsync(filePath: string): Promise<Response> {
+        const pathSlice = filePath.split("/");
+        const fileExtension = pathSlice[pathSlice.length - 1].split(".").at(-1);
+        const type = this.getMimeText(fileExtension ?? "") || this.getMimeText("txt");
+
+        // Read the file as a buffer and create a response
+        const response = new Response(Bun.file(filePath), {
+            headers: {
+                "Content-Type": type,
+            },
+        });
+
+        return response;
     }
 }

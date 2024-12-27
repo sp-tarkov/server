@@ -1,28 +1,27 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import type { ImageRouteService } from "@spt/services/mod/image/ImageRouteService";
-import { HttpFileUtil } from "@spt/utils/HttpFileUtil";
 import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
+import type { HttpServerHelper } from "../helpers/HttpServerHelper";
 
 @injectable()
 export class ImageRouter {
     constructor(
         @inject("VFS") protected vfs: VFS,
         @inject("ImageRouteService") protected imageRouteService: ImageRouteService,
-        @inject("HttpFileUtil") protected httpFileUtil: HttpFileUtil,
+        @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
     ) {}
 
     public addRoute(key: string, valueToAdd: string): void {
         this.imageRouteService.addRoute(key, valueToAdd);
     }
 
-    public async sendImage(sessionID: string, req: IncomingMessage, resp: ServerResponse, body: any): Promise<void> {
+    public async sendImage(sessionID: string, req: Request, body: any): Promise<Response> {
         // remove file extension
-        const url = this.vfs.stripExtension(req.url);
+        const url = this.vfs.stripExtension(new URL(req.url).pathname);
 
         // send image
         if (this.imageRouteService.existsByKey(url)) {
-            await this.httpFileUtil.sendFileAsync(resp, this.imageRouteService.getByKey(url));
+            return await this.httpServerHelper.sendFileAsync(this.imageRouteService.getByKey(url));
         }
     }
 

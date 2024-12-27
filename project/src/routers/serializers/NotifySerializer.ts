@@ -1,4 +1,3 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import { NotifierController } from "@spt/controllers/NotifierController";
 import { Serializer } from "@spt/di/Serializer";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
@@ -15,12 +14,7 @@ export class NotifySerializer extends Serializer {
         super();
     }
 
-    public override async serialize(
-        _sessionID: string,
-        req: IncomingMessage,
-        resp: ServerResponse,
-        _: any,
-    ): Promise<void> {
+    public override async serialize(_sessionID: string, req: Request, _: any): Promise<Response> {
         const splittedUrl = req.url.split("/");
         const tmpSessionID = splittedUrl[splittedUrl.length - 1].split("?last_id")[0];
 
@@ -31,7 +25,9 @@ export class NotifySerializer extends Serializer {
         await this.notifierController
             .notifyAsync(tmpSessionID)
             .then((messages: any) => messages.map((message: any) => this.jsonUtil.serialize(message)).join("\n"))
-            .then((text) => this.httpServerHelper.sendTextJson(resp, text));
+            .then((text) => {
+                return this.httpServerHelper.sendJson(text);
+            });
     }
 
     public override canHandle(route: string): boolean {

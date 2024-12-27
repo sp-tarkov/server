@@ -260,7 +260,6 @@ import { CompareUtil } from "@spt/utils/CompareUtil";
 import { DatabaseImporter } from "@spt/utils/DatabaseImporter";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { HttpFileUtil } from "@spt/utils/HttpFileUtil";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { ImporterUtil } from "@spt/utils/ImporterUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
@@ -447,7 +446,6 @@ export class Container {
         depContainer.register<WatermarkLocale>("WatermarkLocale", WatermarkLocale, { lifecycle: Lifecycle.Singleton });
         depContainer.register<Watermark>("Watermark", Watermark, { lifecycle: Lifecycle.Singleton });
         depContainer.register<IAsyncQueue>("AsyncQueue", AsyncQueue, { lifecycle: Lifecycle.Singleton });
-        depContainer.register<HttpFileUtil>("HttpFileUtil", HttpFileUtil, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModLoadOrder>("ModLoadOrder", ModLoadOrder, { lifecycle: Lifecycle.Singleton });
         depContainer.register<ModTypeCheck>("ModTypeCheck", ModTypeCheck, { lifecycle: Lifecycle.Singleton });
         depContainer.register<CompareUtil>("CompareUtil", CompareUtil, { lifecycle: Lifecycle.Singleton });
