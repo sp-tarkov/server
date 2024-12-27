@@ -392,20 +392,6 @@ export class PreSptModLoader implements IModLoader {
      * @param mod Name of mod to compile/add
      */
     protected async addModAsync(mod: string, pkg: IPackageJsonData): Promise<void> {
-        const modPath = this.getModPath(mod);
-
-        const typeScriptFiles = this.vfs.getFilesOfType(`${modPath}src`, ".ts");
-
-        if (typeScriptFiles.length > 0) {
-            if (globalThis.G_MODS_TRANSPILE_TS) {
-                // compile ts into js if ts files exist and globalThis.G_MODS_TRANSPILE_TS is set to true
-                await this.modCompilerService.compileMod(mod, modPath, typeScriptFiles);
-            } else {
-                // rename the mod entry point to .ts if it's set to .js because G_MODS_TRANSPILE_TS is set to false
-                pkg.main = pkg.main.replace(".js", ".ts");
-            }
-        }
-
         // Purge scripts data from package object
         pkg.scripts = {};
 
@@ -611,15 +597,9 @@ export class PreSptModLoader implements IModLoader {
         }
 
         if ("main" in config) {
-            if (config.main.split(".").pop() !== "js") {
-                // expects js file as entry
-                this.logger.error(this.localisationService.getText("modloader-main_property_not_js", modName));
-                issue = true;
-            }
-
             if (!this.vfs.exists(`${modPath}/${config.main}`)) {
                 // If TS file exists with same name, dont perform check as we'll generate JS from TS file
-                const tsFileName = config.main.replace(".js", ".ts");
+                const tsFileName = config.main;
                 const tsFileExists = this.vfs.exists(`${modPath}/${tsFileName}`);
 
                 if (!tsFileExists) {
