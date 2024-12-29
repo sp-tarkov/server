@@ -1,10 +1,27 @@
 {
-    "extends": "./tsconfig.base.json",
     "compilerOptions": {
+        "strict": false,
+        "moduleDetection": "force",
+        "module": "Preserve",
         "resolveJsonModule": true,
-        "outDir": "obj",
-        "declaration": true
+        "allowJs": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "verbatimModuleSyntax": false,
+        "baseUrl": ".",
+        "paths": {
+            "@spt/*": [
+                "./src/*"
+            ],
+            "@tests/*": [
+                "./tests/*"
+            ]
+        },
     },
-    "include": ["./src/**/*", "./tests/**/*", "./types/**/*", "./user/mods/**/*"],
-    "exclude": ["./user/mods/**/*"]
+    "include": [
+        "src/*",
+        "src/**/*"
+    ]
 }

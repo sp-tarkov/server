@@ -325,10 +325,6 @@ gulp.task("build:bleeding", build("bleeding"));
 gulp.task("build:bleedingmods", build("bleedingmods"));
 
 gulp.task("run:build", async () => await exec(serverExeName, { stdio, cwd: buildDir }));
-gulp.task(
-    "run:debug",
-    async () => await exec("ts-node-dev -r tsconfig-paths/register src/ide/TestEntry.ts", { stdio }),
-);
 gulp.task("run:profiler", async () => {
     await cleanCompiled();
     await compile();

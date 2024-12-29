@@ -27,21 +27,20 @@
             {
                 "name": "Debug",
                 "type": "node",
+                "program": "${workspaceFolder}/src/ide/TestEntry.ts",
                 "runtimeVersion": "20.11.1",
-                "runtimeExecutable": "npm",
+                "runtimeExecutable": "tsx",
                 "request": "launch",
-                "sourceMaps": true,
                 "runtimeArgs": [
-                    "run",
-                    "run:debug"
+                    "watch",
+                    "--clear-screen=false"
                 ],
-                "outFiles": [
-                    "!**/node_modules/**"
-                ],
-                "cwd": "${workspaceFolder}",
-                "outputCapture": "std",
                 "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen"
+                "internalConsoleOptions": "neverOpen",
+                "skipFiles": [
+                    "<node_internals>/**",
+                    "${workspaceFolder}/node_modules/**",
+                ],
             },
             {
                 "name": "Run Vitest Tests",
@@ -55,12 +54,10 @@
                 ],
                 "console": "integratedTerminal",
                 "internalConsoleOptions": "neverOpen",
-                "cwd": "${workspaceFolder}",
-                "sourceMaps": true,
-                "outputCapture": "std",
-                "outFiles": [
-                    "!**/node_modules/**"
-                ]
+                "skipFiles": [
+                    "<node_internals>/**",
+                    "${workspaceFolder}/node_modules/**",
+                ],
             }
         ]
     }

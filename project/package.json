@@ -26,12 +26,12 @@
         "build:bleeding": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleeding",
         "build:bleedingmods": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleedingmods",
         "run:build": "gulp run:build",
-        "run:debug": "gulp run:debug",
+        "run:debug": "tsx ./src/ide/TestEntry.ts",
         "run:profiler": "gulp run:profiler",
-        "gen:types": "tsc -p tsconfig.typedef.json --resolveJsonModule",
+        "gen:types": "tsc -p tsconfig.types.json",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
-        "gen:items": "ts-node -r tsconfig-paths/register ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
-        "gen:productionquests": "ts-node -r tsconfig-paths/register ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
+        "gen:items": "tsx ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
+        "gen:productionquests": "tsx ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
     },
     "dependencies": {
         "atomically": "~1.7",
@@ -51,7 +51,6 @@
         "source-map-support": "~0.5",
         "string-similarity-js": "~2.1",
         "tsyringe": "~4.8",
-        "typescript": "~5.5",
         "winston": "~3.13",
         "winston-daily-rotate-file": "~5.0",
         "ws": "~8.18"
@@ -79,9 +78,9 @@
         "madge": "~7",
         "minimist": "~1.2",
         "resedit": "~2.0",
-        "ts-node-dev": "~2.0",
-        "tsconfig-paths": "~4.2",
+        "tsx": "4.19.2",
         "typedoc": "~0.26",
+        "typescript": "~5.5",
         "vitest": "^2.1.8"
     },
     "targets": {
