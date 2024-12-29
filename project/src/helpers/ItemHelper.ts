@@ -846,6 +846,7 @@ export class ItemHelper {
                     item._id === pmcData.Inventory.questStashItems ||
                     item._id === pmcData.Inventory.sortingTable ||
                     item._id === pmcData.Inventory.stash ||
+                    item._id === pmcData.Inventory.hideoutCustomizationStashId ||
                     hideoutAreaStashes?.includes(item._id)
                 ) {
                     continue;

@@ -5127,76 +5127,6 @@
     "type": 23
   },
   {
-    "_id": "5df8a81f8f77747fcf5f5702",
-    "craftGivesExp": true,
-    "displayLevel": true,
-    "enableAreaRequirements": false,
-    "enabled": true,
-    "needsFuel": true,
-    "parentArea": null,
-    "requirements": [],
-    "stages": {
-      "0": {
-        "autoUpgrade": false,
-        "bonuses": [],
-        "constructionTime": 0,
-        "container": "",
-        "description": "",
-        "displayInterface": true,
-        "improvements": [],
-        "requirements": [],
-        "slots": 0
-      },
-      "1": {
-        "autoUpgrade": false,
-        "bonuses": [],
-        "constructionTime": 0,
-        "container": "",
-        "description": "",
-        "displayInterface": true,
-        "improvements": [],
-        "requirements": [
-          {
-            "areaType": 4,
-            "requiredLevel": 1,
-            "type": "Area"
-          },
-          {
-            "count": 10000,
-            "isEncoded": false,
-            "isFunctional": false,
-            "templateId": "5449016a4bdc2d6f028b456f",
-            "type": "Item"
-          },
-          {
-            "count": 1,
-            "isEncoded": false,
-            "isFunctional": false,
-            "templateId": "5df8a77486f77412672a1e3f",
-            "type": "Item"
-          },
-          {
-            "count": 1,
-            "isEncoded": false,
-            "isFunctional": false,
-            "templateId": "5df8a72c86f77412640e2e83",
-            "type": "Item"
-          },
-          {
-            "count": 1,
-            "isEncoded": false,
-            "isFunctional": false,
-            "templateId": "5df8a6a186f77412640e2e80",
-            "type": "Item"
-          }
-        ],
-        "slots": 0
-      }
-    },
-    "takeFromSlotLocked": false,
-    "type": 21
-  },
-  {
     "_id": "637b39f02e873739ec490215",
     "craftGivesExp": false,
     "displayLevel": false,
@@ -6144,5 +6074,73 @@
     },
     "takeFromSlotLocked": false,
     "type": 24
+  },
+  {
+    "_id": "5df8a81f8f77747fcf5f5702",
+    "craftGivesExp": true,
+    "displayLevel": true,
+    "enableAreaRequirements": false,
+    "enabled": true,
+    "needsFuel": true,
+    "parentArea": null,
+    "requirements": [],
+    "stages": {
+      "0": {
+        "autoUpgrade": false,
+        "bonuses": [],
+        "constructionTime": 0,
+        "container": "",
+        "description": "",
+        "displayInterface": true,
+        "globalCounterId": null,
+        "improvements": [],
+        "requirements": [],
+        "slots": 0
+      },
+      "1": {
+        "autoUpgrade": false,
+        "bonuses": [],
+        "constructionTime": 0,
+        "container": "",
+        "description": "",
+        "displayInterface": true,
+        "globalCounterId": "676e783a37141d44ba0e3e7d",
+        "improvements": [],
+        "requirements": [
+          {
+            "areaType": 4,
+            "requiredLevel": 1,
+            "type": "Area"
+          },
+          {
+            "count": 1,
+            "isEncoded": false,
+            "isFunctional": false,
+            "isSpawnedInSession": true,
+            "templateId": "5df8a77486f77412672a1e3f",
+            "type": "Item"
+          },
+          {
+            "count": 1,
+            "isEncoded": false,
+            "isFunctional": false,
+            "isSpawnedInSession": true,
+            "templateId": "5df8a72c86f77412640e2e83",
+            "type": "Item"
+          },
+          {
+            "count": 1,
+            "isEncoded": false,
+            "isFunctional": false,
+            "isSpawnedInSession": true,
+            "templateId": "5df8a6a186f77412640e2e80",
+            "type": "Item"
+          }
+        ],
+        "slots": 0
+      }
+    },
+    "takeFromSlotLocked": false,
+    "type": 21
   }
 ]

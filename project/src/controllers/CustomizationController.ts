@@ -1,4 +1,5 @@
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
 import type { IPmcData } from "@spt/models/eft/common/IPmcData";
 import type { ICustomisationStorage } from "@spt/models/eft/common/tables/ICustomisationStorage";
 import type { ISuit } from "@spt/models/eft/common/tables/ITrader";
@@ -10,11 +11,15 @@ import type { ICustomizationSetRequest } from "@spt/models/eft/customization/ICu
 import type { IWearClothingRequestData } from "@spt/models/eft/customization/IWearClothingRequestData";
 import type { IHideoutCustomisation } from "@spt/models/eft/hideout/IHideoutCustomisation";
 import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { GameEditions } from "@spt/models/enums/GameEditions";
+import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
+import { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -31,6 +36,7 @@ export class CustomizationController {
         @inject("SaveServer") protected saveServer: SaveServer,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
+        @inject("PrimaryCloner") protected cloner: ICloner,
     ) {}
 
     /**
@@ -242,12 +248,99 @@ export class CustomizationController {
         return result;
     }
 
-    public getHideoutCustomisation(sessionID: string, info: any): IHideoutCustomisation {
+    /** Handle client/hideout/customization/offer/list */
+    public getHideoutCustomisation(sessionID: string, info: IEmptyRequestData): IHideoutCustomisation {
         return this.databaseService.getHideout().customisation;
     }
 
-    public getCustomisationStorage(sessionID: string, info: any): ICustomisationStorage[] {
-        return this.databaseService.getTemplates().customisationStorage;
+    /** Handle client/customization/storage */
+    public getCustomisationStorage(sessionID: string, info: IEmptyRequestData): ICustomisationStorage[] {
+        const customisationResultsClone = this.cloner.clone(this.databaseService.getTemplates().customisationStorage);
+
+        // Some game versions have additional dogtag variants, add them
+        const profile = this.profileHelper.getFullProfile(sessionID);
+        switch (this.getGameEdition(profile)) {
+            case GameEditions.EDGE_OF_DARKNESS:
+                // Gets EoD tags
+                customisationResultsClone.push({
+                    id: "6746fd09bafff85008048838",
+                    source: "default",
+                    type: "dogTag",
+                });
+
+                customisationResultsClone.push({
+                    id: "67471938bafff850080488b7",
+                    source: "default",
+                    type: "dogTag",
+                });
+
+                break;
+            case GameEditions.UNHEARD:
+                // Gets EoD+Unheard tags
+                customisationResultsClone.push({
+                    id: "6746fd09bafff85008048838",
+                    source: "default",
+                    type: "dogTag",
+                });
+
+                customisationResultsClone.push({
+                    id: "67471938bafff850080488b7",
+                    source: "default",
+                    type: "dogTag",
+                });
+
+                customisationResultsClone.push({
+                    id: "67471928d17d6431550563b5",
+                    source: "default",
+                    type: "dogTag",
+                });
+
+                customisationResultsClone.push({
+                    id: "6747193f170146228c0d2226",
+                    source: "default",
+                    type: "dogTag",
+                });
+                break;
+        }
+
+        const pretigeLevel = profile?.characters?.pmc?.Info?.PrestigeLevel;
+        if (pretigeLevel) {
+            if (pretigeLevel >= 1) {
+                customisationResultsClone.push({
+                    id: "674dbf593bee1152d407f005",
+                    source: "default",
+                    type: "dogTag",
+                });
+            }
+
+            if (pretigeLevel >= 2) {
+                customisationResultsClone.push({
+                    id: "675dcfea7ae1a8792107ca99",
+                    source: "default",
+                    type: "dogTag",
+                });
+            }
+        }
+
+        return customisationResultsClone;
+    }
+
+    protected getGameEdition(profile: ISptProfile): string {
+        const edition = profile.characters?.pmc?.Info?.GameVersion;
+        if (!edition) {
+            // Edge case - profile not created yet, fall back to what launcher has set
+            const launcherEdition = profile.info.edition;
+            switch (launcherEdition.toLowerCase()) {
+                case "edge of darkness":
+                    return GameEditions.EDGE_OF_DARKNESS;
+                case "unheard":
+                    return GameEditions.UNHEARD;
+                default:
+                    return GameEditions.STANDARD;
+            }
+        }
+
+        return edition;
     }
 
     /** Handle CustomizationSet event */
