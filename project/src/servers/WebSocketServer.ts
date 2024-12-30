@@ -7,6 +7,7 @@ import { JsonUtil } from "@spt/utils/JsonUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectAll, injectable } from "tsyringe";
 import WebSocket, { WebSocketServer as Server } from "ws";
+import { SPTWebSocket } from "./ws/SPTWebsocket";
 
 @injectable()
 export class WebSocketServer {
@@ -52,12 +53,12 @@ export class WebSocketServer {
             : this.localisationService.getText("server_start_success");
     }
 
-    protected async wsOnConnection(ws: WebSocket, req: IncomingMessage): Promise<void> {
+    protected async wsOnConnection(ws: SPTWebSocket, req: IncomingMessage): Promise<void> {
         const socketHandlers = this.webSocketConnectionHandlers.filter((wsh) => req.url.includes(wsh.getHookUrl()));
         if ((socketHandlers?.length ?? 0) === 0) {
             const message = `Socket connection received for url ${req.url}, but there is not websocket handler configured for it`;
             this.logger.warning(message);
-            await this.sendAsync(ws, this.jsonUtil.serialize({ error: message }));
+            await ws.sendAsync(ws, this.jsonUtil.serialize({ error: message }));
             ws.close();
             return;
         }
@@ -66,18 +67,5 @@ export class WebSocketServer {
             await wsh.onConnection(ws, req);
             this.logger.info(`WebSocketHandler "${wsh.getSocketId()}" connected`);
         }
-    }
-
-    // biome-ignore lint/suspicious/noExplicitAny: Any is required here, I dont see any other way considering it will complain if we use BufferLike
-    protected sendAsync(ws: WebSocket, data: any): Promise<void> {
-        return new Promise((resolve, reject) => {
-            ws.send(data, (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
     }
 }
