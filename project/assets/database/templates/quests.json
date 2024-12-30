@@ -60335,9 +60335,26 @@
           "parentId": "",
           "status": [
             4,
-            5
+            5,
+            7
           ],
           "target": "5edac34d0bb72a50635c2bfa",
+          "visibilityConditions": []
+        },
+        {
+          "availableAfter": 0,
+          "conditionType": "Quest",
+          "dispersion": 0,
+          "dynamicLocale": false,
+          "globalQuestCounterId": "",
+          "id": "677260a62c1ea725720d6532",
+          "index": 1,
+          "parentId": "",
+          "status": [
+            4,
+            5
+          ],
+          "target": "5edab4b1218d181e29451435",
           "visibilityConditions": []
         }
       ],
