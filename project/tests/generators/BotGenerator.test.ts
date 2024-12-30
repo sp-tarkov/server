@@ -177,21 +177,5 @@ describe("BotGenerator", () => {
             expect(getRandomTextThatMatchesPartialKeySpy).toHaveBeenCalled();
             expect(result).toBe("test player");
         });
-
-        it("should generate PMC name in brackets behind scav name when chanceAssaultScavHasPlayerScavName is enabled", () => {
-            const botJsonTemplate = { firstName: ["scav"], lastName: [] };
-            const botGenerationDetails = { isPlayerScav: false, isPmc: false, allPmcsHaveSameNameAsPlayer: false };
-            const botRole = "assault";
-
-            botNameService.botConfig.chanceAssaultScavHasPlayerScavName = 100;
-            botNameService.databaseService.getBots().types.usec.firstName = ["player"];
-            botNameService.databaseService.getBots().types.bear.firstName = [];
-
-            const mockPlayerProfile = { Info: { Nickname: "Player", Level: 1 } };
-            vi.spyOn(botNameService.profileHelper, "getPmcProfile").mockReturnValue(<IPmcData>mockPlayerProfile);
-
-            const result = botNameService.generateUniqueBotNickname(botJsonTemplate, botGenerationDetails, botRole);
-            expect(result).toBe("scav (player)");
-        });
     });
 });

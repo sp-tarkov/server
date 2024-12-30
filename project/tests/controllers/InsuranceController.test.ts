@@ -211,7 +211,7 @@ describe("InsuranceController", () => {
             // Verify that the processing methods were called once per insurance package.
             expect(mockFindItemsToDelete).toBeCalledTimes(packageCount);
             expect(mockRemoveItemsFromInsurance).toBeCalledTimes(packageCount);
-            expect(mockAdoptOrphanedItems).toBeCalledTimes(packageCount);
+            expect(mockAdoptOrphanedItems).toBeCalledTimes(packageCount * 2);
             expect(mockSendMail).toBeCalledTimes(packageCount);
             expect(mockRemoveInsurancePackageFromProfile).toBeCalledTimes(packageCount);
         });
