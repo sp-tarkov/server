@@ -6,7 +6,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import WebSocket, { WebSocketServer as Server } from "ws";
+import { WebSocketServer as Server } from "ws";
 import { SPTWebSocket } from "./ws/SPTWebsocket";
 
 @injectable()
@@ -27,7 +27,7 @@ export class WebSocketServer {
     }
 
     public setupWebSocket(httpServer: http.Server): void {
-        this.webSocketServer = new Server({ server: httpServer });
+        this.webSocketServer = new Server({ server: httpServer, WebSocket: SPTWebSocket });
 
         this.webSocketServer.addListener("listening", () => {
             this.logger.success(
@@ -38,7 +38,7 @@ export class WebSocketServer {
             );
         });
 
-        this.webSocketServer.addListener("connection", async (ws, msg) => {
+        this.webSocketServer.addListener("connection", async (ws: SPTWebSocket, msg) => {
             await this.wsOnConnection(ws, msg);
         });
     }
@@ -59,7 +59,7 @@ export class WebSocketServer {
             const message = `Socket connection received for url ${req.url}, but there is not websocket handler configured for it`;
             this.logger.warning(message);
             await ws.sendAsync(ws, this.jsonUtil.serialize({ error: message }));
-            ws.close();
+            await ws.closeAsync();
             return;
         }
 

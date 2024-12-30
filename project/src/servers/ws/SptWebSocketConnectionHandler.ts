@@ -55,7 +55,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
         if (this.websocketPingHandler) {
             clearInterval(this.websocketPingHandler);
         }
-
+        
         ws.on("message", async (msg) => {
             for (const wsmh of this.sptWebSocketMessageHandlers) {
                 await wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg);
@@ -68,7 +68,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             this.logger.debug(this.localisationService.getText("websocket-pinging_player", sessionID));
 
             if (ws.readyState === WebSocket.OPEN) {
-                await ws.sendAsync(ws, this.jsonUtil.serialize(this.defaultNotification));
+                await ws.sendAsync(this.jsonUtil.serialize(this.defaultNotification));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-socket_lost_deleting_handle"));
                 clearInterval(this.websocketPingHandler);
@@ -82,7 +82,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             if (this.isConnectionWebSocket(sessionID)) {
                 const ws = this.webSockets.get(sessionID);
 
-                await ws.sendAsync(this.webSockets.get(sessionID), this.jsonUtil.serialize(output));
+                await ws.sendAsync(this.jsonUtil.serialize(output));
                 this.logger.debug(this.localisationService.getText("websocket-message_sent"));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-not_ready_message_not_sent", sessionID));
