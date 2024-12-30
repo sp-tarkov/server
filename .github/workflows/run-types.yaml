@@ -19,26 +19,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: "project/.nvmrc"
+          node-version-file: "./project/.nvmrc"
           cache: "npm"
-          cache-dependency-path: "project/package.json"
+          cache-dependency-path: "./project/package.json"
 
-      - name: Get NPM Cache Directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
-      - name: Check NPM Dependencies Cache
-        id: npm-cache
+      - name: Check NPM Cache
+        id: cache-check
         uses: actions/cache@v4
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('project/package.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('./project/package.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install NPM Dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+        if: steps.cache-check.outputs.cache-hit != 'true'
         run: npm install
         working-directory: ./project
 
