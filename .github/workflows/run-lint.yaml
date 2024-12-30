@@ -1,0 +1,47 @@
+name: Run Code Linter
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Checkout LFS
+        run: git lfs pull
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: "project/.nvmrc"
+          cache: "npm"
+          cache-dependency-path: "project/package.json"
+
+      - name: Get NPM Cache Directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - name: Check NPM Dependencies Cache
+        id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('project/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install NPM Dependencies
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm install
+        working-directory: ./project
+
+      - name: Run Linter
+        run: npm run lint
+        working-directory: ./project
