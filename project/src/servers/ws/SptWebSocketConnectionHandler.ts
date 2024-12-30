@@ -12,7 +12,6 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectAll, injectable } from "tsyringe";
 import { WebSocket } from "ws";
-import { WebSocketServer } from "../WebSocketServer";
 import { SPTWebSocket } from "./SPTWebsocket";
 
 @injectable()
