@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.setup.outputs.cache-hit == 'true' || always()
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: project-files
           path: ./project
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.setup.outputs.cache-hit == 'true' || always()
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: project-files
           path: ./project
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.setup.outputs.cache-hit == 'true' || always()
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: project-files
           path: ./project
