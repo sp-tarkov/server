@@ -15,6 +15,7 @@ export interface IPmcConfig extends IBaseConfig {
     pocketLoot: ISlotLootSettings;
     /** Global whitelist/blacklist of backpack loot for PMCs */
     backpackLoot: ISlotLootSettings;
+    globalLootBlacklist: string[];
     /** Use difficulty defined in config/bot.json/difficulty instead of chosen difficulty dropdown value */
     useDifficultyOverride: boolean;
     /** Difficulty override e.g. "AsOnline/Hard" */

@@ -19,6 +19,7 @@ import { ISearchFriendRequestData } from "@spt/models/eft/profile/ISearchFriendR
 import { ISearchFriendResponse } from "@spt/models/eft/profile/ISearchFriendResponse";
 import { IInraid, ISptProfile, IVitality } from "@spt/models/eft/profile/ISptProfile";
 import { IValidateNicknameRequestData } from "@spt/models/eft/profile/IValidateNicknameRequestData";
+import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { QuestStatus } from "@spt/models/enums/QuestStatus";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
@@ -160,6 +161,9 @@ export class ProfileController {
             pmcData.UnlockedInfo = { unlockedProductionRecipe: [] };
         }
 
+        // Add required items to pmc stash
+        this.addMissingInternalContainersToProfile(pmcData);
+
         // Change item IDs to be unique
         pmcData.Inventory.items = this.itemHelper.replaceIDs(
             pmcData.Inventory.items,
@@ -240,6 +244,41 @@ export class ProfileController {
             if (item._id === oldEquipmentId) {
                 item._id = pmcData.Inventory.equipment;
             }
+        }
+    }
+
+    /**
+     * Ensure a profile has the necessary internal containers e.g. questRaidItems / sortingTable
+     * DOES NOT check that stash exists
+     * @param pmcData Profile to check
+     */
+    protected addMissingInternalContainersToProfile(pmcData: IPmcData): void {
+        if (!pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.hideoutCustomizationStashId)) {
+            pmcData.Inventory.items.push({
+                _id: pmcData.Inventory.hideoutCustomizationStashId,
+                _tpl: ItemTpl.HIDEOUTAREACONTAINER_CUSTOMIZATION,
+            });
+        }
+
+        if (!pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.sortingTable)) {
+            pmcData.Inventory.items.push({
+                _id: pmcData.Inventory.sortingTable,
+                _tpl: ItemTpl.SORTINGTABLE_SORTING_TABLE,
+            });
+        }
+
+        if (!pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.questStashItems)) {
+            pmcData.Inventory.items.push({
+                _id: pmcData.Inventory.questStashItems,
+                _tpl: ItemTpl.STASH_QUESTOFFLINE,
+            });
+        }
+
+        if (!pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.questRaidItems)) {
+            pmcData.Inventory.items.push({
+                _id: pmcData.Inventory.questRaidItems,
+                _tpl: ItemTpl.STASH_QUESTRAID,
+            });
         }
     }
 

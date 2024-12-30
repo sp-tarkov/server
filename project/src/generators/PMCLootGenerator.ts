@@ -45,19 +45,24 @@ export class PMCLootGenerator {
             const pmcPriceOverrides =
                 this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items.Pockets;
 
-            const allowedItemTypes = this.pmcConfig.pocketLoot.whitelist;
-            const pmcItemBlacklist = this.pmcConfig.pocketLoot.blacklist;
-            const itemBlacklist = this.itemFilterService.getBlacklistedItems();
+            const allowedItemTypeWhitelist = this.pmcConfig.pocketLoot.whitelist;
 
-            // Blacklist inactive seasonal items
-            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+            const blacklist = new Set();
+            for (const id of [
+                ...this.pmcConfig.pocketLoot.blacklist,
+                ...this.pmcConfig.globalLootBlacklist,
+                ...this.itemFilterService.getBlacklistedItems(),
+                ...this.seasonalEventService.getInactiveSeasonalEventItems(),
+            ]) {
+                blacklist.add(id);
+            }
 
             const itemsToAdd = Object.values(items).filter(
                 (item) =>
-                    allowedItemTypes.includes(item._parent) &&
+                    allowedItemTypeWhitelist.includes(item._parent) &&
                     this.itemHelper.isValidItem(item._id) &&
-                    !pmcItemBlacklist.includes(item._id) &&
-                    !itemBlacklist.includes(item._id) &&
+                    !blacklist.has(item._id) &&
+                    !blacklist.has(item._parent) &&
                     this.itemFitsInto1By2Slot(item),
             );
 
@@ -97,19 +102,24 @@ export class PMCLootGenerator {
                 this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items
                     .TacticalVest;
 
-            const allowedItemTypes = this.pmcConfig.vestLoot.whitelist;
-            const pmcItemBlacklist = this.pmcConfig.vestLoot.blacklist;
-            const itemBlacklist = this.itemFilterService.getBlacklistedItems();
+            const allowedItemTypeWhitelist = this.pmcConfig.vestLoot.whitelist;
 
-            // Blacklist seasonal items
-            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+            const blacklist = new Set();
+            for (const id of [
+                ...this.pmcConfig.vestLoot.blacklist,
+                ...this.pmcConfig.globalLootBlacklist,
+                ...this.itemFilterService.getBlacklistedItems(),
+                ...this.seasonalEventService.getInactiveSeasonalEventItems(),
+            ]) {
+                blacklist.add(id);
+            }
 
             const itemsToAdd = Object.values(items).filter(
                 (item) =>
-                    allowedItemTypes.includes(item._parent) &&
+                    allowedItemTypeWhitelist.includes(item._parent) &&
                     this.itemHelper.isValidItem(item._id) &&
-                    !pmcItemBlacklist.includes(item._id) &&
-                    !itemBlacklist.includes(item._id) &&
+                    !blacklist.has(item._id) &&
+                    !blacklist.has(item._parent) &&
                     this.itemFitsInto2By2Slot(item),
             );
 
@@ -176,19 +186,24 @@ export class PMCLootGenerator {
             const pmcPriceOverrides =
                 this.databaseService.getBots().types[botRole === "pmcBEAR" ? "bear" : "usec"].inventory.items.Backpack;
 
-            const allowedItemTypes = this.pmcConfig.backpackLoot.whitelist;
-            const pmcItemBlacklist = this.pmcConfig.backpackLoot.blacklist;
-            const itemBlacklist = this.itemFilterService.getBlacklistedItems();
+            const allowedItemTypeWhitelist = this.pmcConfig.backpackLoot.whitelist;
 
-            // Blacklist seasonal items
-            itemBlacklist.push(...this.seasonalEventService.getInactiveSeasonalEventItems());
+            const blacklist = new Set();
+            for (const id of [
+                ...this.pmcConfig.backpackLoot.blacklist,
+                ...this.pmcConfig.globalLootBlacklist,
+                ...this.itemFilterService.getBlacklistedItems(),
+                ...this.seasonalEventService.getInactiveSeasonalEventItems(),
+            ]) {
+                blacklist.add(id);
+            }
 
             const itemsToAdd = Object.values(items).filter(
                 (item) =>
-                    allowedItemTypes.includes(item._parent) &&
+                    allowedItemTypeWhitelist.includes(item._parent) &&
                     this.itemHelper.isValidItem(item._id) &&
-                    !pmcItemBlacklist.includes(item._id) &&
-                    !itemBlacklist.includes(item._id),
+                    !blacklist.has(item._id) &&
+                    !blacklist.has(item._parent),
             );
 
             for (const itemToAdd of itemsToAdd) {

@@ -43,17 +43,6 @@ export class CustomizationCallbacks {
     }
 
     /**
-     * Handle CustomizationWear event
-     */
-    public wearClothing(
-        pmcData: IPmcData,
-        body: IWearClothingRequestData,
-        sessionID: string,
-    ): IItemEventRouterResponse {
-        return this.customizationController.wearClothing(pmcData, body, sessionID);
-    }
-
-    /**
      * Handle CustomizationBuy event
      */
     public buyClothing(pmcData: IPmcData, body: IBuyClothingRequestData, sessionID: string): IItemEventRouterResponse {

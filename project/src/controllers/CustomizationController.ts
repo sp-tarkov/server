@@ -7,13 +7,14 @@ import type {
     IBuyClothingRequestData,
     IPaymentItemForClothing,
 } from "@spt/models/eft/customization/IBuyClothingRequestData";
-import type { ICustomizationSetRequest } from "@spt/models/eft/customization/ICustomizationSetRequest";
-import type { IWearClothingRequestData } from "@spt/models/eft/customization/IWearClothingRequestData";
+import type {
+    CustomizationSetOption,
+    ICustomizationSetRequest,
+} from "@spt/models/eft/customization/ICustomizationSetRequest";
 import type { IHideoutCustomisation } from "@spt/models/eft/hideout/IHideoutCustomisation";
 import type { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { GameEditions } from "@spt/models/enums/GameEditions";
-import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { SaveServer } from "@spt/servers/SaveServer";
@@ -61,34 +62,6 @@ export class CustomizationController {
             throw new Error(this.localisationService.getText("customisation-unable_to_get_trader_suits", traderID));
 
         return matchedSuits;
-    }
-
-    /**
-     * Handle CustomizationWear event
-     * Equip one to many clothing items to player
-     */
-    public wearClothing(
-        pmcData: IPmcData,
-        wearClothingRequest: IWearClothingRequestData,
-        sessionID: string,
-    ): IItemEventRouterResponse {
-        for (const suitId of wearClothingRequest.suites) {
-            // Find desired clothing item in db
-            const dbSuit = this.databaseService.getCustomization()[suitId];
-
-            // Legs
-            if (dbSuit._parent === this.clothingIds.lowerParentId) {
-                pmcData.Customization.Feet = dbSuit._props.Feet;
-            }
-
-            // Torso
-            if (dbSuit._parent === this.clothingIds.upperParentId) {
-                pmcData.Customization.Body = dbSuit._props.Body;
-                pmcData.Customization.Hands = dbSuit._props.Hands;
-            }
-        }
-
-        return this.eventOutputHolder.getOutput(sessionID);
     }
 
     /**
@@ -350,9 +323,48 @@ export class CustomizationController {
         pmcData: IPmcData,
     ): IItemEventRouterResponse {
         for (const customisation of request.customizations) {
-            pmcData.Customization[customisation.type] = customisation.id;
+            switch (customisation.type) {
+                case "dogTag":
+                    pmcData.Customization.DogTag = customisation.id;
+                    break;
+                case "suite":
+                    this.applyClothingItemToProfile(customisation, pmcData);
+                    break;
+                default:
+                    this.logger.error(`Unhandled customisation type: ${customisation.type}`);
+                    break;
+            }
         }
 
         return this.eventOutputHolder.getOutput(sessionId);
+    }
+
+    /**
+     * Applies a purchsed suit to the players doll
+     * @param customisation Suit to apply to profile
+     * @param pmcData Profile to update
+     */
+    protected applyClothingItemToProfile(customisation: CustomizationSetOption, pmcData: IPmcData): void {
+        const dbSuit = this.databaseService.getCustomization()[customisation.id];
+        if (!dbSuit) {
+            this.logger.error(
+                `Unable to find suit customisation id: ${customisation.id}, cannot apply clothing to player profile: ${pmcData._id}`,
+            );
+
+            return;
+        }
+
+        // Body
+        if (dbSuit._parent === this.clothingIds.upperParentId) {
+            pmcData.Customization.Body = dbSuit._props.Body;
+            pmcData.Customization.Hands = dbSuit._props.Hands;
+
+            return;
+        }
+
+        // Feet
+        if (dbSuit._parent === this.clothingIds.lowerParentId) {
+            pmcData.Customization.Feet = dbSuit._props.Feet;
+        }
     }
 }
