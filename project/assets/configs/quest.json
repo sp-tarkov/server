@@ -89,64 +89,29 @@
             "endTimestamp": "",
             "yearly": false
         },
-        "61bb474dce7374453b45dfd2": {
-            "name": "Fairy Tale Showdown",
+        "675031be899713ccad00060c": {
+            "name": "Christmas Dinner",
             "season": "christmas",
             "startTimestamp": 1701388800000,
             "endTimestamp": 1703980800000,
             "yearly": true
         },
-        "61bb474b1ab5304c3817a53a": {
-            "name": "Disrupting the Party",
+        "675031d3884e1da4a90b3bc9": {
+            "name": "Chilly",
             "season": "christmas",
             "startTimestamp": 1701388800000,
             "endTimestamp": 1703980800000,
             "yearly": true
         },
-        "61bb47481908c67d4249a205": {
-            "name": "No Gifts for You",
+        "6750320e23fc8fd9cc087d14": {
+            "name": "Holiday Beyond the Means",
             "season": "christmas",
             "startTimestamp": 1701388800000,
             "endTimestamp": 1703980800000,
             "yearly": true
         },
-        "61bb468b8d7cac1532300ccc": {
-            "name": "Party Preparations",
-            "season": "christmas",
-            "startTimestamp": 1701388800000,
-            "endTimestamp": 1703980800000,
-            "yearly": true
-        },
-        "61b9e1aaef9a1b5d6a79899a": {
-            "name": "Santas bag",
-            "season": "christmas",
-            "startTimestamp": 1701388800000,
-            "endTimestamp": 1703980800000,
-            "yearly": true
-        },
-        "61bb47516b70332c062ca7b9": {
-            "name": "Stop the Fight!",
-            "season": "christmas",
-            "startTimestamp": 1701388800000,
-            "endTimestamp": 1703980800000,
-            "yearly": true
-        },
-        "61bb475467f83663e155e26a": {
-            "name": "A Kind Snow Maiden",
-            "season": "christmas",
-            "startTimestamp": 1701388800000,
-            "endTimestamp": 1703980800000,
-            "yearly": true
-        },
-        "61bb4756883b2c16a163870a": {
-            "name": "Home Comfort",
-            "season": "christmas",
-            "startTimestamp": 1701388800000,
-            "endTimestamp": 1703980800000,
-            "yearly": true
-        },
-        "61bb47578d7cac1532300ccd": {
-            "name": "Bad Santa",
+        "67503247622398376d0b57cd": {
+            "name": "Khorovod",
             "season": "christmas",
             "startTimestamp": 1701388800000,
             "endTimestamp": 1703980800000,
@@ -154,13 +119,6 @@
         },
         "655e427b64d09b4122018228": {
             "name": "The punisher - Harvest",
-            "season": "None",
-            "startTimestamp": 1341615600000,
-            "endTimestamp": "",
-            "yearly": false
-        },
-        "65e85198e32da31f2b30978e": {
-            "name": "Evil Spirits",
             "season": "None",
             "startTimestamp": 1341615600000,
             "endTimestamp": "",
