@@ -4,7 +4,7 @@ import { ContextVariableType } from "@spt/context/ContextVariableType";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { WebSocketServer } from "@spt/servers/WebSocketServer";
 import { IHttpListener } from "@spt/servers/http/IHttpListener";
@@ -14,7 +14,7 @@ import { inject, injectAll, injectable } from "tsyringe";
 @injectable()
 export class HttpServer {
     protected httpConfig: IHttpConfig;
-    protected started: boolean;
+    protected started = false;
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
@@ -102,7 +102,7 @@ export class HttpServer {
      * @param remoteAddress Address to check
      * @returns True if its local
      */
-    protected isLocalRequest(remoteAddress: string): boolean {
+    protected isLocalRequest(remoteAddress: string | undefined): boolean | undefined {
         if (!remoteAddress) {
             return undefined;
         }
