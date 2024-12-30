@@ -58,7 +58,7 @@ export class WebSocketServer {
         if ((socketHandlers?.length ?? 0) === 0) {
             const message = `Socket connection received for url ${req.url}, but there is not websocket handler configured for it`;
             this.logger.warning(message);
-            await ws.sendAsync(ws, this.jsonUtil.serialize({ error: message }));
+            await ws.sendAsync(this.jsonUtil.serialize({ error: message }));
             await ws.closeAsync();
             return;
         }
