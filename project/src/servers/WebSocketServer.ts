@@ -69,7 +69,7 @@ export class WebSocketServer {
     }
 
     // biome-ignore lint/suspicious/noExplicitAny: Any is required here, I dont see any other way considering it will complain if we use BufferLike
-    public sendAsync(ws: WebSocket, data: any): Promise<void> {
+    protected sendAsync(ws: WebSocket, data: any): Promise<void> {
         return new Promise((resolve, reject) => {
             ws.send(data, (error) => {
                 if (error) {

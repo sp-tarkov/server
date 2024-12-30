@@ -91,7 +91,7 @@ export class SptHttpListener implements IHttpListener {
         sessionID: string,
         req: IncomingMessage,
         resp: ServerResponse,
-        body: Buffer,
+        body: Buffer | undefined,
         output: string,
     ): Promise<void> {
         const bodyInfo = this.getBodyInfo(body);
@@ -138,7 +138,7 @@ export class SptHttpListener implements IHttpListener {
         }
     }
 
-    public async getResponse(sessionID: string, req: IncomingMessage, body: Buffer): Promise<string> {
+    public async getResponse(sessionID: string, req: IncomingMessage, body: Buffer | undefined): Promise<string> {
         const info = this.getBodyInfo(body, req.url);
         if (globalThis.G_LOG_REQUESTS) {
             // Parse quest info into object
@@ -158,7 +158,7 @@ export class SptHttpListener implements IHttpListener {
         return output;
     }
 
-    protected getBodyInfo(body: Buffer, requestUrl = undefined): any {
+    protected getBodyInfo(body: Buffer | undefined, requestUrl = undefined): any {
         const text = body ? body.toString() : "{}";
         const info = text ? this.jsonUtil.deserialize<any>(text, requestUrl) : {};
         return info;

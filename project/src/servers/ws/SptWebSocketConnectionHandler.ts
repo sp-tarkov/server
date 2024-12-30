@@ -12,7 +12,6 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectAll, injectable } from "tsyringe";
 import { WebSocket } from "ws";
-import { WebSocketServer } from "../WebSocketServer";
 
 @injectable()
 export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandler {
@@ -22,7 +21,6 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
 
     protected websocketPingHandler: NodeJS.Timeout | undefined;
     constructor(
-        @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -69,7 +67,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             this.logger.debug(this.localisationService.getText("websocket-pinging_player", sessionID));
 
             if (ws.readyState === WebSocket.OPEN) {
-                await this.webSocketServer.sendAsync(ws, this.jsonUtil.serialize(this.defaultNotification));
+                await this.sendAsync(ws, this.jsonUtil.serialize(this.defaultNotification));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-socket_lost_deleting_handle"));
                 clearInterval(this.websocketPingHandler);
@@ -83,7 +81,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             if (this.isConnectionWebSocket(sessionID)) {
                 const ws = this.webSockets.get(sessionID);
 
-                await this.webSocketServer.sendAsync(this.webSockets.get(sessionID), this.jsonUtil.serialize(output));
+                await this.sendAsync(this.webSockets.get(sessionID), this.jsonUtil.serialize(output));
                 this.logger.debug(this.localisationService.getText("websocket-message_sent"));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-not_ready_message_not_sent", sessionID));
@@ -99,5 +97,18 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
 
     public getSessionWebSocket(sessionID: string): WebSocket {
         return this.webSockets[sessionID];
+    }
+
+    // biome-ignore lint/suspicious/noExplicitAny: Any is required here, I dont see any other way considering it will complain if we use BufferLike
+    public sendAsync(ws: WebSocket, data: any): Promise<void> {
+        return new Promise((resolve, reject) => {
+            ws.send(data, (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 }
