@@ -1,16 +1,16 @@
 import http, { IncomingMessage } from "node:http";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import { Server, WebSocket } from "ws";
+import WebSocket, { WebSocketServer as Server } from "ws";
 
 @injectable()
 export class WebSocketServer {
-    protected webSocketServer: Server;
+    protected webSocketServer: Server | undefined;
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
@@ -21,7 +21,7 @@ export class WebSocketServer {
         @injectAll("WebSocketConnectionHandler") protected webSocketConnectionHandlers: IWebSocketConnectionHandler[],
     ) {}
 
-    public getWebSocketServer(): Server {
+    public getWebSocketServer(): Server | undefined {
         return this.webSocketServer;
     }
 
@@ -37,7 +37,9 @@ export class WebSocketServer {
             );
         });
 
-        this.webSocketServer.addListener("connection", this.wsOnConnection.bind(this));
+        this.webSocketServer.addListener("connection", async (ws, msg) => {
+            await this.wsOnConnection(ws, msg);
+        });
     }
 
     protected getRandomisedMessage(): string {
@@ -50,18 +52,32 @@ export class WebSocketServer {
             : this.localisationService.getText("server_start_success");
     }
 
-    protected wsOnConnection(ws: WebSocket, req: IncomingMessage): void {
+    protected async wsOnConnection(ws: WebSocket, req: IncomingMessage): Promise<void> {
         const socketHandlers = this.webSocketConnectionHandlers.filter((wsh) => req.url.includes(wsh.getHookUrl()));
         if ((socketHandlers?.length ?? 0) === 0) {
             const message = `Socket connection received for url ${req.url}, but there is not websocket handler configured for it`;
             this.logger.warning(message);
-            ws.send(this.jsonUtil.serialize({ error: message }));
+            await this.sendAsync(ws, this.jsonUtil.serialize({ error: message }));
             ws.close();
             return;
         }
-        socketHandlers.forEach((wsh) => {
-            wsh.onConnection(ws, req);
+
+        for (const wsh of socketHandlers) {
+            await wsh.onConnection(ws, req);
             this.logger.info(`WebSocketHandler "${wsh.getSocketId()}" connected`);
+        }
+    }
+
+    // biome-ignore lint/suspicious/noExplicitAny: Any is required here, I dont see any other way considering it will complain if we use BufferLike
+    public sendAsync(ws: WebSocket, data: any): Promise<void> {
+        return new Promise((resolve, reject) => {
+            ws.send(data, (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
         });
     }
 }

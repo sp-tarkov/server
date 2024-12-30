@@ -4,7 +4,7 @@ import { IWsNotificationEvent } from "@spt/models/eft/ws/IWsNotificationEvent";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
 import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { IWebSocketConnectionHandler } from "@spt/servers/ws/IWebSocketConnectionHandler";
 import { ISptWebSocketMessageHandler } from "@spt/servers/ws/message/ISptWebSocketMessageHandler";
@@ -12,6 +12,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { inject, injectAll, injectable } from "tsyringe";
 import { WebSocket } from "ws";
+import { WebSocketServer } from "../WebSocketServer";
 
 @injectable()
 export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandler {
@@ -21,6 +22,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
 
     protected websocketPingHandler: NodeJS.Timeout | undefined;
     constructor(
+        @inject("WebSocketServer") protected webSocketServer: WebSocketServer,
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
@@ -39,7 +41,7 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
         return "/notifierServer/getwebsocket/";
     }
 
-    public onConnection(ws: WebSocket, req: IncomingMessage): void {
+    public async onConnection(ws: WebSocket, req: IncomingMessage): Promise<void> {
         // Strip request and break it into sections
         const splitUrl = req.url.substring(0, req.url.indexOf("?")).split("/");
         const sessionID = splitUrl.pop();
@@ -55,17 +57,19 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             clearInterval(this.websocketPingHandler);
         }
 
-        ws.on("message", (msg) =>
-            this.sptWebSocketMessageHandlers.forEach((wsmh) =>
-                wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg),
-            ),
-        );
+        ws.on("message", async (msg) => {
+            for (const wsmh of this.sptWebSocketMessageHandlers) {
+                await wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg);
+            }
 
-        this.websocketPingHandler = setInterval(() => {
+            this.logger.info(`WebSocketHandler "${wsmh.getSocketId()}" connected`);
+        });
+
+        this.websocketPingHandler = setInterval(async () => {
             this.logger.debug(this.localisationService.getText("websocket-pinging_player", sessionID));
 
             if (ws.readyState === WebSocket.OPEN) {
-                ws.send(this.jsonUtil.serialize(this.defaultNotification));
+                await this.webSocketServer.sendAsync(ws, this.jsonUtil.serialize(this.defaultNotification));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-socket_lost_deleting_handle"));
                 clearInterval(this.websocketPingHandler);
@@ -74,10 +78,12 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
         }, this.httpConfig.webSocketPingDelayMs);
     }
 
-    public sendMessage(sessionID: string, output: IWsNotificationEvent): void {
+    public async sendMessageAsync(sessionID: string, output: IWsNotificationEvent): Promise<void> {
         try {
             if (this.isConnectionWebSocket(sessionID)) {
-                this.webSockets.get(sessionID).send(this.jsonUtil.serialize(output));
+                const ws = this.webSockets.get(sessionID);
+
+                await this.webSocketServer.sendAsync(this.webSockets.get(sessionID), this.jsonUtil.serialize(output));
                 this.logger.debug(this.localisationService.getText("websocket-message_sent"));
             } else {
                 this.logger.debug(this.localisationService.getText("websocket-not_ready_message_not_sent", sessionID));
