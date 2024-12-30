@@ -14,6 +14,7 @@
         "check:circular": "madge --circular --ts-config tsconfig.json --extensions ts ./src/",
         "lint": "npx @biomejs/biome lint ./",
         "lint:fix": "npx @biomejs/biome lint --write ./",
+        "lint:types": "tsc --noEmit",
         "style": "npx @biomejs/biome format ./",
         "style:fix": "npx @biomejs/biome format --write ./",
         "format": "npx @biomejs/biome check --write ./",
