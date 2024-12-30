@@ -1,6 +1,6 @@
 {
     "name": "spt-server",
-    "version": "3.10.4",
+    "version": "4.0.0",
     "author": "SPT Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
@@ -8,7 +8,7 @@
     "description": "The single-player modding framework for Escape From Tarkov.",
     "icon": "assets/images/icon.ico",
     "engines": {
-        "node": "20.11.1"
+        "node": "22.12.0"
     },
     "scripts": {
         "check:circular": "madge --circular --ts-config tsconfig.json --extensions ts ./src/",
@@ -61,14 +61,14 @@
         "@swc/cli": "~0.4",
         "@swc/core": "~1.7",
         "@types/i18n": "~0.13",
-        "@types/node": "~22.0",
+        "@types/node": "22.10.2",
         "@types/proper-lockfile": "~4.1",
         "@types/semver": "~7.5",
         "@types/ws": "~8.5",
         "@vitest/coverage-istanbul": "^2.1.8",
         "@vitest/ui": "^2.1.8",
-        "@yao-pkg/pkg": "5.12",
-        "@yao-pkg/pkg-fetch": "3.5.9",
+        "@yao-pkg/pkg": "6.2.0",
+        "@yao-pkg/pkg-fetch": "3.5.18",
         "cross-env": "~7.0",
         "gulp": "~5.0",
         "gulp-decompress": "~3.0",

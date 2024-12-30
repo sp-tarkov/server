@@ -10,7 +10,9 @@ import { exec } from "gulp-execa";
 import rename from "gulp-rename";
 import minimist from "minimist";
 import * as ResEdit from "resedit";
-import manifest from "./package.json" assert { type: "json" };
+
+// Load the package.json file
+const manifest = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
 // Accept command line arguments for arch and platform
 const knownOptions = { string: ["arch", "platform"], default: { arch: process.arch, platform: process.platform } };
@@ -19,7 +21,7 @@ const targetArch = options.arch;
 const targetPlatform = options.platform;
 console.log(`target arch: ${targetArch}, target platform: ${targetPlatform}`);
 
-const nodeVersion = "node20"; // As of @yao-pkg/pkg-fetch v3.5.9, it's v20.11.1
+const nodeVersion = "node22"; // As of @yao-pkg/pkg-fetch@3.5.18, it's Node 22.12.0
 const stdio = "inherit";
 const buildDir = "build/";
 const dataDir = path.join(buildDir, "SPT_Data", "Server");
@@ -62,7 +64,7 @@ const compile = async () => {
 // Packaging
 const fetchPackageImage = async () => {
     try {
-        const output = "./.pkg-cache/v3.5";
+        const output = "./.pkg-cache/v6.2";
         const fetchedPkg = await pkgfetch.need({
             arch: targetArch,
             nodeRange: nodeVersion,

@@ -28,7 +28,7 @@
                 "name": "Debug",
                 "type": "node",
                 "program": "${workspaceFolder}/src/ide/TestEntry.ts",
-                "runtimeVersion": "20.11.1",
+                "runtimeVersion": "22.12.0",
                 "runtimeExecutable": "tsx",
                 "request": "launch",
                 "runtimeArgs": [
@@ -45,7 +45,7 @@
             {
                 "name": "Run Vitest Tests",
                 "type": "node",
-                "runtimeVersion": "20.11.1",
+                "runtimeVersion": "22.12.0",
                 "runtimeExecutable": "npm",
                 "request": "launch",
                 "runtimeArgs": [
