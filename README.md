@@ -42,7 +42,7 @@ To prepare the project for development you will need to:
 1. Run `git clone https://github.com/sp-tarkov/server.git server` to clone the repository.
 2. Run `git lfs pull` to download LFS files locally.
 3. Open the `project/mod.code-workspace` file in Visual Studio Code (VSC).
-4. Run `nvm use 20.11.1` in the VSC terminal.
+4. Run `nvm use 22.12.0` in the VSC terminal.
 5. Run `npm install` in the VSC terminal.
 
 ## Development
@@ -91,7 +91,7 @@ We're really excited that you're interested in contributing! Before submitting y
   The default branch used for the latest stable release. This branch is protected and typically is only merged with release branches.
 - **3.10.X-DEV**
   Development for the next hotfix release. Hotfix releases include bug fixes and minor features that do not affect the coding structure of the project. Special care is taken to not break server mod stability. These always target the same version of EFT as the last minor release.
-- **3.11.0-DEV**
+- **4.0.0-DEV**
   Development for the next minor release of SPT. Minor releases target the latest version of EFT. Late in the minor release cycle the EFT version is frozen for stability to prepare for release. Larger changes to the project structure may be included in minor releases.
 
 ### Pull Request Guidelines
