@@ -34701,8 +34701,8 @@
       "rainForFrozen": 0.25,
       "repairSec": 8,
       "secToBreak": {
-        "x": 30,
-        "y": 120
+        "x": 60,
+        "y": 180
       },
       "sleighLocations": [
         "Interchange",

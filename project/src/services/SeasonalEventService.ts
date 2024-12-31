@@ -247,14 +247,13 @@ export class SeasonalEventService {
 
         // Add active events to array
         for (const event of seasonalEvents) {
-            const eventStartDate = new Date(currentDate.getFullYear(), event.startMonth - 1, event.startDay);
-            const eventEndDate = new Date(currentDate.getFullYear(), event.endMonth - 1, event.endDay);
+            if (!event.enabled) {
+                continue;
+            }
 
-            // Current date is between start/end dates
-            if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
-                if (!event.enabled) {
-                    continue;
-                }
+            if (
+                this.dateIsBetweenTwoDates(currentDate, event.startMonth, event.startDay, event.endMonth, event.endDay)
+            ) {
                 this.currentlyActiveEvents.push(event);
 
                 if (SeasonalEventType[event.type] === SeasonalEventType.CHRISTMAS) {
@@ -279,16 +278,15 @@ export class SeasonalEventService {
 
         const currentDate = new Date();
         for (const seasonRange of this.weatherConfig.seasonDates) {
-            // Figure out start and end dates to get range of season
-            const eventStartDate = new Date(
-                currentDate.getFullYear(),
-                seasonRange.startMonth - 1, // Month value starts at 0
-                seasonRange.startDay,
-            );
-            const eventEndDate = new Date(currentDate.getFullYear(), seasonRange.endMonth - 1, seasonRange.endDay);
-
-            // Does todays date fit inside the above range
-            if (currentDate >= eventStartDate && currentDate <= eventEndDate) {
+            if (
+                this.dateIsBetweenTwoDates(
+                    currentDate,
+                    seasonRange.startMonth,
+                    seasonRange.startDay,
+                    seasonRange.endMonth,
+                    seasonRange.endDay,
+                )
+            ) {
                 return seasonRange.seasonType;
             }
         }
@@ -296,6 +294,30 @@ export class SeasonalEventService {
         this.logger.warning(this.localisationService.getText("season-no_matching_season_found_for_date"));
 
         return Season.SUMMER;
+    }
+
+    /**
+     * Does the provided date fit between the two defined dates?
+     * Excludes year
+     * Inclusive of end date upto 23 hours 59 minutes
+     * @param dateToCheck Date to check is between 2 dates
+     * @param startMonth Lower bound for month
+     * @param startDay Lower bound for day
+     * @param endMonth Upper bound for month
+     * @param endDay Upper bound for day
+     * @returns True when inside date range
+     */
+    protected dateIsBetweenTwoDates(
+        dateToCheck: Date,
+        startMonth: number,
+        startDay: number,
+        endMonth: number,
+        endDay: number,
+    ): boolean {
+        const eventStartDate = new Date(dateToCheck.getFullYear(), startMonth - 1, startDay);
+        const eventEndDate = new Date(dateToCheck.getFullYear(), endMonth - 1, endDay, 23, 59);
+
+        return dateToCheck >= eventStartDate && dateToCheck <= eventEndDate;
     }
 
     /**
@@ -370,7 +392,7 @@ export class SeasonalEventService {
      * @param eventName Name of the event to enable. e.g. Christmas
      */
     protected updateGlobalEvents(globalConfig: IConfig, event: ISeasonalEvent): void {
-        this.logger.success(`event: ${event.type} is active`);
+        this.logger.success(this.localisationService.getText("season-event_is_active", event.type));
 
         switch (event.type.toLowerCase()) {
             case SeasonalEventType.HALLOWEEN.toLowerCase():
@@ -387,10 +409,10 @@ export class SeasonalEventService {
                 if (event.settings?.zombieSettings?.enabled) {
                     this.configureZombies(event.settings?.zombieSettings);
                 }
-                if (event.settings.removeEntryRequirement) {
+                if (event.settings?.removeEntryRequirement) {
                     this.removeEntryRequirement(event.settings.removeEntryRequirement);
                 }
-                if (event.settings.replaceBotHostility) {
+                if (event.settings?.replaceBotHostility) {
                     this.replaceBotHostility(this.seasonalEventConfig.hostilitySettingsForEvent.zombies);
                 }
                 this.addPumpkinsToScavBackpacks();
