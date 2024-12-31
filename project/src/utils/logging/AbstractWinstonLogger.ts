@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { promisify } from "node:util";
+import { Program } from "@spt/Program";
 import { IDaum } from "@spt/models/eft/itemEvent/IItemEventRouterRequest";
 import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
@@ -37,7 +38,7 @@ export abstract class AbstractWinstonLogger implements ILogger {
     constructor(protected asyncQueue: IAsyncQueue) {
         this.filePath = path.join(this.getFilePath(), this.getFileName());
         this.writeFilePromisify = promisify(fs.writeFile);
-        this.showDebugInConsole = globalThis.G_DEBUG_CONFIGURATION;
+        this.showDebugInConsole = Program.DEBUG;
         if (!fs.existsSync(this.getFilePath())) {
             fs.mkdirSync(this.getFilePath(), { recursive: true });
         }

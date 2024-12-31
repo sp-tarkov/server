@@ -1,4 +1,5 @@
 import path from "node:path";
+import { Program } from "@spt/Program";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocaleService } from "@spt/services/LocaleService";
@@ -21,9 +22,7 @@ export class LocalisationService {
     ) {
         const localeFileDirectory = path.join(
             process.cwd(),
-            globalThis.G_RELEASE_CONFIGURATION
-                ? "SPT_Data/Server/database/locales/server"
-                : "./assets/database/locales/server",
+            Program.COMPILED ? "SPT_Data/Server/database/locales/server" : "./assets/database/locales/server",
         );
         this.i18n = new I18n({
             locales: this.localeService.getServerSupportedLocales(),

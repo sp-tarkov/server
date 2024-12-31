@@ -1,4 +1,5 @@
 import os from "node:os";
+import { Program } from "@spt/Program";
 import { OnLoad } from "@spt/di/OnLoad";
 import { OnUpdate } from "@spt/di/OnUpdate";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
@@ -6,11 +7,11 @@ import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { HttpServer } from "@spt/servers/HttpServer";
+import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { inject, injectAll, injectable } from "tsyringe";
-import { DatabaseService } from "@spt/services/DatabaseService";
 
 @injectable()
 export class App {
@@ -40,13 +41,14 @@ export class App {
         this.logger.debug(`RAM: ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)}GB`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.argv[0])}`);
         this.logger.debug(`PATH: ${this.encodingUtil.toBase64(process.execPath)}`);
-        this.logger.debug(`Server: ${globalThis.G_SPTVERSION || this.coreConfig.sptVersion}`);
-        if (globalThis.G_BUILDTIME) {
-            this.logger.debug(`Date: ${globalThis.G_BUILDTIME}`);
+        this.logger.debug(`Server: ${Program.SPT_VERSION || this.coreConfig.sptVersion}`);
+
+        if (Program.BUILD_TIME) {
+            this.logger.debug(`Date: ${Program.BUILD_TIME}`);
         }
 
-        if (globalThis.G_COMMIT) {
-            this.logger.debug(`Commit: ${globalThis.G_COMMIT}`);
+        if (Program.COMMIT) {
+            this.logger.debug(`Commit: ${Program.COMMIT}`);
         }
 
         for (const onLoad of this.onLoadComponents) {

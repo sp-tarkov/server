@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
+import { Program } from "@spt/Program";
 import { ModLoadOrder } from "@spt/loaders/ModLoadOrder";
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
 import { IModDetails } from "@spt/models/eft/profile/ISptProfile";
@@ -49,7 +50,7 @@ export class PreSptModLoader implements IModLoader {
     }
 
     public async load(container: DependencyContainer): Promise<void> {
-        if (globalThis.G_MODS_ENABLED) {
+        if (Program.MODS) {
             this.container = container;
             await this.importModsAsync();
             await this.executeModsAsync();
@@ -285,7 +286,7 @@ export class PreSptModLoader implements IModLoader {
      * @returns True if compatible
      */
     protected isModCombatibleWithSpt(mod: IPackageJsonData): boolean {
-        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
+        const sptVersion = Program.SPT_VERSION || this.sptConfig.sptVersion;
         const modName = `${mod.author}-${mod.name}`;
 
         // Error and prevent loading If no sptVersion property exists
@@ -396,8 +397,8 @@ export class PreSptModLoader implements IModLoader {
         const typeScriptFiles = this.vfs.getFilesOfType(`${modPath}src`, ".ts");
 
         if (typeScriptFiles.length > 0) {
-            if (globalThis.G_MODS_TRANSPILE_TS) {
-                // compile ts into js if ts files exist and globalThis.G_MODS_TRANSPILE_TS is set to true
+            if (Program.COMPILED) {
+                // compile ts into js if ts files exist and the program is compiled
                 await this.modCompilerService.compileMod(mod, modPath, typeScriptFiles);
             } else {
                 // rename the mod entry point to .ts if it's set to .js because G_MODS_TRANSPILE_TS is set to false
@@ -455,10 +456,7 @@ export class PreSptModLoader implements IModLoader {
                 this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
                     name: pkg.name,
                     author: pkg.author,
-                    configPath: path.join(
-                        globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/configs" : "assets/configs",
-                        "core.json",
-                    ),
+                    configPath: path.join(Program.COMPILED ? "SPT_Data/Server/configs" : "assets/configs", "core.json"),
                     configOption: "autoInstallModDependencies",
                 }),
             );
@@ -480,7 +478,7 @@ export class PreSptModLoader implements IModLoader {
 
         const pnpmPath = path.join(
             process.cwd(),
-            globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
+            Program.COMPILED ? "SPT_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
             os.platform() === "win32" ? "pnpm.exe" : "pnpm",
         );
 

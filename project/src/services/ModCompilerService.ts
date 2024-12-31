@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { inject, injectable } from "tsyringe";
 import { ScriptTarget, ModuleKind, ModuleResolutionKind, transpileModule, CompilerOptions } from "typescript";
+import { Program } from "@spt/Program";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ModHashCacheService } from "@spt/services/cache/ModHashCacheService";
 import { VFS } from "@spt/utils/VFS";
@@ -94,8 +95,7 @@ export class ModCompilerService
             const text = fs.readFileSync(filePath).toString();
             let replacedText: string;
 
-            if (globalThis.G_RELEASE_CONFIGURATION)
-            {
+            if (Program.COMPILED) {
                 replacedText = text.replace(/(@spt)/g, `${baseDir}/obj`);
                 for (const dependency of this.serverDependencies)
                 {

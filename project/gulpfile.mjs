@@ -29,10 +29,10 @@ const serverExeName = "SPT.Server.exe";
 const serverExe = path.join(buildDir, serverExeName);
 const pkgConfig = "pkgconfig.json";
 const entries = {
-    release: path.join("obj", "ide", "ReleaseEntry.js"),
-    debug: path.join("obj", "ide", "DebugEntry.js"),
-    bleeding: path.join("obj", "ide", "BleedingEdgeEntry.js"),
-    bleedingmods: path.join("obj", "ide", "BleedingEdgeModsEntry.js"),
+    release: "RELEASE",
+    debug: "DEBUG",
+    bleeding: "BLEEDING_EDGE",
+    bleedingmods: "BLEEDING_EDGE_MODS",
 };
 const licenseFile = "../LICENSE.md";
 
@@ -64,7 +64,7 @@ const compile = async () => {
 // Packaging
 const fetchPackageImage = async () => {
     try {
-        const output = "./.pkg-cache/v6.2";
+        const output = "./.pkg-cache/v3.5";
         const fetchedPkg = await pkgfetch.need({
             arch: targetArch,
             nodeRange: nodeVersion,
@@ -153,7 +153,7 @@ const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.tx
 /**
  * Writes the latest build data to the core.json and build.json configuration files.
  */
-const writeBuildDataToJSON = async () => {
+const writeBuildDataToJSON = async (entryType) => {
     try {
         // Fetch the latest Git commit hash
         const gitResult = await exec("git rev-parse HEAD", { stdout: "pipe" });
@@ -168,12 +168,13 @@ const writeBuildDataToJSON = async () => {
         await fs.writeFile(coreJSONPath, JSON.stringify(coreParsed, null, 4));
 
         // Write build.json
-        const buildJsonPath = path.join("obj", "ide", "build.json");
-        const buildInfo = {};
+        const buildJsonPath = path.join("obj", "entry", "build.json");
 
+        const buildInfo = {};
+        buildInfo.entryType = entryType;
+        buildInfo.sptVersion = coreParsed.sptVersion;
         buildInfo.commit = coreParsed.commit;
         buildInfo.buildTime = coreParsed.buildTime;
-        buildInfo.sptVersion = coreParsed.sptVersion;
         await fs.writeFile(buildJsonPath, JSON.stringify(buildInfo, null, 4));
     } catch (error) {
         throw new Error(`Failed to write commit hash to core.json: ${error.message}`);
@@ -191,7 +192,8 @@ const createHashFile = async () => {
 };
 
 // Combine all tasks into addAssets
-const addAssets = gulp.series(copyAssets, downloadPnpm, copyLicense, writeBuildDataToJSON, createHashFile);
+const addAssets = (entryType) =>
+    gulp.series(copyAssets, downloadPnpm, copyLicense, () => writeBuildDataToJSON(entryType), createHashFile);
 
 /**
  * Cleans the build directory.
@@ -284,14 +286,14 @@ const loadRecursiveAsync = async (filepath) => {
 };
 
 // Main Tasks Generation
-const build = (packagingType) => {
-    const anonPackaging = () => packaging(entries[packagingType]);
-    anonPackaging.displayName = `packaging-${packagingType}`;
+const build = (entryType) => {
+    const anonPackaging = () => packaging(entries[entryType]);
+    anonPackaging.displayName = `packaging-${entryType}`;
     const tasks = [
         cleanBuild,
         validateJSONs,
         compile,
-        addAssets,
+        addAssets(entries[entryType]),
         fetchPackageImage,
         anonPackaging,
         updateBuildProperties,
@@ -301,11 +303,11 @@ const build = (packagingType) => {
 };
 
 // Packaging Arguments
-const packaging = async (entry) => {
+const packaging = async (entryType) => {
     const target = `${nodeVersion}-${targetPlatform}-${targetArch}`;
     try {
         await pkg.exec([
-            entry,
+            path.join("obj", "entry", "run.js"),
             "--compress",
             "GZip",
             "--target",
@@ -330,5 +332,5 @@ gulp.task("run:build", async () => await exec(serverExeName, { stdio, cwd: build
 gulp.task("run:profiler", async () => {
     await cleanCompiled();
     await compile();
-    await exec("node --prof --inspect --trace-warnings obj/ide/TestEntry.js", { stdio });
+    await exec("node --prof --inspect --trace-warnings obj/entry/run.js", { stdio });
 });

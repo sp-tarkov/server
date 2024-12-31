@@ -1,3 +1,4 @@
+import { Program } from "@spt/Program";
 import { OnLoad } from "@spt/di/OnLoad";
 import { BundleLoader } from "@spt/loaders/BundleLoader";
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
@@ -21,7 +22,7 @@ export class PostDBModLoader implements OnLoad {
     ) {}
 
     public async onLoad(): Promise<void> {
-        if (globalThis.G_MODS_ENABLED) {
+        if (Program.MODS) {
             this.container = this.preSptModLoader.getContainer();
             await this.executeModsAsync();
             this.addBundles();

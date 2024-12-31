@@ -1,3 +1,4 @@
+import { Program } from "@spt/Program";
 import { OnLoad } from "@spt/di/OnLoad";
 import { PostSptModLoader } from "@spt/loaders/PostSptModLoader";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
@@ -25,7 +26,7 @@ export class ModCallbacks implements OnLoad {
     }
 
     public async onLoad(): Promise<void> {
-        if (globalThis.G_MODS_ENABLED) {
+        if (Program.MODS) {
             await this.postSptModLoader.load();
         }
     }

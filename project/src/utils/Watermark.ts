@@ -1,3 +1,4 @@
+import { Program } from "@spt/Program";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
@@ -78,10 +79,10 @@ export class Watermark {
         this.text = [this.versionLabel];
         this.text = [...this.text, ...description];
 
-        if (globalThis.G_DEBUG_CONFIGURATION) {
+        if (Program.DEBUG) {
             this.text = this.text.concat([...warning]);
         }
-        if (!globalThis.G_MODS_ENABLED) {
+        if (!Program.MODS) {
             this.text = this.text.concat([...modding]);
         }
 
@@ -104,8 +105,8 @@ export class Watermark {
      * @returns string
      */
     public getVersionTag(withEftVersion = false): string {
-        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
-        const versionTag = globalThis.G_DEBUG_CONFIGURATION
+        const sptVersion = Program.SPT_VERSION || this.sptConfig.sptVersion;
+        const versionTag = Program.DEBUG
             ? `${sptVersion} - ${this.localisationService.getText("bleeding_edge_build")}`
             : sptVersion;
 
@@ -123,10 +124,10 @@ export class Watermark {
      * @returns string
      */
     public getInGameVersionLabel(): string {
-        const sptVersion = globalThis.G_SPTVERSION || this.sptConfig.sptVersion;
-        const versionTag = globalThis.G_DEBUG_CONFIGURATION
-            ? `${sptVersion} - BLEEDINGEDGE ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`
-            : `${sptVersion} - ${globalThis.G_COMMIT?.slice(0, 6) ?? ""}`;
+        const sptVersion = Program.SPT_VERSION || this.sptConfig.sptVersion;
+        const versionTag = Program.DEBUG
+            ? `${sptVersion} - BLEEDINGEDGE ${Program.COMMIT?.slice(0, 6) ?? ""}`
+            : `${sptVersion} - ${Program.COMMIT?.slice(0, 6) ?? ""}`;
 
         return `${this.sptConfig.projectName} ${versionTag}`;
     }
@@ -138,7 +139,9 @@ export class Watermark {
 
     /** Reset console cursor to top */
     protected resetCursor(): void {
-        process.stdout.write("\u001B[2J\u001B[0;0f");
+        if (!Program.COMPILED) {
+            process.stdout.write("\u001B[2J\u001B[0;0f");
+        }
     }
 
     /** Draw the watermark */

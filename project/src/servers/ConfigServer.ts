@@ -1,3 +1,4 @@
+import { Program } from "@spt/Program";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { JsonUtil } from "@spt/utils/JsonUtil";
@@ -33,7 +34,7 @@ export class ConfigServer {
         this.logger.debug("Importing configs...");
 
         // Get all filepaths
-        const filepath = globalThis.G_RELEASE_CONFIGURATION ? "SPT_Data/Server/configs/" : "./assets/configs/";
+        const filepath = Program.COMPILED ? "SPT_Data/Server/configs/" : "./assets/configs/";
         const files = this.vfs.getFiles(filepath);
 
         // Add file content to result
@@ -59,7 +60,7 @@ export class ConfigServer {
             }
         }
 
-        this.logger.info(`Commit hash: ${globalThis.G_COMMIT || "DEBUG"}`);
-        this.logger.info(`Build date: ${globalThis.G_BUILDTIME || "DEBUG"}`);
+        this.logger.info(`Commit hash: ${Program.COMMIT || "DEBUG"}`);
+        this.logger.info(`Build date: ${Program.BUILD_TIME || "DEBUG"}`);
     }
 }

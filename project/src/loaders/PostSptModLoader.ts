@@ -1,3 +1,4 @@
+import { Program } from "@spt/Program";
 import { ModTypeCheck } from "@spt/loaders/ModTypeCheck";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { IPostSptLoadMod } from "@spt/models/external/IPostSptLoadMod";
@@ -23,7 +24,7 @@ export class PostSptModLoader implements IModLoader {
     }
 
     public async load(): Promise<void> {
-        if (globalThis.G_MODS_ENABLED) {
+        if (Program.MODS) {
             this.container = this.preSptModLoader.getContainer();
             await this.executeModsAsync();
         }

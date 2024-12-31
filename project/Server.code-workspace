@@ -27,7 +27,7 @@
             {
                 "name": "Debug",
                 "type": "node",
-                "program": "${workspaceFolder}/src/ide/TestEntry.ts",
+                "program": "${workspaceFolder}/src/entry/run.ts",
                 "runtimeVersion": "22.12.0",
                 "runtimeExecutable": "tsx",
                 "request": "launch",
