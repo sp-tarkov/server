@@ -1,8 +1,8 @@
-import fs from "node:fs";
+import { createReadStream } from "node:fs";
 import { ServerResponse } from "node:http";
+import { pipeline } from "node:stream/promises";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import { inject, injectable } from "tsyringe";
-import { pipeline } from "stream/promises";
 
 @injectable()
 export class HttpFileUtil {
@@ -16,6 +16,6 @@ export class HttpFileUtil {
 
         resp.setHeader("Content-Type", type);
 
-        await pipeline(fs.createReadStream(filePath), resp);
+        await pipeline(createReadStream(filePath), resp);
     }
 }

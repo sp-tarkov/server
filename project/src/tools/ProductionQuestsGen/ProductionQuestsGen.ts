@@ -10,13 +10,13 @@
  * - Some productions may output "Quest ... is already associated" if a quest unlocks multiple assorts, this can be ignored
  * - The list of "blacklistedProductions" is to stop spurious errors when we know a production is no longer necessary (Old events)
  */
-import * as fs from "node:fs";
 import * as path from "node:path";
 import { OnLoad } from "@spt/di/OnLoad";
 import { IHideoutProduction, IRequirement } from "@spt/models/eft/hideout/IHideoutProduction";
 import { QuestRewardType } from "@spt/models/enums/QuestRewardType";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { inject, injectAll, injectable } from "tsyringe";
 
 @injectable()
@@ -35,6 +35,7 @@ export class ProductionQuestsGen {
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @injectAll("OnLoad") protected onLoadComponents: OnLoad[],
     ) {}
 
@@ -53,10 +54,9 @@ export class ProductionQuestsGen {
         const projectDir = path.resolve(currentDir, "..", "..", "..");
         const hideoutDir = path.join(projectDir, "assets", "database", "hideout");
         const productionOutPath = path.join(hideoutDir, "production.json");
-        fs.writeFileSync(
+        this.fileSystemSync.write(
             productionOutPath,
             JSON.stringify(this.databaseServer.getTables().hideout.production, null, 2),
-            "utf-8",
         );
     }
 

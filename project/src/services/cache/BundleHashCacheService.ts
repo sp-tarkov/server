@@ -1,7 +1,7 @@
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -10,19 +10,16 @@ export class BundleHashCacheService {
     protected readonly bundleHashCachePath = "./user/cache/bundleHashCache.json";
 
     constructor(
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("PrimaryLogger") protected logger: ILogger,
     ) {
-        if (!this.vfs.exists(this.bundleHashCachePath)) {
-            this.vfs.writeFile(this.bundleHashCachePath, "{}");
+        if (!this.fileSystemSync.exists(this.bundleHashCachePath)) {
+            this.fileSystemSync.writeJson(this.bundleHashCachePath, {});
         }
 
-        this.bundleHashes = this.jsonUtil.deserialize(
-            this.vfs.readFile(this.bundleHashCachePath),
-            this.bundleHashCachePath,
-        );
+        this.bundleHashes = this.fileSystemSync.readJson(this.bundleHashCachePath);
     }
 
     public getStoredValue(key: string): number {
@@ -32,7 +29,7 @@ export class BundleHashCacheService {
     public storeValue(key: string, value: number): void {
         this.bundleHashes[key] = value;
 
-        this.vfs.writeFile(this.bundleHashCachePath, this.jsonUtil.serialize(this.bundleHashes));
+        this.fileSystemSync.writeJson(this.bundleHashCachePath, this.bundleHashes);
 
         this.logger.debug(`Bundle ${key} hash stored in ${this.bundleHashCachePath}`);
     }

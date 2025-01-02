@@ -4,7 +4,7 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IBackupConfig } from "@spt/models/spt/config/IBackupConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
-import fs from "fs-extra";
+import { FileSystem } from "@spt/utils/FileSystem";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -17,6 +17,7 @@ export class BackupService {
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("ConfigServer") protected configServer: ConfigServer,
+        @inject("FileSystem") protected fileSystem: FileSystem,
     ) {
         this.backupConfig = this.configServer.getConfig(ConfigTypes.BACKUP);
         this.activeServerMods = this.getActiveServerMods();
@@ -41,7 +42,7 @@ export class BackupService {
         // Fetch all profiles in the profile directory.
         let currentProfiles: string[] = [];
         try {
-            currentProfiles = await this.fetchProfileFiles();
+            currentProfiles = await this.fileSystem.getFiles(this.profileDir, false, ["json"]);
         } catch (error) {
             this.logger.debug("Skipping profile backup: Unable to read profiles directory");
             return;
@@ -53,15 +54,15 @@ export class BackupService {
         }
 
         try {
-            await fs.ensureDir(targetDir);
+            await this.fileSystem.ensureDir(targetDir);
 
             // Track write promises.
             const writes: Promise<void>[] = currentProfiles.map((profile) =>
-                fs.copy(path.join(this.profileDir, profile), path.join(targetDir, profile)),
+                this.fileSystem.copy(path.normalize(profile), path.join(targetDir, path.basename(profile))),
             );
 
             // Write a copy of active mods.
-            writes.push(fs.writeJson(path.join(targetDir, "activeMods.json"), this.activeServerMods));
+            writes.push(this.fileSystem.writeJson(path.join(targetDir, "activeMods.json"), this.activeServerMods));
 
             await Promise.all(writes); // Wait for all writes to complete.
         } catch (error) {
@@ -72,25 +73,6 @@ export class BackupService {
         this.logger.debug(`Profile backup created: ${targetDir}`);
 
         this.cleanBackups();
-    }
-
-    /**
-     * Fetches the names of all JSON files in the profile directory.
-     *
-     * This method normalizes the profile directory path and reads all files within it. It then filters the files to
-     * include only those with a `.json` extension and returns their names.
-     *
-     * @returns A promise that resolves to an array of JSON file names.
-     */
-    protected async fetchProfileFiles(): Promise<string[]> {
-        const normalizedProfileDir = path.normalize(this.profileDir);
-
-        try {
-            const allFiles = await fs.readdir(normalizedProfileDir);
-            return allFiles.filter((file) => path.extname(file).toLowerCase() === ".json");
-        } catch (error) {
-            return Promise.reject(error);
-        }
     }
 
     /**
@@ -165,8 +147,8 @@ export class BackupService {
      * @returns A promise that resolves to an array of sorted backup file paths.
      */
     private async getBackupPaths(dir: string): Promise<string[]> {
-        const backups = await fs.readdir(dir);
-        return backups.filter((backup) => path.join(dir, backup)).sort(this.compareBackupDates.bind(this));
+        const backups = await this.fileSystem.getFiles(dir, false, ["json"]);
+        return backups.sort(this.compareBackupDates.bind(this));
     }
 
     /**
@@ -176,12 +158,12 @@ export class BackupService {
      * @param b - The name of the second backup folder.
      * @returns The difference in time between the two dates in milliseconds, or `null` if either date is invalid.
      */
-    private compareBackupDates(a: string, b: string): number | null {
+    private compareBackupDates(a: string, b: string): number {
         const dateA = this.extractDateFromFolderName(a);
         const dateB = this.extractDateFromFolderName(b);
 
         if (!dateA || !dateB) {
-            return null; // Skip comparison if either date is invalid.
+            return 0; // Skip comparison if either date is invalid.
         }
 
         return dateA.getTime() - dateB.getTime();
@@ -213,7 +195,7 @@ export class BackupService {
      */
     private async removeExcessBackups(backups: string[]): Promise<void> {
         const removePromises = backups.map((backupPath) =>
-            fs.remove(path.join(this.backupConfig.directory, backupPath)),
+            this.fileSystem.remove(path.join(this.backupConfig.directory, backupPath)),
         );
         await Promise.all(removePromises);
 

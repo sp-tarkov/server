@@ -5,12 +5,12 @@
  * - Run this script using npm: `npm run gen:customisationstorage`
  *
  */
-import { writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { OnLoad } from "@spt/di/OnLoad";
 import { IQuestReward } from "@spt/models/eft/common/tables/IQuest";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { FileSystem } from "@spt/utils/FileSystem";
 import { inject, injectAll, injectable } from "tsyringe";
 
 @injectable()
@@ -21,6 +21,7 @@ export class HideoutCustomisationGen {
     constructor(
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
         @inject("PrimaryLogger") protected logger: ILogger,
+        @inject("FileSystem") protected fileSystem: FileSystem,
         @injectAll("OnLoad") protected onLoadComponents: OnLoad[],
     ) {}
 
@@ -40,10 +41,9 @@ export class HideoutCustomisationGen {
         const projectDir = resolve(currentDir, "..", "..", "..");
         const templatesDir = join(projectDir, "assets", "database", "templates");
         const customisationStorageOutPath = join(templatesDir, "customisationStorage.json");
-        writeFileSync(
+        await this.fileSystem.write(
             customisationStorageOutPath,
             JSON.stringify(this.databaseServer.getTables().templates?.customisationStorage, null, 2),
-            "utf-8",
         );
     }
 

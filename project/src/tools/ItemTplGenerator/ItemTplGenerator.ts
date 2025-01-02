@@ -23,8 +23,7 @@
  * - Finalized enum names are created as a combination of the parent name, prefix, item name, and suffix
  */
 
-import * as fs from "node:fs";
-import * as path from "node:path";
+import path from "node:path";
 import { OnLoad } from "@spt/di/OnLoad";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
@@ -35,6 +34,7 @@ import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocaleService } from "@spt/services/LocaleService";
 import * as itemTplOverrides from "@spt/tools/ItemTplGenerator/itemOverrides";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { inject, injectAll, injectable } from "tsyringe";
 
 @injectable()
@@ -49,6 +49,7 @@ export class ItemTplGenerator {
         @inject("LocaleService") protected localeService: LocaleService,
         @inject("PrimaryLogger") protected logger: ILogger,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @injectAll("OnLoad") protected onLoadComponents: OnLoad[],
     ) {}
 
@@ -494,6 +495,6 @@ export class ItemTplGenerator {
             enumFileData += "}\n";
         }
 
-        fs.writeFileSync(outputPath, enumFileData, "utf-8");
+        this.fileSystemSync.write(outputPath, enumFileData);
     }
 }

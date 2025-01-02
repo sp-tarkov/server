@@ -1,13 +1,16 @@
 import crypto from "node:crypto";
-import fs from "node:fs";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import crc32 from "buffer-crc32";
 import { mongoid } from "mongoid-js";
 import { inject, injectable } from "tsyringe";
+import { FileSystemSync } from "./FileSystemSync";
 
 @injectable()
 export class HashUtil {
-    constructor(@inject("TimeUtil") protected timeUtil: TimeUtil) {}
+    constructor(
+        @inject("TimeUtil") protected timeUtil: TimeUtil,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
+    ) {}
 
     /**
      * Create a 24 character id using the sha256 algorithm + current timestamp
@@ -35,7 +38,7 @@ export class HashUtil {
     }
 
     public generateCRC32ForFile(filePath: fs.PathLike): number {
-        return crc32.unsigned(fs.readFileSync(filePath));
+        return crc32.unsigned(this.fileSystemSync.read(filePath));
     }
 
     /**

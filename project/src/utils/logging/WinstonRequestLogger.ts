@@ -1,12 +1,16 @@
 import path from "node:path";
-import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import { FileSystem } from "@spt/utils/FileSystem";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { AbstractWinstonLogger } from "@spt/utils/logging/AbstractWinstonLogger";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class WinstonRequestLogger extends AbstractWinstonLogger {
-    constructor(@inject("AsyncQueue") protected asyncQueue: IAsyncQueue) {
-        super(asyncQueue);
+    constructor(
+        @inject("FileSystem") fileSystem: FileSystem,
+        @inject("FileSystemSync") fileSystemSync: FileSystemSync,
+    ) {
+        super(fileSystem, fileSystemSync);
     }
 
     protected isLogExceptions(): boolean {

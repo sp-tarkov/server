@@ -1,8 +1,7 @@
-import path from "node:path";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import { BundleHashCacheService } from "@spt/services/cache/BundleHashCacheService";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { VFS } from "@spt/utils/VFS";
 import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
@@ -26,7 +25,7 @@ export class BundleLoader {
 
     constructor(
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("BundleHashCacheService") protected bundleHashCacheService: BundleHashCacheService,
         @inject("PrimaryCloner") protected cloner: ICloner,
@@ -50,9 +49,8 @@ export class BundleLoader {
     }
 
     public addBundles(modpath: string): void {
-        const bundleManifestArr = this.jsonUtil.deserialize<IBundleManifest>(
-            this.vfs.readFile(`${modpath}bundles.json`),
-        ).manifest;
+        const bundles = this.fileSystemSync.readJson(`${modpath}bundles.json`) as IBundleManifest;
+        const bundleManifestArr = bundles?.manifest;
 
         for (const bundleManifest of bundleManifestArr) {
             const relativeModPath = modpath.slice(0, -1).replace(/\\/g, "/");

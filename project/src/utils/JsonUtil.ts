@@ -1,6 +1,6 @@
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { VFS } from "@spt/utils/VFS";
 import fixJson from "json-fixer";
 import { parse, stringify } from "json5";
 import { jsonc } from "jsonc";
@@ -14,7 +14,7 @@ export class JsonUtil {
     protected jsonCachePath = "./user/cache/jsonCache.json";
 
     constructor(
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("PrimaryLogger") protected logger: ILogger,
     ) {}
@@ -160,7 +160,7 @@ export class JsonUtil {
                 } else {
                     // data valid, save hash and call function again
                     this.fileHashes[filePath] = generatedHash;
-                    this.vfs.writeFile(this.jsonCachePath, this.serialize(this.fileHashes, true));
+                    this.fileSystemSync.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
                     savedHash = generatedHash;
                 }
                 return data as T;
@@ -186,9 +186,9 @@ export class JsonUtil {
      */
     protected ensureJsonCacheExists(jsonCachePath: string): void {
         if (!this.jsonCacheExists) {
-            if (!this.vfs.exists(jsonCachePath)) {
+            if (!this.fileSystemSync.exists(jsonCachePath)) {
                 // Create empty object at path
-                this.vfs.writeFile(jsonCachePath, "{}");
+                this.fileSystemSync.writeJson(jsonCachePath, {});
             }
             this.jsonCacheExists = true;
         }
@@ -201,7 +201,7 @@ export class JsonUtil {
     protected hydrateJsonCache(jsonCachePath: string): void {
         // Get all file hashes
         if (!this.fileHashes) {
-            this.fileHashes = this.deserialize(this.vfs.readFile(`${jsonCachePath}`));
+            this.fileHashes = this.deserialize(this.fileSystemSync.read(`${jsonCachePath}`));
         }
     }
 

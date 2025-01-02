@@ -5,9 +5,9 @@ import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { VFS } from "@spt/utils/VFS";
 import { inject, injectAll, injectable } from "tsyringe";
 
 @injectable()
@@ -19,7 +19,7 @@ export class SaveServer {
     protected saveMd5 = {};
 
     constructor(
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @injectAll("SaveLoadRouter") protected saveLoadRouters: SaveLoadRouter[],
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("HashUtil") protected hashUtil: HashUtil,
@@ -49,20 +49,16 @@ export class SaveServer {
      * Load all profiles in /user/profiles folder into memory (this.profiles)
      */
     public load(): void {
-        // get files to load
-        if (!this.vfs.exists(this.profileFilepath)) {
-            this.vfs.createDir(this.profileFilepath);
-        }
+        this.fileSystemSync.ensureDir(this.profileFilepath);
 
-        const files = this.vfs.getFiles(this.profileFilepath).filter((item) => {
-            return this.vfs.getFileExtension(item) === "json";
-        });
+        // get files to load
+        const files = this.fileSystemSync.getFiles(this.profileFilepath, false, ["json"]);
 
         // load profiles
         const start = performance.now();
         let loadTimeCount = 0;
         for (const file of files) {
-            this.loadProfile(this.vfs.stripExtension(file));
+            this.loadProfile(FileSystemSync.getFileName(file));
             loadTimeCount += performance.now() - start;
         }
 
@@ -160,9 +156,9 @@ export class SaveServer {
     public loadProfile(sessionID: string): void {
         const filename = `${sessionID}.json`;
         const filePath = `${this.profileFilepath}${filename}`;
-        if (this.vfs.exists(filePath)) {
+        if (this.fileSystemSync.exists(filePath)) {
             // File found, store in profiles[]
-            this.profiles[sessionID] = this.jsonUtil.deserialize(this.vfs.readFile(filePath), filename);
+            this.profiles[sessionID] = this.fileSystemSync.readJson(filePath);
         }
 
         // Run callbacks
@@ -200,7 +196,7 @@ export class SaveServer {
         if (typeof this.saveMd5[sessionID] !== "string" || this.saveMd5[sessionID] !== fmd5) {
             this.saveMd5[sessionID] = String(fmd5);
             // save profile to disk
-            this.vfs.writeFile(filePath, jsonProfile);
+            this.fileSystemSync.write(filePath, jsonProfile);
         }
 
         return Number(performance.now() - start);
@@ -216,8 +212,8 @@ export class SaveServer {
 
         delete this.profiles[sessionID];
 
-        this.vfs.removeFile(file);
+        this.fileSystemSync.remove(file);
 
-        return !this.vfs.exists(file);
+        return !this.fileSystemSync.exists(file);
     }
 }

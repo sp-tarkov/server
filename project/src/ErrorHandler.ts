@@ -1,14 +1,17 @@
 import readline from "node:readline";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { AsyncQueue } from "@spt/utils/AsyncQueue";
 import { WinstonMainLogger } from "@spt/utils/logging/WinstonMainLogger";
+import { FileSystem } from "./utils/FileSystem";
+import { FileSystemSync } from "./utils/FileSystemSync";
 
 export class ErrorHandler {
     private logger: ILogger;
     private readLine: readline.Interface;
 
     constructor() {
-        this.logger = new WinstonMainLogger(new AsyncQueue());
+        const fileSystem = new FileSystem();
+        const fileSystemSync = new FileSystemSync();
+        this.logger = new WinstonMainLogger(fileSystem, fileSystemSync);
         this.readLine = readline.createInterface({ input: process.stdin, output: process.stdout });
     }
 

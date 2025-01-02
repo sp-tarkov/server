@@ -1,7 +1,7 @@
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -10,16 +10,16 @@ export class ModHashCacheService {
     protected readonly modCachePath = "./user/cache/modCache.json";
 
     constructor(
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("PrimaryLogger") protected logger: ILogger,
     ) {
-        if (!this.vfs.exists(this.modCachePath)) {
-            this.vfs.writeFile(this.modCachePath, "{}");
+        if (!this.fileSystemSync.exists(this.modCachePath)) {
+            this.fileSystemSync.writeJson(this.modCachePath, {});
         }
 
-        this.modHashes = this.jsonUtil.deserialize(this.vfs.readFile(this.modCachePath), this.modCachePath);
+        this.modHashes = this.fileSystemSync.readJson(this.modCachePath);
     }
 
     public getStoredValue(key: string): string {
@@ -29,7 +29,7 @@ export class ModHashCacheService {
     public storeValue(key: string, value: string): void {
         this.modHashes[key] = value;
 
-        this.vfs.writeFile(this.modCachePath, this.jsonUtil.serialize(this.modHashes));
+        this.fileSystemSync.writeJson(this.modCachePath, this.modHashes);
 
         this.logger.debug(`Mod ${key} hash stored in ${this.modCachePath}`);
     }

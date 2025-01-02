@@ -8,7 +8,6 @@ import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
-import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
 
 /** Store a mapping between weapons, their slots and the items that fit those slots */
@@ -22,7 +21,6 @@ export class BotEquipmentModPoolService {
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
-        @inject("VFS") protected vfs: VFS,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("LocalisationService") protected localisationService: LocalisationService,

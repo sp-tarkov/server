@@ -9,10 +9,10 @@ import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { EncodingUtil } from "@spt/utils/EncodingUtil";
+import { FileSystem } from "@spt/utils/FileSystem";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { ImporterUtil } from "@spt/utils/ImporterUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
-import { VFS } from "@spt/utils/VFS";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -24,7 +24,7 @@ export class DatabaseImporter implements OnLoad {
 
     constructor(
         @inject("PrimaryLogger") protected logger: ILogger,
-        @inject("VFS") protected vfs: VFS,
+        @inject("FileSystem") protected fileSystem: FileSystem,
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("DatabaseServer") protected databaseServer: DatabaseServer,
@@ -42,7 +42,7 @@ export class DatabaseImporter implements OnLoad {
      * @returns path to data
      */
     public getSptDataPath(): string {
-        return ProgramStatics.COMPILED ? "SPT_Data/Server/" : "./assets/";
+        return ProgramStatics.COMPILED ? "SPT_Data/Server/" : "assets/";
     }
 
     public async onLoad(): Promise<void> {
@@ -53,9 +53,9 @@ export class DatabaseImporter implements OnLoad {
                 // Reading the dynamic SHA1 file
                 const file = "checks.dat";
                 const fileWithPath = `${this.filepath}${file}`;
-                if (this.vfs.exists(fileWithPath)) {
+                if (await this.fileSystem.exists(fileWithPath)) {
                     this.hashedFile = this.jsonUtil.deserialize(
-                        this.encodingUtil.fromBase64(this.vfs.readFile(fileWithPath)),
+                        this.encodingUtil.fromBase64(await this.fileSystem.read(fileWithPath)),
                         file,
                     );
                 } else {
@@ -71,7 +71,7 @@ export class DatabaseImporter implements OnLoad {
         await this.hydrateDatabase(this.filepath);
 
         const imageFilePath = `${this.filepath}images/`;
-        const directories = await this.vfs.getDirsAsync(imageFilePath);
+        const directories = await this.fileSystem.getDirectories(imageFilePath, true);
         await this.loadImagesAsync(imageFilePath, directories, [
             "/files/achievement/",
             "/files/CONTENT/banners/",
@@ -145,10 +145,10 @@ export class DatabaseImporter implements OnLoad {
     public async loadImagesAsync(filepath: string, directories: string[], routes: string[]): Promise<void> {
         for (const directoryIndex in directories) {
             // Get all files in directory
-            const filesInDirectory = await this.vfs.getFilesAsync(`${filepath}${directories[directoryIndex]}`);
+            const filesInDirectory = await this.fileSystem.getFiles(`${filepath}${directories[directoryIndex]}`, true);
             for (const file of filesInDirectory) {
                 // Register each file in image router
-                const filename = this.vfs.stripExtension(file);
+                const filename = FileSystem.stripExtension(file);
                 const routeKey = `${routes[directoryIndex]}${filename}`;
                 let imagePath = `${filepath}${directories[directoryIndex]}/${file}`;
 
