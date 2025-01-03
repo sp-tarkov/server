@@ -125,6 +125,30 @@
                 "repeatable": false
             },
             {
+                "reward": ["5df8a72c86f77412640e2e83"],
+                "requiredItems": ["5df8a6a186f77412640e2e80"],
+                "craftTimeSeconds": 3960,
+                "repeatable": false
+            },
+            {
+                "reward": ["5df8a77486f77412672a1e3f"],
+                "requiredItems": ["5df8a72c86f77412640e2e83"],
+                "craftTimeSeconds": 3960,
+                "repeatable": false
+            },
+            {
+                "reward": ["5df8a6a186f77412640e2e80"],
+                "requiredItems": ["5df8a77486f77412672a1e3f"],
+                "craftTimeSeconds": 3960,
+                "repeatable": false
+            },
+            {
+                "reward": ["676008db84e242067d0dc4c9"],
+                "requiredItems": ["5c093ca986f7740a1867ab12"],
+                "craftTimeSeconds": 3960,
+                "repeatable": false
+            },
+            {
                 "reward": ["5d1b376e86f774252519444e"],
                 "requiredItems": ["6582dbf0b8d7830efc45016f"],
                 "craftTimeSeconds": 3960,
