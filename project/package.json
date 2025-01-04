@@ -1,6 +1,6 @@
 {
     "name": "spt-server",
-    "version": "3.10.4",
+    "version": "3.10.5",
     "author": "SPT Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
