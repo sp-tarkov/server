@@ -1,4 +1,5 @@
 import { IAdditionalHostilitySettings, IBossLocationSpawn, IWave } from "@spt/models/eft/common/ILocationBase";
+import { Season } from "@spt/models/enums/Season";
 import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
 import { IBaseConfig } from "@spt/models/spt/config/IBaseConfig";
 
@@ -30,17 +31,30 @@ export interface ISeasonalEvent {
     startMonth: number;
     endDay: number;
     endMonth: number;
-    settings?: Record<string, ISeasonalEventSettings | IZombieSettings>;
+    settings?: ISeasonalEventSettings;
 }
 
 export interface ISeasonalEventSettings {
-    enabled: boolean;
-}
-
-export interface IZombieSettings extends ISeasonalEventSettings {
-    mapInfectionAmount: Record<string, number>;
+    enableSummoning: boolean;
+    enableHalloweenHideout: boolean;
+    enableChristmasHideout: boolean;
+    enableSanta: boolean,
+    adjustBotAppearances: boolean;
+    addEventGearToBots: boolean;
+    addEventLootToBots: boolean;
+    removeEntryRequirement: string[];
+    replaceBotHostility: boolean;
+    forceSeason: Season;
+    zombieSettings?: IZombieSettings;
     disableBosses: string[];
     disableWaves: string[];
+}
+
+export interface IZombieSettings {
+    enabled?: boolean;
+    mapInfectionAmount?: Record<string, number>;
+    disableBosses?: string[];
+    disableWaves?: string[];
 }
 
 export interface IGifterSetting {

@@ -11,7 +11,7 @@ import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
 import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
 import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
-import { ISeasonalEvent, ISeasonalEventConfig, IZombieSettings } from "@spt/models/spt/config/ISeasonalEventConfig";
+import { ISeasonalEvent, ISeasonalEventConfig, ISeasonalEventSettings, IZombieSettings } from "@spt/models/spt/config/ISeasonalEventConfig";
 import { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
