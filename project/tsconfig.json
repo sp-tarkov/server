@@ -2,6 +2,7 @@
     "compilerOptions": {
         "strict": true,
         "moduleDetection": "force",
+        "target": "es2022",
         "module": "Preserve",
         "resolveJsonModule": true,
         "allowJs": true,
