@@ -27,7 +27,7 @@
         "build:bleeding": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleeding",
         "build:bleedingmods": "cross-env PKG_CACHE_PATH=\"./.pkg-cache\" gulp build:bleedingmods",
         "run:build": "gulp run:build",
-        "run:debug": "tsx ./src/ide/TestEntry.ts",
+        "run:debug": "tsx ./src/entry/run.ts",
         "run:profiler": "gulp run:profiler",
         "gen:types": "tsc -p tsconfig.types.json",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",

@@ -60,8 +60,6 @@ export class SptWebSocketConnectionHandler implements IWebSocketConnectionHandle
             for (const wsmh of this.sptWebSocketMessageHandlers) {
                 await wsmh.onSptMessage(sessionID, this.webSockets.get(sessionID), msg);
             }
-
-            this.logger.info(`WebSocketHandler "${wsmh.getSocketId()}" connected`);
         });
 
         this.websocketPingHandler = setInterval(async () => {
