@@ -1,6 +1,6 @@
 import { RouteAction } from "@spt/di/Router";
 import { StaticRouterMod } from "@spt/services/mod/staticRouter/StaticRouterMod";
-import { DependencyContainer, injectable } from "tsyringe";
+import { type DependencyContainer, injectable } from "tsyringe";
 
 @injectable()
 export class StaticRouterModService {

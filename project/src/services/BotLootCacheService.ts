@@ -4,11 +4,11 @@ import { IBotType } from "@spt/models/eft/common/tables/IBotType";
 import { IProps, ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { IBotLootCache, LootCacheType } from "@spt/models/spt/bots/IBotLootCache";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RagfairPriceService } from "@spt/services/RagfairPriceService";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

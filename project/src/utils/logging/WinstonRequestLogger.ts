@@ -1,5 +1,5 @@
 import path from "node:path";
-import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
 import { AbstractWinstonLogger } from "@spt/utils/logging/AbstractWinstonLogger";
 import { inject, injectable } from "tsyringe";
 

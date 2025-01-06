@@ -16,7 +16,7 @@ import {
     IEquipmentFilterDetails,
     IWeightingAdjustmentDetails,
 } from "@spt/models/spt/config/IBotConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { inject, injectable } from "tsyringe";
 

@@ -9,7 +9,7 @@ import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { IRewardDetails, ISealedAirdropContainerSettings } from "@spt/models/spt/config/IInventoryConfig";
 import { ILootRequest } from "@spt/models/spt/services/ILootRequest";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";

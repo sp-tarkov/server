@@ -1,5 +1,5 @@
 import { OnLoadMod } from "@spt/services/mod/onLoad/OnLoadMod";
-import { DependencyContainer, injectable } from "tsyringe";
+import { type DependencyContainer, injectable } from "tsyringe";
 
 @injectable()
 export class OnLoadModService {

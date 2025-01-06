@@ -2,7 +2,7 @@ import { AbstractDialogueChatBot } from "@spt/helpers/Dialogue/AbstractDialogueC
 import { IChatCommand } from "@spt/helpers/Dialogue/Commando/IChatCommand";
 import { IUserDialogInfo } from "@spt/models/eft/profile/IUserDialogInfo";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { MailSendService } from "@spt/services/MailSendService";
 import { inject, injectAll, injectable } from "tsyringe";
 

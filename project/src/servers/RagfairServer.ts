@@ -6,7 +6,7 @@ import { ISearchRequestData } from "@spt/models/eft/ragfair/ISearchRequestData";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Traders } from "@spt/models/enums/Traders";
 import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { RagfairCategoriesService } from "@spt/services/RagfairCategoriesService";

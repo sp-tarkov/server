@@ -14,7 +14,7 @@ import { ItemAddedResult } from "@spt/models/enums/ItemAddedResult";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { Traders } from "@spt/models/enums/Traders";
 import { IKarmaLevel, IPlayerScavConfig } from "@spt/models/spt/config/IPlayerScavConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { BotLootCacheService } from "@spt/services/BotLootCacheService";
@@ -23,7 +23,7 @@ import { FenceService } from "@spt/services/FenceService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

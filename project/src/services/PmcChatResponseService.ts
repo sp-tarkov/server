@@ -8,7 +8,7 @@ import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { IGiftsConfig } from "@spt/models/spt/config/IGiftsConfig";
 import { IPmcChatResponse } from "@spt/models/spt/config/IPmChatResponse";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { GiftService } from "@spt/services/GiftService";
 import { LocaleService } from "@spt/services/LocaleService";

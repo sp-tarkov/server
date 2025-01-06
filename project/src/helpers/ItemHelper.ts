@@ -8,7 +8,7 @@ import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { EquipmentSlots } from "@spt/models/enums/EquipmentSlots";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { Money } from "@spt/models/enums/Money";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
@@ -20,7 +20,7 @@ import { JsonUtil } from "@spt/utils/JsonUtil";
 import { MathUtil } from "@spt/utils/MathUtil";
 import { ObjectId } from "@spt/utils/ObjectId";
 import { ProbabilityObject, ProbabilityObjectArray, RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

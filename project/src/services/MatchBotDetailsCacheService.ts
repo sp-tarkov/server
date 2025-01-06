@@ -1,5 +1,5 @@
 import { IBotBase } from "@spt/models/eft/common/tables/IBotBase";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { inject, injectable } from "tsyringe";
 

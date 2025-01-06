@@ -12,7 +12,7 @@ import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { Traders } from "@spt/models/enums/Traders";
 import { IProfileChangeEvent, ISendMessageDetails } from "@spt/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";

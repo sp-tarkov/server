@@ -31,7 +31,7 @@ import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { Weapons } from "@spt/models/enums/Weapons";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocaleService } from "@spt/services/LocaleService";
 import * as itemTplOverrides from "@spt/tools/ItemTplGenerator/itemOverrides";

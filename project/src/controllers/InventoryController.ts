@@ -36,7 +36,7 @@ import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { Traders } from "@spt/models/enums/Traders";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { FenceService } from "@spt/services/FenceService";
@@ -47,7 +47,7 @@ import { RagfairOfferService } from "@spt/services/RagfairOfferService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { HttpResponseUtil } from "@spt/utils/HttpResponseUtil";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

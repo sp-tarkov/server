@@ -11,12 +11,12 @@ import { IStartLocalRaidResponseData } from "@spt/models/eft/match/IStartLocalRa
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IMatchConfig } from "@spt/models/spt/config/IMatchConfig";
 import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { LocationLifecycleService } from "@spt/services/LocationLifecycleService";
 import { MatchLocationService } from "@spt/services/MatchLocationService";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -11,7 +11,7 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { GameEditions } from "@spt/models/enums/GameEditions";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -19,7 +19,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import { Watermark } from "@spt/utils/Watermark";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

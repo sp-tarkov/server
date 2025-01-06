@@ -8,11 +8,11 @@ import {
     NewItemDetails,
     NewItemFromCloneDetails,
 } from "@spt/models/spt/mod/NewItemDetails";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemBaseClassService } from "@spt/services/ItemBaseClassService";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

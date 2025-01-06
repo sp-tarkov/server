@@ -5,13 +5,13 @@ import { IPresetBuildActionRequestData } from "@spt/models/eft/presetBuild/IPres
 import { IRemoveBuildRequestData } from "@spt/models/eft/presetBuild/IRemoveBuildRequestData";
 import { IEquipmentBuild, IMagazineBuild, IUserBuilds, IWeaponBuild } from "@spt/models/eft/profile/ISptProfile";
 import { EquipmentBuildType } from "@spt/models/enums/EquipmentBuildType";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -25,7 +25,7 @@ import { Traders } from "@spt/models/enums/Traders";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
 import { IRagfairConfig, ITieredFlea } from "@spt/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";

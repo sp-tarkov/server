@@ -4,7 +4,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path, { resolve } from "node:path";
 import { promisify } from "node:util";
-import { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
+import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
 import { writeFileSync } from "atomically";
 import { checkSync, lockSync, unlockSync } from "proper-lockfile";
 import { inject, injectable } from "tsyringe";

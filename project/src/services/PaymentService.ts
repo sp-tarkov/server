@@ -12,7 +12,7 @@ import { IProcessSellTradeRequestData } from "@spt/models/eft/trade/IProcessSell
 import { BackendErrorCodes } from "@spt/models/enums/BackendErrorCodes";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { IInventoryConfig } from "@spt/models/spt/config/IInventoryConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocalisationService } from "@spt/services/LocalisationService";

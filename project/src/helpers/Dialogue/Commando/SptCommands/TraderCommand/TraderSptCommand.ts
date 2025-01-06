@@ -6,7 +6,7 @@ import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest"
 import { IUserDialogInfo } from "@spt/models/eft/profile/IUserDialogInfo";
 import { Money } from "@spt/models/enums/Money";
 import { IProfileChangeEvent, ProfileChangeEventType } from "@spt/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { LocaleService } from "@spt/services/LocaleService";
 import { MailSendService } from "@spt/services/MailSendService";

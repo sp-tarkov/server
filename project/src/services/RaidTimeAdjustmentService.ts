@@ -11,7 +11,7 @@ import {
     IScavRaidTimeLocationSettings,
 } from "@spt/models/spt/config/ILocationConfig";
 import { IRaidChanges } from "@spt/models/spt/location/IRaidChanges";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { RandomUtil } from "@spt/utils/RandomUtil";

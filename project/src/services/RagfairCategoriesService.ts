@@ -2,7 +2,7 @@ import { PaymentHelper } from "@spt/helpers/PaymentHelper";
 import { IRagfairOffer } from "@spt/models/eft/ragfair/IRagfairOffer";
 import { ISearchRequestData, OfferOwnerType } from "@spt/models/eft/ragfair/ISearchRequestData";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

@@ -8,13 +8,13 @@ import { ISendMessageRequest } from "@spt/models/eft/dialog/ISendMessageRequest"
 import { IUserDialogInfo } from "@spt/models/eft/profile/IUserDialogInfo";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocaleService } from "@spt/services/LocaleService";
 import { MailSendService } from "@spt/services/MailSendService";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { stringSimilarity } from "string-similarity-js";
 import { inject, injectable } from "tsyringe";
 

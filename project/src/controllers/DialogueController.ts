@@ -18,7 +18,7 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { NotificationEventType } from "@spt/models/enums/NotificationEventType";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { SaveServer } from "@spt/servers/SaveServer";
 import { LocalisationService } from "@spt/services/LocalisationService";

@@ -9,13 +9,13 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { IAirdropConfig, IAirdropLoot } from "@spt/models/spt/config/IAirdropConfig";
 import { IAirdropLootRequest, ILootRequest } from "@spt/models/spt/services/ILootRequest";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { ItemFilterService } from "@spt/services/ItemFilterService";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

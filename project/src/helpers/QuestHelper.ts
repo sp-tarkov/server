@@ -22,7 +22,7 @@ import { QuestStatus } from "@spt/models/enums/QuestStatus";
 import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -33,7 +33,7 @@ import { PlayerService } from "@spt/services/PlayerService";
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

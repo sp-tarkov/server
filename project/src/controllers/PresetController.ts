@@ -1,6 +1,6 @@
 import { PresetHelper } from "@spt/helpers/PresetHelper";
 import { IPreset } from "@spt/models/eft/common/IGlobals";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { inject, injectable } from "tsyringe";
 

@@ -2,7 +2,7 @@ import { IClientLogRequest } from "@spt/models/spt/logging/IClientLogRequest";
 import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
 import { LogLevel } from "@spt/models/spt/logging/LogLevel";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

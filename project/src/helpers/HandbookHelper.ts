@@ -5,7 +5,7 @@ import { Money } from "@spt/models/enums/Money";
 import { IItemConfig } from "@spt/models/spt/config/IItemConfig";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 class LookupItem<T, I> {

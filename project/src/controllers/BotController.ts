@@ -18,7 +18,7 @@ import { WildSpawnTypeNumber } from "@spt/models/enums/WildSpawnTypeNumber";
 import { IBotGenerationDetails } from "@spt/models/spt/bots/BotGenerationDetails";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { IPmcConfig } from "@spt/models/spt/config/IPmcConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { BotGenerationCacheService } from "@spt/services/BotGenerationCacheService";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -27,7 +27,7 @@ import { MatchBotDetailsCacheService } from "@spt/services/MatchBotDetailsCacheS
 import { SeasonalEventService } from "@spt/services/SeasonalEventService";
 import { ProgressWriter } from "@spt/utils/ProgressWriter";
 import { RandomUtil } from "@spt/utils/RandomUtil";
-import { ICloner } from "@spt/utils/cloners/ICloner";
+import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

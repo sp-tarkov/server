@@ -6,7 +6,7 @@ import { MessageType } from "@spt/models/enums/MessageType";
 import { Traders } from "@spt/models/enums/Traders";
 import { IGift, IGiftsConfig } from "@spt/models/spt/config/IGiftsConfig";
 import { ISendMessageDetails } from "@spt/models/spt/dialog/ISendMessageDetails";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { MailSendService } from "@spt/services/MailSendService";

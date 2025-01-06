@@ -27,7 +27,7 @@ import { IProcessBuyTradeRequestData } from "@spt/models/eft/trade/IProcessBuyTr
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { FleaOfferType } from "@spt/models/enums/FleaOfferType";
 import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { EventOutputHolder } from "@spt/routers/EventOutputHolder";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { RagfairServer } from "@spt/servers/RagfairServer";
