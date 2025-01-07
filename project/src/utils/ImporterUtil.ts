@@ -1,7 +1,6 @@
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { ProgressWriter } from "@spt/utils/ProgressWriter";
 import { VFS } from "@spt/utils/VFS";
-import { Queue } from "@spt/utils/collections/queue/Queue";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -11,141 +10,72 @@ export class ImporterUtil {
         @inject("JsonUtil") protected jsonUtil: JsonUtil,
     ) {}
 
-    /**
-     * Load files into js objects recursively (asynchronous)
-     * @param filepath Path to folder with files
-     * @returns Promise<T> return T type associated with this class
-     */
-    public async loadRecursiveAsync<T>(
-        filepath: string,
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {},
-    ): Promise<T> {
-        const result = {} as T;
-
-        // get all filepaths
-        const files = this.vfs.getFiles(filepath);
-        const directories = this.vfs.getDirs(filepath);
-
-        // add file content to result
-        for (const file of files) {
-            if (this.vfs.getFileExtension(file) === "json") {
-                const filename = this.vfs.stripExtension(file);
-                const filePathAndName = `${filepath}${file}`;
-                await this.vfs.readFileAsync(filePathAndName).then((fileData) => {
-                    onReadCallback(filePathAndName, fileData);
-                    const fileDeserialized = this.jsonUtil.deserializeWithCacheCheck(fileData, filePathAndName);
-                    onObjectDeserialized(filePathAndName, fileDeserialized);
-                    result[filename] = fileDeserialized;
-                });
-            }
-        }
-
-        // deep tree search
-        for (const dir of directories) {
-            result[dir] = this.loadRecursiveAsync(`${filepath}${dir}/`);
-        }
-
-        // set all loadRecursive to be executed asynchronously
-        const resEntries = Object.entries(result);
-        const resResolved = await Promise.all(resEntries.map((ent) => ent[1]));
-        for (let resIdx = 0; resIdx < resResolved.length; resIdx++) {
-            resEntries[resIdx][1] = resResolved[resIdx];
-        }
-
-        // return the result of all async fetch
-        return Object.fromEntries(resEntries) as T;
-    }
-
-    /**
-     * Load files into js objects recursively (synchronous)
-     * @param filepath Path to folder with files
-     * @returns
-     */
-    public loadRecursive<T>(
-        filepath: string,
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {},
-    ): T {
-        const result = {} as T;
-
-        // get all filepaths
-        const files = this.vfs.getFiles(filepath);
-        const directories = this.vfs.getDirs(filepath);
-
-        // add file content to result
-        for (const file of files) {
-            if (this.vfs.getFileExtension(file) === "json") {
-                const filename = this.vfs.stripExtension(file);
-                const filePathAndName = `${filepath}${file}`;
-                const fileData = this.vfs.readFile(filePathAndName);
-                onReadCallback(filePathAndName, fileData);
-                const fileDeserialized = this.jsonUtil.deserializeWithCacheCheck(fileData, filePathAndName);
-                onObjectDeserialized(filePathAndName, fileDeserialized);
-                result[filename] = fileDeserialized;
-            }
-        }
-
-        // deep tree search
-        for (const dir of directories) {
-            result[dir] = this.loadRecursive(`${filepath}${dir}/`);
-        }
-
-        return result;
-    }
-
     public async loadAsync<T>(
         filepath: string,
         strippablePath = "",
         onReadCallback: (fileWithPath: string, data: string) => void = () => {},
         onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {},
     ): Promise<T> {
-        const directoriesToRead = new Queue<string>();
-        const filesToProcess = new Queue<VisitNode>();
-
-        const promises = new Array<Promise<any>>();
-
         const result = {} as T;
 
-        const files = this.vfs.getFiles(filepath);
-        const directories = this.vfs.getDirs(filepath);
+        // Fetch files and directories concurrently for the root path
+        const [files, directories] = await Promise.all([
+            this.vfs.getFilesAsync(filepath),
+            this.vfs.getDirsAsync(filepath),
+        ]);
 
-        directoriesToRead.enqueueAll(directories.map((d) => `${filepath}${d}`));
-        filesToProcess.enqueueAll(files.map((f) => new VisitNode(filepath, f)));
+        // Queue to process files and directories for the root path first.
+        const filesToProcess = files.map((f) => new VisitNode(filepath, f));
+        const directoriesToRead = directories.map((d) => `${filepath}${d}`);
 
-        while (directoriesToRead.length !== 0) {
-            const directory = directoriesToRead.dequeue();
-            if (!directory) continue;
-            filesToProcess.enqueueAll(this.vfs.getFiles(directory).map((f) => new VisitNode(`${directory}/`, f)));
-            directoriesToRead.enqueueAll(this.vfs.getDirs(directory).map((d) => `${directory}/${d}`));
-        }
+        const allFiles = [...filesToProcess];
 
-        const progressWriter = new ProgressWriter(filesToProcess.length - 1);
+        // Method to traverse directories and collect all files recursively
+        const traverseDirectories = async (directory: string) => {
+            const [directoryFiles, subDirectories] = await Promise.all([
+                this.vfs.getFilesAsync(directory),
+                this.vfs.getDirsAsync(directory),
+            ]);
 
-        while (filesToProcess.length !== 0) {
-            const fileNode = filesToProcess.dequeue();
-            if (!fileNode || this.vfs.getFileExtension(fileNode.fileName) !== "json") {
-                continue;
+            // Add the files from this directory to the processing queue
+            const fileNodes = directoryFiles.map((f) => new VisitNode(directory, f));
+            allFiles.push(...fileNodes);
+
+            // Recurse into subdirectories
+            for (const subDirectory of subDirectories) {
+                await traverseDirectories(`${directory}/${subDirectory}`);
+            }
+        };
+
+        // Start recursive directory traversal
+        const traversalPromises = directoriesToRead.map((dir) => traverseDirectories(dir));
+        await Promise.all(traversalPromises); // Ensure all directories are processed
+
+        // Setup the progress writer with the total amount of files to load
+        const progressWriter = new ProgressWriter(allFiles.length);
+
+        const fileProcessingPromises = allFiles.map(async (fileNode) => {
+            if (this.vfs.getFileExtension(fileNode.fileName) !== "json") {
+                return Promise.resolve(); // Skip non-JSON files
             }
 
-            const filePathAndName = `${fileNode.filePath}${fileNode.fileName}`;
-            promises.push(
-                this.vfs
-                    .readFileAsync(filePathAndName)
-                    .then(async (fileData) => {
-                        onReadCallback(filePathAndName, fileData);
-                        return this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, filePathAndName);
-                    })
-                    .then(async (fileDeserialized) => {
-                        onObjectDeserialized(filePathAndName, fileDeserialized);
-                        const strippedFilePath = this.vfs.stripExtension(filePathAndName).replace(filepath, "");
-                        this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
-                    })
-                    .then(() => progressWriter.increment()),
-            );
-        }
+            // Ensure we're creating the correct file path
+            const filePathAndName = `${fileNode.filePath}${fileNode.filePath.endsWith("/") ? "" : "/"}${fileNode.fileName}`;
 
-        await Promise.all(promises).catch((e) => console.error(e));
+            try {
+                const fileData = await this.vfs.readFileAsync(filePathAndName);
+                onReadCallback(filePathAndName, fileData);
+                const fileDeserialized = await this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, filePathAndName);
+                onObjectDeserialized(filePathAndName, fileDeserialized);
+                const strippedFilePath = this.vfs.stripExtension(filePathAndName).replace(filepath, "");
+                this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
+            } finally {
+                return progressWriter.increment(); // Update progress after each file
+            }
+        });
+
+        // Wait for all file processing to complete
+        await Promise.all(fileProcessingPromises).catch((e) => console.error(e));
 
         return result;
     }
