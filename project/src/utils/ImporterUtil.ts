@@ -59,7 +59,7 @@ export class ImporterUtil {
                 return Promise.resolve(); // Skip non-JSON files
             }
 
-            // Ensure we're creating the correct file path
+            // Ensure we're attempting to read the correct file path
             const filePathAndName = `${fileNode.filePath}${fileNode.filePath.endsWith("/") ? "" : "/"}${fileNode.fileName}`;
 
             try {
