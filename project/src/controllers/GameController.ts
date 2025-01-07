@@ -336,7 +336,7 @@ export class GameController {
      * Handle client/server/list
      */
     public getServer(sessionId: string): IServerDetails[] {
-        return [{ ip: this.httpConfig.backendIp, port: Number.parseInt(this.httpConfig.backendPort) }];
+        return [{ ip: this.httpConfig.backendIp, port: this.httpConfig.backendPort }];
     }
 
     /**

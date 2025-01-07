@@ -1156,7 +1156,7 @@
                                 "5": 3,
                                 "10": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "pocketLoot": {
                             "weights": {
@@ -1165,7 +1165,7 @@
                                 "2": 2,
                                 "3": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "vestLoot": {
                             "weights": {
@@ -1175,7 +1175,7 @@
                                 "3": 1,
                                 "4": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "magazines": {
                             "weights": {
@@ -1184,14 +1184,14 @@
                                 "2": 4,
                                 "3": 3
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         },
                         "stims": {
                             "weights": {
                                 "0": 10,
                                 "1": 1
                             },
-                            "whitelist": []
+                            "whitelist": {}
                         }
                     },
                     "equipment": {

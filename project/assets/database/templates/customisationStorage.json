@@ -1,342 +1,194 @@
-[
-  {
-    "id": "675468bdb784110b2702fe13",
-    "source": "achievement",
-    "type": "ceiling"
-  },
-  {
-    "id": "675466bcc6e063d76309c609",
-    "source": "achievement",
-    "type": "floor"
-  },
-  {
-    "id": "5d1f623e86f7744bce0ef705",
-    "source": "unlockedInGame",
-    "type": "suite"
-  },
-  {
-    "id": "5df8e75786f7745c67099df4",
-    "source": "unlockedInGame",
-    "type": "suite"
-  },
-  {
-    "id": "5cde9e957d6c8b0474535da7",
-    "source": "default",
-    "type": "suite"
-  },
-  {
-    "id": "5cde9ec17d6c8b04723cf479",
-    "source": "default",
-    "type": "suite"
-  },
-  {
-    "id": "64ef3fa81a5f313cb144bf89",
-    "source": "unlockedInGame",
-    "type": "suite"
-  },
-  {
-    "id": "5d1f648a86f7744bcd135841",
-    "source": "unlockedInGame",
-    "type": "suite"
-  },
-  {
-    "id": "675467728b3797a0e8038bd4",
-    "source": "achievement",
-    "type": "wall"
-  },
-  {
-    "id": "675467e643b934b1a7089ad3",
-    "source": "achievement",
-    "type": "wall"
-  },
-  {
-    "id": "674731d1170146228c0d222a",
-    "source": "default",
-    "type": "dogTag"
-  },
-  {
-    "id": "674731c8bafff850080488bb",
-    "source": "default",
-    "type": "dogTag"
-  },
-  {
-    "id": "6758501933627edb710b058c",
-    "source": "default",
-    "type": "environment"
-  },
-  {
-    "id": "675850678b8204ec0001936c",
-    "source": "default",
-    "type": "environment"
-  },
-  {
-    "id": "67585083ff58ff0e7909e440",
-    "source": "default",
-    "type": "environment"
-  },
-  {
-    "id": "67584eda8b8204ec00019362",
-    "source": "default",
-    "type": "environment"
-  },
-  {
-    "id": "67519b66490b32072c06f1c9",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519adaba5968fd800a01f0",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519b33490b32072c06f1c4",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519afca34a61ba7f053e5c",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519b77a34a61ba7f053e67",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519b48ba5968fd800a01fa",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "67519b21ba5968fd800a01f5",
-    "source": "default",
-    "type": "gesture"
-  },
-  {
-    "id": "5fdb50bb2b730a787b3f78cf",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "5cde96047d6c8b20b577f016",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "62a9e7d15ea3b87d6f642a28",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "6764194e4dec6d46f106f9f6",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "6574aabee0423b9ebe0c79cf",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "5fdb7571e4ed5b5ea251e529",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "619f9e338858a474c8685cc9",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "62aca6a1310e67685a2fc2e7",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "5cc084dd14c02e000b0550a3",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "5fdb4139e4ed5b5ea251e4ed",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "619f94f5b90286142b59d45f",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "5fdb5950f5264a66150d1c6e",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "60a6aaad42fd2735e4589978",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "675ac3957908e416a20861e6",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "60a6aa8fd559ae040d0d951f",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "6574aa9a1b144de18c0fba45",
-    "source": "default",
-    "type": "head"
-  },
-  {
-    "id": "67604ab20aa8253ebe05fd08",
-    "source": "default",
-    "type": "mannequinPose"
-  },
-  {
-    "id": "67604a9a8491fd0a830f3576",
-    "source": "default",
-    "type": "mannequinPose"
-  },
-  {
-    "id": "67604aa550dfa9253901a546",
-    "source": "default",
-    "type": "mannequinPose"
-  },
-  {
-    "id": "67604a890aa8253ebe05fd06",
-    "source": "default",
-    "type": "mannequinPose"
-  },
-  {
-    "id": "67600aa8e9db590d5601665f",
-    "source": "default",
-    "type": "mannequinPose"
-  },
-  {
-    "id": "5cd945d71388ce000a659dfb",
-    "source": "default",
-    "type": "suite"
-  },
-  {
-    "id": "5cd946231388ce000d572fe3",
-    "source": "default",
-    "type": "suite"
-  },
-  {
-    "id": "6284d6948e4092597733b7a5",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc1223595572123ae7384a3",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "6284d6ab8e4092597733b7a7",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc50bddb4965a7a2f48c5af",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc614da00efd824885865c2",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "668677330ae95580780867c6",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc615110b735e7b024c76ea",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc614f40b735e7b024c76e9",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "5fc1221a95572123ae7384a2",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "6284d67f8e4092597733b7a4",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "6284d6a28e4092597733b7a6",
-    "source": "default",
-    "type": "voice"
-  },
-  {
-    "id": "6751af383e9bd9caef89db33",
-    "source": "unlockedInGame",
-    "type": "wall"
-  },
-  {
-    "id": "6757f8138582434245011b0b",
-    "source": "unlockedInGame",
-    "type": "shootingRangeMark"
-  },
-  {
-    "id": "6757f843ef44ccd9cae9b4cd",
-    "source": "unlockedInGame",
-    "type": "shootingRangeMark"
-  },
-  {
-    "id": "6757f86db8c6e4b9a80b3fd2",
-    "source": "unlockedInGame",
-    "type": "shootingRangeMark"
-  },
-  {
-    "id": "6757f88b8455992ca790d75f",
-    "source": "unlockedInGame",
-    "type": "shootingRangeMark"
-  },
-  {
-    "id": "6757f8a88e1a324c7432def2",
-    "source": "unlockedInGame",
-    "type": "shootingRangeMark"
-  },
-  {
-    "id": "675845a78fc07a5b49df8378",
-    "source": "unlockedInGame",
-    "type": "wall"
-  },
-  {
-    "id": "675846870ef524572ad413b5",
-    "source": "unlockedInGame",
-    "type": "floor"
-  },
-  {
-    "id": "67584709106d54460af75877",
-    "source": "unlockedInGame",
-    "type": "floor"
-  },
-  {
-    "id": "6758521199c7b5040d87468d",
-    "source": "unlockedInGame",
-    "type": "ceiling"
-  },
-  {
-    "id": "67585260c0250fb99b3b9113",
-    "source": "unlockedInGame",
-    "type": "ceiling"
-  }
+[{
+        "id": "674731d1170146228c0d222a",
+        "source": "default",
+        "type": "dogTag"
+    }, {
+        "id": "674731c8bafff850080488bb",
+        "source": "default",
+        "type": "dogTag"
+    }, {
+        "id": "67584eda8b8204ec00019362",
+        "source": "default",
+        "type": "environment"
+    }, {
+        "id": "675850678b8204ec0001936c",
+        "source": "default",
+        "type": "environment"
+    }, {
+        "id": "6758501933627edb710b058c",
+        "source": "default",
+        "type": "environment"
+    }, {
+        "id": "67585083ff58ff0e7909e440",
+        "source": "default",
+        "type": "environment"
+    }, {
+        "id": "67519b66490b32072c06f1c9",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519b77a34a61ba7f053e67",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519b48ba5968fd800a01fa",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519b21ba5968fd800a01f5",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519afca34a61ba7f053e5c",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519adaba5968fd800a01f0",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "67519b33490b32072c06f1c4",
+        "source": "default",
+        "type": "gesture"
+    }, {
+        "id": "6764194e4dec6d46f106f9f6",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5fdb50bb2b730a787b3f78cf",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "619f94f5b90286142b59d45f",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5fdb4139e4ed5b5ea251e4ed",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "62aca6a1310e67685a2fc2e7",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5cc084dd14c02e000b0550a3",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5fdb7571e4ed5b5ea251e529",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "62a9e7d15ea3b87d6f642a28",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "60a6aa8fd559ae040d0d951f",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "619f9e338858a474c8685cc9",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "60a6aaad42fd2735e4589978",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5cde96047d6c8b20b577f016",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "675ac3957908e416a20861e6",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "5fdb5950f5264a66150d1c6e",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "6574aabee0423b9ebe0c79cf",
+        "source": "default",
+        "type": "head"
+    }, {
+        "id": "67604a890aa8253ebe05fd06",
+        "source": "default",
+        "type": "mannequinPose"
+    }, {
+        "id": "67604aa550dfa9253901a546",
+        "source": "default",
+        "type": "mannequinPose"
+    }, {
+        "id": "67604ab20aa8253ebe05fd08",
+        "source": "default",
+        "type": "mannequinPose"
+    }, {
+        "id": "67604a9a8491fd0a830f3576",
+        "source": "default",
+        "type": "mannequinPose"
+    }, {
+        "id": "67600aa8e9db590d5601665f",
+        "source": "default",
+        "type": "mannequinPose"
+    }, {
+        "id": "5cd946231388ce000d572fe3",
+        "source": "default",
+        "type": "suite"
+    }, {
+        "id": "5cde9e957d6c8b0474535da7",
+        "source": "default",
+        "type": "suite"
+    }, {
+        "id": "5cd945d71388ce000a659dfb",
+        "source": "default",
+        "type": "suite"
+    }, {
+        "id": "5cde9ec17d6c8b04723cf479",
+        "source": "default",
+        "type": "suite"
+    }, {
+        "id": "5fc615110b735e7b024c76ea",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "6284d6ab8e4092597733b7a7",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "6284d6948e4092597733b7a5",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "5fc1223595572123ae7384a3",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "5fc614f40b735e7b024c76e9",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "5fc1221a95572123ae7384a2",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "6284d6a28e4092597733b7a6",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "5fc50bddb4965a7a2f48c5af",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "5fc614da00efd824885865c2",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "668677330ae95580780867c6",
+        "source": "default",
+        "type": "voice"
+    }, {
+        "id": "6284d67f8e4092597733b7a4",
+        "source": "default",
+        "type": "voice"
+    }
 ]

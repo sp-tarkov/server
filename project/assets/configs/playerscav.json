@@ -43,38 +43,38 @@
                         "0": 2,
                         "1": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 },
                 "drugs": {
                     "weights": {
                         "0": 2,
                         "1": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 },
                 "stims": {
                     "weights": {
                         "0": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 },
                 "looseLoot": {
                     "weights": {
                         "0": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 },
                 "magazines": {
                     "weights": {
                         "1": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 },
                 "grenades": {
                     "weights": {
                         "0": 1
                     },
-                    "whitelist": []
+                    "whitelist": {}
                 }
             },
             "labsAccessCardChancePercent": 0,
