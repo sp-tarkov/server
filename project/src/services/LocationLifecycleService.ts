@@ -19,6 +19,7 @@ import {
 } from "@spt/models/eft/match/IEndLocalRaidRequestData";
 import { IStartLocalRaidRequestData } from "@spt/models/eft/match/IStartLocalRaidRequestData";
 import { IStartLocalRaidResponseData } from "@spt/models/eft/match/IStartLocalRaidResponseData";
+import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ExitStatus } from "@spt/models/enums/ExitStatis";
 import { MessageType } from "@spt/models/enums/MessageType";
@@ -380,7 +381,7 @@ export class LocationLifecycleService {
 
         this.handlePostRaidPmc(
             sessionId,
-            pmcProfile,
+            fullProfile,
             scavProfile,
             isDead,
             isSurvived,
@@ -623,16 +624,16 @@ export class LocationLifecycleService {
     /**
      *
      * @param sessionId Player id
-     * @param pmcProfile Pmc profile
+     * @param fullProfile Full player profile
      * @param scavProfile Scav profile
      * @param isDead Player died/got left behind in raid
      * @param isSurvived Not same as opposite of `isDead`, specific status
-     * @param request
-     * @param locationName
+     * @param request Client request
+     * @param locationName name of location exited
      */
     protected handlePostRaidPmc(
         sessionId: string,
-        pmcProfile: IPmcData,
+        fullProfile: ISptProfile,
         scavProfile: IPmcData,
         isDead: boolean,
         isSurvived: boolean,
@@ -640,6 +641,7 @@ export class LocationLifecycleService {
         request: IEndLocalRaidRequestData,
         locationName: string,
     ): void {
+        const pmcProfile = fullProfile.characters.pmc;
         const postRaidProfile = request.results.profile;
         const preRaidProfileQuestDataClone = this.cloner.clone(pmcProfile.Quests);
 
@@ -656,6 +658,10 @@ export class LocationLifecycleService {
         pmcProfile.Encyclopedia = postRaidProfile.Encyclopedia;
         pmcProfile.TaskConditionCounters = postRaidProfile.TaskConditionCounters;
         pmcProfile.SurvivorClass = postRaidProfile.SurvivorClass;
+
+        // MUST occur prior to profile achievements being overwritten by post-raid achievements
+        this.processAchievementCustomisationRewards(fullProfile, postRaidProfile.Achievements);
+
         pmcProfile.Achievements = postRaidProfile.Achievements;
         pmcProfile.Quests = this.processPostRaidQuests(postRaidProfile.Quests);
 
@@ -715,6 +721,44 @@ export class LocationLifecycleService {
         }
 
         this.handleInsuredItemLostEvent(sessionId, pmcProfile, request, locationName);
+    }
+
+    /**
+     * Check for and add any customisations found via the gained achievements this raid
+     * @param fullProfile Profile to add customisations to
+     * @param postRaidAchievements Achievements gained this raid
+     */
+    protected processAchievementCustomisationRewards(
+        fullProfile: ISptProfile,
+        postRaidAchievements: Record<string, number>,
+    ): void {
+        const preRaidAchievementIds = Object.keys(fullProfile.characters.pmc.Achievements);
+        const postRaidAchievementIds = Object.keys(postRaidAchievements);
+        const achievementIdsAcquiredThisRaid = postRaidAchievementIds.filter(
+            (id) => !preRaidAchievementIds.includes(id),
+        );
+
+        // Get achievement data from db
+        const achievementsDb = this.databaseService.getTemplates().achievements;
+
+        // Map the achievement ids player obtained in raid with matching achievement data from db
+        const achievements = achievementIdsAcquiredThisRaid.map((achievementId) =>
+            achievementsDb.find((achievementDb) => achievementDb.id === achievementId),
+        );
+        if (!achievements) {
+            // No achievements found
+            return;
+        }
+
+        // Get only customisation rewards from above achievements
+        const customisationRewards = achievements
+            .filter((achievement) => achievement?.rewards.some((reward) => reward.type === "CustomizationDirect"))
+            .flatMap((achievement) => achievement?.rewards);
+
+        // Insert customisations into profile
+        for (const reward of customisationRewards) {
+            this.profileHelper.addHideoutCustomisationUnlock(fullProfile, reward, "achievement");
+        }
     }
 
     /**
