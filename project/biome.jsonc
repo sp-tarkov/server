@@ -8,18 +8,14 @@
             ".editorconfig",
             ".git/*",
             ".pkg-cache/*",
-            ".vscode/*",
+            "assets/database/*",
             "build/*",
             "node_modules/*",
             "obj/*",
-            "out/*",
-            "src/services/ModCompilerService.ts",
             "tests/__cache__/*",
             "tests/__coverage__/*",
             "types/*",
-            "user/mods/*",
-            "user/profiles/*",
-            "assets/database/*"
+            "user/*"
         ]
     },
     "linter": {
@@ -34,17 +30,6 @@
     "formatter": {
         "enabled": true,
         "formatWithErrors": false,
-        "ignore": [
-            "**/.git",
-            "**/.pkg-cache",
-            "**/.vscode",
-            "**/build",
-            "**/node_modules",
-            "**/types",
-            "**/tests/__cache__",
-            "**/tests/__coverage__",
-            "**/.editorconfig"
-        ],
         "attributePosition": "auto",
         "indentStyle": "space",
         "indentWidth": 4,
@@ -72,14 +57,7 @@
     },
     "overrides": [
         {
-            "include": ["tests/*"],
-            "linter": {
-                "rules": {
-                    "suspicious": {
-                        "noExplicitAny": "off"
-                    }
-                }
-            }
+            "include": ["tests/*"]
         }
     ]
 }
