@@ -743,7 +743,7 @@ export class SeasonalEventService {
                 break;
         }
 
-        this.databaseImporter.loadImages(
+        this.databaseImporter.loadImagesAsync(
             `${this.databaseImporter.getSptDataPath()}images/`,
             ["traders"],
             ["/files/trader/avatar/"],

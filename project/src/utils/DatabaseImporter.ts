@@ -71,8 +71,8 @@ export class DatabaseImporter implements OnLoad {
         await this.hydrateDatabase(this.filepath);
 
         const imageFilePath = `${this.filepath}images/`;
-        const directories = this.vfs.getDirs(imageFilePath);
-        this.loadImages(imageFilePath, directories, [
+        const directories = await this.vfs.getDirsAsync(imageFilePath);
+        await this.loadImagesAsync(imageFilePath, directories, [
             "/files/achievement/",
             "/files/CONTENT/banners/",
             "/files/handbook/",
@@ -142,10 +142,10 @@ export class DatabaseImporter implements OnLoad {
      * Find and map files with image router inside a designated path
      * @param filepath Path to find files in
      */
-    public loadImages(filepath: string, directories: string[], routes: string[]): void {
+    public async loadImagesAsync(filepath: string, directories: string[], routes: string[]): Promise<void> {
         for (const directoryIndex in directories) {
             // Get all files in directory
-            const filesInDirectory = this.vfs.getFiles(`${filepath}${directories[directoryIndex]}`);
+            const filesInDirectory = await this.vfs.getFilesAsync(`${filepath}${directories[directoryIndex]}`);
             for (const file of filesInDirectory) {
                 // Register each file in image router
                 const filename = this.vfs.stripExtension(file);
