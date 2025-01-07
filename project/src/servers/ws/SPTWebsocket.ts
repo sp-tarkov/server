@@ -16,9 +16,9 @@ export class SPTWebSocket extends WebSocket {
 
     public closeAsync(): Promise<void> {
         return new Promise((resolve, reject) => {
-          this.on('close', () => resolve());
-          this.on('error', (err) => reject(err));
-          this.close();
+            this.on("close", () => resolve());
+            this.on("error", (err) => reject(err));
+            this.close();
         });
-      }
+    }
 }

@@ -38,7 +38,7 @@ export interface ISeasonalEventSettings {
     enableSummoning: boolean;
     enableHalloweenHideout: boolean;
     enableChristmasHideout: boolean;
-    enableSanta: boolean,
+    enableSanta: boolean;
     adjustBotAppearances: boolean;
     addEventGearToBots: boolean;
     addEventLootToBots: boolean;

@@ -34,16 +34,10 @@
                 "runtimeVersion": "22.12.0",
                 "runtimeExecutable": "tsx",
                 "request": "launch",
-                "runtimeArgs": [
-                    "watch",
-                    "--clear-screen=false"
-                ],
+                "runtimeArgs": ["watch", "--clear-screen=false"],
                 "console": "integratedTerminal",
                 "internalConsoleOptions": "neverOpen",
-                "skipFiles": [
-                    "<node_internals>/**",
-                    "${workspaceFolder}/node_modules/**",
-                ],
+                "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
             },
             {
                 "name": "Run Vitest Tests",
@@ -51,16 +45,10 @@
                 "runtimeVersion": "22.12.0",
                 "runtimeExecutable": "npm",
                 "request": "launch",
-                "runtimeArgs": [
-                    "run",
-                    "test"
-                ],
+                "runtimeArgs": ["run", "test"],
                 "console": "integratedTerminal",
                 "internalConsoleOptions": "neverOpen",
-                "skipFiles": [
-                    "<node_internals>/**",
-                    "${workspaceFolder}/node_modules/**",
-                ],
+                "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
             }
         ]
     }

@@ -98,13 +98,13 @@
                     "5a43957686f7742a2c2f11b0": 150
                 }
             },
-			"bosskilla": {
+            "bosskilla": {
                 "ArmorVest": {
                     "674d91ce6e862d5a95059ed6": 200
                 },
-				"Headwear": {
-					"6759af0f9c8a538dd70bfae6": 200
-				}
+                "Headwear": {
+                    "6759af0f9c8a538dd70bfae6": 200
+                }
             },
             "bossknight": {
                 "FaceCover": {
@@ -242,7 +242,7 @@
             "bear": {
                 "FaceCover": {
                     "5c1a1e3f2e221602b66cc4c2": 30,
-					"675ac888803644528007b3f6": 30
+                    "675ac888803644528007b3f6": 30
                 },
                 "Headwear": {
                     "5a43957686f7742a2c2f11b0": 80,
@@ -252,7 +252,7 @@
             "usec": {
                 "FaceCover": {
                     "5c1a1e3f2e221602b66cc4c2": 30,
-					"675ac888803644528007b3f6": 30
+                    "675ac888803644528007b3f6": 30
                 },
                 "Headwear": {
                     "5a43957686f7742a2c2f11b0": 80,
@@ -261,28 +261,28 @@
             }
         }
     },
-	"eventLoot": {
-		"christmas": {
-			"assault": {
-				"Pockets": {
-					"5df8a6a186f77412640e2e80": 2200,
-					"5df8a72c86f77412640e2e83": 2200,
-					"5df8a77486f77412672a1e3f": 2200
-				},
-				"Backpack": {
-					"5df8a6a186f77412640e2e80": 2200,
-					"5df8a72c86f77412640e2e83": 2200,
-					"5df8a77486f77412672a1e3f": 2200,
-					"63a8970d7108f713591149f5": 250
-				},
-				"TacticalVest": {
-					"5df8a6a186f77412640e2e80": 2200,
-					"5df8a72c86f77412640e2e83": 2200,
-					"5df8a77486f77412672a1e3f": 2200
-				}
-			}
-		}
-	},
+    "eventLoot": {
+        "christmas": {
+            "assault": {
+                "Pockets": {
+                    "5df8a6a186f77412640e2e80": 2200,
+                    "5df8a72c86f77412640e2e83": 2200,
+                    "5df8a77486f77412672a1e3f": 2200
+                },
+                "Backpack": {
+                    "5df8a6a186f77412640e2e80": 2200,
+                    "5df8a72c86f77412640e2e83": 2200,
+                    "5df8a77486f77412672a1e3f": 2200,
+                    "63a8970d7108f713591149f5": 250
+                },
+                "TacticalVest": {
+                    "5df8a6a186f77412640e2e80": 2200,
+                    "5df8a72c86f77412640e2e83": 2200,
+                    "5df8a77486f77412672a1e3f": 2200
+                }
+            }
+        }
+    },
     "eventBotMapping": {
         "peacefullZryachiyEvent": "bossZryachiy",
         "sectactPriestEvent": "sectantPriest",
@@ -8363,9 +8363,9 @@
             "endDay": "31",
             "endMonth": "12",
             "settings": {
-				"enableChristmasHideout": true,
+                "enableChristmasHideout": true,
                 "enableSanta": true,
-				"adjustBotAppearances": true
+                "adjustBotAppearances": true
             }
         },
         {
@@ -8376,13 +8376,13 @@
             "startMonth": "1",
             "endDay": "1",
             "endMonth": "1",
-			"settings": {
-				"enableChristmasHideout": true,
+            "settings": {
+                "enableChristmasHideout": true,
                 "enableSanta": true,
-				"adjustBotAppearances": true
+                "adjustBotAppearances": true
             }
         },
-		{
+        {
             "enabled": true,
             "name": "christmas January",
             "type": "CHRISTMAS",
@@ -8391,9 +8391,9 @@
             "endDay": "7",
             "endMonth": "1",
             "settings": {
-				"enableChristmasHideout": true,
+                "enableChristmasHideout": true,
                 "enableSanta": true,
-				"adjustBotAppearances": true
+                "adjustBotAppearances": true
             }
         },
         {
@@ -12314,11 +12314,11 @@
             ]
         }
     },
-	"christmasContainerIds": [
-		"container_custom_DesignStuff_00427",
-		"container_Shopping_Mall_DesignStuff_00808",
-		"container_Lighthouse_DesignStuff_00001",
-		"container_shoreline_DesignStuff_00418",
-		"container_woods_design_stuff_00328"
-	]
+    "christmasContainerIds": [
+        "container_custom_DesignStuff_00427",
+        "container_Shopping_Mall_DesignStuff_00808",
+        "container_Lighthouse_DesignStuff_00001",
+        "container_shoreline_DesignStuff_00418",
+        "container_woods_design_stuff_00328"
+    ]
 }

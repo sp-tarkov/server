@@ -1411,7 +1411,7 @@
             "_type": "opened case - walter event quest",
             "rewardCount": 4,
             "foundInRaid": true,
-            "rewardTplPool": {"67409848d0b2f8eb9b034db9": 1}
+            "rewardTplPool": { "67409848d0b2f8eb9b034db9": 1 }
         },
         "674098588466ebb03408b210": {
             "_type": "opened box - walter event quest",
@@ -1596,5 +1596,5 @@
     "skillGainMultiplers": {
         "Strength": 1
     },
-	"deprioritisedMoneyContainers": ["590c60fc86f77412b13fddcf", "5d235bb686f77443f4331278"]
+    "deprioritisedMoneyContainers": ["590c60fc86f77412b13fddcf", "5d235bb686f77443f4331278"]
 }

@@ -70,7 +70,8 @@ export class HideoutCustomisationGen {
             }
 
             const matchingQuest = this.questCustomisationReward[questOrAchievementRequirement.target as string];
-            const matchingAchievement = this.achievementCustomisationReward[questOrAchievementRequirement.target as string];
+            const matchingAchievement =
+                this.achievementCustomisationReward[questOrAchievementRequirement.target as string];
 
             let source = null;
             if (matchingQuest) {

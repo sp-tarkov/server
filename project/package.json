@@ -33,7 +33,7 @@
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "gen:items": "tsx ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
         "gen:productionquests": "tsx ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts",
-		"gen:customisationstorage": "tsx ./src/tools/HideoutCustomisation/HideoutCustomisationProgram.ts"
+        "gen:customisationstorage": "tsx ./src/tools/HideoutCustomisation/HideoutCustomisationProgram.ts"
     },
     "dependencies": {
         "atomically": "~1.7",

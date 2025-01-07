@@ -26,7 +26,7 @@ export default (<Environment>{
         await importDatabase(container);
 
         return {
-            async teardown() { },
+            async teardown() {},
         };
     },
 });

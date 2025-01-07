@@ -1,6 +1,5 @@
 // This is an auto generated file, do not modify. Re-generate with `npm run gen:items`
-export enum ItemTpl
-{
+export enum ItemTpl {
     AMMOBOX_127X33_COPPER_20RND = "676009ddb623f3b8ba079419",
     AMMOBOX_127X33_FMJ_20RND = "676009ed8f1fee08740f9479",
     AMMOBOX_127X33_JHP_20RND = "676009fe8f1fee08740f947c",

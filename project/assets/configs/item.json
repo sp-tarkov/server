@@ -52,12 +52,12 @@
         "66da1b546916142b3b022777",
         "670ad7f1ad195290cd00da7a",
         "66ec2aa6daf127599c0c31f1",
-		"67654a6759116d347b0bfb86",
-		"5751916f24597720a27126df",
-		"57518f7724597720a31c09ab",
-		"57518fd424597720c85dbaaa",
-		"5a043f2c86f7741aa57b5145",
-		"5a0448bc86f774736f14efa8"
+        "67654a6759116d347b0bfb86",
+        "5751916f24597720a27126df",
+        "57518f7724597720a31c09ab",
+        "57518fd424597720c85dbaaa",
+        "5a043f2c86f7741aa57b5145",
+        "5a0448bc86f774736f14efa8"
     ],
     "rewardItemTypeBlacklist": ["65649eb40bf0ed77b8044453"],
     "lootableItemBlacklist": ["660bbc47c38b837877075e47", "660bc341c38b837877075e4c"],
@@ -122,21 +122,21 @@
         "671d8b38b769f0d88c0950f8",
         "671d8b8c0959c721a50ca838",
         "660bc341c38b837877075e4c",
-		"67409848d0b2f8eb9b034db9",
-		"67449b6c89d5e1ddc603f504",
-		"675aab0d6b6addc02a08f097",
-		"675aaae1dcf102478202c537",
-		"675aaa9a3107dac100063331",
-		"675aaae75a3ab8372d0b02a7",
-		"675aaab74bca0b001d02f356",
-		"675aaa8f7f3c962069072b27",
-		"675aaaf674a7619a5304c233",
-		"675aaa003107dac10006332f",
-		"6764207f2fa5e32733055c4a",
-		"6764202ae307804338014c1a",
-		"6707d13e4e617ec94f0e5631",
-		"675dc9d37ae1a8792107ca96",
-		"675dcb0545b1a2d108011b2b"
+        "67409848d0b2f8eb9b034db9",
+        "67449b6c89d5e1ddc603f504",
+        "675aab0d6b6addc02a08f097",
+        "675aaae1dcf102478202c537",
+        "675aaa9a3107dac100063331",
+        "675aaae75a3ab8372d0b02a7",
+        "675aaab74bca0b001d02f356",
+        "675aaa8f7f3c962069072b27",
+        "675aaaf674a7619a5304c233",
+        "675aaa003107dac10006332f",
+        "6764207f2fa5e32733055c4a",
+        "6764202ae307804338014c1a",
+        "6707d13e4e617ec94f0e5631",
+        "675dc9d37ae1a8792107ca96",
+        "675dcb0545b1a2d108011b2b"
     ],
     "bossItems": [
         "6275303a9f372d6ea97f9ec7",
@@ -183,204 +183,204 @@
         "63a898a328e385334e0640a5": { "price": 20000, "parentId": "5b5f6fa186f77409407a7eb7" },
         "63a897c6b1ff6e29734fcc95": { "price": 40000, "parentId": "5b5f6fa186f77409407a7eb7" }
     },
-	"customItemGlobalPresets": [
-		{
-			"_changeWeaponName": false,
-			"_encyclopedia": "675956062f6ddfe8ff0e2806",
-			"_id": "6777b37393a9a6f10ea57501",
-			"_items": [
-			{
-			  "_id": "6777bee3324b2e0cf7b7cfe1",
-			  "_tpl": "675956062f6ddfe8ff0e2806"
-			},
-			{
-			  "_id": "6777c029e3703d1f9dc47d15",
-			  "_tpl": "676307c004856a0b3c0dfffd",
-			  "parentId": "6777bee3324b2e0cf7b7cfe1",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "6777c030386bec3cd3c41b6e",
-			  "_tpl": "676307b4d9ec0af3d9001fa8",
-			  "parentId": "6777bee3324b2e0cf7b7cfe1",
-			  "slotId": "Helmet_back"
-			}
-			],
-			"_name": "MTEK FLUX Ballistic helmet (MultiCam Alpine) Default",
-			"_parent": "6777bee3324b2e0cf7b7cfe1",
-			"_type": "Preset"
-		},
-		{
-			"_changeWeaponName": false,
-			"_encyclopedia": "6759655674aa5e0825040d62",
-			"_id": "6777bf37e10ffdb431ff9508",
-			"_items": [
-			{
-			  "_id": "6777bf03ad549e66e7ad06b2",
-			  "_tpl": "6759655674aa5e0825040d62"
-			},
-			{
-			  "_id": "6777c02180ddaee0b54493da",
-			  "_tpl": "676307c004856a0b3c0dfffd",
-			  "parentId": "6777bf03ad549e66e7ad06b2",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "6777c00f41b022243abdac99",
-			  "_tpl": "676307b4d9ec0af3d9001fa8",
-			  "parentId": "6777bf03ad549e66e7ad06b2",
-			  "slotId": "Helmet_back"
-			}
-			],
-			"_name": "MTEK FLUX Ballistic helmet (Olive Drab) Default",
-			"_parent": "6777bf03ad549e66e7ad06b2",
-			"_type": "Preset"
-		},
-		{
-			"_changeWeaponName": false,
-			"_encyclopedia": "67597ceea35600b4c10cea86",
-			"_id": "6777bfee0658691ef27d9993",
-			"_items": [
-			{
-			  "_id": "6777bfaaaf1999ce0701bc00",
-			  "_tpl": "67597ceea35600b4c10cea86"
-			},
-			{
-			  "_id": "6777c01b07b5d347d6b99404",
-			  "_tpl": "676307ded8b241b4f703a3e8",
-			  "parentId": "6777bfaaaf1999ce0701bc00",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "6777c0033f374912b965ae5a",
-			  "_tpl": "676307d3d9ec0af3d9001fac",
-			  "parentId": "6777bfaaaf1999ce0701bc00",
-			  "slotId": "Helmet_back"
-			}
-			],
-			"_name": "MTEK FLUX Ballistic helmet (Coyote) Default",
-			"_parent": "6777bfaaaf1999ce0701bc00",
-			"_type": "Preset"
-		},
-		{
-			"_changeWeaponName": false,
-			"_encyclopedia": "67597d241d5a44f2f605df06",
-			"_id": "6777c1244557b9b1474da362",
-			"_items": [
-			{
-			  "_id": "6777c10f4989fc544063b5a1",
-			  "_tpl": "67597d241d5a44f2f605df06"
-			},
-			{
-			  "_id": "6777c1293c00b35cd6960536",
-			  "_tpl": "676307ded8b241b4f703a3e8",
-			  "parentId": "6777c10f4989fc544063b5a1",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "6777c12f8fc234973af0cf16",
-			  "_tpl": "676307d3d9ec0af3d9001fac",
-			  "parentId": "6777c10f4989fc544063b5a1",
-			  "slotId": "Helmet_back"
-			}
-			],
-			"_name": "MTEK FLUX Ballistic helmet (Coyote/MultiCam Arid) Default",
-			"_parent": "6777c10f4989fc544063b5a1",
-			"_type": "Preset"
-		},
-		{
-		  "_changeWeaponName": false,
-		  "_encyclopedia": "674d91ce6e862d5a95059ed6",
-		  "_id": "67784df15058057382b28f87",
-		  "_items": [
-			{
-			  "_id": "67784dfaf57296ecbdbfc87f",
-			  "_tpl": "674d91ce6e862d5a95059ed6"
-			},
-			{
-			  "_id": "67784e27ee352de60dc982a3",
-			  "_tpl": "6575ea3060703324250610da",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Soft_armor_front"
-			},
-			{
-			  "_id": "67784e32d75f52daffe36de5",
-			  "_tpl": "6575ea4cf6a13a7b7100adc4",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Soft_armor_back"
-			},
-			{
-			  "_id": "67784e36e778f8aace662e1d",
-			  "_tpl": "6575ea5cf6a13a7b7100adc8",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Soft_armor_left"
-			},
-			{
-			  "_id": "67784e3c0e4afac4ebdab52d",
-			  "_tpl": "6575ea6760703324250610de",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "soft_armor_right"
-			},
-			{
-			  "_id": "67784e40832d547cb2c986bf",
-			  "_tpl": "6575ea719c7cad336508e418",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Collar"
-			},
-			{
-			  "_id": "67784e446c92fcb0e0d8fea8",
-			  "_tpl": "6575ea7c60703324250610e2",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Groin"
-			},
-			{
-			  "_id": "67784e473abf2a39a05dba5a",
-			  "_tpl": "656f611f94b480b8a500c0db",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Front_plate"
-			},
-			{
-			  "_id": "67784e4b934ace8451681bee",
-			  "_tpl": "656efaf54772930db4031ff5",
-			  "parentId": "67784dfaf57296ecbdbfc87f",
-			  "slotId": "Back_plate"
-			}
-		  ],
-		  "_name": "Body armor 6B13 M Killa Christmas Standard",
-		  "_parent": "67784dfaf57296ecbdbfc87f",
-		  "_type": "Preset"
-		},
-		{
-		  "_changeWeaponName": false,
-		  "_encyclopedia": "6745895717824b1ec20570a6",
-		  "_id": "677d14927f8ee8353d85918d",
-		  "_items": [
-			{
-			  "_id": "677d14a27757dcc54a3054fb",
-			  "_tpl": "6745895717824b1ec20570a6"
-			},
-			{
-			  "_id": "677d14abef2285ed18ee3e62",
-			  "_tpl": "657baaf0b7e9ca9a02045c02",
-			  "parentId": "677d14a27757dcc54a3054fb",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "677d14b0024eda59d1544794",
-			  "_tpl": "657bab6ec6f689d3a205b85f",
-			  "parentId": "677d14a27757dcc54a3054fb",
-			  "slotId": "Helmet_back"
-			},
-			{
-			  "_id": "677d14bb1dfea5b33fa31337",
-			  "_tpl": "657babc6f58ba5a6250107a2",
-			  "parentId": "677d14a27757dcc54a3054fb",
-			  "slotId": "Helmet_ears"
-			}
-		  ],
-		  "_name": "6B47 Ratnik-BSh helmet (EMR Arctic cover) default",
-		  "_parent": "677d14a27757dcc54a3054fb",
-		  "_type": "Preset"
-		}
-	]
+    "customItemGlobalPresets": [
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "675956062f6ddfe8ff0e2806",
+            "_id": "6777b37393a9a6f10ea57501",
+            "_items": [
+                {
+                    "_id": "6777bee3324b2e0cf7b7cfe1",
+                    "_tpl": "675956062f6ddfe8ff0e2806"
+                },
+                {
+                    "_id": "6777c029e3703d1f9dc47d15",
+                    "_tpl": "676307c004856a0b3c0dfffd",
+                    "parentId": "6777bee3324b2e0cf7b7cfe1",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "6777c030386bec3cd3c41b6e",
+                    "_tpl": "676307b4d9ec0af3d9001fa8",
+                    "parentId": "6777bee3324b2e0cf7b7cfe1",
+                    "slotId": "Helmet_back"
+                }
+            ],
+            "_name": "MTEK FLUX Ballistic helmet (MultiCam Alpine) Default",
+            "_parent": "6777bee3324b2e0cf7b7cfe1",
+            "_type": "Preset"
+        },
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "6759655674aa5e0825040d62",
+            "_id": "6777bf37e10ffdb431ff9508",
+            "_items": [
+                {
+                    "_id": "6777bf03ad549e66e7ad06b2",
+                    "_tpl": "6759655674aa5e0825040d62"
+                },
+                {
+                    "_id": "6777c02180ddaee0b54493da",
+                    "_tpl": "676307c004856a0b3c0dfffd",
+                    "parentId": "6777bf03ad549e66e7ad06b2",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "6777c00f41b022243abdac99",
+                    "_tpl": "676307b4d9ec0af3d9001fa8",
+                    "parentId": "6777bf03ad549e66e7ad06b2",
+                    "slotId": "Helmet_back"
+                }
+            ],
+            "_name": "MTEK FLUX Ballistic helmet (Olive Drab) Default",
+            "_parent": "6777bf03ad549e66e7ad06b2",
+            "_type": "Preset"
+        },
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "67597ceea35600b4c10cea86",
+            "_id": "6777bfee0658691ef27d9993",
+            "_items": [
+                {
+                    "_id": "6777bfaaaf1999ce0701bc00",
+                    "_tpl": "67597ceea35600b4c10cea86"
+                },
+                {
+                    "_id": "6777c01b07b5d347d6b99404",
+                    "_tpl": "676307ded8b241b4f703a3e8",
+                    "parentId": "6777bfaaaf1999ce0701bc00",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "6777c0033f374912b965ae5a",
+                    "_tpl": "676307d3d9ec0af3d9001fac",
+                    "parentId": "6777bfaaaf1999ce0701bc00",
+                    "slotId": "Helmet_back"
+                }
+            ],
+            "_name": "MTEK FLUX Ballistic helmet (Coyote) Default",
+            "_parent": "6777bfaaaf1999ce0701bc00",
+            "_type": "Preset"
+        },
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "67597d241d5a44f2f605df06",
+            "_id": "6777c1244557b9b1474da362",
+            "_items": [
+                {
+                    "_id": "6777c10f4989fc544063b5a1",
+                    "_tpl": "67597d241d5a44f2f605df06"
+                },
+                {
+                    "_id": "6777c1293c00b35cd6960536",
+                    "_tpl": "676307ded8b241b4f703a3e8",
+                    "parentId": "6777c10f4989fc544063b5a1",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "6777c12f8fc234973af0cf16",
+                    "_tpl": "676307d3d9ec0af3d9001fac",
+                    "parentId": "6777c10f4989fc544063b5a1",
+                    "slotId": "Helmet_back"
+                }
+            ],
+            "_name": "MTEK FLUX Ballistic helmet (Coyote/MultiCam Arid) Default",
+            "_parent": "6777c10f4989fc544063b5a1",
+            "_type": "Preset"
+        },
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "674d91ce6e862d5a95059ed6",
+            "_id": "67784df15058057382b28f87",
+            "_items": [
+                {
+                    "_id": "67784dfaf57296ecbdbfc87f",
+                    "_tpl": "674d91ce6e862d5a95059ed6"
+                },
+                {
+                    "_id": "67784e27ee352de60dc982a3",
+                    "_tpl": "6575ea3060703324250610da",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Soft_armor_front"
+                },
+                {
+                    "_id": "67784e32d75f52daffe36de5",
+                    "_tpl": "6575ea4cf6a13a7b7100adc4",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Soft_armor_back"
+                },
+                {
+                    "_id": "67784e36e778f8aace662e1d",
+                    "_tpl": "6575ea5cf6a13a7b7100adc8",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Soft_armor_left"
+                },
+                {
+                    "_id": "67784e3c0e4afac4ebdab52d",
+                    "_tpl": "6575ea6760703324250610de",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "soft_armor_right"
+                },
+                {
+                    "_id": "67784e40832d547cb2c986bf",
+                    "_tpl": "6575ea719c7cad336508e418",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Collar"
+                },
+                {
+                    "_id": "67784e446c92fcb0e0d8fea8",
+                    "_tpl": "6575ea7c60703324250610e2",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Groin"
+                },
+                {
+                    "_id": "67784e473abf2a39a05dba5a",
+                    "_tpl": "656f611f94b480b8a500c0db",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Front_plate"
+                },
+                {
+                    "_id": "67784e4b934ace8451681bee",
+                    "_tpl": "656efaf54772930db4031ff5",
+                    "parentId": "67784dfaf57296ecbdbfc87f",
+                    "slotId": "Back_plate"
+                }
+            ],
+            "_name": "Body armor 6B13 M Killa Christmas Standard",
+            "_parent": "67784dfaf57296ecbdbfc87f",
+            "_type": "Preset"
+        },
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "6745895717824b1ec20570a6",
+            "_id": "677d14927f8ee8353d85918d",
+            "_items": [
+                {
+                    "_id": "677d14a27757dcc54a3054fb",
+                    "_tpl": "6745895717824b1ec20570a6"
+                },
+                {
+                    "_id": "677d14abef2285ed18ee3e62",
+                    "_tpl": "657baaf0b7e9ca9a02045c02",
+                    "parentId": "677d14a27757dcc54a3054fb",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "677d14b0024eda59d1544794",
+                    "_tpl": "657bab6ec6f689d3a205b85f",
+                    "parentId": "677d14a27757dcc54a3054fb",
+                    "slotId": "Helmet_back"
+                },
+                {
+                    "_id": "677d14bb1dfea5b33fa31337",
+                    "_tpl": "657babc6f58ba5a6250107a2",
+                    "parentId": "677d14a27757dcc54a3054fb",
+                    "slotId": "Helmet_ears"
+                }
+            ],
+            "_name": "6B47 Ratnik-BSh helmet (EMR Arctic cover) default",
+            "_parent": "677d14a27757dcc54a3054fb",
+            "_type": "Preset"
+        }
+    ]
 }

@@ -335,7 +335,7 @@ export class RagfairController {
 
                     // Figure out how many items the requirementsCost is applying to, and what the per-item price is
                     const offerItemCount = Math.max(
-                        offer.sellInOnePiece ? (offer.items[0].upd?.StackObjectsCount ?? 1) : 1,
+                        offer.sellInOnePiece ? offer.items[0].upd?.StackObjectsCount ?? 1 : 1,
                     );
                     const perItemPrice = offer.requirementsCost / offerItemCount;
 

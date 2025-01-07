@@ -8522,209 +8522,239 @@
             "associatedEvent": "Promo",
             "maxToSendPlayer": 5
         },
-		"NewYear2024": {
-			"items": [{
-                            "_id": "6773b39ccf4c2fe4e50a7ec3",
-                            "_tpl": "67124dcfa3541f2a1f0e788b",
-                            "upd": {
-                                "FireMode": {
-                                    "FireMode": "single"
-                                },
-                                "Repairable": {
-                                    "Durability": 100,
-                                    "MaxDurability": 100
-                                }
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec4",
-                            "_tpl": "6719023b612cc94b9008e78c",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec3",
-                            "slotId": "mod_stock"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec5",
-                            "_tpl": "6709133fa532466d5403fb7c",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec3",
-                            "slotId": "mod_magazine"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec6",
-                            "_tpl": "670fd0a8d8d4eae4790c8187",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec3",
-                            "slotId": "mod_barrel"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec7",
-                            "_tpl": "6710cea62bb09af72f0e6bf8",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec6",
-                            "slotId": "mod_mount"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec8",
-                            "_tpl": "57d17c5e2459775a5c57d17d",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec7",
-                            "slotId": "mod_tactical_003"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ec9",
-                            "_tpl": "6165ac8c290d254f5e6b2f6c",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec3",
-                            "slotId": "mod_scope"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ecb",
-                            "_tpl": "6709133fa532466d5403fb7c",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ecd",
-                            "_tpl": "6709133fa532466d5403fb7c",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ecf",
-                            "_tpl": "6709133fa532466d5403fb7c",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed1",
-                            "_tpl": "5c0d591486f7744c505b416f",
-                            "upd": {
-                                "StackObjectsCount": 20
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed3",
-                            "_tpl": "5c0d591486f7744c505b416f",
-                            "upd": {
-                                "StackObjectsCount": 20
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed5",
-                            "_tpl": "5c0d591486f7744c505b416f",
-                            "upd": {
-                                "StackObjectsCount": 20
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed6",
-                            "_tpl": "5ab8e79e86f7742d8b372e78",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed7",
-                            "_tpl": "65732688d9d89ff7ac0d9c4c",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Soft_armor_front"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed8",
-                            "_tpl": "657326978c1cc6dcd9098b56",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Soft_armor_back"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ed9",
-                            "_tpl": "657326a28c1cc6dcd9098b5a",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Soft_armor_left"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7eda",
-                            "_tpl": "657326b08c1cc6dcd9098b5e",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "soft_armor_right"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7edb",
-                            "_tpl": "657326bc5d3a3129fb05f36b",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Collar"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7edc",
-                            "_tpl": "656f611f94b480b8a500c0db",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Front_plate"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7edd",
-                            "_tpl": "65573fa5655447403702a816",
-                            "parentId": "6773b39ccf4c2fe4e50a7ed6",
-                            "slotId": "Back_plate"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ede",
-                            "_tpl": "675956062f6ddfe8ff0e2806",
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7edf",
-                            "_tpl": "676307c004856a0b3c0dfffd",
-                            "parentId": "6773b39ccf4c2fe4e50a7ede",
-                            "slotId": "Helmet_top"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ee0",
-                            "_tpl": "676307b4d9ec0af3d9001fa8",
-                            "parentId": "6773b39ccf4c2fe4e50a7ede",
-                            "slotId": "Helmet_back"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ee2",
-                            "_tpl": "674589d98dd67746010329e6",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ee4",
-                            "_tpl": "67458794e21e5d724e066976",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ee6",
-                            "_tpl": "5d40407c86f774318526545a",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7ee8",
-                            "_tpl": "5d40407c86f774318526545a",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7eea",
-                            "_tpl": "5d403f9186f7743cac3f229b",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
-                        }, {
-                            "_id": "6773b39ccf4c2fe4e50a7eec",
-                            "_tpl": "5d403f9186f7743cac3f229b",
-                            "upd": {
-                                "StackObjectsCount": 1
-                            },
-                            "parentId": "6773b39ccf4c2fe4e50a7ec2",
-                            "slotId": "main"
+        "NewYear2024": {
+            "items": [
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec3",
+                    "_tpl": "67124dcfa3541f2a1f0e788b",
+                    "upd": {
+                        "FireMode": {
+                            "FireMode": "single"
+                        },
+                        "Repairable": {
+                            "Durability": 100,
+                            "MaxDurability": 100
                         }
-                    ],
-			"sender": "System",
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec4",
+                    "_tpl": "6719023b612cc94b9008e78c",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec3",
+                    "slotId": "mod_stock"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec5",
+                    "_tpl": "6709133fa532466d5403fb7c",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec3",
+                    "slotId": "mod_magazine"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec6",
+                    "_tpl": "670fd0a8d8d4eae4790c8187",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec3",
+                    "slotId": "mod_barrel"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec7",
+                    "_tpl": "6710cea62bb09af72f0e6bf8",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec6",
+                    "slotId": "mod_mount"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec8",
+                    "_tpl": "57d17c5e2459775a5c57d17d",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec7",
+                    "slotId": "mod_tactical_003"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ec9",
+                    "_tpl": "6165ac8c290d254f5e6b2f6c",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec3",
+                    "slotId": "mod_scope"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ecb",
+                    "_tpl": "6709133fa532466d5403fb7c",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ecd",
+                    "_tpl": "6709133fa532466d5403fb7c",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ecf",
+                    "_tpl": "6709133fa532466d5403fb7c",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed1",
+                    "_tpl": "5c0d591486f7744c505b416f",
+                    "upd": {
+                        "StackObjectsCount": 20
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed3",
+                    "_tpl": "5c0d591486f7744c505b416f",
+                    "upd": {
+                        "StackObjectsCount": 20
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed5",
+                    "_tpl": "5c0d591486f7744c505b416f",
+                    "upd": {
+                        "StackObjectsCount": 20
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed6",
+                    "_tpl": "5ab8e79e86f7742d8b372e78",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed7",
+                    "_tpl": "65732688d9d89ff7ac0d9c4c",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Soft_armor_front"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed8",
+                    "_tpl": "657326978c1cc6dcd9098b56",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Soft_armor_back"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ed9",
+                    "_tpl": "657326a28c1cc6dcd9098b5a",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Soft_armor_left"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7eda",
+                    "_tpl": "657326b08c1cc6dcd9098b5e",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "soft_armor_right"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7edb",
+                    "_tpl": "657326bc5d3a3129fb05f36b",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Collar"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7edc",
+                    "_tpl": "656f611f94b480b8a500c0db",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Front_plate"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7edd",
+                    "_tpl": "65573fa5655447403702a816",
+                    "parentId": "6773b39ccf4c2fe4e50a7ed6",
+                    "slotId": "Back_plate"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ede",
+                    "_tpl": "675956062f6ddfe8ff0e2806",
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7edf",
+                    "_tpl": "676307c004856a0b3c0dfffd",
+                    "parentId": "6773b39ccf4c2fe4e50a7ede",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ee0",
+                    "_tpl": "676307b4d9ec0af3d9001fa8",
+                    "parentId": "6773b39ccf4c2fe4e50a7ede",
+                    "slotId": "Helmet_back"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ee2",
+                    "_tpl": "674589d98dd67746010329e6",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ee4",
+                    "_tpl": "67458794e21e5d724e066976",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ee6",
+                    "_tpl": "5d40407c86f774318526545a",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7ee8",
+                    "_tpl": "5d40407c86f774318526545a",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7eea",
+                    "_tpl": "5d403f9186f7743cac3f229b",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                },
+                {
+                    "_id": "6773b39ccf4c2fe4e50a7eec",
+                    "_tpl": "5d403f9186f7743cac3f229b",
+                    "upd": {
+                        "StackObjectsCount": 1
+                    },
+                    "parentId": "6773b39ccf4c2fe4e50a7ec2",
+                    "slotId": "main"
+                }
+            ],
+            "sender": "System",
             "messageText": "New year present!",
             "collectionTimeHours": 72,
             "associatedEvent": "Promo",
             "maxToSendPlayer": 5
-		}
+        }
     }
 }

@@ -1,6 +1,5 @@
 // This is an auto generated file, do not modify. Re-generate with `npm run gen:items`
-export enum Weapons
-{
+export enum Weapons {
     ASSAULTCARBINE_762X39_OP_SKS = "587e02ff24597743df3deaeb",
     ASSAULTCARBINE_762X39_SKS = "574d967124597745970e7c94",
     ASSAULTCARBINE_762X51_VPO_101_VEPR_HUNTER = "5c501a4d2e221602b412b540",
