@@ -2,8 +2,8 @@ import "reflect-metadata";
 
 import crypto from "node:crypto";
 import fs from "node:fs";
+import * as fsPromises from "node:fs/promises";
 import path, { resolve } from "node:path";
-import { promisify } from "node:util";
 import type { IAsyncQueue } from "@spt/models/spt/utils/IAsyncQueue";
 import { writeFileSync } from "atomically";
 import { checkSync, lockSync, unlockSync } from "proper-lockfile";
@@ -11,37 +11,7 @@ import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class VFS {
-    accessFilePromisify: (path: fs.PathLike, mode?: number) => Promise<void>;
-    copyFilePromisify: (src: fs.PathLike, dst: fs.PathLike, flags?: number) => Promise<void>;
-    mkdirPromisify: (
-        path: fs.PathLike,
-        options: fs.MakeDirectoryOptions & { recursive: true },
-    ) => Promise<string | undefined>;
-
-    readFilePromisify: (path: fs.PathLike) => Promise<Buffer>;
-    writeFilePromisify: (path: fs.PathLike, data: string, options?: any) => Promise<void>;
-    readdirPromisify: (
-        path: fs.PathLike,
-        options?: BufferEncoding | { encoding: BufferEncoding; withFileTypes?: false },
-    ) => Promise<string[]>;
-
-    statPromisify: (path: fs.PathLike, options?: fs.StatOptions & { bigint?: false }) => Promise<fs.Stats>;
-    unlinkPromisify: (path: fs.PathLike) => Promise<void>;
-    rmdirPromisify: (path: fs.PathLike) => Promise<void>;
-    renamePromisify: (oldPath: fs.PathLike, newPath: fs.PathLike) => Promise<void>;
-
-    constructor(@inject("AsyncQueue") protected asyncQueue: IAsyncQueue) {
-        this.accessFilePromisify = promisify(fs.access);
-        this.copyFilePromisify = promisify(fs.copyFile);
-        this.mkdirPromisify = promisify(fs.mkdir);
-        this.readFilePromisify = promisify(fs.readFile);
-        this.writeFilePromisify = promisify(fs.writeFile);
-        this.readdirPromisify = promisify(fs.readdir);
-        this.statPromisify = promisify(fs.stat);
-        this.unlinkPromisify = promisify(fs.unlinkSync);
-        this.rmdirPromisify = promisify(fs.rmdir);
-        this.renamePromisify = promisify(fs.renameSync);
-    }
+    constructor(@inject("AsyncQueue") protected asyncQueue: IAsyncQueue) {}
 
     public exists(filepath: fs.PathLike): boolean {
         return fs.existsSync(filepath);
@@ -49,10 +19,7 @@ export class VFS {
 
     public async existsAsync(filepath: fs.PathLike): Promise<boolean> {
         try {
-            // Create the command to add to the queue
-            const command = { uuid: crypto.randomUUID(), cmd: async () => await this.accessFilePromisify(filepath) };
-            // Wait for the command completion
-            await this.asyncQueue.waitFor(command);
+            await fsPromises.access(filepath);
 
             // If no Exception, the file exists
             return true;
@@ -67,8 +34,7 @@ export class VFS {
     }
 
     public async copyAsync(filepath: fs.PathLike, target: fs.PathLike): Promise<void> {
-        const command = { uuid: crypto.randomUUID(), cmd: async () => await this.copyFilePromisify(filepath, target) };
-        await this.asyncQueue.waitFor(command);
+        await fsPromises.copyFile(filepath, target);
     }
 
     public createDir(filepath: string): void {
@@ -76,12 +42,7 @@ export class VFS {
     }
 
     public async createDirAsync(filepath: string): Promise<void> {
-        const command = {
-            uuid: crypto.randomUUID(),
-            cmd: async () =>
-                await this.mkdirPromisify(filepath.substr(0, filepath.lastIndexOf("/")), { recursive: true }),
-        };
-        await this.asyncQueue.waitFor(command);
+        await fsPromises.mkdir(filepath.slice(0, filepath.lastIndexOf("/")), { recursive: true });
     }
 
     public copyDir(filepath: string, target: string, fileExtensions?: string | string[]): void {
@@ -133,18 +94,18 @@ export class VFS {
     }
 
     public async readFileAsync(path: fs.PathLike): Promise<string> {
-        const read = await this.readFilePromisify(path);
+        const read = await fsPromises.readFile(path);
         if (this.isBuffer(read)) {
             return read.toString();
         }
         return read;
     }
 
-    private isBuffer(value: any): value is Buffer {
-        return value?.write && value.toString && value.toJSON && value.equals;
+    private isBuffer(value: Buffer | string): value is Buffer {
+        return Buffer.isBuffer(value);
     }
 
-    public writeFile(filepath: any, data = "", append = false, atomic = true): void {
+    public writeFile(filepath: string, data = "", append = false, atomic = true): void {
         const options = append ? { flag: "a" } : { flag: "w" };
 
         if (!this.exists(filepath)) {
@@ -163,18 +124,18 @@ export class VFS {
         releaseCallback();
     }
 
-    public async writeFileAsync(filepath: any, data = "", append = false, atomic = true): Promise<void> {
+    public async writeFileAsync(filepath: string, data = "", append = false, atomic = true): Promise<void> {
         const options = append ? { flag: "a" } : { flag: "w" };
 
-        if (!(await this.exists(filepath))) {
-            await this.createDir(filepath);
-            await this.writeFilePromisify(filepath, "");
+        if (!(await this.existsAsync(filepath))) {
+            await this.createDirAsync(filepath);
+            await fsPromises.writeFile(filepath, "");
         }
 
         if (!append && atomic) {
-            await this.writeFilePromisify(filepath, data);
+            await fsPromises.writeFile(filepath, data);
         } else {
-            await this.writeFilePromisify(filepath, data, options);
+            await fsPromises.writeFile(filepath, data, options);
         }
     }
 
@@ -185,11 +146,8 @@ export class VFS {
     }
 
     public async getFilesAsync(filepath: string): Promise<string[]> {
-        const addr = await this.readdirPromisify(filepath);
-        return addr.filter(async (item) => {
-            const stat = await this.statPromisify(path.join(filepath, item));
-            return stat.isFile();
-        });
+        const entries = await fsPromises.readdir(filepath, { withFileTypes: true });
+        return entries.filter((entry) => entry.isFile()).map((entry) => entry.name);
     }
 
     public getDirs(filepath: string): string[] {
@@ -199,11 +157,8 @@ export class VFS {
     }
 
     public async getDirsAsync(filepath: string): Promise<string[]> {
-        const addr = await this.readdirPromisify(filepath);
-        return addr.filter(async (item) => {
-            const stat = await this.statPromisify(path.join(filepath, item));
-            return stat.isDirectory();
-        });
+        const entries = await fsPromises.readdir(filepath, { withFileTypes: true });
+        return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
     }
 
     public removeFile(filepath: string): void {
@@ -211,7 +166,7 @@ export class VFS {
     }
 
     public async removeFileAsync(filepath: string): Promise<void> {
-        await this.unlinkPromisify(filepath);
+        await fsPromises.unlink(filepath);
     }
 
     public removeDir(filepath: string): void {
@@ -244,7 +199,7 @@ export class VFS {
         }
 
         await Promise.all(promises);
-        await this.rmdirPromisify(filepath);
+        await fsPromises.rmdir(filepath);
     }
 
     public rename(oldPath: string, newPath: string): void {
@@ -252,18 +207,18 @@ export class VFS {
     }
 
     public async renameAsync(oldPath: string, newPath: string): Promise<void> {
-        await this.renamePromisify(oldPath, newPath);
+        await fsPromises.rename(oldPath, newPath);
     }
 
-    protected lockFileSync(filepath: any): () => void {
+    protected lockFileSync(filepath: string): () => void {
         return lockSync(filepath);
     }
 
-    protected checkFileSync(filepath: any): boolean {
+    protected checkFileSync(filepath: string): boolean {
         return checkSync(filepath);
     }
 
-    protected unlockFileSync(filepath: any): void {
+    protected unlockFileSync(filepath: string): void {
         unlockSync(filepath);
     }
 
