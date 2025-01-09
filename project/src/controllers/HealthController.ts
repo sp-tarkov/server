@@ -250,6 +250,7 @@ export class HealthController {
 
                 // Remove empty effect object
                 if (Object.keys(pmcData.Health.BodyParts[bodyPartKey].Effects).length === 0) {
+                    // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the effect.
                     delete pmcData.Health.BodyParts[bodyPartKey].Effects;
                 }
             }

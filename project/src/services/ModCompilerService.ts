@@ -42,7 +42,7 @@ export class ModCompilerService {
             }
         }
 
-        const hashMatches = this.modHashCacheService.calculateAndCompareHash(modName, tsFileContents);
+        const hashMatches = await this.modHashCacheService.calculateAndCompareHash(modName, tsFileContents);
 
         if (fileExists && hashMatches) {
             // Everything exists and matches, escape early
@@ -51,7 +51,7 @@ export class ModCompilerService {
 
         if (!hashMatches) {
             // Store / update hash in json file
-            this.modHashCacheService.calculateAndStoreHash(modName, tsFileContents);
+            await this.modHashCacheService.calculateAndStoreHash(modName, tsFileContents);
         }
 
         return this.compile(modTypeScriptFiles, {

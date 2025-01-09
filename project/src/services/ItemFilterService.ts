@@ -29,7 +29,9 @@ export class ItemFilterService {
      */
     public isItemBlacklisted(tpl: string): boolean {
         if (this.itemBlacklistCache.size === 0) {
-            this.itemConfig.blacklist.forEach((item) => this.itemBlacklistCache.add(item));
+            for (const item of this.itemConfig.blacklist) {
+                this.itemBlacklistCache.add(item);
+            }
         }
 
         return this.itemBlacklistCache.has(tpl);
@@ -42,7 +44,9 @@ export class ItemFilterService {
      */
     public isLootableItemBlacklisted(tpl: string): boolean {
         if (this.lootableItemBlacklistCache.size === 0) {
-            this.itemConfig.lootableItemBlacklist.forEach((item) => this.itemBlacklistCache.add(item));
+            for (const item of this.itemConfig.lootableItemBlacklist) {
+                this.itemBlacklistCache.add(item);
+            }
         }
 
         return this.lootableItemBlacklistCache.has(tpl);

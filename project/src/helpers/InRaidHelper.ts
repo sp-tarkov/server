@@ -118,7 +118,9 @@ export class InRaidHelper {
         });
 
         for (const item of itemsToRemovePropertyFrom) {
-            delete item.upd.SpawnedInSession;
+            if (item.upd) {
+                item.upd.SpawnedInSession = false;
+            }
         }
     }
 

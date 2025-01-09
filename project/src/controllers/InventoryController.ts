@@ -282,7 +282,7 @@ export class InventoryController {
 
         // Remove FiR status from destination stack when source stack has no FiR but destination does
         if (!sourceItem.upd.SpawnedInSession && destinationItem.upd.SpawnedInSession) {
-            delete destinationItem.upd.SpawnedInSession;
+            destinationItem.upd.SpawnedInSession = false;
         }
 
         destinationItem.upd.StackObjectsCount += sourceItem.upd.StackObjectsCount; // Add source stackcount to destination
@@ -408,6 +408,7 @@ export class InventoryController {
         if (request.to.location) {
             itemOne.location = request.to.location;
         } else {
+            // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
             delete itemOne.location;
         }
 
@@ -416,6 +417,7 @@ export class InventoryController {
         if (request.to2.location) {
             itemTwo.location = request.to2.location;
         } else {
+            // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
             delete itemTwo.location;
         }
 
@@ -721,6 +723,7 @@ export class InventoryController {
             if (change.location) {
                 inventoryItem.location = change.location;
             } else {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
                 delete inventoryItem.location;
             }
         }

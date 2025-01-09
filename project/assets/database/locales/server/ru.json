@@ -708,7 +708,7 @@
     "watermark-discord_url": "https://discord.sp-tarkov.com",
     "watermark-do_not_report": "НЕ ОТПРАВЛЯЙТЕ БАГ-РЕПОРТ НАСЧЕТ ЭТОГО",
     "watermark-free_of_charge": "Данный проект является бесплатным",
-    "watermark-issue_tracker_url": "https://dev.sp-tarkov.com/SPT/Server/issues",
+    "watermark-issue_tracker_url": "https://github.com/sp-tarkov/server/",
     "watermark-modding_disabled": "В ЭТОЙ СБОРКЕ ОТСУТСТВУЮТ ВОЗМОЖНОСТИ МОДИФИКАЦИИ",
     "watermark-no_support": "ПОДДЕРЖКА НЕ БУДЕТ ОКАЗЫВАТЬСЯ",
     "watermark-not_an_issue": "ЭТО НЕ ОШИБКА",

@@ -82,7 +82,7 @@ export class BotEquipmentModPoolService {
 
                         // Check item added into array for slots, need to iterate over those
                         const subItemDetails = this.itemHelper.getItem(itemToAdd)[1];
-                        const hasSubItemsToAdd = subItemDetails?._props?.Slots?.length ?? 0 > 0;
+                        const hasSubItemsToAdd = (subItemDetails?._props?.Slots?.length ?? 0) > 0;
                         if (hasSubItemsToAdd && !pool[subItemDetails._id]) {
                             // Recursive call
                             this.generatePool([subItemDetails], poolType);

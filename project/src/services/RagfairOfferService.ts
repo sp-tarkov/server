@@ -250,6 +250,7 @@ export class RagfairOfferService {
         if (firstOfferItem.upd.StackObjectsCount > firstOfferItem.upd.OriginalStackObjectsCount) {
             playerOffer.items[0].upd.StackObjectsCount = firstOfferItem.upd.OriginalStackObjectsCount;
         }
+        // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the data.
         delete playerOffer.items[0].upd.OriginalStackObjectsCount;
         // Remove player offer from flea
         this.ragfairOfferHandler.removeOffer(playerOffer);

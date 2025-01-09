@@ -350,11 +350,13 @@ export class MailSendService {
 
         // Clean up empty system data
         if (!message.systemData) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
             delete message.systemData;
         }
 
         // Clean up empty template id
         if (!message.templateId) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
             delete message.templateId;
         }
 
@@ -458,6 +460,7 @@ export class MailSendService {
 
             // Remove empty data property if no rewards
             if (itemsToSendToPlayer.data.length === 0) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the empty data property.
                 delete itemsToSendToPlayer.data;
             }
         }
