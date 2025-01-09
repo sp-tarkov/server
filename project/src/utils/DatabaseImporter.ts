@@ -85,7 +85,7 @@ export class DatabaseImporter implements OnLoad {
         const dataToImport = await this.importerUtil.loadAsync<IDatabaseTables>(
             `${filepath}database/`,
             this.filepath,
-            (fileWithPath: string, data: string) => this.onReadValidate(fileWithPath, data),
+            async (fileWithPath: string, data: string) => await this.onReadValidate(fileWithPath, data),
         );
 
         const validation =
@@ -94,9 +94,9 @@ export class DatabaseImporter implements OnLoad {
         this.databaseServer.setTables(dataToImport);
     }
 
-    protected onReadValidate(fileWithPath: string, data: string): void {
+    protected async onReadValidate(fileWithPath: string, data: string): Promise<void> {
         // Validate files
-        if (ProgramStatics.COMPILED && this.hashedFile && !this.validateFile(fileWithPath, data)) {
+        if (ProgramStatics.COMPILED && this.hashedFile && !(await this.validateFile(fileWithPath, data))) {
             this.valid = VaildationResult.FAILED;
         }
     }
@@ -105,7 +105,7 @@ export class DatabaseImporter implements OnLoad {
         return "spt-database";
     }
 
-    protected validateFile(filePathAndName: string, fileData: any): boolean {
+    protected async validateFile(filePathAndName: string, fileData: any): Promise<boolean> {
         try {
             const finalPath = filePathAndName.replace(this.filepath, "").replace(".json", "");
             let tempObject: any;
@@ -117,7 +117,7 @@ export class DatabaseImporter implements OnLoad {
                 }
             }
 
-            if (tempObject !== this.hashUtil.generateSha1ForData(fileData)) {
+            if (tempObject !== (await this.hashUtil.generateSha1ForDataAsync(fileData))) {
                 this.logger.debug(this.localisationService.getText("validation_error_file", filePathAndName));
                 return false;
             }

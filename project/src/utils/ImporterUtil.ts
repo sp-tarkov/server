@@ -13,8 +13,8 @@ export class ImporterUtil {
     public async loadAsync<T>(
         filepath: string,
         strippablePath = "",
-        onReadCallback: (fileWithPath: string, data: string) => void = () => {},
-        onObjectDeserialized: (fileWithPath: string, object: any) => void = () => {},
+        onReadCallback: (fileWithPath: string, data: string) => Promise<void> = () => Promise.resolve(),
+        onObjectDeserialized: (fileWithPath: string, object: any) => Promise<void> = () => Promise.resolve(),
     ): Promise<T> {
         const result = {} as T;
 
@@ -24,9 +24,9 @@ export class ImporterUtil {
         const fileProcessingPromises = allFiles.map(async (file) => {
             try {
                 const fileData = await this.fileSystem.read(file);
-                onReadCallback(file, fileData);
-                const fileDeserialized = await this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, file);
-                onObjectDeserialized(file, fileDeserialized);
+                await onReadCallback(file, fileData);
+                const fileDeserialized = await this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, file, false);
+                await onObjectDeserialized(file, fileDeserialized);
                 const strippedFilePath = FileSystem.stripExtension(file).replace(filepath, "");
                 this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
             } finally {
@@ -35,31 +35,26 @@ export class ImporterUtil {
         });
 
         await Promise.all(fileProcessingPromises).catch((e) => console.error(e)); // Wait for promises to resolve
+        await this.jsonUtil.writeCacheAsync(); // Execute writing of all of the hashes one single time
         return result;
     }
 
     protected placeObject<T>(fileDeserialized: any, strippedFilePath: string, result: T, strippablePath: string): void {
         const strippedFinalPath = strippedFilePath.replace(strippablePath, "");
-        let temp = result;
         const propertiesToVisit = strippedFinalPath.split("/");
-        for (let i = 0; i < propertiesToVisit.length; i++) {
-            const property = propertiesToVisit[i];
 
-            if (i === propertiesToVisit.length - 1) {
-                temp[property] = fileDeserialized;
+        // Traverse the object structure
+        let current = result;
+
+        for (const [index, property] of propertiesToVisit.entries()) {
+            // If we're at the last property, set the value
+            if (index === propertiesToVisit.length - 1) {
+                current[property] = fileDeserialized;
             } else {
-                if (!temp[property]) {
-                    temp[property] = {};
-                }
-                temp = temp[property];
+                // Ensure the property exists as an object and move deeper
+                current[property] = current[property] || {};
+                current = current[property];
             }
         }
     }
-}
-
-class VisitNode {
-    constructor(
-        public filePath: string,
-        public fileName: string,
-    ) {}
 }

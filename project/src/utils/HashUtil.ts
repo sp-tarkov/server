@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+import crypto, { webcrypto } from "node:crypto";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import crc32 from "buffer-crc32";
 import { mongoid } from "mongoid-js";
@@ -40,7 +40,6 @@ export class HashUtil {
     public generateCRC32ForFile(filePath: string): number {
         return crc32.unsigned(this.fileSystemSync.read(filePath));
     }
-
     /**
      * Create a hash for the data parameter
      * @param algorithm algorithm to use to hash
@@ -51,6 +50,18 @@ export class HashUtil {
         const hashSum = crypto.createHash(algorithm);
         hashSum.update(data);
         return hashSum.digest("hex");
+    }
+
+    /** Creates a SHA-1 hash asynchronously, this doesn't end up blocking.
+     * @param data data to be hashed
+     * @returns A promise with the hash value
+     */
+    public async generateSha1ForDataAsync(data: crypto.BinaryLike): Promise<string> {
+        const encoder = new TextEncoder();
+        const encodedData = encoder.encode(data.toString());
+
+        const hashBuffer = await webcrypto.subtle.digest("SHA-1", encodedData);
+        return [...new Uint8Array(hashBuffer)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
     }
 
     public generateAccountId(): number {

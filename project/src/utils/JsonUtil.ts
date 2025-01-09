@@ -1,5 +1,5 @@
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
-import { FileSystemSync } from "@spt/utils/FileSystemSync";
+import { FileSystem } from "@spt/utils/FileSystem";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { parse, stringify } from "json5";
 import { jsonc } from "jsonc";
@@ -14,7 +14,7 @@ export class JsonUtil {
     protected jsonCachePath = "./user/cache/jsonCache.json";
 
     constructor(
-        @inject("FileSystemSync") protected fileSystemSync: FileSystemSync,
+        @inject("FileSystem") protected fileSystem: FileSystem,
         @inject("HashUtil") protected hashUtil: HashUtil,
         @inject("PrimaryLogger") protected logger: ILogger,
     ) {}
@@ -126,25 +126,23 @@ export class JsonUtil {
         }
     }
 
-    public async deserializeWithCacheCheckAsync<T>(jsonString: string, filePath: string): Promise<T | undefined> {
-        return new Promise((resolve) => {
-            resolve(this.deserializeWithCacheCheck<T>(jsonString, filePath));
-        });
-    }
-
     /**
-     * Take json from file and convert into object
+     * Take json from file and convert into object asynchronously
      * Perform valadation on json during process if json file has not been processed before
      * @param jsonString String to turn into object
      * @param filePath Path to json file being processed
-     * @returns Object
+     * @returns A promise that resolves with the object if successful, if not returns undefined
      */
-    public deserializeWithCacheCheck<T>(jsonString: string, filePath: string): T | undefined {
-        this.ensureJsonCacheExists(this.jsonCachePath);
-        this.hydrateJsonCache(this.jsonCachePath);
+    public async deserializeWithCacheCheckAsync<T>(
+        jsonString: string,
+        filePath: string,
+        writeHashes = true,
+    ): Promise<T | undefined> {
+        await this.ensureJsonCacheExistsAsync(this.jsonCachePath);
+        await this.hydrateJsonCacheAsync(this.jsonCachePath);
 
         // Generate hash of string
-        const generatedHash = this.hashUtil.generateSha1ForData(jsonString);
+        const generatedHash = await this.hashUtil.generateSha1ForDataAsync(jsonString);
 
         if (!this.fileHashes) {
             throw new Error("Unable to deserialize with Cache, file hashes have not been hydrated yet");
@@ -163,7 +161,11 @@ export class JsonUtil {
                 } else {
                     // data valid, save hash and call function again
                     this.fileHashes[filePath] = generatedHash;
-                    this.fileSystemSync.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
+
+                    if (writeHashes) {
+                        await this.fileSystem.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
+                    }
+
                     savedHash = generatedHash;
                 }
                 return data as T;
@@ -184,27 +186,34 @@ export class JsonUtil {
     }
 
     /**
-     * Create file if nothing found
+     * Writes the file hashes to the cache path, to be used manually if writeHashes was set to false on deserializeWithCacheCheckAsync
+     */
+    public async writeCacheAsync(): Promise<void> {
+        await this.fileSystem.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
+    }
+
+    /**
+     * Create file if nothing found asynchronously
      * @param jsonCachePath path to cache
      */
-    protected ensureJsonCacheExists(jsonCachePath: string): void {
+    protected async ensureJsonCacheExistsAsync(jsonCachePath: string): Promise<void> {
         if (!this.jsonCacheExists) {
-            if (!this.fileSystemSync.exists(jsonCachePath)) {
+            if (!(await this.fileSystem.exists(jsonCachePath))) {
                 // Create empty object at path
-                this.fileSystemSync.writeJson(jsonCachePath, {});
+                await this.fileSystem.writeJson(jsonCachePath, {});
             }
             this.jsonCacheExists = true;
         }
     }
 
     /**
-     * Read contents of json cache and add to class field
+     * Read contents of json cache and add to class field asynchronously
      * @param jsonCachePath Path to cache
      */
-    protected hydrateJsonCache(jsonCachePath: string): void {
+    protected async hydrateJsonCacheAsync(jsonCachePath: string): Promise<void> {
         // Get all file hashes
         if (!this.fileHashes) {
-            this.fileHashes = this.deserialize(this.fileSystemSync.read(`${jsonCachePath}`));
+            this.fileHashes = this.deserialize(await this.fileSystem.read(`${jsonCachePath}`));
         }
     }
 
