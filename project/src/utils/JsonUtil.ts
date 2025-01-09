@@ -211,7 +211,7 @@ export class JsonUtil {
     }
 
     /**
-     * Read contents of json cache and add to class field asynchronously
+     * Read contents of json cache and add to class field
      * @param jsonCachePath Path to cache
      */
     protected async hydrateJsonCache(jsonCachePath: string): Promise<void> {
