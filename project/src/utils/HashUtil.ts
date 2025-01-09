@@ -37,7 +37,7 @@ export class HashUtil {
         return this.generateHashForData("sha1", data);
     }
 
-    public generateCRC32ForFile(filePath: fs.PathLike): number {
+    public generateCRC32ForFile(filePath: string): number {
         return crc32.unsigned(this.fileSystemSync.read(filePath));
     }
 
