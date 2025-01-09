@@ -154,11 +154,11 @@
         "67408903268737ef6908d432",
         "67499b9b909d2013670a5029",
         "6638a5474e92f038531e210e",
-		"66d9f8744827a77e870ecaf1",
-		"6707d0804e617ec94f0e562f",
-		"67449b6c89d5e1ddc603f504",
-		"6740987b89d5e1ddc603f4f0",
-		"6707d0bdaab679420007e01a"
+        "66d9f8744827a77e870ecaf1",
+        "6707d0804e617ec94f0e562f",
+        "67449b6c89d5e1ddc603f504",
+        "6740987b89d5e1ddc603f4f0",
+        "6707d0bdaab679420007e01a"
     ],
     "useDifficultyOverride": false,
     "difficulty": "AsOnline",
@@ -730,11 +730,11 @@
                 "min": 5000,
                 "max": 0
             },
-			"pocket": {
+            "pocket": {
                 "min": 5000,
                 "max": 0
             },
-			"vest": {
+            "vest": {
                 "min": 5000,
                 "max": 0
             }
@@ -746,11 +746,11 @@
                 "min": 10000,
                 "max": 0
             },
-			"pocket": {
+            "pocket": {
                 "min": 10000,
                 "max": 0
             },
-			"vest": {
+            "vest": {
                 "min": 10000,
                 "max": 0
             }

@@ -137,11 +137,11 @@
         "6707d13e4e617ec94f0e5631",
         "675dc9d37ae1a8792107ca96",
         "675dcb0545b1a2d108011b2b",
-		"66d9f8744827a77e870ecaf1",
-		"6707d0804e617ec94f0e562f",
-		"67449b6c89d5e1ddc603f504",
-		"6740987b89d5e1ddc603f4f0",
-		"6707d0bdaab679420007e01a"
+        "66d9f8744827a77e870ecaf1",
+        "6707d0804e617ec94f0e562f",
+        "67449b6c89d5e1ddc603f504",
+        "6740987b89d5e1ddc603f4f0",
+        "6707d0bdaab679420007e01a"
     ],
     "bossItems": [
         "6275303a9f372d6ea97f9ec7",
@@ -387,43 +387,43 @@
             "_parent": "677d14a27757dcc54a3054fb",
             "_type": "Preset"
         },
-		{
-		  "_changeWeaponName": false,
-		  "_encyclopedia": "6759af0f9c8a538dd70bfae6",
-		  "_id": "677e90e191de7ae4136e3967",
-		  "_items": [
-			{
-			  "_id": "677e90d1fc28426ede1448bd",
-			  "_tpl": "6759af0f9c8a538dd70bfae6"
-			},
-			{
-			  "_id": "677e90e71b6c92662b1b5cce",
-			  "_tpl": "6571133d22996eaf11088200",
-			  "parentId": "677e90d1fc28426ede1448bd",
-			  "slotId": "Helmet_top"
-			},
-			{
-			  "_id": "677e90ef6b6b559c36d31485",
-			  "_tpl": "6571138e818110db4600aa71",
-			  "parentId": "677e90d1fc28426ede1448bd",
-			  "slotId": "Helmet_back"
-			},
-			{
-			  "_id": "677e90f2e2de53f5b48dd35d",
-			  "_tpl": "657112fa818110db4600aa6b",
-			  "parentId": "677e90d1fc28426ede1448bd",
-			  "slotId": "Helmet_ears"
-			},
-			{
-			  "_id": "677e90f61cc7ed9f89331cac",
-			  "_tpl": "5c0e842486f77443a74d2976",
-			  "parentId": "677e90d1fc28426ede1448bd",
-			  "slotId": "mod_equipment"
-			}
-		  ],
-		  "_name": "Maska-1SCh bulletproof helmet (Christmas Edition) default",
-		  "_parent": "677e90d1fc28426ede1448bd",
-		  "_type": "Preset"
-		}
+        {
+            "_changeWeaponName": false,
+            "_encyclopedia": "6759af0f9c8a538dd70bfae6",
+            "_id": "677e90e191de7ae4136e3967",
+            "_items": [
+                {
+                    "_id": "677e90d1fc28426ede1448bd",
+                    "_tpl": "6759af0f9c8a538dd70bfae6"
+                },
+                {
+                    "_id": "677e90e71b6c92662b1b5cce",
+                    "_tpl": "6571133d22996eaf11088200",
+                    "parentId": "677e90d1fc28426ede1448bd",
+                    "slotId": "Helmet_top"
+                },
+                {
+                    "_id": "677e90ef6b6b559c36d31485",
+                    "_tpl": "6571138e818110db4600aa71",
+                    "parentId": "677e90d1fc28426ede1448bd",
+                    "slotId": "Helmet_back"
+                },
+                {
+                    "_id": "677e90f2e2de53f5b48dd35d",
+                    "_tpl": "657112fa818110db4600aa6b",
+                    "parentId": "677e90d1fc28426ede1448bd",
+                    "slotId": "Helmet_ears"
+                },
+                {
+                    "_id": "677e90f61cc7ed9f89331cac",
+                    "_tpl": "5c0e842486f77443a74d2976",
+                    "parentId": "677e90d1fc28426ede1448bd",
+                    "slotId": "mod_equipment"
+                }
+            ],
+            "_name": "Maska-1SCh bulletproof helmet (Christmas Edition) default",
+            "_parent": "677e90d1fc28426ede1448bd",
+            "_type": "Preset"
+        }
     ]
 }

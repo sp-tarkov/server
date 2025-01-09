@@ -539,11 +539,11 @@
         "nonTriggered": 80,
         "triggered": 90
     },
-	"tplsToStripChildItemsFrom": [
-		"63a8970d7108f713591149f5",
-		"63a897c6b1ff6e29734fcc95",
-		"63a898a328e385334e0640a5",
-		"634959225289190e5e773b3b"
-	],
+    "tplsToStripChildItemsFrom": [
+        "63a8970d7108f713591149f5",
+        "63a897c6b1ff6e29734fcc95",
+        "63a898a328e385334e0640a5",
+        "634959225289190e5e773b3b"
+    ],
     "nonMaps": ["base", "develop", "hideout", "privatearea", "suburbs", "terminal", "town"]
 }

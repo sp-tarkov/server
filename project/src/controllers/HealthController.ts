@@ -49,10 +49,7 @@ export class HealthController {
         // Update medkit used (hpresource)
         const healingItemToUse = pmcData.Inventory.items.find((item) => item._id === request.item);
         if (!healingItemToUse) {
-            const errorMessage = this.localisationService.getText(
-                "health-healing_item_not_found",
-                request.item,
-            );
+            const errorMessage = this.localisationService.getText("health-healing_item_not_found", request.item);
             this.logger.error(errorMessage);
 
             return this.httpResponse.appendErrorToOutput(output, errorMessage);
