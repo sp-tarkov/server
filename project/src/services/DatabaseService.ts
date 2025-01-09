@@ -22,6 +22,7 @@ import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
+import { Timer } from "@spt/utils/Timer";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -333,8 +334,7 @@ export class DatabaseService {
      * Validates that the database doesn't contain invalid ID data
      */
     public validateDatabase(): void {
-        const start = performance.now();
-
+        const timer = new Timer();
         this.isDataValid =
             this.validateTable(this.getQuests(), "quest") &&
             this.validateTable(this.getTraders(), "trader") &&
@@ -345,8 +345,7 @@ export class DatabaseService {
             this.logger.error(this.localisationService.getText("database-invalid_data"));
         }
 
-        const validateTime = performance.now() - start;
-        this.logger.debug(`ID validation took: ${validateTime.toFixed(2)}ms`);
+        this.logger.debug(`Database ID validation took ${timer.getTime("ms")}ms`);
     }
 
     /**

@@ -25,6 +25,7 @@ import { LocalisationService } from "@spt/services/LocalisationService";
 import { HashUtil } from "@spt/utils/HashUtil";
 import { JsonUtil } from "@spt/utils/JsonUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
+import { Timer } from "@spt/utils/Timer";
 import { Watermark } from "@spt/utils/Watermark";
 import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
@@ -308,7 +309,7 @@ export class ProfileFixerService {
      * @param pmcProfile The profile to validate quest productions for
      */
     protected verifyQuestProductionUnlocks(pmcProfile: IPmcData): void {
-        const start = performance.now();
+        const timer = new Timer();
 
         const quests = this.databaseService.getQuests();
         const profileQuests = pmcProfile.Quests;
@@ -336,8 +337,7 @@ export class ProfileFixerService {
             }
         }
 
-        const validateTime = performance.now() - start;
-        this.logger.debug(`Quest Production Unlock validation took: ${validateTime.toFixed(2)}ms`);
+        this.logger.debug(`Quest production unlock validation took ${timer.getTime("ms")}ms`);
     }
 
     /**
