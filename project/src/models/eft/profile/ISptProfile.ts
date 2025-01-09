@@ -227,10 +227,13 @@ export interface IEffects {
     RightLeg: IRightLeg;
 }
 
+// biome-ignore lint/complexity/noBannedTypes: Not sure of typing on these for now.
 export type IHead = {};
 
+// biome-ignore lint/complexity/noBannedTypes: Not sure of typing on these for now.
 export type IChest = {};
 
+// biome-ignore lint/complexity/noBannedTypes: Not sure of typing on these for now.
 export type IStomach = {};
 
 export interface ILeftArm {

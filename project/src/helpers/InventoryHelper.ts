@@ -177,10 +177,14 @@ export class InventoryHelper {
             // Ensure item has upd object
             this.itemHelper.addUpdObjectToItem(item);
 
+            if (!item.upd) {
+                item.upd = {};
+            }
+
             if (foundInRaid) {
                 item.upd.SpawnedInSession = foundInRaid;
             } else {
-                delete item.upd.SpawnedInSession;
+                item.upd.SpawnedInSession = false;
             }
         }
     }
@@ -191,14 +195,17 @@ export class InventoryHelper {
      */
     protected removeTraderRagfairRelatedUpdProperties(upd: IUpd): void {
         if (upd.UnlimitedCount !== undefined) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here since we're attempting to remove this fully here.
             delete upd.UnlimitedCount;
         }
 
         if (upd.BuyRestrictionCurrent !== undefined) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here since we're attempting to remove this fully here.
             delete upd.BuyRestrictionCurrent;
         }
 
         if (upd.BuyRestrictionMax !== undefined) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here since we're attempting to remove this fully here.
             delete upd.BuyRestrictionMax;
         }
     }
@@ -997,6 +1004,7 @@ export class InventoryHelper {
                 } else {
                     // No location in request, delete it
                     if (itemToMove.location) {
+                        // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
                         delete itemToMove.location;
                     }
                 }
@@ -1059,6 +1067,7 @@ export class InventoryHelper {
         } else {
             // Moved from slot with location to one without, clean up
             if (matchingInventoryItem.location) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
                 delete matchingInventoryItem.location;
             }
         }

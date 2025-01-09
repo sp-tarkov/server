@@ -38,14 +38,14 @@ export class ModHashCacheService {
         return this.getStoredValue(modName) === hash;
     }
 
-    public calculateAndCompareHash(modName: string, modContent: string): boolean {
-        const generatedHash = this.hashUtil.generateSha1ForData(modContent);
+    public async calculateAndCompareHash(modName: string, modContent: string): Promise<boolean> {
+        const generatedHash = await this.hashUtil.generateSha1ForDataAsync(modContent);
 
         return this.matchWithStoredHash(modName, generatedHash);
     }
 
-    public calculateAndStoreHash(modName: string, modContent: string): void {
-        const generatedHash = this.hashUtil.generateSha1ForData(modContent);
+    public async calculateAndStoreHash(modName: string, modContent: string): Promise<void> {
+        const generatedHash = await this.hashUtil.generateSha1ForDataAsync(modContent);
 
         this.storeValue(modName, generatedHash);
     }

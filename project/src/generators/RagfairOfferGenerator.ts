@@ -403,7 +403,9 @@ export class RagfairOfferGenerator {
             this.itemHelper.reparentItemAndChildren(clonedAssort[0], clonedAssort);
 
             // Clear unnecessary properties
+            // biome-ignore lint/performance/noDelete: Deleting is fine here, we're getting rid of unecessary properties.
             delete clonedAssort[0].parentId;
+            // biome-ignore lint/performance/noDelete: Deleting is fine here, we're getting rid of unecessary properties.
             delete clonedAssort[0].slotId;
 
             assortSingleOfferProcesses.push(

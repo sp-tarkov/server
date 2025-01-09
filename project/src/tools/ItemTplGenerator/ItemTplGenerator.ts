@@ -350,14 +350,16 @@ export class ItemTplGenerator {
     }
 
     private cleanCaliber(ammoCaliber: string): string {
-        ammoCaliber = ammoCaliber.replace("CALIBER", "");
-        ammoCaliber = ammoCaliber.replace("PARA", "");
-        ammoCaliber = ammoCaliber.replace("NATO", "");
+        let ammoCaliberToClean = ammoCaliber;
+
+        ammoCaliberToClean = ammoCaliberToClean.replace("CALIBER", "");
+        ammoCaliberToClean = ammoCaliberToClean.replace("PARA", "");
+        ammoCaliberToClean = ammoCaliberToClean.replace("NATO", "");
 
         // Special case for 45ACP
-        ammoCaliber = ammoCaliber.replace("1143X23ACP", "45ACP");
+        ammoCaliberToClean = ammoCaliberToClean.replace("1143X23ACP", "45ACP");
 
-        return ammoCaliber;
+        return ammoCaliberToClean;
     }
 
     private getAmmoBoxPrefix(item: ITemplateItem): string {

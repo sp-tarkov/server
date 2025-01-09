@@ -571,9 +571,12 @@ export class BotWeaponGenerator {
         }
 
         // Inner join the weapons allowed + passed in cartridge pool to get compatible cartridges
-        const compatibleCartridges = Object.keys(cartridgePoolForWeapon)
-            .filter((cartridge) => compatibleCartridgesInTemplate.includes(cartridge))
-            .reduce((acc, key) => ({ ...acc, [key]: cartridgePoolForWeapon[key] }), {});
+        const compatibleCartridges = {};
+        for (const cartridge of Object.keys(cartridgePoolForWeapon)) {
+            if (compatibleCartridgesInTemplate.includes(cartridge)) {
+                compatibleCartridges[cartridge] = cartridgePoolForWeapon[cartridge];
+            }
+        }
 
         if (!compatibleCartridges) {
             // No compatible cartridges, use default

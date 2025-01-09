@@ -309,20 +309,22 @@ export class RepeatableQuestRewardGenerator {
             itemsToReturn.push({ item: chosenItemFromPool, stackSize: rewardItemStackCount });
 
             const itemCost = this.presetHelper.getDefaultPresetOrItemPrice(chosenItemFromPool._id);
-            itemRewardBudget -= rewardItemStackCount * itemCost;
+            const calculatedItemRewardBudget = itemRewardBudget - rewardItemStackCount * itemCost;
             this.logger.debug(`Added item: ${chosenItemFromPool._id} with price: ${rewardItemStackCount * itemCost}`);
 
             // If we still have budget narrow down possible items
-            if (itemRewardBudget > 0) {
+            if (calculatedItemRewardBudget > 0) {
                 // Filter possible reward items to only items with a price below the remaining budget
                 exhausableItemPool = new ExhaustableArray(
-                    this.filterRewardPoolWithinBudget(itemPool, itemRewardBudget, 0),
+                    this.filterRewardPoolWithinBudget(itemPool, calculatedItemRewardBudget, 0),
                     this.randomUtil,
                     this.cloner,
                 );
 
                 if (!exhausableItemPool.hasValues()) {
-                    this.logger.debug(`Reward pool empty with: ${itemRewardBudget} roubles of budget remaining`);
+                    this.logger.debug(
+                        `Reward pool empty with: ${calculatedItemRewardBudget} roubles of budget remaining`,
+                    );
                     break; // No reward items left, exit
                 }
             }

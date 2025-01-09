@@ -256,6 +256,7 @@ export class GameController {
         // Hideout Improvement property changed name
         if ((fullProfile.characters.pmc.Hideout as any).Improvement) {
             fullProfile.characters.pmc.Hideout.Improvements = (fullProfile.characters.pmc.Hideout as any).Improvement;
+            // biome-ignore lint/performance/noDelete: Delete is fine here, as we're seeking to remove these entirely
             delete (fullProfile.characters.pmc.Hideout as any).Improvement;
             this.logger.warning(`Migration: Moved Hideout Improvement data to new property 'Improvements'`);
         }
@@ -273,12 +274,14 @@ export class GameController {
         // Remove PMC 'ragfair' from trader list
         if (fullProfile.characters.pmc.TradersInfo.ragfair) {
             this.logger.warning("Migration: deleting: ragfair traderinfo object from PMC");
+            // biome-ignore lint/performance/noDelete: Delete is fine here, as we're seeking to remove these entirely
             delete fullProfile.characters.pmc.TradersInfo.ragfair;
         }
 
         // Remove SCAV 'ragfair' from trader list
         if (fullProfile.characters.scav.TradersInfo.ragfair) {
             this.logger.warning("Migration: deleting: ragfair traderinfo object from PMC");
+            // biome-ignore lint/performance/noDelete: Delete is fine here, as we're seeking to remove these entirely
             delete fullProfile.characters.scav.TradersInfo.ragfair;
         }
 
@@ -561,6 +564,7 @@ export class GameController {
     protected checkForAndRemoveUndefinedDialogs(fullProfile: ISptProfile): void {
         const undefinedDialog = fullProfile.dialogues.undefined;
         if (undefinedDialog) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here, as we're seeking to delete undefined dialogs.
             delete fullProfile.dialogues.undefined;
         }
     }
