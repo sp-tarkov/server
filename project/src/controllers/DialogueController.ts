@@ -83,10 +83,12 @@ export class DialogueController {
 
         // Add any friends the user has after the chatbots
         const profile = this.profileHelper.getFullProfile(sessionID);
-        for (const friendId of profile?.friends) {
-            const friendProfile = this.profileHelper.getChatRoomMemberFromSessionId(friendId);
-            if (friendProfile) {
-                friends.push(friendProfile);
+        if (profile?.friends) {
+            for (const friendId of profile.friends) {
+                const friendProfile = this.profileHelper.getChatRoomMemberFromSessionId(friendId);
+                if (friendProfile) {
+                    friends.push(friendProfile);
+                }
             }
         }
 

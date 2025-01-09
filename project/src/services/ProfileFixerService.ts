@@ -83,25 +83,27 @@ export class ProfileFixerService {
      */
     public checkForAndFixDialogueAttachments(fullProfile: ISptProfile): void {
         for (const traderDialogues of Object.values(fullProfile.dialogues)) {
-            for (const message of traderDialogues?.messages) {
-                // Skip any messages without attached items
-                if (!message.items?.data || !message.items?.stash) {
-                    continue;
-                }
+            if (traderDialogues?.messages) {
+                for (const message of traderDialogues.messages) {
+                    // Skip any messages without attached items
+                    if (!message.items?.data || !message.items?.stash) {
+                        continue;
+                    }
 
-                // Skip any messages that don't have a stashId collision with the player's equipment ID
-                if (message.items?.stash !== fullProfile.characters?.pmc?.Inventory?.equipment) {
-                    continue;
-                }
+                    // Skip any messages that don't have a stashId collision with the player's equipment ID
+                    if (message.items?.stash !== fullProfile.characters?.pmc?.Inventory?.equipment) {
+                        continue;
+                    }
 
-                // Otherwise we need to generate a new unique stash ID for this message's attachments
-                message.items.stash = this.hashUtil.generate();
-                message.items.data = this.itemHelper.adoptOrphanedItems(message.items.stash, message.items.data);
+                    // Otherwise we need to generate a new unique stash ID for this message's attachments
+                    message.items.stash = this.hashUtil.generate();
+                    message.items.data = this.itemHelper.adoptOrphanedItems(message.items.stash, message.items.data);
 
-                // Because `adoptOrphanedItems` sets the slotId to `hideout`, we need to re-set it to `main` to work with mail
-                for (const item of message.items.data) {
-                    if (item.slotId === "hideout") {
-                        item.slotId = "main";
+                    // Because `adoptOrphanedItems` sets the slotId to `hideout`, we need to re-set it to `main` to work with mail
+                    for (const item of message.items.data) {
+                        if (item.slotId === "hideout") {
+                            item.slotId = "main";
+                        }
                     }
                 }
             }
@@ -325,15 +327,25 @@ export class ProfileFixerService {
                 const productionRewards = quest.rewards.Started?.filter(
                     (reward) => reward.type === QuestRewardType.PRODUCTIONS_SCHEME,
                 );
-                productionRewards?.forEach((reward) => this.verifyQuestProductionUnlock(pmcProfile, reward, quest));
+
+                if (productionRewards) {
+                    for (const reward of productionRewards) {
+                        this.verifyQuestProductionUnlock(pmcProfile, reward, quest);
+                    }
+                }
             }
 
             // For successful quests, check for unlocks in the `Success` rewards
-            if (profileQuest.status == QuestStatus.Success) {
+            if (profileQuest.status === QuestStatus.Success) {
                 const productionRewards = quest.rewards.Success?.filter(
                     (reward) => reward.type === QuestRewardType.PRODUCTIONS_SCHEME,
                 );
-                productionRewards?.forEach((reward) => this.verifyQuestProductionUnlock(pmcProfile, reward, quest));
+
+                if (productionRewards) {
+                    for (const reward of productionRewards) {
+                        this.verifyQuestProductionUnlock(pmcProfile, reward, quest);
+                    }
+                }
             }
         }
 
