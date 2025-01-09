@@ -25,7 +25,7 @@ export class ImporterUtil {
             try {
                 const fileData = await this.fileSystem.read(file);
                 await onReadCallback(file, fileData);
-                const fileDeserialized = await this.jsonUtil.deserializeWithCacheCheckAsync<any>(fileData, file, false);
+                const fileDeserialized = await this.jsonUtil.deserializeWithCacheCheck<any>(fileData, file, false);
                 await onObjectDeserialized(file, fileDeserialized);
                 const strippedFilePath = FileSystem.stripExtension(file).replace(filepath, "");
                 this.placeObject(fileDeserialized, strippedFilePath, result, strippablePath);
@@ -35,7 +35,7 @@ export class ImporterUtil {
         });
 
         await Promise.all(fileProcessingPromises).catch((e) => console.error(e)); // Wait for promises to resolve
-        await this.jsonUtil.writeCacheAsync(); // Execute writing of all of the hashes one single time
+        await this.jsonUtil.writeCache(); // Execute writing of all of the hashes one single time
         return result;
     }
 

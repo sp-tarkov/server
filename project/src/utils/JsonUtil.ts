@@ -127,19 +127,19 @@ export class JsonUtil {
     }
 
     /**
-     * Take json from file and convert into object asynchronously
+     * Take json from file and convert into object
      * Perform valadation on json during process if json file has not been processed before
      * @param jsonString String to turn into object
      * @param filePath Path to json file being processed
      * @returns A promise that resolves with the object if successful, if not returns undefined
      */
-    public async deserializeWithCacheCheckAsync<T>(
+    public async deserializeWithCacheCheck<T>(
         jsonString: string,
         filePath: string,
         writeHashes = true,
     ): Promise<T | undefined> {
-        await this.ensureJsonCacheExistsAsync(this.jsonCachePath);
-        await this.hydrateJsonCacheAsync(this.jsonCachePath);
+        await this.ensureJsonCacheExists(this.jsonCachePath);
+        await this.hydrateJsonCache(this.jsonCachePath);
 
         // Generate hash of string
         const generatedHash = await this.hashUtil.generateSha1ForDataAsync(jsonString);
@@ -186,9 +186,9 @@ export class JsonUtil {
     }
 
     /**
-     * Writes the file hashes to the cache path, to be used manually if writeHashes was set to false on deserializeWithCacheCheckAsync
+     * Writes the file hashes to the cache path, to be used manually if writeHashes was set to false on deserializeWithCacheCheck
      */
-    public async writeCacheAsync(): Promise<void> {
+    public async writeCache(): Promise<void> {
         await this.fileSystem.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
     }
 
@@ -196,7 +196,7 @@ export class JsonUtil {
      * Create file if nothing found asynchronously
      * @param jsonCachePath path to cache
      */
-    protected async ensureJsonCacheExistsAsync(jsonCachePath: string): Promise<void> {
+    protected async ensureJsonCacheExists(jsonCachePath: string): Promise<void> {
         if (!this.jsonCacheExists) {
             if (!(await this.fileSystem.exists(jsonCachePath))) {
                 // Create empty object at path
@@ -210,7 +210,7 @@ export class JsonUtil {
      * Read contents of json cache and add to class field asynchronously
      * @param jsonCachePath Path to cache
      */
-    protected async hydrateJsonCacheAsync(jsonCachePath: string): Promise<void> {
+    protected async hydrateJsonCache(jsonCachePath: string): Promise<void> {
         // Get all file hashes
         if (!this.fileHashes) {
             this.fileHashes = this.deserialize(await this.fileSystem.read(`${jsonCachePath}`));
