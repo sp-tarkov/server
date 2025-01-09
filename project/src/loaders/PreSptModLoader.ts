@@ -394,7 +394,7 @@ export class PreSptModLoader implements IModLoader {
     protected async addModAsync(mod: string, pkg: IPackageJsonData): Promise<void> {
         const modPath = this.getModPath(mod);
 
-        const typeScriptFiles = this.fileSystemSync.getFiles(`${modPath}src`, true, ["ts"]);
+        const typeScriptFiles = this.fileSystemSync.getFiles(`${modPath}src`, true, ["ts"], true);
 
         if (typeScriptFiles.length > 0) {
             if (ProgramStatics.COMPILED) {

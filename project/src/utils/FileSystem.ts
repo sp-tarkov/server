@@ -302,13 +302,21 @@ export class FileSystem {
      * @param directory The directory to get files from.
      * @param searchRecursive Whether to search recursively.
      * @param fileTypes An optional array of file extensions to filter by (without the dot).
+     * @param includeInputDir If true, the returned paths will include the directory parameter path. If false, the paths
+     *                        will begin from within the directory parameter path. Default false.
      * @returns A promise that resolves with an array of file paths.
      */
-    public async getFiles(directory: string, searchRecursive = false, fileTypes?: string[]): Promise<string[]> {
+    public async getFiles(
+        directory: string,
+        searchRecursive = false,
+        fileTypes?: string[],
+        includeInputDir = false,
+    ): Promise<string[]> {
         if (!(await fsExtra.pathExists(directory))) {
             return [];
         }
-        const dirents = await fsExtra.readdir(directory, { withFileTypes: true, recursive: searchRecursive });
+        const directoryNormalized = path.normalize(directory).replace(/\\/g, "/");
+        const dirents = await fsExtra.readdir(directoryNormalized, { withFileTypes: true, recursive: searchRecursive });
         return (
             dirents
                 // Filter out anything that isn't a file.
@@ -320,6 +328,8 @@ export class FileSystem {
                 })
                 // Join and normalize the input directory and dirent.name to use forward slashes.
                 .map((dirent) => path.join(dirent.parentPath, dirent.name).replace(/\\/g, "/"))
+                // Optionally remove the input directory from the path.
+                .map((dir) => (includeInputDir ? dir : dir.replace(directoryNormalized, "")))
         );
     }
 
@@ -329,20 +339,29 @@ export class FileSystem {
      * Will always return paths with forward slashes.
      *
      * @param directory The directory to get directories from.
-     * @param searchRecursive Whether to search recursively.
+     * @param searchRecursive Whether to search recursively. Default false.
+     * @param includeInputDir If true, the returned paths will include the directory parameter path. If false, the paths
+     *                        will begin from within the directory parameter path. Default false.
      * @returns A promise that resolves with an array of directory paths.
      */
-    public async getDirectories(directory: string, searchRecursive = false): Promise<string[]> {
+    public async getDirectories(
+        directory: string,
+        searchRecursive = false,
+        includeInputDir = false,
+    ): Promise<string[]> {
         if (!(await fsExtra.pathExists(directory))) {
             return [];
         }
-        const dirents = await fsExtra.readdir(directory, { withFileTypes: true, recursive: searchRecursive });
+        const directoryNormalized = path.normalize(directory).replace(/\\/g, "/");
+        const dirents = await fsExtra.readdir(directoryNormalized, { withFileTypes: true, recursive: searchRecursive });
         return (
             dirents
                 // Filter out anything that isn't a directory.
                 .filter((dirent) => dirent.isDirectory())
                 // Join and normalize the input directory and dirent.name to use forward slashes.
-                .map((dirent) => path.join(directory, dirent.name).replace(/\\/g, "/"))
+                .map((dirent) => path.join(dirent.parentPath, dirent.name).replace(/\\/g, "/"))
+                // Optionally remove the input directory from the path.
+                .map((dir) => (includeInputDir ? dir : dir.replace(directoryNormalized, "")))
         );
     }
 }

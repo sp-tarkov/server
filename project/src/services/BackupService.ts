@@ -42,7 +42,7 @@ export class BackupService {
         // Fetch all profiles in the profile directory.
         let currentProfiles: string[] = [];
         try {
-            currentProfiles = await this.fileSystem.getFiles(this.profileDir, false, ["json"]);
+            currentProfiles = await this.fileSystem.getFiles(this.profileDir, false, ["json"], true);
         } catch (error) {
             this.logger.debug("Skipping profile backup: Unable to read profiles directory");
             return;
@@ -147,7 +147,7 @@ export class BackupService {
      * @returns A promise that resolves to an array of sorted backup file paths.
      */
     private async getBackupPaths(dir: string): Promise<string[]> {
-        const backups = await this.fileSystem.getFiles(dir, false, ["json"]);
+        const backups = await this.fileSystem.getFiles(dir, false, ["json"], true);
         return backups.sort(this.compareBackupDates.bind(this));
     }
 

@@ -35,7 +35,7 @@ export class ConfigServer {
 
         // Get all filepaths
         const filepath = ProgramStatics.COMPILED ? "SPT_Data/Server/configs/" : "./assets/configs/";
-        const files = this.fileSystemSync.getFiles(filepath, true, this.acceptableFileExtensions);
+        const files = this.fileSystemSync.getFiles(filepath, true, this.acceptableFileExtensions, true);
 
         // Add file content to result
         for (const file of files) {

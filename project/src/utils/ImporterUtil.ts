@@ -18,7 +18,8 @@ export class ImporterUtil {
     ): Promise<T> {
         const result = {} as T;
 
-        const allFiles = await this.fileSystem.getFiles(filepath, true, ["json"]);
+        const allFiles = await this.fileSystem.getFiles(filepath, true, ["json"], true);
+
         const progressWriter = new ProgressWriter(allFiles.length); // Progress bar initialization
         const fileProcessingPromises = allFiles.map(async (file) => {
             try {

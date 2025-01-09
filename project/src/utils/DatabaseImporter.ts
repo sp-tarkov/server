@@ -71,7 +71,7 @@ export class DatabaseImporter implements OnLoad {
         await this.hydrateDatabase(this.filepath);
 
         const imageFilePath = `${this.filepath}images/`;
-        const directories = await this.fileSystem.getDirectories(imageFilePath, true);
+        const directories = await this.fileSystem.getDirectories(imageFilePath);
         await this.loadImagesAsync(imageFilePath, directories, [
             "/files/achievement/",
             "/files/CONTENT/banners/",
@@ -145,7 +145,7 @@ export class DatabaseImporter implements OnLoad {
     public async loadImagesAsync(filepath: string, directories: string[], routes: string[]): Promise<void> {
         for (const directoryIndex in directories) {
             // Get all files in directory
-            const filesInDirectory = await this.fileSystem.getFiles(`${filepath}${directories[directoryIndex]}`, true);
+            const filesInDirectory = await this.fileSystem.getFiles(`${filepath}${directories[directoryIndex]}`);
             for (const file of filesInDirectory) {
                 // Register each file in image router
                 const filename = FileSystem.stripExtension(file);
