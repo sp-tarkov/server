@@ -132,8 +132,6 @@
     "modloader-error_parsing_mod_load_order": "Erro ao analisar ordem de carregamento de mods",
     "modloader-incompatibilities_not_string_array": "A propriedade 'incompatibilities' no package.json do mod %s deve ser um array de strings",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}} é incompatível com {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Instalando dependências para o Mod: {{name}} por: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} por: {{author}} requer dependências externas mas a funcionalidade está desativada no momento. Vai a \"{{configPath}}\", define \"{{configOption}}\" para true e reinicia o servidor.\nAo ativar esta funcionalidade assumes toda a responsabilidade pelo o que o {{name}} faz download para o teu computador.",
     "modloader-invalid_version_property": "O package.json do Mod %s contém uma string de versão inválida",
     "modloader-is_client_mod": "Mod (%s) é um mod de cliente e deve ser colocado na seguinte pasta: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "O '{{modOneName}}' e '{{modTwoName}}' têm requisitos de ordem de carregamento que entram em conflito. O servidor é incapaz de iniciar e será desligado até isto ser corrigido",

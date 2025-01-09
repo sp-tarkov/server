@@ -140,8 +140,6 @@
     "modloader-error_parsing_mod_load_order": "Fel vid analys av modladdningsordning",
     "modloader-incompatibilities_not_string_array": "Mod %s package.json-egenskapen 'incompatibilities' bör vara en strängmatris",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}} är inkompatibel med {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Installerar beroenden för Mod: {{name}} av: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} by: {{author}} kräver externa beroenden men funktionen är för närvarande inaktiverad, gå till \"{{configPath}}\", sätt \"{{configOption}}\" till true och starta om servern.\nGenom att aktivera detta accepterar du allt ansvar för vad {{name}} laddar ner till din dator.",
     "modloader-invalid_version_property": "Mod %s package.json innehåller en ogiltig versionssträng",
     "modloader-is_client_mod": "Mod (%s) är en klientmod och bör placeras i följande mapp: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "`{{modOneName}}` och `{{modTwoName}}` har motstridiga laddordningskrav, servern kan inte starta förrän detta är fixat och kommer att stängas ner",

@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "分析模组加载顺序时出错",
     "modloader-incompatibilities_not_string_array": "模组%s package.json属性“incompatibilities”应该是字符串数组",
     "modloader-incompatible_mod_found": "模组 {{author}}-{{name}} 不兼容 {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "正在安装依赖 模组：{{name}} 作者：{{author}}",
-    "modloader-installing_external_dependencies_disabled": "作者{{author}} 的模组{{name}} 需要下载外部（非SPT）组件才能正常运行，但目前下载机制是关闭的。需要到这里：\n”{{configPath}}”将“{{configOption}}”设置为 true，然后重启服务器。\n\n允许此下载机制代表用户对所有{{name}} 模组将要下载的文件负全部责任。",
     "modloader-invalid_sptVersion_field": "模组 %s 在sptVersion字段中包含无效的semver字符串。有效值示例：https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "模组 %s package.json包含无效的版本字符串",
     "modloader-is_client_mod": "模组 %s 是一个客户端模组，应该被放置在这个文件夹：/spt/bepinex/plugins",

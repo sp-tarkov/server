@@ -129,8 +129,6 @@
     "modloader-error_parsing_mod_load_order": "Feil under parsing av mod lastings rekkefølge",
     "modloader-incompatibilities_not_string_array": "Mod %s package.json egenskaps 'inkompatibiliteter' bør være en streng array",
     "modloader-incompatible_mod_found": "Mod {{author}}–{{name}} er inkompatibel med {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Installerer avhengigheter for Mod: {{name}} av: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} av: {{author}} krever eksterne avhengigheter, men funksjonen er for øyeblikket deaktivert. gå til \"{{configPath}}\", sett \"{{configOption}}\" til sant, og start serveren på nytt.\nVed å aktivere dette godtar du alt ansvar for hva {{name}} laster ned til maskinen din.",
     "modloader-invalid_version_property": "Mod %s pakke.json inneholder en ugyldig versjonstreng",
     "modloader-is_client_mod": "Mod (%s) er en klientmod og skal plasseres i følgende mappe: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "`{{modOneName}}` og `{{modTwoName}}` har motstridende krav for innlastingsrekkefølge. serveren kan ikke starte før dette er fikset og vil slå seg av",

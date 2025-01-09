@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "Ошибка парсинга порядка загрузки модов",
     "modloader-incompatibilities_not_string_array": "В файле package.json мода %s свойство 'incompatibilities' должно быть массивом строк",
     "modloader-incompatible_mod_found": "Мод {{author}}-{{name}} не совместим с модом {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Установка зависимостей мода: {{name}} от: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Мод: {{name}} автор: {{author}} требует внешних зависимостей, но эта функция в настоящее время отключена, перейдите к \"{{configPath}}\", установите для \"{{configOption}}\" значение true и перезапустите сервер.\nВключив эту опцию, вы принимаете на себя всю ответственность за то, что {{name}} загружает на ваш компьютер.",
     "modloader-invalid_sptVersion_field": "В поле sptVersion мода %s содержится некорректная семвер-строка. См. примеры корректных значений: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "В моде %s package.json содержит недопустимую строку версии",
     "modloader-is_client_mod": "Мод (%s) является модом для клиента и должен находиться в следующей папке: /spt/bepinex/plugins",

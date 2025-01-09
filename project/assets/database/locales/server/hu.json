@@ -167,8 +167,6 @@
     "modloader-error_parsing_mod_load_order": "Hiba a mod betöltési sorrendjének elemzésekor",
     "modloader-incompatibilities_not_string_array": "A Mod %s package.json „incompatibilities” tulajdonságának karakterlánc tömbnek kell lennie",
     "modloader-incompatible_mod_found": "{{author}}-{{name}} mod nem kompatibilis a következővel: {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "A segédprogramok telepítése a következőhö modhoz: {{name}}, {{author}} által készítve",
-    "modloader-installing_external_dependencies_disabled": "A(z) {{name}} mod, melyet {{author}} készített, külső függőségeket igényel, de ez a funkció jelenleg ki van kapcsolva. Lépj a(z) \"{{configPath}}\" helyre, állítsd a(z) \"{{configOption}}\" értékét igazra (true), és indítsd újra a szervert.\nEnnek engedélyezésével elfogadod minden felelősséget amiért a(z) {{name}} letölt a gépedre.",
     "modloader-invalid_version_property": "A(z) %s mod package.json fájlja érvénytelen verziójú karakterláncot tartalmaz",
     "modloader-is_client_mod": "A következő mod (%s) egy kliens mod és a következő mappába kell helyezni: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "`{{modOneName}}` és`{{modTwoName}}` modoknak ellentmondásos betöltési sorrend követelményei vannak, a szerver nem tud elindulni amíg ezt nem javítják, és leáll",

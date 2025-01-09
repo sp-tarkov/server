@@ -179,7 +179,6 @@
         }
     },
     "features": {
-        "autoInstallModDependencies": false,
         "compressProfile": false,
         "chatbotFeatures": {
             "sptFriendEnabled": true,

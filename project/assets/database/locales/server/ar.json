@@ -131,8 +131,6 @@
     "modloader-error_parsing_mod_load_order": "حدث خطأ أثناء تحليل ترتيب المودات.\n\n\n\n\n\n\n",
     "modloader-incompatibilities_not_string_array": "يجب أن يكون Mod %s package.json الخاصية 'incompatibilities' مصفوفة سلاسل",
     "modloader-incompatible_mod_found": "المود {{author}}-{{name}} غير متوافق مع {{incompatibleModName}}.\n\n\n\n\n\n\n",
-    "modloader-installing_external_dependencies": "تثبيت الاعتمادات للإضافة: {{name}} بواسطة: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "الإضافة: {{name}}: {{author}} تتطلب اعتمادات خارجية ولكن الميزة معطلة حاليًا، اذهب إلى \"{{configPath}}\", اضبط \"{{configOption}}\" إلى \"صحيح\" و أعد تشغيل الخادم.\nبتمكينك هذا فإنك تتحمل كل المسؤولية عن ما سيتم تحميله من قبل {{name}} إلى جهازك.",
     "modloader-invalid_version_property": "ملف package.json للمود %s يحتوي على سلسلة إصدار غير صالحة.\n\n\n\n\n\n\n",
     "modloader-is_client_mod": "المود (%s) هو مود خاص بالعميل ويجب وضعه في المجلد التالي: /spt/bepinex/plugins\n\n\n\n\n\n\n",
     "modloader-load_order_conflict": "{{modOneName}} و {{modTwoName}} لديهما متطلبات تعارض في ترتيب التحميل، لا يمكن للخادم أن يبدأ حتى يتم حل هذا وسيتم إيقاف التشغيل.\n\n\n\n\n\n\n",

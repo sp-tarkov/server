@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "SPT-AKI n'a pas réussi à déterminer l'ordre correct des mods",
     "modloader-incompatibilities_not_string_array": "la propriété 'incompatibilities' dans le fichier package.json  du mod %s  doit être un tableau de chaînes de caractères",
     "modloader-incompatible_mod_found": "Le mod {{author}}-{{name}} est incompatible avec {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Installation des dépendances pour le Mod: {{name}} par: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} de: {{author}} nécessite des dépendances externes mais cette fonction est actuellement désactivée, allez dans \"{{configPath}}\", changez l'option \"{{configOption}}\" à vrais et relancez le serveur.\nEn activant cette option, vous endossez toute la responsabilité de ce que {{name}} télécharge sur votre machine.",
     "modloader-invalid_sptVersion_field": "Le mod %s contient une chaîne de caractères semver invalide dans le champ sptVersion. Exemples de chaînes correctes: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "Le mod %s package.json contient une chaîne de version invalide",
     "modloader-is_client_mod": "Le mod (%s) est un mod client et doit être placé dans le dossier suivant : /spt/bepinex/plugins",

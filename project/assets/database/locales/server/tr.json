@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "Mod yükleme sırası ayrıştırılırken hata oluştu",
     "modloader-incompatibilities_not_string_array": "Mod %s package.json özelliği 'incompatibilities' bir dize dizisi olmalıdır",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}}, {{incompatibleModName}} ile uyumsuz",
-    "modloader-installing_external_dependencies": "Mod için bağımlılıklar yükleniyor: {{name}} tarafından: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} tarafından: {{author}} dış bağımlılıklar gerektiriyor ancak bu özellik şu anda devre dışı, \"{{configPath}}\"e gidin, \"{{configOption}}\"ı true olarak ayarlayın ve sunucuyu yeniden başlatın.\nBunu etkinleştirerek {{name}}'in makinenize indirdikleriyle ilgili tüm sorumluluğu kabul etmiş olursunuz.",
     "modloader-invalid_sptVersion_field": "Mod %s, sptVersion alanında geçersiz bir semver dizesi içeriyor. Geçerli değerlere örnekler: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "Mod %s package.json geçersiz bir sürüm dizesi içeriyor",
     "modloader-is_client_mod": "Mod (%s) bir istemci modudur ve aşağıdaki klasöre yerleştirilmelidir: /spt/bepinex/plugins",

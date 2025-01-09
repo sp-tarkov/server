@@ -131,8 +131,6 @@
     "modloader-error_parsing_mod_load_order": "mod ロード順の解析中にエラーが発生しました。",
     "modloader-incompatibilities_not_string_array": "Mod %s package.json プロパティ '非互換性' は文字列配列でなければなりません。",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}} is incompatible with {{incompatibleModName}}。",
-    "modloader-installing_external_dependencies": "Mod {{name}} by: {{author}} と依存関係であるModをインストールしています",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} by: {{author}} が追加の依存関係Modを必要としていますが、設定が無効になっているためダウンロードができません。 \"{{configPath}}\" の \"{{configOption}}\" を true に設定してからサーバーを再起動してください。\n設定を有効にするにあたって、{{name}} があなたのパソコンにダウンロードするデータの責任をあなたが負うものとします",
     "modloader-invalid_version_property": "モッド %s のpackage.jsonにで不正確なバージョン文字列が使用されています。",
     "modloader-is_client_mod": "モッド %s はクライアントタイプのモッドです。正しいインストール先はこちら： /spt/bepinex/plugins",
     "modloader-load_order_conflict": "`{{modOneName}}` と `{{modTwoName}}` のロードの順序の条件が競合しています。 これが修正されるまでサーバーを起動できずシャットダウンします",

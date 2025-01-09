@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "Error al traducir el orden de las modificaciones",
     "modloader-incompatibilities_not_string_array": "La propiedad 'incompatibilities' de la modificacion %s package.json deberia ser un arreglo de string",
     "modloader-incompatible_mod_found": "La modificación {{author}}-{{name}} no es compatible con {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Instalando dependencias para el Mod: {{name}} por: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} por: {{author}} requiere dependencias externas pero la función esta actualmente deshabilitada. Vaya a \"{{configPath}}\", establezca \"{{configOption}}\" en 'true' y reinicie el servidor.\nAl habilitar esto, aceptas toda la responsabilidad de lo que {{name}} descargue en tu equipo.",
     "modloader-invalid_sptVersion_field": "Mod %s contiene una cadena semver inválida en el campo sptVersion. Ejemplos de valores válidos: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "La modificacion %s package.json contiene un valor invalido de version",
     "modloader-is_client_mod": "La modificación (%s) es de cliente, esta debería ponerse en el directorio: /spt/bepinex/plugins",

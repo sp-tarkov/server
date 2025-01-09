@@ -143,8 +143,6 @@
     "modloader-error_parsing_mod_load_order": "Chyba parsování načítání pořadí módů",
     "modloader-incompatibilities_not_string_array": "Vlastnost módu %s package.json 'incompatibility' by měla být pole pro řetězec",
     "modloader-incompatible_mod_found": "Modifikace {{author}}-{{name}} je nekompatibilní s {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Instalace závislostí pro mód: {{name}} od autora: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mód: {{name}} od: {{author}} vyžaduje externí závislosti, ale funkce je momentálně zakázána, přejděte na \"{{configPath}}\", nastavte \"{{configOption}}\" na true a restartujte server.\nPovolením této funkce přijímáte veškerou odpovědnost za to, co {{name}} stáhne do vašeho počítače.",
     "modloader-invalid_version_property": "Mód %s package.json obsahuje neplatnou verzi řetězce",
     "modloader-is_client_mod": "Mód (%s) je klientský mód a měl by být umístěn v následující složce: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "`{{modOneName}}` a `{{modTwoName}}` mají protichůdné požadavky na pořadí načítání, server není schopen spustit, dokud nebude opraven a nebude vypnut",

@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "Errore nel processare l'ordine di caricamento della mod",
     "modloader-incompatibilities_not_string_array": "Le proprietà 'incompatibilities' della mod %s, nel package.json, devono essere uno string array",
     "modloader-incompatible_mod_found": "La mod {{author}}-{{name}} è incompatibile con {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Sto installando le dipendenze per la Mod: {{name}} by: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "La mod: {{name}} di: {{author}} richiede dipendenze esterne, ma la funzione è attualmente disabilitata, vai su \"{{configPath}}\", imposta \"{{configOption}}\" a true e riavvia il server.\nAttivando questa opzione ti assumi tutta la responsabilità di ciò che {{name}} scarica sul tuo Pc.",
     "modloader-invalid_sptVersion_field": "La mod %s contiene una stringa semver non valida nel campo akiVersion. Esempi di valori validi: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "Il package.json della Mod %s contiene una stringa 'version' non valida",
     "modloader-is_client_mod": "La mod (%s) è una mod del client e dovrebbe essere posizionata nella seguente cartella: /spt/bepinex/plugins",

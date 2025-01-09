@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "모드 순서를 가져오는데 오류가 발생하였습니다",
     "modloader-incompatibilities_not_string_array": "모드 %s 의 package.json 파일 중 'incompatibilities' 속성은 문자 배열 타입이어야 합니다",
     "modloader-incompatible_mod_found": "모드 {{author}}-{{name}} 는 {{incompatibleModName}} 모드와 호환되지 않습니다",
-    "modloader-installing_external_dependencies": "모드: {{name}} by: {{author}} 에 대한 종속성을 설치합니다",
-    "modloader-installing_external_dependencies_disabled": "모드: {{name}} by: {{author}} 은(는) 외부 종속성이 필요하지만 기능이 꺼져있습니다, \"{{configPath}}\" 파일을 열어, 설정 \"{{configOption}}\" 값을 true 로 변경 후 서버를 재시작하세요.\n이 기능을 활성화하면 {{name}} 을(를) 기기에 다운로드 하면서 발생하는 모든 책임을 가지게 됩니다.",
     "modloader-invalid_sptVersion_field": "모드 %s 가 sptVersion 필드에 부적합한 semver 스트링 값을 보유하고 있습니다. 올바른 값들의 예시: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "모드 %s 의 package.json 은(는) 잘못된 version 문자열을 포함하고 있습니다",
     "modloader-is_client_mod": "모드 (%s) 는 클라이언트 모드로 '/spt/bepinex/plugins' 폴더에 위치해야 합니다",

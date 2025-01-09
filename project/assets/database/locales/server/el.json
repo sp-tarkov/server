@@ -199,8 +199,6 @@
     "modloader-error_parsing_mod_load_order": "Σφάλμα κατά την ανάλυση της σειράς φόρτωσης πρόσθετου (mod)",
     "modloader-incompatibilities_not_string_array": "Στο πρόσθετο %s package.json η ιδιότητα \"ασυμβατότητες\" θα πρέπει να είναι μία συστοιχία συμβολοσειρών",
     "modloader-incompatible_mod_found": "Το πρόσθετο {{author}}-{{name}} δεν είναι συμβατό με το {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Εγκατάσταση εξαρτήσεων για το πρόσθετο: {{name}} από: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Το πρόσθετο: {{name}} by: {{author}} απαιτεί εξωτερικές εξαρτήσεις, αλλά η λειτουργία αυτή τη στιγμή είναι απενεργοποιημένη, πήγαινε στο \"{{configPath}}\", όρισε \"{{configOption}}\" σε true και επανεκκίνησε τον διακομιστή.\nΕνεργοποιώντας αυτό αποδέχεστε όλη την ευθύνη για τις λήψεις {{name}} στον υπολογιστή σας.",
     "modloader-invalid_sptVersion_field": "Το πρόσθετο %s περιέχει μία μη έγκυρη semver συμβολοσειρά στο πεδίο sptVersion. Παραδείγματα έγκυρων τιμών: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "Το πρόσθετο %s package.json περιέχει μια μη έγκυρη έκδοση συμβολοσειράς",
     "modloader-is_client_mod": "Το πρόσθετο (%s) είναι ένα πρόσθετο πελάτη και θα πρέπει να τοποθετηθεί στον ακόλουθο φάκελο: /spt/bepinex/plugins",

@@ -4,8 +4,6 @@ import pkg from "@yao-pkg/pkg";
 import pkgfetch from "@yao-pkg/pkg-fetch";
 import fs from "fs-extra";
 import gulp from "gulp";
-import decompress from "gulp-decompress";
-import download from "gulp-download";
 import { exec } from "gulp-execa";
 import rename from "gulp-rename";
 import minimist from "minimist";
@@ -228,22 +226,6 @@ const copyAssets = () =>
         .pipe(gulp.dest(dataDir));
 
 /**
- * Download pnpm executable
- */
-const downloadPnpm = async () => {
-    // Please ensure that the @pnpm/exe version in devDependencies is pinned to a specific version. If it's not, the
-    // following task will download *all* versions that are compatible with the semver range specified.
-    const pnpmVersion = manifest.devDependencies["@pnpm/exe"];
-    const pnpmPackageName = `@pnpm/${targetPlatform === "win32" ? "win" : targetPlatform}-${targetArch}`;
-    const npmResult = await exec(`npm view ${pnpmPackageName}@${pnpmVersion} dist.tarball`, { stdout: "pipe" });
-    const pnpmLink = npmResult.stdout.trim();
-    console.log(`Downloading pnpm binary from ${pnpmLink}`);
-    download(pnpmLink)
-        .pipe(decompress({ strip: 1 }))
-        .pipe(gulp.dest(path.join(dataDir, "@pnpm", "exe")));
-};
-
-/**
  * Rename and copy the license file
  */
 const copyLicense = () => gulp.src([licenseFile]).pipe(rename("LICENSE-Server.txt")).pipe(gulp.dest(buildDir));
@@ -292,7 +274,7 @@ const createHashFile = async () => {
 
 // Combine all tasks into addAssets
 const addAssets = (entryType) =>
-    gulp.series(copyAssets, downloadPnpm, copyLicense, () => writeBuildDataToJSON(entryType), createHashFile);
+    gulp.series(copyAssets, copyLicense, () => writeBuildDataToJSON(entryType), createHashFile);
 
 /**
  * Cleans the build directory.

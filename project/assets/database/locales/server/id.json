@@ -179,8 +179,6 @@
     "modloader-error_parsing_mod_load_order": "Permasalahan dalam penguraian urutan pemuatan mod",
     "modloader-incompatibilities_not_string_array": "Mod %s data package.json 'incompatibilities' harus string array",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}} tidak compatibel dengan {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Menginstal dependensi untuk Mod: {{name}} oleh: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} oleh: {{author}} memerlukan dependensi eksternal tapi fitur ini sedang dinonaktifkan, pergi ke \"{{configPath}}\", ubah \"{{configOption}}\" menjadi true lalu mulai ulang server. \nDengan mengaktifkan fitur ini anda bertanggung jawab atas apa yang {{name}} unduh ke dalam mesin anda.",
     "modloader-invalid_version_property": "Mod %s package.json memiliki versi string yang invalid",
     "modloader-is_client_mod": "Mod (%s) merupakan mod client dan harus dipasang dalam folder: /spt/bepinex/plugins",
     "modloader-load_order_conflict": "'{{modOneName}}' dan '{{modTwoName}}' memiliki urutan pemuatan yang bertentangan, server tidak bisa mulai hingga masalah ini diperbaiki dan akan dimatikan",

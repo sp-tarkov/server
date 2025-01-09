@@ -1,5 +1,3 @@
-import { execSync } from "node:child_process";
-import os from "node:os";
 import path from "node:path";
 import { ProgramStatics } from "@spt/ProgramStatics";
 import { ModLoadOrder } from "@spt/loaders/ModLoadOrder";
@@ -148,15 +146,6 @@ export class PreSptModLoader implements IModLoader {
             if (this.shouldSkipMod(modToValidate)) {
                 // skip error checking and dependency install for mods already marked as skipped.
                 continue;
-            }
-
-            // if the mod has library dependencies check if these dependencies are bundled in the server, if not install them
-            if (
-                modToValidate.dependencies &&
-                Object.keys(modToValidate.dependencies).length > 0 &&
-                !this.fileSystemSync.exists(`${this.basepath}${modFolderName}/node_modules`)
-            ) {
-                this.autoInstallDependencies(`${this.basepath}${modFolderName}`, modToValidate);
             }
 
             // Returns if any mod dependency is not satisfied
@@ -428,75 +417,6 @@ export class PreSptModLoader implements IModLoader {
      */
     protected shouldSkipMod(pkg: IPackageJsonData): boolean {
         return this.skippedMods.has(`${pkg.author}-${pkg.name}`);
-    }
-
-    protected autoInstallDependencies(modPath: string, pkg: IPackageJsonData): void {
-        const dependenciesToInstall = new Map<string, string>();
-
-        for (const [depName, depVersion] of Object.entries(pkg.dependencies)) {
-            // currently not checking for version mismatches, but we could check it, just don't know what we would do afterwards, some options would be:
-            // 1 - throw an error
-            // 2 - use the server's version (which is what's currently happening by not checking the version)
-            // 3 - use the mod's version (don't know the reprecursions this would have, or if it would even work)
-
-            // if a mod's dependency does not exist in the server's dependencies we can add it to the list of dependencies to install.
-            if (!this.serverDependencies[depName]) {
-                dependenciesToInstall.set(depName, depVersion);
-            }
-        }
-
-        // If the mod has no extra dependencies return as there's nothing that needs to be done.
-        if (dependenciesToInstall.size === 0) {
-            return;
-        }
-
-        // If this feature flag is set to false, we warn the user he has a mod that requires extra dependencies and might not work, point them in the right direction on how to enable this feature.
-        if (!this.sptConfig.features.autoInstallModDependencies) {
-            this.logger.warning(
-                this.localisationService.getText("modloader-installing_external_dependencies_disabled", {
-                    name: pkg.name,
-                    author: pkg.author,
-                    configPath: path.join(
-                        ProgramStatics.COMPILED ? "SPT_Data/Server/configs" : "assets/configs",
-                        "core.json",
-                    ),
-                    configOption: "autoInstallModDependencies",
-                }),
-            );
-
-            this.skippedMods.add(`${pkg.author}-${pkg.name}`);
-            return;
-        }
-
-        // Temporarily rename package.json because otherwise npm, pnpm and any other package manager will forcefully
-        // download all packages in dependencies without any way of disabling this behavior
-        this.fileSystemSync.rename(`${modPath}/package.json`, `${modPath}/package.json.bak`);
-        this.fileSystemSync.writeJson(`${modPath}/package.json`, {});
-
-        this.logger.info(
-            this.localisationService.getText("modloader-installing_external_dependencies", {
-                name: pkg.name,
-                author: pkg.author,
-            }),
-        );
-
-        const pnpmPath = path.join(
-            process.cwd(),
-            ProgramStatics.COMPILED ? "SPT_Data/Server/@pnpm/exe" : "node_modules/@pnpm/exe",
-            os.platform() === "win32" ? "pnpm.exe" : "pnpm",
-        );
-
-        let command = `"${pnpmPath}" install `;
-        for (const [depName, depVersion] of dependenciesToInstall) {
-            command += `${depName}@${depVersion} `;
-        }
-
-        this.logger.debug(`Running command: ${command}`);
-        execSync(command, { cwd: modPath });
-
-        // Delete the new blank package.json then rename the backup back to the original name
-        this.fileSystemSync.remove(`${modPath}/package.json`);
-        this.fileSystemSync.rename(`${modPath}/package.json.bak`, `${modPath}/package.json`);
     }
 
     protected areModDependenciesFulfilled(pkg: IPackageJsonData, loadedMods: Map<string, IPackageJsonData>): boolean {

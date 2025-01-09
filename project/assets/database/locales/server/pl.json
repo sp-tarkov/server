@@ -198,8 +198,6 @@
     "modloader-error_parsing_mod_load_order": "Błąd analizowania kolejności ładowania modów",
     "modloader-incompatibilities_not_string_array": "Mod %s właściwość package.json 'incompatibilities' powinna być tabelą string",
     "modloader-incompatible_mod_found": "Mod {{author}}-{{name}} jest niezgodny z {{incompatibleModName}}",
-    "modloader-installing_external_dependencies": "Instalowanie zależności dla Moda: {{name}} stworzonego przez: {{author}}",
-    "modloader-installing_external_dependencies_disabled": "Mod: {{name}} stworzony przez: {{author}} wymaga zewnętrznych zależności, ale funkcja jest obecnie wyłączona, przejdź do \"{{configPath}}\", ustaw \"{{configOption}}\" na True oraz zrestartuj serwer.\nPoprzez włączenie akceptujesz wszelką odpowiedzialność za to, co {{name}} pobiera na twój komputer.",
     "modloader-invalid_sptVersion_field": "Mod %s zawiera nieprawidłowy string semver w polu sptVersion. Przykłady prawidłowych wartości: https://github.com/npm/node-semver#versions",
     "modloader-invalid_version_property": "Mod %s package.json zawiera nieprawidłowy string wersji",
     "modloader-is_client_mod": "Mod (%s) jest modem klienta i powinien zostać umieszczony w następującym folderze: /spt/bepinex/plugins",

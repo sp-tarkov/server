@@ -1,15 +1,12 @@
 ## SPT
-*.exe
-*.zip
 *.d.ts
+project/.pkg-cache/
 project/build/
 project/obj/
 project/dist/
 project/user/
 project/logs/
 project/SPT_Data/
-project/tmp/
-project/docs/
 project/types/
 project/tests/__cache__/
 project/tests/__coverage__/
@@ -19,31 +16,13 @@ project/src/__coverage__/
 .vs
 .idea
 .vscode
-slnx.sqlite
-slnx-journal.sqlite
 
 ## nodejs
 package-lock.json
 node_modules
-node.exe
-pnpm-lock.yaml
-yarn.lock
 
 ## windows
 desktop.ini
 
 ## OSX
 .DS_Store
-
-## parcel
-.parcel-cache/
-
-## Pkg
-.pkg-cache
-
-## yarn
-**/yarn-error.log
-
-#jest
-coverage
-.scannerwork/

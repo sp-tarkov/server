@@ -82,8 +82,6 @@ export interface IGameFixes {
 }
 
 export interface IServerFeatures {
-    /* Controls whether or not the server attempts to download mod dependencies not included in the server's executable */
-    autoInstallModDependencies: boolean;
     compressProfile: boolean;
     chatbotFeatures: IChatbotFeatures;
     /** Keyed to profile type e.g. "Standard" or "SPT Developer" */
