@@ -163,7 +163,7 @@ export class JsonUtil {
                     this.fileHashes[filePath] = generatedHash;
 
                     if (writeHashes) {
-                        await this.fileSystem.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
+                        await this.fileSystem.writeJson(this.jsonCachePath, this.fileHashes);
                     }
 
                     savedHash = generatedHash;
@@ -189,7 +189,11 @@ export class JsonUtil {
      * Writes the file hashes to the cache path, to be used manually if writeHashes was set to false on deserializeWithCacheCheck
      */
     public async writeCache(): Promise<void> {
-        await this.fileSystem.write(this.jsonCachePath, this.serialize(this.fileHashes, true));
+        if (!this.fileHashes) {
+            return;
+        }
+
+        await this.fileSystem.writeJson(this.jsonCachePath, this.fileHashes);
     }
 
     /**
@@ -213,7 +217,7 @@ export class JsonUtil {
     protected async hydrateJsonCache(jsonCachePath: string): Promise<void> {
         // Get all file hashes
         if (!this.fileHashes) {
-            this.fileHashes = this.deserialize(await this.fileSystem.read(`${jsonCachePath}`));
+            this.fileHashes = await this.fileSystem.readJson(`${jsonCachePath}`);
         }
     }
 
