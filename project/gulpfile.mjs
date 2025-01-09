@@ -36,6 +36,104 @@ const entries = {
 };
 const licenseFile = "../LICENSE.md";
 
+// Modules to transpile
+const backupDir = path.resolve("backup_modules");
+const transpiledDir = path.resolve("transpiled_modules");
+const modulesToTranspile = [
+    "@messageformat/date-skeleton/lib/get-date-formatter.js",
+    "@messageformat/date-skeleton/lib/index.js",
+    "@messageformat/date-skeleton/lib/options.js",
+    "@messageformat/date-skeleton/lib/tokens.js",
+    "@messageformat/number-skeleton/lib/errors.js",
+    "@messageformat/number-skeleton/lib/get-formatter.js",
+    "@messageformat/number-skeleton/lib/index.js",
+    "@messageformat/number-skeleton/lib/numberformat/locales.js",
+    "@messageformat/number-skeleton/lib/numberformat/modifier.js",
+    "@messageformat/number-skeleton/lib/numberformat/options.js",
+    "@messageformat/number-skeleton/lib/parse-pattern.js",
+    "@messageformat/number-skeleton/lib/parse-skeleton.js",
+    "@messageformat/number-skeleton/lib/pattern-parser/affix-tokens.js",
+    "@messageformat/number-skeleton/lib/pattern-parser/number-as-skeleton.js",
+    "@messageformat/number-skeleton/lib/pattern-parser/number-tokens.js",
+    "@messageformat/number-skeleton/lib/pattern-parser/parse-tokens.js",
+    "@messageformat/number-skeleton/lib/skeleton-parser/options.js",
+    "@messageformat/number-skeleton/lib/skeleton-parser/parse-precision-blueprint.js",
+    "@messageformat/number-skeleton/lib/skeleton-parser/token-parser.js",
+    "@messageformat/number-skeleton/lib/types/skeleton.js",
+    "@messageformat/number-skeleton/lib/types/unit.js",
+    "atomically/dist/constants.js",
+    "atomically/dist/index.js",
+    "atomically/dist/utils/lang.js",
+    "atomically/dist/utils/scheduler.js",
+    "atomically/dist/utils/temp.js",
+    "stubborn-fs/dist/attemptify.js",
+    "stubborn-fs/dist/constants.js",
+    "stubborn-fs/dist/handlers.js",
+    "stubborn-fs/dist/index.js",
+    "stubborn-fs/dist/retryify.js",
+    "stubborn-fs/dist/retryify_queue.js",
+    "when-exit/dist/node/constants.js",
+    "when-exit/dist/node/index.js",
+    "when-exit/dist/node/interceptor.js",
+    "when-exit/dist/node/signals.js",
+];
+
+const transpileModules = async () => {
+    await fs.ensureDir(backupDir);
+    await fs.ensureDir(transpiledDir);
+
+    for (const modulePath of modulesToTranspile) {
+        // Resolve the path of the module
+        const resolvedPath = path.resolve("node_modules", modulePath);
+        const relativeModulePath = modulePath.replace(/\//g, path.sep); // Normalize for platform-specific paths
+        const backupPath = path.join(backupDir, relativeModulePath);
+        const outputPath = path.join(transpiledDir, relativeModulePath);
+
+        // Backup the original file
+        await fs.ensureDir(path.dirname(backupPath));
+        await fs.copy(resolvedPath, backupPath, { overwrite: true });
+        console.log(`Backed up: ${resolvedPath}`);
+
+        // Ensure the output directory exists
+        await fs.ensureDir(path.dirname(outputPath));
+
+        // Build the SWC command
+        const swcCommand = `npx swc ${resolvedPath} -o ${outputPath} --config-file .swcrc`;
+
+        // Execute the command
+        try {
+            await exec(swcCommand, { stdio: "inherit" });
+        } catch (error) {
+            console.error(`Error transpiling module: ${modulePath}`);
+            throw error;
+        }
+
+        // Replace the original file with the transpiled version
+        await fs.copy(outputPath, resolvedPath, { overwrite: true });
+        console.log(`Replaced original module: ${resolvedPath} with transpiled version.`);
+    }
+};
+
+const restoreModules = async () => {
+    for (const modulePath of modulesToTranspile) {
+        // Resolve the path of the module
+        const resolvedPath = path.resolve("node_modules", modulePath);
+        const relativeModulePath = modulePath.replace(/\//g, path.sep); // Normalize for platform-specific paths
+        const backupPath = path.join(backupDir, relativeModulePath);
+
+        // Restore the original file
+        if (await fs.pathExists(backupPath)) {
+            await fs.copy(backupPath, resolvedPath, { overwrite: true });
+            console.log(`Restored original module: ${resolvedPath}`);
+        }
+    }
+
+    // Clean up backup directory after restoration
+    await fs.remove(backupDir);
+    await fs.remove(transpiledDir);
+    console.log("Backup directory removed.");
+};
+
 /**
  * Transpile src files into Javascript with SWC
  */
@@ -293,12 +391,14 @@ const build = (entryType) => {
     const tasks = [
         cleanBuild,
         validateJSONs,
+        transpileModules,
         compile,
         addAssets(entries[entryType]),
         fetchPackageImage,
         anonPackaging,
         updateBuildProperties,
         cleanCompiled,
+        restoreModules,
     ];
     return gulp.series(tasks);
 };
@@ -317,7 +417,7 @@ const packaging = async (entryType) => {
             serverExe,
             "--config",
             pkgConfig,
-            "--public",
+            '--public-packages "*"',
         ]);
     } catch (error) {
         console.error(`Error occurred during packaging: ${error}`);

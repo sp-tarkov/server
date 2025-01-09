@@ -18,7 +18,6 @@
             "@spt/*": ["src/*"]
         }
     },
-    "exclude": ["node_modules/"],
     "module": {
         "type": "commonjs",
         "strictMode": false
