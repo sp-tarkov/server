@@ -30,7 +30,6 @@
         "run:profiler": "gulp run:profiler",
         "type-check": "tsc -p tsconfig.debug.json",
         "gen:types": "tsc -p tsconfig.types.json",
-        "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "gen:items": "tsx ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
         "gen:productionquests": "tsx ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
     },
@@ -74,7 +73,6 @@
         "minimist": "1.2.8",
         "resedit": "2.0.3",
         "tsx": "4.19.2",
-        "typedoc": "~0.26",
         "typescript": "5.7.3",
         "vitest": "2.1.8"
     },
