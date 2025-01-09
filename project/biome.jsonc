@@ -60,7 +60,14 @@
     },
     "overrides": [
         {
-            "include": ["tests/*"]
+            "include": ["tests/*"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noExplicitAny": "off"
+                    }
+                }
+            }
         }
     ]
 }

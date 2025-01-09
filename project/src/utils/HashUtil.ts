@@ -1,6 +1,6 @@
 import crypto, { webcrypto } from "node:crypto";
+import { crc32 } from "node:zlib";
 import { TimeUtil } from "@spt/utils/TimeUtil";
-import crc32 from "buffer-crc32";
 import { mongoid } from "mongoid-js";
 import { inject, injectable } from "tsyringe";
 import { FileSystemSync } from "./FileSystemSync";
@@ -38,7 +38,7 @@ export class HashUtil {
     }
 
     public generateCRC32ForFile(filePath: string): number {
-        return crc32.unsigned(this.fileSystemSync.read(filePath));
+        return crc32(this.fileSystemSync.read(filePath));
     }
     /**
      * Create a hash for the data parameter

@@ -1229,6 +1229,7 @@ export class HideoutController {
 
         if (hasMildPain) {
             // Already has mild pain, remove mild and add severe
+            // biome-ignore lint/performance/noDelete: Deleting is fine here, we're removing the effect to replace it with another.
             delete pmcData.Health.BodyParts.Chest.Effects.MildMusclePain;
 
             pmcData.Health.BodyParts.Chest.Effects.SevereMusclePain = {

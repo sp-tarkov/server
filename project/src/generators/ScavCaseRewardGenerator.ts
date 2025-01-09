@@ -321,6 +321,7 @@ export class ScavCaseRewardGenerator {
 
             // Clean up upd object if it wasn't used
             if (!rootItem.upd) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here, we're cleaning up this object without leaving an undefined.
                 delete rootItem.upd;
             }
 

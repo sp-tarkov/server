@@ -253,6 +253,7 @@ export class QuestHelper {
             existingQuest.completedConditions = [];
 
             if (existingQuest.availableAfter) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
                 delete existingQuest.availableAfter;
             }
 

@@ -1194,6 +1194,7 @@ export class ItemHelper {
 
             // In live no ammo box has the first cartridge item with a location
             if (location === 0) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
                 delete cartridgeItemToAdd.location;
             }
 
@@ -1366,6 +1367,7 @@ export class ItemHelper {
 
         // Only one cartridge stack added, remove location property as its only used for 2 or more stacks
         if (location === 1) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
             delete magazineWithChildCartridges[1].location;
         }
     }
@@ -1706,6 +1708,7 @@ export class ItemHelper {
             if (!parentExists && item.parentId !== rootId && item.slotId !== "hideout") {
                 item.parentId = rootId;
                 item.slotId = "hideout";
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the location.
                 delete item.location;
             }
         }
@@ -1800,7 +1803,10 @@ export class ItemHelper {
      */
     public removeSpawnedInSessionPropertyFromItems(items: IItem[]): void {
         for (const item of items) {
-            delete item.upd.SpawnedInSession;
+            if (item.upd) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we're removing the entire property.
+                delete item.upd.SpawnedInSession;
+            }
         }
     }
 }

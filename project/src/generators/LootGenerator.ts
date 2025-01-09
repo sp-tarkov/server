@@ -397,9 +397,9 @@ export class LootGenerator {
         const presetAndMods: IItem[] = this.itemHelper.replaceIDs(chosenPreset._items);
         this.itemHelper.remapRootItemId(presetAndMods);
         // Add chosen preset tpl to result array
-        presetAndMods.forEach((item) => {
+        for (const item of presetAndMods) {
             result.push(item);
-        });
+        }
 
         if (itemLimitCount) {
             // Increment item count as item has been chosen and its inside itemLimitCount dictionary

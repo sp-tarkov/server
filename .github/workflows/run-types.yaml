@@ -38,5 +38,5 @@ jobs:
         working-directory: ./project
 
       - name: Run Type Check
-        run: npm run lint:types
+        run: npm run type-check
         working-directory: ./project

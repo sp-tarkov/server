@@ -293,6 +293,7 @@ export class HealthHelper {
         for (const bodyPart in bodyPartsWithEffects) {
             // clear effects from profile bodyPart
             if (deleteExistingEffects) {
+                // biome-ignore lint/performance/noDelete: Delete is fine here as we entirely want to get rid of the effect.
                 delete pmcData.Health.BodyParts[bodyPart].Effects;
             }
 
@@ -339,6 +340,7 @@ export class HealthHelper {
 
         // Delete empty property to prevent client bugs
         if (this.isEmpty(profileBodyPart.Effects)) {
+            // biome-ignore lint/performance/noDelete: Delete is fine here, we're removing an empty property to prevent game bugs.
             delete profileBodyPart.Effects;
         }
     }

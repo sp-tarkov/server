@@ -165,6 +165,7 @@ export class FenceService {
         }
 
         // Clean up the items
+        // biome-ignore lint/performance/noDelete: Delete is fine here as we're getting rid of the items before updating.
         delete root.location;
 
         const createAssort: ICreateFenceAssortsResult = { sptItems: [], barter_scheme: {}, loyal_level_items: {} };
@@ -1115,6 +1116,8 @@ export class FenceService {
                 continue;
             }
 
+            let armorWithMods = armorItemAndMods;
+
             const modItemDbDetails = this.itemHelper.getItem(plateTpl)[1];
 
             // Chance to remove plate
@@ -1122,7 +1125,7 @@ export class FenceService {
                 this.traderConfig.fence.chancePlateExistsInArmorPercent[modItemDbDetails._props?.armorClass ?? "3"];
             if (!this.randomUtil.getChance100(plateExistsChance)) {
                 // Remove plate from armor
-                armorItemAndMods = armorItemAndMods.filter(
+                armorWithMods = armorItemAndMods.filter(
                     (item) => item.slotId.toLowerCase() !== plateSlot._name.toLowerCase(),
                 );
 
@@ -1135,13 +1138,13 @@ export class FenceService {
             );
 
             // Find items mod to apply dura changes to
-            const modItemToAdjust = armorItemAndMods.find(
+            const modItemToAdjust = armorWithMods.find(
                 (mod) => mod.slotId.toLowerCase() === plateSlot._name.toLowerCase(),
             );
 
             if (!modItemToAdjust) {
                 this.logger.warning(
-                    `Unable to randomise armor items ${armorItemAndMods[0]._tpl} ${plateSlot._name} slot as it cannot be found, skipping`,
+                    `Unable to randomise armor items ${armorWithMods[0]._tpl} ${plateSlot._name} slot as it cannot be found, skipping`,
                 );
                 continue;
             }
