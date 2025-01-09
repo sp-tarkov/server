@@ -661,7 +661,7 @@ export class CircleOfCultistService {
         // Get all items that match the blacklisted types and fold into item blacklist below
         const itemTypeBlacklist = this.itemFilterService.getItemRewardBaseTypeBlacklist();
         const itemsMatchingTypeBlacklist = Object.values(itemsDb)
-            .filter((templateItem) => this.itemHelper.isOfBaseclasses(templateItem._parent, itemTypeBlacklist))
+            .filter((templateItem) => this.itemHelper.isOfBaseclasses(templateItem._id, itemTypeBlacklist))
             .map((templateItem) => templateItem._id);
 
         // Create set of unique values to ignore

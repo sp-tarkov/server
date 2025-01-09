@@ -32,8 +32,7 @@
         "gen:types": "tsc -p tsconfig.types.json",
         "gen:docs": "typedoc --options ./typedoc.json --entryPointStrategy expand ./src",
         "gen:items": "tsx ./src/tools/ItemTplGenerator/ItemTplGeneratorProgram.ts",
-        "gen:productionquests": "tsx ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts",
-        "gen:customisationstorage": "tsx ./src/tools/HideoutCustomisation/HideoutCustomisationProgram.ts"
+        "gen:productionquests": "tsx ./src/tools/ProductionQuestsGen/ProductionQuestsGenProgram.ts"
     },
     "dependencies": {
         "atomically": "2.0.3",
