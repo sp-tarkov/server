@@ -1,3 +1,4 @@
+import { spawn } from "node:child_process";
 import crypto from "node:crypto";
 import path from "node:path";
 import pkg from "@yao-pkg/pkg";
@@ -78,6 +79,35 @@ const modulesToTranspile = [
     "when-exit/dist/node/signals.js",
 ];
 
+/**
+ * Runs a shell command with spawn, wrapping it in a Promise for async/await usage.
+ */
+const runCommand = (command, args, options = {}) => {
+    return new Promise((resolve, reject) => {
+        const process = spawn(command, args, { shell: true, ...options });
+
+        process.stdout.on("data", (data) => {
+            const message = data.toString().trim();
+            if (message) console.log(message);
+        });
+
+        process.stderr.on("data", (data) => {
+            const message = data.toString().trim();
+            if (message) console.error(message);
+        });
+
+        process.on("exit", (code) => {
+            if (code === 0) {
+                resolve();
+            } else {
+                reject(new Error(`${command} exited with code ${code}`));
+            }
+        });
+
+        process.on("error", reject);
+    });
+};
+
 const transpileModules = async () => {
     await fs.ensureDir(backupDir);
     await fs.ensureDir(transpiledDir);
@@ -92,25 +122,23 @@ const transpileModules = async () => {
         // Backup the original file
         await fs.ensureDir(path.dirname(backupPath));
         await fs.copy(resolvedPath, backupPath, { overwrite: true });
-        console.log(`Backed up: ${resolvedPath}`);
+        console.log(`Backed up: ${path.basename(resolvedPath)}`);
 
         // Ensure the output directory exists
         await fs.ensureDir(path.dirname(outputPath));
 
-        // Build the SWC command
-        const swcCommand = `npx swc ${resolvedPath} -o ${outputPath} --config-file .swcrc`;
-
-        // Execute the command
+        // Transpile the module
         try {
-            await exec(swcCommand, { stdio: "inherit" });
+            await runCommand("npx", ["swc", resolvedPath, "-o", outputPath, "--config-file", ".swcrc"]);
+            console.log(`Successfully transpiled: ${resolvedPath}`);
         } catch (error) {
-            console.error(`Error transpiling module: ${modulePath}`);
+            console.error(`Error transpiling module: ${resolvedPath}`);
             throw error;
         }
 
         // Replace the original file with the transpiled version
         await fs.copy(outputPath, resolvedPath, { overwrite: true });
-        console.log(`Replaced original module: ${resolvedPath} with transpiled version.`);
+        console.log(`Replaced original module: ${path.basename(resolvedPath)} with transpiled version.\n`);
     }
 };
 
@@ -124,7 +152,7 @@ const restoreModules = async () => {
         // Restore the original file
         if (await fs.pathExists(backupPath)) {
             await fs.copy(backupPath, resolvedPath, { overwrite: true });
-            console.log(`Restored original module: ${resolvedPath}`);
+            console.log(`Restored original module: ${path.basename(resolvedPath)}`);
         }
     }
 
@@ -139,7 +167,12 @@ const restoreModules = async () => {
  */
 const compile = async () => {
     // Compile TypeScript files using SWC
-    await exec("npx swc src -d obj", { stdio: "inherit" });
+    try {
+        await runCommand("npx", ["swc", "src", "-d", "obj", "--config-file", ".swcrc"]);
+    } catch (error) {
+        console.error("Error transpiling source:");
+        throw error;
+    }
 
     // Merge the contents from the /obj/src directory into /obj
     const srcDir = path.join("obj", "src");
