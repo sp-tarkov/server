@@ -117,6 +117,12 @@ export class ProfileCallbacks {
      * Handle client/game/profile/nickname/reserved
      */
     public getReservedNickname(url: string, info: IEmptyRequestData, sessionID: string): IGetBodyResponseData<string> {
+        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        if (fullProfile?.info?.username)
+        {
+            return this.httpResponse.getBody(fullProfile.info.username);
+        }
+
         return this.httpResponse.getBody("SPTarkov");
     }
 
