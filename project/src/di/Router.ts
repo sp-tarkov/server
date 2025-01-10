@@ -75,7 +75,7 @@ export class ItemEventRouterDefinition extends Router {
 }
 
 export class SaveLoadRouter extends Router {
-    public handleLoad(profile: ISptProfile): ISptProfile {
+    public async handleLoad(profile: ISptProfile): Promise<ISptProfile> {
         throw new Error("This method needs to be overrode by the router classes");
     }
 }

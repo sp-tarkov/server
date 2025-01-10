@@ -92,7 +92,7 @@ export class GameStaticRouter extends StaticRouter {
                     sessionID: string,
                     output: string,
                 ): Promise<IGetBodyResponseData<IGameLogoutResponseData>> => {
-                    return this.gameCallbacks.gameLogout(url, info, sessionID);
+                    return await this.gameCallbacks.gameLogout(url, info, sessionID);
                 },
             ),
             new RouteAction(

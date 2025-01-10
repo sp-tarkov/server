@@ -8,7 +8,7 @@ export class InraidSaveLoadRouter extends SaveLoadRouter {
         return [new HandledRoute("spt-inraid", false)];
     }
 
-    public override handleLoad(profile: ISptProfile): ISptProfile {
+    public override async handleLoad(profile: ISptProfile): Promise<ISptProfile> {
         if (profile.inraid === undefined) {
             profile.inraid = { location: "none", character: "none" };
         }

@@ -27,7 +27,7 @@ export class LauncherStaticRouter extends StaticRouter {
             new RouteAction(
                 "/launcher/profile/register",
                 async (url: string, info: any, sessionID: string, output: string): Promise<string> => {
-                    return this.launcherCallbacks.register(url, info, sessionID);
+                    return await this.launcherCallbacks.register(url, info, sessionID);
                 },
             ),
             new RouteAction(
@@ -57,7 +57,7 @@ export class LauncherStaticRouter extends StaticRouter {
             new RouteAction(
                 "/launcher/profile/remove",
                 async (url: string, info: any, sessionID: string, output: string): Promise<string> => {
-                    return this.launcherCallbacks.removeProfile(url, info, sessionID);
+                    return await this.launcherCallbacks.removeProfile(url, info, sessionID);
                 },
             ),
             new RouteAction(

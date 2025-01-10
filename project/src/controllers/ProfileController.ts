@@ -99,8 +99,8 @@ export class ProfileController {
      * @param sessionID Player id
      * @returns Profiles _id value
      */
-    public createProfile(info: IProfileCreateRequestData, sessionID: string): string {
-        return this.createProfileService.createProfile(sessionID, info);
+    public async createProfile(info: IProfileCreateRequestData, sessionID: string): Promise<string> {
+        return await this.createProfileService.createProfile(sessionID, info);
     }
 
     /**

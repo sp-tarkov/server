@@ -8,7 +8,7 @@ export class InsuranceSaveLoadRouter extends SaveLoadRouter {
         return [new HandledRoute("spt-insurance", false)];
     }
 
-    public override handleLoad(profile: ISptProfile): ISptProfile {
+    public override async handleLoad(profile: ISptProfile): Promise<ISptProfile> {
         if (profile.insurance === undefined) {
             profile.insurance = [];
         }

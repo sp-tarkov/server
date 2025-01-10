@@ -69,12 +69,12 @@ export class GameCallbacks implements OnLoad {
      * Save profiles on game close
      * @returns IGameLogoutResponseData
      */
-    public gameLogout(
+    public async gameLogout(
         url: string,
         info: IEmptyRequestData,
         sessionID: string,
-    ): IGetBodyResponseData<IGameLogoutResponseData> {
-        this.saveServer.save();
+    ): Promise<IGetBodyResponseData<IGameLogoutResponseData>> {
+        await this.saveServer.saveProfile(sessionID);
         return this.httpResponse.getBody({ status: "ok" });
     }
 

@@ -8,7 +8,7 @@ export class HealthSaveLoadRouter extends SaveLoadRouter {
         return [new HandledRoute("spt-health", false)];
     }
 
-    public override handleLoad(profile: ISptProfile): ISptProfile {
+    public override async handleLoad(profile: ISptProfile): Promise<ISptProfile> {
         if (!profile.vitality) {
             // Occurs on newly created profiles
             profile.vitality = { health: undefined, effects: undefined };

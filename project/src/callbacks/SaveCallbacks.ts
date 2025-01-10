@@ -20,7 +20,7 @@ export class SaveCallbacks implements OnLoad, OnUpdate {
     }
 
     public async onLoad(): Promise<void> {
-        this.backupService.init();
+        await this.backupService.init();
         this.saveServer.load();
     }
 
@@ -31,7 +31,7 @@ export class SaveCallbacks implements OnLoad, OnUpdate {
     public async onUpdate(secondsSinceLastRun: number): Promise<boolean> {
         // run every 15 seconds
         if (secondsSinceLastRun > this.coreConfig.profileSaveIntervalSeconds) {
-            this.saveServer.save();
+            await this.saveServer.save();
             return true;
         }
         return false;

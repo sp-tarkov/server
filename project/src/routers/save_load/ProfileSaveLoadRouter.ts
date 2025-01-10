@@ -9,7 +9,7 @@ export class ProfileSaveLoadRouter extends SaveLoadRouter {
         return [new HandledRoute("spt-profile", false)];
     }
 
-    public override handleLoad(profile: ISptProfile): ISptProfile {
+    public override async handleLoad(profile: ISptProfile): Promise<ISptProfile> {
         if (!profile.characters) {
             profile.characters = { pmc: {} as IPmcData, scav: {} as IPmcData };
         }

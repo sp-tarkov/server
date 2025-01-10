@@ -33,13 +33,12 @@ export class ProfileCallbacks {
     /**
      * Handle client/game/profile/create
      */
-    public createProfile(
+    public async createProfile(
         url: string,
         info: IProfileCreateRequestData,
         sessionID: string,
-    ): IGetBodyResponseData<ICreateProfileResponse> {
-        const id = this.profileController.createProfile(info, sessionID);
-        return this.httpResponse.getBody({ uid: id });
+    ): Promise<IGetBodyResponseData<ICreateProfileResponse>> {
+        return this.httpResponse.getBody({ uid: await this.profileController.createProfile(info, sessionID) });
     }
 
     /**

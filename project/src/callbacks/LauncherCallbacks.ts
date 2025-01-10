@@ -27,8 +27,8 @@ export class LauncherCallbacks {
         return !output ? "FAILED" : output;
     }
 
-    public register(url: string, info: IRegisterData, sessionID: string): "FAILED" | "OK" {
-        const output = this.launcherController.register(info);
+    public async register(url: string, info: IRegisterData, sessionID: string): Promise<"FAILED" | "OK"> {
+        const output = await this.launcherController.register(info);
         return !output ? "FAILED" : "OK";
     }
 
@@ -60,8 +60,8 @@ export class LauncherCallbacks {
         return this.httpResponse.noBody("pong!");
     }
 
-    public removeProfile(url: string, info: IRemoveProfileData, sessionID: string): string {
-        return this.httpResponse.noBody(this.saveServer.removeProfile(sessionID));
+    public async removeProfile(url: string, info: IRemoveProfileData, sessionID: string): Promise<string> {
+        return this.httpResponse.noBody(await this.saveServer.removeProfile(sessionID));
     }
 
     public getCompatibleTarkovVersion(): string {

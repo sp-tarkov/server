@@ -47,7 +47,7 @@ export class CreateProfileService {
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
     ) {}
 
-    public createProfile(sessionID: string, info: IProfileCreateRequestData): string {
+    public async createProfile(sessionID: string, info: IProfileCreateRequestData): Promise<string> {
         const account = this.saveServer.getProfile(sessionID).info;
         const profileTemplateClone: ITemplateSide = this.cloner.clone(
             this.databaseService.getProfiles()[account.edition][info.side.toLowerCase()],
@@ -145,12 +145,12 @@ export class CreateProfileService {
         this.saveServer.getProfile(sessionID).characters.scav = this.playerScavGenerator.generate(sessionID);
 
         // Store minimal profile and reload it
-        this.saveServer.saveProfile(sessionID);
-        this.saveServer.loadProfile(sessionID);
+        await this.saveServer.saveProfile(sessionID);
+        await this.saveServer.loadProfile(sessionID);
 
         // Completed account creation
         this.saveServer.getProfile(sessionID).info.wipe = false;
-        this.saveServer.saveProfile(sessionID);
+        await this.saveServer.saveProfile(sessionID);
 
         return pmcData._id;
     }
