@@ -21,7 +21,7 @@ export class SaveCallbacks implements OnLoad, OnUpdate {
 
     public async onLoad(): Promise<void> {
         await this.backupService.init();
-        this.saveServer.load();
+        await this.saveServer.load();
     }
 
     public getRoute(): string {
