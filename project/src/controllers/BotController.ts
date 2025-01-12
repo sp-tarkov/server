@@ -429,19 +429,18 @@ export class BotController {
 
         // Check cache for bot using above key
         if (!this.botGenerationCacheService.cacheHasBotWithKey(cacheKey)) {
-            const botPromises: Promise<void>[] = [];
-            // No bot in cache, generate new and return one
-            for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++) {
-                botPromises.push(this.generateSingleBotAndStoreInCache(botGenerationDetails, sessionId, cacheKey));
-            }
+            // No bot in cache, generate new and store in cache
+            await Promise.all(
+                Array.from({ length: botGenerationDetails.botCountToGenerate }).map(
+                    async () => await this.generateSingleBotAndStoreInCache(botGenerationDetails, sessionId, cacheKey),
+                ),
+            );
 
-            await Promise.all(botPromises).then(() => {
-                this.logger.debug(
-                    `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
-                        botGenerationDetails.eventRole ?? ""
-                    }) ${botGenerationDetails.botDifficulty} bots`,
-                );
-            });
+            this.logger.debug(
+                `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
+                    botGenerationDetails.eventRole ?? ""
+                }) ${botGenerationDetails.botDifficulty} bots`,
+            );
         }
 
         const desiredBot = this.botGenerationCacheService.getBot(cacheKey);
