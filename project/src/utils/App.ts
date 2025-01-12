@@ -64,8 +64,8 @@ export class App {
             await onLoad.onLoad();
         }
 
-        setInterval(() => {
-            this.update(this.onUpdateComponents);
+        setInterval(async () => {
+            await this.update(this.onUpdateComponents);
         }, 5000);
     }
 
