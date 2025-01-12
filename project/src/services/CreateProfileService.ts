@@ -49,7 +49,7 @@ export class CreateProfileService {
 
     public async createProfile(sessionID: string, info: IProfileCreateRequestData): Promise<string> {
         const account = this.saveServer.getProfile(sessionID).info;
-        const profileTemplateClone: ITemplateSide = this.cloner.clone(
+        const profileTemplateClone: ITemplateSide = await this.cloner.cloneAsync(
             this.databaseService.getProfiles()[account.edition][info.side.toLowerCase()],
         );
         const pmcData = profileTemplateClone.character;
