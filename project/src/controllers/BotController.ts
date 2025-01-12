@@ -301,26 +301,35 @@ export class BotController {
 
         // Get number of bots we have in cache
         const botCacheCount = this.botGenerationCacheService.getCachedBotCount(cacheKey);
-        const botPromises: Promise<void>[] = [];
-        if (botCacheCount > botGenerationDetails.botCountToGenerate) {
+
+        if (botCacheCount >= botGenerationDetails.botCountToGenerate) {
+            this.logger.debug(`Cache already has sufficient bots: ${botCacheCount}`);
             return;
         }
 
         // We're below desired count, add bots to cache
+        const botsToGenerate = botGenerationDetails.botCountToGenerate - botCacheCount;
         const progressWriter = new ProgressWriter(botGenerationDetails.botCountToGenerate);
-        for (let i = 0; i < botGenerationDetails.botCountToGenerate; i++) {
-            const detailsClone = this.cloner.clone(botGenerationDetails);
-            botPromises.push(this.generateSingleBotAndStoreInCache(detailsClone, sessionId, cacheKey));
-            progressWriter.increment();
-        }
 
-        return await Promise.all(botPromises).then(() => {
-            this.logger.debug(
-                `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
-                    botGenerationDetails.eventRole ?? botGenerationDetails.role ?? ""
-                }) ${botGenerationDetails.botDifficulty} bots`,
-            );
+        this.logger.debug(`Generating ${botsToGenerate} bots for cacheKey: ${cacheKey}`);
+
+        const botGenerationPromises = Array.from({ length: botsToGenerate }, async (_, i) => {
+            try {
+                const detailsClone = await this.cloner.cloneAsync(botGenerationDetails);
+                await this.generateSingleBotAndStoreInCache(detailsClone, sessionId, cacheKey);
+                progressWriter.increment();
+            } catch (error) {
+                this.logger.error(`Failed to generate bot #${i + 1}: ${error.message}`);
+            }
         });
+
+        await Promise.allSettled(botGenerationPromises);
+
+        this.logger.debug(
+            `Generated ${botGenerationDetails.botCountToGenerate} ${botGenerationDetails.role} (${
+                botGenerationDetails.eventRole ?? botGenerationDetails.role ?? ""
+            }) ${botGenerationDetails.botDifficulty} bots`,
+        );
     }
 
     /**
