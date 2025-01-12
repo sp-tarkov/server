@@ -182,8 +182,8 @@ export class BotController {
             this.pmcConfig.allPMCsHavePlayerNameWithRandomPrefixChance,
         );
 
-        const conditionPromises: Promise<void>[] = [];
-        for (const condition of request.conditions) {
+        // Map conditions to promises for bot generation
+        const conditionPromises = request.conditions.map(async (condition) => {
             const botGenerationDetails = this.getBotGenerationDetailsForWave(
                 condition,
                 pmcProfile,
@@ -193,14 +193,11 @@ export class BotController {
                 this.botHelper.isBotPmc(condition.Role),
             );
 
-            conditionPromises.push(this.generateWithBotDetails(condition, botGenerationDetails, sessionId));
-        }
+            // Generate bots for the current condition
+            await this.generateWithBotDetails(condition, botGenerationDetails, sessionId);
+        });
 
-        await Promise.all(conditionPromises)
-            .then((p) => Promise.all(p))
-            .catch((ex) => {
-                this.logger.error(ex);
-            });
+        await Promise.all(conditionPromises);
         return [];
     }
 
