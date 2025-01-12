@@ -320,6 +320,7 @@ export class BotController {
             }
         });
 
+        // Use allSettled here, this allows us to continue even if one of the promises is rejected
         await Promise.allSettled(botGenerationPromises);
 
         this.logger.debug(
