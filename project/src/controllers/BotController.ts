@@ -344,7 +344,7 @@ export class BotController {
         sessionId: string,
         cacheKey: string,
     ): Promise<void> {
-        const botToCache = this.botGenerator.prepareAndGenerateBot(sessionId, botGenerationDetails);
+        const botToCache = await this.botGenerator.prepareAndGenerateBot(sessionId, botGenerationDetails);
         this.botGenerationCacheService.storeBots(cacheKey, [botToCache]);
 
         // Store bot details in cache so post-raid PMC messages can use data

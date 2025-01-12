@@ -111,7 +111,10 @@ export class BotGenerator {
      * @param botGenerationDetails details on how to generate bots
      * @returns constructed bot
      */
-    public prepareAndGenerateBot(sessionId: string, botGenerationDetails: IBotGenerationDetails): IBotBase {
+    public async prepareAndGenerateBot(
+        sessionId: string,
+        botGenerationDetails: IBotGenerationDetails,
+    ): Promise<IBotBase> {
         const preparedBotBase = this.getPreparedBotBase(
             botGenerationDetails.eventRole ?? botGenerationDetails.role, // Use eventRole if provided,
             botGenerationDetails.side,
@@ -122,7 +125,7 @@ export class BotGenerator {
         const botRole = botGenerationDetails.isPmc
             ? preparedBotBase.Info.Side // Use side to get usec.json or bear.json when bot will be PMC
             : botGenerationDetails.role;
-        const botJsonTemplateClone = this.cloner.clone(this.botHelper.getBotTemplate(botRole));
+        const botJsonTemplateClone = await this.cloner.cloneAsync(this.botHelper.getBotTemplate(botRole));
         if (!botJsonTemplateClone) {
             this.logger.error(`Unable to retrieve: ${botRole} bot template, cannot generate bot of this type`);
         }
