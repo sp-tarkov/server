@@ -44,4 +44,37 @@ export class RecursiveCloner implements ICloner {
 
         throw new Error(`Cant clone ${JSON.stringify(obj)}`);
     }
+
+    public async cloneAsync<T>(obj: T): Promise<T> {
+        // if null or undefined return it as is
+        if (obj === null || obj === undefined) return obj;
+
+        const typeOfObj = typeof obj;
+
+        // no need to clone these types, they are primitives
+        if (RecursiveCloner.primitives.has(typeOfObj)) {
+            return obj;
+        }
+
+        // clone the object types
+        if (typeOfObj === "object") {
+            if (Array.isArray(obj)) {
+                const objArr = obj as Array<T>;
+                const clonedArray = await Promise.all(objArr.map(async (v) => await this.cloneAsync(v)));
+                return clonedArray as T;
+            }
+
+            const newObj: Record<string, T> = {};
+            const clonePromises = Object.keys(obj).map(async (key) => {
+                const value = (obj as Record<string, T>)[key];
+                newObj[key] = await this.cloneAsync(value);
+            });
+
+            await Promise.all(clonePromises);
+            return newObj as T;
+        }
+
+        // Handle unsupported types
+        throw new Error(`Cannot clone ${JSON.stringify(obj)}`);
+    }
 }
