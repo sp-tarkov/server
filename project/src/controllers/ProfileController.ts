@@ -1,4 +1,5 @@
 import { PlayerScavGenerator } from "@spt/generators/PlayerScavGenerator";
+import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { IMiniProfile } from "@spt/models/eft/launcher/IMiniProfile";
@@ -29,7 +30,8 @@ export class ProfileController {
         @inject("CreateProfileService") protected createProfileService: CreateProfileService,
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-    ) {}
+        @inject("ItemHelper") protected itemHelper: ItemHelper,
+    ) { }
 
     /**
      * Handle /launcher/profiles
@@ -210,6 +212,14 @@ export class ProfileController {
         }
         const playerPmc = profile.characters.pmc;
         const playerScav = profile.characters.scav;
+        const hideoutKeys = [...Object.values(playerPmc.Inventory.hideoutAreaStashes), playerPmc.Inventory.hideoutCustomizationStashId];
+
+        const hideoutItems = playerPmc.Inventory.items.filter(x => hideoutKeys.includes(x._id));
+        const itemsToReturn = [];
+        for (const item of hideoutItems) {
+            const foundItems = this.itemHelper.findAndReturnChildrenAsItems(playerPmc.Inventory.items, item._id);
+            itemsToReturn.push(...foundItems);
+        }
 
         return {
             id: playerPmc._id,
@@ -249,6 +259,10 @@ export class ProfileController {
                     overAllCounters: playerScav.Stats.Eft.OverallCounters,
                 },
             },
+            hideout: playerPmc.Hideout,
+            customizationStash: playerPmc.Inventory.hideoutCustomizationStashId,
+            hideoutAreaStashes: playerPmc.Inventory.hideoutAreaStashes,
+            items: itemsToReturn
         };
     }
 

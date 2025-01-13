@@ -1,4 +1,4 @@
-import { IOverallCounters, ISkills } from "@spt/models/eft/common/tables/IBotBase";
+import { IHideout, IOverallCounters, ISkills } from "@spt/models/eft/common/tables/IBotBase";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
 
 export interface IGetOtherProfileResponse {
@@ -12,6 +12,10 @@ export interface IGetOtherProfileResponse {
     favoriteItems: IItem[];
     pmcStats: IOtherProfileStats;
     scavStats: IOtherProfileStats;
+    hideout: IHideout;
+    hideoutAreaStashes: Record<string, string>;
+    customizationStash: string;
+    items: IItem[];
 }
 
 export interface IOtherProfileInfo {
