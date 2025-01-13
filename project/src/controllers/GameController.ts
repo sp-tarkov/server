@@ -132,7 +132,7 @@ export class GameController {
             //3.9 migrations
             if (fullProfile.spt.version.includes("3.9.") && !fullProfile.spt.migrations["39x"]) {
                 // Check every item has a valid mongoid
-                this.inventoryHelper.validateInventoryUsesMonogoIds(fullProfile.characters.pmc.Inventory.items);
+                this.inventoryHelper.validateInventoryUsesMongoIds(fullProfile.characters.pmc.Inventory.items);
 
                 this.migrate39xProfile(fullProfile);
 
