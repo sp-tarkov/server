@@ -60,14 +60,15 @@ export class RecursiveCloner implements ICloner {
         if (typeOfObj === "object") {
             if (Array.isArray(obj)) {
                 const objArr = obj as Array<T>;
-                const clonedArray = await Promise.all(objArr.map(async (v) => await this.cloneAsync(v)));
+                const clonedArray = await Promise.all(objArr.map((v) => this.cloneAsync(v)));
                 return clonedArray as T;
             }
 
             const newObj: Record<string, T> = {};
-            const clonePromises = Object.keys(obj).map(async (key) => {
+            const clonePromises = Object.keys(obj).map((key) => {
                 const value = (obj as Record<string, T>)[key];
-                newObj[key] = await this.cloneAsync(value);
+                // Assign values to `newObj` with this.clone, assigning values to `newObj` causes locks with the debugger attached if cloneAsync is used.
+                newObj[key] = this.clone(value);
             });
 
             await Promise.all(clonePromises);
