@@ -108,7 +108,7 @@ export class DialogueHelper {
      * @param dialogueId The id of the dialogue to find
      * @returns Dialogue if found, otherwise undefined
      */
-    public getDialogFromProfile(profileId: string, dialogueId: string): IDialogue | undefined {
+    public getDialogueFromProfile(profileId: string, dialogueId: string): IDialogue | undefined {
         let returnDialogue: IDialogue | undefined = undefined;
         const dialogues = this.getDialogsForProfile(profileId);
 
