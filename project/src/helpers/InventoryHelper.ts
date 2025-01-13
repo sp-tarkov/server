@@ -161,8 +161,7 @@ export class InventoryHelper {
         pmcData.Inventory.items.push(...itemWithModsToAddClone);
 
         this.logger.debug(
-            `Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount ?? 1} item: ${
-                itemWithModsToAddClone[0]._tpl
+            `Added ${itemWithModsToAddClone[0].upd?.StackObjectsCount ?? 1} item: ${itemWithModsToAddClone[0]._tpl
             } with: ${itemWithModsToAddClone.length - 1} mods to inventory`,
         );
     }
@@ -1162,7 +1161,7 @@ export class InventoryHelper {
         return isParentInStash(itemToCheck._id);
     }
 
-    public validateInventoryUsesMonogoIds(itemsToValidate: IItem[]) {
+    public validateInventoryUsesMongoIds(itemsToValidate: IItem[]) {
         for (const item of itemsToValidate) {
             if (!this.hashUtil.isValidMongoId(item._id)) {
                 throw new Error(

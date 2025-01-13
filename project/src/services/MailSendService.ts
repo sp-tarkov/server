@@ -5,7 +5,7 @@ import { NotifierHelper } from "@spt/helpers/NotifierHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { IMessageContentRagfair } from "@spt/models/eft/profile/IMessageContentRagfair";
-import { IDialogue, IMessage, IMessageItems } from "@spt/models/eft/profile/ISptProfile";
+import { IDialogue, IMessage, IMessageItems, IReplyTo } from "@spt/models/eft/profile/ISptProfile";
 import { ISystemData } from "@spt/models/eft/profile/ISystemData";
 import { IUserDialogInfo } from "@spt/models/eft/profile/IUserDialogInfo";
 import { BaseClasses } from "@spt/models/enums/BaseClasses";
@@ -36,7 +36,7 @@ export class MailSendService {
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("ItemHelper") protected itemHelper: ItemHelper,
         @inject("TraderHelper") protected traderHelper: TraderHelper,
-    ) {}
+    ) { }
 
     /**
      * Send a message from an NPC (e.g. prapor) to the player with or without items using direct message text, do not look up any locale
@@ -348,6 +348,14 @@ export class MailSendService {
                 messageDetails.profileChangeEvents?.length === 0 ? messageDetails.profileChangeEvents : undefined, // no one knows, its never been used in any dumps
         };
 
+        // handle replyTo
+        if (messageDetails.replyTo) {
+            const replyMessage = this.getMessageToReplyTo(messageDetails.recipientId, messageDetails.replyTo, dialogId);
+            if (replyMessage) {
+                message.replyTo = replyMessage;
+            }
+        }
+
         // Clean up empty system data
         if (!message.systemData) {
             // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
@@ -358,6 +366,37 @@ export class MailSendService {
         if (!message.templateId) {
             // biome-ignore lint/performance/noDelete: Delete is fine here as we're trying to remove the entire data property.
             delete message.templateId;
+        }
+
+        return message;
+    }
+
+    /**
+     * @param recipientId The id of the recipient
+     * @param replyToId The id of the message to reply to
+     * @param dialogueId The id of the dialogue (traderId or profileId)
+     * @returns A new instance with data from the found message, otherwise undefined
+     */
+    private getMessageToReplyTo(recipientId: string, replyToId: string, dialogueId: string): IReplyTo | undefined {
+        let message: IReplyTo | undefined = undefined;
+        const currentDialogue = this.dialogueHelper.getDialogFromProfile(recipientId, dialogueId);
+
+        if (!currentDialogue) {
+            this.logger.warning(`Could not find dialogue ${dialogueId} from sender`);
+            return message;
+        }
+
+        for (const dialogueMessage of currentDialogue.messages) {
+            if (dialogueMessage._id === replyToId) {
+                message = {
+                    _id: dialogueMessage._id,
+                    dt: dialogueMessage.dt,
+                    type: dialogueMessage.type,
+                    uid: dialogueMessage.uid,
+                    text: dialogueMessage.text
+                };
+                break;
+            }
         }
 
         return message;
