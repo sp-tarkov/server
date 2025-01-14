@@ -67,6 +67,7 @@ export class ModCompilerService {
             downlevelIteration: true,
             experimentalDecorators: true,
             emitDecoratorMetadata: true,
+            isolatedModules: true,
             rootDir: modPath,
         });
     }
