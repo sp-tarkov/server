@@ -57,9 +57,9 @@ export class ModCompilerService {
         return this.compile(modTypeScriptFiles, {
             noEmitOnError: true,
             noImplicitAny: false,
-            target: ScriptTarget.ES2022,
-            module: ModuleKind.CommonJS,
-            moduleResolution: ModuleResolutionKind.Node10,
+            target: ScriptTarget.ESNext,
+            module: ModuleKind.Preserve,
+            moduleResolution: ModuleResolutionKind.NodeNext,
             sourceMap: true,
             resolveJsonModule: true,
             allowJs: true,
