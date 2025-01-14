@@ -17,5 +17,5 @@
             "@tests/*": ["./tests/*"]
         }
     },
-    "include": ["src/*", "src/**/*"]
+    "include": ["src/*", "src/**/*", "./user/mods/**/*"]
 }
