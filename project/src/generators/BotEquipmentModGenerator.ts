@@ -334,6 +334,24 @@ export class BotEquipmentModGenerator {
     }
 
     /**
+     * Gets the minimum and maximum plate class levels from an array of plates
+     * @param platePool Pool of plates to sort by armorClass to get min and max
+     * @returns MinMax of armorClass from plate pool
+     */
+    protected getMinMaxArmorPlateClass(platePool: ITemplateItem[]): MinMax {
+        platePool.sort((x, y) => {
+            if (x._props.armorClass < y._props.armorClass) return -1;
+            if (x._props.armorClass > y._props.armorClass) return 1;
+            return 0;
+        });
+
+        return {
+            min: Number(platePool[0]._props.armorClass),
+            max: Number(platePool[platePool.length - 1]._props.armorClass),
+        };
+    }
+
+    /**
      * Add mods to a weapon using the provided mod pool
      * @param sessionId Session id
      * @param request Data used to generate the weapon
