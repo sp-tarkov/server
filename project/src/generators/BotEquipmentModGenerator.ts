@@ -7,6 +7,7 @@ import { PresetHelper } from "@spt/helpers/PresetHelper";
 import { ProbabilityHelper } from "@spt/helpers/ProbabilityHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
+import { MinMax } from "@spt/models/common/MinMax";
 import { IPreset } from "@spt/models/eft/common/IGlobals";
 import { IMods, IModsChances } from "@spt/models/eft/common/tables/IBotType";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
