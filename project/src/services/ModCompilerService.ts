@@ -58,7 +58,7 @@ export class ModCompilerService {
             noEmitOnError: true,
             noImplicitAny: false,
             target: ScriptTarget.ESNext,
-            module: ModuleKind.Preserve,
+            module: ModuleKind.CommonJS,
             moduleResolution: ModuleResolutionKind.NodeNext,
             sourceMap: true,
             resolveJsonModule: true,
