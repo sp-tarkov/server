@@ -31,6 +31,7 @@ import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
+import { CreateProfileService } from "@spt/services/CreateProfileService";
 import { CustomLocationWaveService } from "@spt/services/CustomLocationWaveService";
 import { DatabaseService } from "@spt/services/DatabaseService";
 import { GiftService } from "@spt/services/GiftService";
@@ -70,6 +71,7 @@ export class GameController {
         @inject("ProfileFixerService") protected profileFixerService: ProfileFixerService,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("PostDbLoadService") protected postDbLoadService: PostDbLoadService,
+        @inject("CreateProfileService") protected createProfileService: CreateProfileService,
         @inject("CustomLocationWaveService") protected customLocationWaveService: CustomLocationWaveService,
         @inject("OpenZoneService") protected openZoneService: OpenZoneService,
         @inject("SeasonalEventService") protected seasonalEventService: SeasonalEventService,
@@ -142,6 +144,16 @@ export class GameController {
                 this.logger.success(`Migration of 3.9.x profile: ${fullProfile.info.username} completed successfully`);
             }
 
+            //3.9 migrations
+            if (fullProfile.spt.version.includes("3.10.") && !fullProfile.spt.migrations["310x"]) {
+                this.migrate310xProfile(fullProfile);
+
+                // Flag as migrated
+                fullProfile.spt.migrations["310x"] = this.timeUtil.getTimestamp();
+
+                this.logger.success(`Migration of 3.10.x profile: ${fullProfile.info.username} completed successfully`);
+            }
+
             if (Array.isArray(fullProfile.characters.pmc.WishList)) {
                 fullProfile.characters.pmc.WishList = {};
             }
@@ -197,6 +209,56 @@ export class GameController {
             }
 
             this.seasonalEventService.givePlayerSeasonalGifts(sessionID);
+        }
+    }
+
+    protected migrate310xProfile(fullProfile: ISptProfile) {
+        if (typeof fullProfile.customisationUnlocks === "undefined") {
+            fullProfile.customisationUnlocks = [];
+            this.createProfileService.addCustomisationUnlocksToProfile(fullProfile);
+        }
+
+        if (typeof fullProfile.characters.pmc.Info.PrestigeLevel === "undefined") {
+            fullProfile.characters.pmc.Info.PrestigeLevel = 0;
+        }
+
+        if (typeof fullProfile.characters.pmc.Inventory.hideoutCustomizationStashId === "undefined") {
+            fullProfile.characters.pmc.Inventory.hideoutCustomizationStashId = "676db384777490e23c45b657";
+            this.createProfileService.addMissingInternalContainersToProfile(fullProfile.characters.pmc);
+        }
+
+        if (typeof fullProfile.characters.pmc.Hideout.Customization === "undefined") {
+            fullProfile.characters.pmc.Hideout.Customization = {
+                Wall: "675844bdf94a97cbbe096f1a",
+                Floor: "6758443ff94a97cbbe096f18",
+                Light: "675fe8abbc3deae49a0b947f",
+                Ceiling: "673b3f977038192ee006aa09",
+                ShootingRangeMark: "67585d416c72998cf60ed85a",
+            };
+        }
+
+        if (fullProfile.characters.pmc.Info.Side === "Bear") {
+            fullProfile.characters.pmc.Customization.DogTag = "674731c8bafff850080488bb"; //Bear base dogtag
+
+            if (fullProfile.characters.pmc.Info.GameVersion === "edge_of_darkness") {
+                fullProfile.characters.pmc.Customization.DogTag = "6746fd09bafff85008048838";
+            }
+
+            if (fullProfile.characters.pmc.Info.GameVersion === "unheard_edition") {
+                fullProfile.characters.pmc.Customization.DogTag = "67471928d17d6431550563b5";
+            }
+        }
+
+        if (fullProfile.characters.pmc.Info.Side === "Usec") {
+            fullProfile.characters.pmc.Customization.DogTag = "674731d1170146228c0d222a"; //Usec base dogtag
+
+            if (fullProfile.characters.pmc.Info.GameVersion === "edge_of_darkness") {
+                fullProfile.characters.pmc.Customization.DogTag = "67471938bafff850080488b7";
+            }
+
+            if (fullProfile.characters.pmc.Info.GameVersion === "unheard_edition") {
+                fullProfile.characters.pmc.Customization.DogTag = "6747193f170146228c0d2226";
+            }
         }
     }
 

@@ -205,7 +205,7 @@ export class CreateProfileService {
      * DOES NOT check that stash exists
      * @param pmcData Profile to check
      */
-    protected addMissingInternalContainersToProfile(pmcData: IPmcData): void {
+    public addMissingInternalContainersToProfile(pmcData: IPmcData): void {
         if (!pmcData.Inventory.items.find((item) => item._id === pmcData.Inventory.hideoutCustomizationStashId)) {
             pmcData.Inventory.items.push({
                 _id: pmcData.Inventory.hideoutCustomizationStashId,
@@ -235,7 +235,7 @@ export class CreateProfileService {
         }
     }
 
-    protected addCustomisationUnlocksToProfile(fullProfile: ISptProfile) {
+    public addCustomisationUnlocksToProfile(fullProfile: ISptProfile) {
         // Some game versions have additional dogtag variants, add them
         switch (this.getGameEdition(fullProfile)) {
             case GameEditions.EDGE_OF_DARKNESS:
