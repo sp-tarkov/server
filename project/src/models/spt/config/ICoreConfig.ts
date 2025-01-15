@@ -95,7 +95,7 @@ export interface IChatbotFeatures {
     /** Human readable id to guid for each bot */
     ids: Record<string, string>;
     /** Bot Ids player is allowed to interact with */
-    enabledBots: Record<string, string>;
+    enabledBots: Record<string, boolean>;
 }
 
 export interface ICommandoFeatures {
