@@ -218,6 +218,10 @@ export class GameController {
             this.createProfileService.addCustomisationUnlocksToProfile(fullProfile);
         }
 
+        if (typeof fullProfile.characters.pmc.Prestige === "undefined") {
+            fullProfile.characters.pmc.Prestige = {};
+        }
+
         if (typeof fullProfile.characters.pmc.Info.PrestigeLevel === "undefined") {
             fullProfile.characters.pmc.Info.PrestigeLevel = 0;
         }
