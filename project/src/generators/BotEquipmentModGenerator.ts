@@ -285,46 +285,74 @@ export class BotEquipmentModGenerator {
         }
 
         // Choose a plate level based on weighting
-        const chosenArmorPlateLevel = this.weightedRandomHelper.getWeightedValue<string>(plateWeights);
+        let chosenArmorPlateLevel = this.weightedRandomHelper.getWeightedValue<string>(plateWeights);
 
         // Convert the array of ids into database items
         const platesFromDb = existingPlateTplPool.map((plateTpl) => this.itemHelper.getItem(plateTpl)[1]);
 
         // Filter plates to the chosen level based on its armorClass property
-        const platesOfDesiredLevel = platesFromDb.filter((item) => item._props.armorClass === chosenArmorPlateLevel);
+        let platesOfDesiredLevel = platesFromDb.filter((item) => item._props.armorClass === chosenArmorPlateLevel);
         if (platesOfDesiredLevel.length === 0) {
-            this.logger.debug(
-                `Plate filter was too restrictive for armor: ${armorItem._name} ${armorItem._id}, unable to find plates of level: ${chosenArmorPlateLevel}. Using mod items default plate`,
-            );
+            // Get lowest and highest plate classes available for this armor
+            const minMaxArmorPlateClass = this.getMinMaxArmorPlateClass(platesFromDb);
 
-            const relatedItemDbModSlot = armorItem._props.Slots.find((slot) => slot._name.toLowerCase() === modSlot);
-            const defaultPlate = relatedItemDbModSlot._props.filters[0].Plate;
-            if (!defaultPlate) {
-                // No relevant plate found after filtering AND no default plate
+            let fitPlateIntoArmorAttempts = 0;
+            const maxTries = 3;
 
-                // Last attempt, get default preset and see if it has a plate default
-                const defaultPreset = this.presetHelper.getDefaultPreset(armorItem._id);
-                if (defaultPreset) {
-                    const relatedPresetSlot = defaultPreset._items.find(
-                        (item) => item.slotId?.toLowerCase() === modSlot,
+            // Attempt to increase plate class level to attempt getting minimum plate level useable based on original selection
+            for (let i = 0; i < maxTries; i++) {
+                chosenArmorPlateLevel = (Number.parseInt(chosenArmorPlateLevel) + 1).toString();
+                platesOfDesiredLevel = platesFromDb.filter((item) => item._props.armorClass === chosenArmorPlateLevel);
+
+                // If new chosen plate class is higher than max, then set to min and try again
+                if (Number(chosenArmorPlateLevel) > minMaxArmorPlateClass.max) {
+                    chosenArmorPlateLevel = minMaxArmorPlateClass.min.toString();
+                }
+
+                fitPlateIntoArmorAttempts++;
+                // Break loop if valid plate class is found
+                if (platesOfDesiredLevel.length > 0) {
+                    break;
+                }
+
+                // If no valid plate class is found in 3 tries then attempt default plates
+                if (fitPlateIntoArmorAttempts >= maxTries) {
+                    console.log(JSON.stringify(platesOfDesiredLevel));
+                    this.logger.debug(
+                        `Plate filter was too restrictive for armor: ${armorItem._name} ${armorItem._id}, unable to find plates of level: ${chosenArmorPlateLevel}. Using mod items default plate`,
                     );
-                    if (relatedPresetSlot) {
-                        result.result = Result.SUCCESS;
-                        result.plateModTpls = [relatedPresetSlot._tpl];
+                    const relatedItemDbModSlot = armorItem._props.Slots.find(
+                        (slot) => slot._name.toLowerCase() === modSlot,
+                    );
+                    const defaultPlate = relatedItemDbModSlot._props.filters[0].Plate;
+                    if (!defaultPlate) {
+                        // No relevant plate found after filtering AND no default plate
+
+                        // Last attempt, get default preset and see if it has a plate default
+                        const defaultPreset = this.presetHelper.getDefaultPreset(armorItem._id);
+                        if (defaultPreset) {
+                            const relatedPresetSlot = defaultPreset._items.find(
+                                (item) => item.slotId?.toLowerCase() === modSlot,
+                            );
+                            if (relatedPresetSlot) {
+                                result.result = Result.SUCCESS;
+                                result.plateModTpls = [relatedPresetSlot._tpl];
+
+                                return result;
+                            }
+                        }
+                        // Return Default Preset cause didn't have default plates
+                        result.result = Result.NO_DEFAULT_FILTER;
 
                         return result;
                     }
+                    // Return Default Plates cause couldn't get lowest level available from original selection
+                    result.result = Result.SUCCESS;
+                    result.plateModTpls = [defaultPlate];
+
+                    return result;
                 }
-
-                result.result = Result.NO_DEFAULT_FILTER;
-
-                return result;
             }
-
-            result.result = Result.SUCCESS;
-            result.plateModTpls = [defaultPlate];
-
-            return result;
         }
 
         // Only return the items ids
