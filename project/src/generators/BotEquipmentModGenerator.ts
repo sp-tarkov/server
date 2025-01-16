@@ -317,7 +317,6 @@ export class BotEquipmentModGenerator {
 
                 // If no valid plate class is found in 3 tries then attempt default plates
                 if (fitPlateIntoArmorAttempts >= maxTries) {
-                    console.log(JSON.stringify(platesOfDesiredLevel));
                     this.logger.debug(
                         `Plate filter was too restrictive for armor: ${armorItem._name} ${armorItem._id}, unable to find plates of level: ${chosenArmorPlateLevel}. Using mod items default plate`,
                     );
