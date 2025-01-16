@@ -302,12 +302,13 @@ export class BotEquipmentModGenerator {
             // Attempt to increase plate class level to attempt getting minimum plate level useable based on original selection
             for (let i = 0; i < maxTries; i++) {
                 chosenArmorPlateLevel = (Number.parseInt(chosenArmorPlateLevel) + 1).toString();
-                platesOfDesiredLevel = platesFromDb.filter((item) => item._props.armorClass === chosenArmorPlateLevel);
 
-                // If new chosen plate class is higher than max, then set to min and try again
+                // If new chosen plate class is higher than max, then set to min and check if valid
                 if (Number(chosenArmorPlateLevel) > minMaxArmorPlateClass.max) {
                     chosenArmorPlateLevel = minMaxArmorPlateClass.min.toString();
                 }
+
+                platesOfDesiredLevel = platesFromDb.filter((item) => item._props.armorClass === chosenArmorPlateLevel);
 
                 fitPlateIntoArmorAttempts++;
                 // Break loop if valid plate class is found
