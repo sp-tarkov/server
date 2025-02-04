@@ -353,6 +353,7 @@ export class FileSystemSync {
                 .map((dirent) => path.join(dirent.parentPath, dirent.name).replace(/\\/g, "/"))
                 // Optionally remove the input directory from the path.
                 .map((dir) => (includeInputDir ? dir : dir.replace(directoryNormalized, "")))
+                .sort()
         );
     }
 }
