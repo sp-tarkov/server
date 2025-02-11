@@ -21,7 +21,7 @@ export class PrestigeHelper {
         @inject("DatabaseService") protected databaseService: DatabaseService,
         @inject("MailSendService") protected mailSendService: MailSendService,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
-        @inject("RewardHelper") protected RewardHelper: RewardHelper,
+        @inject("RewardHelper") protected rewardHelper: RewardHelper,
     ) {}
 
     public processPendingPrestige(oldProfile: ISptProfile, newProfile: ISptProfile, prestige: IPendingPrestige) {
@@ -64,7 +64,7 @@ export class PrestigeHelper {
 
         // Add "Prestigious" achievement
         if (!newProfile.characters.pmc.Achievements["676091c0f457869a94017a23"]) {
-            this.RewardHelper.addAchievementToProfile(newProfile, "676091c0f457869a94017a23");
+            this.rewardHelper.addAchievementToProfile(newProfile, "676091c0f457869a94017a23");
         }
 
         // Assumes Prestige data is in descending order

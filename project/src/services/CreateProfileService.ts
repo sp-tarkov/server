@@ -47,7 +47,7 @@ export class CreateProfileService {
         @inject("PrestigeHelper") protected prestigeHelper: PrestigeHelper,
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("QuestRewardHelper") protected questRewardHelper: QuestRewardHelper,
-        @inject("RewardHelper") protected RewardHelper: RewardHelper,
+        @inject("RewardHelper") protected rewardHelper: RewardHelper,
         @inject("PrimaryCloner") protected cloner: ICloner,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
     ) {}
@@ -150,7 +150,7 @@ export class CreateProfileService {
                 }
 
                 achievementRewardItemsToSend.push(
-                    ...this.RewardHelper.applyRewards(
+                    ...this.rewardHelper.applyRewards(
                         rewards,
                         CustomisationSource.ACHIEVEMENT,
                         profileDetails,
