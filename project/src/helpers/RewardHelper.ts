@@ -9,7 +9,6 @@ import { IReward } from "@spt/models/eft/common/tables/IReward";
 import { IHideoutProduction } from "@spt/models/eft/hideout/IHideoutProduction";
 import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
-import { BaseClasses } from "@spt/models/enums/BaseClasses";
 import { RewardType } from "@spt/models/enums/RewardType";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
@@ -348,8 +347,10 @@ export class RewardHelper {
      * @param achievementId Id of achievement to add
      */
     public addAchievementToProfile(fullProfile: ISptProfile, achievementId: string): void {
-        // Add achievement id to profile with timestamp it was unlocked
-        fullProfile.characters.pmc.Achievements[achievementId] = this.timeUtil.getTimestamp();
+        if (!fullProfile.characters.pmc.Achievements[achievementId]) {
+            // Add achievement id to profile with timestamp it was unlocked
+            fullProfile.characters.pmc.Achievements[achievementId] = this.timeUtil.getTimestamp();
+        }
 
         // Check for any customisation unlocks
         const achievementDataDb = this.databaseService
