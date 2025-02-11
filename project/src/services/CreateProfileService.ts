@@ -1,15 +1,18 @@
 import { PlayerScavGenerator } from "@spt/generators/PlayerScavGenerator";
 import { ItemHelper } from "@spt/helpers/ItemHelper";
+import { PrestigeHelper } from "@spt/helpers/PrestigeHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { QuestHelper } from "@spt/helpers/QuestHelper";
 import { QuestRewardHelper } from "@spt/helpers/QuestRewardHelper";
+import { RewardHelper } from "@spt/helpers/RewardHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { CustomisationSource, CustomisationType } from "@spt/models/eft/common/tables/ICustomisationStorage";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { ITemplateSide } from "@spt/models/eft/common/tables/IProfileTemplate";
 import { IItemEventRouterResponse } from "@spt/models/eft/itemEvent/IItemEventRouterResponse";
 import { IProfileCreateRequestData } from "@spt/models/eft/profile/IProfileCreateRequestData";
-import { IInraid, ISptProfile, IVitality } from "@spt/models/eft/profile/ISptProfile";
+import { IInraid, IPendingPrestige, ISptProfile, IVitality } from "@spt/models/eft/profile/ISptProfile";
 import { GameEditions } from "@spt/models/enums/GameEditions";
 import { ItemTpl } from "@spt/models/enums/ItemTpl";
 import { MessageType } from "@spt/models/enums/MessageType";
@@ -41,16 +44,18 @@ export class CreateProfileService {
         @inject("TraderHelper") protected traderHelper: TraderHelper,
         @inject("LocalisationService") protected localisationService: LocalisationService,
         @inject("MailSendService") protected mailSendService: MailSendService,
+        @inject("PrestigeHelper") protected prestigeHelper: PrestigeHelper,
         @inject("PlayerScavGenerator") protected playerScavGenerator: PlayerScavGenerator,
         @inject("QuestRewardHelper") protected questRewardHelper: QuestRewardHelper,
+        @inject("RewardHelper") protected RewardHelper: RewardHelper,
         @inject("PrimaryCloner") protected cloner: ICloner,
         @inject("EventOutputHolder") protected eventOutputHolder: EventOutputHolder,
     ) {}
 
     public async createProfile(sessionID: string, info: IProfileCreateRequestData): Promise<string> {
-        const account = this.saveServer.getProfile(sessionID).info;
+        const account = await this.cloner.cloneAsync(this.saveServer.getProfile(sessionID));
         const profileTemplateClone: ITemplateSide = await this.cloner.cloneAsync(
-            this.databaseService.getProfiles()[account.edition][info.side.toLowerCase()],
+            this.databaseService.getProfiles()[account.info.edition][info.side.toLowerCase()],
         );
         const pmcData = profileTemplateClone.character;
 
@@ -58,12 +63,12 @@ export class CreateProfileService {
         this.deleteProfileBySessionId(sessionID);
 
         // PMC
-        pmcData._id = account.id;
-        pmcData.aid = account.aid;
-        pmcData.savage = account.scavId;
+        pmcData._id = account.info.id;
+        pmcData.aid = account.info.aid;
+        pmcData.savage = account.info.scavId;
         pmcData.sessionId = sessionID;
         pmcData.Info.Nickname = info.nickname;
-        pmcData.Info.LowerNickname = account.username.toLowerCase();
+        pmcData.Info.LowerNickname = account.info.username.toLowerCase();
         pmcData.Info.RegistrationDate = this.timeUtil.getTimestamp();
         pmcData.Info.Voice = this.databaseService.getCustomization()[info.voiceId]._name;
         pmcData.Stats = this.profileHelper.getDefaultCounters();
@@ -77,8 +82,21 @@ export class CreateProfileService {
         pmcData.CoopExtractCounts = {};
         pmcData.Achievements = {};
 
-        if (typeof info.sptForcePrestigeLevel === "number") {
-            pmcData.Info.PrestigeLevel = info.sptForcePrestigeLevel;
+        // Process handling if the account has been forced to wipe
+        // BSG keeps both the achievements, prestige level and the total in-game time in a wipe.
+        if (account.characters.pmc.Achievements) {
+            pmcData.Achievements = account.characters.pmc.Achievements;
+        }
+
+        if (account.characters.pmc.Prestige) {
+            pmcData.Prestige = account.characters.pmc.Prestige;
+            pmcData.Info.PrestigeLevel = account.characters.pmc.Info.PrestigeLevel;
+        }
+
+        if (account.characters.pmc.Stats.Eft?.TotalInGameTime) {
+            if (pmcData.Stats.Eft) {
+                pmcData.Stats.Eft.TotalInGameTime = account.characters.pmc.Stats.Eft?.TotalInGameTime;
+            }
         }
 
         this.updateInventoryEquipmentId(pmcData);
@@ -100,7 +118,7 @@ export class CreateProfileService {
 
         // Create profile
         const profileDetails: ISptProfile = {
-            info: account,
+            info: account.info,
             characters: { pmc: pmcData, scav: {} as IPmcData },
             suits: profileTemplateClone.suits,
             userbuilds: profileTemplateClone.userbuilds,
@@ -119,6 +137,54 @@ export class CreateProfileService {
         this.profileFixerService.checkForAndFixPmcProfileIssues(profileDetails.characters.pmc);
 
         this.saveServer.addProfile(profileDetails);
+
+        if (Object.keys(profileDetails.characters.pmc.Achievements).length > 0) {
+            const achievementsDb = this.databaseService.getTemplates().achievements;
+            const achievementRewardItemsToSend: IItem[] = [];
+
+            for (const achievementId in profileDetails.characters.pmc.Achievements) {
+                const rewards = achievementsDb.find((achievementDb) => achievementDb.id === achievementId)?.rewards;
+
+                if (!rewards) {
+                    continue;
+                }
+
+                achievementRewardItemsToSend.push(
+                    ...this.RewardHelper.applyRewards(
+                        rewards,
+                        CustomisationSource.ACHIEVEMENT,
+                        profileDetails,
+                        profileDetails.characters.pmc,
+                        achievementId,
+                    ),
+                );
+            }
+
+            if (achievementRewardItemsToSend.length > 0) {
+                this.mailSendService.sendLocalisedSystemMessageToPlayer(
+                    profileDetails.info.id,
+                    "670547bb5fa0b1a7c30d5836 0",
+                    achievementRewardItemsToSend,
+                    [],
+                    31536000,
+                );
+            }
+        }
+
+        // Process handling if the account is forced to prestige, or if the account currently has any pending prestiges
+        if (info.sptForcePrestigeLevel || account.spt.pendingPrestige) {
+            let pendingPrestige: IPendingPrestige;
+
+            if (account.spt.pendingPrestige) {
+                pendingPrestige = account.spt.pendingPrestige;
+            } else {
+                pendingPrestige = {
+                    prestigeLevel: info.sptForcePrestigeLevel as number,
+                };
+            }
+
+            this.prestigeHelper.processPendingPrestige(account, profileDetails, pendingPrestige);
+        }
 
         if (profileTemplateClone.trader.setQuestsAvailableForStart) {
             this.questHelper.addAllQuestsToProfile(profileDetails.characters.pmc, [QuestStatus.AvailableForStart]);

@@ -198,6 +198,7 @@ export class ProfileHelper {
             cultistRewards: new Map(),
             mods: [],
             receivedGifts: [],
+            pendingPrestige: undefined,
         };
     }
 

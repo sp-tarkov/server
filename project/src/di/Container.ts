@@ -109,6 +109,7 @@ import { NotificationSendHelper } from "@spt/helpers/NotificationSendHelper";
 import { NotifierHelper } from "@spt/helpers/NotifierHelper";
 import { PaymentHelper } from "@spt/helpers/PaymentHelper";
 import { PresetHelper } from "@spt/helpers/PresetHelper";
+import { PrestigeHelper } from "@spt/helpers/PrestigeHelper";
 import { ProbabilityHelper } from "@spt/helpers/ProbabilityHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { QuestConditionHelper } from "@spt/helpers/QuestConditionHelper";
@@ -120,8 +121,8 @@ import { RagfairSellHelper } from "@spt/helpers/RagfairSellHelper";
 import { RagfairServerHelper } from "@spt/helpers/RagfairServerHelper";
 import { RagfairSortHelper } from "@spt/helpers/RagfairSortHelper";
 import { RepairHelper } from "@spt/helpers/RepairHelper";
-import { RewardHelper } from "@spt/helpers/RewardHelper";
 import { RepeatableQuestHelper } from "@spt/helpers/RepeatableQuestHelper";
+import { RewardHelper } from "@spt/helpers/RewardHelper";
 import { SecureContainerHelper } from "@spt/helpers/SecureContainerHelper";
 import { TradeHelper } from "@spt/helpers/TradeHelper";
 import { TraderAssortHelper } from "@spt/helpers/TraderAssortHelper";
@@ -636,6 +637,7 @@ export class Container {
         });
         depContainer.register<BotDifficultyHelper>("BotDifficultyHelper", { useClass: BotDifficultyHelper });
         depContainer.register<RepeatableQuestHelper>("RepeatableQuestHelper", { useClass: RepeatableQuestHelper });
+        depContainer.register<PrestigeHelper>("PrestigeHelper", PrestigeHelper);
 
         // ChatBots
         depContainer.register<SptDialogueChatBot>("SptDialogueChatBot", SptDialogueChatBot);

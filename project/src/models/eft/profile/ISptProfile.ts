@@ -5,6 +5,7 @@ import { EquipmentBuildType } from "@spt/models/enums/EquipmentBuildType";
 import { MemberCategory } from "@spt/models/enums/MemberCategory";
 import { MessageType } from "@spt/models/enums/MessageType";
 import { IProfileChangeEvent } from "@spt/models/spt/dialog/ISendMessageDetails";
+import { IObtainPrestigeRequest } from "../prestige/IObtainPrestigeRequest";
 import { ISystemData } from "./ISystemData";
 import { IUserDialogInfo } from "./IUserDialogInfo";
 
@@ -175,6 +176,12 @@ export interface ISpt {
     migrations?: Record<string, number>;
     /** Cultist circle rewards received that are one time use, key (md5) is a combination of sacrificed + reward items */
     cultistRewards?: Map<string, IAcceptedCultistReward>;
+    pendingPrestige?: IPendingPrestige;
+}
+
+export interface IPendingPrestige {
+    prestigeLevel: number;
+    items?: IObtainPrestigeRequest[];
 }
 
 export interface IAcceptedCultistReward {
