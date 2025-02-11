@@ -93,9 +93,9 @@ export class CreateProfileService {
             pmcData.Info.PrestigeLevel = account.characters.pmc.Info.PrestigeLevel;
         }
 
-        if (account.characters.pmc.Stats.Eft?.TotalInGameTime) {
+        if (account.characters?.pmc?.Stats?.Eft) {
             if (pmcData.Stats.Eft) {
-                pmcData.Stats.Eft.TotalInGameTime = account.characters.pmc.Stats.Eft?.TotalInGameTime;
+                pmcData.Stats.Eft.TotalInGameTime = account.characters.pmc.Stats.Eft.TotalInGameTime;
             }
         }
 
@@ -172,7 +172,7 @@ export class CreateProfileService {
         }
 
         // Process handling if the account is forced to prestige, or if the account currently has any pending prestiges
-        if (info.sptForcePrestigeLevel || account.spt.pendingPrestige) {
+        if (info.sptForcePrestigeLevel || account.spt?.pendingPrestige) {
             let pendingPrestige: IPendingPrestige;
 
             if (account.spt.pendingPrestige) {
