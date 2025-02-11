@@ -51,7 +51,7 @@ export class PrestigeController {
             profile.spt.pendingPrestige = pendingPrestige;
             profile.info.wipe = true;
 
-            this.saveServer.saveProfile(sessionId);
+            await this.saveServer.saveProfile(sessionId);
         }
     }
 }
