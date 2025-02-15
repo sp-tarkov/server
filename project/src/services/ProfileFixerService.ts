@@ -413,13 +413,10 @@ export class ProfileFixerService {
      * @param pmcProfile 
      */
     protected fixOrphanedInsurance(pmcProfile: IPmcData): void {
-        const startTime = performance.now();
         pmcProfile.InsuredItems = pmcProfile.InsuredItems.filter((insuredItem) => {
             // Check if the player inventory contains this item
             return pmcProfile.Inventory.items.some((item) => item._id === insuredItem.itemId);
         });
-        const duration = performance.now() - startTime;
-        console.log(`Took ${duration}ms to filter insurance`);
     }
 
     /**
