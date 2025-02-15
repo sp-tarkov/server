@@ -5,6 +5,7 @@ import { HideoutHelper } from "@spt/helpers/HideoutHelper";
 import { HttpServerHelper } from "@spt/helpers/HttpServerHelper";
 import { InventoryHelper } from "@spt/helpers/InventoryHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
+import { RewardHelper } from "@spt/helpers/RewardHelper";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { IEmptyRequestData } from "@spt/models/eft/common/IEmptyRequestData";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
@@ -14,6 +15,7 @@ import {
     CustomisationType,
     ICustomisationStorage,
 } from "@spt/models/eft/common/tables/ICustomisationStorage";
+import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { ICheckVersionResponse } from "@spt/models/eft/game/ICheckVersionResponse";
 import { ICurrentGroupResponse } from "@spt/models/eft/game/ICurrentGroupResponse";
 import { IGameConfigResponse } from "@spt/models/eft/game/IGameConfigResponse";
@@ -28,6 +30,7 @@ import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
+import { RewardType } from "@spt/models/enums/RewardType";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
@@ -70,6 +73,7 @@ export class GameController {
         @inject("PreSptModLoader") protected preSptModLoader: PreSptModLoader,
         @inject("HttpServerHelper") protected httpServerHelper: HttpServerHelper,
         @inject("InventoryHelper") protected inventoryHelper: InventoryHelper,
+        @inject("RewardHelper") protected rewardHelper: RewardHelper,
         @inject("RandomUtil") protected randomUtil: RandomUtil,
         @inject("HideoutHelper") protected hideoutHelper: HideoutHelper,
         @inject("ProfileHelper") protected profileHelper: ProfileHelper,
@@ -290,6 +294,31 @@ export class GameController {
                 } else {
                     // Modded clothing, this will have to be re-setup by the user in 4.0
                     clothingToRemove.push(clothing);
+                }
+            }
+
+            if (Object.keys(fullProfile.characters.pmc.Achievements).length > 0) {
+                const achievementsDb = this.databaseService.getTemplates().achievements;
+
+                for (const achievementId in fullProfile.characters.pmc.Achievements) {
+                    let rewards = achievementsDb.find((achievementDb) => achievementDb.id === achievementId)?.rewards;
+
+                    if (!rewards) {
+                        continue;
+                    }
+
+                    // Only hand out the new hideout customization rewards.
+                    rewards = rewards.filter(
+                        (achievementReward) => achievementReward.type === RewardType.CUSTOMIZATION_DIRECT,
+                    );
+
+                    this.rewardHelper.applyRewards(
+                        rewards,
+                        CustomisationSource.ACHIEVEMENT,
+                        fullProfile,
+                        fullProfile.characters.pmc,
+                        achievementId,
+                    );
                 }
             }
         }
