@@ -67,6 +67,7 @@ export class ProfileFixerService {
         this.removeOrphanedQuests(pmcProfile);
         this.verifyQuestProductionUnlocks(pmcProfile);
         this.fixFavorites(pmcProfile);
+        this.fixOrphanedInsurance(pmcProfile);
 
         if (pmcProfile.Hideout) {
             this.addHideoutEliteSlots(pmcProfile);
@@ -404,6 +405,21 @@ export class ProfileFixerService {
 
             pmcProfile.Inventory.favoriteItems = correctedFavorites ?? [];
         }
+    }
+
+    /**
+     * Remove any entries from `pmcProfile.InsuredItems` that do not have a corresponding
+     * `pmcProfile.Inventory.items` entry
+     * @param pmcProfile 
+     */
+    protected fixOrphanedInsurance(pmcProfile: IPmcData): void {
+        const startTime = performance.now();
+        pmcProfile.InsuredItems = pmcProfile.InsuredItems.filter((insuredItem) => {
+            // Check if the player inventory contains this item
+            return pmcProfile.Inventory.items.some((item) => item._id === insuredItem.itemId);
+        });
+        const duration = performance.now() - startTime;
+        console.log(`Took ${duration}ms to filter insurance`);
     }
 
     /**

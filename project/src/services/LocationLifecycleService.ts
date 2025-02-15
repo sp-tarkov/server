@@ -1004,7 +1004,7 @@ export class LocationLifecycleService {
             const mappedItems = this.insuranceService.mapInsuredItemsToTrader(
                 sessionId,
                 request.lostInsuredItems,
-                request.results.profile,
+                preRaidPmcProfile,
             );
 
             // Is possible to have items in lostInsuredItems but removed before reaching mappedItems
