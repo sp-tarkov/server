@@ -321,6 +321,8 @@ export class GameController {
                     );
                 }
             }
+
+            fullProfile.spt.version = `${this.profileHelper.getDefaultSptDataObject().version} (Migrated from 3.10)`;
         }
 
         if (fullProfile.characters.pmc.Info.Side === "Usec") {
