@@ -1,6 +1,6 @@
 {
     "name": "spt-server",
-    "version": "4.0.0",
+    "version": "3.11.0",
     "author": "SPT Server",
     "license": "NCSA",
     "main": "obj/bundle.js",
@@ -50,7 +50,7 @@
         "winston": "3.17.0",
         "winston-daily-rotate-file": "5.0.0",
         "ws": "8.18.0",
-		"typescript": "5.7.3"
+        "typescript": "5.7.3"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
