@@ -89,8 +89,6 @@ export class PostDbLoadService {
             this.removeExistingPmcWaves();
         }
 
-        this.pmcWaveGenerator.applyWaveChangesToAllMaps();
-
         if (this.locationConfig.addCustomBotWavesToMaps) {
             this.customLocationWaveService.applyWaveChangesToAllMaps();
         }

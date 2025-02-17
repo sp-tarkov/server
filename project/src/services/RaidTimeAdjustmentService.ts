@@ -3,14 +3,14 @@ import { ContextVariableType } from "@spt/context/ContextVariableType";
 import { WeightedRandomHelper } from "@spt/helpers/WeightedRandomHelper";
 import { ILocationBase } from "@spt/models/eft/common/ILocationBase";
 import { IGetRaidTimeRequest } from "@spt/models/eft/game/IGetRaidTimeRequest";
-import { ExtractChange, IGetRaidTimeResponse } from "@spt/models/eft/game/IGetRaidTimeResponse";
+import { IGetRaidTimeResponse } from "@spt/models/eft/game/IGetRaidTimeResponse";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import {
     ILocationConfig,
     ILootMultiplier,
     IScavRaidTimeLocationSettings,
 } from "@spt/models/spt/config/ILocationConfig";
-import { IRaidChanges } from "@spt/models/spt/location/IRaidChanges";
+import { ExtractChange, IRaidChanges } from "@spt/models/spt/location/IRaidChanges";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -39,17 +39,47 @@ export class RaidTimeAdjustmentService {
      * @param mapBase Map to adjust
      */
     public makeAdjustmentsToMap(raidAdjustments: IRaidChanges, mapBase: ILocationBase): void {
-        this.logger.debug(
-            `Adjusting dynamic loot multipliers to ${raidAdjustments.dynamicLootPercent}% and static loot multipliers to ${raidAdjustments.staticLootPercent}% of original`,
-        );
+        if (raidAdjustments.dynamicLootPercent < 100 || raidAdjustments.staticLootPercent < 100) {
+            this.logger.debug(
+                `Adjusting dynamic loot multipliers to ${raidAdjustments.dynamicLootPercent}% and static loot multipliers to ${raidAdjustments.staticLootPercent}% of original`,
+            );
+        }
 
         // Change loot multipler values before they're used below
-        this.adjustLootMultipliers(this.locationConfig.looseLootMultiplier, raidAdjustments.dynamicLootPercent);
-        this.adjustLootMultipliers(this.locationConfig.staticLootMultiplier, raidAdjustments.staticLootPercent);
+        if (raidAdjustments.dynamicLootPercent < 100) {
+            this.adjustLootMultipliers(this.locationConfig.looseLootMultiplier, raidAdjustments.dynamicLootPercent);
+        }
+        if (raidAdjustments.staticLootPercent < 100) {
+            this.adjustLootMultipliers(this.locationConfig.staticLootMultiplier, raidAdjustments.staticLootPercent);
+        }
 
+        // Adjust the escape time limit
+        mapBase.EscapeTimeLimit = raidAdjustments.raidTimeMinutes;
+
+        // Adjust map exits
+        raidAdjustments.exitChanges.forEach(exitChange => {
+            const exitToChange = mapBase.exits.find(exit => exit.Name === exitChange.Name);
+            if (!exitToChange) {
+                this.logger.debug(`Exit with Id: ${exitChange.Name} not found, skipping`);
+                return;
+            }
+
+            if (typeof exitChange.Chance !== 'undefined') {
+                exitToChange.Chance = exitChange.Chance;
+            }
+
+            if (typeof exitChange.MinTime !== 'undefined') {
+                exitToChange.MinTime = exitChange.MinTime;
+            }
+
+            if (typeof exitChange.MaxTime !== 'undefined') {
+                exitToChange.MaxTime = exitChange.MaxTime;
+            }
+        });
+
+        // Make alterations to bot spawn waves now player is simulated spawning later
         const mapSettings = this.getMapSettings(mapBase.Id);
         if (mapSettings.adjustWaves) {
-            // Make alterations to bot spawn waves now player is simulated spawning later
             this.adjustWaves(mapBase, raidAdjustments);
         }
     }
@@ -102,8 +132,6 @@ export class RaidTimeAdjustmentService {
 
         // Prep result object to return
         const result: IGetRaidTimeResponse = {
-            RaidTimeMinutes: baseEscapeTimeMinutes,
-            ExitChanges: [],
             NewSurviveTimeSeconds: undefined,
             OriginalSurvivalTimeSeconds: globals.config.exp.match_end.survived_seconds_requirement,
         };
@@ -136,32 +164,40 @@ export class RaidTimeAdjustmentService {
         // Time player spawns into the raid if it was online
         const simulatedRaidStartTimeMinutes = baseEscapeTimeMinutes - newRaidTimeMinutes;
 
-        if (mapSettings.reduceLootByPercent) {
-            // Store time reduction percent in app context so loot gen can pick it up later
-            this.applicationContext.addValue(ContextVariableType.RAID_ADJUSTMENTS, {
-                dynamicLootPercent: Math.max(raidTimeRemainingPercent, mapSettings.minDynamicLootPercent),
-                staticLootPercent: Math.max(raidTimeRemainingPercent, mapSettings.minStaticLootPercent),
-                simulatedRaidStartSeconds: simulatedRaidStartTimeMinutes * 60,
-            });
-        }
-
-        // Update result object with new time
-        result.RaidTimeMinutes = newRaidTimeMinutes;
-
-        this.logger.debug(
-            `Reduced: ${request.Location} raid time by: ${chosenRaidReductionPercent}% to ${newRaidTimeMinutes} minutes`,
-        );
-
         // Calculate how long player needs to be in raid to get a `survived` extract status
         result.NewSurviveTimeSeconds = Math.max(
             result.OriginalSurvivalTimeSeconds - (baseEscapeTimeMinutes - newRaidTimeMinutes) * 60,
             0,
         );
 
+        // State that we'll pass to loot generation
+        const raidChanges: IRaidChanges = {
+            dynamicLootPercent: 100,
+            staticLootPercent: 100,
+            raidTimeMinutes: newRaidTimeMinutes,
+            originalSurvivalTimeSeconds: result.OriginalSurvivalTimeSeconds,
+            exitChanges: [],
+            newSurviveTimeSeconds: result.NewSurviveTimeSeconds,
+            simulatedRaidStartSeconds: 0
+        };
+
+        if (mapSettings.reduceLootByPercent) {
+            raidChanges.dynamicLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minDynamicLootPercent);
+            raidChanges.staticLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minStaticLootPercent);
+            raidChanges.simulatedRaidStartSeconds = simulatedRaidStartTimeMinutes * 60;
+        }
+
+        this.logger.debug(
+            `Reduced: ${request.Location} raid time by: ${chosenRaidReductionPercent}% to ${newRaidTimeMinutes} minutes`,
+        );
+
         const exitAdjustments = this.getExitAdjustments(mapBase, newRaidTimeMinutes);
         if (exitAdjustments) {
-            result.ExitChanges.push(...exitAdjustments);
+            raidChanges.exitChanges.push(...exitAdjustments);
         }
+
+        // Store state to use in loot generation
+        this.applicationContext.addValue(ContextVariableType.RAID_ADJUSTMENTS, raidChanges);
 
         return result;
     }
