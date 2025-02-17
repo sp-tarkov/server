@@ -57,22 +57,22 @@ export class RaidTimeAdjustmentService {
         mapBase.EscapeTimeLimit = raidAdjustments.raidTimeMinutes;
 
         // Adjust map exits
-        raidAdjustments.exitChanges.forEach(exitChange => {
-            const exitToChange = mapBase.exits.find(exit => exit.Name === exitChange.Name);
+        raidAdjustments.exitChanges.forEach((exitChange) => {
+            const exitToChange = mapBase.exits.find((exit) => exit.Name === exitChange.Name);
             if (!exitToChange) {
                 this.logger.debug(`Exit with Id: ${exitChange.Name} not found, skipping`);
                 return;
             }
 
-            if (typeof exitChange.Chance !== 'undefined') {
+            if (typeof exitChange.Chance !== "undefined") {
                 exitToChange.Chance = exitChange.Chance;
             }
 
-            if (typeof exitChange.MinTime !== 'undefined') {
+            if (typeof exitChange.MinTime !== "undefined") {
                 exitToChange.MinTime = exitChange.MinTime;
             }
 
-            if (typeof exitChange.MaxTime !== 'undefined') {
+            if (typeof exitChange.MaxTime !== "undefined") {
                 exitToChange.MaxTime = exitChange.MaxTime;
             }
         });
@@ -178,7 +178,7 @@ export class RaidTimeAdjustmentService {
             originalSurvivalTimeSeconds: result.OriginalSurvivalTimeSeconds,
             exitChanges: [],
             newSurviveTimeSeconds: result.NewSurviveTimeSeconds,
-            simulatedRaidStartSeconds: 0
+            simulatedRaidStartSeconds: 0,
         };
 
         if (mapSettings.reduceLootByPercent) {
