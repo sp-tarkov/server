@@ -158,7 +158,7 @@ export class QuestController {
         for (const condition of questConditions) {
             if (pmcData.TaskConditionCounters[condition.id]) {
                 this.logger.error(
-                    `Unable to add new task condition counter: ${condition.conditionType} for qeust: ${questId} to profile: ${pmcData.sessionId} as it already exists:`,
+                    `Unable to add new task condition counter: ${condition.conditionType} for quest: ${questId} to profile: ${pmcData.sessionId} as it already exists:`,
                 );
             }
 
@@ -476,7 +476,7 @@ export class QuestController {
     /**
      * Handle /client/game/profile/items/moving - QuestFail
      * @param pmcData Pmc profile
-     * @param request Fail qeust request
+     * @param request Fail quest request
      * @param sessionID Session id
      * @returns IItemEventRouterResponse
      */

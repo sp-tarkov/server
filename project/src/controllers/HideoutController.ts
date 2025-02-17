@@ -428,7 +428,7 @@ export class HideoutController {
      * Handle HideoutPutItemsInAreaSlots
      * Create item in hideout slot item array, remove item from player inventory
      * @param pmcData Profile data
-     * @param addItemToHideoutRequest reqeust from client to place item in area slot
+     * @param addItemToHideoutRequest request from client to place item in area slot
      * @param sessionID Session id
      * @returns IItemEventRouterResponse object
      */
