@@ -108,6 +108,10 @@ export class LocationLifecycleService {
 
         const playerProfile = this.profileHelper.getPmcProfile(sessionId);
 
+        // Set interval times to in-raid value
+        this.ragfairConfig.runIntervalSeconds = this.ragfairConfig.runIntervalValues.inRaid;
+        this.hideoutConfig.runIntervalSeconds = this.hideoutConfig.runIntervalValues.inRaid;
+
         const result: IStartLocalRaidResponseData = {
             serverId: `${request.location}.${request.playerSide}.${this.timeUtil.getTimestamp()}`, // TODO - does this need to be more verbose - investigate client?
             serverSettings: this.databaseService.getLocationServices(), // TODO - is this per map or global?
@@ -289,8 +293,11 @@ export class LocationLifecycleService {
             return locationBaseClone;
         }
 
-        // Check for a loot multipler adjustment in app context and apply if one is found
-        let locationConfigClone: ILocationConfig;
+        // Add cusom pmcs to map every time its run
+        this.pmcWaveGenerator.applyWaveChangesToMap(locationBaseClone);
+
+        // Adjust raid based on whether this is a scav run
+        let locationConfigClone: ILocationConfig | undefined;
         const raidAdjustments = this.applicationContext
             .getLatestValue(ContextVariableType.RAID_ADJUSTMENTS)
             ?.getValue<IRaidChanges>();
@@ -325,7 +332,7 @@ export class LocationLifecycleService {
         this.logger.success(this.localisationService.getText("location-generated_success", name));
 
         // Reset loot multipliers back to original values
-        if (raidAdjustments) {
+        if (raidAdjustments && locationConfigClone) {
             this.logger.debug("Resetting loot multipliers back to their original values");
             this.locationConfig.staticLootMultiplier = locationConfigClone.staticLootMultiplier;
             this.locationConfig.looseLootMultiplier = locationConfigClone.looseLootMultiplier;

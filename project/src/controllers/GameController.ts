@@ -542,11 +542,6 @@ export class GameController {
      * Handle singleplayer/settings/getRaidTime
      */
     public getRaidTime(sessionId: string, request: IGetRaidTimeRequest): IGetRaidTimeResponse {
-        // Set interval times to in-raid value
-        this.ragfairConfig.runIntervalSeconds = this.ragfairConfig.runIntervalValues.inRaid;
-
-        this.hideoutConfig.runIntervalSeconds = this.hideoutConfig.runIntervalValues.inRaid;
-
         return this.raidTimeAdjustmentService.getRaidAdjustments(sessionId, request);
     }
 
