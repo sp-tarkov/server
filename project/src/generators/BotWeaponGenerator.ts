@@ -578,7 +578,7 @@ export class BotWeaponGenerator {
             }
         }
 
-        if (!compatibleCartridges) {
+        if (Object.keys(compatibleCartridges).length === 0) {
             // No compatible cartridges, use default
             return weaponTemplate._props.defAmmo;
         }
