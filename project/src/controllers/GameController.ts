@@ -121,6 +121,12 @@ export class GameController {
         // successful) repeatable quests. We also have to remove the Counters from the repeatableQuests
         if (sessionID) {
             const fullProfile = this.profileHelper.getFullProfile(sessionID);
+
+            if (!fullProfile) {
+                this.logger.error("gameStart requested but the profile linked to the sessionID does not exist!");
+                return;
+            }
+
             if (fullProfile.info.wipe) {
                 // Don't bother doing any fixes, we're resetting profile
                 return;
