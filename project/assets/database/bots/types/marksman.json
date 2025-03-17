@@ -2449,8 +2449,8 @@
           "min": 85
         },
         "Head": {
-          "max": 35,
-          "min": 35
+          "max": 30,
+          "min": 30
         },
         "LeftArm": {
           "max": 60,
@@ -2509,8 +2509,8 @@
           "min": 90
         },
         "Head": {
-          "max": 35,
-          "min": 35
+          "max": 30,
+          "min": 30
         },
         "LeftArm": {
           "max": 60,
