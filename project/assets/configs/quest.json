@@ -416,8 +416,8 @@
                     "maxRequestedBulletAmount": 40,
                     "useWhitelist": true,
                     "useBlacklist": false,
-					"requiredItemsAreFiR": true,
-					"requiredItemMinDurabilityMinMax": {
+                    "requiredItemsAreFiR": true,
+                    "requiredItemMinDurabilityMinMax": {
 						"min": 60,
 						"max": 80
                     }
