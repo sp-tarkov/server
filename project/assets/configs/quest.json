@@ -418,8 +418,8 @@
                     "useBlacklist": false,
                     "requiredItemsAreFiR": true,
                     "requiredItemMinDurabilityMinMax": {
-						"min": 60,
-						"max": 80
+                        "min": 60,
+                        "max": 80
                     }
                 },
                 "Elimination": [
