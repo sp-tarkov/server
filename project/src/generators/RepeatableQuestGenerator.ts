@@ -10,6 +10,7 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { Traders } from "@spt/models/enums/Traders";
 import {
     IBossInfo,
+    ICompletion,
     IEliminationConfig,
     IQuestConfig,
     IRepeatableQuestConfig,
@@ -581,7 +582,13 @@ export class RepeatableQuestGenerator {
 
             // Push a CompletionCondition with the item and the amount of the item
             chosenRequirementItemsTpls.push(itemSelected[0]);
-            quest.conditions.AvailableForFinish.push(this.generateCompletionAvailableForFinish(itemSelected[0], value));
+            quest.conditions.AvailableForFinish.push(
+                this.generateCompletionAvailableForFinish(
+                    itemSelected[0],
+                    value,
+                    repeatableConfig.questConfig.Completion,
+                ),
+            );
 
             if (roublesBudget > 0) {
                 // Reduce the list possible items to fulfill the new budget constraint
@@ -611,23 +618,28 @@ export class RepeatableQuestGenerator {
     /**
      * A repeatable quest, besides some more or less static components, exists of reward and condition (see assets/database/templates/repeatableQuests.json)
      * This is a helper method for GenerateCompletionQuest to create a completion condition (of which a completion quest theoretically can have many)
-     *
-     * @param   {string}    itemTpl    id of the item to request
-     * @param   {integer}   value           amount of items of this specific type to request
-     * @returns {object}                    object of "Completion"-condition
+     * @param itemTpl Tpl of item to add create condition around
+     * @param value Number of items to add to condition
+     * @param completionConfig completion config from quest.json
+     * @returns Quest condition object
      */
-    protected generateCompletionAvailableForFinish(itemTpl: string, value: number): IQuestCondition {
-        let minDurability = 0;
-        let onlyFoundInRaid = true;
-        if (
-            this.itemHelper.isOfBaseclass(itemTpl, BaseClasses.WEAPON) ||
-            this.itemHelper.isOfBaseclass(itemTpl, BaseClasses.ARMOR)
-        ) {
-            minDurability = this.randomUtil.getArrayValue([60, 80]);
-        }
+    protected generateCompletionAvailableForFinish(
+        itemTpl: string,
+        value: number,
+        completionConfig: ICompletion,
+    ): IQuestCondition {
+        let onlyFoundInRaid = completionConfig.requiredItemsAreFiR;
 
-        // By default all collected items must be FiR, except dog tags
-        if (this.itemHelper.isDogtag(itemTpl)) {
+        // Get value from config for weapon/armor, 0 for everything else
+        const minDurability = this.itemHelper.isOfBaseclasses(itemTpl, [BaseClasses.WEAPON, BaseClasses.ARMOR])
+            ? this.randomUtil.getArrayValue([
+                  completionConfig.requiredItemMinDurabilityMinMax.min,
+                  completionConfig.requiredItemMinDurabilityMinMax.max,
+              ])
+            : 0;
+
+        // Dog tags MUST NOT be FiR for them to work
+        if (onlyFoundInRaid && this.itemHelper.isDogtag(itemTpl)) {
             onlyFoundInRaid = false;
         }
 
