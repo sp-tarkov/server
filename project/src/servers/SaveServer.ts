@@ -190,13 +190,13 @@ export class SaveServer {
      */
     public async saveProfile(sessionID: string): Promise<void> {
         if (!this.profiles.get(sessionID)) {
-            throw new Error(`Profile ${sessionID} does not exist! Unable to save this profile!`);
+            throw new Error(`Profile: ${sessionID} does not exist! Unable to save this profile!`);
         }
 
         // Get the current mutex if it exists, create a new one if it doesn't for this profile
         const mutex =
             this.profilesBeingSavedMutex.get(sessionID) ||
-            withTimeout(new Mutex(), 5000, new Error(`Saving timed out for profile ${sessionID}`));
+            withTimeout(new Mutex(), 5000, new Error(`Saving timed out for profile: ${sessionID}`));
         this.profilesBeingSavedMutex.set(sessionID, mutex);
 
         const release = await mutex.acquire();

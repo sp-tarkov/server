@@ -669,6 +669,19 @@ export class ProfileHelper {
             }
 
             fullProfile.customisationUnlocks.push(rewardToStore);
+        } else {
+            // Check if reward is cybertark background
+            if (reward.id === "675b0d14dd24b1cb7c2c2e7d") {
+                fullProfile.customisationUnlocks.push({
+                    id: "67585108def253bd97084552",
+                    source: CustomisationSource.DEFAULT,
+                    type: CustomisationType.ENVIRONMENT,
+                });
+
+                return;
+            }
+
+            this.logger.warning(`Unhandled reward: ${reward.id}`);
         }
 
         // const rewardToStore: ICustomisationStorage = {

@@ -29,7 +29,6 @@ export class PrestigeHelper {
         const sessionId = newProfile.info.id;
 
         // Skill copy
-
         if (prePrestigePmc.Skills.Common) {
             const commonSKillsToCopy = prePrestigePmc.Skills.Common;
             for (const skillToCopy of commonSKillsToCopy) {
