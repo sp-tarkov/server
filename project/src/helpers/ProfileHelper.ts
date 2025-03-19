@@ -4,6 +4,7 @@ import { BanType, Common, ICounterKeyValue, IStats } from "@spt/models/eft/commo
 import {
     CustomisationSource,
     CustomisationType,
+    CustomisationTypeId,
     ICustomisationStorage,
 } from "@spt/models/eft/common/tables/ICustomisationStorage";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
@@ -620,7 +621,7 @@ export class ProfileHelper {
         fullProfile.customisationUnlocks ||= [];
         if (fullProfile.customisationUnlocks?.some((unlock) => unlock.id === reward.target)) {
             this.logger.warning(
-                `Profile: ${fullProfile.info.id} already has hideout customisaiton reward: ${reward.target}, skipping`,
+                `Profile: ${fullProfile.info.id} already has hideout customisation reward: ${reward.target}, skipping`,
             );
             return;
         }
@@ -635,34 +636,32 @@ export class ProfileHelper {
                 type: null,
             };
             switch (matchingCustomisation._parent) {
-                case "675ff48ce8d2356707079617": {
-                    // MannequinPose
+                case CustomisationTypeId.MANNEQUIN_POSE: {
                     rewardToStore.type = CustomisationType.MANNEQUIN_POSE;
                     break;
                 }
-                case "6751848eba5968fd800a01d6": {
-                    // Gestures
+                case CustomisationTypeId.GESTURES: {
                     rewardToStore.type = CustomisationType.GESTURE;
                     break;
                 }
-                case "67373f170eca6e03ab0d5391": {
-                    // Floor
+                case CustomisationTypeId.FLOOR: {
                     rewardToStore.type = CustomisationType.FLOOR;
                     break;
                 }
-                case "6746fafabafff8500804880e": {
-                    // DogTags
+                case CustomisationTypeId.DOG_TAGS: {
                     rewardToStore.type = CustomisationType.DOG_TAG;
                     break;
                 }
-                case "673b3f595bf6b605c90fcdc2": {
-                    // Ceiling
+                case CustomisationTypeId.CEILING: {
                     rewardToStore.type = CustomisationType.CEILING;
                     break;
                 }
-                case "67373f1e5a5ee73f2a081baf": {
-                    // Wall
+                case CustomisationTypeId.WALL: {
                     rewardToStore.type = CustomisationType.WALL;
+                    break;
+                }
+                case CustomisationTypeId.ENVIRONMENT_UI: {
+                    rewardToStore.type = CustomisationType.ENVIRONMENT;
                     break;
                 }
                 default:
@@ -674,26 +673,7 @@ export class ProfileHelper {
 
             fullProfile.customisationUnlocks.push(rewardToStore);
         } else {
-            // Check if reward is cybertark background
-            if (reward.id === "675b0d14dd24b1cb7c2c2e7d") {
-                fullProfile.customisationUnlocks.push({
-                    id: "67585108def253bd97084552",
-                    source: CustomisationSource.DEFAULT,
-                    type: CustomisationType.ENVIRONMENT,
-                });
-
-                return;
-            }
-
             this.logger.warning(`Unhandled reward: ${reward.id}`);
         }
-
-        // const rewardToStore: ICustomisationStorage = {
-        //     id: matchingHideoutCustomisation.itemId,
-        //     source: source,
-        //     type: matchingHideoutCustomisation.type as CustomisationType,
-        // };
-
-        // fullProfile.customisationUnlocks.push(rewardToStore);
     }
 }
