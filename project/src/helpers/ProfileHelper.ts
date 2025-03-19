@@ -477,6 +477,10 @@ export class ProfileHelper {
 
         profileSkill.Progress += pointsToAddToSkill;
         profileSkill.Progress = Math.min(profileSkill.Progress, 5100); // Prevent skill from ever going above level 51 (5100)
+
+        profileSkill.PointsEarnedDuringSession ||= 0;
+        profileSkill.PointsEarnedDuringSession += pointsToAddToSkill;
+
         profileSkill.LastAccess = this.timeUtil.getTimestamp();
     }
 
