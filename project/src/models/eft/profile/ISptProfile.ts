@@ -12,8 +12,11 @@ import { IUserDialogInfo } from "./IUserDialogInfo";
 export interface ISptProfile {
     info: Info;
     characters: ICharacters;
-    /** Clothing purchases */
-    suits: string[];
+    /**
+     * @deprecated
+     * Removed in 3.11 - clothing now stored in customisationUnlocks
+     */
+    suits?: string[];
     userbuilds: IUserBuilds;
     dialogues: Record<string, IDialogue>;
     spt: ISpt;
@@ -24,6 +27,7 @@ export interface ISptProfile {
     traderPurchases?: Record<string, Record<string, ITraderPurchaseData>>;
     /** List of friend profile IDs */
     friends: string[];
+    /** Stores profile-related customisation, e.g. clothing / hideout walls / floors */
     customisationUnlocks: ICustomisationStorage[];
 }
 

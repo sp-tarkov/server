@@ -121,7 +121,6 @@ export class CreateProfileService {
         const profileDetails: ISptProfile = {
             info: account.info,
             characters: { pmc: pmcData, scav: {} as IPmcData },
-            suits: profileTemplateClone.suits,
             userbuilds: profileTemplateClone.userbuilds,
             dialogues: profileTemplateClone.dialogues,
             spt: this.profileHelper.getDefaultSptDataObject(),
@@ -134,6 +133,9 @@ export class CreateProfileService {
         };
 
         this.addCustomisationUnlocksToProfile(profileDetails);
+
+        // Add suits the profile template has listed to the players profile
+        this.traderHelper.addSuitsToProfile(profileDetails, profileTemplateClone.suits);
 
         this.profileFixerService.checkForAndFixPmcProfileIssues(profileDetails.characters.pmc);
 

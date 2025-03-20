@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { ProgramStatics } from "@spt/ProgramStatics";
 import { ApplicationContext } from "@spt/context/ApplicationContext";
 import { ContextVariableType } from "@spt/context/ContextVariableType";
@@ -15,7 +16,6 @@ import {
     CustomisationType,
     ICustomisationStorage,
 } from "@spt/models/eft/common/tables/ICustomisationStorage";
-import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { ICheckVersionResponse } from "@spt/models/eft/game/ICheckVersionResponse";
 import { ICurrentGroupResponse } from "@spt/models/eft/game/ICurrentGroupResponse";
 import { IGameConfigResponse } from "@spt/models/eft/game/IGameConfigResponse";
@@ -56,7 +56,6 @@ import { RandomUtil } from "@spt/utils/RandomUtil";
 import { TimeUtil } from "@spt/utils/TimeUtil";
 import type { ICloner } from "@spt/utils/cloners/ICloner";
 import { inject, injectable } from "tsyringe";
-import crypto from "node:crypto";
 
 @injectable()
 export class GameController {
@@ -215,7 +214,12 @@ export class GameController {
                 this.hideoutHelper.setHideoutImprovementsToCompleted(pmcProfile);
                 this.hideoutHelper.unlockHideoutWallInProfile(pmcProfile);
                 // Handle if player has been inactive for a long time, catch up on hideout update before the user goes to his hideout
-                if (!this.profileActivityService.activeWithinLastMinutes(sessionID, this.hideoutConfig.updateProfileHideoutWhenActiveWithinMinutes)) {
+                if (
+                    !this.profileActivityService.activeWithinLastMinutes(
+                        sessionID,
+                        this.hideoutConfig.updateProfileHideoutWhenActiveWithinMinutes,
+                    )
+                ) {
                     this.hideoutHelper.updatePlayerHideout(sessionID);
                 }
             }
@@ -270,8 +274,6 @@ export class GameController {
             };
         }
 
-        const clothingToRemove: string[] = [];
-
         if (fullProfile.characters.pmc.Info.Side === "Bear") {
             // Reset clothing customization back to default as customization changed in 4.0
             fullProfile.characters.pmc.Customization.Body = "5cc0858d14c02e000c6bea66"; //Bear default clothing
@@ -309,15 +311,15 @@ export class GameController {
                     };
 
                     fullProfile.customisationUnlocks.push(clothingToAdd);
-                } else {
-                    // Modded clothing, this will have to be re-setup by the user in 4.0
-                    clothingToRemove.push(clothing);
                 }
             }
+
+            // Remove array, not used in 3.11
+            delete fullProfile.suits;
         }
 
         if (fullProfile.characters.pmc.Info.Side === "Usec") {
-            // Reset clothing customization back to default as customization changed in 4.0
+            // Reset clothing customization back to default as customization changed in 3.11
             fullProfile.characters.pmc.Customization.Body = "5cde95d97d6c8b647a3769b0"; //Usec default clothing
             fullProfile.characters.pmc.Customization.Feet = "5cde95ef7d6c8b04713c4f2d";
             fullProfile.characters.pmc.Customization.Hands = "5cde95fa7d6c8b04737c2d13";
@@ -353,14 +355,11 @@ export class GameController {
                     };
 
                     fullProfile.customisationUnlocks.push(clothingToAdd);
-                } else {
-                    // Modded clothing, this will have to be re-setup by the user in 4.0
-                    clothingToRemove.push(clothing);
                 }
             }
 
-            // Filter out modded items, we dont need to keep any of those here as these will not appear as bought
-            fullProfile.suits = fullProfile.suits.filter((clothing) => !clothingToRemove.includes(clothing));
+            // Remove array, not used in 3.11
+            delete fullProfile.suits;
         }
 
         if (Object.keys(fullProfile.characters.pmc.Achievements).length > 0) {
