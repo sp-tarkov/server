@@ -165,9 +165,8 @@ export class RepeatableQuestController {
                 };
             }
 
-            // Reset free repeatable values in player profile to defaults
-            generatedRepeatables.freeChanges = repeatableConfig.freeChanges;
-            generatedRepeatables.freeChangesAvailable = repeatableConfig.freeChanges;
+            // Reset the free changes available to the players base count
+            generatedRepeatables.freeChangesAvailable = generatedRepeatables.freeChanges;
 
             returnData.push({
                 id: repeatableConfig.id,
@@ -177,7 +176,7 @@ export class RepeatableQuestController {
                 inactiveQuests: generatedRepeatables.inactiveQuests,
                 changeRequirement: generatedRepeatables.changeRequirement,
                 freeChanges: generatedRepeatables.freeChanges,
-                freeChangesAvailable: generatedRepeatables.freeChanges,
+                freeChangesAvailable: generatedRepeatables.freeChangesAvailable,
             });
         }
 
@@ -299,9 +298,9 @@ export class RepeatableQuestController {
         let repeatableQuestDetails = pmcData.RepeatableQuests.find(
             (repeatable) => repeatable.name === repeatableConfig.name,
         );
+        const hasAccess = this.profileHelper.hasAccessToRepeatableFreeRefreshSystem(pmcData);
         if (!repeatableQuestDetails) {
             // Not in profile, generate
-            const hasAccess = this.profileHelper.hasAccessToRepeatableFreeRefreshSystem(pmcData);
             repeatableQuestDetails = {
                 id: repeatableConfig.id,
                 name: repeatableConfig.name,
@@ -315,6 +314,13 @@ export class RepeatableQuestController {
 
             // Add base object that holds repeatable data to profile
             pmcData.RepeatableQuests.push(repeatableQuestDetails);
+        }
+
+        // There is a chance an invalid number of free changes was assigned to the profile in earlier versions, so
+        // reset the number if the user doesn't have access
+        if (!hasAccess) {
+            repeatableQuestDetails.freeChanges = 0;
+            repeatableQuestDetails.freeChangesAvailable = 0;
         }
 
         return repeatableQuestDetails;
