@@ -122,10 +122,10 @@ export class PrestigeHelper {
                     }
                     break;
                 }
-                //case RewardType.EXTRA_DAILY_QUEST: {
-                //    // todo
-                //    break;
-                //}
+                case RewardType.EXTRA_DAILY_QUEST: {
+                    this.profileHelper.addExtraRepeatableQuest(newProfile, reward.target as string, reward.value as number);
+                    break;
+                }
                 default:
                     this.logger.error(`Unhandled prestige reward type: ${reward.type}`);
                     break;
