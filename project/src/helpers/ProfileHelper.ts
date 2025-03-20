@@ -195,6 +195,7 @@ export class ProfileHelper {
         return {
             version: this.watermark.getVersionTag(true),
             freeRepeatableRefreshUsedCount: {},
+            extraRepeatableQuests: {},
             migrations: {},
             cultistRewards: new Map(),
             mods: [],
@@ -609,6 +610,18 @@ export class ProfileHelper {
         }
 
         return fullFavorites;
+    }
+
+    /**
+     * Add the given number of extra repeatable quests for the given type of repeatable to the users profile
+     * @param fullProfile Profile to add the extra repeatable to
+     * @param repeatableId The ID of the type of repeatable to increase
+     * @param value The number of extra repeatables to add
+     */
+    public addExtraRepeatableQuest(fullProfile: ISptProfile, repeatableId: string, value: number): void {
+        fullProfile.spt.extraRepeatableQuests ||= {};
+        fullProfile.spt.extraRepeatableQuests[repeatableId] ||= 0;
+        fullProfile.spt.extraRepeatableQuests[repeatableId] += value;
     }
 
     /**

@@ -81,7 +81,7 @@ export class RepeatableQuestController {
      */
     public getClientRepeatableQuests(sessionID: string): IPmcDataRepeatableQuest[] {
         const returnData: Array<IPmcDataRepeatableQuest> = [];
-        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        const fullProfile = this.profileHelper.getFullProfile(sessionID) as ISptProfile;
         const pmcData = fullProfile.characters.pmc;
         const currentTime = this.timeUtil.getTimestamp();
 
@@ -123,7 +123,7 @@ export class RepeatableQuestController {
             const questTypePool = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
 
             // Add repeatable quests of this loops sub-type (daily/weekly)
-            for (let i = 0; i < this.getQuestCount(repeatableConfig, pmcData); i++) {
+            for (let i = 0; i < this.getQuestCount(repeatableConfig, fullProfile); i++) {
                 let quest: IRepeatableQuest | undefined = undefined;
                 let lifeline = 0;
                 while (!quest && questTypePool.types.length > 0) {
@@ -269,20 +269,20 @@ export class RepeatableQuestController {
      * @param pmcData Player profile
      * @returns Quest count
      */
-    protected getQuestCount(repeatableConfig: IRepeatableQuestConfig, pmcData: IPmcData): number {
+    protected getQuestCount(repeatableConfig: IRepeatableQuestConfig, fullProfile: ISptProfile): number {
+        let questCount = repeatableConfig.numQuests;
         if (
             repeatableConfig.name.toLowerCase() === "daily" &&
-            this.profileHelper.hasEliteSkillLevel(SkillTypes.CHARISMA, pmcData)
+            this.profileHelper.hasEliteSkillLevel(SkillTypes.CHARISMA, fullProfile.characters.pmc)
         ) {
             // Elite charisma skill gives extra daily quest(s)
-            return (
-                repeatableConfig.numQuests +
-                this.databaseService.getGlobals().config.SkillsSettings.Charisma.BonusSettings.EliteBonusSettings
-                    .RepeatableQuestExtraCount
-            );
+            questCount += this.databaseService.getGlobals().config.SkillsSettings.Charisma.BonusSettings.EliteBonusSettings.RepeatableQuestExtraCount
         }
 
-        return repeatableConfig.numQuests;
+        // Add any extra repeatable quests the profile has unlocked
+        questCount += fullProfile.spt.extraRepeatableQuests?.[repeatableConfig.id] ?? 0;
+
+        return questCount;
     }
 
     /**

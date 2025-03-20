@@ -177,6 +177,8 @@ export interface ISpt {
     /** Cultist circle rewards received that are one time use, key (md5) is a combination of sacrificed + reward items */
     cultistRewards?: Map<string, IAcceptedCultistReward>;
     pendingPrestige?: IPendingPrestige;
+    /** Track the number of extra repeatable quests available */
+    extraRepeatableQuests?: Record<string, number>;
 }
 
 export interface IPendingPrestige {
