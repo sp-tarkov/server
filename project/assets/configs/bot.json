@@ -115,7 +115,7 @@
                 "minLimitPercent": 100
             },
             "weapon": {
-                "lowestMax": 80,
+                "lowestMax": 85,
                 "highestMax": 100,
                 "maxDelta": 10,
                 "minDelta": 0,
@@ -124,12 +124,14 @@
         },
         "follower": {
             "armor": {
+                "lowestMaxPercent": 90,
+                "highestMaxPercent": 100,
                 "maxDelta": 10,
                 "minDelta": 0,
                 "minLimitPercent": 15
             },
             "weapon": {
-                "lowestMax": 80,
+                "lowestMax": 85,
                 "highestMax": 100,
                 "maxDelta": 40,
                 "minDelta": 20,
