@@ -76,6 +76,8 @@ export class PostDbLoadService {
 
         this.addCustomLooseLootPositions();
 
+        this.mergeCustomAchievements();
+
         this.adjustMinReserveRaiderSpawnChance();
 
         if (this.coreConfig.fixes.fixShotgunDispersion) {
@@ -258,6 +260,19 @@ export class PostDbLoadService {
                 // New position, add entire object
                 mapLooseLoot.spawnpoints.push(positionToAdd);
             }
+        }
+    }
+
+    /** Merge custom achievemetns into achievement db table */
+    protected mergeCustomAchievements() {
+        const achievements = this.databaseService.getAchievements();
+        for (const customAchievement of this.databaseService.getCustomAchievements()) {
+            if (achievements.find((a) => a.id === customAchievement.id)) {
+                this.logger.warning(`Unable to add custom achievement as id: ${customAchievement.id} already exists`);
+                continue;
+            }
+
+            achievements.push(customAchievement);
         }
     }
 

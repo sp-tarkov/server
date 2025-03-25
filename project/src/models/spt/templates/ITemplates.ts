@@ -32,6 +32,9 @@ export interface ITemplates {
     /** Achievements */
     achievements: IAchievement[];
 
+    /** Custom Achievements not from BSG PvE - Added to `achievements` on server start */
+    customAchievements: IAchievement[];
+
     /** Location services data */
     locationServices: ILocationServices;
 }
