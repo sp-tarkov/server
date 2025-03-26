@@ -924,7 +924,7 @@ export class SeasonalEventService {
                 BossEscortDifficult: "normal",
                 BossEscortAmount: "0",
                 ForceSpawn: true,
-                spawnMode: ["regular", "pve"],
+                SpawnMode: ["regular", "pve"],
                 Time: -1,
                 TriggerId: "",
                 TriggerName: "",
