@@ -2140,8 +2140,8 @@
         "min": -1
       },
       "normal": {
-        "max": 20,
-        "min": 20
+        "max": -1,
+        "min": -1
       }
     },
     "standingForKill": {
