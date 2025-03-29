@@ -522,7 +522,7 @@
           "gifter"
         ],
         "REVENGE_FOR_SAVAGE_PLAYERS": false,
-        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 20000,
+        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 10000,
         "SEARCH_TARGET": true,
         "SEC_TO_MORE_DIST_TO_RUN": 10,
         "SHOOT_INSTEAD_DOG_FIGHT": 9,
@@ -1047,7 +1047,7 @@
           "gifter"
         ],
         "REVENGE_FOR_SAVAGE_PLAYERS": false,
-        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 20000,
+        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 10000,
         "SEARCH_TARGET": true,
         "SEC_TO_MORE_DIST_TO_RUN": 10,
         "SHOOT_INSTEAD_DOG_FIGHT": 9,
@@ -1571,7 +1571,7 @@
           "gifter"
         ],
         "REVENGE_FOR_SAVAGE_PLAYERS": false,
-        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 20000,
+        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 10000,
         "SEARCH_TARGET": true,
         "SEC_TO_MORE_DIST_TO_RUN": 10,
         "SHOOT_INSTEAD_DOG_FIGHT": 0.5,
@@ -2094,7 +2094,7 @@
           "gifter"
         ],
         "REVENGE_FOR_SAVAGE_PLAYERS": false,
-        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 20000,
+        "SDIST_TO_DELIVER_INFO_WHEN_ENEMY": 10000,
         "SEARCH_TARGET": true,
         "SEC_TO_MORE_DIST_TO_RUN": 10,
         "SHOOT_INSTEAD_DOG_FIGHT": 5,
