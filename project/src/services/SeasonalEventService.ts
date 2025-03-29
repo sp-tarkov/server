@@ -443,7 +443,14 @@ export class SeasonalEventService {
                 this.enableHalloweenSummonEvent();
                 this.addPumpkinsToScavBackpacks();
                 this.renameBitcoin();
-                this.enableSnow();
+
+                if (event.settings?.replaceBotHostility) {
+                    this.replaceBotHostility(this.seasonalEventConfig.hostilitySettingsForEvent.aprilFools);
+                }
+                if (typeof event.settings?.forceSeason !== "undefined") {
+                    this.weatherConfig.overrideSeason = event.settings.forceSeason;
+                }
+
                 break;
             default:
                 // Likely a mod event
@@ -585,7 +592,54 @@ export class SeasonalEventService {
                 continue;
             }
 
-            location.base.BotLocationModifier.AdditionalHostilitySettings = hostilitySettings.default;
+            for (const settings of newHostilitySettings) {
+                const matchingBaseSettings = location.base.BotLocationModifier.AdditionalHostilitySettings.find(
+                    (x) => x.BotRole === settings.BotRole,
+                );
+                if (!matchingBaseSettings) {
+                    continue;
+                }
+
+                if (settings.AlwaysEnemies) {
+                    matchingBaseSettings.AlwaysEnemies = settings.AlwaysEnemies;
+                }
+
+                if (settings.AlwaysFriends) {
+                    matchingBaseSettings.AlwaysFriends = settings.AlwaysFriends;
+                }
+
+                if (settings.BearEnemyChance) {
+                    matchingBaseSettings.BearEnemyChance = settings.BearEnemyChance;
+                }
+
+                if (settings.ChancedEnemies) {
+                    matchingBaseSettings.ChancedEnemies = settings.ChancedEnemies;
+                }
+
+                if (settings.Neutral) {
+                    matchingBaseSettings.Neutral = settings.Neutral;
+                }
+
+                if (settings.SavageEnemyChance) {
+                    matchingBaseSettings.SavageEnemyChance = settings.SavageEnemyChance;
+                }
+
+                if (settings.SavagePlayerBehaviour) {
+                    matchingBaseSettings.SavagePlayerBehaviour = settings.SavagePlayerBehaviour;
+                }
+
+                if (settings.UsecEnemyChance) {
+                    matchingBaseSettings.UsecEnemyChance = settings.UsecEnemyChance;
+                }
+
+                if (settings.UsecPlayerBehaviour) {
+                    matchingBaseSettings.UsecPlayerBehaviour = settings.UsecPlayerBehaviour;
+                }
+
+                if (settings.Warn) {
+                    matchingBaseSettings.Warn = settings.Warn;
+                }
+            }
         }
     }
 
@@ -960,7 +1014,7 @@ export class SeasonalEventService {
         if (event.settings?.zombieSettings?.enabled) {
             this.configureZombies(event.settings.zombieSettings);
         }
-        if (event.settings?.forceSeason) {
+        if (typeof event.settings?.forceSeason !== "undefined") {
             this.weatherConfig.overrideSeason = event.settings.forceSeason;
         }
 
