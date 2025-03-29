@@ -2035,6 +2035,10 @@
       "normal": {
         "max": -1,
         "min": -1
+      },
+      "easy": {
+        "max": -1,
+        "min": -1
       }
     },
     "standingForKill": {
