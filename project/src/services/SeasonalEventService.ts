@@ -439,7 +439,7 @@ export class SeasonalEventService {
                 this.addEventGearToBots(SeasonalEventType.HALLOWEEN);
                 this.addEventGearToBots(SeasonalEventType.CHRISTMAS);
                 this.addEventLootToBots(SeasonalEventType.CHRISTMAS);
-                this.addEventBossesToMaps(SeasonalEventType.HALLOWEEN);
+                this.addEventBossesToMaps("halloweensummon");
                 this.enableHalloweenSummonEvent();
                 this.addPumpkinsToScavBackpacks();
                 this.renameBitcoin();
