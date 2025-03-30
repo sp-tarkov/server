@@ -37,6 +37,7 @@ import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { IHideoutConfig } from "@spt/models/spt/config/IHideoutConfig";
 import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
+import { IRaidChanges } from "@spt/models/spt/location/IRaidChanges";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
 import { CreateProfileService } from "@spt/services/CreateProfileService";
@@ -558,7 +559,7 @@ export class GameController {
     /**
      * Handle singleplayer/settings/getRaidTime
      */
-    public getRaidTime(sessionId: string, request: IGetRaidTimeRequest): IGetRaidTimeResponse {
+    public getRaidTime(sessionId: string, request: IGetRaidTimeRequest): IRaidChanges {
         return this.raidTimeAdjustmentService.getRaidAdjustments(sessionId, request);
     }
 
