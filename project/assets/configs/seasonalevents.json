@@ -7813,7 +7813,7 @@
             "settings": {
                 "removeEntryRequirement": ["laboratory"],
                 "replaceBotHostility": true,
-				"forceSeason": 4,
+				"forceSeason": 2,
                 "zombieSettings": {
                     "enabled": true,
                     "mapInfectionAmount": {
