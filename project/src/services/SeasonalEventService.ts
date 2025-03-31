@@ -984,6 +984,7 @@ export class SeasonalEventService {
                 TriggerName: "",
                 Delay: 0,
                 RandomTimeSpawn: false,
+                IgnoreMaxBots: true,
             });
         }
     }
