@@ -1,4 +1,5 @@
 export interface IBotCore {
+    ACTIVE_HALLOWEEN_ZOMBIES_EVENT?: boolean;
     SAVAGE_KILL_DIST: number;
     SOUND_DOOR_BREACH_METERS: number;
     SOUND_DOOR_OPEN_METERS: number;
