@@ -97,6 +97,7 @@ export class PlayerScavGenerator {
         scavData.Info.GameVersion = pmcDataClone.Info.GameVersion;
         scavData.Info.MemberCategory = MemberCategory.UNIQUE_ID;
         scavData.Info.lockedMoveCommands = true;
+        scavData.Info.MainProfileNickname = pmcDataClone.Info.Nickname;
         scavData.RagfairInfo = pmcDataClone.RagfairInfo;
         scavData.UnlockedInfo = pmcDataClone.UnlockedInfo;
 
