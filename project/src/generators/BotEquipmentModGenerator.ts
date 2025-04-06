@@ -467,6 +467,14 @@ export class BotEquipmentModGenerator {
                 continue;
             }
 
+            // If the parent is a UBGL, the patron_in_weapon will be generated later - so skip it for now
+            if (
+                modSlot === "patron_in_weapon" &&
+                this.itemHelper.isOfBaseclass(request.parentTemplate._id, BaseClasses.UBGL)
+            ) {
+                continue;
+            }
+
             // Check spawn chance of mod
             const modSpawnResult = this.shouldModBeSpawned(
                 modsParentSlot,
