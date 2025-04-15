@@ -94,10 +94,8 @@ We're really excited that you're interested in contributing! Before submitting y
 
 - **master**  
   The default branch used for the latest stable release. This branch is protected and typically is only merged with release branches.
-- **3.10.X-DEV**
+- **3.11.X-DEV**
   Development for the next hotfix release. Hotfix releases include bug fixes and minor features that do not affect the coding structure of the project. Special care is taken to not break server mod stability. These always target the same version of EFT as the last minor release.
-- **4.0.0-DEV**
-  Development for the next minor release of SPT. Minor releases target the latest version of EFT. Late in the minor release cycle the EFT version is frozen for stability to prepare for release. Larger changes to the project structure may be included in minor releases.
 
 ### Pull Request Guidelines
 
