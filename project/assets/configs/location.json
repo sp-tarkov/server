@@ -190,8 +190,7 @@
             "laboratory": true,
             "rezervbase": true,
             "sandbox": true,
-            "sandbox_high": true,
-            "labyrinth": true
+            "sandbox_high": true
         },
         "containerTypesToNotRandomise": [
             "5d6fd45b86f774317075ed43",
