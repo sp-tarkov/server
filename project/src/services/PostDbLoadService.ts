@@ -282,7 +282,7 @@ export class PostDbLoadService {
     protected fixShotgunDispersions(): void {
         const itemDb = this.databaseService.getItems();
 
-        const shotguns = [Weapons.SHOTGUN_12G_SAIGA_12K, Weapons.SHOTGUN_20G_TOZ_106, Weapons.SHOTGUN_12G_M870];
+        const shotguns = [Weapons.SHOTGUN_12G_SAIGA_12K, Weapons.SHOTGUN_20G_TOZ_106, Weapons.SHOTGUN_12G_M870, Weapons.SHOTGUN_12G_SAIGA_12K_FA];
         for (const shotgunId of shotguns) {
             if (itemDb[shotgunId]._props.ShotgunDispersion) {
                 itemDb[shotgunId]._props.shotgunDispersion = itemDb[shotgunId]._props.ShotgunDispersion;
