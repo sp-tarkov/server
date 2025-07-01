@@ -9,7 +9,7 @@
 	"bot-compatibility_check_missing_props": "アイテムを検証できません: スロット内の {{id}} {{name}}: {{slot}} は装備できますが、 _props の値が存在しません。",
 	"bot-generation_failed": "botの生成に失敗しました。詳細はサーバーログを参照してください",
 	"bot-incompatible_ammo_for_weapon_falling_back_to_default": "互換性のない弾薬 {{chosenAmmo}} が {{weaponId}} - {{weaponName}} の中に見つかりました。デフォルトの {{defaultAmmo}} に入れ替えます。",
-	"bot-invalid_item_compatibility_check": "装備アイテムとの互換性をチェックできません: スロットの{{itemTpl}} は有効なアイテムではありません:{{slot}} は有効なアイテムではありません。",
+	"bot-invalid_item_compatibility_check": "装備しているアイテムとの互換性をチェックできません。スロット {{slot}} に格納されているアイテム {{itemTpl}} は有効なアイテムではありません。",
 	"bot-item_missing_props_property": "アイテム {{itemTpl}} {{name}} にはプロパティ _props が欠損しています。",
 	"bot-item_spawn_limit_reached_skipping_item": "{{botRole}} にアイテム {{itemName}} のスポーンを {{attempts}} 回試行してもできませんでした。スポーン制限を無視します。",
 	"bot-loot_type_not_found": "ルートキャッシュに失敗しました: botの {{lootType}}: {{botRole}} はPMCでした: {{isPmc}}",
