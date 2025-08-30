@@ -11,12 +11,7 @@ import { SeasonalEventType } from "@spt/models/enums/SeasonalEventType";
 import { IHttpConfig } from "@spt/models/spt/config/IHttpConfig";
 import { ILocationConfig } from "@spt/models/spt/config/ILocationConfig";
 import { IQuestConfig } from "@spt/models/spt/config/IQuestConfig";
-import {
-    ISeasonalEvent,
-    ISeasonalEventConfig,
-    ISeasonalEventSettings,
-    IZombieSettings,
-} from "@spt/models/spt/config/ISeasonalEventConfig";
+import { ISeasonalEvent, ISeasonalEventConfig, IZombieSettings } from "@spt/models/spt/config/ISeasonalEventConfig";
 import { IWeatherConfig } from "@spt/models/spt/config/IWeatherConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { ConfigServer } from "@spt/servers/ConfigServer";
@@ -439,11 +434,18 @@ export class SeasonalEventService {
                 this.addEventGearToBots(SeasonalEventType.HALLOWEEN);
                 this.addEventGearToBots(SeasonalEventType.CHRISTMAS);
                 this.addEventLootToBots(SeasonalEventType.CHRISTMAS);
-                this.addEventBossesToMaps(SeasonalEventType.HALLOWEEN);
+                this.addEventBossesToMaps("halloweensummon");
                 this.enableHalloweenSummonEvent();
                 this.addPumpkinsToScavBackpacks();
                 this.renameBitcoin();
-                this.enableSnow();
+
+                if (event.settings?.replaceBotHostility) {
+                    this.replaceBotHostility(this.seasonalEventConfig.hostilitySettingsForEvent.aprilFools);
+                }
+                if (typeof event.settings?.forceSeason !== "undefined") {
+                    this.weatherConfig.overrideSeason = event.settings.forceSeason;
+                }
+
                 break;
             default:
                 // Likely a mod event
@@ -585,7 +587,54 @@ export class SeasonalEventService {
                 continue;
             }
 
-            location.base.BotLocationModifier.AdditionalHostilitySettings = hostilitySettings.default;
+            for (const settings of newHostilitySettings) {
+                const matchingBaseSettings = location.base.BotLocationModifier.AdditionalHostilitySettings.find(
+                    (x) => x.BotRole === settings.BotRole,
+                );
+                if (!matchingBaseSettings) {
+                    continue;
+                }
+
+                if (settings.AlwaysEnemies) {
+                    matchingBaseSettings.AlwaysEnemies = settings.AlwaysEnemies;
+                }
+
+                if (settings.AlwaysFriends) {
+                    matchingBaseSettings.AlwaysFriends = settings.AlwaysFriends;
+                }
+
+                if (settings.BearEnemyChance) {
+                    matchingBaseSettings.BearEnemyChance = settings.BearEnemyChance;
+                }
+
+                if (settings.ChancedEnemies) {
+                    matchingBaseSettings.ChancedEnemies = settings.ChancedEnemies;
+                }
+
+                if (settings.Neutral) {
+                    matchingBaseSettings.Neutral = settings.Neutral;
+                }
+
+                if (settings.SavageEnemyChance) {
+                    matchingBaseSettings.SavageEnemyChance = settings.SavageEnemyChance;
+                }
+
+                if (settings.SavagePlayerBehaviour) {
+                    matchingBaseSettings.SavagePlayerBehaviour = settings.SavagePlayerBehaviour;
+                }
+
+                if (settings.UsecEnemyChance) {
+                    matchingBaseSettings.UsecEnemyChance = settings.UsecEnemyChance;
+                }
+
+                if (settings.UsecPlayerBehaviour) {
+                    matchingBaseSettings.UsecPlayerBehaviour = settings.UsecPlayerBehaviour;
+                }
+
+                if (settings.Warn) {
+                    matchingBaseSettings.Warn = settings.Warn;
+                }
+            }
         }
     }
 
@@ -628,6 +677,10 @@ export class SeasonalEventService {
     }
 
     protected configureZombies(zombieSettings: IZombieSettings) {
+        // Flag zombies as being enabled
+        const botData = this.databaseService.getBots();
+        botData.core.ACTIVE_HALLOWEEN_ZOMBIES_EVENT = true;
+
         const infectionHalloween = this.databaseService.getGlobals().config.SeasonActivity.InfectionHalloween;
         infectionHalloween.DisplayUIEnabled = true;
         infectionHalloween.Enabled = true;
@@ -910,7 +963,10 @@ export class SeasonalEventService {
         for (const gifterMapSettings of gifterSettings) {
             const mapData: ILocation = maps[gifterMapSettings.map];
             // Dont add gifter to map twice
-            if (mapData.base.BossLocationSpawn.some((boss) => boss.BossName === "gifter")) {
+            const existingGifter = mapData.base.BossLocationSpawn.find((boss) => boss.BossName === "gifter");
+            if (existingGifter) {
+                existingGifter.BossChance = gifterMapSettings.spawnChance;
+
                 continue;
             }
 
@@ -924,12 +980,13 @@ export class SeasonalEventService {
                 BossEscortDifficult: "normal",
                 BossEscortAmount: "0",
                 ForceSpawn: true,
-                spawnMode: ["regular", "pve"],
+                SpawnMode: ["regular", "pve"],
                 Time: -1,
                 TriggerId: "",
                 TriggerName: "",
                 Delay: 0,
                 RandomTimeSpawn: false,
+                IgnoreMaxBots: true,
             });
         }
     }
@@ -960,7 +1017,7 @@ export class SeasonalEventService {
         if (event.settings?.zombieSettings?.enabled) {
             this.configureZombies(event.settings.zombieSettings);
         }
-        if (event.settings?.forceSeason) {
+        if (typeof event.settings?.forceSeason !== "undefined") {
             this.weatherConfig.overrideSeason = event.settings.forceSeason;
         }
 

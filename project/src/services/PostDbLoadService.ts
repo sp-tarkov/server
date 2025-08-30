@@ -2,6 +2,7 @@ import { PmcWaveGenerator } from "@spt/generators/PmcWaveGenerator";
 import { ILocation } from "@spt/models/eft/common/ILocation";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ELocationName } from "@spt/models/enums/ELocationName";
+import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
 import { Traders } from "@spt/models/enums/Traders";
 import { Weapons } from "@spt/models/enums/Weapons";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
@@ -75,6 +76,8 @@ export class PostDbLoadService {
 
         this.addCustomLooseLootPositions();
 
+        this.mergeCustomAchievements();
+
         this.adjustMinReserveRaiderSpawnChance();
 
         if (this.coreConfig.fixes.fixShotgunDispersion) {
@@ -100,6 +103,8 @@ export class PostDbLoadService {
         this.adjustLooseLootSpawnProbabilities();
 
         this.adjustLocationBotValues();
+
+        this.addChristmasTreeAreaIfMissing();
 
         if (this.locationConfig.rogueLighthouseSpawnTimeSettings.enabled) {
             this.fixRoguesSpawningInstantlyOnLighthouse();
@@ -258,6 +263,19 @@ export class PostDbLoadService {
         }
     }
 
+    /** Merge custom achievemetns into achievement db table */
+    protected mergeCustomAchievements() {
+        const achievements = this.databaseService.getAchievements();
+        for (const customAchievement of this.databaseService.getCustomAchievements()) {
+            if (achievements.find((a) => a.id === customAchievement.id)) {
+                this.logger.warning(`Unable to add custom achievement as id: ${customAchievement.id} already exists`);
+                continue;
+            }
+
+            achievements.push(customAchievement);
+        }
+    }
+
     /**
      * BSG have two values for shotgun dispersion, we make sure both have the same value
      */
@@ -356,6 +374,83 @@ export class PostDbLoadService {
 
             // make values no larger than 30 secs
             map.base.BotStart = Math.min(map.base.BotStart, 30);
+        }
+    }
+
+    protected addChristmasTreeAreaIfMissing() {
+        const areas = this.databaseService.getHideout().areas;
+        const treeArea = areas.find((area) => area.type === HideoutAreas.CHRISTMAS_TREE);
+        if (!treeArea) {
+            areas.push({
+                _id: "5df8a81f8f77747fcf5f5702",
+                type: HideoutAreas.CHRISTMAS_TREE,
+                enabled: true,
+                needsFuel: true,
+                takeFromSlotLocked: false,
+                craftGivesExp: true,
+                displayLevel: true,
+                requirements: [],
+                stages: {
+                    0: {
+                        requirements: [],
+                        bonuses: [],
+                        slots: 0,
+                        constructionTime: 0.0,
+                        description: "",
+                        container: "",
+                        autoUpgrade: false,
+                        displayInterface: true,
+                        improvements: [],
+                    },
+                    1: {
+                        requirements: [
+                            {
+                                areaType: 4,
+                                requiredLevel: 1,
+                                type: "Area",
+                            },
+                            {
+                                templateId: "5449016a4bdc2d6f028b456f",
+                                count: 10000,
+                                isFunctional: false,
+                                isEncoded: false,
+                                type: "Item",
+                            },
+                            {
+                                templateId: "5df8a77486f77412672a1e3f",
+                                count: 1,
+                                isFunctional: false,
+                                isEncoded: false,
+                                type: "Item",
+                            },
+                            {
+                                templateId: "5df8a72c86f77412640e2e83",
+                                count: 1,
+                                isFunctional: false,
+                                isEncoded: false,
+                                type: "Item",
+                            },
+                            {
+                                templateId: "5df8a6a186f77412640e2e80",
+                                count: 1,
+                                isFunctional: false,
+                                isEncoded: false,
+                                type: "Item",
+                            },
+                        ],
+                        bonuses: [],
+                        slots: 0,
+                        constructionTime: 0.0,
+                        description: "",
+                        container: "",
+                        autoUpgrade: false,
+                        displayInterface: true,
+                        improvements: [],
+                    },
+                },
+                enableAreaRequirements: false,
+                parentArea: undefined,
+            });
         }
     }
 

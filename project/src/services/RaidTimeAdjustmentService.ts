@@ -125,15 +125,20 @@ export class RaidTimeAdjustmentService {
      * @param request Raid adjustment request
      * @returns Response to send to client
      */
-    public getRaidAdjustments(sessionId: string, request: IGetRaidTimeRequest): IGetRaidTimeResponse {
+    public getRaidAdjustments(sessionId: string, request: IGetRaidTimeRequest): IRaidChanges {
         const globals = this.databaseService.getGlobals();
         const mapBase: ILocationBase = this.databaseService.getLocation(request.Location.toLowerCase()).base;
         const baseEscapeTimeMinutes = mapBase.EscapeTimeLimit;
 
         // Prep result object to return
-        const result: IGetRaidTimeResponse = {
-            NewSurviveTimeSeconds: undefined,
-            OriginalSurvivalTimeSeconds: globals.config.exp.match_end.survived_seconds_requirement,
+        const result: IRaidChanges = {
+            newSurviveTimeSeconds: globals.config.exp.match_end.survived_seconds_requirement,
+            originalSurvivalTimeSeconds: globals.config.exp.match_end.survived_seconds_requirement,
+            dynamicLootPercent: 100,
+            staticLootPercent: 100,
+            simulatedRaidStartSeconds: 0,
+            raidTimeMinutes: baseEscapeTimeMinutes,
+            exitChanges: [],
         };
 
         // Pmc raid, send default
@@ -165,26 +170,18 @@ export class RaidTimeAdjustmentService {
         const simulatedRaidStartTimeMinutes = baseEscapeTimeMinutes - newRaidTimeMinutes;
 
         // Calculate how long player needs to be in raid to get a `survived` extract status
-        result.NewSurviveTimeSeconds = Math.max(
-            result.OriginalSurvivalTimeSeconds - (baseEscapeTimeMinutes - newRaidTimeMinutes) * 60,
+        result.newSurviveTimeSeconds = Math.max(
+            result.originalSurvivalTimeSeconds - (baseEscapeTimeMinutes - newRaidTimeMinutes) * 60,
             0,
         );
 
         // State that we'll pass to loot generation
-        const raidChanges: IRaidChanges = {
-            dynamicLootPercent: 100,
-            staticLootPercent: 100,
-            raidTimeMinutes: newRaidTimeMinutes,
-            originalSurvivalTimeSeconds: result.OriginalSurvivalTimeSeconds,
-            exitChanges: [],
-            newSurviveTimeSeconds: result.NewSurviveTimeSeconds,
-            simulatedRaidStartSeconds: 0,
-        };
+        result.raidTimeMinutes = newRaidTimeMinutes;
+        result.simulatedRaidStartSeconds = simulatedRaidStartTimeMinutes * 60;
 
         if (mapSettings.reduceLootByPercent) {
-            raidChanges.dynamicLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minDynamicLootPercent);
-            raidChanges.staticLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minStaticLootPercent);
-            raidChanges.simulatedRaidStartSeconds = simulatedRaidStartTimeMinutes * 60;
+            result.dynamicLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minDynamicLootPercent);
+            result.staticLootPercent = Math.max(raidTimeRemainingPercent, mapSettings.minStaticLootPercent);
         }
 
         this.logger.debug(
@@ -193,11 +190,11 @@ export class RaidTimeAdjustmentService {
 
         const exitAdjustments = this.getExitAdjustments(mapBase, newRaidTimeMinutes);
         if (exitAdjustments) {
-            raidChanges.exitChanges.push(...exitAdjustments);
+            result.exitChanges.push(...exitAdjustments);
         }
 
         // Store state to use in loot generation
-        this.applicationContext.addValue(ContextVariableType.RAID_ADJUSTMENTS, raidChanges);
+        this.applicationContext.addValue(ContextVariableType.RAID_ADJUSTMENTS, result);
 
         return result;
     }

@@ -1,2774 +1,2847 @@
 {
-    "presetBatch": {
-        "assault": 45,
-        "bossBully": 5,
-        "bossGluhar": 5,
-        "bossKilla": 5,
-        "bossKojaniy": 5,
-        "bossSanitar": 5,
-        "bossTagilla": 5,
-        "bossKnight": 5,
-        "bossZryachiy": 5,
-        "bossTest": 10,
-        "bossKolontay": 5,
-        "bossPartisan": 5,
-        "cursedAssault": 50,
-        "followerBully": 5,
-        "followerGluharAssault": 5,
-        "followerGluharScout": 5,
-        "followerGluharSecurity": 5,
-        "followerGluharSnipe": 5,
-        "followerKojaniy": 5,
-        "followerSanitar": 5,
-        "followerTagilla": 5,
-        "followerBirdEye": 5,
-        "followerBigPipe": 5,
-        "followerZryachiy": 10,
-        "followerTest": 10,
-        "followerBoar": 15,
-        "marksman": 30,
-        "pmcBot": 40,
-        "sectantPriest": 10,
-        "sectantWarrior": 10,
-        "gifter": 5,
-        "test": 30,
-        "exUsec": 15,
-        "arenaFighterEvent": 15,
-        "arenaFighter": 15,
-        "crazyAssaultEvent": 15,
-        "bossBoar": 5,
-        "bossBoarSniper": 5,
-        "followerBoarClose1": 10,
-        "followerBoarClose2": 10,
-        "followerKolontayAssault": 10,
-        "followerKolontaySecurity": 10,
-        "shooterBTR": 1,
-        "peacefullZryachiyEvent": 5,
-        "ravangeZryachiyEvent": 5,
-        "sectactPriestEvent": 10,
-        "pmcUSEC": 20,
-        "pmcBEAR": 20,
-        "peacemaker": 10,
-        "skier": 10,
-        "sectantPredvestnik": 10,
-        "sectantPrizrak": 10,
-        "sectantOni": 10,
-        "infectedAssault": 30,
-        "infectedPmc": 30,
-        "infectedCivil": 30,
-        "infectedLaborant": 30,
-        "infectedTagilla": 5
+  "assaultBrainType": {
+    "bigmap": {
+      "assault": 1
     },
-    "bosses": [
-        "bossBully",
-        "bossGluhar",
-        "bossKilla",
-        "bossKojaniy",
-        "bossSanitar",
-        "bossTagilla",
-        "bossKnight",
-        "bossZryachiy",
-        "bossBoar",
-        "bossBoarSniper",
-        "bossKolontay",
-        "bossPartisan",
-        "followerBigPipe",
-        "followerBirdEye"
-    ],
-    "durability": {
-        "default": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 60,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
+    "factory4_day": {
+      "assault": 1
+    },
+    "factory4_night": {
+      "assault": 1
+    },
+    "interchange": {
+      "assault": 1
+    },
+    "laboratory": {
+      "assault": 1
+    },
+    "lighthouse": {
+      "assault": 1
+    },
+    "rezervbase": {
+      "assault": 1
+    },
+    "sandbox": {
+      "assault": 1
+    },
+    "sandbox_high": {
+      "assault": 1
+    },
+    "shoreline": {
+      "assault": 1
+    },
+    "tarkovstreets": {
+      "assault": 1
+    },
+    "woods": {
+      "assault": 1
+    }
+  },
+  "bosses": [
+    "bossBully",
+    "bossGluhar",
+    "bossKilla",
+    "bossKojaniy",
+    "bossSanitar",
+    "bossTagilla",
+    "bossKnight",
+    "bossZryachiy",
+    "bossBoar",
+    "bossBoarSniper",
+    "bossKolontay",
+    "bossPartisan",
+    "followerBigPipe",
+    "followerBirdEye"
+  ],
+  "botNameLengthLimit": 19,
+  "botRolesThatMustHaveUniqueName": [
+    "assault",
+    "pmcusec",
+    "pmcbear"
+  ],
+  "botRolesWithDogTags": [
+    "pmcbear",
+    "pmcusec"
+  ],
+  "chanceAssaultScavHasPlayerScavName": 10,
+  "currencyStackSize": {
+    "assault": {
+      "5449016a4bdc2d6f028b456f": {
+        "10000": 51,
+        "15000": 28,
+        "20000": 13,
+        "25000": 8,
+        "30000": 3,
+        "350000": 1,
+        "5000": 200
+      },
+      "5696686a4bdc2da3298b456a": {
+        "100": 5,
+        "250": 1,
+        "50": 20
+      },
+      "569668774bdc2da2298b4568": {
+        "100": 5,
+        "250": 1,
+        "50": 20
+      },
+      "5d235b4d86f7742e017bc88a": {
+        "1": 15,
+        "2": 3,
+        "3": 1
+      }
+    },
+    "default": {
+      "5449016a4bdc2d6f028b456f": {
+        "10000": 14,
+        "15000": 8,
+        "20000": 4,
+        "25000": 2,
+        "5000": 70
+      },
+      "5696686a4bdc2da3298b456a": {
+        "100": 5,
+        "250": 1,
+        "50": 10
+      },
+      "569668774bdc2da2298b4568": {
+        "100": 5,
+        "250": 1,
+        "50": 10
+      },
+      "5d235b4d86f7742e017bc88a": {
+        "1": 8,
+        "10": 1,
+        "2": 4,
+        "5": 4
+      }
+    }
+  },
+  "disableLootOnBotTypes": [],
+  "durability": {
+    "arenafighter": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 80,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "arenafighterevent": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 80,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "assault": {
+      "armor": {
+        "maxDelta": 50,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 85,
+        "maxDelta": 45,
+        "minDelta": 30,
+        "minLimitPercent": 15
+      }
+    },
+    "boss": {
+      "armor": {
+        "highestMaxPercent": 100,
+        "lowestMaxPercent": 90,
+        "maxDelta": 15,
+        "minDelta": 0,
+        "minLimitPercent": 100
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 85,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "crazyassaultevent": {
+      "armor": {
+        "maxDelta": 50,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 85,
+        "maxDelta": 45,
+        "minDelta": 30,
+        "minLimitPercent": 15
+      }
+    },
+    "cursedassault": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 80,
+        "maxDelta": 25,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "default": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 60,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "exusec": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 80,
+        "maxDelta": 40,
+        "minDelta": 20,
+        "minLimitPercent": 15
+      }
+    },
+    "follower": {
+      "armor": {
+        "highestMaxPercent": 100,
+        "lowestMaxPercent": 90,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 85,
+        "maxDelta": 40,
+        "minDelta": 20,
+        "minLimitPercent": 15
+      }
+    },
+    "gifter": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 90,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "marksman": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 60,
+        "maxDelta": 25,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "peacemaker": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 60,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "pmc": {
+      "armor": {
+        "highestMaxPercent": 100,
+        "lowestMaxPercent": 90,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 95,
+        "maxDelta": 5,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "pmcbot": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 80,
+        "maxDelta": 40,
+        "minDelta": 20,
+        "minLimitPercent": 15
+      }
+    },
+    "sectantpriest": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 90,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "sectantwarrior": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 90,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    },
+    "skier": {
+      "armor": {
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      },
+      "weapon": {
+        "highestMax": 100,
+        "lowestMax": 60,
+        "maxDelta": 10,
+        "minDelta": 0,
+        "minLimitPercent": 15
+      }
+    }
+  },
+  "equipment": {
+    "arenafighter": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 35,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "arenafighterevent": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 35,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "assault": {
+      "faceShieldIsActiveChancePercent": 85,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 90,
+      "weaponModLimits": {
+        "lightLaserLimit": 2,
+        "scopeLimit": 1
+      },
+      "weightingAdjustmentsByPlayerLevel": [
+        {
+          "equipment": {
+            "add": {},
+            "edit": {
+              "FaceCover": {
+                "572b7fa524597762b747ce82": 30
+              },
+              "FirstPrimaryWeapon": {
+                "54491c4f4bdc2db1078b4568": 90,
+                "5a38e6bac4a2826c6e06d79b": 90
+              }
             }
-        },
-        "pmc": {
-            "armor": {
-                "lowestMaxPercent": 90,
-                "highestMaxPercent": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 95,
-                "highestMax": 100,
-                "maxDelta": 5,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "boss": {
-            "armor": {
-                "lowestMaxPercent": 90,
-                "highestMaxPercent": 100,
-                "maxDelta": 15,
-                "minDelta": 0,
-                "minLimitPercent": 100
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "follower": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 40,
-                "minDelta": 20,
-                "minLimitPercent": 15
-            }
-        },
-        "assault": {
-            "armor": {
-                "maxDelta": 50,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 85,
-                "highestMax": 100,
-                "maxDelta": 45,
-                "minDelta": 30,
-                "minLimitPercent": 15
-            }
-        },
-        "cursedassault": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 25,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "marksman": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 60,
-                "highestMax": 100,
-                "maxDelta": 25,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "pmcbot": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 40,
-                "minDelta": 20,
-                "minLimitPercent": 15
-            }
-        },
-        "arenafighterevent": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "arenafighter": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "crazyassaultevent": {
-            "armor": {
-                "maxDelta": 50,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 85,
-                "highestMax": 100,
-                "maxDelta": 45,
-                "minDelta": 30,
-                "minLimitPercent": 15
-            }
-        },
-        "exusec": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 80,
-                "highestMax": 100,
-                "maxDelta": 40,
-                "minDelta": 20,
-                "minLimitPercent": 15
-            }
-        },
-        "sectantpriest": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 90,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "sectantwarrior": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 90,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "gifter": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 90,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "skier": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 60,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
-        },
-        "peacemaker": {
-            "armor": {
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            },
-            "weapon": {
-                "lowestMax": 60,
-                "highestMax": 100,
-                "maxDelta": 10,
-                "minDelta": 0,
-                "minLimitPercent": 15
-            }
+          },
+          "levelRange": {
+            "max": 6,
+            "min": 1
+          }
         }
+      ]
     },
-    "lootItemResourceRandomization": {
-        "assault": {
-            "food": {
-                "resourcePercent": 65,
-                "chanceMaxResourcePercent": 30
-            },
-            "meds": {
-                "resourcePercent": 50,
-                "chanceMaxResourcePercent": 40
+    "assaultgroup": {},
+    "bossboar": {
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "bossboarsniper": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "bossbully": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "bossgluhar": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 45,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "bosskilla": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 75,
+      "lightIsActiveNightChancePercent": 85
+    },
+    "bossknight": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "bosskojaniy": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "bosskolontay": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "bosspartisan": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "bosssanitar": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "bosstagilla": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "bosstest": {},
+    "bosszryachiy": {
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "crazyassaultevent": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "cursedassault": {
+      "faceShieldIsActiveChancePercent": 90,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 60
+    },
+    "exusec": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 90,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90,
+      "randomisation": [
+        {
+          "equipmentMods": {
+            "mod_nvg": 0
+          },
+          "levelRange": {
+            "max": 100,
+            "min": 1
+          },
+          "nighttimeChanges": {
+            "equipmentModsModifiers": {
+              "mod_nvg": 90
             }
+          }
         }
+      ],
+      "weaponSlotIdsToMakeRequired": [
+        "mod_reciever"
+      ]
     },
-    "chanceAssaultScavHasPlayerScavName": 10,
-    "secureContainerAmmoStackCount": 20,
-    "botRolesWithDogTags": ["pmcbear", "pmcusec"],
-    "revenge": {
-        "pmcBot": ["pmcBot", "gifter"],
-        "arenaFighter": ["pmcBot", "gifter"],
-        "arenaFighterEvent": ["pmcBot", "gifter"],
-        "bossKnight": ["exUsec", "gifter", "bossKnight", "followerBigPipe", "followerBirdEye"],
-        "followerBigPipe": ["exUsec", "gifter", "bossKnight", "followerBigPipe", "followerBirdEye"],
-        "exUsec": ["exUsec", "gifter", "bossKnight", "followerBigPipe", "followerBirdEye"],
-        "spiritWinter": ["pmcBot", "gifter"]
+    "followerbigpipe": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
     },
-    "itemSpawnLimits": {
-        "default": {},
-        "assault": {
-            "5a0c27731526d80618476ac4": 1,
-            "5c99f98d86f7745c314214b3": 1,
-            "5448f3ac4bdc2dce718b4569": 4,
-            "62a09d3bcf4a99369e262447": 1,
-            "5448e8d64bdc2dce718b4568": 2,
-            "5448e8d04bdc2ddf718b4569": 2,
-            "5449016a4bdc2d6f028b456f": 2,
-            "5783c43d2459774bbe137486": 1,
-            "60b0f6c058e0b0481a09ad11": 1
-        },
-        "marksman": {
-            "60b0f6c058e0b0481a09ad11": 1,
-            "5783c43d2459774bbe137486": 1,
-            "62a09d3bcf4a99369e262447": 1
-        },
-        "cursedassault": {},
-        "exusec": {
-            "60098ad7c2240c0fe85c570a": 2
-        },
-        "bossbully": {
-            "5448ba0b4bdc2d02308b456c": 1
-        },
-        "bossgluhar": {
-            "5c94bbff86f7747ee735c08f": 1
-        },
-        "bosskilla": {},
-        "bosskojaniy": {
-            "5d08d21286f774736e7c94c3": 1,
-            "5c94bbff86f7747ee735c08f": 1
-        },
-        "bosssanitar": {
-            "5efde6b4f5448336730dbd61": 1,
-            "5eff09cd30a7dc22fd1ddfed": 1
-        },
-        "bosstagilla": {},
-        "bossknight": {},
-        "bosszryachiy": {},
-        "bosskolontay": {},
-        "bosspartisan": {},
-        "bosstest": {},
-        "followerbully": {
-            "5448e8d64bdc2dce718b4568": 1,
-            "5448ba0b4bdc2d02308b456c": 1
-        },
-        "followergluharassault": {
-            "5c0fa877d174af02a012e1cf": 1,
-            "5c94bbff86f7747ee735c08f": 0
-        },
-        "followergluharscout": {
-            "5c0fa877d174af02a012e1cf": 1,
-            "5c94bbff86f7747ee735c08f": 0
-        },
-        "followergluharsecurity": {
-            "5c0fa877d174af02a012e1cf": 1,
-            "5c94bbff86f7747ee735c08f": 0
-        },
-        "followergluharsnipe": {
-            "5c0fa877d174af02a012e1cf": 1,
-            "5c94bbff86f7747ee735c08f": 0
-        },
-        "followerkojaniy": {
-            "5448e8d64bdc2dce718b4568": 2
-        },
-        "followersanitar": {
-            "590c2e1186f77425357b6124": 1
-        },
-        "followertagilla": {},
-        "followerbirdeye": {},
-        "followerbigpipe": {},
-        "followerzryachiy": {},
-        "followertest": {},
-        "followerboar": {
-            "5448e8d04bdc2ddf718b4569": 1,
-            "544fb37f4bdc2dee738b4567": 1,
-            "5448e8d64bdc2dce718b4568": 1,
-            "5c94bbff86f7747ee735c08f": 1
-        },
-        "followerboarclose1": {
-            "5448e8d04bdc2ddf718b4569": 1,
-            "5448e8d64bdc2dce718b4568": 1,
-            "5c94bbff86f7747ee735c08f": 1
-        },
-        "followerboarclose2": {
-            "5448e8d04bdc2ddf718b4569": 1,
-            "5448e8d64bdc2dce718b4568": 1,
-            "5c94bbff86f7747ee735c08f": 1
-        },
-        "followerkolontayassault": {
-            "5448e8d04bdc2ddf718b4569": 2,
-            "5c94bbff86f7747ee735c08f": 1,
-            "5448e8d64bdc2dce718b4568": 2
-        },
-        "followerkolontaysecurity": {
-            "5448e8d04bdc2ddf718b4569": 2,
-            "5c94bbff86f7747ee735c08f": 1,
-            "5448e8d64bdc2dce718b4568": 2
-        },
-        "sectantpriest": {},
-        "sectantwarrior": {},
-        "test": {},
-        "pmcbot": {
-            "60098ad7c2240c0fe85c570a": 2
-        },
-        "arenafighterevent": {
-            "5734758f24597738025ee253": 1
-        },
-        "arenafighter": {
-            "5734758f24597738025ee253": 1
-        },
-        "crazyassaultevent": {},
-        "assaultgroup": {},
-        "gifter": {},
-        "bossboar": {},
-        "bossboarsniper": {},
-        "ravangezryachiyevent": {},
-        "pmc": {
-            "5c99f98d86f7745c314214b3": 1,
-            "5c164d2286f774194c5e69fa": 1,
-            "550aa4cd4bdc2dd8348b456c": 2,
-            "55818add4bdc2d5b648b456f": 1,
-            "55818ad54bdc2ddc698b4569": 1,
-            "55818aeb4bdc2ddc698b456a": 1,
-            "55818ae44bdc2dde698b456c": 1,
-            "55818af64bdc2d5b648b4570": 1,
-            "5448e54d4bdc2dcc718b4568": 1,
-            "5448f3a64bdc2d60728b456a": 2,
-            "5447e1d04bdc2dff2f8b4567": 1,
-            "5a341c4686f77469e155819e": 1,
-            "55818b164bdc2ddc698b456c": 2,
-            "5448bc234bdc2d3c308b4569": 2,
-            "543be5dd4bdc2deb348b4569": 1,
-            "543be5cb4bdc2deb348b4568": 2,
-            "5485a8684bdc2da71d8b4567": 2,
-            "5d650c3e815116009f6201d2": 2,
-            "5448f39d4bdc2d0a728b4568": 2,
-            "543be6564bdc2df4348b4568": 1,
-            "5751a25924597722c463c472": 2,
-            "544fb37f4bdc2dee738b4567": 2
-        },
-        "shooterbtr": {},
-        "skier": {},
-        "peacemaker": {},
-        "sectantpredvestnik": {},
-        "sectantprizrak": {},
-        "sectantoni": {},
-        "infectedassault": {},
-        "infectedpmc": {},
-        "infectedcivil": {},
-        "infectedlaborant": {},
-        "infectedtagilla": {}
+    "followerbirdeye": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
     },
-    "equipment": {
-        "assault": {
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 2
-            },
-            "faceShieldIsActiveChancePercent": 85,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 75,
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 90,
-            "weightingAdjustmentsByPlayerLevel": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 6
-                    },
-                    "equipment": {
-                        "add": {},
-                        "edit": {
-                            "FaceCover": {
-                                "572b7fa524597762b747ce82": 30
-                            },
-                            "FirstPrimaryWeapon": {
-                                "54491c4f4bdc2db1078b4568": 90,
-                                "5a38e6bac4a2826c6e06d79b": 90
-                            }
-                        }
-                    }
-                }
+    "followerboar": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "followerboarclose1": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "followerboarclose2": {
+      "faceShieldIsActiveChancePercent": 80,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 85,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 2
+      }
+    },
+    "followerbully": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followergluharassault": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 85
+    },
+    "followergluharscout": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followergluharsecurity": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followergluharsnipe": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followerkojaniy": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 85
+    },
+    "followerkolontayassault": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followerkolontaysecurity": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followersanitar": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75
+    },
+    "followertagilla": {},
+    "followertest": {},
+    "followerzryachiy": {
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "gifter": {
+      "faceShieldIsActiveChancePercent": 0,
+      "laserIsActiveChancePercent": 75,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 0,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "infectedassault": {},
+    "infectedcivil": {},
+    "infectedlaborant": {},
+    "infectedpmc": {},
+    "infectedtagilla": {},
+    "marksman": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 90,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "peacemaker": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 35,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "pmc": {
+      "armorPlateWeighting": [
+        {
+          "back_plate": {
+            "2": 25,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "front_plate": {
+            "2": 25,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "left_side_plate": {
+            "2": 25,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "levelRange": {
+            "max": 10,
+            "min": 1
+          },
+          "right_side_plate": {
+            "2": 25,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "side_plate": {
+            "2": 25,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "back_plate": {
+            "2": 30,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "front_plate": {
+            "2": 30,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "left_side_plate": {
+            "2": 30,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "levelRange": {
+            "max": 14,
+            "min": 11
+          },
+          "right_side_plate": {
+            "2": 30,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          },
+          "side_plate": {
+            "2": 30,
+            "3": 20,
+            "4": 5,
+            "5": 1,
+            "6": 1
+          }
+        },
+        {
+          "back_plate": {
+            "2": 10,
+            "3": 15,
+            "4": 24,
+            "5": 5,
+            "6": 4
+          },
+          "front_plate": {
+            "2": 10,
+            "3": 15,
+            "4": 24,
+            "5": 5,
+            "6": 4
+          },
+          "left_side_plate": {
+            "2": 10,
+            "3": 15,
+            "4": 24,
+            "5": 5,
+            "6": 4
+          },
+          "levelRange": {
+            "max": 24,
+            "min": 15
+          },
+          "right_side_plate": {
+            "2": 10,
+            "3": 15,
+            "4": 24,
+            "5": 5,
+            "6": 4
+          },
+          "side_plate": {
+            "2": 10,
+            "3": 15,
+            "4": 24,
+            "5": 5,
+            "6": 4
+          }
+        },
+        {
+          "back_plate": {
+            "2": 2,
+            "3": 10,
+            "4": 35,
+            "5": 15,
+            "6": 5
+          },
+          "front_plate": {
+            "2": 2,
+            "3": 10,
+            "4": 35,
+            "5": 15,
+            "6": 5
+          },
+          "left_side_plate": {
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5
+          },
+          "levelRange": {
+            "max": 35,
+            "min": 25
+          },
+          "right_side_plate": {
+            "2": 3,
+            "3": 15,
+            "4": 35,
+            "5": 15,
+            "6": 5
+          },
+          "side_plate": {
+            "2": 2,
+            "3": 10,
+            "4": 35,
+            "5": 15,
+            "6": 5
+          }
+        },
+        {
+          "back_plate": {
+            "2": 0,
+            "3": 4,
+            "4": 32,
+            "5": 50,
+            "6": 20
+          },
+          "front_plate": {
+            "2": 0,
+            "3": 4,
+            "4": 32,
+            "5": 50,
+            "6": 20
+          },
+          "left_side_plate": {
+            "2": 0,
+            "3": 4,
+            "4": 32,
+            "5": 50,
+            "6": 20
+          },
+          "levelRange": {
+            "max": 55,
+            "min": 36
+          },
+          "right_side_plate": {
+            "2": 0,
+            "3": 4,
+            "4": 32,
+            "5": 50,
+            "6": 20
+          },
+          "side_plate": {
+            "2": 0,
+            "3": 4,
+            "4": 32,
+            "5": 50,
+            "6": 20
+          }
+        },
+        {
+          "back_plate": {
+            "2": 0,
+            "3": 0,
+            "4": 10,
+            "5": 40,
+            "6": 50
+          },
+          "front_plate": {
+            "2": 0,
+            "3": 0,
+            "4": 10,
+            "5": 50,
+            "6": 50
+          },
+          "left_side_plate": {
+            "2": 0,
+            "3": 0,
+            "4": 10,
+            "5": 40,
+            "6": 50
+          },
+          "levelRange": {
+            "max": 90,
+            "min": 56
+          },
+          "right_side_plate": {
+            "2": 0,
+            "3": 0,
+            "4": 10,
+            "5": 40,
+            "6": 50
+          },
+          "side_plate": {
+            "2": 0,
+            "3": 0,
+            "4": 10,
+            "5": 40,
+            "6": 50
+          }
+        }
+      ],
+      "blacklist": [
+        {
+          "cartridge": {
+            "Caliber127x55": [
+              "5cadf6e5ae921500113bb973",
+              "5cadf6ddae9215051e1c23b2"
+            ],
+            "Caliber23x75": [
+              "5e85a9f4add9fe03027d9bf1"
             ]
-        },
-        "marksman": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "cursedassault": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 60,
-            "faceShieldIsActiveChancePercent": 90,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "exusec": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 90,
-            "laserIsActiveChancePercent": 85,
-            "forceStock": true,
-            "weaponSlotIdsToMakeRequired": ["mod_reciever"],
-            "randomisation": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 100
-                    },
-                    "equipmentMods": {
-                        "mod_nvg": 0
-                    },
-                    "nighttimeChanges": {
-                        "equipmentModsModifiers": {
-                            "mod_nvg": 90
-                        }
-                    }
-                }
+          },
+          "equipment": {
+            "mod_front_sight": [
+              "5a0f096dfcdbcb0176308b15"
+            ],
+            "mod_magazine": [
+              "57838f0b2459774a256959b2",
+              "5aaa5e60e5b5b000140293d6",
+              "5b1fd4e35acfc40018633c39",
+              "59e5d83b86f7745aed03d262",
+              "5b7bef1e5acfc43d82528402",
+              "617130016c780c1e710c9a24",
+              "55d4837c4bdc2d1d4e8b456c",
+              "5c503ac82e221602b21d6e9a",
+              "6241c2c2117ad530666a5108",
+              "671d85439ae8365d69117ba6",
+              "671d8617a3e45c1f5908278c",
+              "670e8eab8c1bb0e5a7075acf",
+              "671d8ac8a3e45c1f59082799",
+              "671d8b38b769f0d88c0950f8",
+              "671d8b8c0959c721a50ca838"
+            ],
+            "mod_nvg": [
+              "5c11046cd174af02a012e42b"
+            ],
+            "mod_rear_sight": [
+              "5a0ed824fcdbcb0176308b0d"
+            ],
+            "mod_reciever": [
+              "5d4405aaa4b9361e6a4e6bd3"
+            ],
+            "mod_scope": [
+              "5a1ead28fcdbcb001912fa9f",
+              "5a1eaa87fcdbcb001865f75e",
+              "5d1b5e94d7ad1a2b865a96b0",
+              "5a7c74b3e899ef0014332c29",
+              "618b9643526131765025ab35",
+              "618bab21526131765025ab3f",
+              "65392f611406374f82152ba5",
+              "653931da5db71d30ab1d6296"
+            ],
+            "mod_stock": [
+              "5cde739cd7f00c0010373bd3"
             ]
+          },
+          "levelRange": {
+            "max": 66,
+            "min": 1
+          }
         },
-        "bossbully": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true
-        },
-        "bossgluhar": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 45,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true
-        },
-        "bosskilla": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 75,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true
-        },
-        "bosskojaniy": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "bosssanitar": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 85,
-            "forceStock": true
-        },
-        "bosstagilla": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true
-        },
-        "bossknight": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true
-        },
-        "bosszryachiy": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "forceStock": true
-        },
-        "bossboar": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "ravangezryachiyevent": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "forceStock": true
-        },
-        "bosstest": {},
-        "shooterbtr": {},
-        "followerkolontayassault": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true
-        },
-        "followerkolontaysecurity": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true
-        },
-        "followerbully": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true
-        },
-        "followergluharassault": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true
-        },
-        "followergluharscout": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "followergluharsecurity": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "followergluharsnipe": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "followerkojaniy": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "followersanitar": {
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "followertagilla": {},
-        "followerbirdeye": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            }
-        },
-        "followerbigpipe": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true
-        },
-        "followerzryachiy": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 90,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 85,
-            "forceStock": true
-        },
-        "followerboar": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "followerboarclose1": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "followerboarclose2": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "bossboarsniper": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
-        "bosskolontay": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
-        "bosspartisan": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 2,
-                "lightLaserLimit": 1
-            }
-        },
-        "followertest": {},
-        "sectantpriest": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 100,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 85,
-            "laserIsActiveChancePercent": 95
-        },
-        "sectantwarrior": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 100,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 95
-        },
-        "sectantpredvestnik": {},
-        "sectantprizrak": {},
-        "sectantoni": {},
-        "infectedassault": {},
-        "infectedpmc": {},
-        "infectedcivil": {},
-        "infectedlaborant": {},
-        "infectedtagilla": {},
-        "test": {},
-        "pmcbot": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 35,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceRigWhenNoVest": true,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "weaponSlotIdsToMakeRequired": ["mod_reciever"]
-        },
-        "peacemaker": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 35,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            }
-        },
-        "skier": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 35,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            }
-        },
-        "arenafighterevent": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 35,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            }
-        },
-        "arenafighter": {
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 100,
-            "lightIsActiveDayChancePercent": 35,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 95,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "forceStock": true,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            }
-        },
-        "crazyassaultevent": {
-            "nvgIsActiveChanceDayPercent": 20,
-            "nvgIsActiveChanceNightPercent": 85,
-            "faceShieldIsActiveChancePercent": 80,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75,
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "forceStock": true
-        },
-        "assaultgroup": {},
-        "gifter": {
-            "nvgIsActiveChanceDayPercent": 0,
-            "nvgIsActiveChanceNightPercent": 90,
-            "faceShieldIsActiveChancePercent": 0,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 75,
-            "laserIsActiveChancePercent": 75
-        },
-        "pmc": {
-            "weaponModLimits": {
-                "scopeLimit": 1,
-                "lightLaserLimit": 1
-            },
-            "weaponSightWhitelist": {
-                "5447b5fc4bdc2d87278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818add4bdc2d5b648b456f",
-                    "55818aeb4bdc2ddc698b456a"
-                ],
-                "5447b5f14bdc2d61278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818add4bdc2d5b648b456f",
-                    "55818aeb4bdc2ddc698b456a"
-                ],
-                "5447bedf4bdc2d87278b4568": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818add4bdc2d5b648b456f",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818aeb4bdc2ddc698b456a"
-                ],
-                "5447bed64bdc2d97278b4568": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818add4bdc2d5b648b456f",
-                    "55818aeb4bdc2ddc698b456a"
-                ],
-                "5447b6194bdc2d67278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818ae44bdc2dde698b456c",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818aeb4bdc2ddc698b456a",
-                    "55818add4bdc2d5b648b456f"
-                ],
-                "5447b5cf4bdc2d65278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e"
-                ],
-                "617f1ef5e8b54b0998387733": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e"
-                ],
-                "5447b6094bdc2dc3278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e"
-                ],
-                "5447b5e04bdc2d62278b4567": [
-                    "55818ad54bdc2ddc698b4569",
-                    "55818acf4bdc2dde698b456b",
-                    "55818ac54bdc2d5b648b456e"
-                ],
-                "5447b6254bdc2dc3278b4568": [
-                    "55818ae44bdc2dde698b456c",
-                    "55818ac54bdc2d5b648b456e",
-                    "55818aeb4bdc2ddc698b456a",
-                    "55818add4bdc2d5b648b456f"
-                ]
-            },
-            "nvgIsActiveChanceDayPercent": 10,
-            "nvgIsActiveChanceNightPercent": 95,
-            "faceShieldIsActiveChancePercent": 85,
-            "lightIsActiveDayChancePercent": 25,
-            "lightIsActiveNightChancePercent": 95,
-            "laserIsActiveChancePercent": 85,
-            "forceOnlyArmoredRigWhenNoArmor": true,
-            "filterPlatesByLevel": true,
-            "weaponSlotIdsToMakeRequired": ["mod_reciever", "mod_stock", "mod_muzzle"],
-            "randomisation": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 14
-                    },
-                    "generation": {
-                        "drugs": {
-                            "weights": {
-                                "0": 1,
-                                "1": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "grenades": {
-                            "weights": {
-                                "0": 25,
-                                "1": 11
-                            },
-                            "whitelist": {
-                                "5710c24ad2720bc3458b45a3": 1,
-                                "58d3db5386f77426186285a0": 1,
-                                "5448be9a4bdc2dfd2f8b456a": 1
-                            }
-                        },
-                        "healing": {
-                            "weights": {
-                                "0": 1,
-                                "1": 6,
-                                "2": 3
-                            },
-                            "whitelist": {
-                                "5e831507ea0a7c419c2f9bd9": 1,
-                                "5755356824597772cb798962": 1,
-                                "590c661e86f7741e566b646a": 1,
-                                "590c657e86f77412b013051d": 1,
-                                "544fb37f4bdc2dee738b4567": 1,
-                                "544fb3364bdc2d34748b456a": 1,
-                                "544fb25a4bdc2dfb738b4567": 1
-                            }
-                        },
-                        "backpackLoot": {
-                            "weights": {
-                                "0": 4,
-                                "1": 15,
-                                "2": 40,
-                                "3": 10,
-                                "4": 8,
-                                "5": 2,
-                                "10": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "pocketLoot": {
-                            "weights": {
-                                "0": 4,
-                                "1": 9,
-                                "2": 1,
-                                "3": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "vestLoot": {
-                            "weights": {
-                                "0": 2,
-                                "1": 12,
-                                "2": 1,
-                                "3": 1,
-                                "4": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "magazines": {
-                            "weights": {
-                                "0": 0,
-                                "1": 4,
-                                "2": 1,
-                                "3": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "stims": {
-                            "weights": {
-                                "0": 29,
-                                "1": 1
-                            },
-                            "whitelist": {
-                                "5c0e530286f7747fa1419862": 1,
-                                "5c10c8fd86f7743d7d706df3": 1
-                            }
-                        }
-                    },
-                    "equipment": {
-                        "ArmBand": 90,
-                        "FirstPrimaryWeapon": 85,
-                        "SecondPrimaryWeapon": 3,
-                        "Holster": 5,
-                        "Earpiece": 35,
-                        "Eyewear": 5,
-                        "Backpack": 65,
-                        "FaceCover": 5
-                    },
-                    "randomisedWeaponModSlots": [],
-                    "equipmentMods": {
-                        "back_plate": 60,
-                        "left_side_plate": 0,
-                        "right_side_plate": 0,
-                        "mod_equipment": 3,
-                        "mod_equipment_000": 3,
-                        "mod_equipment_001": 3,
-                        "mod_equipment_002": 3,
-                        "mod_nvg": 3,
-                        "mod_mount": 1
-                    },
-                    "weaponMods": {
-                        "mod_barrel": 5,
-                        "mod_bipod": 10,
-                        "mod_flashlight": 10,
-                        "mod_foregrip": 10,
-                        "mod_handguard": 10,
-                        "mod_launcher": 0,
-                        "mod_reciever": 10,
-                        "mod_magazine": 10,
-                        "mod_mount": 15,
-                        "mod_mount_000": 10,
-                        "mod_mount_001": 10,
-                        "mod_mount_002": 10,
-                        "mod_mount_003": 10,
-                        "mod_mount_004": 10,
-                        "mod_mount_005": 10,
-                        "mod_mount_006": 10,
-                        "mod_muzzle": 10,
-                        "mod_muzzle_000": 10,
-                        "mod_muzzle_001": 10,
-                        "mod_equipment": 5,
-                        "mod_equipment_000": 10,
-                        "mod_equipment_001": 5,
-                        "mod_equipment_002": 0,
-                        "mod_nvg": 0,
-                        "mod_pistol_grip_akms": 10,
-                        "mod_pistol_grip": 10,
-                        "mod_scope": 10,
-                        "mod_scope_000": 15,
-                        "mod_scope_001": 15,
-                        "mod_scope_002": 15,
-                        "mod_scope_003": 15,
-                        "mod_tactical": 10,
-                        "mod_tactical001": 10,
-                        "mod_tactical002": 10,
-                        "mod_tactical_000": 10,
-                        "mod_tactical_001": 10,
-                        "mod_tactical_002": 10,
-                        "mod_tactical_003": 10,
-                        "mod_tactical_2": 10
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 15,
-                        "max": 22
-                    },
-                    "generation": {
-                        "backpackLoot": {
-                            "weights": {
-                                "0": 3,
-                                "1": 7,
-                                "2": 12,
-                                "3": 20,
-                                "4": 8,
-                                "5": 3,
-                                "10": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "pocketLoot": {
-                            "weights": {
-                                "0": 2,
-                                "1": 3,
-                                "2": 2,
-                                "3": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "vestLoot": {
-                            "weights": {
-                                "0": 1,
-                                "1": 4,
-                                "2": 2,
-                                "3": 1,
-                                "4": 1
-                            },
-                            "whitelist": {}
-                        },
-                        "magazines": {
-                            "weights": {
-                                "0": 0,
-                                "1": 1,
-                                "2": 4,
-                                "3": 3
-                            },
-                            "whitelist": {}
-                        },
-                        "stims": {
-                            "weights": {
-                                "0": 10,
-                                "1": 1
-                            },
-                            "whitelist": {}
-                        }
-                    },
-                    "equipment": {
-                        "ArmBand": 90,
-                        "FirstPrimaryWeapon": 90,
-                        "SecondPrimaryWeapon": 0,
-                        "Holster": 10,
-                        "Earpiece": 35,
-                        "Eyewear": 15,
-                        "FaceCover": 20,
-                        "Backpack": 80,
-                        "Scabbard": 100,
-                        "TacticalVest": 90
-                    },
-                    "randomisedArmorSlots": ["Headwear", "ArmorVest", "TacticalVest"],
-                    "randomisedWeaponModSlots": [
-                        "mod_scope",
-                        "mod_scope_000",
-                        "mod_scope_001",
-                        "mod_scope_002",
-                        "mod_scope_003",
-                        "mod_handguard",
-                        "mod_magazine",
-                        "mod_muzzle",
-                        "mod_bipod",
-                        "mod_muzzle_000",
-                        "mod_muzzle_001",
-                        "mod_charge",
-                        "mod_gas_block",
-                        "mod_pistol_grip",
-                        "mod_pistolgrip",
-                        "mod_pistol_grip_akms",
-                        "mod_pistolgrip_000",
-                        "mod_foregrip",
-                        "mod_trigger",
-                        "mod_reciever",
-                        "mod_hammer",
-                        "mod_stock",
-                        "mod_stock_000",
-                        "mod_stock_001",
-                        "mod_stock_akms",
-                        "mod_stock_axis",
-                        "mod_mount_000",
-                        "mod_mount_001",
-                        "mod_mount_002",
-                        "mod_mount_003",
-                        "mod_mount_004",
-                        "mod_mount_005",
-                        "mod_mount_006",
-                        "mod_tactical",
-                        "mod_tactical_2",
-                        "mod_tactical_000",
-                        "mod_tactical_001",
-                        "mod_tactical_002",
-                        "mod_tactical_003",
-                        "mod_tactical001",
-                        "mod_tactical002"
-                    ],
-                    "equipmentMods": {
-                        "back_plate": 75,
-                        "left_side_plate": 25,
-                        "right_side_plate": 25,
-                        "mod_equipment": 10,
-                        "mod_equipment_000": 10,
-                        "mod_equipment_001": 10,
-                        "mod_equipment_002": 5,
-                        "mod_nvg": 0
-                    },
-                    "weaponMods": {
-                        "mod_barrel": 50,
-                        "mod_bipod": 15,
-                        "mod_flashlight": 35,
-                        "mod_foregrip": 45,
-                        "mod_handguard": 25,
-                        "mod_launcher": 5,
-                        "mod_magazine": 50,
-                        "mod_mount": 45,
-                        "mod_mount_000": 35,
-                        "mod_mount_001": 35,
-                        "mod_mount_002": 35,
-                        "mod_mount_003": 35,
-                        "mod_mount_004": 35,
-                        "mod_mount_005": 35,
-                        "mod_mount_006": 35,
-                        "mod_muzzle": 20,
-                        "mod_muzzle_000": 20,
-                        "mod_muzzle_001": 20,
-                        "mod_pistol_grip_akms": 35,
-                        "mod_pistol_grip": 40,
-                        "mod_reciever": 20,
-                        "mod_scope": 15,
-                        "mod_scope_000": 45,
-                        "mod_scope_001": 35,
-                        "mod_scope_002": 35,
-                        "mod_scope_003": 25,
-                        "mod_tactical": 15,
-                        "mod_tactical001": 40,
-                        "mod_tactical002": 30,
-                        "mod_tactical_000": 40,
-                        "mod_tactical_001": 30,
-                        "mod_tactical_002": 30,
-                        "mod_tactical_003": 30,
-                        "mod_tactical_2": 15
-                    },
-                    "nighttimeChanges": {
-                        "equipmentModsModifiers": {
-                            "mod_nvg": 30
-                        }
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 23,
-                        "max": 45
-                    },
-                    "equipment": {
-                        "SecondPrimaryWeapon": 10,
-                        "FaceCover": 50
-                    },
-                    "equipmentMods": {
-                        "mod_nvg": 0
-                    },
-                    "randomisedArmorSlots": ["Headwear", "TacticalVest", "ArmorVest"],
-                    "randomisedWeaponModSlots": [
-                        "mod_scope",
-                        "mod_scope_000",
-                        "mod_scope_001",
-                        "mod_scope_002",
-                        "mod_scope_003",
-                        "mod_handguard",
-                        "mod_magazine",
-                        "mod_muzzle",
-                        "mod_bipod",
-                        "mod_muzzle_000",
-                        "mod_muzzle_001",
-                        "mod_charge",
-                        "mod_gas_block",
-                        "mod_pistol_grip",
-                        "mod_pistolgrip",
-                        "mod_pistol_grip_akms",
-                        "mod_pistolgrip_000",
-                        "mod_foregrip",
-                        "mod_trigger",
-                        "mod_reciever",
-                        "mod_hammer",
-                        "mod_stock",
-                        "mod_stock_000",
-                        "mod_stock_001",
-                        "mod_stock_akms",
-                        "mod_stock_axis",
-                        "mod_mount_000",
-                        "mod_mount_001",
-                        "mod_mount_002",
-                        "mod_mount_003",
-                        "mod_mount_004",
-                        "mod_mount_005",
-                        "mod_mount_006",
-                        "mod_tactical",
-                        "mod_tactical_2",
-                        "mod_tactical_000",
-                        "mod_tactical_001",
-                        "mod_tactical_002",
-                        "mod_tactical_003",
-                        "mod_tactical001",
-                        "mod_tactical002"
-                    ],
-                    "nighttimeChanges": {
-                        "equipmentModsModifiers": {
-                            "mod_nvg": 50
-                        }
-                    },
-                    "minimumMagazineSize": {
-                        "5447a9cd4bdc2dbd208b4567": 30,
-                        "5926bb2186f7744b1c6c6e60": 30,
-                        "5c07c60e0db834002330051f": 30,
-                        "5bb2475ed4351e00853264e3": 30,
-                        "5bf3e03b0db834001d2c4a9c": 30,
-                        "5644bd2b4bdc2d3b4c8b4572": 30,
-                        "63171672192e68c5460cebc5": 30,
-                        "62e7c4fba689e8c9c50dfc38": 30,
-                        "623063e994fc3f7b302a9696": 30,
-                        "5c488a752e221602b412af63": 30,
-                        "5fbcc1d9016cce60e8341ab3": 30,
-                        "606587252535c57a13424cfd": 30,
-                        "628a60ae6b1d481ff772e9c8": 30,
-                        "5aafa857e5b5b00018480968": 20,
-                        "5df8ce05b11454561e39243b": 20,
-                        "5beed0f50db834001c062b12": 30,
-                        "5ba26383d4351e00334c93d9": 30,
-                        "5bd70322209c4d00d7167b8f": 30,
-                        "5e00903ae9dc277128008b87": 25,
-                        "5de7bd7bfd6b4e6e2276dc25": 30,
-                        "58948c8e86f77409493f7266": 30,
-                        "59984ab886f7743e98271174": 30,
-                        "5fc3f2d5900b1d5091531e57": 30,
-                        "5fb64bc92b1b027b1f50bcf2": 30,
-                        "668e71a8dadf42204c032ce1": 30
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 46,
-                        "max": 100
-                    },
-                    "equipment": {
-                        "SecondPrimaryWeapon": 10,
-                        "Earpiece": 85,
-                        "FaceCover": 75
-                    },
-                    "equipmentMods": {
-                        "left_side_plate": 95,
-                        "right_side_plate": 95,
-                        "mod_equipment": 85,
-                        "mod_equipment_000": 80,
-                        "mod_equipment_001": 75,
-                        "mod_equipment_002": 90,
-                        "mod_nvg": 5
-                    },
-                    "weaponMods": {
-                        "mod_scope": 95,
-                        "mod_muzzle": 85,
-                        "mod_muzzle_000": 95,
-                        "mod_muzzle_001": 95
-                    },
-                    "randomisedArmorSlots": ["Headwear", "TacticalVest", "ArmorVest"],
-                    "randomisedWeaponModSlots": [
-                        "mod_scope",
-                        "mod_scope_000",
-                        "mod_scope_001",
-                        "mod_scope_002",
-                        "mod_scope_003",
-                        "mod_handguard",
-                        "mod_magazine",
-                        "mod_muzzle",
-                        "mod_bipod",
-                        "mod_muzzle_000",
-                        "mod_muzzle_001",
-                        "mod_charge",
-                        "mod_gas_block",
-                        "mod_pistol_grip",
-                        "mod_pistolgrip",
-                        "mod_pistol_grip_akms",
-                        "mod_pistolgrip_000",
-                        "mod_foregrip",
-                        "mod_trigger",
-                        "mod_reciever",
-                        "mod_hammer",
-                        "mod_stock",
-                        "mod_stock_000",
-                        "mod_stock_001",
-                        "mod_stock_akms",
-                        "mod_stock_axis",
-                        "mod_mount_000",
-                        "mod_mount_001",
-                        "mod_mount_002",
-                        "mod_mount_003",
-                        "mod_mount_004",
-                        "mod_mount_005",
-                        "mod_mount_006",
-                        "mod_tactical",
-                        "mod_tactical_2",
-                        "mod_tactical_000",
-                        "mod_tactical_001",
-                        "mod_tactical_002",
-                        "mod_tactical_003",
-                        "mod_tactical001",
-                        "mod_tactical002"
-                    ],
-                    "nighttimeChanges": {
-                        "equipmentModsModifiers": {
-                            "mod_nvg": 90
-                        }
-                    },
-                    "minimumMagazineSize": {
-                        "5447a9cd4bdc2dbd208b4567": 30,
-                        "5926bb2186f7744b1c6c6e60": 30,
-                        "5c07c60e0db834002330051f": 30,
-                        "5bb2475ed4351e00853264e3": 30,
-                        "5bf3e03b0db834001d2c4a9c": 30,
-                        "5644bd2b4bdc2d3b4c8b4572": 30,
-                        "63171672192e68c5460cebc5": 30,
-                        "62e7c4fba689e8c9c50dfc38": 30,
-                        "623063e994fc3f7b302a9696": 30,
-                        "5c488a752e221602b412af63": 30,
-                        "5fbcc1d9016cce60e8341ab3": 30,
-                        "606587252535c57a13424cfd": 30,
-                        "628a60ae6b1d481ff772e9c8": 30,
-                        "5aafa857e5b5b00018480968": 20,
-                        "5df8ce05b11454561e39243b": 20,
-                        "5beed0f50db834001c062b12": 30,
-                        "5ba26383d4351e00334c93d9": 30,
-                        "5bd70322209c4d00d7167b8f": 30,
-                        "5e00903ae9dc277128008b87": 25,
-                        "5de7bd7bfd6b4e6e2276dc25": 30,
-                        "58948c8e86f77409493f7266": 30,
-                        "59984ab886f7743e98271174": 30,
-                        "5fc3f2d5900b1d5091531e57": 30,
-                        "5fb64bc92b1b027b1f50bcf2": 30,
-                        "668e71a8dadf42204c032ce1": 30
-                    }
-                }
+        {
+          "cartridge": {
+            "Caliber127x55": [
+              "5cadf6e5ae921500113bb973",
+              "5cadf6ddae9215051e1c23b2"
             ],
-            "blacklist": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 66
-                    },
-                    "equipment": {
-                        "mod_magazine": [
-                            "57838f0b2459774a256959b2",
-                            "5aaa5e60e5b5b000140293d6",
-                            "5b1fd4e35acfc40018633c39",
-                            "59e5d83b86f7745aed03d262",
-                            "5b7bef1e5acfc43d82528402",
-                            "617130016c780c1e710c9a24",
-                            "55d4837c4bdc2d1d4e8b456c",
-                            "5c503ac82e221602b21d6e9a",
-                            "6241c2c2117ad530666a5108",
-                            "671d85439ae8365d69117ba6",
-                            "671d8617a3e45c1f5908278c",
-                            "670e8eab8c1bb0e5a7075acf",
-                            "671d8ac8a3e45c1f59082799",
-                            "671d8b38b769f0d88c0950f8",
-                            "671d8b8c0959c721a50ca838"
-                        ],
-                        "mod_scope": [
-                            "5a1ead28fcdbcb001912fa9f",
-                            "5a1eaa87fcdbcb001865f75e",
-                            "5d1b5e94d7ad1a2b865a96b0",
-                            "5a7c74b3e899ef0014332c29",
-                            "618b9643526131765025ab35",
-                            "618bab21526131765025ab3f",
-                            "65392f611406374f82152ba5",
-                            "653931da5db71d30ab1d6296"
-                        ],
-                        "mod_nvg": ["5c11046cd174af02a012e42b"],
-                        "mod_reciever": ["5d4405aaa4b9361e6a4e6bd3"],
-                        "mod_stock": ["5cde739cd7f00c0010373bd3"],
-                        "mod_rear_sight": ["5a0ed824fcdbcb0176308b0d"],
-                        "mod_front_sight": ["5a0f096dfcdbcb0176308b15"]
-                    },
-                    "cartridge": {
-                        "Caliber23x75": ["5e85a9f4add9fe03027d9bf1"],
-                        "Caliber127x55": ["5cadf6e5ae921500113bb973", "5cadf6ddae9215051e1c23b2"]
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 67,
-                        "max": 100
-                    },
-                    "equipment": {
-                        "mod_magazine": [
-                            "57838f0b2459774a256959b2",
-                            "5aaa5e60e5b5b000140293d6",
-                            "5b1fd4e35acfc40018633c39",
-                            "59e5d83b86f7745aed03d262",
-                            "5b7bef1e5acfc43d82528402",
-                            "617130016c780c1e710c9a24",
-                            "55d4837c4bdc2d1d4e8b456c",
-                            "5c503ac82e221602b21d6e9a",
-                            "6241c2c2117ad530666a5108",
-                            "6241c2c2117ad530666a5108",
-                            "671d85439ae8365d69117ba6",
-                            "671d8617a3e45c1f5908278c",
-                            "670e8eab8c1bb0e5a7075acf",
-                            "671d8ac8a3e45c1f59082799",
-                            "671d8b38b769f0d88c0950f8",
-                            "671d8b8c0959c721a50ca838"
-                        ],
-                        "mod_scope": [
-                            "5a1ead28fcdbcb001912fa9f",
-                            "5a1eaa87fcdbcb001865f75e",
-                            "5d1b5e94d7ad1a2b865a96b0",
-                            "5a7c74b3e899ef0014332c29",
-                            "618b9643526131765025ab35",
-                            "618bab21526131765025ab3f",
-                            "65392f611406374f82152ba5",
-                            "653931da5db71d30ab1d6296"
-                        ],
-                        "mod_nvg": [],
-                        "mod_reciever": ["5d4405aaa4b9361e6a4e6bd3"],
-                        "mod_stock": ["5cde739cd7f00c0010373bd3"],
-                        "mod_rear_sight": ["5a0ed824fcdbcb0176308b0d"],
-                        "mod_front_sight": ["5a0f096dfcdbcb0176308b15"]
-                    },
-                    "cartridge": {
-                        "Caliber23x75": ["5e85a9f4add9fe03027d9bf1"],
-                        "Caliber127x55": ["5cadf6e5ae921500113bb973", "5cadf6ddae9215051e1c23b2"]
-                    }
-                }
-            ],
-            "weightingAdjustmentsByBotLevel": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 14
-                    },
-                    "ammo": {
-                        "add": {},
-                        "edit": {
-                            "Caliber1143x23ACP": {
-                                "5e81f423763d9f754677bf2e": 25,
-                                "5ea2a8e200685063ec28c05a": 1,
-                                "5efb0cabfb3e451d70735af5": 1,
-                                "5efb0d4f4bc50b58e81710f3": 54,
-                                "5efb0fc6aeb21837e749c801": 1
-                            },
-                            "Caliber556x45NATO": {
-                                "59e6920f86f77411d82aa167": 300,
-                                "59e6927d86f77411da468256": 300,
-                                "54527a984bdc2d4e668b4567": 250,
-                                "59e6918f86f7746c9f75e849": 200,
-                                "5c0d5ae286f7741e46554302": 200
-                            },
-                            "Caliber545x39": {
-                                "56dff3afd2720bba668b4567": 17,
-                                "56dff421d2720b5f5a8b4567": 200,
-                                "56dff4ecd2720b5f5a8b4568": 200,
-                                "56dff4a2d2720bbd668b456a": 100,
-                                "56dfef82d2720bbd668b4567": 0,
-                                "56dff026d2720bb8668b4567": 0,
-                                "5c0d5e4486f77478390952fe": 0
-                            },
-                            "Caliber762x39": {
-                                "59e4cf5286f7741778269d8a": 20,
-                                "64b7af734b75259c590fa895": 300,
-                                "59e4d3d286f774176a36250a": 50,
-                                "64b7af5a8532cf95ee0a0dbd": 200
-                            },
-                            "Caliber762x35": {
-                                "5fd20ff893a8961fc660a954": 2,
-                                "6196364158ef8c428c287d9f": 30,
-                                "6196365d58ef8c428c287da1": 300
-                            },
-                            "Caliber366TKM": {
-                                "59e6542b86f77411dc52a77a": 100,
-                                "59e655cb86f77411dc52a77b": 5,
-                                "59e6658b86f77411d949b250": 55,
-                                "5f0596629e22f464da6bbdd9": 0
-                            },
-                            "Caliber762x51": {
-                                "58dd3ad986f77403051cba8f": 1,
-                                "5a608bf24f39f98ffc77720e": 0,
-                                "5a6086ea4f39f99cd479502f": 0,
-                                "5efb0c1bd79ff02a1f5e68d9": 0,
-                                "6768c25aa7b238f14a08d3f6": 0,
-                                "5e023e6e34d52a55c3304f71": 150,
-                                "5e023e88277cce2b522ff2b1": 300
-                            },
-                            "Caliber762x54R": {
-                                "5e023cf8186a883be655e54f": 0,
-                                "5887431f2459777e1612938f": 10,
-                                "64b8f7c241772715af0f9c3d": 300,
-                                "64b8f7b5389d7ffd620ccba2": 190
-                            },
-                            "Caliber9x19PARA": {
-                                "58864a4f2459770fcc257101": 80,
-                                "5c3df7d588a4501f290594e5": 80,
-                                "5efb0da7a29a85116f6ea05f": 0,
-                                "5c925fa22e221601da359b7b": 1
-                            },
-                            "Caliber9x39": {
-                                "57a0dfb82459774d3078b56c": 10,
-                                "6576f96220d53a5b8f3e395e": 200
-                            },
-                            "Caliber12g": {
-                                "5d6e68a8a4b9360b6c0d54e2": 1,
-                                "5d6e6911a4b9361bd5780d52": 1,
-                                "5d6e6806a4b936088465b17e": 20,
-                                "58820d1224597753c90aeb13": 200,
-                                "5d6e67fba4b9361bc73bc779": 200,
-                                "560d5e524bdc2d25448b4571": 200,
-                                "64b8ee384b75259c590fa89b": 60
-                            },
-                            "Caliber20g": {
-                                "5a38ebd9c4a282000d722a5b": 10
-                            },
-                            "Caliber23x75": {
-                                "5e85a9a6eacf8c039e4e2ac1": 50
-                            },
-                            "Caliber9x18PM": {
-                                "573719df2459775a626ccbc2": 0,
-                                "57371aab2459775a77142f22": 0
-                            },
-                            "Caliber9x21": {
-                                "6576f4708ca9c4381d16cd9d": 0,
-                                "5a26ac0ec4a28200741e1e18": 0
-                            },
-                            "Caliber46x30": {
-                                "5ba26835d4351e0035628ff5": 0
-                            }
-                        }
-                    },
-                    "equipment": {
-                        "add": {
-                            "ArmorVest": {
-                                "59e7635f86f7742cbf2c1095": 120
-                            },
-                            "TacticalVest": {
-                                "6034d0230ca681766b6a0fb5": 120,
-                                "6034cf5fffd42c541047f72e": 150
-                            },
-                            "Backpack": {},
-                            "Headwear": {
-                                "59e7711e86f7746cae05fbe1": 90
-                            }
-                        },
-                        "edit": {
-                            "ArmorVest": {
-                                "5648a7494bdc2d9d488b4583": 320,
-                                "5b44d22286f774172b0c9de8": 290,
-                                "5c0e5bab86f77461f55ed1f3": 260,
-                                "5c0e5edb86f77461f55ed1f7": 280,
-                                "5ab8e4ed86f7742d8e50c7fa": 260,
-                                "5df8a2ca86f7740bfe6df777": 220,
-                                "64be79c487d1510151095552": 280,
-                                "64be79e2bf8412471d0d9bcc": 310,
-                                "5c0e655586f774045612eeb2": 120,
-                                "62a09d79de7ac81993580530": 240,
-                                "5e4abb5086f77406975c9342": 1,
-                                "6038b4ca92ec1c3103795a0d": 1,
-                                "6038b4b292ec1c3103795a0b": 1,
-                                "5b44cd8b86f774503d30cba2": 1,
-                                "5ca21c6986f77479963115a7": 1,
-                                "5b44d0de86f774503d30cba8": 4,
-                                "5b44cf1486f77431723e3d05": 4,
-                                "60a283193cb70855c43a381d": 4,
-                                "5c0e541586f7747fa54205c9": 1,
-                                "545cdb794bdc2d3a198b456a": 1,
-                                "5ca2151486f774244a3b8d30": 1
-                            },
-                            "TacticalVest": {
-                                "5c0e446786f7742013381639": 210,
-                                "5e4abfed86f77406a2713cf7": 200,
-                                "5d5d8ca986f7742798716522": 200,
-                                "5d5d646386f7742797261fd9": 230,
-                                "64be7095047e826eae02b0c1": 230,
-                                "5e4abc1f86f774069619fbaa": 230,
-                                "628d0618d1ba6e4fa07ce5a4": 1,
-                                "628b9c7d45122232a872358f": 1,
-                                "628b9784bcf6e2659e09b8a2": 1,
-                                "628cd624459354321c4b7fa2": 1,
-                                "609e860ebd219504d8507525": 1,
-                                "60a3c68c37ea821725773ef5": 1,
-                                "5e4ac41886f77406a511c9a8": 1,
-                                "5b44cad286f77402a54ae7e5": 1,
-                                "628dc750b910320f4c27a732": 1,
-                                "5c0e3eb886f7742015526062": 230,
-                                "572b7adb24597762ae139821": 250,
-                                "544a5caa4bdc2d1a388b4568": 50,
-                                "5929a2a086f7744f4b234d43": 150,
-                                "64be7110bf597ba84a0a41ea": 220,
-                                "5fd4c4fa16cac650092f6771": 210,
-                                "63611865ba5b90db0c0399d1": 100
-                            },
-                            "Headwear": {
-                                "5c17a7ed2e2216152142459c": 1,
-                                "61bca7cda0eae612383adf57": 1,
-                                "5e00c1ad86f774747333222c": 1,
-                                "5e01ef6886f77445f643baa4": 1,
-                                "5ea17ca01412a1425304d1c0": 1,
-                                "5ea05cf85ad9772e6624305d": 330,
-                                "5c0d2727d174af02a012cf58": 250,
-                                "59e7711e86f7746cae05fbe1": 250,
-                                "5a7c4850e899ef00150be885": 350,
-                                "5645bc214bdc2d363b8b4571": 230,
-                                "5aa7cfc0e5b5b00015693143": 310,
-                                "5c06c6a80db834001b735491": 350,
-                                "5aa7d193e5b5b000171d063f": 350,
-                                "5aa7d03ae5b5b00016327db5": 230
-                            },
-                            "FirstPrimaryWeapon": {
-                                "59e6152586f77473dc057aa1": 170,
-                                "57d14d2524597714373db789": 180,
-                                "5c07c60e0db834002330051f": 120,
-                                "5ac4cd105acfc40016339859": 110,
-                                "56dee2bdd2720bc8328b4567": 140,
-                                "574d967124597745970e7c94": 190,
-                                "587e02ff24597743df3deaeb": 140,
-                                "583990e32459771419544dd2": 140,
-                                "59d6088586f774275f37482f": 130,
-                                "5ae08f0a5acfc408fb1398a1": 110,
-                                "5bfd297f0db834001a669119": 110,
-                                "5447a9cd4bdc2dbd208b4567": 70,
-                                "5926bb2186f7744b1c6c6e60": 130,
-                                "58948c8e86f77409493f7266": 80,
-                                "5fc3e272f8b6a877a729eac5": 80,
-                                "5644bd2b4bdc2d3b4c8b4572": 100,
-                                "59e6687d86f77411d949b251": 130,
-                                "54491c4f4bdc2db1078b4568": 120,
-                                "5ba26383d4351e00334c93d9": 20,
-                                "5c501a4d2e221602b412b540": 120,
-                                "60db29ce99594040e04c4a27": 130,
-                                "5580223e4bdc2d1c128b457f": 120,
-                                "5e870397991fd70db46995c8": 90,
-                                "61f7c9e189e6fb1a5e3ea78d": 40,
-                                "5a38e6bac4a2826c6e06d79b": 110,
-                                "5ea03f7400685063ec28bfa8": 65,
-                                "5bb2475ed4351e00853264e3": 1,
-                                "5d43021ca4b9362eab4b5e25": 1,
-                                "627e14b21713922ded6f2c15": 0,
-                                "5fc22d7c187fea44d52eda44": 0,
-                                "6275303a9f372d6ea97f9ec7": 0,
-                                "5fb64bc92b1b027b1f50bcf2": 1,
-                                "6499849fc93611967b034949": 140,
-                                "59984ab886f7743e98271174": 170,
-                                "57dc2fa62459775949412633": 170,
-                                "606dae0ab0e443224b421bb7": 110,
-                                "64637076203536ad5600c990": 0,
-                                "6513ef33e06849f06c0957ca": 0,
-                                "64ca3d3954fc657e230529cc": 0
-                            },
-                            "SecondPrimaryWeapon": {
-                                "5e81ebcd8e146c7080625e15": 0
-                            },
-                            "Backpack": {
-                                "544a5cde4bdc2d39388b456b": 145,
-                                "5ca20d5986f774331e7c9602": 90,
-                                "5ab8ee7786f7742d8f33f0b9": 130,
-                                "5ab8f04f86f774585f4237d8": 100,
-                                "56e33680d2720be2748b4576": 150,
-                                "56e33634d2720bd8058b456b": 150,
-                                "5f5e45cc5021ce62144be7aa": 150,
-                                "56e335e4d2720b6c058b456d": 100,
-                                "59e763f286f7742ee57895da": 80,
-                                "5e9dcf5986f7746c417435b3": 120
-                            },
-                            "Holster": {
-                                "576a581d2459771e7b1bc4f1": 100,
-                                "5cadc190ae921500103bb3b6": 100,
-                                "56d59856d2720bd8418b456a": 100,
-                                "5a17f98cfcdbcb0980087290": 95
-                            },
-                            "Earpiece": {
-                                "5b432b965acfc47a8774094e": 200
-                            },
-                            "ArmBand": {
-                                "5b3f16c486f7747c327f55f7": 200,
-                                "5b3f3ade86f7746b6b790d8e": 200,
-                                "5b3f3af486f774679e752c1f": 200,
-                                "5b3f3b0186f774021a2afef7": 200,
-                                "5b3f3b0e86f7746752107cda": 200
-                            },
-                            "Scabbard": {
-                                "57cd379a24597778e7682ecf": 70,
-                                "5bffdc370db834001d23eca8": 100,
-                                "54491bb74bdc2d09088b4567": 100
-                            }
-                        }
-                    },
-                    "clothing": {
-                        "add": {},
-                        "edit": {
-                            "body": {
-                                "5cc0858d14c02e000c6bea66": 20,
-                                "5cde95d97d6c8b647a3769b0": 20
-                            },
-                            "feet": {
-                                "5cc085bb14c02e000e67a5c5": 20,
-                                "5cde95ef7d6c8b04713c4f2d": 20
-                            }
-                        }
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 15,
-                        "max": 22
-                    },
-                    "ammo": {
-                        "add": {},
-                        "edit": {
-                            "Caliber1143x23ACP": {
-                                "5e81f423763d9f754677bf2e": 26,
-                                "5ea2a8e200685063ec28c05a": 1,
-                                "5efb0cabfb3e451d70735af5": 1,
-                                "5efb0d4f4bc50b58e81710f3": 62,
-                                "5efb0fc6aeb21837e749c801": 1
-                            },
-                            "Caliber556x45NATO": {
-                                "59e6920f86f77411d82aa167": 250,
-                                "59e6927d86f77411da468256": 250,
-                                "54527a984bdc2d4e668b4567": 250,
-                                "59e6918f86f7746c9f75e849": 150,
-                                "5c0d5ae286f7741e46554302": 150
-                            },
-                            "Caliber545x39": {
-                                "56dff3afd2720bba668b4567": 40,
-                                "56dff421d2720b5f5a8b4567": 180,
-                                "56dff4ecd2720b5f5a8b4568": 180,
-                                "56dff4a2d2720bbd668b456a": 180,
-                                "56dfef82d2720bbd668b4567": 1,
-                                "56dff026d2720bb8668b4567": 1,
-                                "5c0d5e4486f77478390952fe": 1
-                            },
-                            "Caliber762x39": {
-                                "5656d7c34bdc2d9d198b4587": 20,
-                                "64b7af734b75259c590fa895": 300,
-                                "59e4d3d286f774176a36250a": 100,
-                                "64b7af5a8532cf95ee0a0dbd": 100
-                            },
-                            "Caliber762x35": {
-                                "5fd20ff893a8961fc660a954": 2,
-                                "6196364158ef8c428c287d9f": 30,
-                                "6196365d58ef8c428c287da1": 300
-                            },
-                            "Caliber366TKM": {
-                                "59e6542b86f77411dc52a77a": 100,
-                                "59e655cb86f77411dc52a77b": 5,
-                                "59e6658b86f77411d949b250": 55,
-                                "5f0596629e22f464da6bbdd9": 0
-                            },
-                            "Caliber762x51": {
-                                "58dd3ad986f77403051cba8f": 1,
-                                "5a608bf24f39f98ffc77720e": 0,
-                                "5a6086ea4f39f99cd479502f": 0,
-                                "5efb0c1bd79ff02a1f5e68d9": 0,
-                                "5e023e6e34d52a55c3304f71": 100,
-                                "5e023e88277cce2b522ff2b1": 150
-                            },
-                            "Caliber762x54R": {
-                                "5e023cf8186a883be655e54f": 5,
-                                "5887431f2459777e1612938f": 30,
-                                "64b8f7c241772715af0f9c3d": 400,
-                                "64b8f7b5389d7ffd620ccba2": 600
-                            },
-                            "Caliber9x19PARA": {
-                                "58864a4f2459770fcc257101": 80,
-                                "5c3df7d588a4501f290594e5": 80,
-                                "5efb0da7a29a85116f6ea05f": 0,
-                                "5c925fa22e221601da359b7b": 1
-                            },
-                            "Caliber9x39": {
-                                "57a0dfb82459774d3078b56c": 100,
-                                "6576f96220d53a5b8f3e395e": 150
-                            },
-                            "Caliber12g": {
-                                "5d6e68a8a4b9360b6c0d54e2": 1,
-                                "5d6e6911a4b9361bd5780d52": 1,
-                                "5d6e6806a4b936088465b17e": 20,
-                                "58820d1224597753c90aeb13": 200,
-                                "5d6e67fba4b9361bc73bc779": 200,
-                                "560d5e524bdc2d25448b4571": 200,
-                                "64b8ee384b75259c590fa89b": 60
-                            },
-                            "Caliber20g": {
-                                "5a38ebd9c4a282000d722a5b": 10
-                            },
-                            "Caliber23x75": {
-                                "5e85a9a6eacf8c039e4e2ac1": 50
-                            },
-                            "Caliber9x18PM": {
-                                "573719df2459775a626ccbc2": 0,
-                                "57371aab2459775a77142f22": 0
-                            },
-                            "Caliber9x21": {
-                                "6576f4708ca9c4381d16cd9d": 0,
-                                "5a26ac0ec4a28200741e1e18": 0
-                            },
-                            "Caliber57x28": {
-                                "5cc80f38e4a949001152b560": 0
-                            },
-                            "Caliber46x30": {
-                                "5ba26835d4351e0035628ff5": 0
-                            }
-                        }
-                    },
-                    "equipment": {
-                        "add": {},
-                        "edit": {
-                            "ArmorVest": {
-                                "5c0e5bab86f77461f55ed1f3": 135,
-                                "5c0e5edb86f77461f55ed1f7": 135,
-                                "5648a7494bdc2d9d488b4583": 90,
-                                "5ab8e4ed86f7742d8e50c7fa": 135,
-                                "62a09d79de7ac81993580530": 25
-                            },
-                            "TacticalVest": {
-                                "5c0e3eb886f7742015526062": 40,
-                                "64a536392d2c4e6e970f4121": 40,
-                                "64a5366719bab53bd203bf33": 40,
-                                "64be7110bf597ba84a0a41ea": 50,
-                                "63611865ba5b90db0c0399d1": 50
-                            },
-                            "Backpack": {
-                                "544a5cde4bdc2d39388b456b": 10,
-                                "5ca20d5986f774331e7c9602": 10,
-                                "60a272cc93ef783291411d8e": 7,
-                                "6034d103ca006d2dca39b3f0": 7,
-                                "618bb76513f5097c8d5aa2d5": 10,
-                                "619cf0335771dd3c390269ae": 7,
-                                "628e1ffc83ec92260c0f437f": 7,
-                                "62a1b7fbc30cfa1d366af586": 7,
-                                "5f5e467b0bc58666c37e7821": 6,
-                                "5c0e805e86f774683f3dd637": 6,
-                                "56e335e4d2720b6c058b456d": 10,
-                                "5e9dcf5986f7746c417435b3": 10
-                            },
-                            "Headwear": {
-                                "5aa7cfc0e5b5b00015693143": 80,
-                                "5a7c4850e899ef00150be885": 80,
-                                "5e00c1ad86f774747333222c": 50,
-                                "5c06c6a80db834001b735491": 80,
-                                "5aa7d03ae5b5b00016327db5": 70,
-                                "5d5e7d28a4b936645d161203": 50,
-                                "5b432d215acfc4771e1c6624": 60,
-                                "5b40e3f35acfc40016388218": 40,
-                                "5b40e4035acfc47a87740943": 40,
-                                "5a154d5cfcdbcb001a3b00da": 40,
-                                "5ac8d6885acfc400180ae7b0": 40
-                            },
-                            "Earpiece": {
-                                "5645bcc04bdc2d363b8b4572": 7
-                            },
-                            "FirstPrimaryWeapon": {
-                                "5fc3e272f8b6a877a729eac5": 8,
-                                "576165642459773c7a400233": 8,
-                                "5bf3e03b0db834001d2c4a9c": 7,
-                                "5bf3e0490db83400196199af": 7,
-                                "5ab8e9fcd8ce870019439434": 7,
-                                "5abcbc27d8ce8700182eceeb": 7,
-                                "5ac4cd105acfc40016339859": 7,
-                                "5ac66cb05acfc40198510a10": 7,
-                                "5ac66d015acfc400180ae6e4": 7,
-                                "58948c8e86f77409493f7266": 6,
-                                "627e14b21713922ded6f2c15": 0,
-                                "6275303a9f372d6ea97f9ec7": 0,
-                                "64ca3d3954fc657e230529cc": 0,
-                                "64637076203536ad5600c990": 0,
-                                "6513ef33e06849f06c0957ca": 0,
-                                "5fc22d7c187fea44d52eda44": 0
-                            },
-                            "Scabbard": {
-                                "57cd379a24597778e7682ecf": 70,
-                                "5bffdc370db834001d23eca8": 100,
-                                "54491bb74bdc2d09088b4567": 100
-                            }
-                        }
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 30,
-                        "max": 50
-                    },
-                    "equipment": {
-                        "add": {},
-                        "edit": {
-                            "FirstPrimaryWeapon": {
-                                "5bb2475ed4351e00853264e3": 6,
-                                "5fbcc1d9016cce60e8341ab3": 6,
-                                "5b0bbe4e5acfc40dc528a72d": 5,
-                                "5cc82d76e24e8d00134b4b83": 6,
-                                "5c501a4d2e221602b412b540": 3
-                            },
-                            "ArmorVest": {
-                                "5ab8e79e86f7742d8b372e78": 40,
-                                "5c0e541586f7747fa54205c9": 40,
-                                "5ca2151486f774244a3b8d30": 40,
-                                "5ca21c6986f77479963115a7": 40,
-                                "5e9dacf986f774054d6b89f4": 40,
-                                "5f5f41476bdad616ad46d631": 40,
-                                "5e4abb5086f77406975c9342": 30,
-                                "5fd4c474dd870108a754b241": 30,
-                                "6038b4b292ec1c3103795a0b": 30,
-                                "6038b4ca92ec1c3103795a0d": 30,
-                                "60a283193cb70855c43a381d": 30,
-                                "545cdb794bdc2d3a198b456a": 30,
-                                "64be79c487d1510151095552": 1,
-                                "64be79e2bf8412471d0d9bcc": 1,
-                                "5648a7494bdc2d9d488b4583": 1,
-                                "62a09d79de7ac81993580530": 1
-                            },
-                            "TacticalVest": {
-                                "5b44cad286f77402a54ae7e5": 70,
-                                "5e4ac41886f77406a511c9a8": 70,
-                                "60a3c68c37ea821725773ef5": 45,
-                                "628b9784bcf6e2659e09b8a2": 45,
-                                "628b9c7d45122232a872358f": 45,
-                                "609e860ebd219504d8507525": 25,
-                                "628cd624459354321c4b7fa2": 35,
-                                "572b7adb24597762ae139821": 15,
-                                "5e4abc1f86f774069619fbaa": 1,
-                                "6034d0230ca681766b6a0fb5": 1
-                            },
-                            "Headwear": {
-                                "5aa7e4a4e5b5b000137b76f2": 40,
-                                "5b40e1525acfc4771e1c6611": 40,
-                                "5b40e2bc5acfc40016388216": 40,
-                                "5b40e3f35acfc40016388218": 40,
-                                "5b40e4035acfc47a87740943": 40,
-                                "5d6d3716a4b9361bc8618872": 40,
-                                "5ea17ca01412a1425304d1c0": 40,
-                                "5c17a7ed2e2216152142459c": 45,
-                                "5f60c74e3b85f6263c145586": 15
-                            }
-                        }
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 51,
-                        "max": 100
-                    },
-                    "ammo": {
-                        "add": {},
-                        "edit": {
-                            "Caliber545x39": {
-                                "56dff061d2720bb5668b4567": 110,
-                                "61962b617c6c7b169525f168": 60,
-                                "56dff026d2720bb8668b4567": 90,
-                                "5c0d5e4486f77478390952fe": 50
-                            },
-                            "Caliber556x45NATO": {
-                                "601949593ae8f707c4608daa": 40,
-                                "59e690b686f7746c9f75e848": 40
-                            },
-                            "Caliber762x51": {
-                                "5efb0c1bd79ff02a1f5e68d9": 12,
-                                "5a6086ea4f39f99cd479502f": 12,
-                                "5a608bf24f39f98ffc77720e": 12
-                            },
-                            "Caliber762x39": {
-                                "601aa3d2b2bcb34913271e6d": 40,
-                                "59e0d99486f7744a32234762": 50
-                            },
-                            "Caliber1143x23ACP": {
-                                "5efb0cabfb3e451d70735af5": 12
-                            },
-                            "Caliber762x35": {
-                                "5fd20ff893a8961fc660a954": 11
-                            },
-                            "Caliber366TKM": {
-                                "5f0596629e22f464da6bbdd9": 11
-                            },
-                            "Caliber46x30": {
-                                "5ba26835d4351e0035628ff5": 11
-                            },
-                            "Caliber12g": {
-                                "5d6e6911a4b9361bd5780d52": 12,
-                                "5d6e68a8a4b9360b6c0d54e2": 12
-                            },
-                            "Caliber9x18PM": {
-                                "573719df2459775a626ccbc2": 3,
-                                "57371aab2459775a77142f22": 2
-                            },
-                            "Caliber9x19PARA": {
-                                "5efb0da7a29a85116f6ea05f": 11
-                            },
-                            "Caliber127x55": {
-                                "5cadf6eeae921500134b2799": 11
-                            },
-                            "Caliber23x75": {
-                                "5e85aa1a988a8701445df1f5": 3
-                            }
-                        }
-                    },
-                    "equipment": {
-                        "add": {},
-                        "edit": {
-                            "FirstPrimaryWeapon": {
-                                "65290f395ae2ae97b80fdf2d": 10,
-                                "5bb2475ed4351e00853264e3": 10,
-                                "5fbcc1d9016cce60e8341ab3": 10,
-                                "5b0bbe4e5acfc40dc528a72d": 10,
-                                "5cc82d76e24e8d00134b4b83": 10,
-                                "60339954d62c9b14ed777c06": 1,
-                                "5c501a4d2e221602b412b540": 1,
-                                "5d2f0d8048f0356c925bc3b0": 0,
-                                "59984ab886f7743e98271174": 0,
-                                "5ea03f7400685063ec28bfa8": 0,
-                                "59f9cabd86f7743a10721f46": 0,
-                                "60db29ce99594040e04c4a27": 0,
-                                "61f7c9e189e6fb1a5e3ea78d": 0,
-                                "5bfd297f0db834001a669119": 0,
-                                "5ae08f0a5acfc408fb1398a1": 0,
-                                "5de652c31b7e3716273428be": 0,
-                                "5a38e6bac4a2826c6e06d79b": 0
-                            },
-                            "Holster": {
-                                "5d3eb3b0a4b93615055e84d2": 25
-                            },
-                            "ArmorVest": {
-                                "5ab8e79e86f7742d8b372e78": 60,
-                                "5c0e541586f7747fa54205c9": 60,
-                                "5ca2151486f774244a3b8d30": 60,
-                                "5ca21c6986f77479963115a7": 60,
-                                "5e9dacf986f774054d6b89f4": 60,
-                                "5f5f41476bdad616ad46d631": 60,
-                                "5e4abb5086f77406975c9342": 80,
-                                "5fd4c474dd870108a754b241": 80,
-                                "6038b4b292ec1c3103795a0b": 80,
-                                "6038b4ca92ec1c3103795a0d": 80,
-                                "60a283193cb70855c43a381d": 80,
-                                "545cdb794bdc2d3a198b456a": 80,
-                                "5c0e625a86f7742d77340f62": 80,
-                                "5b44cf1486f77431723e3d05": 80,
-                                "5c0e655586f774045612eeb2": 25,
-                                "5c0e53c886f7747fa54205c7": 10,
-                                "5c0e51be86f774598e797894": 10,
-                                "5c0e57ba86f7747fa141986d": 10,
-                                "609e8540d5c319764c2bc2e9": 10,
-                                "64abd93857958b4249003418": 10,
-                                "64be79c487d1510151095552": 1,
-                                "5648a7494bdc2d9d488b4583": 1,
-                                "64be79e2bf8412471d0d9bcc": 1,
-                                "62a09d79de7ac81993580530": 1
-                            },
-                            "TacticalVest": {
-                                "5b44cad286f77402a54ae7e5": 90,
-                                "5e4ac41886f77406a511c9a8": 90,
-                                "60a3c68c37ea821725773ef5": 90,
-                                "628b9784bcf6e2659e09b8a2": 90,
-                                "628b9c7d45122232a872358f": 90,
-                                "609e860ebd219504d8507525": 55,
-                                "628cd624459354321c4b7fa2": 85,
-                                "628d0618d1ba6e4fa07ce5a4": 85,
-                                "5df8a42886f77412640e2e75": 60,
-                                "5648a69d4bdc2ded0b8b457b": 55,
-                                "5e4abc1f86f774069619fbaa": 1,
-                                "572b7adb24597762ae139821": 1,
-                                "6034d0230ca681766b6a0fb5": 1
-                            },
-                            "Headwear": {
-                                "5aa7e4a4e5b5b000137b76f2": 60,
-                                "5aa7e454e5b5b0214e506fa2": 60,
-                                "5b40e1525acfc4771e1c6611": 60,
-                                "5b40e2bc5acfc40016388216": 60,
-                                "5b40e3f35acfc40016388218": 60,
-                                "5b40e4035acfc47a87740943": 60,
-                                "5d6d3716a4b9361bc8618872": 60,
-                                "5ea17ca01412a1425304d1c0": 60,
-                                "5c17a7ed2e2216152142459c": 65,
-                                "5f60c74e3b85f6263c145586": 50,
-                                "5aa7e276e5b5b000171d0647": 50
-                            },
-                            "Backpack": {
-                                "5df8a4d786f77412672a1e3b": 15,
-                                "5f5e46b96bdad616ad46d613": 15,
-                                "5ab8ebf186f7742d8b372e80": 15,
-                                "639346cc1c8f182ad90c8972": 15,
-                                "59e763f286f7742ee57895da": 11
-                            },
-                            "FaceCover": {
-                                "657089638db3adca1009f4ca": 22
-                            }
-                        }
-                    }
-                }
-            ],
-            "armorPlateWeighting": [
-                {
-                    "levelRange": {
-                        "min": 1,
-                        "max": 10
-                    },
-                    "front_plate": {
-                        "2": 25,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "back_plate": {
-                        "2": 25,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "side_plate": {
-                        "2": 25,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "left_side_plate": {
-                        "2": 25,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "right_side_plate": {
-                        "2": 25,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 11,
-                        "max": 14
-                    },
-                    "front_plate": {
-                        "2": 30,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "back_plate": {
-                        "2": 30,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "side_plate": {
-                        "2": 30,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "left_side_plate": {
-                        "2": 30,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    },
-                    "right_side_plate": {
-                        "2": 30,
-                        "3": 20,
-                        "4": 5,
-                        "5": 1,
-                        "6": 1
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 15,
-                        "max": 24
-                    },
-                    "front_plate": {
-                        "2": 10,
-                        "3": 15,
-                        "4": 24,
-                        "5": 5,
-                        "6": 4
-                    },
-                    "back_plate": {
-                        "2": 10,
-                        "3": 15,
-                        "4": 24,
-                        "5": 5,
-                        "6": 4
-                    },
-                    "side_plate": {
-                        "2": 10,
-                        "3": 15,
-                        "4": 24,
-                        "5": 5,
-                        "6": 4
-                    },
-                    "left_side_plate": {
-                        "2": 10,
-                        "3": 15,
-                        "4": 24,
-                        "5": 5,
-                        "6": 4
-                    },
-                    "right_side_plate": {
-                        "2": 10,
-                        "3": 15,
-                        "4": 24,
-                        "5": 5,
-                        "6": 4
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 25,
-                        "max": 35
-                    },
-                    "front_plate": {
-                        "2": 2,
-                        "3": 10,
-                        "4": 35,
-                        "5": 15,
-                        "6": 5
-                    },
-                    "back_plate": {
-                        "2": 2,
-                        "3": 10,
-                        "4": 35,
-                        "5": 15,
-                        "6": 5
-                    },
-                    "side_plate": {
-                        "2": 2,
-                        "3": 10,
-                        "4": 35,
-                        "5": 15,
-                        "6": 5
-                    },
-                    "left_side_plate": {
-                        "2": 3,
-                        "3": 15,
-                        "4": 35,
-                        "5": 15,
-                        "6": 5
-                    },
-                    "right_side_plate": {
-                        "2": 3,
-                        "3": 15,
-                        "4": 35,
-                        "5": 15,
-                        "6": 5
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 36,
-                        "max": 55
-                    },
-                    "front_plate": {
-                        "2": 0,
-                        "3": 4,
-                        "4": 32,
-                        "5": 50,
-                        "6": 20
-                    },
-                    "back_plate": {
-                        "2": 0,
-                        "3": 4,
-                        "4": 32,
-                        "5": 50,
-                        "6": 20
-                    },
-                    "side_plate": {
-                        "2": 0,
-                        "3": 4,
-                        "4": 32,
-                        "5": 50,
-                        "6": 20
-                    },
-                    "left_side_plate": {
-                        "2": 0,
-                        "3": 4,
-                        "4": 32,
-                        "5": 50,
-                        "6": 20
-                    },
-                    "right_side_plate": {
-                        "2": 0,
-                        "3": 4,
-                        "4": 32,
-                        "5": 50,
-                        "6": 20
-                    }
-                },
-                {
-                    "levelRange": {
-                        "min": 56,
-                        "max": 90
-                    },
-                    "front_plate": {
-                        "2": 0,
-                        "3": 0,
-                        "4": 10,
-                        "5": 50,
-                        "6": 50
-                    },
-                    "back_plate": {
-                        "2": 0,
-                        "3": 0,
-                        "4": 10,
-                        "5": 40,
-                        "6": 50
-                    },
-                    "side_plate": {
-                        "2": 0,
-                        "3": 0,
-                        "4": 10,
-                        "5": 40,
-                        "6": 50
-                    },
-                    "left_side_plate": {
-                        "2": 0,
-                        "3": 0,
-                        "4": 10,
-                        "5": 40,
-                        "6": 50
-                    },
-                    "right_side_plate": {
-                        "2": 0,
-                        "3": 0,
-                        "4": 10,
-                        "5": 40,
-                        "6": 50
-                    }
-                }
-            ],
-            "whitelist": [
-                {
-                    "levelRange": {
-                        "min": 101,
-                        "max": 101
-                    },
-                    "equipment": {},
-                    "cartridge": {}
-                }
+            "Caliber23x75": [
+              "5e85a9f4add9fe03027d9bf1"
             ]
+          },
+          "equipment": {
+            "mod_front_sight": [
+              "5a0f096dfcdbcb0176308b15"
+            ],
+            "mod_magazine": [
+              "57838f0b2459774a256959b2",
+              "5aaa5e60e5b5b000140293d6",
+              "5b1fd4e35acfc40018633c39",
+              "59e5d83b86f7745aed03d262",
+              "5b7bef1e5acfc43d82528402",
+              "617130016c780c1e710c9a24",
+              "55d4837c4bdc2d1d4e8b456c",
+              "5c503ac82e221602b21d6e9a",
+              "6241c2c2117ad530666a5108",
+              "6241c2c2117ad530666a5108",
+              "671d85439ae8365d69117ba6",
+              "671d8617a3e45c1f5908278c",
+              "670e8eab8c1bb0e5a7075acf",
+              "671d8ac8a3e45c1f59082799",
+              "671d8b38b769f0d88c0950f8",
+              "671d8b8c0959c721a50ca838"
+            ],
+            "mod_nvg": [],
+            "mod_rear_sight": [
+              "5a0ed824fcdbcb0176308b0d"
+            ],
+            "mod_reciever": [
+              "5d4405aaa4b9361e6a4e6bd3"
+            ],
+            "mod_scope": [
+              "5a1ead28fcdbcb001912fa9f",
+              "5a1eaa87fcdbcb001865f75e",
+              "5d1b5e94d7ad1a2b865a96b0",
+              "5a7c74b3e899ef0014332c29",
+              "618b9643526131765025ab35",
+              "618bab21526131765025ab3f",
+              "65392f611406374f82152ba5",
+              "653931da5db71d30ab1d6296"
+            ],
+            "mod_stock": [
+              "5cde739cd7f00c0010373bd3"
+            ]
+          },
+          "levelRange": {
+            "max": 100,
+            "min": 67
+          }
         }
-    },
-    "showTypeInNickname": false,
-    "assaultBrainType": {
-        "factory4_day": {
-            "bossKilla": 0,
-            "bossKnight": 0,
-            "bossGluhar": 0,
-            "bossSanitar": 0,
-            "bossTagilla": 0,
-            "bossZryachiy": 0,
-            "bossBoar": 0,
-            "followerGluharAssault": 0,
-            "followerBully": 0,
-            "followerBigPipe": 0,
-            "followerSanitar": 0,
-            "assault": 1,
-            "cursedAssault": 0,
-            "exUsec": 0,
-            "arenaFighter": 0,
-            "arenaFighterEvent": 0,
-            "crazyAssaultEvent": 0,
-            "pmcBot": 0
-        },
-        "factory4_night": {
-            "assault": 1
-        },
-        "bigmap": {
-            "assault": 1
-        },
-        "laboratory": {
-            "assault": 1
-        },
-        "woods": {
-            "assault": 1
-        },
-        "interchange": {
-            "assault": 1
-        },
-        "lighthouse": {
-            "assault": 1
-        },
-        "rezervbase": {
-            "assault": 1
-        },
-        "shoreline": {
-            "assault": 1
-        },
-        "tarkovstreets": {
-            "assault": 1
-        },
-        "sandbox": {
-            "assault": 1
-        },
-        "sandbox_high": {
-            "assault": 1
-        }
-    },
-    "playerScavBrainType": {
-        "factory4_day": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "factory4_night": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "bigmap": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "laboratory": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "woods": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "interchange": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "lighthouse": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "rezervbase": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "shoreline": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "tarkovstreets": {
-            "bossKilla": 1,
-            "assault": 1,
-            "pmcBot": 1
-        },
-        "sandbox": {
-            "assault": 2,
-            "pmcBot": 1
-        },
-        "sandbox_high": {
-            "assault": 2,
-            "pmcBot": 1
-        }
-    },
-    "maxBotCap": {
-        "factory4_day": 11,
-        "factory4_night": 11,
-        "bigmap": 23,
-        "woods": 22,
-        "shoreline": 22,
-        "lighthouse": 22,
-        "rezervbase": 22,
-        "interchange": 22,
-        "laboratory": 19,
-        "tarkovstreets": 23,
-        "sandbox": 14,
-        "sandbox_high": 14,
-        "default": 19
-    },
-    "walletLoot": {
-        "chancePercent": 35,
-        "itemCount": {
-            "min": 1,
-            "max": 3
-        },
-        "stackSizeWeight": {
-            "25000": 1,
-            "20000": 2,
-            "15000": 4,
-            "10000": 7,
-            "5000": 50
-        },
-        "currencyWeight": {
-            "5449016a4bdc2d6f028b456f": 1,
-            "569668774bdc2da2298b4568": 0,
-            "5696686a4bdc2da3298b456a": 0
-        },
-        "walletTplPool": ["5783c43d2459774bbe137486", "60b0f6c058e0b0481a09ad11"]
-    },
-    "currencyStackSize": {
-        "default": {
-            "5449016a4bdc2d6f028b456f": {
-                "25000": 2,
-                "20000": 4,
-                "15000": 8,
-                "10000": 14,
-                "5000": 70
-            },
-            "5696686a4bdc2da3298b456a": {
-                "50": 10,
-                "100": 5,
-                "250": 1
-            },
-            "569668774bdc2da2298b4568": {
-                "50": 10,
-                "100": 5,
-                "250": 1
-            },
-            "5d235b4d86f7742e017bc88a": {
-                "1": 8,
-                "2": 4,
-                "5": 4,
-                "10": 1
-            }
-        },
-        "assault": {
-            "5449016a4bdc2d6f028b456f": {
-                "350000": 1,
-                "30000": 3,
-                "25000": 8,
-                "20000": 13,
-                "15000": 28,
-                "10000": 51,
-                "5000": 200
-            },
-            "5696686a4bdc2da3298b456a": {
-                "50": 20,
-                "100": 5,
-                "250": 1
-            },
-            "569668774bdc2da2298b4568": {
-                "50": 20,
-                "100": 5,
-                "250": 1
-            },
-            "5d235b4d86f7742e017bc88a": {
+      ],
+      "faceShieldIsActiveChancePercent": 85,
+      "filterPlatesByLevel": true,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 95,
+      "randomisation": [
+        {
+          "equipment": {
+            "ArmBand": 90,
+            "Backpack": 65,
+            "Earpiece": 35,
+            "Eyewear": 5,
+            "FaceCover": 5,
+            "FirstPrimaryWeapon": 85,
+            "Holster": 5,
+            "SecondPrimaryWeapon": 3
+          },
+          "equipmentMods": {
+            "back_plate": 60,
+            "left_side_plate": 0,
+            "mod_equipment": 3,
+            "mod_equipment_000": 3,
+            "mod_equipment_001": 3,
+            "mod_equipment_002": 3,
+            "mod_mount": 1,
+            "mod_nvg": 3,
+            "right_side_plate": 0
+          },
+          "generation": {
+            "backpackLoot": {
+              "weights": {
+                "0": 4,
                 "1": 15,
-                "2": 3,
+                "10": 1,
+                "2": 40,
+                "3": 10,
+                "4": 8,
+                "5": 2
+              },
+              "whitelist": {}
+            },
+            "drugs": {
+              "weights": {
+                "0": 1,
+                "1": 1
+              },
+              "whitelist": {}
+            },
+            "grenades": {
+              "weights": {
+                "0": 25,
+                "1": 11
+              },
+              "whitelist": {
+                "5448be9a4bdc2dfd2f8b456a": 1,
+                "5710c24ad2720bc3458b45a3": 1,
+                "58d3db5386f77426186285a0": 1
+              }
+            },
+            "healing": {
+              "weights": {
+                "0": 1,
+                "1": 6,
+                "2": 3
+              },
+              "whitelist": {
+                "544fb25a4bdc2dfb738b4567": 1,
+                "544fb3364bdc2d34748b456a": 1,
+                "544fb37f4bdc2dee738b4567": 1,
+                "5755356824597772cb798962": 1,
+                "590c657e86f77412b013051d": 1,
+                "590c661e86f7741e566b646a": 1,
+                "5e831507ea0a7c419c2f9bd9": 1
+              }
+            },
+            "magazines": {
+              "weights": {
+                "0": 0,
+                "1": 4,
+                "2": 1,
                 "3": 1
+              },
+              "whitelist": {}
+            },
+            "pocketLoot": {
+              "weights": {
+                "0": 4,
+                "1": 9,
+                "2": 1,
+                "3": 1
+              },
+              "whitelist": {}
+            },
+            "stims": {
+              "weights": {
+                "0": 29,
+                "1": 1
+              },
+              "whitelist": {
+                "5c0e530286f7747fa1419862": 1,
+                "5c10c8fd86f7743d7d706df3": 1
+              }
+            },
+            "vestLoot": {
+              "weights": {
+                "0": 2,
+                "1": 12,
+                "2": 1,
+                "3": 1,
+                "4": 1
+              },
+              "whitelist": {}
             }
+          },
+          "levelRange": {
+            "max": 14,
+            "min": 1
+          },
+          "randomisedWeaponModSlots": [],
+          "weaponMods": {
+            "mod_barrel": 5,
+            "mod_bipod": 10,
+            "mod_equipment": 5,
+            "mod_equipment_000": 10,
+            "mod_equipment_001": 5,
+            "mod_equipment_002": 0,
+            "mod_flashlight": 10,
+            "mod_foregrip": 10,
+            "mod_handguard": 10,
+            "mod_launcher": 0,
+            "mod_magazine": 10,
+            "mod_mount": 15,
+            "mod_mount_000": 10,
+            "mod_mount_001": 10,
+            "mod_mount_002": 10,
+            "mod_mount_003": 10,
+            "mod_mount_004": 10,
+            "mod_mount_005": 10,
+            "mod_mount_006": 10,
+            "mod_muzzle": 10,
+            "mod_muzzle_000": 10,
+            "mod_muzzle_001": 10,
+            "mod_nvg": 0,
+            "mod_pistol_grip": 10,
+            "mod_pistol_grip_akms": 10,
+            "mod_reciever": 10,
+            "mod_scope": 10,
+            "mod_scope_000": 15,
+            "mod_scope_001": 15,
+            "mod_scope_002": 15,
+            "mod_scope_003": 15,
+            "mod_tactical": 10,
+            "mod_tactical001": 10,
+            "mod_tactical002": 10,
+            "mod_tactical_000": 10,
+            "mod_tactical_001": 10,
+            "mod_tactical_002": 10,
+            "mod_tactical_003": 10,
+            "mod_tactical_2": 10
+          }
+        },
+        {
+          "equipment": {
+            "ArmBand": 90,
+            "Backpack": 80,
+            "Earpiece": 35,
+            "Eyewear": 15,
+            "FaceCover": 20,
+            "FirstPrimaryWeapon": 90,
+            "Holster": 10,
+            "Scabbard": 100,
+            "SecondPrimaryWeapon": 0,
+            "TacticalVest": 90
+          },
+          "equipmentMods": {
+            "back_plate": 75,
+            "left_side_plate": 25,
+            "mod_equipment": 10,
+            "mod_equipment_000": 10,
+            "mod_equipment_001": 10,
+            "mod_equipment_002": 5,
+            "mod_nvg": 0,
+            "right_side_plate": 25
+          },
+          "generation": {
+            "backpackLoot": {
+              "weights": {
+                "0": 3,
+                "1": 7,
+                "10": 1,
+                "2": 12,
+                "3": 20,
+                "4": 8,
+                "5": 3
+              },
+              "whitelist": {}
+            },
+            "magazines": {
+              "weights": {
+                "0": 0,
+                "1": 1,
+                "2": 4,
+                "3": 3
+              },
+              "whitelist": {}
+            },
+            "pocketLoot": {
+              "weights": {
+                "0": 2,
+                "1": 3,
+                "2": 2,
+                "3": 1
+              },
+              "whitelist": {}
+            },
+            "stims": {
+              "weights": {
+                "0": 10,
+                "1": 1
+              },
+              "whitelist": {}
+            },
+            "vestLoot": {
+              "weights": {
+                "0": 1,
+                "1": 4,
+                "2": 2,
+                "3": 1,
+                "4": 1
+              },
+              "whitelist": {}
+            }
+          },
+          "levelRange": {
+            "max": 22,
+            "min": 15
+          },
+          "nighttimeChanges": {
+            "equipmentModsModifiers": {
+              "mod_nvg": 30
+            }
+          },
+          "randomisedArmorSlots": [
+            "Headwear",
+            "ArmorVest",
+            "TacticalVest"
+          ],
+          "randomisedWeaponModSlots": [
+            "mod_scope",
+            "mod_scope_000",
+            "mod_scope_001",
+            "mod_scope_002",
+            "mod_scope_003",
+            "mod_handguard",
+            "mod_magazine",
+            "mod_muzzle",
+            "mod_bipod",
+            "mod_muzzle_000",
+            "mod_muzzle_001",
+            "mod_charge",
+            "mod_gas_block",
+            "mod_pistol_grip",
+            "mod_pistolgrip",
+            "mod_pistol_grip_akms",
+            "mod_pistolgrip_000",
+            "mod_foregrip",
+            "mod_trigger",
+            "mod_reciever",
+            "mod_hammer",
+            "mod_stock",
+            "mod_stock_000",
+            "mod_stock_001",
+            "mod_stock_akms",
+            "mod_stock_axis",
+            "mod_mount_000",
+            "mod_mount_001",
+            "mod_mount_002",
+            "mod_mount_003",
+            "mod_mount_004",
+            "mod_mount_005",
+            "mod_mount_006",
+            "mod_tactical",
+            "mod_tactical_2",
+            "mod_tactical_000",
+            "mod_tactical_001",
+            "mod_tactical_002",
+            "mod_tactical_003",
+            "mod_tactical001",
+            "mod_tactical002"
+          ],
+          "weaponMods": {
+            "mod_barrel": 50,
+            "mod_bipod": 15,
+            "mod_flashlight": 35,
+            "mod_foregrip": 45,
+            "mod_handguard": 25,
+            "mod_launcher": 5,
+            "mod_magazine": 50,
+            "mod_mount": 45,
+            "mod_mount_000": 35,
+            "mod_mount_001": 35,
+            "mod_mount_002": 35,
+            "mod_mount_003": 35,
+            "mod_mount_004": 35,
+            "mod_mount_005": 35,
+            "mod_mount_006": 35,
+            "mod_muzzle": 20,
+            "mod_muzzle_000": 20,
+            "mod_muzzle_001": 20,
+            "mod_pistol_grip": 40,
+            "mod_pistol_grip_akms": 35,
+            "mod_reciever": 20,
+            "mod_scope": 15,
+            "mod_scope_000": 45,
+            "mod_scope_001": 35,
+            "mod_scope_002": 35,
+            "mod_scope_003": 25,
+            "mod_tactical": 15,
+            "mod_tactical001": 40,
+            "mod_tactical002": 30,
+            "mod_tactical_000": 40,
+            "mod_tactical_001": 30,
+            "mod_tactical_002": 30,
+            "mod_tactical_003": 30,
+            "mod_tactical_2": 15
+          }
+        },
+        {
+          "equipment": {
+            "FaceCover": 50,
+            "SecondPrimaryWeapon": 10
+          },
+          "equipmentMods": {
+            "mod_nvg": 0
+          },
+          "levelRange": {
+            "max": 45,
+            "min": 23
+          },
+          "minimumMagazineSize": {
+            "5447a9cd4bdc2dbd208b4567": 30,
+            "5644bd2b4bdc2d3b4c8b4572": 30,
+            "58948c8e86f77409493f7266": 30,
+            "5926bb2186f7744b1c6c6e60": 30,
+            "59984ab886f7743e98271174": 30,
+            "5aafa857e5b5b00018480968": 20,
+            "5ba26383d4351e00334c93d9": 30,
+            "5bb2475ed4351e00853264e3": 30,
+            "5bd70322209c4d00d7167b8f": 30,
+            "5beed0f50db834001c062b12": 30,
+            "5bf3e03b0db834001d2c4a9c": 30,
+            "5c07c60e0db834002330051f": 30,
+            "5c488a752e221602b412af63": 30,
+            "5de7bd7bfd6b4e6e2276dc25": 30,
+            "5df8ce05b11454561e39243b": 20,
+            "5e00903ae9dc277128008b87": 25,
+            "5fb64bc92b1b027b1f50bcf2": 30,
+            "5fbcc1d9016cce60e8341ab3": 30,
+            "5fc3f2d5900b1d5091531e57": 30,
+            "606587252535c57a13424cfd": 30,
+            "623063e994fc3f7b302a9696": 30,
+            "628a60ae6b1d481ff772e9c8": 30,
+            "62e7c4fba689e8c9c50dfc38": 30,
+            "63171672192e68c5460cebc5": 30,
+            "668e71a8dadf42204c032ce1": 30
+          },
+          "nighttimeChanges": {
+            "equipmentModsModifiers": {
+              "mod_nvg": 50
+            }
+          },
+          "randomisedArmorSlots": [
+            "Headwear",
+            "TacticalVest",
+            "ArmorVest"
+          ],
+          "randomisedWeaponModSlots": [
+            "mod_scope",
+            "mod_scope_000",
+            "mod_scope_001",
+            "mod_scope_002",
+            "mod_scope_003",
+            "mod_handguard",
+            "mod_magazine",
+            "mod_muzzle",
+            "mod_bipod",
+            "mod_muzzle_000",
+            "mod_muzzle_001",
+            "mod_charge",
+            "mod_gas_block",
+            "mod_pistol_grip",
+            "mod_pistolgrip",
+            "mod_pistol_grip_akms",
+            "mod_pistolgrip_000",
+            "mod_foregrip",
+            "mod_trigger",
+            "mod_reciever",
+            "mod_hammer",
+            "mod_stock",
+            "mod_stock_000",
+            "mod_stock_001",
+            "mod_stock_akms",
+            "mod_stock_axis",
+            "mod_mount_000",
+            "mod_mount_001",
+            "mod_mount_002",
+            "mod_mount_003",
+            "mod_mount_004",
+            "mod_mount_005",
+            "mod_mount_006",
+            "mod_tactical",
+            "mod_tactical_2",
+            "mod_tactical_000",
+            "mod_tactical_001",
+            "mod_tactical_002",
+            "mod_tactical_003",
+            "mod_tactical001",
+            "mod_tactical002"
+          ]
+        },
+        {
+          "equipment": {
+            "Earpiece": 85,
+            "FaceCover": 75,
+            "SecondPrimaryWeapon": 10
+          },
+          "equipmentMods": {
+            "left_side_plate": 95,
+            "mod_equipment": 85,
+            "mod_equipment_000": 80,
+            "mod_equipment_001": 75,
+            "mod_equipment_002": 90,
+            "mod_nvg": 5,
+            "right_side_plate": 95
+          },
+          "levelRange": {
+            "max": 100,
+            "min": 46
+          },
+          "minimumMagazineSize": {
+            "5447a9cd4bdc2dbd208b4567": 30,
+            "5644bd2b4bdc2d3b4c8b4572": 30,
+            "58948c8e86f77409493f7266": 30,
+            "5926bb2186f7744b1c6c6e60": 30,
+            "59984ab886f7743e98271174": 30,
+            "5aafa857e5b5b00018480968": 20,
+            "5ba26383d4351e00334c93d9": 30,
+            "5bb2475ed4351e00853264e3": 30,
+            "5bd70322209c4d00d7167b8f": 30,
+            "5beed0f50db834001c062b12": 30,
+            "5bf3e03b0db834001d2c4a9c": 30,
+            "5c07c60e0db834002330051f": 30,
+            "5c488a752e221602b412af63": 30,
+            "5de7bd7bfd6b4e6e2276dc25": 30,
+            "5df8ce05b11454561e39243b": 20,
+            "5e00903ae9dc277128008b87": 25,
+            "5fb64bc92b1b027b1f50bcf2": 30,
+            "5fbcc1d9016cce60e8341ab3": 30,
+            "5fc3f2d5900b1d5091531e57": 30,
+            "606587252535c57a13424cfd": 30,
+            "623063e994fc3f7b302a9696": 30,
+            "628a60ae6b1d481ff772e9c8": 30,
+            "62e7c4fba689e8c9c50dfc38": 30,
+            "63171672192e68c5460cebc5": 30,
+            "668e71a8dadf42204c032ce1": 30
+          },
+          "nighttimeChanges": {
+            "equipmentModsModifiers": {
+              "mod_nvg": 90
+            }
+          },
+          "randomisedArmorSlots": [
+            "Headwear",
+            "TacticalVest",
+            "ArmorVest"
+          ],
+          "randomisedWeaponModSlots": [
+            "mod_scope",
+            "mod_scope_000",
+            "mod_scope_001",
+            "mod_scope_002",
+            "mod_scope_003",
+            "mod_handguard",
+            "mod_magazine",
+            "mod_muzzle",
+            "mod_bipod",
+            "mod_muzzle_000",
+            "mod_muzzle_001",
+            "mod_charge",
+            "mod_gas_block",
+            "mod_pistol_grip",
+            "mod_pistolgrip",
+            "mod_pistol_grip_akms",
+            "mod_pistolgrip_000",
+            "mod_foregrip",
+            "mod_trigger",
+            "mod_reciever",
+            "mod_hammer",
+            "mod_stock",
+            "mod_stock_000",
+            "mod_stock_001",
+            "mod_stock_akms",
+            "mod_stock_axis",
+            "mod_mount_000",
+            "mod_mount_001",
+            "mod_mount_002",
+            "mod_mount_003",
+            "mod_mount_004",
+            "mod_mount_005",
+            "mod_mount_006",
+            "mod_tactical",
+            "mod_tactical_2",
+            "mod_tactical_000",
+            "mod_tactical_001",
+            "mod_tactical_002",
+            "mod_tactical_003",
+            "mod_tactical001",
+            "mod_tactical002"
+          ],
+          "weaponMods": {
+            "mod_muzzle": 85,
+            "mod_muzzle_000": 95,
+            "mod_muzzle_001": 95,
+            "mod_scope": 95
+          }
         }
+      ],
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      },
+      "weaponSightWhitelist": {
+        "5447b5cf4bdc2d65278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e"
+        ],
+        "5447b5e04bdc2d62278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e"
+        ],
+        "5447b5f14bdc2d61278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e",
+          "55818add4bdc2d5b648b456f",
+          "55818aeb4bdc2ddc698b456a"
+        ],
+        "5447b5fc4bdc2d87278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e",
+          "55818add4bdc2d5b648b456f",
+          "55818aeb4bdc2ddc698b456a"
+        ],
+        "5447b6094bdc2dc3278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e"
+        ],
+        "5447b6194bdc2d67278b4567": [
+          "55818ad54bdc2ddc698b4569",
+          "55818ae44bdc2dde698b456c",
+          "55818ac54bdc2d5b648b456e",
+          "55818aeb4bdc2ddc698b456a",
+          "55818add4bdc2d5b648b456f"
+        ],
+        "5447b6254bdc2dc3278b4568": [
+          "55818ae44bdc2dde698b456c",
+          "55818ac54bdc2d5b648b456e",
+          "55818aeb4bdc2ddc698b456a",
+          "55818add4bdc2d5b648b456f"
+        ],
+        "5447bed64bdc2d97278b4568": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e",
+          "55818add4bdc2d5b648b456f",
+          "55818aeb4bdc2ddc698b456a"
+        ],
+        "5447bedf4bdc2d87278b4568": [
+          "55818ad54bdc2ddc698b4569",
+          "55818add4bdc2d5b648b456f",
+          "55818ac54bdc2d5b648b456e",
+          "55818aeb4bdc2ddc698b456a"
+        ],
+        "617f1ef5e8b54b0998387733": [
+          "55818ad54bdc2ddc698b4569",
+          "55818acf4bdc2dde698b456b",
+          "55818ac54bdc2d5b648b456e"
+        ]
+      },
+      "weaponSlotIdsToMakeRequired": [
+        "mod_reciever",
+        "mod_stock",
+        "mod_muzzle"
+      ],
+      "weightingAdjustmentsByBotLevel": [
+        {
+          "ammo": {
+            "add": {},
+            "edit": {
+              "Caliber1143x23ACP": {
+                "5e81f423763d9f754677bf2e": 25,
+                "5ea2a8e200685063ec28c05a": 1,
+                "5efb0cabfb3e451d70735af5": 1,
+                "5efb0d4f4bc50b58e81710f3": 54,
+                "5efb0fc6aeb21837e749c801": 1
+              },
+              "Caliber12g": {
+                "560d5e524bdc2d25448b4571": 200,
+                "58820d1224597753c90aeb13": 200,
+                "5d6e67fba4b9361bc73bc779": 200,
+                "5d6e6806a4b936088465b17e": 20,
+                "5d6e68a8a4b9360b6c0d54e2": 1,
+                "5d6e6911a4b9361bd5780d52": 1,
+                "64b8ee384b75259c590fa89b": 60
+              },
+              "Caliber20g": {
+                "5a38ebd9c4a282000d722a5b": 10
+              },
+              "Caliber23x75": {
+                "5e85a9a6eacf8c039e4e2ac1": 50
+              },
+              "Caliber366TKM": {
+                "59e6542b86f77411dc52a77a": 100,
+                "59e655cb86f77411dc52a77b": 5,
+                "59e6658b86f77411d949b250": 55,
+                "5f0596629e22f464da6bbdd9": 0
+              },
+              "Caliber46x30": {
+                "5ba26835d4351e0035628ff5": 0
+              },
+              "Caliber545x39": {
+                "56dfef82d2720bbd668b4567": 0,
+                "56dff026d2720bb8668b4567": 0,
+                "56dff3afd2720bba668b4567": 17,
+                "56dff421d2720b5f5a8b4567": 200,
+                "56dff4a2d2720bbd668b456a": 100,
+                "56dff4ecd2720b5f5a8b4568": 200,
+                "5c0d5e4486f77478390952fe": 0
+              },
+              "Caliber556x45NATO": {
+                "54527a984bdc2d4e668b4567": 250,
+                "59e6918f86f7746c9f75e849": 200,
+                "59e6920f86f77411d82aa167": 300,
+                "59e6927d86f77411da468256": 300,
+                "5c0d5ae286f7741e46554302": 200
+              },
+              "Caliber762x35": {
+                "5fd20ff893a8961fc660a954": 2,
+                "6196364158ef8c428c287d9f": 30,
+                "6196365d58ef8c428c287da1": 300
+              },
+              "Caliber762x39": {
+                "59e4cf5286f7741778269d8a": 20,
+                "59e4d3d286f774176a36250a": 50,
+                "64b7af5a8532cf95ee0a0dbd": 200,
+                "64b7af734b75259c590fa895": 300
+              },
+              "Caliber762x51": {
+                "58dd3ad986f77403051cba8f": 1,
+                "5a6086ea4f39f99cd479502f": 0,
+                "5a608bf24f39f98ffc77720e": 0,
+                "5e023e6e34d52a55c3304f71": 150,
+                "5e023e88277cce2b522ff2b1": 300,
+                "5efb0c1bd79ff02a1f5e68d9": 0,
+                "6768c25aa7b238f14a08d3f6": 0
+              },
+              "Caliber762x54R": {
+                "5887431f2459777e1612938f": 10,
+                "5e023cf8186a883be655e54f": 0,
+                "64b8f7b5389d7ffd620ccba2": 190,
+                "64b8f7c241772715af0f9c3d": 300
+              },
+              "Caliber9x18PM": {
+                "573719df2459775a626ccbc2": 0,
+                "57371aab2459775a77142f22": 0
+              },
+              "Caliber9x19PARA": {
+                "58864a4f2459770fcc257101": 80,
+                "5c3df7d588a4501f290594e5": 80,
+                "5c925fa22e221601da359b7b": 1,
+                "5efb0da7a29a85116f6ea05f": 0
+              },
+              "Caliber9x21": {
+                "5a26ac0ec4a28200741e1e18": 0,
+                "6576f4708ca9c4381d16cd9d": 0
+              },
+              "Caliber9x39": {
+                "57a0dfb82459774d3078b56c": 10,
+                "6576f96220d53a5b8f3e395e": 200
+              }
+            }
+          },
+          "clothing": {
+            "add": {},
+            "edit": {
+              "body": {
+                "5cc0858d14c02e000c6bea66": 20,
+                "5cde95d97d6c8b647a3769b0": 20
+              },
+              "feet": {
+                "5cc085bb14c02e000e67a5c5": 20,
+                "5cde95ef7d6c8b04713c4f2d": 20
+              }
+            }
+          },
+          "equipment": {
+            "add": {
+              "ArmorVest": {
+                "59e7635f86f7742cbf2c1095": 120
+              },
+              "Backpack": {},
+              "Headwear": {
+                "59e7711e86f7746cae05fbe1": 90
+              },
+              "TacticalVest": {
+                "6034cf5fffd42c541047f72e": 150,
+                "6034d0230ca681766b6a0fb5": 120
+              }
+            },
+            "edit": {
+              "ArmBand": {
+                "5b3f16c486f7747c327f55f7": 200,
+                "5b3f3ade86f7746b6b790d8e": 200,
+                "5b3f3af486f774679e752c1f": 200,
+                "5b3f3b0186f774021a2afef7": 200,
+                "5b3f3b0e86f7746752107cda": 200
+              },
+              "ArmorVest": {
+                "545cdb794bdc2d3a198b456a": 1,
+                "5648a7494bdc2d9d488b4583": 320,
+                "5ab8e4ed86f7742d8e50c7fa": 260,
+                "5b44cd8b86f774503d30cba2": 1,
+                "5b44cf1486f77431723e3d05": 4,
+                "5b44d0de86f774503d30cba8": 4,
+                "5b44d22286f774172b0c9de8": 290,
+                "5c0e541586f7747fa54205c9": 1,
+                "5c0e5bab86f77461f55ed1f3": 260,
+                "5c0e5edb86f77461f55ed1f7": 280,
+                "5c0e655586f774045612eeb2": 120,
+                "5ca2151486f774244a3b8d30": 1,
+                "5ca21c6986f77479963115a7": 1,
+                "5df8a2ca86f7740bfe6df777": 220,
+                "5e4abb5086f77406975c9342": 1,
+                "6038b4b292ec1c3103795a0b": 1,
+                "6038b4ca92ec1c3103795a0d": 1,
+                "60a283193cb70855c43a381d": 4,
+                "62a09d79de7ac81993580530": 240,
+                "64be79c487d1510151095552": 280,
+                "64be79e2bf8412471d0d9bcc": 310
+              },
+              "Backpack": {
+                "544a5cde4bdc2d39388b456b": 145,
+                "56e335e4d2720b6c058b456d": 100,
+                "56e33634d2720bd8058b456b": 150,
+                "56e33680d2720be2748b4576": 150,
+                "59e763f286f7742ee57895da": 80,
+                "5ab8ee7786f7742d8f33f0b9": 130,
+                "5ab8f04f86f774585f4237d8": 100,
+                "5ca20d5986f774331e7c9602": 90,
+                "5e9dcf5986f7746c417435b3": 120,
+                "5f5e45cc5021ce62144be7aa": 150
+              },
+              "Earpiece": {
+                "5b432b965acfc47a8774094e": 200
+              },
+              "FirstPrimaryWeapon": {
+                "5447a9cd4bdc2dbd208b4567": 70,
+                "54491c4f4bdc2db1078b4568": 120,
+                "5580223e4bdc2d1c128b457f": 120,
+                "5644bd2b4bdc2d3b4c8b4572": 100,
+                "56dee2bdd2720bc8328b4567": 140,
+                "574d967124597745970e7c94": 190,
+                "57d14d2524597714373db789": 180,
+                "57dc2fa62459775949412633": 170,
+                "583990e32459771419544dd2": 140,
+                "587e02ff24597743df3deaeb": 140,
+                "58948c8e86f77409493f7266": 80,
+                "5926bb2186f7744b1c6c6e60": 130,
+                "59984ab886f7743e98271174": 170,
+                "59d6088586f774275f37482f": 130,
+                "59e6152586f77473dc057aa1": 170,
+                "59e6687d86f77411d949b251": 130,
+                "5a38e6bac4a2826c6e06d79b": 110,
+                "5ac4cd105acfc40016339859": 110,
+                "5ae08f0a5acfc408fb1398a1": 110,
+                "5ba26383d4351e00334c93d9": 20,
+                "5bb2475ed4351e00853264e3": 1,
+                "5bfd297f0db834001a669119": 110,
+                "5c07c60e0db834002330051f": 120,
+                "5c501a4d2e221602b412b540": 120,
+                "5d43021ca4b9362eab4b5e25": 1,
+                "5e870397991fd70db46995c8": 90,
+                "5ea03f7400685063ec28bfa8": 65,
+                "5fb64bc92b1b027b1f50bcf2": 1,
+                "5fc22d7c187fea44d52eda44": 0,
+                "5fc3e272f8b6a877a729eac5": 80,
+                "606dae0ab0e443224b421bb7": 110,
+                "60db29ce99594040e04c4a27": 130,
+                "61f7c9e189e6fb1a5e3ea78d": 40,
+                "6275303a9f372d6ea97f9ec7": 0,
+                "627e14b21713922ded6f2c15": 0,
+                "64637076203536ad5600c990": 0,
+                "6499849fc93611967b034949": 140,
+                "64ca3d3954fc657e230529cc": 0,
+                "6513ef33e06849f06c0957ca": 0
+              },
+              "Headwear": {
+                "5645bc214bdc2d363b8b4571": 230,
+                "59e7711e86f7746cae05fbe1": 250,
+                "5a7c4850e899ef00150be885": 350,
+                "5aa7cfc0e5b5b00015693143": 310,
+                "5aa7d03ae5b5b00016327db5": 230,
+                "5aa7d193e5b5b000171d063f": 350,
+                "5c06c6a80db834001b735491": 350,
+                "5c0d2727d174af02a012cf58": 250,
+                "5c17a7ed2e2216152142459c": 1,
+                "5e00c1ad86f774747333222c": 1,
+                "5e01ef6886f77445f643baa4": 1,
+                "5ea05cf85ad9772e6624305d": 330,
+                "5ea17ca01412a1425304d1c0": 1,
+                "61bca7cda0eae612383adf57": 1
+              },
+              "Holster": {
+                "56d59856d2720bd8418b456a": 100,
+                "576a581d2459771e7b1bc4f1": 100,
+                "5a17f98cfcdbcb0980087290": 95,
+                "5cadc190ae921500103bb3b6": 100
+              },
+              "Scabbard": {
+                "54491bb74bdc2d09088b4567": 100,
+                "57cd379a24597778e7682ecf": 70,
+                "5bffdc370db834001d23eca8": 100
+              },
+              "SecondPrimaryWeapon": {
+                "5e81ebcd8e146c7080625e15": 0
+              },
+              "TacticalVest": {
+                "544a5caa4bdc2d1a388b4568": 50,
+                "572b7adb24597762ae139821": 250,
+                "5929a2a086f7744f4b234d43": 150,
+                "5b44cad286f77402a54ae7e5": 1,
+                "5c0e3eb886f7742015526062": 230,
+                "5c0e446786f7742013381639": 210,
+                "5d5d646386f7742797261fd9": 230,
+                "5d5d8ca986f7742798716522": 200,
+                "5e4abc1f86f774069619fbaa": 230,
+                "5e4abfed86f77406a2713cf7": 200,
+                "5e4ac41886f77406a511c9a8": 1,
+                "5fd4c4fa16cac650092f6771": 210,
+                "609e860ebd219504d8507525": 1,
+                "60a3c68c37ea821725773ef5": 1,
+                "628b9784bcf6e2659e09b8a2": 1,
+                "628b9c7d45122232a872358f": 1,
+                "628cd624459354321c4b7fa2": 1,
+                "628d0618d1ba6e4fa07ce5a4": 1,
+                "628dc750b910320f4c27a732": 1,
+                "63611865ba5b90db0c0399d1": 100,
+                "64be7095047e826eae02b0c1": 230,
+                "64be7110bf597ba84a0a41ea": 220
+              }
+            }
+          },
+          "levelRange": {
+            "max": 14,
+            "min": 1
+          }
+        },
+        {
+          "ammo": {
+            "add": {},
+            "edit": {
+              "Caliber1143x23ACP": {
+                "5e81f423763d9f754677bf2e": 26,
+                "5ea2a8e200685063ec28c05a": 1,
+                "5efb0cabfb3e451d70735af5": 1,
+                "5efb0d4f4bc50b58e81710f3": 62,
+                "5efb0fc6aeb21837e749c801": 1
+              },
+              "Caliber12g": {
+                "560d5e524bdc2d25448b4571": 200,
+                "58820d1224597753c90aeb13": 200,
+                "5d6e67fba4b9361bc73bc779": 200,
+                "5d6e6806a4b936088465b17e": 20,
+                "5d6e68a8a4b9360b6c0d54e2": 1,
+                "5d6e6911a4b9361bd5780d52": 1,
+                "64b8ee384b75259c590fa89b": 60
+              },
+              "Caliber20g": {
+                "5a38ebd9c4a282000d722a5b": 10
+              },
+              "Caliber23x75": {
+                "5e85a9a6eacf8c039e4e2ac1": 50
+              },
+              "Caliber366TKM": {
+                "59e6542b86f77411dc52a77a": 100,
+                "59e655cb86f77411dc52a77b": 5,
+                "59e6658b86f77411d949b250": 55,
+                "5f0596629e22f464da6bbdd9": 0
+              },
+              "Caliber46x30": {
+                "5ba26835d4351e0035628ff5": 0
+              },
+              "Caliber545x39": {
+                "56dfef82d2720bbd668b4567": 1,
+                "56dff026d2720bb8668b4567": 1,
+                "56dff3afd2720bba668b4567": 40,
+                "56dff421d2720b5f5a8b4567": 180,
+                "56dff4a2d2720bbd668b456a": 180,
+                "56dff4ecd2720b5f5a8b4568": 180,
+                "5c0d5e4486f77478390952fe": 1
+              },
+              "Caliber556x45NATO": {
+                "54527a984bdc2d4e668b4567": 250,
+                "59e6918f86f7746c9f75e849": 150,
+                "59e6920f86f77411d82aa167": 250,
+                "59e6927d86f77411da468256": 250,
+                "5c0d5ae286f7741e46554302": 150
+              },
+              "Caliber57x28": {
+                "5cc80f38e4a949001152b560": 0
+              },
+              "Caliber762x35": {
+                "5fd20ff893a8961fc660a954": 2,
+                "6196364158ef8c428c287d9f": 30,
+                "6196365d58ef8c428c287da1": 300
+              },
+              "Caliber762x39": {
+                "5656d7c34bdc2d9d198b4587": 20,
+                "59e4d3d286f774176a36250a": 100,
+                "64b7af5a8532cf95ee0a0dbd": 100,
+                "64b7af734b75259c590fa895": 300
+              },
+              "Caliber762x51": {
+                "58dd3ad986f77403051cba8f": 1,
+                "5a6086ea4f39f99cd479502f": 0,
+                "5a608bf24f39f98ffc77720e": 0,
+                "5e023e6e34d52a55c3304f71": 100,
+                "5e023e88277cce2b522ff2b1": 150,
+                "5efb0c1bd79ff02a1f5e68d9": 0
+              },
+              "Caliber762x54R": {
+                "5887431f2459777e1612938f": 30,
+                "5e023cf8186a883be655e54f": 5,
+                "64b8f7b5389d7ffd620ccba2": 600,
+                "64b8f7c241772715af0f9c3d": 400
+              },
+              "Caliber9x18PM": {
+                "573719df2459775a626ccbc2": 0,
+                "57371aab2459775a77142f22": 0
+              },
+              "Caliber9x19PARA": {
+                "58864a4f2459770fcc257101": 80,
+                "5c3df7d588a4501f290594e5": 80,
+                "5c925fa22e221601da359b7b": 1,
+                "5efb0da7a29a85116f6ea05f": 0
+              },
+              "Caliber9x21": {
+                "5a26ac0ec4a28200741e1e18": 0,
+                "6576f4708ca9c4381d16cd9d": 0
+              },
+              "Caliber9x39": {
+                "57a0dfb82459774d3078b56c": 100,
+                "6576f96220d53a5b8f3e395e": 150
+              }
+            }
+          },
+          "equipment": {
+            "add": {},
+            "edit": {
+              "ArmorVest": {
+                "5648a7494bdc2d9d488b4583": 90,
+                "5ab8e4ed86f7742d8e50c7fa": 135,
+                "5c0e5bab86f77461f55ed1f3": 135,
+                "5c0e5edb86f77461f55ed1f7": 135,
+                "62a09d79de7ac81993580530": 25
+              },
+              "Backpack": {
+                "544a5cde4bdc2d39388b456b": 10,
+                "56e335e4d2720b6c058b456d": 10,
+                "5c0e805e86f774683f3dd637": 6,
+                "5ca20d5986f774331e7c9602": 10,
+                "5e9dcf5986f7746c417435b3": 10,
+                "5f5e467b0bc58666c37e7821": 6,
+                "6034d103ca006d2dca39b3f0": 7,
+                "60a272cc93ef783291411d8e": 7,
+                "618bb76513f5097c8d5aa2d5": 10,
+                "619cf0335771dd3c390269ae": 7,
+                "628e1ffc83ec92260c0f437f": 7,
+                "62a1b7fbc30cfa1d366af586": 7
+              },
+              "Earpiece": {
+                "5645bcc04bdc2d363b8b4572": 7
+              },
+              "FirstPrimaryWeapon": {
+                "576165642459773c7a400233": 8,
+                "58948c8e86f77409493f7266": 6,
+                "5ab8e9fcd8ce870019439434": 7,
+                "5abcbc27d8ce8700182eceeb": 7,
+                "5ac4cd105acfc40016339859": 7,
+                "5ac66cb05acfc40198510a10": 7,
+                "5ac66d015acfc400180ae6e4": 7,
+                "5bf3e03b0db834001d2c4a9c": 7,
+                "5bf3e0490db83400196199af": 7,
+                "5fc22d7c187fea44d52eda44": 0,
+                "5fc3e272f8b6a877a729eac5": 8,
+                "6275303a9f372d6ea97f9ec7": 0,
+                "627e14b21713922ded6f2c15": 0,
+                "64637076203536ad5600c990": 0,
+                "64ca3d3954fc657e230529cc": 0,
+                "6513ef33e06849f06c0957ca": 0
+              },
+              "Headwear": {
+                "5a154d5cfcdbcb001a3b00da": 40,
+                "5a7c4850e899ef00150be885": 80,
+                "5aa7cfc0e5b5b00015693143": 80,
+                "5aa7d03ae5b5b00016327db5": 70,
+                "5ac8d6885acfc400180ae7b0": 40,
+                "5b40e3f35acfc40016388218": 40,
+                "5b40e4035acfc47a87740943": 40,
+                "5b432d215acfc4771e1c6624": 60,
+                "5c06c6a80db834001b735491": 80,
+                "5d5e7d28a4b936645d161203": 50,
+                "5e00c1ad86f774747333222c": 50
+              },
+              "Scabbard": {
+                "54491bb74bdc2d09088b4567": 100,
+                "57cd379a24597778e7682ecf": 70,
+                "5bffdc370db834001d23eca8": 100
+              },
+              "TacticalVest": {
+                "5c0e3eb886f7742015526062": 40,
+                "63611865ba5b90db0c0399d1": 50,
+                "64a536392d2c4e6e970f4121": 40,
+                "64a5366719bab53bd203bf33": 40,
+                "64be7110bf597ba84a0a41ea": 50
+              }
+            }
+          },
+          "levelRange": {
+            "max": 22,
+            "min": 15
+          }
+        },
+        {
+          "equipment": {
+            "add": {},
+            "edit": {
+              "ArmorVest": {
+                "545cdb794bdc2d3a198b456a": 30,
+                "5648a7494bdc2d9d488b4583": 1,
+                "5ab8e79e86f7742d8b372e78": 40,
+                "5c0e541586f7747fa54205c9": 40,
+                "5ca2151486f774244a3b8d30": 40,
+                "5ca21c6986f77479963115a7": 40,
+                "5e4abb5086f77406975c9342": 30,
+                "5e9dacf986f774054d6b89f4": 40,
+                "5f5f41476bdad616ad46d631": 40,
+                "5fd4c474dd870108a754b241": 30,
+                "6038b4b292ec1c3103795a0b": 30,
+                "6038b4ca92ec1c3103795a0d": 30,
+                "60a283193cb70855c43a381d": 30,
+                "62a09d79de7ac81993580530": 1,
+                "64be79c487d1510151095552": 1,
+                "64be79e2bf8412471d0d9bcc": 1
+              },
+              "FirstPrimaryWeapon": {
+                "5b0bbe4e5acfc40dc528a72d": 5,
+                "5bb2475ed4351e00853264e3": 6,
+                "5c501a4d2e221602b412b540": 3,
+                "5cc82d76e24e8d00134b4b83": 6,
+                "5fbcc1d9016cce60e8341ab3": 6
+              },
+              "Headwear": {
+                "5aa7e4a4e5b5b000137b76f2": 40,
+                "5b40e1525acfc4771e1c6611": 40,
+                "5b40e2bc5acfc40016388216": 40,
+                "5b40e3f35acfc40016388218": 40,
+                "5b40e4035acfc47a87740943": 40,
+                "5c17a7ed2e2216152142459c": 45,
+                "5d6d3716a4b9361bc8618872": 40,
+                "5ea17ca01412a1425304d1c0": 40,
+                "5f60c74e3b85f6263c145586": 15
+              },
+              "TacticalVest": {
+                "572b7adb24597762ae139821": 15,
+                "5b44cad286f77402a54ae7e5": 70,
+                "5e4abc1f86f774069619fbaa": 1,
+                "5e4ac41886f77406a511c9a8": 70,
+                "6034d0230ca681766b6a0fb5": 1,
+                "609e860ebd219504d8507525": 25,
+                "60a3c68c37ea821725773ef5": 45,
+                "628b9784bcf6e2659e09b8a2": 45,
+                "628b9c7d45122232a872358f": 45,
+                "628cd624459354321c4b7fa2": 35
+              }
+            }
+          },
+          "levelRange": {
+            "max": 50,
+            "min": 30
+          }
+        },
+        {
+          "ammo": {
+            "add": {},
+            "edit": {
+              "Caliber1143x23ACP": {
+                "5efb0cabfb3e451d70735af5": 12
+              },
+              "Caliber127x55": {
+                "5cadf6eeae921500134b2799": 11
+              },
+              "Caliber12g": {
+                "5d6e68a8a4b9360b6c0d54e2": 12,
+                "5d6e6911a4b9361bd5780d52": 12
+              },
+              "Caliber23x75": {
+                "5e85aa1a988a8701445df1f5": 3
+              },
+              "Caliber366TKM": {
+                "5f0596629e22f464da6bbdd9": 11
+              },
+              "Caliber46x30": {
+                "5ba26835d4351e0035628ff5": 11
+              },
+              "Caliber545x39": {
+                "56dff026d2720bb8668b4567": 90,
+                "56dff061d2720bb5668b4567": 110,
+                "5c0d5e4486f77478390952fe": 50,
+                "61962b617c6c7b169525f168": 60
+              },
+              "Caliber556x45NATO": {
+                "59e690b686f7746c9f75e848": 40,
+                "601949593ae8f707c4608daa": 40
+              },
+              "Caliber762x35": {
+                "5fd20ff893a8961fc660a954": 11
+              },
+              "Caliber762x39": {
+                "59e0d99486f7744a32234762": 50,
+                "601aa3d2b2bcb34913271e6d": 40
+              },
+              "Caliber762x51": {
+                "5a6086ea4f39f99cd479502f": 12,
+                "5a608bf24f39f98ffc77720e": 12,
+                "5efb0c1bd79ff02a1f5e68d9": 12
+              },
+              "Caliber9x18PM": {
+                "573719df2459775a626ccbc2": 3,
+                "57371aab2459775a77142f22": 2
+              },
+              "Caliber9x19PARA": {
+                "5efb0da7a29a85116f6ea05f": 11
+              }
+            }
+          },
+          "equipment": {
+            "add": {},
+            "edit": {
+              "ArmorVest": {
+                "545cdb794bdc2d3a198b456a": 80,
+                "5648a7494bdc2d9d488b4583": 1,
+                "5ab8e79e86f7742d8b372e78": 60,
+                "5b44cf1486f77431723e3d05": 80,
+                "5c0e51be86f774598e797894": 10,
+                "5c0e53c886f7747fa54205c7": 10,
+                "5c0e541586f7747fa54205c9": 60,
+                "5c0e57ba86f7747fa141986d": 10,
+                "5c0e625a86f7742d77340f62": 80,
+                "5c0e655586f774045612eeb2": 25,
+                "5ca2151486f774244a3b8d30": 60,
+                "5ca21c6986f77479963115a7": 60,
+                "5e4abb5086f77406975c9342": 80,
+                "5e9dacf986f774054d6b89f4": 60,
+                "5f5f41476bdad616ad46d631": 60,
+                "5fd4c474dd870108a754b241": 80,
+                "6038b4b292ec1c3103795a0b": 80,
+                "6038b4ca92ec1c3103795a0d": 80,
+                "609e8540d5c319764c2bc2e9": 10,
+                "60a283193cb70855c43a381d": 80,
+                "62a09d79de7ac81993580530": 1,
+                "64abd93857958b4249003418": 10,
+                "64be79c487d1510151095552": 1,
+                "64be79e2bf8412471d0d9bcc": 1
+              },
+              "Backpack": {
+                "59e763f286f7742ee57895da": 11,
+                "5ab8ebf186f7742d8b372e80": 15,
+                "5df8a4d786f77412672a1e3b": 15,
+                "5f5e46b96bdad616ad46d613": 15,
+                "639346cc1c8f182ad90c8972": 15
+              },
+              "FaceCover": {
+                "657089638db3adca1009f4ca": 22
+              },
+              "FirstPrimaryWeapon": {
+                "59984ab886f7743e98271174": 0,
+                "59f9cabd86f7743a10721f46": 0,
+                "5a38e6bac4a2826c6e06d79b": 0,
+                "5ae08f0a5acfc408fb1398a1": 0,
+                "5b0bbe4e5acfc40dc528a72d": 10,
+                "5bb2475ed4351e00853264e3": 10,
+                "5bfd297f0db834001a669119": 0,
+                "5c501a4d2e221602b412b540": 1,
+                "5cc82d76e24e8d00134b4b83": 10,
+                "5d2f0d8048f0356c925bc3b0": 0,
+                "5de652c31b7e3716273428be": 0,
+                "5ea03f7400685063ec28bfa8": 0,
+                "5fbcc1d9016cce60e8341ab3": 10,
+                "60339954d62c9b14ed777c06": 1,
+                "60db29ce99594040e04c4a27": 0,
+                "61f7c9e189e6fb1a5e3ea78d": 0,
+                "65290f395ae2ae97b80fdf2d": 10
+              },
+              "Headwear": {
+                "5aa7e276e5b5b000171d0647": 50,
+                "5aa7e454e5b5b0214e506fa2": 60,
+                "5aa7e4a4e5b5b000137b76f2": 60,
+                "5b40e1525acfc4771e1c6611": 60,
+                "5b40e2bc5acfc40016388216": 60,
+                "5b40e3f35acfc40016388218": 60,
+                "5b40e4035acfc47a87740943": 60,
+                "5c17a7ed2e2216152142459c": 65,
+                "5d6d3716a4b9361bc8618872": 60,
+                "5ea17ca01412a1425304d1c0": 60,
+                "5f60c74e3b85f6263c145586": 50
+              },
+              "Holster": {
+                "5d3eb3b0a4b93615055e84d2": 25
+              },
+              "TacticalVest": {
+                "5648a69d4bdc2ded0b8b457b": 55,
+                "572b7adb24597762ae139821": 1,
+                "5b44cad286f77402a54ae7e5": 90,
+                "5df8a42886f77412640e2e75": 60,
+                "5e4abc1f86f774069619fbaa": 1,
+                "5e4ac41886f77406a511c9a8": 90,
+                "6034d0230ca681766b6a0fb5": 1,
+                "609e860ebd219504d8507525": 55,
+                "60a3c68c37ea821725773ef5": 90,
+                "628b9784bcf6e2659e09b8a2": 90,
+                "628b9c7d45122232a872358f": 90,
+                "628cd624459354321c4b7fa2": 85,
+                "628d0618d1ba6e4fa07ce5a4": 85
+              }
+            }
+          },
+          "levelRange": {
+            "max": 100,
+            "min": 51
+          }
+        }
+      ],
+      "whitelist": [
+        {
+          "cartridge": {},
+          "equipment": {},
+          "levelRange": {
+            "max": 101,
+            "min": 101
+          }
+        }
+      ]
     },
-    "lowProfileGasBlockTpls": [
-        "61702f1b67085e45ef140b26",
-        "5dfa3d45dfc58d14537c20b0",
-        "5bb20dcad4351e3bac1212da",
-        "56eabcd4d2720b66698b4574",
-        "6065dc8a132d4d12c81fd8e3",
-        "55d4af3a4bdc2d972f8b456f"
+    "pmcbot": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceOnlyArmoredRigWhenNoArmor": true,
+      "forceRigWhenNoVest": true,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 35,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 20,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      },
+      "weaponSlotIdsToMakeRequired": [
+        "mod_reciever"
+      ]
+    },
+    "ravangezryachiyevent": {
+      "forceStock": true,
+      "laserIsActiveChancePercent": 85,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 90
+    },
+    "sectantoni": {},
+    "sectantpredvestnik": {},
+    "sectantpriest": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 85,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 100
+    },
+    "sectantprizrak": {},
+    "sectantwarrior": {
+      "faceShieldIsActiveChancePercent": 100,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 25,
+      "lightIsActiveNightChancePercent": 75,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 100
+    },
+    "shooterbtr": {},
+    "skier": {
+      "faceShieldIsActiveChancePercent": 100,
+      "forceStock": true,
+      "laserIsActiveChancePercent": 95,
+      "lightIsActiveDayChancePercent": 35,
+      "lightIsActiveNightChancePercent": 95,
+      "nvgIsActiveChanceDayPercent": 10,
+      "nvgIsActiveChanceNightPercent": 95,
+      "weaponModLimits": {
+        "lightLaserLimit": 1,
+        "scopeLimit": 1
+      }
+    },
+    "test": {}
+  },
+  "itemSpawnLimits": {
+    "arenafighter": {
+      "5734758f24597738025ee253": 1
+    },
+    "arenafighterevent": {
+      "5734758f24597738025ee253": 1
+    },
+    "assault": {
+      "5448e8d04bdc2ddf718b4569": 2,
+      "5448e8d64bdc2dce718b4568": 2,
+      "5448f3ac4bdc2dce718b4569": 4,
+      "5449016a4bdc2d6f028b456f": 2,
+      "5783c43d2459774bbe137486": 1,
+      "5a0c27731526d80618476ac4": 1,
+      "5c99f98d86f7745c314214b3": 1,
+      "60b0f6c058e0b0481a09ad11": 1,
+      "62a09d3bcf4a99369e262447": 1
+    },
+    "assaultgroup": {},
+    "bossboar": {},
+    "bossboarsniper": {},
+    "bossbully": {
+      "5448ba0b4bdc2d02308b456c": 1
+    },
+    "bossgluhar": {
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "bosskilla": {},
+    "bossknight": {},
+    "bosskojaniy": {
+      "5c94bbff86f7747ee735c08f": 1,
+      "5d08d21286f774736e7c94c3": 1
+    },
+    "bosskolontay": {},
+    "bosspartisan": {},
+    "bosssanitar": {
+      "5efde6b4f5448336730dbd61": 1,
+      "5eff09cd30a7dc22fd1ddfed": 1
+    },
+    "bosstagilla": {},
+    "bosstest": {},
+    "bosszryachiy": {},
+    "crazyassaultevent": {},
+    "cursedassault": {},
+    "default": {},
+    "exusec": {
+      "60098ad7c2240c0fe85c570a": 2
+    },
+    "followerbigpipe": {},
+    "followerbirdeye": {},
+    "followerboar": {
+      "5448e8d04bdc2ddf718b4569": 1,
+      "5448e8d64bdc2dce718b4568": 1,
+      "544fb37f4bdc2dee738b4567": 1,
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "followerboarclose1": {
+      "5448e8d04bdc2ddf718b4569": 1,
+      "5448e8d64bdc2dce718b4568": 1,
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "followerboarclose2": {
+      "5448e8d04bdc2ddf718b4569": 1,
+      "5448e8d64bdc2dce718b4568": 1,
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "followerbully": {
+      "5448ba0b4bdc2d02308b456c": 1,
+      "5448e8d64bdc2dce718b4568": 1
+    },
+    "followergluharassault": {
+      "5c0fa877d174af02a012e1cf": 1,
+      "5c94bbff86f7747ee735c08f": 0
+    },
+    "followergluharscout": {
+      "5c0fa877d174af02a012e1cf": 1,
+      "5c94bbff86f7747ee735c08f": 0
+    },
+    "followergluharsecurity": {
+      "5c0fa877d174af02a012e1cf": 1,
+      "5c94bbff86f7747ee735c08f": 0
+    },
+    "followergluharsnipe": {
+      "5c0fa877d174af02a012e1cf": 1,
+      "5c94bbff86f7747ee735c08f": 0
+    },
+    "followerkojaniy": {
+      "5448e8d64bdc2dce718b4568": 2
+    },
+    "followerkolontayassault": {
+      "5448e8d04bdc2ddf718b4569": 2,
+      "5448e8d64bdc2dce718b4568": 2,
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "followerkolontaysecurity": {
+      "5448e8d04bdc2ddf718b4569": 2,
+      "5448e8d64bdc2dce718b4568": 2,
+      "5c94bbff86f7747ee735c08f": 1
+    },
+    "followersanitar": {
+      "590c2e1186f77425357b6124": 1
+    },
+    "followertagilla": {},
+    "followertest": {},
+    "followerzryachiy": {},
+    "gifter": {},
+    "infectedassault": {},
+    "infectedcivil": {},
+    "infectedlaborant": {},
+    "infectedpmc": {},
+    "infectedtagilla": {},
+    "marksman": {
+      "5783c43d2459774bbe137486": 1,
+      "60b0f6c058e0b0481a09ad11": 1,
+      "62a09d3bcf4a99369e262447": 1
+    },
+    "peacemaker": {},
+    "pmc": {
+      "543be5cb4bdc2deb348b4568": 2,
+      "543be5dd4bdc2deb348b4569": 1,
+      "543be6564bdc2df4348b4568": 1,
+      "5447e1d04bdc2dff2f8b4567": 1,
+      "5448bc234bdc2d3c308b4569": 2,
+      "5448e54d4bdc2dcc718b4568": 1,
+      "5448f39d4bdc2d0a728b4568": 2,
+      "5448f3a64bdc2d60728b456a": 2,
+      "544fb37f4bdc2dee738b4567": 2,
+      "5485a8684bdc2da71d8b4567": 2,
+      "550aa4cd4bdc2dd8348b456c": 2,
+      "55818ad54bdc2ddc698b4569": 1,
+      "55818add4bdc2d5b648b456f": 1,
+      "55818ae44bdc2dde698b456c": 1,
+      "55818aeb4bdc2ddc698b456a": 1,
+      "55818af64bdc2d5b648b4570": 1,
+      "55818b164bdc2ddc698b456c": 2,
+      "5751a25924597722c463c472": 2,
+      "5a341c4686f77469e155819e": 1,
+      "5c164d2286f774194c5e69fa": 1,
+      "5c99f98d86f7745c314214b3": 1,
+      "5d650c3e815116009f6201d2": 2
+    },
+    "pmcbot": {
+      "60098ad7c2240c0fe85c570a": 2
+    },
+    "ravangezryachiyevent": {},
+    "sectantoni": {},
+    "sectantpredvestnik": {},
+    "sectantpriest": {},
+    "sectantprizrak": {},
+    "sectantwarrior": {},
+    "shooterbtr": {},
+    "skier": {},
+    "test": {}
+  },
+  "lootItemResourceRandomization": {
+    "assault": {
+      "food": {
+        "chanceMaxResourcePercent": 30,
+        "resourcePercent": 65
+      },
+      "meds": {
+        "chanceMaxResourcePercent": 40,
+        "resourcePercent": 50
+      }
+    }
+  },
+  "lowProfileGasBlockTpls": [
+    "61702f1b67085e45ef140b26",
+    "5dfa3d45dfc58d14537c20b0",
+    "5bb20dcad4351e3bac1212da",
+    "56eabcd4d2720b66698b4574",
+    "6065dc8a132d4d12c81fd8e3",
+    "55d4af3a4bdc2d972f8b456f"
+  ],
+  "maxBotCap": {
+    "bigmap": 23,
+    "default": 19,
+    "factory4_day": 11,
+    "factory4_night": 11,
+    "interchange": 22,
+    "laboratory": 19,
+    "lighthouse": 22,
+    "rezervbase": 22,
+    "sandbox": 14,
+    "sandbox_high": 14,
+    "shoreline": 22,
+    "tarkovstreets": 23,
+    "woods": 22
+  },
+  "playerScavBrainType": {
+    "bigmap": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "factory4_day": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "factory4_night": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "interchange": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "laboratory": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "lighthouse": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "rezervbase": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "sandbox": {
+      "assault": 2,
+      "pmcBot": 1
+    },
+    "sandbox_high": {
+      "assault": 2,
+      "pmcBot": 1
+    },
+    "shoreline": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "tarkovstreets": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    },
+    "woods": {
+      "assault": 1,
+      "bossKilla": 1,
+      "pmcBot": 1
+    }
+  },
+  "presetBatch": {
+    "arenaFighter": 15,
+    "arenaFighterEvent": 15,
+    "assault": 45,
+    "bossBoar": 5,
+    "bossBoarSniper": 5,
+    "bossBully": 5,
+    "bossGluhar": 5,
+    "bossKilla": 5,
+    "bossKnight": 5,
+    "bossKojaniy": 5,
+    "bossKolontay": 5,
+    "bossPartisan": 5,
+    "bossSanitar": 5,
+    "bossTagilla": 5,
+    "bossTest": 10,
+    "bossZryachiy": 5,
+    "crazyAssaultEvent": 15,
+    "cursedAssault": 50,
+    "exUsec": 15,
+    "followerBigPipe": 5,
+    "followerBirdEye": 5,
+    "followerBoar": 15,
+    "followerBoarClose1": 10,
+    "followerBoarClose2": 10,
+    "followerBully": 5,
+    "followerGluharAssault": 5,
+    "followerGluharScout": 5,
+    "followerGluharSecurity": 5,
+    "followerGluharSnipe": 5,
+    "followerKojaniy": 5,
+    "followerKolontayAssault": 10,
+    "followerKolontaySecurity": 10,
+    "followerSanitar": 5,
+    "followerTagilla": 5,
+    "followerTest": 10,
+    "followerZryachiy": 10,
+    "gifter": 5,
+    "infectedAssault": 30,
+    "infectedCivil": 30,
+    "infectedLaborant": 30,
+    "infectedPmc": 30,
+    "infectedTagilla": 5,
+    "marksman": 30,
+    "peacefullZryachiyEvent": 5,
+    "peacemaker": 10,
+    "pmcBEAR": 20,
+    "pmcBot": 40,
+    "pmcUSEC": 20,
+    "ravangeZryachiyEvent": 5,
+    "sectactPriestEvent": 10,
+    "sectantOni": 10,
+    "sectantPredvestnik": 10,
+    "sectantPriest": 10,
+    "sectantPrizrak": 10,
+    "sectantWarrior": 10,
+    "shooterBTR": 1,
+    "skier": 10,
+    "test": 30
+  },
+  "revenge": {
+    "arenaFighter": [
+      "pmcBot",
+      "gifter"
     ],
-    "disableLootOnBotTypes": [],
-    "botNameLengthLimit": 19,
-    "botRolesThatMustHaveUniqueName": ["assault", "pmcusec", "pmcbear"]
+    "arenaFighterEvent": [
+      "pmcBot",
+      "gifter"
+    ],
+    "bossKnight": [
+      "exUsec",
+      "gifter",
+      "bossKnight",
+      "followerBigPipe",
+      "followerBirdEye"
+    ],
+    "exUsec": [
+      "exUsec",
+      "gifter",
+      "bossKnight",
+      "followerBigPipe",
+      "followerBirdEye"
+    ],
+    "followerBigPipe": [
+      "exUsec",
+      "gifter",
+      "bossKnight",
+      "followerBigPipe",
+      "followerBirdEye"
+    ],
+    "pmcBot": [
+      "pmcBot",
+      "gifter"
+    ],
+    "spiritWinter": [
+      "pmcBot",
+      "gifter"
+    ]
+  },
+  "secureContainerAmmoStackCount": 20,
+  "showTypeInNickname": false,
+  "walletLoot": {
+    "chancePercent": 35,
+    "currencyWeight": {
+      "5449016a4bdc2d6f028b456f": 1,
+      "5696686a4bdc2da3298b456a": 0,
+      "569668774bdc2da2298b4568": 0
+    },
+    "itemCount": {
+      "max": 3,
+      "min": 1
+    },
+    "stackSizeWeight": {
+      "10000": 7,
+      "15000": 4,
+      "20000": 2,
+      "25000": 1,
+      "5000": 50
+    },
+    "walletTplPool": [
+      "5783c43d2459774bbe137486",
+      "60b0f6c058e0b0481a09ad11"
+    ]
+  }
 }

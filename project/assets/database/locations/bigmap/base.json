@@ -418,11 +418,11 @@
         "BotRole": "pmcBEAR",
         "ChancedEnemies": [
           {
-            "EnemyChance": 70,
+            "EnemyChance": 80,
             "Role": "assault"
           },
           {
-            "EnemyChance": 70,
+            "EnemyChance": 80,
             "Role": "marksman"
           },
           {
@@ -465,11 +465,11 @@
         "BotRole": "pmcUSEC",
         "ChancedEnemies": [
           {
-            "EnemyChance": 70,
+            "EnemyChance": 80,
             "Role": "assault"
           },
           {
-            "EnemyChance": 70,
+            "EnemyChance": 80,
             "Role": "marksman"
           },
           {
@@ -570,7 +570,7 @@
     "MaxExfiltrationTime": 1800,
     "MinExfiltrationTime": 1200,
     "NonWaveSpawnBotsLimitPerPlayer": 10,
-    "NonWaveSpawnBotsLimitPerPlayerPvE": 15,
+    "NonWaveSpawnBotsLimitPerPlayerPvE": 10,
     "RainVisibilityDistanceCoef": 0.35,
     "RainVisibilitySpeedCoef": 0,
     "Scattering": 1,

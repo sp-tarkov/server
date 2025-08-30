@@ -191,6 +191,22 @@ export class DatabaseService {
     }
 
     /**
+     * @returns assets/database/templates/customAchievements.json
+     */
+    public getCustomAchievements(): IAchievement[] {
+        if (!this.databaseServer.getTables().templates.customAchievements) {
+            throw new Error(
+                this.localisationService.getText(
+                    "database-data_at_path_missing",
+                    "assets/database/templates/customAchievements.json",
+                ),
+            );
+        }
+
+        return this.databaseServer.getTables().templates.customAchievements;
+    }
+
+    /**
      * @returns assets/database/templates/customisation.json
      */
     public getCustomization(): Record<string, ICustomizationItem> {

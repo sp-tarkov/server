@@ -6,7 +6,7 @@
             "default": {
                 "clouds": {
                     "values": [-1, -0.8, -0.5, 0.1, 0, 0.15, 0.4, 1],
-                    "weights": [80, 22, 22, 15, 15, 15, 5, 4]
+                    "weights": [70, 22, 22, 15, 15, 15, 5, 4]
                 },
                 "windSpeed": {
                     "values": [0, 1, 2, 3, 4],
@@ -143,13 +143,13 @@
             "name": "SPRING_EARLY",
             "startDay": "9",
             "startMonth": "1",
-            "endDay": "25",
+            "endDay": "20",
             "endMonth": "3"
         },
         {
             "seasonType": 3,
             "name": "SPRING",
-            "startDay": "25",
+            "startDay": "20",
             "startMonth": "3",
             "endDay": "2",
             "endMonth": "6"

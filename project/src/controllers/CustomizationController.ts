@@ -109,9 +109,6 @@ export class CustomizationController {
         // Pay for items
         this.payForClothingItems(sessionId, pmcData, buyClothingRequest.items, output);
 
-        // Add clothing to profile
-        this.saveServer.getProfile(sessionId).suits.push(suitId);
-
         // TODO: Merge with function this.profileHelper.addHideoutCustomisationUnlock
         const rewardToStore: ICustomisationStorage = {
             id: suitId,
@@ -139,7 +136,10 @@ export class CustomizationController {
      * @returns true if already purchased
      */
     protected outfitAlreadyPurchased(suitId: string, sessionID: string): boolean {
-        return this.saveServer.getProfile(sessionID).suits.includes(suitId);
+        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+
+        // Check if clothing can be found by id
+        return !!fullProfile?.customisationUnlocks.find((customisation) => customisation.id === suitId);
     }
 
     /**

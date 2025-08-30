@@ -6,17 +6,18 @@ import { RewardHelper } from "@spt/helpers/RewardHelper";
 import { TraderHelper } from "@spt/helpers/TraderHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { IBonus, IHideoutSlot } from "@spt/models/eft/common/tables/IBotBase";
+import { CustomisationType } from "@spt/models/eft/common/tables/ICustomisationStorage";
 import { IQuest } from "@spt/models/eft/common/tables/IQuest";
-import { IReward } from "@spt/models/eft/common/tables/IReward";
 import { IPmcDataRepeatableQuest, IRepeatableQuest } from "@spt/models/eft/common/tables/IRepeatableQuests";
+import { IReward } from "@spt/models/eft/common/tables/IReward";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { IStageBonus } from "@spt/models/eft/hideout/IHideoutArea";
 import { IEquipmentBuild, IMagazineBuild, ISptProfile, IWeaponBuild } from "@spt/models/eft/profile/ISptProfile";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
-import { RewardType } from "@spt/models/enums/RewardType";
 import { QuestStatus } from "@spt/models/enums/QuestStatus";
+import { RewardType } from "@spt/models/enums/RewardType";
 import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
 import { IRagfairConfig } from "@spt/models/spt/config/IRagfairConfig";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
@@ -410,7 +411,7 @@ export class ProfileFixerService {
     /**
      * Remove any entries from `pmcProfile.InsuredItems` that do not have a corresponding
      * `pmcProfile.Inventory.items` entry
-     * @param pmcProfile 
+     * @param pmcProfile
      */
     protected fixOrphanedInsurance(pmcProfile: IPmcData): void {
         pmcProfile.InsuredItems = pmcProfile.InsuredItems.filter((insuredItem) => {
@@ -602,13 +603,15 @@ export class ProfileFixerService {
             }
         }
 
-        const clothing = this.databaseService.getTemplates().customization;
-        for (const [_, suitId] of Object.entries(fullProfile.suits)) {
-            if (!clothing[suitId]) {
-                this.logger.error(this.localisationService.getText("fixer-clothing_item_found", suitId));
+        // Ensure all clothing items found in profile can be found in the db
+        const clothingDb = this.databaseService.getTemplates().customization;
+        for (const suit of fullProfile.customisationUnlocks.filter((x) => x.type === CustomisationType.SUITE)) {
+            if (!clothingDb[suit.id]) {
+                // Item in profile not foundin db, not good
+                this.logger.error(this.localisationService.getText("fixer-clothing_item_found", suit.id));
                 if (this.coreConfig.fixes.removeModItemsFromProfile) {
-                    fullProfile.suits.splice(fullProfile.suits.indexOf(suitId), 1);
-                    this.logger.warning(`Non-default suit purchase: ${suitId} removed from profile`);
+                    fullProfile.customisationUnlocks.splice(fullProfile.customisationUnlocks.indexOf(suit), 1);
+                    this.logger.warning(`Non-default suit purchase: ${suit.id} removed from profile`);
                 }
             }
         }

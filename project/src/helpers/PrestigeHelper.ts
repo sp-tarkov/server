@@ -2,6 +2,7 @@ import { CustomisationSource } from "@spt/models/eft/common/tables/ICustomisatio
 import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { IReward } from "@spt/models/eft/common/tables/IReward";
 import { IPendingPrestige, ISptProfile } from "@spt/models/eft/profile/ISptProfile";
+import { RewardType } from "@spt/models/enums/RewardType";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import type { ILogger } from "@spt/models/spt/utils/ILogger";
 import { DatabaseService } from "@spt/services/DatabaseService";
@@ -29,7 +30,6 @@ export class PrestigeHelper {
         const sessionId = newProfile.info.id;
 
         // Skill copy
-
         if (prePrestigePmc.Skills.Common) {
             const commonSKillsToCopy = prePrestigePmc.Skills.Common;
             for (const skillToCopy of commonSKillsToCopy) {
@@ -105,27 +105,27 @@ export class PrestigeHelper {
 
         for (const reward of rewards) {
             switch (reward.type) {
-                case "CustomizationDirect": {
+                case RewardType.CUSTOMIZATION_DIRECT: {
                     this.profileHelper.addHideoutCustomisationUnlock(newProfile, reward, CustomisationSource.PRESTIGE);
                     break;
                 }
-                case "Skill":
+                case RewardType.SKILL:
                     this.profileHelper.addSkillPointsToPlayer(
                         newProfile.characters.pmc,
                         reward.target as SkillTypes,
                         reward.value as number,
                     );
                     break;
-                case "Item": {
+                case RewardType.ITEM: {
                     if (reward.items) {
                         itemsToSend.push(...reward.items);
                     }
                     break;
                 }
-                // case "ExtraDailyQuest": {
-                //     // todo
-                //     break;
-                // }
+                case RewardType.EXTRA_DAILY_QUEST: {
+                    this.profileHelper.addExtraRepeatableQuest(newProfile, reward.target as string, reward.value as number);
+                    break;
+                }
                 default:
                     this.logger.error(`Unhandled prestige reward type: ${reward.type}`);
                     break;

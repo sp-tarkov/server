@@ -4,6 +4,7 @@ import { ItemHelper } from "@spt/helpers/ItemHelper";
 import { ProfileHelper } from "@spt/helpers/ProfileHelper";
 import { IPmcData } from "@spt/models/eft/common/IPmcData";
 import { BanType } from "@spt/models/eft/common/tables/IBotBase";
+import { CustomisationSource, CustomisationType } from "@spt/models/eft/common/tables/ICustomisationStorage";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { IProfileTraderTemplate } from "@spt/models/eft/common/tables/IProfileTemplate";
 import { ITraderAssort, ITraderBase, ITraderLoyaltyLevel } from "@spt/models/eft/common/tables/ITrader";
@@ -196,19 +197,23 @@ export class TraderHelper {
     }
 
     /**
-     * Add an array of suit ids to a profiles suit array, no duplicates
+     * Add an array of clothing ids to a profile, prevents dupes
      * @param fullProfile Profile to add to
-     * @param suitIds Suit Ids to add
+     * @param suitIds Clothing Ids to add
      */
-    protected addSuitsToProfile(fullProfile: ISptProfile, suitIds: string[]): void {
-        if (!fullProfile.suits) {
-            fullProfile.suits = [];
+    public addSuitsToProfile(fullProfile: ISptProfile, suitIds: string[]): void {
+        if (!fullProfile.customisationUnlocks) {
+            fullProfile.customisationUnlocks = [];
         }
 
         for (const suitId of suitIds) {
-            // Don't add dupes
-            if (!fullProfile.suits.includes(suitId)) {
-                fullProfile.suits.push(suitId);
+            if (!fullProfile.customisationUnlocks.find((customisation) => customisation.id === suitId)) {
+                // Clothing item doesnt exist in profile, add it
+                fullProfile.customisationUnlocks.push({
+                    id: suitId,
+                    source: CustomisationSource.UNLOCKED_IN_GAME,
+                    type: CustomisationType.SUITE,
+                });
             }
         }
     }

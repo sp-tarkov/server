@@ -4,6 +4,7 @@ import { BanType, Common, ICounterKeyValue, IStats } from "@spt/models/eft/commo
 import {
     CustomisationSource,
     CustomisationType,
+    CustomisationTypeId,
     ICustomisationStorage,
 } from "@spt/models/eft/common/tables/ICustomisationStorage";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
@@ -194,6 +195,7 @@ export class ProfileHelper {
         return {
             version: this.watermark.getVersionTag(true),
             freeRepeatableRefreshUsedCount: {},
+            extraRepeatableQuests: {},
             migrations: {},
             cultistRewards: new Map(),
             mods: [],
@@ -477,6 +479,10 @@ export class ProfileHelper {
 
         profileSkill.Progress += pointsToAddToSkill;
         profileSkill.Progress = Math.min(profileSkill.Progress, 5100); // Prevent skill from ever going above level 51 (5100)
+
+        profileSkill.PointsEarnedDuringSession ||= 0;
+        profileSkill.PointsEarnedDuringSession += pointsToAddToSkill;
+
         profileSkill.LastAccess = this.timeUtil.getTimestamp();
     }
 
@@ -607,6 +613,18 @@ export class ProfileHelper {
     }
 
     /**
+     * Add the given number of extra repeatable quests for the given type of repeatable to the users profile
+     * @param fullProfile Profile to add the extra repeatable to
+     * @param repeatableId The ID of the type of repeatable to increase
+     * @param value The number of extra repeatables to add
+     */
+    public addExtraRepeatableQuest(fullProfile: ISptProfile, repeatableId: string, value: number): void {
+        fullProfile.spt.extraRepeatableQuests ||= {};
+        fullProfile.spt.extraRepeatableQuests[repeatableId] ||= 0;
+        fullProfile.spt.extraRepeatableQuests[repeatableId] += value;
+    }
+
+    /**
      * Store a hideout customisation unlock inside a profile
      * @param fullProfile Profile to add unlock to
      * @param reward reward given to player with customisation data
@@ -616,7 +634,7 @@ export class ProfileHelper {
         fullProfile.customisationUnlocks ||= [];
         if (fullProfile.customisationUnlocks?.some((unlock) => unlock.id === reward.target)) {
             this.logger.warning(
-                `Profile: ${fullProfile.info.id} already has hideout customisaiton reward: ${reward.target}, skipping`,
+                `Profile: ${fullProfile.info.id} already has hideout customisation reward: ${reward.target}, skipping`,
             );
             return;
         }
@@ -631,34 +649,32 @@ export class ProfileHelper {
                 type: null,
             };
             switch (matchingCustomisation._parent) {
-                case "675ff48ce8d2356707079617": {
-                    // MannequinPose
+                case CustomisationTypeId.MANNEQUIN_POSE: {
                     rewardToStore.type = CustomisationType.MANNEQUIN_POSE;
                     break;
                 }
-                case "6751848eba5968fd800a01d6": {
-                    // Gestures
+                case CustomisationTypeId.GESTURES: {
                     rewardToStore.type = CustomisationType.GESTURE;
                     break;
                 }
-                case "67373f170eca6e03ab0d5391": {
-                    // Floor
+                case CustomisationTypeId.FLOOR: {
                     rewardToStore.type = CustomisationType.FLOOR;
                     break;
                 }
-                case "6746fafabafff8500804880e": {
-                    // DogTags
+                case CustomisationTypeId.DOG_TAGS: {
                     rewardToStore.type = CustomisationType.DOG_TAG;
                     break;
                 }
-                case "673b3f595bf6b605c90fcdc2": {
-                    // Ceiling
+                case CustomisationTypeId.CEILING: {
                     rewardToStore.type = CustomisationType.CEILING;
                     break;
                 }
-                case "67373f1e5a5ee73f2a081baf": {
-                    // Wall
+                case CustomisationTypeId.WALL: {
                     rewardToStore.type = CustomisationType.WALL;
+                    break;
+                }
+                case CustomisationTypeId.ENVIRONMENT_UI: {
+                    rewardToStore.type = CustomisationType.ENVIRONMENT;
                     break;
                 }
                 default:
@@ -669,14 +685,8 @@ export class ProfileHelper {
             }
 
             fullProfile.customisationUnlocks.push(rewardToStore);
+        } else {
+            this.logger.warning(`Unhandled reward: ${reward.id}`);
         }
-
-        // const rewardToStore: ICustomisationStorage = {
-        //     id: matchingHideoutCustomisation.itemId,
-        //     source: source,
-        //     type: matchingHideoutCustomisation.type as CustomisationType,
-        // };
-
-        // fullProfile.customisationUnlocks.push(rewardToStore);
     }
 }

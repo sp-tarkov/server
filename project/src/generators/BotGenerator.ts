@@ -312,6 +312,11 @@ export class BotGenerator {
             return this.randomUtil.getInt(experience.normal.min, experience.normal.max);
         }
 
+        // Some bots have -1/-1, shortcut result
+        if (result.max === -1) {
+            return -1;
+        }
+
         return this.randomUtil.getInt(result.min, result.max);
     }
 

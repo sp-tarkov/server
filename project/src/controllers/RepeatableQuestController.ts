@@ -81,7 +81,7 @@ export class RepeatableQuestController {
      */
     public getClientRepeatableQuests(sessionID: string): IPmcDataRepeatableQuest[] {
         const returnData: Array<IPmcDataRepeatableQuest> = [];
-        const fullProfile = this.profileHelper.getFullProfile(sessionID);
+        const fullProfile = this.profileHelper.getFullProfile(sessionID) as ISptProfile;
         const pmcData = fullProfile.characters.pmc;
         const currentTime = this.timeUtil.getTimestamp();
 
@@ -123,7 +123,7 @@ export class RepeatableQuestController {
             const questTypePool = this.generateQuestPool(repeatableConfig, pmcData.Info.Level);
 
             // Add repeatable quests of this loops sub-type (daily/weekly)
-            for (let i = 0; i < this.getQuestCount(repeatableConfig, pmcData); i++) {
+            for (let i = 0; i < this.getQuestCount(repeatableConfig, fullProfile); i++) {
                 let quest: IRepeatableQuest | undefined = undefined;
                 let lifeline = 0;
                 while (!quest && questTypePool.types.length > 0) {
@@ -165,9 +165,8 @@ export class RepeatableQuestController {
                 };
             }
 
-            // Reset free repeatable values in player profile to defaults
-            generatedRepeatables.freeChanges = repeatableConfig.freeChanges;
-            generatedRepeatables.freeChangesAvailable = repeatableConfig.freeChanges;
+            // Reset the free changes available to the players base count
+            generatedRepeatables.freeChangesAvailable = generatedRepeatables.freeChanges;
 
             returnData.push({
                 id: repeatableConfig.id,
@@ -177,7 +176,7 @@ export class RepeatableQuestController {
                 inactiveQuests: generatedRepeatables.inactiveQuests,
                 changeRequirement: generatedRepeatables.changeRequirement,
                 freeChanges: generatedRepeatables.freeChanges,
-                freeChangesAvailable: generatedRepeatables.freeChanges,
+                freeChangesAvailable: generatedRepeatables.freeChangesAvailable,
             });
         }
 
@@ -269,20 +268,20 @@ export class RepeatableQuestController {
      * @param pmcData Player profile
      * @returns Quest count
      */
-    protected getQuestCount(repeatableConfig: IRepeatableQuestConfig, pmcData: IPmcData): number {
+    protected getQuestCount(repeatableConfig: IRepeatableQuestConfig, fullProfile: ISptProfile): number {
+        let questCount = repeatableConfig.numQuests;
         if (
             repeatableConfig.name.toLowerCase() === "daily" &&
-            this.profileHelper.hasEliteSkillLevel(SkillTypes.CHARISMA, pmcData)
+            this.profileHelper.hasEliteSkillLevel(SkillTypes.CHARISMA, fullProfile.characters.pmc)
         ) {
             // Elite charisma skill gives extra daily quest(s)
-            return (
-                repeatableConfig.numQuests +
-                this.databaseService.getGlobals().config.SkillsSettings.Charisma.BonusSettings.EliteBonusSettings
-                    .RepeatableQuestExtraCount
-            );
+            questCount += this.databaseService.getGlobals().config.SkillsSettings.Charisma.BonusSettings.EliteBonusSettings.RepeatableQuestExtraCount
         }
 
-        return repeatableConfig.numQuests;
+        // Add any extra repeatable quests the profile has unlocked
+        questCount += fullProfile.spt.extraRepeatableQuests?.[repeatableConfig.id] ?? 0;
+
+        return questCount;
     }
 
     /**
@@ -299,9 +298,9 @@ export class RepeatableQuestController {
         let repeatableQuestDetails = pmcData.RepeatableQuests.find(
             (repeatable) => repeatable.name === repeatableConfig.name,
         );
+        const hasAccess = this.profileHelper.hasAccessToRepeatableFreeRefreshSystem(pmcData);
         if (!repeatableQuestDetails) {
             // Not in profile, generate
-            const hasAccess = this.profileHelper.hasAccessToRepeatableFreeRefreshSystem(pmcData);
             repeatableQuestDetails = {
                 id: repeatableConfig.id,
                 name: repeatableConfig.name,
@@ -315,6 +314,13 @@ export class RepeatableQuestController {
 
             // Add base object that holds repeatable data to profile
             pmcData.RepeatableQuests.push(repeatableQuestDetails);
+        }
+
+        // There is a chance an invalid number of free changes was assigned to the profile in earlier versions, so
+        // reset the number if the user doesn't have access
+        if (!hasAccess) {
+            repeatableQuestDetails.freeChanges = 0;
+            repeatableQuestDetails.freeChangesAvailable = 0;
         }
 
         return repeatableQuestDetails;

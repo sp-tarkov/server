@@ -106,7 +106,14 @@ export class LocationLifecycleService {
     public startLocalRaid(sessionId: string, request: IStartLocalRaidRequestData): IStartLocalRaidResponseData {
         this.logger.debug(`Starting: ${request.location}`);
 
-        const playerProfile = this.profileHelper.getPmcProfile(sessionId);
+        const playerProfile = this.profileHelper.getFullProfile(sessionId);
+
+        // Remove skill fatigue values
+        if (request.playerSide.toLowerCase() === "pmc") {
+            this.resetSkillPointsEarnedDuringRaid(playerProfile.characters.pmc.Skills.Common);
+        } else {
+            this.resetSkillPointsEarnedDuringRaid(playerProfile.characters.scav.Skills.Common);
+        }
 
         // Set interval times to in-raid value
         this.ragfairConfig.runIntervalSeconds = this.ragfairConfig.runIntervalValues.inRaid;
@@ -115,7 +122,7 @@ export class LocationLifecycleService {
         const result: IStartLocalRaidResponseData = {
             serverId: `${request.location}.${request.playerSide}.${this.timeUtil.getTimestamp()}`, // TODO - does this need to be more verbose - investigate client?
             serverSettings: this.databaseService.getLocationServices(), // TODO - is this per map or global?
-            profile: { insuredItems: playerProfile.InsuredItems },
+            profile: { insuredItems: playerProfile.characters.pmc.InsuredItems },
             locationLoot: this.generateLocationAndLoot(request.location, !request.sptSkipLootGeneration),
             transitionType: TransitionType.None,
             transition: {
@@ -618,9 +625,6 @@ export class LocationLifecycleService {
         // Must occur after encyclopedia updated
         this.mergePmcAndScavEncyclopedias(scavProfile, pmcProfile);
 
-        // Remove skill fatigue values
-        this.resetSkillPointsEarnedDuringRaid(scavProfile.Skills.Common);
-
         // Scav died, regen scav loadout and reset timer
         if (isDead) {
             this.playerScavGenerator.generate(sessionId);
@@ -700,9 +704,6 @@ export class LocationLifecycleService {
 
         // MUST occur AFTER encyclopedia updated
         this.mergePmcAndScavEncyclopedias(pmcProfile, scavProfile);
-
-        // Remove skill fatigue values
-        this.resetSkillPointsEarnedDuringRaid(pmcProfile.Skills.Common);
 
         // Handle temp, hydration, limb hp/effects
         this.healthHelper.updateProfileHealthPostRaid(pmcProfile, postRaidProfile.Health, sessionId, isDead);
