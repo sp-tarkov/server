@@ -914,11 +914,7 @@ export class LocationLifecycleService {
                 continue;
             }
 
-            if (failedQuest.status === QuestStatus.MarkedAsFailed && dbQuest.restartable) {
-                failedQuest.status = QuestStatus.FailRestartable;
-            } else {
-                failedQuest.status = QuestStatus.Fail;
-            }
+            failedQuest.status = dbQuest.restartable ? QuestStatus.FailRestartable : QuestStatus.Fail;
         }
 
         return questsToProcess;
