@@ -38,9 +38,17 @@ export class WeatherHelper {
     /**
      * Is the current raid at nighttime
      * @param timeVariant PASS OR CURR (from raid settings)
+     * @param mapLocation map name. E.g. factory4_day
      * @returns True when nighttime
      */
-    public isNightTime(timeVariant: DateTime) {
+    public isNightTime(timeVariant: DateTime, mapLocation: string) {
+        switch (mapLocation) {
+            case "factory4_night":
+                return true;
+            case "factory4_day":
+                return false;
+        }
+
         const time = this.getInRaidTime();
 
         // getInRaidTime() provides left side value, if player chose right side, set ahead 12 hrs
