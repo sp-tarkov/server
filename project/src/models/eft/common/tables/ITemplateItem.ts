@@ -296,7 +296,7 @@ export interface IProps {
     DeafStrength?: string;
     BlindnessProtection?: number;
     Distortion?: number;
-    CompressorTreshold?: number;
+    CompressorThreshold?: number;
     CompressorAttack?: number;
     CompressorRelease?: number;
     CompressorGain?: number;
