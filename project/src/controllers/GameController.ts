@@ -195,9 +195,16 @@ export class GameController {
 
             for (const lockedQuest of lockedQuests) {
                 const dbQuest = this.databaseService.getQuests()[lockedQuest.qid];
-                if (!dbQuest) {
+
+                // Check if the quest has had any other statuses than being locked, if it hasn't, we skip.
+                const hasOnlyZeroStatusTimers =
+                    lockedQuest.statusTimers && Object.values(lockedQuest.statusTimers).every((value) => value === 0);
+
+                if (!dbQuest || hasOnlyZeroStatusTimers) {
                     continue;
                 }
+
+                this.logger.success(`Fixed quest ${lockedQuest.qid} with invalid 'locked' state successfully`);
 
                 lockedQuest.status = dbQuest.restartable ? QuestStatus.FailRestartable : QuestStatus.Fail;
             }
