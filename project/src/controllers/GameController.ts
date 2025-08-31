@@ -198,7 +198,7 @@ export class GameController {
 
                 // Check if the quest has had any other statuses than being locked, if it hasn't, we skip.
                 const hasOnlyZeroStatusTimers =
-                    lockedQuest.statusTimers && Object.values(lockedQuest.statusTimers).every((value) => value === 0);
+                    lockedQuest.statusTimers && Object.keys(lockedQuest.statusTimers).every((key) => key === "0");
 
                 if (!dbQuest || hasOnlyZeroStatusTimers) {
                     continue;
