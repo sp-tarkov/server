@@ -45,6 +45,7 @@ export interface IUpd {
     RepairKit?: IUpdRepairKit;
     CultistAmulet?: IUpdCultistAmulet;
     PinLockState?: PinLockState;
+    Lockable?: boolean;
 }
 
 export enum PinLockState {

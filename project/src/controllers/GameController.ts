@@ -30,6 +30,7 @@ import { ISptProfile } from "@spt/models/eft/profile/ISptProfile";
 import { BonusType } from "@spt/models/enums/BonusType";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { HideoutAreas } from "@spt/models/enums/HideoutAreas";
+import { QuestStatus } from "@spt/models/enums/QuestStatus";
 import { RewardType } from "@spt/models/enums/RewardType";
 import { SkillTypes } from "@spt/models/enums/SkillTypes";
 import { IBotConfig } from "@spt/models/spt/config/IBotConfig";
@@ -189,6 +190,24 @@ export class GameController {
             this.logger.debug(`Started game with sessionId: ${sessionID} ${fullProfile.info.username}`);
 
             const pmcProfile = fullProfile.characters.pmc;
+
+            const lockedQuests = pmcProfile.Quests.filter((quest) => quest.status === QuestStatus.Locked);
+
+            for (const lockedQuest of lockedQuests) {
+                const dbQuest = this.databaseService.getQuests()[lockedQuest.qid];
+
+                // Check if the quest has had any other statuses than being locked, if it hasn't, we skip.
+                const hasOnlyZeroStatusTimers =
+                    lockedQuest.statusTimers && Object.keys(lockedQuest.statusTimers).every((key) => key === "0");
+
+                if (!dbQuest || hasOnlyZeroStatusTimers) {
+                    continue;
+                }
+
+                this.logger.success(`Fixed quest ${lockedQuest.qid} with invalid 'locked' state successfully`);
+
+                lockedQuest.status = dbQuest.restartable ? QuestStatus.FailRestartable : QuestStatus.Fail;
+            }
 
             if (this.coreConfig.fixes.fixProfileBreakingInventoryItemIssues) {
                 this.profileFixerService.fixProfileBreakingInventoryItemIssues(pmcProfile);

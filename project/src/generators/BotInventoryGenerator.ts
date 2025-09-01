@@ -188,7 +188,7 @@ export class BotInventoryGenerator {
         if (
             randomistionDetails?.nighttimeChanges &&
             raidConfig &&
-            this.weatherHelper.isNightTime(raidConfig.timeVariant)
+            this.weatherHelper.isNightTime(raidConfig.timeVariant, raidConfig.location)
         ) {
             for (const equipmentSlotKey of Object.keys(randomistionDetails.nighttimeChanges.equipmentModsModifiers)) {
                 // Never let mod chance go outside of 0 - 100

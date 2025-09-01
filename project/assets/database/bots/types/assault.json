@@ -5525,6 +5525,10 @@
       }
     },
     "mods": {
+      "628cd624459354321c4b7fa2": {
+        "Front_plate": ["656f9d5900d62bcd2e02407c"],
+        "Back_plate": ["656f9d5900d62bcd2e02407c"]
+      },
       "5447a9cd4bdc2dbd208b4567": {
         "mod_charge": [
           "5c0faf68d174af02a96260b8",

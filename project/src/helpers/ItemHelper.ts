@@ -931,12 +931,12 @@ export class ItemHelper {
      */
     public setFoundInRaid(items: IItem[], excludeCurrency = true): void {
         for (const item of items) {
-            if (!item.upd) {
-                item.upd = {};
-            }
-
             if (excludeCurrency && this.isOfBaseclass(item._tpl, BaseClasses.MONEY)) {
                 continue;
+            }
+
+            if (!item.upd) {
+                item.upd = {};
             }
 
             item.upd.SpawnedInSession = true;

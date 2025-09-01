@@ -393,6 +393,24 @@ export class BotLootCacheService {
             filteredVestItems[itemKey] = vestLootPool[itemKey];
         }
 
+        const filteredSecureLoot = {};
+
+        for (const itemKey of Object.keys(secureLootTPool)) {
+            const itemResult = this.itemHelper.getItem(itemKey);
+
+            if (!itemResult[0]) {
+                continue;
+            }
+
+            const itemTemplate = itemResult[1];
+
+            if (this.isBulletOrGrenade(itemTemplate._props) || this.isMagazine(itemTemplate._props)) {
+                continue;
+            }
+
+            filteredSecureLoot[itemKey] = secureLootTPool[itemKey];
+        }
+
         this.lootCache[botRole].healingItems = healingItems;
         this.lootCache[botRole].drugItems = drugItems;
         this.lootCache[botRole].foodItems = foodItems;
@@ -405,7 +423,7 @@ export class BotLootCacheService {
         this.lootCache[botRole].backpackLoot = filteredBackpackItems;
         this.lootCache[botRole].pocketLoot = filteredPocketItems;
         this.lootCache[botRole].vestLoot = filteredVestItems;
-        this.lootCache[botRole].secureLoot = secureLootTPool;
+        this.lootCache[botRole].secureLoot = filteredSecureLoot;
     }
 
     protected addItemsToPool(poolToAddTo: Record<string, number>, poolOfItemsToAdd: Record<string, number>): void {

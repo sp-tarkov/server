@@ -407,6 +407,8 @@ export class LootGenerator {
 
         const presetAndMods: IItem[] = this.itemHelper.replaceIDs(chosenPreset._items);
         this.itemHelper.remapRootItemId(presetAndMods);
+        this.itemHelper.setFoundInRaid(presetAndMods);
+
         // Add chosen preset tpl to result array
         for (const item of presetAndMods) {
             result.push(item);

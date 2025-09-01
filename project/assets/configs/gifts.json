@@ -6233,6 +6233,12 @@
                     "entity": "5c0647fdd443bc2504c2d371"
                 },
                 {
+                    "_id": "668014ea2b680c65290bea93",
+                    "Type": "UnlockTrader",
+                    "value": 1,
+                    "entity": "579dc571d53a0658a154fbec"
+                },
+                {
                     "_id": "668014ea2b680c65290bbe53",
                     "Type": "HideoutAreaLevel",
                     "value": 1,
